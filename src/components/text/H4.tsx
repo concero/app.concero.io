@@ -5,17 +5,14 @@ export interface H4Props {
   style?: CSSProperties
 }
 
-export const H4: FC<H4Props> = ({ children, ...rest }) => {
+export const H4: FC<H4Props> = ({ children, style, ...rest }) => {
   return (
-    <h4 style={styles.container} {...rest}>
+    <h4 style={{ ...styles.container, ...style }} {...rest}>
       {children}
     </h4>
   )
 }
 
 const styles: Record<string, CSSProperties> = {
-  container: {
-    fontSize: 15,
-    fontWeight: 500,
-  },
+  container: {},
 }

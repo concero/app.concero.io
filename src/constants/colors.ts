@@ -39,4 +39,9 @@ export const colors = {
     darker: '#333333',
     darkest: '#131313',
   },
+
+  text: {
+    primary: '#f7f7f7',
+    secondary: '#7E7B86',
+  },
 }

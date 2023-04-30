@@ -7,6 +7,50 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+
+    /* Primary Colors */
+    --primary-lightest: #e3d7fd;
+    --primary-lighter: #c7aefc;
+    --primary-light: #ab86fa;
+    --primary-mainLight: #8f5df9;
+    --primary-main: #7335F7;
+    --primary-mainDark: #5c2ac6;
+    --primary-dark: #452094;
+    --primary-darker: #2e1563;
+    --primary-darkest: #170b31;
+
+    /* Green Colors */
+    --green-lightest: #e3f9f1;
+    --green-lighter: #c7f3e3;
+    --green-light: #abedd5;
+    --green-main: #26C281;
+    --green-dark: #20A273;
+    --green-darker: #1A8B65;
+    --green-darkest: #147457;
+
+    /* Red Colors */
+    --red-lightest: #fdeeeb;
+    --red-lighter: #fbdcd7;
+    --red-light: #f9c9c3;
+    --red-dark: #D34141;
+    --red-darker: #B62C2C;
+    --red-darkest: #8F1717;
+
+    /* Background, Black, White, and Grey Colors */
+    --background: #000000;
+    --black: #000000;
+    --white: #ffffff;
+    --grey-lightest: #f7f7f7;
+    --grey-lighter: #ebebeb;
+    --grey-light: #dcdcdc;
+    --grey-dark: #7E7B86;
+    --grey-darker: #333333;
+    --grey-darkest: #131313;
+
+    --text-primary: #F7F7F7;
+    --text-secondary: #7E7B86;
+
+
 }
 
 body {
@@ -29,7 +73,53 @@ div {
     flex-direction: column;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p, a, button, input {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    color: var(--text-primary)
 }
+
+h1 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+}
+

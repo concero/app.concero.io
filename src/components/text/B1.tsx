@@ -5,17 +5,14 @@ export interface B1Props {
   style?: CSSProperties
 }
 
-export const B1: FC<B1Props> = ({ children, ...rest }) => {
+export const B1: FC<B1Props> = ({ children, style, ...rest }) => {
   return (
-    <p style={styles.container} {...rest}>
+    <p style={{ ...styles.container, ...style }} {...rest}>
       {children}
     </p>
   )
 }
 
 const styles: Record<string, CSSProperties> = {
-  container: {
-    fontSize: 15,
-    fontWeight: 500,
-  },
+  container: {},
 }
