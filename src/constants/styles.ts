@@ -11,10 +11,10 @@ export const pd = {
   },
 }
 
-export const br = {
-  xl: 20,
-  lg: 16,
-  md: 12,
-  sm: 8,
-  xs: 4,
-}
+// export const br = {
+//   xl: 20,
+//   lg: 16,
+//   md: 12,
+//   sm: 8,
+//   xs: 4,
+// }

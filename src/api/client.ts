@@ -1,5 +1,13 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { config } from '../constants/config'
+
+interface GetParams {
+  [key: string]: any
+}
+
+interface PostData {
+  [key: string]: any
+}
 
 const api = axios.create({
   baseURL: config.baseURL,
@@ -8,7 +16,7 @@ const api = axios.create({
 
 // Add a request interceptor to attach the authentication token if needed
 api.interceptors.request.use(
-  (config) => {
+  (config: AxiosRequestConfig) => {
     const token = localStorage.getItem('token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -20,9 +28,9 @@ api.interceptors.request.use(
   },
 )
 
-export async function get(url, params = {}) {
+export async function get(url: string, params: GetParams = {}): Promise<any> {
   try {
-    const response = await api.get(url, { params })
+    const response: AxiosResponse = await api.get(url, { params })
     return response.data
   } catch (error) {
     console.error('GET request failed:', error)
@@ -30,9 +38,9 @@ export async function get(url, params = {}) {
   }
 }
 
-export async function post(url, data) {
+export async function post(url: string, data: PostData): Promise<any> {
   try {
-    const response = await api.post(url, data)
+    const response: AxiosResponse = await api.post(url, data)
     return response.data
   } catch (error) {
     console.error('POST request failed:', error)
@@ -40,12 +48,12 @@ export async function post(url, data) {
   }
 }
 
-export async function imageUpload(url, imageFile) {
+export async function imageUpload(url: string, imageFile: File): Promise<any> {
   try {
     const formData = new FormData()
     formData.append('image', imageFile)
 
-    const response = await api.post(url, formData, {
+    const response: AxiosResponse = await api.post(url, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

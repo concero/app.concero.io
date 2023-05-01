@@ -5,7 +5,7 @@ export interface HeaderProps {
   children?: ReactNode
 }
 
-export const Header: FC<HeaderProps> = ({ style, children, ...rest }) => {
+export const Header: FC<HeaderProps> = ({ style, children }) => {
   return <header style={{ ...styles.container, ...style }}>{children}</header>
 }
 

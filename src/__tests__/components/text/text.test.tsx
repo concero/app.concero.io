@@ -1,4 +1,4 @@
-import { chai, describe, test } from 'vitest'
+import { describe, test } from 'vitest'
 import { expect } from 'chai'
 import chaiDom from 'chai-dom'
 import { render, screen } from '@testing-library/react'
@@ -30,7 +30,7 @@ const testTextComponent = (Component, componentName) => {
         </Component>,
       )
       const element = screen.getByTestId('testDataId')
-      expect(element).to.have.attribute('id', 'testId')
+      expect(element).to.have.attr('id', 'testId')
     })
     test('renders with different child types', () => {
       const text = 'Test Text'

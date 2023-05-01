@@ -1,12 +1,14 @@
 import { CSSProperties, FC } from 'react'
-import { H2 } from '../text/H2'
+import { Button } from '../buttons/Button/Button'
 
 export interface ExchangeScreenProps {}
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = ({ ...rest }) => {
   return (
     <div style={styles.container}>
-      <H2>$25,960</H2>
+      <Button primary md>
+        Exchange
+      </Button>
     </div>
   )
 }

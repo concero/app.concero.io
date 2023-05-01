@@ -21,6 +21,6 @@ const styles: Record<string, CSSProperties> = {
     paddingBottom: pd.screen.v,
     paddingLeft: pd.screen.h,
     paddingRight: pd.screen.h,
-    backgroundColor: colors.background,
+    backgroundColor: colors.base.background,
   },
 }
