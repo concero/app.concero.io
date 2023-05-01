@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
     "@tabler/icons": "^2.17.0",
@@ -20,15 +23,23 @@
     "react-router-dom": "^6.11.0"
   },
   "devDependencies": {
+    "@testing-library/dom": "^9.2.0",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
+    "@vitejs/plugin-react": "^4.0.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "chai-dom": "^1.11.0",
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "jest": "^29.5.0",
+    "jsdom": "^21.1.1",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^4.3.2",
+    "vitest": "^0.30.1"
   }
 }
