@@ -1,5 +1,5 @@
 import { CSSProperties, FC, ReactNode } from 'react'
-import { pd } from '../../constants/styles'
+import { sp } from '../../constants/spacing'
 import { colors } from '../../constants/colors'
 
 export interface AppScreenProps {
@@ -17,10 +17,10 @@ export const AppScreen: FC<AppScreenProps> = ({ children, ...rest }) => {
 const styles: Record<string, CSSProperties> = {
   container: {
     flex: 1,
-    paddingTop: pd.screen.v,
-    paddingBottom: pd.screen.v,
-    paddingLeft: pd.screen.h,
-    paddingRight: pd.screen.h,
+    paddingTop: sp.screen.v,
+    paddingBottom: sp.screen.v,
+    paddingLeft: sp.screen.h,
+    paddingRight: sp.screen.h,
     backgroundColor: colors.base.background,
   },
 }

@@ -3,49 +3,49 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--pd-sm) var(--pd-md);
+    padding: var(--sp-sm) var(--sp-md);
     cursor: pointer;
-    border-radius: var(--br-sm);
-    color: var(--text-primary);
-    border: 1px solid var(--primary-lighter);
+    border-radius: var(--st-br-md);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-primary-lighter);
     transition: transform 0.3s, background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
 .button:hover {
     transform: scale(1.01);
-    background-color: var(--primary-mainLight);
-    border-color: var(--primary-light);
+    background-color: var(--color-primary-mainLight);
+    border-color: var(--color-primary-light);
 }
 
 .button:active {
     transform: scale(0.99);
-    background-color: var(--primary-mainDark);
-    border-color: var(--primary-main);
+    background-color: var(--color-primary-mainDark);
+    border-color: var(--color-primary-main);
 }
 
 .sm {
-    font-size: var(--pd-sm);
+    font-size: var(--sp-sm);
 }
 
 .md {
-    font-size: var(--pd-md);
+    font-size: var(--sp-md);
 }
 
 .lg {
-    font-size: var(--pd-lg);
+    font-size: var(--sp-lg);
 }
 
 .xl {
-    font-size: var(--pd-xl);
-    padding: var(--pd-sm) var(--pd-lg);
+    font-size: var(--sp-xl);
+    padding: var(--sp-sm) var(--sp-lg);
 }
 
 .primary {
-    background-color: var(--primary-main);
-    border-color: var(--primary-mainLight);
+    background-color: var(--color-primary-main);
+    border-color: var(--color-primary-mainLight);
 }
 
 .secondary {
-    background-color: var(--base-background);
-    border-color: var(--primary-mainLight);
+    background-color: var(--color-base-background);
+    border-color: var(--color-primary-mainLight);
 }

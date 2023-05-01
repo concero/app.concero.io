@@ -1,20 +1,6 @@
-export const pd = {
-  xl: 40,
-  lg: 30,
-  md: 20,
-  sm: 10,
-  xs: 5,
+import stylesJson from './styles.json'
+import { NestedObj } from '../types/utils'
 
-  screen: {
-    v: 20,
-    h: 20,
-  },
-}
-
-// export const br = {
-//   xl: 20,
-//   lg: 16,
-//   md: 12,
-//   sm: 8,
-//   xs: 4,
-// }
+type stylesKeys = keyof typeof stylesJson.st
+type styles = NestedObj<typeof stylesJson.st, stylesKeys>
+export const sp = stylesJson.st as styles

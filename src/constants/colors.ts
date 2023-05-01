@@ -1,13 +1,8 @@
 import colorsJson from './colors.json'
+import { NestedObj } from '../types/utils'
 
-type ColorSet<TKey extends string> = {
-  [key in TKey]: string
-}
+type ColorKeys = keyof typeof colorsJson.color
 
-type ColorKeys = keyof typeof colorsJson
+type Colors = NestedObj<typeof colorsJson.color, ColorKeys>
 
-type Colors = {
-  [key in ColorKeys]: key extends string ? ColorSet<Extract<keyof (typeof colorsJson)[key], string>> : string
-}
-
-export const colors = colorsJson as Colors
+export const colors = colorsJson.color as Colors
