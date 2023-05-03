@@ -1,7 +1,7 @@
 :root {
-    @import-json "./constants/colors.json";
-    @import-json "./constants/spacing.json";
-    @import-json "./constants/styles.json";
+    @import-json './constants/colors.json';
+    @import-json './constants/spacing.json';
+    @import-json './constants/styles.json';
     font-family: Poppins, sans-serif;
     color-scheme: light dark;
     font-synthesis: none;
@@ -86,4 +86,3 @@ input {
     font-size: 16px;
     font-weight: 400;
 }
-

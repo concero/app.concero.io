@@ -1,10 +1,20 @@
 import { defineConfig } from 'vite'
+import stylelint from 'vite-plugin-stylelint'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    stylelint({
+      fix: true,
+      //include any .css and .module.css files in src
+      include: ['./src/**/*.css'],
+      configFile: './.stylelintrc.json',
+      emitErrorAsWarning: true,
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
