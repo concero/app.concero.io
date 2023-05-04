@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react'
+import { FC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ExchangeScreen } from './components/screens/ExchangeScreen'
 import { AppScreen } from './components/screens/AppScreen'
@@ -17,8 +17,4 @@ export const Navigator: FC<NavigatorProps> = ({}) => {
       </AppScreen>
     </BrowserRouter>
   )
-}
-
-const styles: Record<string, CSSProperties> = {
-  container: {},
 }

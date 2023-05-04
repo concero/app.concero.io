@@ -30,10 +30,12 @@
     },
     "grey": {
       "lightest": "#f7f7f7",
-      "lighter": "#ebebeb",
-      "light": "#dcdcdc",
+      "lighter": "#E5E5E7",
+      "light": "#CBCACF",
+      "mediumLight": "#B0AFB5",
+      "medium": "#98959E",
       "dark": "#7e7b86",
-      "darker": "#333333",
+      "darker": "#1C1C1C",
       "darkest": "#131313"
     },
     "text": {

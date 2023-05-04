@@ -1,42 +1,47 @@
 
 .button {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: var(--sp-sm);
     padding: var(--sp-sm) var(--sp-md);
     cursor: pointer;
     border-radius: var(--st-br-md);
     color: var(--color-text-primary);
     border: 1px solid var(--color-primary-lighter);
-    transition: transform 0.3s, background-color 0.3s, border-color 0.3s, color 0.3s;
+    transform-origin: center;
+    transition: transform 0.2s, background-color 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .button:hover {
-    transform: scale(1.01);
+    transform: scale(1.02);
     background-color: var(--color-primary-mainLight);
     border-color: var(--color-primary-light);
 }
 
 .button:active {
-    transform: scale(0.99);
+    transform: scale(0.98);
     background-color: var(--color-primary-mainDark);
     border-color: var(--color-primary-main);
 }
 
 .sm {
-    font-size: var(--sp-sm);
+    font-size: 0.875rem;
+    gap: var(--sp-sm);
 }
 
 .md {
-    font-size: var(--sp-md);
+    font-size: 1.25rem;
+    gap: var(--sp-md);
 }
 
 .lg {
-    font-size: var(--sp-lg);
+    font-size: 1.5rem;
 }
 
 .xl {
-    font-size: var(--sp-xl);
+    font-size: 2rem;
     padding: var(--sp-sm) var(--sp-lg);
 }
 
@@ -48,4 +53,10 @@
 .secondary {
     background-color: var(--color-base-background);
     border-color: var(--color-primary-mainLight);
+}
+
+.isLoading {
+    pointer-events: none;
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary-light);
 }

@@ -3,7 +3,8 @@ import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
 import Icon from '../../Icon'
 import Lottie from 'lottie-react'
-import * as loadingAnimation from '../../../assets/animations/circle-loading.json'
+import loadingAnimation from '../../../assets/animations/circle-loading.json'
+
 import styles from './Button.module.css'
 
 type IconComponentProps = {
@@ -51,25 +52,27 @@ export const Button: FC<ButtonProps> = ({
   if (xl) buttonClasses.push(styles.xl)
   if (primary) buttonClasses.push(styles.primary)
   if (secondary) buttonClasses.push(styles.secondary)
+  if (isLoading) buttonClasses.push(styles.isLoading)
 
   return (
     <button className={buttonClasses.join(' ')} onClick={onClick}>
-      {leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
+      {isLoading ? <LoadingAnimation /> : leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
       {children}
-      {isLoading ? (
-        <Lottie
-          loop
-          autoplay
-          animationData={loadingAnimation}
-          width={30}
-          height={30}
-          rendererSettings={{
-            preserveAspectRatio: 'xMidYMid slice',
-          }}
-        />
-      ) : (
-        rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />
-      )}
+      {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}
     </button>
+  )
+}
+
+const LoadingAnimation: FC = () => {
+  return (
+    <Lottie
+      loop
+      autoplay
+      animationData={loadingAnimation}
+      style={{ width: 30, height: 30 }}
+      rendererSettings={{
+        preserveAspectRatio: 'xMidYMid slice',
+      }}
+    />
   )
 }

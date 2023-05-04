@@ -1,0 +1,24 @@
+header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div {
+        flex-direction: row;
+    }
+}
+
+ul {
+    color: var(--color-text-secondary);
+    gap: var(--sp-md);
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+a {
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--color-grey-mediumLight);
+}

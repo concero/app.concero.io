@@ -1,0 +1,37 @@
+
+.container {
+    box-sizing: content-box;
+    min-width: 180px;
+    padding: var(--sp-sm);
+    border-radius: var(--st-br-sm);
+    background-color: var(--color-grey-darkest);
+
+    & > div {
+        flex-direction: row;
+    }
+}
+
+.menuItem {
+    display: flex;
+    align-items: flex-start;
+    padding: 5px;
+    cursor: pointer;
+    gap: 10px;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: var(--st-br-sm);
+    overflow: hidden;
+
+}
+
+.menuItem:hover {
+    background-color: var(--color-grey-darker);
+
+}
+
+.title {
+    color: var(--color-text-secondary);
+}
+
+.icon {
+    color: var(--color-text-secondary);
+}

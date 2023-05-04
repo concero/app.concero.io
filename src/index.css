@@ -3,12 +3,17 @@
     @import-json './constants/spacing.json';
     @import-json './constants/styles.json';
     font-family: Poppins, sans-serif;
+    font-size: 16px; /* base font size, 1rem */
     color-scheme: light dark;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+}
+
+header, main, footer, aside, nav, section, article, figure, figcaption, ul, ol, li {
+    display: flex;
 }
 
 body {
@@ -31,12 +36,12 @@ div {
     flex-direction: column;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, button, input {
+h1, h2, h3, h4, h5, h6, p, a, button, input, label, span, li {
     margin: 0;
     padding: 0;
     font-family: inherit;
     box-sizing: border-box;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -45,27 +50,32 @@ h1, h2, h3, h4, h5, h6, p, a, button, input {
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
 h3 {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 500;
 }
 
 h4 {
-    font-size: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+h5 {
+    font-size: 0.875rem;
     font-weight: 500;
 }
 
 p {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
 }
 
@@ -78,6 +88,8 @@ button {
     border: none;
     outline: none;
     cursor: pointer;
+    font-weight: 500;
+    line-height: 0;
 }
 
 input {
