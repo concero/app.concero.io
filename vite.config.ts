@@ -2,8 +2,16 @@ import { defineConfig } from 'vite'
 import stylelint from 'vite-plugin-stylelint'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
+import postcssPresetEnv from 'postcss-preset-env'
+
+import postcssImport from 'postcss-import'
+import postcssImportJson from '@daltontan/postcss-import-json'
+import postcssDTs from 'postcss-d-ts'
+import precss from 'precss'
+import EnvironmentPlugin from 'vite-plugin-environment'
 
 // https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [
     react(),
@@ -14,7 +22,13 @@ export default defineConfig({
       configFile: './.stylelintrc.json',
       emitErrorAsWarning: true,
     }),
+    EnvironmentPlugin('all'),
   ],
+  css: {
+    postcss: {
+      plugins: [postcssImport(), postcssImportJson(), postcssPresetEnv(), postcssDTs(), precss()],
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

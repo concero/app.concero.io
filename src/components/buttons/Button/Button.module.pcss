@@ -5,19 +5,17 @@
     align-items: center;
     justify-content: center;
     gap: var(--sp-sm);
-    padding: var(--sp-sm) var(--sp-md);
+    padding: var(--sp-md) var(--sp-md);
     cursor: pointer;
     border-radius: var(--st-br-md);
     color: var(--color-text-primary);
     border: 1px solid var(--color-primary-lighter);
     transform-origin: center;
-    transition: transform 0.2s, background-color 0.2s, border-color 0.2s, color 0.2s;
+    transition: transform 0.2s, background-color 0.25s, border-color 0.25s, color 0.25s;
 }
 
 .button:hover {
-    transform: scale(1.02);
-    background-color: var(--color-primary-mainLight);
-    border-color: var(--color-primary-light);
+//transform: scale(1.02); background-color: var(--color-primary-mainLight); border-color: var(--color-primary-light);
 }
 
 .button:active {
@@ -59,4 +57,8 @@
     pointer-events: none;
     background-color: var(--color-primary-light);
     border-color: var(--color-primary-light);
+}
+
+.pressable-down:active {
+    transform: translateY(2px);
 }

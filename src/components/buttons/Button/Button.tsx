@@ -5,7 +5,7 @@ import Icon from '../../Icon'
 import Lottie from 'lottie-react'
 import loadingAnimation from '../../../assets/animations/circle-loading.json'
 
-import styles from './Button.module.css'
+import styles from './Button.module.pcss'
 
 type IconComponentProps = {
   name: keyof typeof Icons
@@ -41,9 +41,10 @@ export const Button: FC<ButtonProps> = ({
   secondary,
   leftIcon,
   rightIcon,
-  onClick,
   isLoading,
   children,
+  onClick,
+  className,
 }) => {
   const buttonClasses = [styles.button]
   if (sm) buttonClasses.push(styles.sm)
@@ -53,7 +54,7 @@ export const Button: FC<ButtonProps> = ({
   if (primary) buttonClasses.push(styles.primary)
   if (secondary) buttonClasses.push(styles.secondary)
   if (isLoading) buttonClasses.push(styles.isLoading)
-
+  if (className) buttonClasses.push(className)
   return (
     <button className={buttonClasses.join(' ')} onClick={onClick}>
       {isLoading ? <LoadingAnimation /> : leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}

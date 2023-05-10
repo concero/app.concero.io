@@ -1,10 +1,11 @@
 import { CSSProperties, FC, ReactNode } from 'react'
-import './Header.module.css'
+import './Header.module.pcss'
 import { Button } from '../buttons/Button/Button'
 import { colors } from '../../constants/colors'
 import { Link } from 'react-router-dom'
 import { WithPopover } from '../wrappers/WithPopover'
 import { MenuPopover } from '../overlays/MenuPopover/MenuPopover'
+import { Web3Button } from '@web3modal/react'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -42,13 +43,14 @@ export const Header: FC<HeaderProps> = ({ children }) => {
         </ul>
       </div>
       <div>
-        <ButtonWithPopover
-          secondary
-          sm
-          leftIcon={{ name: 'ArrowsUpDown', iconProps: { color: colors.base.white, strokeWidth: 2, size: 14 } }}
-          rightIcon={{ name: 'ChevronDown', iconProps: { color: colors.base.white, strokeWidth: 2, size: 14 } }}>
-          Buy crypto
-        </ButtonWithPopover>
+        <Web3Button />
+        {/*<ButtonWithPopover*/}
+        {/*  secondary*/}
+        {/*  sm*/}
+        {/*  leftIcon={{ name: 'Wallet', iconProps: { color: colors.base.white, strokeWidth: 2, size: 14 } }}*/}
+        {/*  rightIcon={{ name: 'ChevronDown', iconProps: { color: colors.base.white, strokeWidth: 2, size: 14 } }}>*/}
+        {/*  0x00000*/}
+        {/*</ButtonWithPopover>*/}
       </div>
     </header>
   )

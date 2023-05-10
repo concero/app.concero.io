@@ -8,6 +8,7 @@ export type CssIdentifiersMap = {
   "isLoading": string|undefined
   "lg": string|undefined
   "md": string|undefined
+  "pressable-down": string|undefined
   "primary": string|undefined
   "secondary": string|undefined
   "sm": string|undefined

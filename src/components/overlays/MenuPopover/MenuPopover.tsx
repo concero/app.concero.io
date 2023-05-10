@@ -1,7 +1,7 @@
 import { CSSProperties, FC } from 'react'
 import Icon from '../../Icon'
 import * as Icons from 'tabler-icons-react'
-import styles from './MenuPopover.module.css'
+import styles from './MenuPopover.module.pcss'
 import { colors } from '../../../constants/colors'
 
 export interface MenuItem {

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ExchangeScreen } from './components/screens/ExchangeScreen'
+import { ExchangeScreen } from './components/screens/ExchangeScreen/ExchangeScreen'
 import { AppScreen } from './components/screens/AppScreen'
 import { Header } from './components/layout/Header'
 
