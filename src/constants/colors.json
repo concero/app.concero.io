@@ -18,7 +18,7 @@
       "main": "#26c281",
       "dark": "#20a273",
       "darker": "#1a8b65",
-      "darkest": "#147457"
+      "darkest": "#0F271F"
     },
     "red": {
       "lightest": "#fdeeeb",
@@ -26,7 +26,7 @@
       "light": "#f9c9c3",
       "dark": "#d34141",
       "darker": "#b62c2c",
-      "darkest": "#8f1717"
+      "darkest": "#290C0C"
     },
     "grey": {
       "lightest": "#f7f7f7",
