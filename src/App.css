@@ -2,6 +2,14 @@
     flex-direction: row
 }
 
+.ac {
+    align-items: center;
+}
+
+.jc {
+    justify-content: center;
+}
+
 .f1 {
     flex: 1
 }

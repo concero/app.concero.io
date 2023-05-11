@@ -33,6 +33,8 @@
     "react-lottie": "^1.2.3",
     "react-router": "^6.11.0",
     "react-router-dom": "^6.11.0",
+    "react-ts-tradingview-widgets": "^1.0.14",
+    "relativeTime": "link:@dayjs/plugin/relativeTime",
     "sass": "^1.62.1",
     "tabler-icons-react": "^1.56.0",
     "viem": "^0.3.19",

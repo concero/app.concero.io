@@ -12,6 +12,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
           BSC / USDT
         </Button>
       </CardHeader>
+      {/*<AdvancedRealTimeChart theme={'dark'} symbol={'BINANCE:BTCUSDT'} interval={'1'} width={'100%'} height={'100%'} />*/}
     </div>
   )
 }
