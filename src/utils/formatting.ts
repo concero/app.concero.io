@@ -13,6 +13,10 @@ export const formatTime = (date: string | Date, format = 'HH:mm'): string => {
   return dayjs(date).format(format)
 }
 
+export const fromNow = (date: string | Date): string => {
+  return dayjs(date).fromNow()
+}
+
 // Number and currency formatting
 export const formatNumber = (num: number, decimalPlaces = 2): string => {
   return num.toFixed(decimalPlaces)
@@ -35,6 +39,21 @@ export const toSnakeCase = (str: string): string => {
   return str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`).replace(/^-/, '')
 }
 
+// URL formatting
+export const slugify = (str: string): string => {
+  return str
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '')
+}
+export const getHostname = (url: string): string => {
+  return new URL(url).hostname
+}
+
+// turns 'https://cointelegraph.com/abcd' into cointelegraph
+export const getDomain = (url: string): string => {
+  return getHostname(url).replace('www.', '').split('.')[0]
+}
 // String manipulation
 
 export const truncate = (str: string, length = 100, ending = '...'): string => {

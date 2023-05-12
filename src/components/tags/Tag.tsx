@@ -3,29 +3,14 @@ import className from './Tag.module.pcss'
 import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
 import Icon from '../Icon'
-
-export interface TagProps {}
-
-className
+import { colors } from '../../constants/colors'
 
 type IconComponentProps = {
   name: keyof typeof Icons
   iconProps?: Omit<IconProps, 'name'>
 }
 
-type TagSize = {
-  sm?: boolean
-  md?: boolean
-  lg?: boolean
-  xl?: boolean
-}
-
-type TagVariant = {
-  primary?: boolean
-  secondary?: boolean
-}
-
-export interface TagProps extends TagSize, TagVariant {
+export interface TagProps {
   leftIcon?: IconComponentProps
   rightIcon?: IconComponentProps
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -35,32 +20,50 @@ export interface TagProps extends TagSize, TagVariant {
   children?: string
 }
 
-export const Tag: FC<TagProps> = ({
-  sm,
-  md,
-  lg,
-  xl,
-  primary,
-  secondary,
-  fgColor,
-  bgColor,
-  leftIcon,
-  rightIcon,
-  children,
-}) => {
-  const classes = [className.container]
-  if (sm) classes.push(className.sm)
-  if (md) classes.push(className.md)
-  if (lg) classes.push(className.lg)
-  if (xl) classes.push(className.xl)
-  if (primary) classes.push(className.primary)
-  if (secondary) classes.push(className.secondary)
-
+export const Tag: FC<TagProps> = ({ fgColor, bgColor, leftIcon, rightIcon, children }) => {
   return (
-    <div className={className.container} style={{ backgroundColor: bgColor, color: fgColor }}>
-      {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}
-      {children}
-      {rightIcon && <Icon name={rightIcon.name} color={fgColor} {...rightIcon.iconProps} />}
+    <div className={className.container}>
+      <div className={className.tag} style={{ backgroundColor: bgColor, color: fgColor }}>
+        {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}
+        {children}
+        {rightIcon && <Icon name={rightIcon.name} color={fgColor} {...rightIcon.iconProps} />}
+      </div>
     </div>
   )
+}
+
+export function getSentimentFgColorByText(text: string): string | null {
+  switch (text) {
+    case 'bullish':
+      return colors.green.main
+    case 'bearish':
+      return colors.red.dark
+    case 'neutral':
+      return colors.grey.medium
+  }
+  return null
+}
+
+export function getSentimentBgColorByText(text: string): string | null {
+  switch (text) {
+    case 'bullish':
+      return colors.green.darkest
+    case 'bearish':
+      return colors.red.darkest
+    case 'neutral':
+      return colors.grey.darkest
+  }
+  return null
+}
+
+export function getSentimentIconByText(text: string): IconComponentProps | null {
+  switch (text) {
+    case 'bullish':
+      return { name: 'ArrowUpRight', iconProps: { size: 18 } }
+    case 'bearish':
+      return { name: 'ArrowDownRight', iconProps: { size: 18 } }
+    case 'neutral':
+      return { name: 'Minus', iconProps: { size: 18 } }
+  }
+  return null
 }

@@ -1,10 +1,12 @@
 {
   "sp": {
+    "xxl": "60px",
     "xl": "40px",
     "lg": "30px",
     "md": "20px",
     "sm": "10px",
     "xs": "5px",
+    "xxs": "2px",
     "screen": {
       "v": "20px",
       "h": "20px"

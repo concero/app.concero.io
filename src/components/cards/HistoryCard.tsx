@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { CardHeader } from './CardHeader'
-import { Table } from '../layout/Table/Table'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { colors } from '../../constants/colors'
@@ -47,7 +46,7 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
   return (
     <div className="card f1">
       <CardHeader title={'History'}></CardHeader>
-      <Table data={historyItems} columns={historyColumns} />
+      {/*<Table data={historyItems} columns={historyColumns} />*/}
     </div>
   )
 }

@@ -6,12 +6,52 @@
     align-items: center;
 }
 
+.afe {
+    align-items: flex-end;
+}
+
+.afs {
+    align-items: flex-start;
+}
+
 .jc {
     justify-content: center;
 }
 
+.jfe {
+    justify-content: flex-end;
+}
+
+.jsb {
+    justify-content: space-between;
+}
+
+.jfs {
+    justify-content: flex-start;
+}
+
 .f1 {
     flex: 1
+}
+
+.gap-xs {
+    gap: var(--sp-xs)
+}
+
+.gap-sm {
+    gap: var(--sp-sm)
+}
+
+.gap-md {
+    gap: var(--sp-md)
+}
+
+.gap-lg {
+    gap: var(--sp-lg)
+}
+
+.gap-xl {
+    gap: var(--sp-xl)
 }
 
 .card {

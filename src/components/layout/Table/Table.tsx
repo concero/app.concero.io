@@ -1,10 +1,22 @@
-import { TxFromTo } from './TxFromTo'
 import './Table.module.pcss'
+import { FC } from 'react'
 
-export const Table = ({ columns, data }) => (
+export interface TableColumn {
+  columnTitle: string
+  cellComponent: (item: any) => JSX.Element
+  headerStyle?: React.CSSProperties
+}
+
+export interface TableProps {
+  columns: TableColumn[]
+  data: any[]
+  isHeaderVisible?: boolean
+}
+
+export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true }) => (
   <div>
     <table>
-      <TableHeader columns={columns} />
+      {isHeaderVisible && <TableHeader columns={columns} />}
       <tbody>
         {data.map((item, index) => (
           <TableRow key={index} item={item} columns={columns} />
@@ -18,7 +30,9 @@ const TableHeader = ({ columns }) => (
   <thead>
     <tr>
       {columns.map((column, index) => (
-        <th key={index}>{column.column_title}</th>
+        <th key={index} style={column.headerStyle}>
+          {column.columnTitle}
+        </th>
       ))}
     </tr>
   </thead>
@@ -33,19 +47,6 @@ const TableRow = ({ item, columns }) => (
 )
 
 const TableCell = ({ item, column }) => {
-  const value = column.data(item)
-  const { column_type, onChange, style } = column
-  switch (column_type) {
-    case 'plain_text':
-      return (
-        <td>
-          <p style={style}>{value}</p>
-        </td>
-      )
-    case 'tx_from_to':
-      return <TxFromTo item={item} />
-
-    default:
-      return <td />
-  }
+  const CellComponent = column.cellComponent(item)
+  return <td>{CellComponent}</td>
 }

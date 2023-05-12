@@ -3,8 +3,6 @@ import './Header.module.pcss'
 import { Button } from '../buttons/Button/Button'
 import { colors } from '../../constants/colors'
 import { Link } from 'react-router-dom'
-import { WithPopover } from '../wrappers/WithPopover'
-import { MenuPopover } from '../overlays/MenuPopover/MenuPopover'
 import { Web3Button } from '@web3modal/react'
 
 export interface HeaderProps {
@@ -13,18 +11,18 @@ export interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children }) => {
-  const ButtonWithPopover = WithPopover(
-    Button,
-    MenuPopover,
-    {
-      items: [
-        { title: 'Copy address', iconName: 'Copy' },
-        { title: 'Settings', iconName: 'Settings' },
-        { title: 'Logout', iconName: 'Logout', danger: true },
-      ],
-    },
-    'click',
-  )
+  // const ButtonWithPopover = WithPopover(
+  //   Button,
+  //   MenuPopover,
+  //   {
+  //     items: [
+  //       { title: 'Copy address', iconName: 'Copy' },
+  //       { title: 'Settings', iconName: 'Settings' },
+  //       { title: 'Logout', iconName: 'Logout', danger: true },
+  //     ],
+  //   },
+  //   'click',
+  // )
 
   return (
     <header>
