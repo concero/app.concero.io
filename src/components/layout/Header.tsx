@@ -1,7 +1,5 @@
 import { CSSProperties, FC, ReactNode } from 'react'
-import './Header.module.pcss'
-import { Button } from '../buttons/Button/Button'
-import { colors } from '../../constants/colors'
+import classNames from './Header.module.pcss'
 import { Link } from 'react-router-dom'
 import { Web3Button } from '@web3modal/react'
 
@@ -28,12 +26,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
     <header>
       {children}
       <div>
-        <Button
-          primary
-          sm
-          leftIcon={{ name: 'ArrowsUpDown', iconProps: { color: colors.base.white, strokeWidth: 2, size: 14 } }}>
-          Buy crypto
-        </Button>
+        <div className={classNames.logo} />
         <ul>
           <Link to={'#'}>Home</Link>
           <Link to={'#'}>Exchange</Link>

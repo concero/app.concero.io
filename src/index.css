@@ -49,6 +49,12 @@ h1, h2, h3, h4, h5, h6, p, a, button, input, label, span, li {
 
 }
 
+ul, ol, li {
+    margin-block: 0;
+    margin-inline: 0;
+    padding-inline: 0;
+}
+
 h1 {
     font-size: 2rem;
     font-weight: 600;

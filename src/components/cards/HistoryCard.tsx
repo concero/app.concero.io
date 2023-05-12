@@ -3,6 +3,8 @@ import { CardHeader } from './CardHeader'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { colors } from '../../constants/colors'
+import { TxFromTo } from '../layout/Table/TxFromTo'
+import { Table } from '../layout/Table/Table'
 
 dayjs.extend(relativeTime)
 
@@ -26,27 +28,24 @@ const historyItems = [
 ]
 const historyColumns = [
   {
-    column_title: 'From / to',
-    data: (item) => item,
-    column_type: 'tx_from_to',
+    columnTitle: 'From / to',
+    cellComponent: (item) => <TxFromTo item={item} />,
   },
   {
-    column_title: 'Value',
-    data: (item) => item.value,
-    column_type: 'plain_text',
+    columnTitle: 'Value',
+    cellComponent: (item) => <p style={{ color: colors.grey.light }}>${item.value}</p>,
   },
   {
-    column_title: 'When',
-    data: (item) => item.created_at,
-    column_type: 'plain_text',
-    style: { color: colors.text.secondary },
+    columnTitle: 'When',
+    headerStyle: { textAlign: 'right' },
+    cellComponent: (item) => <p style={{ color: colors.text.secondary, textAlign: 'end' }}>{item.created_at}</p>,
   },
 ]
 export const HistoryCard: FC<HistoryCardProps> = () => {
   return (
     <div className="card f1">
       <CardHeader title={'History'}></CardHeader>
-      {/*<Table data={historyItems} columns={historyColumns} />*/}
+      <Table data={historyItems} columns={historyColumns} />
     </div>
   )
 }
