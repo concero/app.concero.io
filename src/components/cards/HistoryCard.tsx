@@ -25,6 +25,41 @@ const historyItems = [
     value: '350',
     created_at: dayjs().to(dayjs('2021-10-10T12:00:00.000Z')),
   },
+  {
+    from: 'SOL',
+    to: 'USDT',
+    type: 'buy',
+    value: '540',
+    created_at: dayjs().to(dayjs('2021-10-10T12:00:00.000Z')),
+  },
+  {
+    from: 'SOL',
+    to: 'USDT',
+    type: 'sell',
+    value: '350',
+    created_at: dayjs().to(dayjs('2021-10-10T12:00:00.000Z')),
+  },
+  {
+    from: 'SOL',
+    to: 'USDT',
+    type: 'sell',
+    value: '350',
+    created_at: dayjs().to(dayjs('2021-10-10T12:00:00.000Z')),
+  },
+  {
+    from: 'SOL',
+    to: 'USDT',
+    type: 'buy',
+    value: '540',
+    created_at: dayjs().to(dayjs('2021-10-10T12:00:00.000Z')),
+  },
+  {
+    from: 'SOL',
+    to: 'USDT',
+    type: 'sell',
+    value: '350',
+    created_at: dayjs().to(dayjs('2021-10-10T12:00:00.000Z')),
+  },
 ]
 const historyColumns = [
   {

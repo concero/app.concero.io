@@ -28,16 +28,17 @@
 .sm {
     font-size: 0.875rem;
     gap: var(--sp-sm);
+    padding: var(--sp-sm) var(--sp-md);
 }
 
 .md {
     font-size: 0.875rem;
-    gap: var(--sp-md);
+    gap: var(--sp-md)
 }
 
 .lg {
     font-size: 0.875rem;
-    padding: var(--sp-sm) var(--sp-lg);
+    padding: var(--sp-md) var(--sp-lg);
 }
 
 .xl {
@@ -76,4 +77,19 @@
 
 .pressable-down:active {
     transform: translateY(2px);
+}
+
+
+.black {
+    color: var(--color-text-primary);
+    border: none;
+    background-color: var(--color-base-background);
+}
+
+.black:hover {
+    background-color: var(--color-grey-dark);
+}
+
+.black:active {
+    background-color: var(--color-grey-darker);
 }

@@ -3,10 +3,10 @@
     "xxl": "60px",
     "xl": "40px",
     "lg": "30px",
-    "md": "20px",
-    "sm": "10px",
-    "xs": "5px",
-    "xxs": "2px",
+    "md": "18px",
+    "sm": "12px",
+    "xs": "6px",
+    "xxs": "4px",
     "screen": {
       "v": "20px",
       "h": "20px"

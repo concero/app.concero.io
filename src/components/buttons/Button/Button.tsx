@@ -23,6 +23,7 @@ type ButtonVariant = {
   primary?: boolean
   secondary?: boolean
   subtle?: boolean
+  black?: boolean
 }
 
 export interface ButtonProps extends ButtonSize, ButtonVariant {
@@ -42,6 +43,7 @@ export const Button: FC<ButtonProps> = ({
   primary,
   secondary,
   subtle,
+  black,
   leftIcon,
   rightIcon,
   isLoading,
@@ -57,6 +59,7 @@ export const Button: FC<ButtonProps> = ({
   if (primary) buttonClasses.push(styles.primary)
   if (secondary) buttonClasses.push(styles.secondary)
   if (subtle) buttonClasses.push(styles.subtle)
+  if (black) buttonClasses.push(styles.black)
   if (isLoading) buttonClasses.push(styles.isLoading)
   if (className) buttonClasses.push(className)
   return (
