@@ -22,6 +22,7 @@ type ButtonSize = {
 type ButtonVariant = {
   primary?: boolean
   secondary?: boolean
+  subtle?: boolean
 }
 
 export interface ButtonProps extends ButtonSize, ButtonVariant {
@@ -29,6 +30,7 @@ export interface ButtonProps extends ButtonSize, ButtonVariant {
   rightIcon?: IconComponentProps
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
   isLoading?: boolean
+  className?: string
   children?: ReactNode
 }
 
@@ -39,6 +41,7 @@ export const Button: FC<ButtonProps> = ({
   xl,
   primary,
   secondary,
+  subtle,
   leftIcon,
   rightIcon,
   isLoading,
@@ -53,6 +56,7 @@ export const Button: FC<ButtonProps> = ({
   if (xl) buttonClasses.push(styles.xl)
   if (primary) buttonClasses.push(styles.primary)
   if (secondary) buttonClasses.push(styles.secondary)
+  if (subtle) buttonClasses.push(styles.subtle)
   if (isLoading) buttonClasses.push(styles.isLoading)
   if (className) buttonClasses.push(className)
   return (

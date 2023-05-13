@@ -14,6 +14,9 @@ export const SwapCard: FC<SwapCardProps> = () => {
         <div className={classNames.tokenContainer}>
           <div className={classNames.tokenRow}>
             <p>From</p>
+            <Button sm subtle>
+              BNB
+            </Button>
             <p>Max: 10</p>
           </div>
           <div className={classNames.tokenRow}>

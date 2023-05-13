@@ -8,7 +8,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   return (
     <div className="card f1">
       <CardHeader title={'Chart'}>
-        <Button secondary sm>
+        <Button subtle sm>
           BSC / USDT
         </Button>
       </CardHeader>

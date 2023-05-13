@@ -12,5 +12,6 @@ export type CssIdentifiersMap = {
   "primary": string|undefined
   "secondary": string|undefined
   "sm": string|undefined
+  "subtle": string|undefined
   "xl": string|undefined
 }

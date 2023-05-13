@@ -1,6 +1,31 @@
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+
+}
+
+td:first-child {
+    border-top-left-radius: var(--st-br-sm);
+    border-bottom-left-radius: var(--st-br-sm);
+}
+
+td:last-child {
+    border-top-right-radius: var(--st-br-sm);
+    border-bottom-right-radius: var(--st-br-sm);
+}
+
+td {
+    padding: var(--sp-xs) var(--sp-sm);
+
+}
+
 th {
     color: var(--color-grey-medium);
     font-weight: 400;
     font-size: 0.875rem;
     text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: var(--color-grey-darkest);
 }
