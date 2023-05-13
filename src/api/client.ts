@@ -14,7 +14,7 @@ const api = axios.create({
   headers: config.headers,
 })
 
-// Add a request interceptor to attach the authentication token if needed
+//Axios interceptor for adding authorization token to request headers.
 api.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const token = localStorage.getItem('token')
@@ -28,6 +28,12 @@ api.interceptors.request.use(
   },
 )
 
+/**
+ Performs a GET request to the specified URL with the given parameters.
+ @param {string} url - The URL to send the GET request to.
+ @param {GetParams} params - The parameters to send with the GET request.
+ @returns {Promise<any>} A promise that resolves with the response data if the request succeeds, or rejects with an error if it fails.
+ */
 export async function get(url: string, params: GetParams = {}): Promise<any> {
   try {
     const response: AxiosResponse = await api.get(url, { params })
@@ -38,6 +44,12 @@ export async function get(url: string, params: GetParams = {}): Promise<any> {
   }
 }
 
+/**
+ Performs a POST request to the specified URL with the given data.
+ @param {string} url - The URL to send the POST request to.
+ @param {PostData} data - The data to send with the POST request.
+ @returns {Promise<any>} A promise that resolves with the response data if the request succeeds, or rejects with an error if it fails.
+ */
 export async function post(url: string, data: PostData): Promise<any> {
   try {
     const response: AxiosResponse = await api.post(url, data)
@@ -48,6 +60,12 @@ export async function post(url: string, data: PostData): Promise<any> {
   }
 }
 
+/**
+ Uploads an image file to the specified URL using a POST request.
+ @param {string} url - The URL to send the POST request to.
+ @param {File} imageFile - The image file to upload.
+ @returns {Promise<any>} A promise that resolves with the response data if the request succeeds, or rejects with an error if it fails.
+ */
 export async function imageUpload(url: string, imageFile: File): Promise<any> {
   try {
     const formData = new FormData()

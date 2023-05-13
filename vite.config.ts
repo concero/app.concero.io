@@ -3,7 +3,7 @@ import stylelint from 'vite-plugin-stylelint'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import postcssPresetEnv from 'postcss-preset-env'
-
+import postcssSorting from 'postcss-sorting'
 import postcssImport from 'postcss-import'
 import postcssImportJson from '@daltontan/postcss-import-json'
 import postcssDTs from 'postcss-d-ts'
@@ -26,7 +26,7 @@ export default defineConfig({
   ],
   css: {
     postcss: {
-      plugins: [postcssImport(), postcssImportJson(), postcssPresetEnv(), postcssDTs(), precss()],
+      plugins: [postcssImport(), postcssSorting(), postcssImportJson(), postcssPresetEnv(), postcssDTs(), precss()],
     },
   },
   resolve: {

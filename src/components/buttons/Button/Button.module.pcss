@@ -1,64 +1,63 @@
-
 .button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: var(--sp-sm);
-    padding: var(--sp-md) var(--sp-md);
-    cursor: pointer;
-    border-radius: var(--st-br-md);
-    color: var(--color-text-primary);
-    border: 1px solid var(--color-primary-lighter);
+    align-items:      center;
+    border:           1px solid var(--color-primary-lighter);
+    border-radius:    var(--st-br-md);
+    color:            var(--color-text-primary);
+    cursor:           pointer;
+    display:          flex;
+    flex-direction:   row;
+    gap:              var(--sp-sm);
+    justify-content:  center;
+    padding:          var(--sp-md) var(--sp-md);
     transform-origin: center;
-    transition: transform 0.2s, background 0.25s, border-color 0.25s, color 0.25s;
+    transition:       transform 0.2s, background 0.25s, border-color 0.25s, color 0.25s;
 }
 
 .button:hover {
     background-color: var(--color-primary-main);
-    border-color: var(--color-primary-light);
+    border-color:     var(--color-primary-light);
 }
 
 .button:active {
-    transform: scale(0.98);
-    border-color: var(--color-primary-main);
     background-color: var(--color-primary-dark);
+    border-color:     var(--color-primary-main);
+    transform:        scale(0.98);
 }
 
 .sm {
     font-size: 0.875rem;
-    gap: var(--sp-sm);
-    padding: var(--sp-sm) var(--sp-md);
+    gap:       var(--sp-sm);
+    padding:   var(--sp-sm) var(--sp-md);
 }
 
 .md {
     font-size: 0.875rem;
-    gap: var(--sp-md)
+    gap:       var(--sp-md);
 }
 
 .lg {
     font-size: 0.875rem;
-    padding: var(--sp-md) var(--sp-lg);
+    padding:   var(--sp-md) var(--sp-lg);
 }
 
 .xl {
     font-size: 2rem;
-    padding: var(--sp-sm) var(--sp-sm);
+    padding:   var(--sp-sm) var(--sp-sm);
 }
 
 .primary {
+    background:   linear-gradient(123deg, rgba(255, 255, 255, 0.2) -20%, rgba(255, 255, 255, 0) 100%), #501DBC;
     border-color: var(--color-primary-mainLight);
-    background: linear-gradient(123deg, rgba(255, 255, 255, 0.2) -20%, rgba(255, 255, 255, 0) 100%), #501DBC
 }
 
 .secondary {
     background-color: var(--color-base-background);
-    border-color: var(--color-primary-mainLight);
+    border-color:     var(--color-primary-mainLight);
 }
 
 .subtle {
-    border: none;
     background-color: var(--color-grey-darker);
+    border:           none;
 }
 
 .subtle:hover {
@@ -70,9 +69,9 @@
 }
 
 .isLoading {
-    pointer-events: none;
     background-color: var(--color-primary-light);
-    border-color: var(--color-primary-light);
+    border-color:     var(--color-primary-light);
+    pointer-events:   none;
 }
 
 .pressable-down:active {
@@ -81,9 +80,9 @@
 
 
 .black {
-    color: var(--color-text-primary);
-    border: none;
     background-color: var(--color-base-background);
+    border:           none;
+    color:            var(--color-text-primary);
 }
 
 .black:hover {

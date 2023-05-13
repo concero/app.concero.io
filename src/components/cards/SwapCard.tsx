@@ -15,7 +15,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           <div className={classNames.tokenRow}>
             <div className={classNames.tokenRowHeader}>
               <p>From</p>
-              <Button sm black rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
+              <Button size={'sm'} variant={'black'} rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
                 BNB
               </Button>
             </div>
@@ -32,7 +32,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           <div className={classNames.tokenRow}>
             <div className={classNames.tokenRowHeader}>
               <p>To</p>
-              <Button sm black rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
+              <Button size={'sm'} variant={'black'} rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
                 BNB
               </Button>
             </div>
@@ -46,7 +46,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           </div>
         </div>
 
-        <Button primary lg leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
+        <Button size={'lg'} leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
           Swap
         </Button>
       </div>

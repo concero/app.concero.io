@@ -55,8 +55,8 @@
 }
 
 .card {
-    border-radius: var(--st-br-md);
-    border: 1px solid var(--color-grey-dark);
     background-color: var(--color-base-background);
-    padding: var(--sp-sm);
+    border:           1px solid var(--color-grey-dark);
+    border-radius:    var(--st-br-md);
+    padding:          var(--sp-sm);
 }

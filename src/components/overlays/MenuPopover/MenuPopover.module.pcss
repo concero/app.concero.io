@@ -1,10 +1,10 @@
 
 .container {
-    box-sizing: content-box;
-    min-width: 180px;
-    padding: var(--sp-sm);
-    border-radius: var(--st-br-sm);
     background-color: var(--color-grey-darkest);
+    border-radius:    var(--st-br-sm);
+    box-sizing:       content-box;
+    min-width:        180px;
+    padding:          var(--sp-sm);
 
     & > div {
         flex-direction: row;
@@ -12,14 +12,14 @@
 }
 
 .menuItem {
-    display: flex;
-    align-items: flex-start;
-    padding: 5px;
-    cursor: pointer;
-    gap: 10px;
-    transition: background-color 0.2s ease-in-out;
+    align-items:   flex-start;
     border-radius: var(--st-br-sm);
-    overflow: hidden;
+    cursor:        pointer;
+    display:       flex;
+    gap:           10px;
+    overflow:      hidden;
+    padding:       5px;
+    transition:    background-color 0.2s ease-in-out;
 
 }
 

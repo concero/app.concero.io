@@ -2,13 +2,13 @@
     @import-json './constants/colors.json';
     @import-json './constants/spacing.json';
     @import-json './constants/styles.json';
-    font-family: Poppins, sans-serif;
-    font-size: 16px; /* base font size, 1rem */
-    color-scheme: light dark;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    color-scheme:             light dark;
+    font-family:              Poppins, sans-serif;
+    font-size:                16px; /* base font size, 1rem */
+    -webkit-font-smoothing:   antialiased;
+    font-synthesis:           none;
+    -moz-osx-font-smoothing:  grayscale;
+    text-rendering:           optimizeLegibility;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -17,13 +17,13 @@ header, main, footer, aside, nav, section, article, figure, figcaption, ul, ol, 
 }
 
 body {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
+    display:    flex;
+    height:     100vh;
+    margin:     0;
+    overflow:   hidden;
+    padding:    0;
+    width:      100vw;
 }
 
 div#root {
@@ -31,76 +31,76 @@ div#root {
 }
 
 div {
-    box-sizing: border-box;
-    display: flex;
+    box-sizing:     border-box;
+    display:        flex;
     flex-direction: column;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, button, input, label, span, li {
-    margin: 0;
-    padding: 0;
-    font-family: inherit;
-    box-sizing: border-box;
-    color: var(--color-text-primary);
+    box-sizing:          border-box;
+    color:               var(--color-text-primary);
+    font-family:         inherit;
+    margin:              0;
+    padding:             0;
+    -moz-user-select:    none;
+    -ms-user-select:     none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    user-select:         none;
 
 }
 
 ul, ol, li {
-    margin-block: 0;
-    margin-inline: 0;
+    margin-block:   0;
+    margin-inline:  0;
     padding-inline: 0;
 }
 
 h1 {
-    font-size: 2rem;
+    font-size:   2rem;
     font-weight: 600;
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size:   1.5rem;
     font-weight: 500;
 }
 
 h3 {
-    font-size: 1.25rem;
+    font-size:   1.25rem;
     font-weight: 500;
 }
 
 h4 {
-    font-size: 1rem;
+    font-size:   1rem;
     font-weight: 500;
 }
 
 h5 {
-    font-size: 0.875rem;
+    font-size:   0.875rem;
     font-weight: 500;
 }
 
 p {
-    font-size: 1rem;
+    font-size:   1rem;
     font-weight: 400;
 }
 
 a {
+    color:           inherit;
     text-decoration: none;
-    color: inherit;
 }
 
 button {
-    border: none;
-    outline: none;
-    cursor: pointer;
+    border:      none;
+    cursor:      pointer;
     font-weight: 500;
     line-height: 0;
+    outline:     none;
 }
 
 input {
-    border: none;
-    outline: none;
-    font-size: 16px;
+    border:      none;
+    font-size:   16px;
     font-weight: 400;
+    outline:     none;
 }

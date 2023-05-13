@@ -8,7 +8,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   return (
     <div className="card f1">
       <CardHeader title={'Chart'}>
-        <Button subtle sm rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
+        <Button variant={'subtle'} size={'sm'} rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
           BSC / USDT
         </Button>
       </CardHeader>
