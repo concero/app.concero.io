@@ -25,7 +25,7 @@ export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true })
       ) : (
         <table>
           {isHeaderVisible && <TableHeader columns={columns} />}
-          <tbody>
+          <tbody className="striped">
             {data.map((item, index) => (
               <TableRow key={index} item={item} columns={columns} />
             ))}

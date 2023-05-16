@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="eslint airbnb configuration" />
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="prettier" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +70,7 @@
     "nodejs_package_manager_path": "pnpm",
     "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "settings.codegpt.advanced",
+    "settings.editor.selected.configurable": "preferences.sourceCode.JavaScript",
     "ts.external.directory.path": "/Users/oleg/Documents/Code/dex-frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -114,7 +114,7 @@
       <workItem from="1683731364188" duration="71097000" />
       <workItem from="1684155476718" duration="19957000" />
       <workItem from="1684189775863" duration="160000" />
-      <workItem from="1684191822098" duration="9559000" />
+      <workItem from="1684191822098" duration="10770000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -242,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684247228700</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="prettier">
+      <created>1684252280263</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1684252280263</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,6 +273,7 @@
     <MESSAGE value="modal init + css formatting in Webstorm" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="eslint airbnb configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="eslint airbnb configuration" />
+    <MESSAGE value="prettier" />
+    <option name="LAST_COMMIT_MESSAGE" value="prettier" />
   </component>
 </project>
