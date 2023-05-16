@@ -1,8 +1,41 @@
-
 {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "semi": false,
-    "bracketSameLine": true,
-    "printWidth": 120
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": false,
+  "bracketSameLine": true,
+  "printWidth": 120,
+  "overrides": [
+    {
+      "files": "*.jsx",
+      "options": {
+        "import/extensions": [
+          ".jsx"
+        ]
+      }
+    },
+    {
+      "files": "*.ts",
+      "options": {
+        "import/extensions": [
+          ".ts"
+        ]
+      }
+    },
+    {
+      "files": "*.tsx",
+      "options": {
+        "import/extensions": [
+          ".tsx"
+        ]
+      }
+    },
+    {
+      "files": "*.js",
+      "options": {
+        "import/extensions": [
+          ".js"
+        ]
+      }
+    }
+  ]
 }

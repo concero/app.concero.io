@@ -6,13 +6,11 @@ export interface AppScreenProps {
   children?: ReactNode
 }
 
-export const AppScreen: FC<AppScreenProps> = ({ children, ...rest }) => {
-  return (
-    <div style={styles.container} {...rest}>
-      {children}
-    </div>
-  )
-}
+export const AppScreen: FC<AppScreenProps> = ({ children, ...rest }) => (
+  <div style={styles.container} {...rest}>
+    {children}
+  </div>
+)
 
 const styles: Record<string, CSSProperties> = {
   container: {

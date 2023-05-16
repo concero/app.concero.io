@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
-import { CardHeader } from '../CardHeader/CardHeader.tsx'
-import { Button } from '../../buttons/Button/Button.tsx'
+import { CardHeader } from '../CardHeader/CardHeader'
+import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
-import { ChainsModal } from '../../modals/ChainsModal.tsx'
+import { ChainsModal } from '../../modals/ChainsModal'
 
 interface SwapCardProps {}
 
@@ -11,7 +11,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   return (
     <>
       <div className="card">
-        <CardHeader title={'Swap'}></CardHeader>
+        <CardHeader title="Swap" />
 
         <div className={classNames.swapContainer}>
           <div className={classNames.tokenContainer}>
@@ -20,9 +20,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
                 <p>From</p>
                 <Button
                   onClick={() => setShowChainsModal(true)}
-                  size={'sm'}
-                  variant={'black'}
-                  rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
+                  size="sm"
+                  variant="black"
+                  rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}
+                >
                   BNB
                 </Button>
               </div>
@@ -39,7 +40,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
             <div className={classNames.tokenRow}>
               <div className={classNames.tokenRowHeader}>
                 <p>To</p>
-                <Button size={'sm'} variant={'black'} rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
+                <Button size="sm" variant="black" rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}>
                   BNB
                 </Button>
               </div>
@@ -53,7 +54,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
             </div>
           </div>
 
-          <Button size={'lg'} leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
+          <Button size="lg" leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
             Swap
           </Button>
         </div>

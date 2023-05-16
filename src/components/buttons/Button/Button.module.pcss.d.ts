@@ -4,19 +4,19 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "black": string|undefined
-  "button": string|undefined
-  "isLoading": string|undefined
-  "lg": string|undefined
-  "md": string|undefined
-  "pressable-down": string|undefined
-  "primary": string|undefined
-  "secondary": string|undefined
-  "sm": string|undefined
-  "sq-lg": string|undefined
-  "sq-md": string|undefined
-  "sq-sm": string|undefined
-  "sq-xs": string|undefined
-  "subtle": string|undefined
-  "xl": string|undefined
+  black: string | undefined
+  button: string | undefined
+  isLoading: string | undefined
+  lg: string | undefined
+  md: string | undefined
+  'pressable-down': string | undefined
+  primary: string | undefined
+  secondary: string | undefined
+  sm: string | undefined
+  'sq-lg': string | undefined
+  'sq-md': string | undefined
+  'sq-sm': string | undefined
+  'sq-xs': string | undefined
+  subtle: string | undefined
+  xl: string | undefined
 }

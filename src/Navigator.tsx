@@ -6,15 +6,13 @@ import { Header } from './components/layout/Header/Header'
 
 export interface NavigatorProps {}
 
-export const Navigator: FC<NavigatorProps> = ({}) => {
-  return (
-    <BrowserRouter>
-      <AppScreen>
-        <Header />
-        <Routes>
-          <Route path="/" element={<ExchangeScreen />} />
-        </Routes>
-      </AppScreen>
-    </BrowserRouter>
-  )
-}
+export const Navigator: FC<NavigatorProps> = ({}) => (
+  <BrowserRouter>
+    <AppScreen>
+      <Header />
+      <Routes>
+        <Route path="/" element={<ExchangeScreen />} />
+      </Routes>
+    </AppScreen>
+  </BrowserRouter>
+)

@@ -14,9 +14,7 @@ export const deleteCookie = (name: string): void => {
   setCookie(name, '', -1)
 }
 
-export const isCookieSet = (name: string): boolean => {
-  return getCookie(name) !== null
-}
+export const isCookieSet = (name: string): boolean => getCookie(name) !== null
 
 export const clearCookies = (): void => {
   const cookies = document.cookie.split('; ')

@@ -1,4 +1,6 @@
-import { ComponentType, FC, useRef, useState } from 'react'
+import {
+  ComponentType, FC, useRef, useState,
+} from 'react'
 
 type WithPopoverProps = {
   WrappedComponent: ComponentType<any>
@@ -15,7 +17,7 @@ export const WithPopover: FC<WithPopoverProps> = (
   const [showPopover, setShowPopover] = useState(false)
   const [popoverPosition, setPopoverPosition] = useState({ position: 'absolute', top: 0, left: 0 })
   const wrappedComponentRef = useRef<HTMLDivElement>(null)
-  return (props: any) => {
+  return function (props: any) {
     const handleMouseEnter = (e: MouseEvent) => {
       if (trigger === 'hover') {
         e.stopPropagation()
@@ -52,7 +54,8 @@ export const WithPopover: FC<WithPopoverProps> = (
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
-        style={{ position: 'relative' }}>
+        style={{ position: 'relative' }}
+      >
         <WrappedComponent {...props} />
         {showPopover && <PopoverComponent {...popoverProps} style={popoverPosition} />}
       </div>

@@ -14,7 +14,7 @@ const api = axios.create({
   headers: config.headers,
 })
 
-//Axios interceptor for adding authorization token to request headers.
+// Axios interceptor for adding authorization token to request headers.
 api.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const token = localStorage.getItem('token')
@@ -23,9 +23,7 @@ api.interceptors.request.use(
     }
     return config
   },
-  (error) => {
-    return Promise.reject(error)
-  },
+  (error) => Promise.reject(error),
 )
 
 /**

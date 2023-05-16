@@ -1,5 +1,5 @@
-import classNames from './Table.module.pcss'
 import { FC, useEffect, useState } from 'react'
+import classNames from './Table.module.pcss'
 
 export interface TableColumn {
   columnTitle: string
@@ -36,43 +36,49 @@ export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true })
   )
 }
 
-const TableHeader = ({ columns }) => (
-  <thead>
-    <tr>
+function TableHeader({ columns }) {
+  return (
+    <thead>
+      <tr>
+        {columns.map((column, index) => (
+          <th key={index} style={column.headerStyle}>
+            {column.columnTitle}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  )
+}
+
+function TableRow({ item, columns }) {
+  return (
+    <tr className="hover-dim">
       {columns.map((column, index) => (
-        <th key={index} style={column.headerStyle}>
-          {column.columnTitle}
-        </th>
+        <TableCell key={index} item={item} column={column} />
       ))}
     </tr>
-  </thead>
-)
+  )
+}
 
-const TableRow = ({ item, columns }) => (
-  <tr className={'hover-dim'}>
-    {columns.map((column, index) => (
-      <TableCell key={index} item={item} column={column} />
-    ))}
-  </tr>
-)
-
-const TableCell = ({ item, column }) => {
+function TableCell({ item, column }) {
   const CellComponent = column.cellComponent(item)
   return <td>{CellComponent}</td>
 }
 
-const TableSkeleton = ({ columns }) => (
-  <div className={classNames.skeletonTable}>
-    <div className={classNames.skeletonHeader}>
-      {columns.map((column, index) => (
-        <div key={index} className={classNames.skeletonHeaderCell}></div>
-      ))}
-    </div>
+function TableSkeleton({ columns }) {
+  return (
+    <div className={classNames.skeletonTable}>
+      <div className={classNames.skeletonHeader}>
+        {columns.map((column, index) => (
+          <div key={index} className={classNames.skeletonHeaderCell} />
+        ))}
+      </div>
 
-    <div className={classNames.skeletonColumns}>
-      {[...Array(10)].map((_, index) => (
-        <div key={index} className={classNames.skeletonCell}></div>
-      ))}
+      <div className={classNames.skeletonColumns}>
+        {[...Array(10)].map((_, index) => (
+          <div key={index} className={classNames.skeletonCell} />
+        ))}
+      </div>
     </div>
-  </div>
-)
+  )
+}

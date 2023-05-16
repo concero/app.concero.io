@@ -1,9 +1,9 @@
 import { FC, MouseEvent } from 'react'
-import className from './Tag.module.pcss'
 import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
-import Icon from '../../Icon.tsx'
-import { colors } from '../../../constants/colors.ts'
+import className from './Tag.module.pcss'
+import Icon from '../../Icon'
+import { colors } from '../../../constants/colors'
 
 type IconComponentProps = {
   name: keyof typeof Icons
@@ -20,17 +20,17 @@ export interface TagProps {
   children?: string
 }
 
-export const Tag: FC<TagProps> = ({ fgColor, bgColor, leftIcon, rightIcon, children }) => {
-  return (
-    <div className={className.container}>
-      <div className={className.tag} style={{ backgroundColor: bgColor, color: fgColor }}>
-        {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}
-        {children}
-        {rightIcon && <Icon name={rightIcon.name} color={fgColor} {...rightIcon.iconProps} />}
-      </div>
+export const Tag: FC<TagProps> = ({
+  fgColor, bgColor, leftIcon, rightIcon, children,
+}) => (
+  <div className={className.container}>
+    <div className={className.tag} style={{ backgroundColor: bgColor, color: fgColor }}>
+      {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}
+      {children}
+      {rightIcon && <Icon name={rightIcon.name} color={fgColor} {...rightIcon.iconProps} />}
     </div>
-  )
-}
+  </div>
+)
 
 export function getSentimentFgColorByText(text: string): string | null {
   switch (text) {

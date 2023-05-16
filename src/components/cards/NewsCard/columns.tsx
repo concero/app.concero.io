@@ -1,12 +1,7 @@
-import { colors } from '../../../constants/colors.ts'
-import {
-  getSentimentBgColorByText,
-  getSentimentFgColorByText,
-  getSentimentIconByText,
-  Tag,
-} from '../../tags/Tag/Tag.tsx'
-import Icon from '../../Icon.tsx'
-import { fromNow, getHostname } from '../../../utils/formatting.ts'
+import { colors } from '../../../constants/colors'
+import { getSentimentBgColorByText, getSentimentFgColorByText, getSentimentIconByText, Tag } from '../../tags/Tag/Tag'
+import Icon from '../../Icon'
+import { fromNow, getHostname } from '../../../utils/formatting'
 
 export const columns = [
   {
@@ -27,8 +22,8 @@ export const columns = [
   {
     columnTitle: 'Date',
     cellComponent: (item) => (
-      <div className={'row ac gap-xs'}>
-        <Icon name={'Calendar'} color={colors.text.secondary} size={18} />
+      <div className="row ac gap-xs">
+        <Icon name="Calendar" color={colors.text.secondary} size={18} />
         <p style={{ color: colors.text.secondary }}>{fromNow(item.created_at)}</p>
       </div>
     ),
@@ -37,8 +32,8 @@ export const columns = [
     columnTitle: 'Source',
     headerStyle: { textAlign: 'right' },
     cellComponent: (item) => (
-      <div className={'row ac gap-xs jfe'}>
-        <Icon name={'Link'} color={colors.text.secondary} size={18} />
+      <div className="row ac gap-xs jfe">
+        <Icon name="Link" color={colors.text.secondary} size={18} />
         <p style={{ color: colors.text.secondary }}>{getHostname(item.source_url)}</p>
       </div>
     ),

@@ -1,11 +1,11 @@
-//todo: remove when api connected
-import { CryptoSymbol } from '../tags/CryptoSymbol/CryptoSymbol.tsx'
-import { CryptoSymbolType } from '../../types/CryptoSymbol.ts'
-import { colors } from '../../constants/colors.ts'
+// todo: remove when api connected
 import { useState } from 'react'
-import { TextInput } from '../input/TextInput.tsx'
-import { Table } from '../layout/Table/Table.tsx'
-import { Modal } from './Modal/Modal.tsx'
+import { CryptoSymbol } from '../tags/CryptoSymbol/CryptoSymbol'
+import { CryptoSymbolType } from '../../types/CryptoSymbol'
+import { colors } from '../../constants/colors'
+import { TextInput } from '../input/TextInput'
+import { Table } from '../layout/Table/Table'
+import { Modal } from './Modal/Modal'
 
 const chains = [
   { name: 'BinanceSmartChain', symbol: 'BSC' },
@@ -41,23 +41,14 @@ export function ChainsModal({ show, setShow }) {
   const [filteredChains, setFilteredChains] = useState<any[]>(chains)
 
   function filterChains(name) {
-    const filteredChains = chains.filter((chain) => {
-      return chain.name.toLowerCase().includes(name.toLowerCase())
-    })
-    setFilteredChains(filteredChains)
+    const newChains = chains.filter((chain) => chain.name.toLowerCase().includes(name.toLowerCase()))
+    setFilteredChains(newChains)
   }
 
   return (
-    <>
-      <Modal title={'Select chain'} show={show} setShow={setShow} size={{ width: 400, height: 400 }}>
-        <TextInput
-          iconName={'Search'}
-          value={''}
-          placeholder={'Search chain'}
-          onChangeText={(val) => filterChains(val)}
-        />
-        <Table columns={chainsColumns} data={filteredChains} />
-      </Modal>
-    </>
+    <Modal title="Select chain" show={show} setShow={setShow} size={{ width: 400, height: 400 }}>
+      <TextInput iconName="Search" value="" placeholder="Search chain" onChangeText={(val) => filterChains(val)} />
+      <Table columns={chainsColumns} data={filteredChains} />
+    </Modal>
   )
 }

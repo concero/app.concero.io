@@ -5,13 +5,11 @@ export interface H2Props {
   style?: CSSProperties
 }
 
-export const H2: FC<H2Props> = ({ children, style, ...rest }) => {
-  return (
-    <h2 style={{ ...styles.container, ...style }} {...rest}>
-      {children}
-    </h2>
-  )
-}
+export const H2: FC<H2Props> = ({ children, style, ...rest }) => (
+  <h2 style={{ ...styles.container, ...style }} {...rest}>
+    {children}
+  </h2>
+)
 
 const styles: Record<string, CSSProperties> = {
   container: {},

@@ -6,11 +6,9 @@ interface CardHeaderProps {
   children?: React.ReactNode
 }
 
-export const CardHeader: FC<CardHeaderProps> = ({ title, children }) => {
-  return (
-    <div className={classNames.cardHeader}>
-      <h5>{title}</h5>
-      {children}
-    </div>
-  )
-}
+export const CardHeader: FC<CardHeaderProps> = ({ title, children }) => (
+  <div className={classNames.cardHeader}>
+    <h5>{title}</h5>
+    {children}
+  </div>
+)

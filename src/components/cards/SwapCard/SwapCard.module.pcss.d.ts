@@ -4,8 +4,8 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "swapContainer": string|undefined
-  "tokenContainer": string|undefined
-  "tokenRow": string|undefined
-  "tokenRowHeader": string|undefined
+  swapContainer: string | undefined
+  tokenContainer: string | undefined
+  tokenRow: string | undefined
+  tokenRowHeader: string | undefined
 }

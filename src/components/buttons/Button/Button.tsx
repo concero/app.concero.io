@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
-import Icon from '../../Icon'
 import Lottie from 'lottie-react'
+import Icon from '../../Icon'
 import loadingAnimation from '../../../assets/animations/circle-loading.json'
 
 import styles from './Button.module.pcss'
@@ -73,16 +73,14 @@ const getButtonClasses = (
   return baseClasses.concat(sizeClass, variantClass, isLoadingClass, additionalClasses).join(' ')
 }
 
-const LoadingAnimation: FC = () => {
-  return (
-    <Lottie
-      loop
-      autoplay
-      animationData={loadingAnimation}
-      style={{ width: 30, height: 30 }}
-      rendererSettings={{
-        preserveAspectRatio: 'xMidYMid slice',
-      }}
-    />
-  )
-}
+const LoadingAnimation: FC = () => (
+  <Lottie
+    loop
+    autoplay
+    animationData={loadingAnimation}
+    style={{ width: 30, height: 30 }}
+    rendererSettings={{
+      preserveAspectRatio: 'xMidYMid slice',
+    }}
+  />
+)

@@ -14,7 +14,7 @@ export const setItem = (key: string, value: any, storageType: StorageType = 'loc
 export const getItem = <T>(key: string, defaultValue: T, storageType: StorageType = 'localStorage'): T => {
   if (storageType === 'localStorage') {
     return localStorageUtils.getItem(key, defaultValue)
-  } else if (storageType === 'cookie') {
+  } if (storageType === 'cookie') {
     const cookieValue = cookieUtils.getCookie(key)
     return cookieValue ? JSON.parse(cookieValue) : defaultValue
   }

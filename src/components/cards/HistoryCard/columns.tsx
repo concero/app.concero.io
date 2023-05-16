@@ -1,5 +1,5 @@
-import { TxFromTo } from '../../tags/TxFromTo/TxFromTo.tsx'
-import { colors } from '../../../constants/colors.ts'
+import { TxFromTo } from '../../tags/TxFromTo/TxFromTo'
+import { colors } from '../../../constants/colors'
 
 export const columns = [
   {

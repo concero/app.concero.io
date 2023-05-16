@@ -28,19 +28,13 @@ export const passwordStrengthLevel = (password: string): number => {
 }
 
 // Non-empty string validation
-export const isNotEmpty = (str: string): boolean => {
-  return str.length > 0
-}
+export const isNotEmpty = (str: string): boolean => str.length > 0
 
 // Numeric validation
-export const isNumeric = (num: string): boolean => {
-  return !isNaN(parseFloat(num)) && isFinite(Number(num))
-}
+export const isNumeric = (num: string): boolean => !isNaN(parseFloat(num)) && isFinite(Number(num))
 
 // Non-numeric validation
-export const isNotNumeric = (str: string): boolean => {
-  return !/\d/.test(str)
-}
+export const isNotNumeric = (str: string): boolean => !/\d/.test(str)
 
 // URL validation
 export const isValidURL = (url: string): boolean => {

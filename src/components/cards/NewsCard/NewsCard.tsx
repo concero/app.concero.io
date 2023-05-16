@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import { CardHeader } from '../CardHeader/CardHeader.tsx'
-import { Table } from '../../layout/Table/Table.tsx'
+import { CardHeader } from '../CardHeader/CardHeader'
+import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
-import { columns } from './columns.tsx'
+import { columns } from './columns'
 
 interface NewsCardProps {}
 
@@ -45,11 +45,9 @@ const newsData = [
   },
 ]
 
-export const NewsCard: FC<NewsCardProps> = () => {
-  return (
-    <div className={`${classNames.container} card`}>
-      <CardHeader title={'News'}></CardHeader>
-      <Table data={newsData} columns={columns} isHeaderVisible={false} />
-    </div>
-  )
-}
+export const NewsCard: FC<NewsCardProps> = () => (
+  <div className={`${classNames.container} card`}>
+    <CardHeader title="News" />
+    <Table data={newsData} columns={columns} isHeaderVisible={false} />
+  </div>
+)

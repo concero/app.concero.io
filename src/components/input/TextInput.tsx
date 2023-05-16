@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
-import Icon from '../Icon'
 import * as Icons from 'tabler-icons-react'
+import Icon from '../Icon'
 import { colors } from '../../constants/colors'
 import classNames from './TextInput.module.pcss'
 
@@ -21,7 +21,7 @@ export const TextInput: FC<TextInputProps> = ({ placeholder, onChangeText, iconN
   return (
     <div className={classNames.inputWrapper}>
       <Icon name={iconName} className={classNames.inputIcon} size={18} color={colors.grey.dark} />
-      <input type={'text'} placeholder={placeholder} value={value} onChange={handleChange} />
+      <input type="text" placeholder={placeholder} value={value} onChange={handleChange} />
     </div>
   )
 }

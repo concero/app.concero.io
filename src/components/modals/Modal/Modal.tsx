@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import classNames from './Modal.module.pcss'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ModalHeader } from './ModalHeader.tsx'
-import { fadeAnimation, fadeUpAnimation } from '../../../constants/animations.ts'
+import classNames from './Modal.module.pcss'
+import { ModalHeader } from './ModalHeader'
+import { fadeAnimation, fadeUpAnimation } from '../../../constants/animations'
 
 export interface ModalProps {
   title: string
@@ -17,19 +17,17 @@ export interface ModalProps {
   }
 }
 
-export const Modal: FC<ModalProps> = ({ title, show, setShow, size, children }) => {
-  return (
-    <AnimatePresence>
-      {show && (
-        <>
-          <motion.div {...fadeAnimation} className={classNames.overlay}>
-            <motion.div {...fadeUpAnimation} className={classNames.container} style={{ ...size }}>
-              <ModalHeader title={title} onClick={() => setShow(false)} />
-              {children}
-            </motion.div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-  )
-}
+export const Modal: FC<ModalProps> = ({
+  title, show, setShow, size, children,
+}) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div {...fadeAnimation} className={classNames.overlay}>
+        <motion.div {...fadeUpAnimation} className={classNames.container} style={{ ...size }}>
+          <ModalHeader title={title} onClick={() => setShow(false)} />
+          {children}
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+)

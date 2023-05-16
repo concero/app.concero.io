@@ -1,9 +1,9 @@
 import { FC } from 'react'
-import Icon from '../../Icon.tsx'
+import Icon from '../../Icon'
 import className from './TxFromTo.module.pcss'
-import { colors } from '../../../constants/colors.ts'
+import { colors } from '../../../constants/colors'
 
-//todo: add chain icons component
+// todo: add chain icons component
 export interface TxFromToProps {
   from: string
   to: string
@@ -12,19 +12,21 @@ export interface TxFromToProps {
 }
 
 export const TxFromTo: FC<TxFromToProps> = ({ item }) => {
-  const { from, to, showIcons, type } = item
+  const {
+    from, to, showIcons, type,
+  } = item
   const color = getColor(type)
 
   const styles = {
     text: {
-      color: color,
+      color,
     },
   }
 
   return (
     <div className={className.container}>
       <p style={styles.text}>{from}</p>
-      <Icon name={'ArrowRight'} color={color} size={18} />
+      <Icon name="ArrowRight" color={color} size={18} />
       <p style={styles.text}>{to}</p>
     </div>
   )

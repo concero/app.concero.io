@@ -11,7 +11,7 @@ export const { chains, publicClient, webSocketPublicClient } = configureChains([
 
 export const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',
-  projectId: projectId,
+  projectId,
   chains,
 })
 
