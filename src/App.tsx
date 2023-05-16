@@ -1,4 +1,4 @@
-import './App.css'
+import './styles/App.css'
 import { Navigator } from './Navigator'
 import { WagmiConfig } from 'wagmi'
 import { wagmiConfig } from './web3/rainbowKit'

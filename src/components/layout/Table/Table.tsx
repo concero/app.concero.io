@@ -16,7 +16,7 @@ export interface TableProps {
 export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true }) => {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(false)
   }, [])
   return (
     <div className={classNames.container}>

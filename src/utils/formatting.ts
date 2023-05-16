@@ -1,4 +1,7 @@
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 // Date and time formatting
 export const formatDate = (date: string | Date, format = 'YYYY-MM-DD'): string => {

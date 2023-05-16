@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader.tsx'
 import { Button } from '../../buttons/Button/Button.tsx'
 import classNames from './SwapCard.module.pcss'
-import { Modal } from '../../layout/Modal/Modal.tsx'
+import { ChainsModal } from '../../modals/ChainsModal.tsx'
 
 interface SwapCardProps {}
 
@@ -58,12 +58,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           </Button>
         </div>
       </div>
-      <Modal
-        title={'Choose chain'}
-        show={showChainsModal}
-        setShow={setShowChainsModal}
-        size={{ height: 400, width: 400 }}
-      />
+      <ChainsModal show={showChainsModal} setShow={setShowChainsModal} />
     </>
   )
 }

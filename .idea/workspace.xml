@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="refactoring">
+      <change afterPath="$PROJECT_DIR$/src/components/cards/HistoryCard/columns.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/NewsCard/columns.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/modals/ChainsModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/modals/Modal/Modal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/modals/Modal/ModalHeader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/constants/animations.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/App.css.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.stylelintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.stylelintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/HistoryCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/HistoryCard/HistoryCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/NewsCard/NewsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/NewsCard/NewsCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Modal/Modal.module.pcss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/Modal/Modal.module.pcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Modal/Modal.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/Modal/Modal.module.pcss.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Modal/Modal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/TxFromTo.module.pcss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/TxFromTo/TxFromTo.module.pcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/TxFromTo.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/TxFromTo/TxFromTo.module.pcss.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/TxFromTo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/TxFromTo/TxFromTo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/screens/ExchangeScreen/ExchangeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/screens/ExchangeScreen/ExchangeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/formatting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatting.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBowerSettings">
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectId" id="2P9qeR8auInNbjr7ZdQRMOBROIX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.0.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.0.0&quot;,
+    &quot;jsx.switch.disabled&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/src/constants&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/stylelint&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/constants" />
+      <recent name="$PROJECT_DIR$/src/assets/animations" />
+      <recent name="$PROJECT_DIR$/src/api" />
+      <recent name="$PROJECT_DIR$/src/assets/fonts/Poppins" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/styles" />
+      <recent name="$PROJECT_DIR$/src/components/tags/TxFromTo" />
+      <recent name="$PROJECT_DIR$/src/components/cards/HistoryCard" />
+      <recent name="$PROJECT_DIR$/src/components/modals" />
+      <recent name="$PROJECT_DIR$/src/components/cards/SwapCard" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/src/components/cards/HistoryCard/columns.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/cards/NewsCard/columns.tsx" />
+      <recent name="$PROJECT_DIR$/src/constants/animations.ts" />
+      <recent name="$PROJECT_DIR$/src/components/layout/Modal/ModalHeader.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/cards/NewsCard.tsx" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="" />
+      <created>1682879739999</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682879739999</updated>
+      <workItem from="1682879741019" duration="2000" />
+      <workItem from="1682879747826" duration="10106000" />
+      <workItem from="1682892812281" duration="30903000" />
+      <workItem from="1683064791784" duration="4449000" />
+      <workItem from="1683197831212" duration="19536000" />
+      <workItem from="1683731364188" duration="71097000" />
+      <workItem from="1684155476718" duration="19957000" />
+      <workItem from="1684189775863" duration="160000" />
+      <workItem from="1684191822098" duration="7087000" />
+    </task>
+    <task id="LOCAL-00001" summary="text">
+      <created>1682887317120</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682887317120</updated>
+    </task>
+    <task id="LOCAL-00002" summary="text tests">
+      <created>1682900745130</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682900745130</updated>
+    </task>
+    <task id="LOCAL-00003" summary="shared json variables">
+      <created>1682960811059</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682960811059</updated>
+    </task>
+    <task id="LOCAL-00004" summary="shared json variables">
+      <created>1682963502557</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682963502557</updated>
+    </task>
+    <task id="LOCAL-00005" summary="shared json variables">
+      <created>1683145497835</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683145497835</updated>
+    </task>
+    <task id="LOCAL-00006" summary="header done">
+      <created>1683225659462</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1683225659462</updated>
+    </task>
+    <task id="LOCAL-00007" summary="cards, walletConnect, preCSS &amp; env">
+      <created>1683748842162</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1683748842162</updated>
+    </task>
+    <task id="LOCAL-00008" summary="table init">
+      <created>1683835259501</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1683835259501</updated>
+    </task>
+    <task id="LOCAL-00009" summary="tag">
+      <created>1683837326765</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683837326765</updated>
+    </task>
+    <task id="LOCAL-00010" summary="table">
+      <created>1683917607938</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683917607938</updated>
+    </task>
+    <task id="LOCAL-00011" summary="spacing">
+      <created>1683919491494</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1683919491494</updated>
+    </task>
+    <task id="LOCAL-00012" summary="swap init">
+      <created>1683923231567</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1683923231567</updated>
+    </task>
+    <task id="LOCAL-00013" summary="table border radius">
+      <created>1683986447252</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1683986447252</updated>
+    </task>
+    <task id="LOCAL-00014" summary="buttons sm">
+      <created>1683989890378</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1683989890378</updated>
+    </task>
+    <task id="LOCAL-00015" summary="modal init + css formatting in Webstorm">
+      <created>1684000023124</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1684000023124</updated>
+    </task>
+    <task id="LOCAL-00016" summary="refactoring">
+      <created>1684242190372</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1684242190372</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="text" />
+    <MESSAGE value="text tests" />
+    <MESSAGE value="shared json variables" />
+    <MESSAGE value="header done" />
+    <MESSAGE value="cards, preCSS &amp; env" />
+    <MESSAGE value="cards, walletConnect, preCSS &amp; env" />
+    <MESSAGE value="table init" />
+    <MESSAGE value="tag" />
+    <MESSAGE value="table" />
+    <MESSAGE value="spacing" />
+    <MESSAGE value="swap init" />
+    <MESSAGE value="table border radius" />
+    <MESSAGE value="buttons sm" />
+    <MESSAGE value="modal init + css formatting in Webstorm" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+  </component>
+</project>
