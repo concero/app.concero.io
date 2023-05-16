@@ -20,9 +20,7 @@ export interface TagProps {
   children?: string
 }
 
-export const Tag: FC<TagProps> = ({
-  fgColor, bgColor, leftIcon, rightIcon, children,
-}) => (
+export const Tag: FC<TagProps> = ({ fgColor, bgColor, leftIcon, rightIcon, children }) => (
   <div className={className.container}>
     <div className={className.tag} style={{ backgroundColor: bgColor, color: fgColor }}>
       {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}

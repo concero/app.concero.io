@@ -12,9 +12,7 @@ export interface TxFromToProps {
 }
 
 export const TxFromTo: FC<TxFromToProps> = ({ item }) => {
-  const {
-    from, to, showIcons, type,
-  } = item
+  const { from, to, showIcons, type } = item
   const color = getColor(type)
 
   const styles = {

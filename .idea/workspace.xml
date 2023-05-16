@@ -4,45 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="refactoring">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.cjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/animations/circle-loading.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/animations/circle-loading.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/buttons/Button/Button.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/buttons/Button/Button.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/CardHeader/CardHeader.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/CardHeader/CardHeader.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/ChartCard/ChartCard.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/ChartCard/ChartCard.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/ChartCard/ChartCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/ChartCard/ChartCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/HistoryCard/HistoryCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/HistoryCard/HistoryCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/NewsCard/NewsCard.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/NewsCard/NewsCard.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/NewsCard/NewsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/NewsCard/NewsCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/input/TextInput.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/input/TextInput.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Header/Header.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Header/Header.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/Table.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Table/Table.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modals/ChainsModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/ChainsModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modals/Modal/Modal.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/Modal/Modal.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modals/Modal/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/Modal/Modal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modals/Modal/ModalHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/Modal/ModalHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/overlays/MenuPopover/MenuPopover.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/overlays/MenuPopover/MenuPopover.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/screens/ExchangeScreen/ExchangeScreen.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/screens/ExchangeScreen/ExchangeScreen.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/screens/ExchangeScreen/ExchangeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/screens/ExchangeScreen/ExchangeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tags/CryptoSymbol/CryptoSymbol.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/CryptoSymbol/CryptoSymbol.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tags/Tag/Tag.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/Tag/Tag.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tags/Tag/Tag.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/Tag/Tag.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tags/TxFromTo/TxFromTo.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/TxFromTo/TxFromTo.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tags/TxFromTo/TxFromTo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/TxFromTo/TxFromTo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/App.css.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/App.css.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/index.css.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-    </list>
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="eslint airbnb configuration" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,36 +45,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.0.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.0.0&quot;,
-    &quot;jsx.switch.disabled&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/src/constants&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/stylelint&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "code.cleanup.on.save": "true",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "master",
+    "javascript.nodejs.core.library.configured.version": "20.0.0",
+    "javascript.nodejs.core.library.typings.version": "20.0.0",
+    "jsx.switch.disabled": "true",
+    "last_opened_file_path": "/Users/oleg/Documents/Code/dex-frontend/src/constants",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.stylelint": "/Users/oleg/Documents/Code/dex-frontend/node_modules/stylelint",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "pnpm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "settings.codegpt.advanced",
+    "ts.external.directory.path": "/Users/oleg/Documents/Code/dex-frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/constants" />
@@ -152,7 +114,7 @@
       <workItem from="1683731364188" duration="71097000" />
       <workItem from="1684155476718" duration="19957000" />
       <workItem from="1684189775863" duration="160000" />
-      <workItem from="1684191822098" duration="8891000" />
+      <workItem from="1684191822098" duration="9559000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -273,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684244904863</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="eslint airbnb configuration">
+      <created>1684247228700</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1684247228700</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,6 +265,7 @@
     <MESSAGE value="buttons sm" />
     <MESSAGE value="modal init + css formatting in Webstorm" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="eslint airbnb configuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="eslint airbnb configuration" />
   </component>
 </project>

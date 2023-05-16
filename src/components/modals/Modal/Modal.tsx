@@ -17,9 +17,7 @@ export interface ModalProps {
   }
 }
 
-export const Modal: FC<ModalProps> = ({
-  title, show, setShow, size, children,
-}) => (
+export const Modal: FC<ModalProps> = ({ title, show, setShow, size, children }) => (
   <AnimatePresence>
     {show && (
       <motion.div {...fadeAnimation} className={classNames.overlay}>

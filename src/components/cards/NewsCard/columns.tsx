@@ -14,7 +14,8 @@ export const columns = [
       <Tag
         fgColor={getSentimentFgColorByText(item.sentiment)}
         bgColor={getSentimentBgColorByText(item.sentiment)}
-        leftIcon={getSentimentIconByText(item.sentiment)}>
+        leftIcon={getSentimentIconByText(item.sentiment)}
+      >
         {item.sentiment}
       </Tag>
     ),
