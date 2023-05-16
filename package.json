@@ -21,6 +21,7 @@
     "@web3-react/walletconnect-connector": "^6.2.13",
     "@web3modal/ethereum": "^2.4.1",
     "@web3modal/react": "^2.4.1",
+    "cryptocurrency-icons": "^0.18.1",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "eslint-config-airbnb": "^19.0.4",

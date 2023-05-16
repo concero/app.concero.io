@@ -9,14 +9,14 @@ import { Modal } from './Modal/Modal'
 
 const chains = [
   { name: 'BinanceSmartChain', symbol: 'BSC' },
-  { name: 'Ethereum', symbol: 'ETH' },
-  { name: 'Polygon', symbol: 'MATIC' },
-  { name: 'Avalanche', symbol: 'AVAX' },
-  { name: 'Fantom', symbol: 'FTM' },
-  { name: 'Harmony', symbol: 'ONE' },
+  { name: 'eth', symbol: 'ETH' },
+  { name: 'matic', symbol: 'MATIC' },
+  { name: 'avax', symbol: 'AVAX' },
+  { name: 'miota', symbol: 'FTM' },
+  { name: 'pot', symbol: 'ONE' },
   { name: 'Kucoin', symbol: 'KCS' },
   { name: 'Solana', symbol: 'SOL' },
-  { name: 'Tron', symbol: 'TRX' },
+  { name: 'trx', symbol: 'TRX' },
 ]
 const chainsColumns = [
   {
