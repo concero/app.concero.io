@@ -4,497 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="refactoring">
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/$pac.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/0xbtc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/1inch.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/2give.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/aave.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/abt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/act.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/actn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ada.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/add.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/adx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ae.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/aeon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/aeur.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/agi.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/agrs.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/algo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/amb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/amp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ampl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ant.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ape.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/apex.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/appc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ardr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/arg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/arn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/arnx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ary.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ast.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/atlas.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/atm.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/atom.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/audr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/aury.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/auto.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/avax.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/aywa.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bab.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/band.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bay.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bcbc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bcc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bcd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bch.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bcio.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bcn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bco.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bcpt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bdl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bela.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bix.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/blcn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/blk.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/block.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/blz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bnb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bnt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bnty.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/booty.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bos.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bpt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bq.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/brd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bsd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bsv.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btcd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btch.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btcp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btcz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btdx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btm.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bts.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/btx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/burst.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/bze.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/call.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cdn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cdt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cenz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/chain.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/chat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/chips.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/chsb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/chz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cix.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/clam.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cloak.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cmm.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cmt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cnd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cnx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cny.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cob.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/colx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/comp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/coqui.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cred.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/crpt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/crv.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/crw.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cs.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ctr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ctxc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/cvc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/d.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dai.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/data.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dbc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dcn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dcr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/deez.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dent.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dew.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dgb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dgd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dlt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dnt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dock.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/doge.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dot.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/drgn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/drop.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dta.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dth.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/dtr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ebst.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eca.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/edg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/edo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/edoge.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ela.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/elec.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/elf.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/elix.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ella.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/emb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/emc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/emc2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eng.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/enj.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/entrp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eop.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eos.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eqli.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/equa.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/etc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eth.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ethos.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/etn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/etp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/eur.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/evx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/exmo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/exp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fair.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fct.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fida.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fil.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fjc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fldc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/flo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fsn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ftc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fuel.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/fun.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/game.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gas.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gbp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gbx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gbyte.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/generic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/glxt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gmr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gmt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gno.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gnt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gold.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/grc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/grin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/grs.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/grt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gsc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gto.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gup.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gusd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gvt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gxs.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/gzr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/hight.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/hns.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/hodl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/hot.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/hpb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/hsr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ht.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/html.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/huc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/husd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/hush.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/icn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/icp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/icx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ignis.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ilk.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ink.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ins.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ion.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/iop.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/iost.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/iotx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/iq.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/itc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/jnt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/jpy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/kcs.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/kin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/klown.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/kmd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/knc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/krb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/lbc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/lend.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/leo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/link.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/lkk.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/loom.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/lpt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/lrc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/lsk.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ltc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/lun.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/maid.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mana.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/matic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/max.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mcap.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mco.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mda.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mds.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/med.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mft.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/miota.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mith.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mkr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mln.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mnx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mnz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/moac.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mod.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mona.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/msr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mth.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mtl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/music.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/mzc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nano.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nas.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ndz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nebl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/neos.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/neu.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nio.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nkn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nlc2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nlg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nmc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nmr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/npxs.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ntbc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nuls.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nxs.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/nxt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/oax.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ok.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/omni.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/one.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ong.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/oot.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ost.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ox.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/oxt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/oxy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pasc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pasl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pax.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/paxg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pay.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/payx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pink.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pirl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/plr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/poa.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/poe.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/polis.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/poly.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pot.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/powr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ppc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ppp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ppt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pre.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/prl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pungo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/pura.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/qash.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/qiwi.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/qlc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/qnt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/qrl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/qsp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/r.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rads.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rap.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ray.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rcn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rdd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rdn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ren.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rep.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/repv2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/req.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rhoc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ric.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rlc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rpx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rub.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/rvn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ryo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/safe.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/safemoon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sai.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/salt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/san.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sand.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sbd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sberbank.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ser.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/shift.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sib.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/skl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sky.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/slr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sls.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/smart.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sngls.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/snm.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/snt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/snx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/soc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sol.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/spacehbit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/spank.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sphtx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/srn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/stak.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/start.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/storj.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/storm.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/stox.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/stq.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/strat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/stx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sub.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sumo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sushi.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/sys.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/taas.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tau.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tbx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tel.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ten.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tern.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tgch.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tix.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tkn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tks.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tnb.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tnc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tnt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tomo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tpay.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/trig.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/trtl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/trx.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tusd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/tzc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/ubq.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/uni.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/unity.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/usd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/usdc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/usdt.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/utk.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/veri.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vet.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/via.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vib.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vibe.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vivo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vrc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vrsc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vtc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/vtho.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wabi.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wan.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wax.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wbtc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wgr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wicc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wings.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wpr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/wtc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/x.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xas.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xbc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xbp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xby.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xcp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xdn.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xem.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xlm.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xmcc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xmg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xmo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xmr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xmy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xpa.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xpm.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xpr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xrp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xsg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xtz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xuc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xvc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xvg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/xzc.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/yfi.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/yoyow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zcl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zec.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zel.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zen.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zest.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zil.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zilla.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/zrx.svg" afterDir="false" />
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="add crypto icons">
+      <change afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/TokenArea.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/useSelectionState.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableCell.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableHeader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableRow.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableSkeleton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Aion.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Aion.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Ankr.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Ankr.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Beam.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Beam.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Dash.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Dash.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Flux.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Flux.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Ksm.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Ksm.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Meetone.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Meetone.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/NCash.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/NCash.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Nav.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Nav.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Neo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Neo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Nexo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Nexo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Ngc.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Ngc.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Omg.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Omg.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Part.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Part.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Pivx.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Pivx.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Qtum.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Qtum.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Rise.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Rise.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Steem.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Steem.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Theta.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Theta.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Uma.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Uma.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/cryptoSymbols/Waves.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/cryptoSymbols/Waves.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/Table.module.pcss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Table/Table.module.pcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Table/Table.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/modals/ChainsModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/ChainsModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/tags/CryptoSymbol/CryptoSymbol.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/CryptoSymbol/CryptoSymbol.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/CryptoSymbol.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/CryptoSymbol.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -561,7 +82,7 @@
     "nodejs_package_manager_path": "pnpm",
     "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "preferences.sourceCode.JavaScript",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "ts.external.directory.path": "/Users/oleg/Documents/Code/dex-frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -582,11 +103,11 @@
       <recent name="$PROJECT_DIR$/src/components/cards/SwapCard" />
     </key>
     <key name="es6.move.members.recent.items">
-      <recent name="$PROJECT_DIR$/src/components/cards/HistoryCard/columns.tsx" />
-      <recent name="$PROJECT_DIR$/src/components/cards/NewsCard/columns.tsx" />
-      <recent name="$PROJECT_DIR$/src/constants/animations.ts" />
-      <recent name="$PROJECT_DIR$/src/components/layout/Modal/ModalHeader.tsx" />
-      <recent name="$PROJECT_DIR$/src/components/cards/NewsCard.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/cards/SwapCard/TokenArea.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/layout/Table/TableHeader.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/layout/Table/TableRow.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/layout/Table/TableCell.tsx" />
+      <recent name="$PROJECT_DIR$/src/components/layout/Table/TableSkeleton.tsx" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -605,7 +126,7 @@
       <workItem from="1683731364188" duration="71097000" />
       <workItem from="1684155476718" duration="19957000" />
       <workItem from="1684189775863" duration="160000" />
-      <workItem from="1684191822098" duration="16061000" />
+      <workItem from="1684191822098" duration="19330000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -747,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684264194421</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="add crypto icons">
+      <created>1684273306031</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1684273306031</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -772,6 +300,7 @@
     <MESSAGE value="eslint airbnb configuration" />
     <MESSAGE value="prettier" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="add crypto icons" />
+    <option name="LAST_COMMIT_MESSAGE" value="add crypto icons" />
   </component>
 </project>

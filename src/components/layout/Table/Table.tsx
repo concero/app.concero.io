@@ -1,5 +1,8 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import classNames from './Table.module.pcss'
+import { TableSkeleton } from './TableSkeleton'
+import { TableRow } from './TableRow'
+import { TableHeader } from './TableHeader'
 
 export interface TableColumn {
   columnTitle: string
@@ -11,13 +14,12 @@ export interface TableProps {
   columns: TableColumn[]
   data: never[]
   isHeaderVisible?: boolean
+  onClick?: (item: any) => void
 }
 
-export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true }) => {
-  const [isLoading, setIsLoading] = useState(true)
-  useEffect(() => {
-    setIsLoading(false)
-  }, [])
+export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true, onClick }) => {
+  const [isLoading, setIsLoading] = useState(false)
+
   return (
     <div className={classNames.container}>
       {isLoading ? (
@@ -27,58 +29,11 @@ export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true })
           {isHeaderVisible && <TableHeader columns={columns} />}
           <tbody className="striped">
             {data.map((item, index) => (
-              <TableRow key={index} item={item} columns={columns} />
+              <TableRow key={index} item={item} columns={columns} onClick={onClick} />
             ))}
           </tbody>
         </table>
       )}
-    </div>
-  )
-}
-
-function TableHeader({ columns }) {
-  return (
-    <thead>
-      <tr>
-        {columns.map((column, index) => (
-          <th key={index} style={column.headerStyle}>
-            {column.columnTitle}
-          </th>
-        ))}
-      </tr>
-    </thead>
-  )
-}
-
-function TableRow({ item, columns }) {
-  return (
-    <tr className="hover-dim">
-      {columns.map((column, index) => (
-        <TableCell key={index} item={item} column={column} />
-      ))}
-    </tr>
-  )
-}
-
-function TableCell({ item, column }) {
-  const CellComponent = column.cellComponent(item)
-  return <td>{CellComponent}</td>
-}
-
-function TableSkeleton({ columns }) {
-  return (
-    <div className={classNames.skeletonTable}>
-      <div className={classNames.skeletonHeader}>
-        {columns.map((column, index) => (
-          <div key={index} className={classNames.skeletonHeaderCell} />
-        ))}
-      </div>
-
-      <div className={classNames.skeletonColumns}>
-        {[...Array(10)].map((_, index) => (
-          <div key={index} className={classNames.skeletonCell} />
-        ))}
-      </div>
     </div>
   )
 }

@@ -48,7 +48,7 @@ export function ChainsModal({ show, setShow }) {
   return (
     <Modal title="Select chain" show={show} setShow={setShow} size={{ width: 400, height: 400 }}>
       <TextInput iconName="Search" value="" placeholder="Search chain" onChangeText={(val) => filterChains(val)} />
-      <Table columns={chainsColumns} data={filteredChains} />
+      <Table columns={chainsColumns} data={filteredChains} onClick={(item) => console.log(item)} />
     </Modal>
   )
 }
