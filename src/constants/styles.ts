@@ -1,4 +1,4 @@
-import stylesJson from './styles.json'
+import stylesJson from './json/styles.json'
 import { NestedObj } from '../types/utils'
 
 type stylesKeys = keyof typeof stylesJson.st

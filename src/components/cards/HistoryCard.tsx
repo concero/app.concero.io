@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { CardHeader } from './CardHeader'
+import { CardHeader } from './CardHeader/CardHeader.tsx'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { colors } from '../../constants/colors'

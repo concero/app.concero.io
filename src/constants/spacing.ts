@@ -1,4 +1,4 @@
-import spacingJson from './spacing.json'
+import spacingJson from './json/spacing.json'
 import { NestedObj } from '../types/utils'
 
 type SpacingKeys = keyof typeof spacingJson.sp

@@ -1,10 +1,16 @@
 import { FC } from 'react'
-import { CardHeader } from './CardHeader'
-import { Table } from '../layout/Table/Table'
-import { getSentimentBgColorByText, getSentimentFgColorByText, getSentimentIconByText, Tag } from '../tags/Tag'
-import Icon from '../Icon'
-import { colors } from '../../constants/colors'
-import { fromNow, getHostname } from '../../utils/formatting'
+import { CardHeader } from '../CardHeader/CardHeader.tsx'
+import { Table } from '../../layout/Table/Table.tsx'
+import {
+  getSentimentBgColorByText,
+  getSentimentFgColorByText,
+  getSentimentIconByText,
+  Tag,
+} from '../../tags/Tag/Tag.tsx'
+import Icon from '../../Icon.tsx'
+import { colors } from '../../../constants/colors.ts'
+import { fromNow, getHostname } from '../../../utils/formatting.ts'
+import classNames from './NewsCard.module.pcss'
 
 interface NewsCardProps {}
 
@@ -64,11 +70,29 @@ const newsData = [
     created_at: '2021-10-10T12:00:00.000Z',
     source_url: 'https://cointelegraph.com/abcd',
   },
+  {
+    title: 'Solana (SOL) price prediction: can the coin reach $200?',
+    sentiment: 'neutral',
+    created_at: '2021-10-10T12:00:00.000Z',
+    source_url: 'https://cointelegraph.com/abcd',
+  },
+  {
+    title: 'Solana (SOL) price prediction: can the coin reach $200?',
+    sentiment: 'neutral',
+    created_at: '2021-10-10T12:00:00.000Z',
+    source_url: 'https://cointelegraph.com/abcd',
+  },
+  {
+    title: 'Solana (SOL) price prediction: can the coin reach $200?',
+    sentiment: 'neutral',
+    created_at: '2021-10-10T12:00:00.000Z',
+    source_url: 'https://cointelegraph.com/abcd',
+  },
 ]
 
 export const NewsCard: FC<NewsCardProps> = () => {
   return (
-    <div className="card">
+    <div className={`${classNames.container} card`}>
       <CardHeader title={'News'}></CardHeader>
       <Table data={newsData} columns={newsColumns} isHeaderVisible={false} />
     </div>

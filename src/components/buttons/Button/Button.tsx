@@ -13,7 +13,7 @@ type IconComponentProps = {
 }
 
 type ButtonProps = {
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
   variant?: 'primary' | 'secondary' | 'subtle' | 'black'
   leftIcon?: IconComponentProps
   rightIcon?: IconComponentProps
@@ -34,6 +34,10 @@ type ButtonProps = {
  @param {string} [className] - A string of additional CSS classes to apply to the button.
  @param {ReactNode} [children] - The children of the button.
  @returns {JSX.Element} - The rendered button element.
+ @example
+ <Button size={'lg'} leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
+ Swap
+ </Button>
  */
 export const Button: FC<ButtonProps> = ({
   size = 'md',

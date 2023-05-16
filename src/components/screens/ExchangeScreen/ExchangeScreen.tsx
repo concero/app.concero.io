@@ -1,17 +1,15 @@
 import { FC } from 'react'
 import styles from './ExchangeScreen.module.pcss'
-import { ChartCard } from '../../cards/ChartCard'
+import { ChartCard } from '../../cards/ChartCard/ChartCard.tsx'
 import { HistoryCard } from '../../cards/HistoryCard'
-import { SwapCard } from '../../cards/SwapCard'
-import { NewsCard } from '../../cards/NewsCard'
-import { Modal } from '../../layout/Modal/Modal'
+import { SwapCard } from '../../cards/SwapCard/SwapCard.tsx'
+import { NewsCard } from '../../cards/NewsCard/NewsCard.tsx'
 
 export interface ExchangeScreenProps {}
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
   return (
     <div className={`row ${styles.container}`}>
-      <Modal title={'Modal Title'} />
       <div className={styles.mainCardStack}>
         <ChartCard />
         <NewsCard />

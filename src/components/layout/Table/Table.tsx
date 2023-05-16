@@ -1,5 +1,5 @@
-import './Table.module.pcss'
-import { FC } from 'react'
+import classNames from './Table.module.pcss'
+import { FC, useEffect, useState } from 'react'
 
 export interface TableColumn {
   columnTitle: string
@@ -9,22 +9,32 @@ export interface TableColumn {
 
 export interface TableProps {
   columns: TableColumn[]
-  data: any[]
+  data: never[]
   isHeaderVisible?: boolean
 }
 
-export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true }) => (
-  <div>
-    <table>
-      {isHeaderVisible && <TableHeader columns={columns} />}
-      <tbody>
-        {data.map((item, index) => (
-          <TableRow key={index} item={item} columns={columns} />
-        ))}
-      </tbody>
-    </table>
-  </div>
-)
+export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true }) => {
+  const [isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    setIsLoading(true)
+  }, [])
+  return (
+    <div className={classNames.container}>
+      {isLoading ? (
+        <TableSkeleton columns={columns} />
+      ) : (
+        <table>
+          {isHeaderVisible && <TableHeader columns={columns} />}
+          <tbody>
+            {data.map((item, index) => (
+              <TableRow key={index} item={item} columns={columns} />
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  )
+}
 
 const TableHeader = ({ columns }) => (
   <thead>
@@ -50,3 +60,19 @@ const TableCell = ({ item, column }) => {
   const CellComponent = column.cellComponent(item)
   return <td>{CellComponent}</td>
 }
+
+const TableSkeleton = ({ columns }) => (
+  <div className={classNames.skeletonTable}>
+    <div className={classNames.skeletonHeader}>
+      {columns.map((column, index) => (
+        <div key={index} className={classNames.skeletonHeaderCell}></div>
+      ))}
+    </div>
+
+    <div className={classNames.skeletonColumns}>
+      {[...Array(10)].map((_, index) => (
+        <div key={index} className={classNames.skeletonCell}></div>
+      ))}
+    </div>
+  </div>
+)

@@ -5,6 +5,9 @@ export default identifiersMap
 
 export type CssIdentifiersMap = {
   "container": string|undefined
-  "mainCardStack": string|undefined
-  "secondaryCardStack": string|undefined
+  "skeletonCell": string|undefined
+  "skeletonColumns": string|undefined
+  "skeletonHeader": string|undefined
+  "skeletonHeaderCell": string|undefined
+  "skeletonTable": string|undefined
 }

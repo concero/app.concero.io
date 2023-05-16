@@ -2,8 +2,8 @@ import { FC, MouseEvent } from 'react'
 import className from './Tag.module.pcss'
 import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
-import Icon from '../Icon'
-import { colors } from '../../constants/colors'
+import Icon from '../../Icon.tsx'
+import { colors } from '../../../constants/colors.ts'
 
 type IconComponentProps = {
   name: keyof typeof Icons

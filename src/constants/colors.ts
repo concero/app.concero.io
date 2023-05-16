@@ -1,4 +1,4 @@
-import colorsJson from './colors.json'
+import colorsJson from './json/colors.json'
 import { NestedObj } from '../types/utils'
 
 type ColorKeys = keyof typeof colorsJson.color

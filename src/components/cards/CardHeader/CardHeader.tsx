@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import styles from '../screens/ExchangeScreen/ExchangeScreen.module.pcss'
+import classNames from './CardHeader.module.pcss'
 
 interface CardHeaderProps {
   title: string
@@ -8,7 +8,7 @@ interface CardHeaderProps {
 
 export const CardHeader: FC<CardHeaderProps> = ({ title, children }) => {
   return (
-    <div className={styles.cardHeader}>
+    <div className={classNames.cardHeader}>
       <h5>{title}</h5>
       {children}
     </div>
