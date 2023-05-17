@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { config } from '../constants/config'
+import queue from './queue.ts'
 
 interface GetParams {
   [key: string]: any
@@ -34,7 +35,12 @@ api.interceptors.request.use(
  */
 export async function get(url: string, params: GetParams = {}): Promise<any> {
   try {
-    const response: AxiosResponse = await api.get(url, { params })
+    const response: AxiosResponse = await queue.add({
+      method: 'get',
+      url: `${config.baseURL}${url}`,
+      headers: config.headers,
+      params,
+    })
     return response.data
   } catch (error) {
     console.error('GET request failed:', error)
@@ -50,7 +56,13 @@ export async function get(url: string, params: GetParams = {}): Promise<any> {
  */
 export async function post(url: string, data: PostData): Promise<any> {
   try {
-    const response: AxiosResponse = await api.post(url, data)
+    const response: AxiosResponse = await queue.add({
+      method: 'post',
+      url: `${config.baseURL}${url}`,
+      headers: config.headers,
+      data,
+    })
+
     return response.data
   } catch (error) {
     console.error('POST request failed:', error)
