@@ -6,6 +6,16 @@
       "DOM.Iterable",
       "ESNext"
     ],
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "postcssOptions": {
+            "useConfig": true
+          }
+        }
+      }
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
