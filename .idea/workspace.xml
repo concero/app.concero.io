@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="swapcard refactor" />
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="swapcard refactor">
+      <change afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.stylelintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.stylelintcache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,9 +39,6 @@
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
-  <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/package.json" />
-  </component>
   <component name="ProjectId" id="2P9qeR8auInNbjr7ZdQRMOBROIX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -56,21 +58,22 @@
     "git-widget-placeholder": "master",
     "javascript.nodejs.core.library.configured.version": "19.2.0",
     "javascript.nodejs.core.library.typings.version": "20.1.7",
+    "js.linters.configure.manually.selectedeslint": "true",
     "jsx.switch.disabled": "true",
     "last_opened_file_path": "/Users/oleg/Documents/Code/dex-frontend/src/constants",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.eslint": "/Users/user/Documents/GitHub/frontend/node_modules/eslint",
     "node.js.selected.package.standard": "",
-    "node.js.selected.package.stylelint": "/Users/oleg/Documents/Code/dex-frontend/node_modules/stylelint",
+    "node.js.selected.package.stylelint": "/Users/user/Documents/GitHub/frontend/node_modules/stylelint",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "pnpm",
     "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "settings.editor.splitter.proportion": "0.23922232",
     "ts.external.directory.path": "/Users/user/Documents/GitHub/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
@@ -117,6 +120,10 @@
       <workItem from="1684189775863" duration="160000" />
       <workItem from="1684191822098" duration="20214000" />
       <workItem from="1684343040983" duration="2599000" />
+      <workItem from="1684352366465" duration="433000" />
+      <workItem from="1684352861997" duration="94000" />
+      <workItem from="1684352963891" duration="36000" />
+      <workItem from="1684353004628" duration="70000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>

@@ -11,12 +11,28 @@ header {
     }
 }
 
-
 ul {
     color:       var(--color-text-secondary);
     font-size:   0.875rem;
     font-weight: 500;
-    gap:         var(--sp-md);
+    gap:         var(--sp-lg);
+
+    .link {
+        border:        1px solid var(--color-base-black);
+        border-radius: 6px;
+        padding:       var(--sp-sm) var(--sp-md);
+    }
+
+    .active {
+        border:     1px solid var(--color-primary-mainDark);
+        box-shadow: 0px 3px 12px rgba(90, 49, 176, 0.4);
+        color:      var(--color-text-primary);
+    }
+
+    .active:hover {
+        color: var(--color-text-primary);
+    }
+
 }
 
 a {

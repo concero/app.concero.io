@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import classNames from './CardHeader.module.pcss'
 
 interface CardHeaderProps {
   title: string
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 export const CardHeader: FC<CardHeaderProps> = ({ title, children }) => (

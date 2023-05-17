@@ -4,5 +4,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
+  "active": string|undefined
+  "link": string|undefined
   "logo": string|undefined
 }
