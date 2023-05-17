@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="swapcard refactor">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="swapcard refactor" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,8 +54,8 @@
     "code.cleanup.on.save": "true",
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "master",
-    "javascript.nodejs.core.library.configured.version": "20.0.0",
-    "javascript.nodejs.core.library.typings.version": "20.0.0",
+    "javascript.nodejs.core.library.configured.version": "19.2.0",
+    "javascript.nodejs.core.library.typings.version": "20.1.7",
     "jsx.switch.disabled": "true",
     "last_opened_file_path": "/Users/oleg/Documents/Code/dex-frontend/src/constants",
     "node.js.detected.package.eslint": "true",
@@ -73,8 +70,9 @@
     "nodejs_package_manager_path": "pnpm",
     "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "/Users/oleg/Documents/Code/dex-frontend/node_modules/typescript/lib",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.splitter.proportion": "0.23922232",
+    "ts.external.directory.path": "/Users/user/Documents/GitHub/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -118,6 +116,7 @@
       <workItem from="1684155476718" duration="19957000" />
       <workItem from="1684189775863" duration="160000" />
       <workItem from="1684191822098" duration="20214000" />
+      <workItem from="1684343040983" duration="2599000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -273,11 +272,29 @@
       <option name="project" value="LOCAL" />
       <updated>1684276372092</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="swapcard refactor">
+      <created>1684346981777</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1684346981777</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -301,5 +318,9 @@
     <MESSAGE value="add crypto icons" />
     <MESSAGE value="swapcard refactor" />
     <option name="LAST_COMMIT_MESSAGE" value="swapcard refactor" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
