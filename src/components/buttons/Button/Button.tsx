@@ -13,7 +13,7 @@ type IconComponentProps = {
 }
 
 type ButtonProps = {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
   variant?: 'primary' | 'secondary' | 'subtle' | 'black'
   leftIcon?: IconComponentProps
   rightIcon?: IconComponentProps

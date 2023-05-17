@@ -19,4 +19,5 @@ export type CssIdentifiersMap = {
   "sq-xs": string|undefined
   "subtle": string|undefined
   "xl": string|undefined
+  "xs": string|undefined
 }
