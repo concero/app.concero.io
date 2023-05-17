@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="add crypto icons">
-      <change afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/TokenArea.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/useSelectionState.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableCell.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableHeader.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableRow.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/layout/Table/TableSkeleton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="swapcard refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Table/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modals/ChainsModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/ChainsModal.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +117,7 @@
       <workItem from="1683731364188" duration="71097000" />
       <workItem from="1684155476718" duration="19957000" />
       <workItem from="1684189775863" duration="160000" />
-      <workItem from="1684191822098" duration="19330000" />
+      <workItem from="1684191822098" duration="20214000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -275,7 +266,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684273306031</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="swapcard refactor">
+      <created>1684276372092</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1684276372092</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,6 +299,7 @@
     <MESSAGE value="prettier" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="add crypto icons" />
-    <option name="LAST_COMMIT_MESSAGE" value="add crypto icons" />
+    <MESSAGE value="swapcard refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="swapcard refactor" />
   </component>
 </project>

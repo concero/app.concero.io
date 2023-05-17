@@ -10,34 +10,33 @@ type State = {
     token: { name: string; symbol: string }
   }
 }
+type Direction = 'from' | 'to'
 
-type Action =
-  | { type: 'setFromChain'; payload: { name: string; symbol: string } }
-  | { type: 'setFromToken'; payload: { name: string; symbol: string } }
-  | { type: 'setToChain'; payload: { name: string; symbol: string } }
-  | { type: 'setToToken'; payload: { name: string; symbol: string } }
+type SetChainAction = {
+  type: 'setChain'
+  direction: Direction
+  payload: { name: string; symbol: string }
+}
+
+type SetTokenAction = {
+  type: 'setToken'
+  direction: Direction
+  payload: { name: string; symbol: string }
+}
+
+type Action = SetChainAction | SetTokenAction
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'setFromChain':
+    case 'setChain':
       return {
         ...state,
-        from: { ...state.from, chain: action.payload },
+        [action.direction]: { ...state[action.direction], chain: action.payload },
       }
-    case 'setFromToken':
+    case 'setToken':
       return {
         ...state,
-        from: { ...state.from, token: action.payload },
-      }
-    case 'setToChain':
-      return {
-        ...state,
-        to: { ...state.to, chain: action.payload },
-      }
-    case 'setToToken':
-      return {
-        ...state,
-        to: { ...state.to, token: action.payload },
+        [action.direction]: { ...state[action.direction], token: action.payload },
       }
     default:
       return state
