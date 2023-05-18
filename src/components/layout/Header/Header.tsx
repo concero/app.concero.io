@@ -1,8 +1,10 @@
-import { CSSProperties, FC, ReactNode } from 'react'
+import { CSSProperties, FC, ReactNode, useContext } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { Web3Button } from '@web3modal/react'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../constants/routes.ts'
+import { Button } from '../../buttons/Button/Button.tsx'
+import { ThemeContext } from '../../../hooks/themeContext.tsx'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -10,6 +12,7 @@ export interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children }) => {
+  const { theme, toggleTheme } = useContext(ThemeContext)
   // const ButtonWithPopover = WithPopover(
   //   Button,
   //   MenuPopover,
@@ -47,6 +50,15 @@ export const Header: FC<HeaderProps> = ({ children }) => {
       </div>
       <div>
         <Web3Button />
+        <Button
+          size="sq-md"
+          onClick={toggleTheme}
+          variant="black"
+          leftIcon={{
+            name: theme === 'light' ? 'Moon' : 'Sun',
+            iconProps: { size: 18 },
+          }}
+        />
         {/* <ButtonWithPopover */}
         {/*  secondary */}
         {/*  sm */}
