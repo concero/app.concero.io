@@ -24,6 +24,7 @@
     "feather-icons": "^4.29.0",
     "framer-motion": "^10.12.10",
     "i": "^0.3.7",
+    "lightweight-charts": "^4.0.1",
     "lottie-react": "^2.4.0",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
