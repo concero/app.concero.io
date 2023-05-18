@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC, useContext, useEffect, useRef } from 'react'
 import { ColorType, createChart } from 'lightweight-charts'
-import { colors } from '../../../constants/colors.ts'
+import { ThemeContext } from '../../../hooks/themeContext.tsx'
+// import { colors } from '../../../constants/colors'
 
 export const data = [
   { time: '2018-12-22', value: 32.51 },
@@ -28,57 +29,57 @@ interface ChartProps {
   data: any
 }
 
-const chartOptions = {
-  layout: {
-    background: { type: ColorType.Solid, color: colors.base.background },
-    textColor: colors.text.primary,
-    fontFamily: 'Poppins',
-  },
-
-  grid: {
-    vertLines: {
-      color: colors.grey.darker,
-      style: 1,
-      visible: true,
-    },
-    horzLines: {
-      color: colors.grey.darker,
-      style: 1,
-      visible: true,
-    },
-  },
-  timeScale: {
-    timeVisible: true,
-    secondsVisible: false,
-  },
-  crosshair: {
-    horzLine: {
-      visible: true,
-      labelVisible: false,
-      color: colors.grey.dark,
-    },
-    vertLine: {
-      visible: true,
-      labelVisible: true,
-      color: colors.grey.dark,
-    },
-  },
-}
-
-const areaSeriesOptions = {
-  baseLineColor: colors.grey.light,
-  baseLineVisible: false,
-  lineType: 2,
-  topColor: colors.primary.dark,
-  bottomColor: colors.base.background,
-  baseLineStyle: 1,
-  lineColor: colors.primary.main,
-}
-
 export const Chart: FC<ChartProps> = () => {
   const ref = useRef()
-
+  const { colors } = useContext(ThemeContext)
   useEffect(() => {
+    const chartOptions = {
+      layout: {
+        background: { type: ColorType.Solid, color: colors.base.background },
+        textColor: colors.text.primary,
+        fontFamily: 'Poppins',
+      },
+
+      grid: {
+        vertLines: {
+          color: colors.grey.darker,
+          style: 1,
+          visible: true,
+        },
+        horzLines: {
+          color: colors.grey.darker,
+          style: 1,
+          visible: true,
+        },
+      },
+      timeScale: {
+        timeVisible: true,
+        secondsVisible: false,
+      },
+      crosshair: {
+        horzLine: {
+          visible: true,
+          labelVisible: false,
+          color: colors.grey.dark,
+        },
+        vertLine: {
+          visible: true,
+          labelVisible: true,
+          color: colors.grey.dark,
+        },
+      },
+    }
+
+    const areaSeriesOptions = {
+      baseLineColor: colors.grey.light,
+      baseLineVisible: false,
+      lineType: 2,
+      topColor: colors.primary.dark,
+      bottomColor: colors.base.background,
+      baseLineStyle: 1,
+      lineColor: colors.primary.main,
+    }
+
     const chart = createChart(ref.current, chartOptions)
     // Setting the border color for the horizontal axis
 
@@ -101,7 +102,7 @@ export const Chart: FC<ChartProps> = () => {
       window.removeEventListener('resize', handleResize)
       chart.remove()
     }
-  }, [])
+  }, [colors])
 
   return <div className="f1" ref={ref} />
 }

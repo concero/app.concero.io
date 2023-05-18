@@ -22,6 +22,19 @@ type ButtonProps = {
   className?: string
   children?: React.ReactNode
 }
+const getButtonClasses = (
+  size: ButtonProps['size'],
+  variant: ButtonProps['variant'],
+  isLoading: ButtonProps['isLoading'],
+  className: ButtonProps['className'],
+) => {
+  const baseClasses = [styles.button]
+  const sizeClass = size ? styles[size] : ''
+  const variantClass = variant ? styles[variant] : ''
+  const isLoadingClass = isLoading ? styles.isLoading : ''
+  const additionalClasses = className && className.split(' ')
+  return baseClasses.concat(sizeClass, variantClass, isLoadingClass, additionalClasses).join(' ')
+}
 
 /**
  A customizable button component that can display icons and animations
@@ -52,25 +65,15 @@ export const Button: FC<ButtonProps> = ({
   const buttonClasses = getButtonClasses(size, variant, isLoading, className)
   return (
     <button className={buttonClasses} onClick={onClick}>
-      {isLoading ? <LoadingAnimation /> : leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
+      {isLoading ? (
+        <LoadingAnimation />
+      ) : (
+        leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />
+      )}
       {children}
       {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}
     </button>
   )
-}
-
-const getButtonClasses = (
-  size: ButtonProps['size'],
-  variant: ButtonProps['variant'],
-  isLoading: ButtonProps['isLoading'],
-  className: ButtonProps['className'],
-) => {
-  const baseClasses = [styles.button]
-  const sizeClass = size ? styles[size] : ''
-  const variantClass = variant ? styles[variant] : ''
-  const isLoadingClass = isLoading ? styles.isLoading : ''
-  const additionalClasses = className && className.split(' ')
-  return baseClasses.concat(sizeClass, variantClass, isLoadingClass, additionalClasses).join(' ')
 }
 
 const LoadingAnimation: FC = () => (

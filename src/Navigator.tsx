@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { ExchangeScreen } from './components/screens/ExchangeScreen/ExchangeScreen'
-import { AppScreen } from './components/screens/AppScreen'
+import { AppScreen } from './components/screens/AppScreen/AppScreen.tsx'
 import { Header } from './components/layout/Header/Header'
-import { routes } from './constants/routes.ts'
-import { PortfolioScreen } from './components/screens/PortfolioScreen/PortfolioScreen.tsx'
+import { routes } from './constants/routes'
+import { PortfolioScreen } from './components/screens/PortfolioScreen/PortfolioScreen'
 
 export interface NavigatorProps {}
 

@@ -1,5 +1,4 @@
 :root {
-    @import-json '../constants/json/colors.json';
     @import-json '../constants/json/spacing.json';
     @import-json '../constants/json/styles.json';
     color-scheme:             light dark;
@@ -7,9 +6,11 @@
     font-size:                16px; /* base font size, 1rem */
     -webkit-font-smoothing:   antialiased;
     font-synthesis:           none;
+
     -moz-osx-font-smoothing:  grayscale;
     text-rendering:           optimizeLegibility;
     -webkit-text-size-adjust: 100%;
+
 }
 
 header, main, footer, aside, nav, section, article, figure, figcaption, ul, ol, li {
@@ -18,21 +19,100 @@ header, main, footer, aside, nav, section, article, figure, figcaption, ul, ol, 
 }
 
 body {
-    box-sizing: border-box;
-    display:    flex;
-    height:     100vh;
-    margin:     0;
-    overflow:   hidden;
-    padding:    0;
-    width:      100vw;
+    background-color: var(--color-base-background);
+    box-sizing:       border-box;
+    display:          flex;
+    height:           100vh;
+    margin:           0;
+    overflow:         hidden;
+    padding:          0;
+    width:            100vw;
+}
+
+.light {
+    --color-base-background:   #FFFFFF;
+    --color-base-black:        #FFFFFF;
+    --color-base-white:        #000000;
+    --color-green-dark:        #ABEDD5;
+    --color-green-darker:      #C7F3E3;
+    --color-green-darkest:     #E3F9F1;
+    --color-green-light:       #20A273;
+    --color-green-lighter:     #1A8B65;
+    --color-green-lightest:    #0F271F;
+    --color-green-main:        #26C281;
+    --color-grey-dark:         #CBCACF;
+    --color-grey-darker:       #E5E5E7;
+    --color-grey-darkest:      #F7F7F7;
+    --color-grey-light:        #464646;
+    --color-grey-lighter:      #1C1C1C;
+    --color-grey-lightest:     #131313;
+    --color-grey-medium:       #B0AFB5;
+    --color-grey-mediumLight:  #98959E;
+    --color-primary-dark:      #AB86FA;
+    --color-primary-darker:    #C7AEFC;
+    --color-primary-darkest:   #E3D7FD;
+    --color-primary-light:     #452094;
+    --color-primary-lighter:   #2E1563;
+    --color-primary-lightest:  #170B31;
+    --color-primary-main:      #7335F7;
+    --color-primary-mainDark:  #8F5DF9;
+    --color-primary-mainLight: #5C2AC6;
+    --color-red-dark:          #F9C9C3;
+    --color-red-darker:        #FBDCD7;
+    --color-red-darkest:       #FDEEEB;
+    --color-red-light:         #D34141;
+    --color-red-lighter:       #B62C2C;
+    --color-red-lightest:      #290C0C;
+    --color-text-primary:      #131313;
+    --color-text-secondary:    #98959E;
+}
+
+.dark {
+    --color-base-background:   #000000;
+    --color-base-black:        #000000;
+    --color-base-white:        #FFFFFF;
+    --color-green-dark:        #20A273;
+    --color-green-darker:      #1A8B65;
+    --color-green-darkest:     #0F271F;
+    --color-green-light:       #ABEDD5;
+    --color-green-lighter:     #C7F3E3;
+    --color-green-lightest:    #E3F9F1;
+    --color-green-main:        #26C281;
+    --color-grey-dark:         #464646;
+    --color-grey-darker:       #1C1C1C;
+    --color-grey-darkest:      #131313;
+    --color-grey-light:        #CBCACF;
+    --color-grey-lighter:      #E5E5E7;
+    --color-grey-lightest:     #F7F7F7;
+    --color-grey-medium:       #98959E;
+    --color-grey-mediumLight:  #B0AFB5;
+    --color-primary-dark:      #452094;
+    --color-primary-darker:    #2E1563;
+    --color-primary-darkest:   #170B31;
+    --color-primary-light:     #AB86FA;
+    --color-primary-lighter:   #C7AEFC;
+    --color-primary-lightest:  #E3D7FD;
+    --color-primary-main:      #7335F7;
+    --color-primary-mainDark:  #5C2AC6;
+    --color-primary-mainLight: #8F5DF9;
+    --color-red-dark:          #D34141;
+    --color-red-darker:        #B62C2C;
+    --color-red-darkest:       #290C0C;
+    --color-red-light:         #F9C9C3;
+    --color-red-lighter:       #FBDCD7;
+    --color-red-lightest:      #FDEEEB;
+    --color-text-primary:      #F7F7F7;
+    --color-text-secondary:    #7E7B86;
 }
 
 div#root {
-    flex: 1
+    background-color: var(--color-base-background);
+    flex:             1;
 }
 
 div {
     box-sizing:     border-box;
+    color:          var(--color-text-primary);
     display:        flex;
     flex-direction: column;
 }
