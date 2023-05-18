@@ -4,6 +4,7 @@ import { ExchangeScreen } from './components/screens/ExchangeScreen/ExchangeScre
 import { AppScreen } from './components/screens/AppScreen'
 import { Header } from './components/layout/Header/Header'
 import { routes } from './constants/routes.ts'
+import { PortfolioScreen } from './components/screens/PortfolioScreen/PortfolioScreen.tsx'
 
 export interface NavigatorProps {}
 
@@ -13,7 +14,7 @@ export const Navigator: FC<NavigatorProps> = ({}) => (
       <Header />
       <Routes>
         <Route path={routes.exchange} element={<ExchangeScreen />} />
-        <Route path={routes.portfolio} element={<div>Portfolio</div>} />
+        <Route path={routes.portfolio} element={<PortfolioScreen />} />
         <Route path={routes.root} element={<Navigate to={routes.exchange} />} />
       </Routes>
     </AppScreen>
