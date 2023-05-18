@@ -1,7 +1,8 @@
 import { CSSProperties, FC, ReactNode } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 import { Web3Button } from '@web3modal/react'
 import classNames from './Header.module.pcss'
+import { routes } from '../../../constants/routes.ts'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -9,23 +10,20 @@ export interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children }) => {
-// const ButtonWithPopover = WithPopover(
-//   Button,
-//   MenuPopover,
-//   {
-//     items: [
-//       { title: 'Copy address', iconName: 'Copy' },
-//       { title: 'Settings', iconName: 'Settings' },
-//       { title: 'Logout', iconName: 'Logout', danger: true },
-//     ],
-//   },
-//   'click',
-// )
-
-  const location = useLocation()
-  const currentPath = location.pathname.split('/')[1]
-  const exchangeClassName = `${classNames.link} ${currentPath === '' && classNames.active}`
-  const walletClassName = `${classNames.link} ${currentPath === 'wallet' && classNames.active}`
+  // const ButtonWithPopover = WithPopover(
+  //   Button,
+  //   MenuPopover,
+  //   {
+  //     items: [
+  //       { title: 'Copy address', iconName: 'Copy' },
+  //       { title: 'Settings', iconName: 'Settings' },
+  //       { title: 'Logout', iconName: 'Logout', danger: true },
+  //     ],
+  //   },
+  //   'click',
+  // )
+  const matchExchange = useMatch(routes.exchange)
+  const matchPortfolio = useMatch(routes.portfolio)
 
   return (
     <header>
@@ -33,9 +31,18 @@ export const Header: FC<HeaderProps> = ({ children }) => {
       <div>
         <div className={classNames.logo} />
         <ul>
-          <Link className={classNames.link} to="#">Home</Link>
-          <Link className={exchangeClassName} to="#">Exchange</Link>
-          <Link className={walletClassName} to="#">Wallet</Link>
+          <Link
+            className={matchExchange ? classNames.active : classNames.link}
+            to={routes.exchange}
+          >
+            Exchange
+          </Link>
+          <Link
+            className={matchPortfolio ? classNames.active : classNames.link}
+            to={routes.portfolio}
+          >
+            Portfolio
+          </Link>
         </ul>
       </div>
       <div>
