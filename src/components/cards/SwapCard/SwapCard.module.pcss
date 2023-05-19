@@ -19,38 +19,26 @@
 
         .swapTagContainer {
             flex-direction: row;
+            gap:            var(--sp-xs);
 
             .swapPriceTag {
+                align-items:    center;
                 flex-direction: row;
-                gap:            6px
+                gap:            var(--sp-xs);
             }
 
             .equalSign {
-                margin-right: 10px;
+            //margin-right: 10px;
             }
         }
 
         .routeInfoContainer {
             align-items:    center;
             flex-direction: row;
-            gap:            2px;
+            gap:            var(--sp-xs);
         }
 
 
-        .avatarContainer {
-            flex-direction: row;
-
-            .avatar {
-                border:        1px solid var(--color-base-black);
-                border-radius: 100px;
-                height:        22px;
-                width:         20px;
-            }
-
-            .avatarRight {
-                margin-left: -10px;
-            }
-        }
     }
 }
 
@@ -72,4 +60,23 @@
     h3, h4, h5 {
         color: var(--color-grey-light);
     }
+}
+
+.avatarContainer {
+    align-items:    center;
+    flex-direction: row;
+
+    img:nth-child(2) {
+        margin-left: -8px;
+    }
+
+    img:nth-child(3) {
+        margin-left:  -8px;
+        margin-right: var(--sp-xs);
+    }
+
+}
+
+p {
+    font-size: 0.85rem;
 }

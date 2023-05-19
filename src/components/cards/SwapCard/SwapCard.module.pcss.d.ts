@@ -4,9 +4,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "avatar": string|undefined
   "avatarContainer": string|undefined
-  "avatarRight": string|undefined
   "equalSign": string|undefined
   "routeInfoContainer": string|undefined
   "swapContainer": string|undefined
