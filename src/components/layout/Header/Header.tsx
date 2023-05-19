@@ -1,10 +1,13 @@
-import { CSSProperties, FC, ReactNode, useContext } from 'react'
+import {
+  CSSProperties, FC, ReactNode, useContext,
+} from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { Web3Button } from '@web3modal/react'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../constants/routes.ts'
 import { Button } from '../../buttons/Button/Button.tsx'
 import { ThemeContext } from '../../../hooks/themeContext.tsx'
+import { IconLogo } from '../../../assets/IconLogo.tsx'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -32,7 +35,9 @@ export const Header: FC<HeaderProps> = ({ children }) => {
     <header>
       {children}
       <div>
-        <div className={classNames.logo} />
+        <Link to={routes.home} className={classNames.logoContainer}>
+          <IconLogo />
+        </Link>
         <ul>
           <Link
             className={matchExchange ? classNames.active : classNames.link}

@@ -43,9 +43,13 @@ a:hover {
     color: var(--color-grey-mediumLight);
 }
 
-.logo {
-    background-color: var(--color-grey-darker);
-    border-radius:    var(--st-br-sm);
-    height:           40px;
-    width:            40px;
+.logoContainer {
+    align-items:  center;
+    display:      flex;
+    margin-right: var(--sp-lg);
+
+    .logo {
+        height: 100%;
+        width:  100%;
+    }
 }

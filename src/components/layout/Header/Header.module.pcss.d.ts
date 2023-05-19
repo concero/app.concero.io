@@ -6,4 +6,5 @@ export default identifiersMap
 export type CssIdentifiersMap = {
   "active": string|undefined
   "logo": string|undefined
+  "logoContainer": string|undefined
 }
