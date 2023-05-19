@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="header selected item">
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="critical deps fix">
+      <change afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/queue.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.stylelintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.stylelintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.stylelintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.stylelintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Header/Header.module.pcss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Header/Header.module.pcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/text/B1.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/text/H1.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/text/H2.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/text/H3.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/text/H4.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/text/index.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,38 +57,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;19.2.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.1.7&quot;,
-    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
-    &quot;jsx.switch.disabled&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/src/constants&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;/Users/user/Documents/GitHub/frontend/node_modules/eslint&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;/Users/user/Documents/GitHub/frontend/node_modules/stylelint&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;settings.editor.splitter.proportion&quot;: &quot;0.23922232&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/user/Documents/GitHub/frontend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "code.cleanup.on.save": "true",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "master",
+    "javascript.nodejs.core.library.configured.version": "20.0.0",
+    "javascript.nodejs.core.library.typings.version": "20.0.0",
+    "js.linters.configure.manually.selectedeslint": "true",
+    "jsx.switch.disabled": "true",
+    "last_opened_file_path": "/Users/oleg/Documents/Code/dex-frontend/src/constants",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "/Users/oleg/Documents/Code/concero/node_modules/eslint",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.stylelint": "/Users/oleg/Documents/Code/concero/node_modules/stylelint",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "pnpm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "configurable.stylesheets",
+    "ts.external.directory.path": "/Users/oleg/Documents/Code/concero/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/constants" />
@@ -117,13 +128,8 @@
       <workItem from="1684155476718" duration="19957000" />
       <workItem from="1684189775863" duration="160000" />
       <workItem from="1684191822098" duration="20214000" />
-      <workItem from="1684343040983" duration="2599000" />
-      <workItem from="1684352366465" duration="433000" />
-      <workItem from="1684352861997" duration="94000" />
-      <workItem from="1684352963891" duration="36000" />
-      <workItem from="1684353004628" duration="7578000" />
-      <workItem from="1684398658189" duration="5000" />
-      <workItem from="1684412299048" duration="29000" />
+      <workItem from="1684342869324" duration="5737000" />
+      <workItem from="1684352298621" duration="5376000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -279,21 +285,7 @@
       <option name="project" value="LOCAL" />
       <updated>1684276372092</updated>
     </task>
-    <task id="LOCAL-00023" summary="swapcard refactor">
-      <created>1684346981777</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1684346981777</updated>
-    </task>
-    <task id="LOCAL-00024" summary="header selected item">
-      <created>1684358574321</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1684358574321</updated>
-    </task>
-    <option name="localTasksCounter" value="25" />
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,11 +323,6 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="add crypto icons" />
     <MESSAGE value="swapcard refactor" />
-    <MESSAGE value="header selected item" />
-    <option name="LAST_COMMIT_MESSAGE" value="header selected item" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+    <option name="LAST_COMMIT_MESSAGE" value="swapcard refactor" />
   </component>
 </project>
