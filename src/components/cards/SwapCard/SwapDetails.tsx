@@ -46,6 +46,12 @@ const route = {
     symbol: 'USD',
     time: '2m',
   },
+  bridge: {
+    src: 'https://via.placeholder.com/20',
+  },
+  dex: {
+    src: 'https://via.placeholder.com/20',
+  },
 }
 
 interface RateTagProps {
@@ -87,12 +93,39 @@ interface RouteButtonProps {
       symbol: string
       time: string
     }
+    bridge: {
+      src: string
+    }
+    dex: {
+      src: string
+    }
   }
 }
+
+interface AvatarProps {
+  bridge: {
+    src: string
+  }
+  dex: {
+    src: string
+  }
+}
+
+const Avatar: FC<AvatarProps> = ({ bridge, dex }) => (
+  <div className={classNames.avatarContainer}>
+    <img src={dex.src} alt="avatar" className={classNames.avatar} />
+    <img
+      src={bridge.src}
+      alt="avatar"
+      className={`${classNames.avatar} ${classNames.avatarRight}`}
+    />
+  </div>
+)
 
 const RouteButton: FC<RouteButtonProps> = ({ route }) => (
   <div>
     <Button variant="subtle" rightIcon={{ name: 'ChevronRight', iconProps: { size: 18 } }}>
+      <Avatar bridge={route.bridge} dex={route.dex} />
       <div className={classNames.routeInfoContainer}>
         <Icon name="GasStation" size="1.2rem" color={colors.text.secondary} />
         <p>{`$${route.gas.price}`}</p>
