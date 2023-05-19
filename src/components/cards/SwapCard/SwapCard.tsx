@@ -4,8 +4,10 @@ import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
 import { useSelectionState } from './useSelectionState'
 import { TokenArea } from './TokenArea'
+import { SwapDetails } from './SwapDetails'
 
-interface SwapCardProps {}
+interface SwapCardProps {
+}
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { selection, dispatch } = useSelectionState()
@@ -16,6 +18,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
       <div className={classNames.swapContainer}>
         <TokenArea direction="from" selection={selection.from} dispatch={dispatch} />
         <TokenArea direction="to" selection={selection.to} dispatch={dispatch} />
+        <SwapDetails selection={selection} />
         <Button size="lg" leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
           Swap
         </Button>

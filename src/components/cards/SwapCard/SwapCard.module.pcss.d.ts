@@ -4,7 +4,12 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
+  "equalSign": string|undefined
+  "routeInfoContainer": string|undefined
   "swapContainer": string|undefined
+  "swapDetailsContainer": string|undefined
+  "swapPriceTag": string|undefined
+  "swapTagContainer": string|undefined
   "tokenContainer": string|undefined
   "tokenRow": string|undefined
   "tokenRowHeader": string|undefined

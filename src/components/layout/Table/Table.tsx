@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { CSSProperties, FC, useState } from 'react'
 import classNames from './Table.module.pcss'
 import { TableSkeleton } from './TableSkeleton'
 import { TableRow } from './TableRow'
@@ -7,7 +7,7 @@ import { TableHeader } from './TableHeader'
 export interface TableColumn {
   columnTitle: string
   cellComponent: (item: any) => JSX.Element
-  headerStyle?: React.CSSProperties
+  headerStyle?: CSSProperties
 }
 
 export interface TableProps {
@@ -17,7 +17,9 @@ export interface TableProps {
   onClick?: (item: any) => void
 }
 
-export const Table: FC<TableProps> = ({ columns, data, isHeaderVisible = true, onClick }) => {
+export const Table: FC<TableProps> = ({
+  columns, data, isHeaderVisible = true, onClick,
+}) => {
   const [isLoading, setIsLoading] = useState(false)
 
   return (
