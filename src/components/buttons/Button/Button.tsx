@@ -19,6 +19,7 @@ type ButtonProps = {
   rightIcon?: IconComponentProps
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   isLoading?: boolean
+  isDisabled?: boolean
   className?: string
   children?: React.ReactNode
 }
@@ -26,14 +27,18 @@ const getButtonClasses = (
   size: ButtonProps['size'],
   variant: ButtonProps['variant'],
   isLoading: ButtonProps['isLoading'],
+  isDisabled: ButtonProps['isDisabled'],
   className: ButtonProps['className'],
 ) => {
   const baseClasses = [styles.button]
   const sizeClass = size ? styles[size] : ''
   const variantClass = variant ? styles[variant] : ''
   const isLoadingClass = isLoading ? styles.isLoading : ''
+  const isDisabledClass = isDisabled ? styles.isDisabled : ''
   const additionalClasses = className && className.split(' ')
-  return baseClasses.concat(sizeClass, variantClass, isLoadingClass, additionalClasses).join(' ')
+  return baseClasses
+    .concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, additionalClasses)
+    .join(' ')
 }
 
 /**
@@ -44,6 +49,7 @@ const getButtonClasses = (
  @param {Object} [rightIcon] - The object describing the right icon displayed in the button. It contains a name property (which must match one of the icons from tabler-icons-react) and an optional iconProps property that gets passed to the Icon component.
  @param {Function} [onClick] - The function to be called when the button is clicked.
  @param {boolean} [isLoading=false] - A boolean indicating whether the button is in a loading state.
+ @param {boolean} [isDisabled=false] - A boolean indicating whether the button is disabled.
  @param {string} [className] - A string of additional CSS classes to apply to the button.
  @param {ReactNode} [children] - The children of the button.
  @returns {JSX.Element} - The rendered button element.
@@ -58,11 +64,12 @@ export const Button: FC<ButtonProps> = ({
   leftIcon,
   rightIcon,
   isLoading,
+  isDisabled,
   children,
   onClick,
   className,
 }) => {
-  const buttonClasses = getButtonClasses(size, variant, isLoading, className)
+  const buttonClasses = getButtonClasses(size, variant, isLoading, isDisabled, className)
   return (
     <button className={buttonClasses} onClick={onClick}>
       {isLoading ? (
