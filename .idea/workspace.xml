@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="header dark/ light theme toggle">
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="toggle chart type ChartCard.tsx">
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/buttons/Button/Button.module.pcss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/buttons/Button/Button.module.pcss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/buttons/Button/Button.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/buttons/Button/Button.module.pcss.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/buttons/Button/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/buttons/Button/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.stylelintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.stylelintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/HistoryCard/HistoryCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/HistoryCard/HistoryCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/index.css.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,8 +61,8 @@
     "code.cleanup.on.save": "true",
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "master",
-    "javascript.nodejs.core.library.configured.version": "20.0.0",
-    "javascript.nodejs.core.library.typings.version": "20.0.0",
+    "javascript.nodejs.core.library.configured.version": "19.2.0",
+    "javascript.nodejs.core.library.typings.version": "20.2.1",
     "js.linters.configure.manually.selectedeslint": "true",
     "jsx.switch.disabled": "true",
     "last_opened_file_path": "/Users/oleg/Documents/Code/dex-frontend/src/constants",
@@ -69,16 +70,16 @@
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "/Users/oleg/Documents/Code/concero/node_modules/eslint",
+    "node.js.selected.package.eslint": "/Users/user/Documents/GitHub/frontend/node_modules/eslint",
     "node.js.selected.package.standard": "",
-    "node.js.selected.package.stylelint": "/Users/oleg/Documents/Code/concero/node_modules/stylelint",
+    "node.js.selected.package.stylelint": "/Users/user/Documents/GitHub/frontend/node_modules/stylelint",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "/opt/homebrew/bin/node",
+    "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "pnpm",
     "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "editor.preferences.jsOptions",
-    "ts.external.directory.path": "/Users/oleg/Documents/Code/concero/node_modules/typescript/lib",
+    "ts.external.directory.path": "/Users/user/Documents/GitHub/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -126,6 +127,7 @@
       <workItem from="1684352298621" duration="5376000" />
       <workItem from="1684442071042" duration="20669000" />
       <workItem from="1684589694849" duration="5821000" />
+      <workItem from="1684603004271" duration="694000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -349,7 +351,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="text" />
     <MESSAGE value="text tests" />
     <MESSAGE value="shared json variables" />
     <MESSAGE value="header done" />
@@ -374,6 +375,7 @@
     <MESSAGE value="portfolioScreen Init" />
     <MESSAGE value="dark/ light theme toggle" />
     <MESSAGE value="header dark/ light theme toggle" />
-    <option name="LAST_COMMIT_MESSAGE" value="header dark/ light theme toggle" />
+    <MESSAGE value="toggle chart type ChartCard.tsx" />
+    <option name="LAST_COMMIT_MESSAGE" value="toggle chart type ChartCard.tsx" />
   </component>
 </project>

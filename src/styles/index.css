@@ -172,6 +172,11 @@ a {
     text-decoration: none;
 }
 
+.body1 {
+    color:     var(--color-text-secondary);
+    font-size: 0.85rem;
+}
+
 button {
     border:      none;
     cursor:      pointer;
