@@ -1,6 +1,8 @@
-import React, { FC, useContext, useEffect, useRef } from 'react'
+import {
+  FC, useContext, useEffect, useRef,
+} from 'react'
 import { ColorType, createChart } from 'lightweight-charts'
-import { ThemeContext } from '../../../hooks/themeContext.tsx'
+import { ThemeContext } from '../../../hooks/themeContext'
 // import { colors } from '../../../constants/colors'
 
 export const data = [
