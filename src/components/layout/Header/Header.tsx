@@ -5,6 +5,7 @@ import classNames from './Header.module.pcss'
 import { routes } from '../../../constants/routes'
 import { Button } from '../../buttons/Button/Button'
 import { ThemeContext } from '../../../hooks/themeContext'
+import { Logo } from '../Logo.tsx'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -32,7 +33,9 @@ export const Header: FC<HeaderProps> = ({ children }) => {
     <header>
       {children}
       <div>
-        <div className={classNames.logo} />
+        <div className={classNames.logoContainer}>
+          <Logo />
+        </div>
         <ul>
           <Link
             className={matchExchange ? classNames.active : classNames.link}

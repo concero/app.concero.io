@@ -4,9 +4,9 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
 import { Chart } from './Chart'
+import { Beacon } from '../../layout/Beacon.tsx'
 
-export interface ChartCardProps {
-}
+export interface ChartCardProps {}
 
 export const ChartCard: FC<ChartCardProps> = () => {
   const [chartType, setChartType] = useState<'chart' | 'tradingView'>('chart')
@@ -24,18 +24,23 @@ export const ChartCard: FC<ChartCardProps> = () => {
         >
           BSC / USDT
         </Button>
-        <Button
-          variant="subtle"
-          size="sm"
-          className={classNames.tradingViewButton}
-          onClick={() => toggleChartType()}
-        >
-          {chartType === 'chart' ? 'TradingView' : 'Main chart'}
+        <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
+          <Beacon isOn={chartType === 'tradingView'} />
+          TradingView
         </Button>
       </CardHeader>
       <div className="f1">
-        {chartType === 'chart' ? <Chart />
-          : <AdvancedRealTimeChart theme="dark" symbol="BINANCE:BTCUSDT" interval="1" width="100%" height="100%" />}
+        {chartType === 'chart' ? (
+          <Chart />
+        ) : (
+          <AdvancedRealTimeChart
+            theme="dark"
+            symbol="BINANCE:BTCUSDT"
+            interval="1"
+            width="100%"
+            height="100%"
+          />
+        )}
       </div>
     </div>
   )
