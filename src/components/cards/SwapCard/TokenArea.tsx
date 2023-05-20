@@ -1,11 +1,12 @@
 import { FC, useState } from 'react'
 import classNames from './SwapCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
-import { EntityListModal } from '../../modals/EntityListModal.tsx'
-import { capitalize } from '../../../utils/formatting.ts'
-import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol.tsx'
-import { CryptoSymbolType } from '../../../types/CryptoSymbol.ts'
-import { colors } from '../../../constants/colors.ts'
+import { EntityListModal } from '../../modals/EntityListModal'
+import { capitalize } from '../../../utils/formatting'
+import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
+import { CryptoSymbolType } from '../../../types/CryptoSymbol'
+import { colors } from '../../../constants/colors'
+import { TextInput } from '../../input/TextInput'
 
 interface TokenAreaProps {
   direction: 'to' | 'from'
@@ -49,10 +50,11 @@ const chainsColumns = [
   },
   {
     columnTitle: 'Balance',
-    cellComponent: (chain: { name: string; symbol: string }) => <p style={{ color: colors.grey.medium }}>0.000</p>,
+    cellComponent: (chain: { name: string; symbol: string }) => (
+      <p style={{ color: colors.grey.medium }}>0.000</p>
+    ),
   },
 ]
-
 const tokensData = [
   { name: 'ETH', symbol: 'ETH' },
   { name: 'BTC', symbol: 'BTC' },
@@ -80,9 +82,9 @@ const tokensColumns = [
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
-
+  const [amount, setAmount] = useState<string>('0.0')
+  const balance = 0
   const setChain = (chain) => {
-    console.log('setChain', direction, chain)
     dispatch({
       type: 'setChain',
       direction,
@@ -91,7 +93,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
   }
 
   const setToken = (token) => {
-    console.log('setToken', direction, token)
     dispatch({
       type: 'setToken',
       direction,
@@ -114,12 +115,17 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
               <CryptoSymbol name={selection.chain.name} symbol={selection.chain.symbol} />
             </Button>
           </div>
-          <p>Max: 10</p>
+          <p>{`Max: ${balance}`}</p>
         </div>
         <div className={classNames.tokenRow}>
           <div>
-            <h3>40 BNB</h3>
-            <h5>$4024</h5>
+            <TextInput
+              variant="inline"
+              placeholder={`0.0 ${selection.token.symbol}`}
+              value={amount}
+              onChangeText={(value) => setAmount(value)}
+            />
+            <h5>${amount}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}
