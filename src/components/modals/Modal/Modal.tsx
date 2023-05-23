@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
@@ -8,7 +8,7 @@ export interface ModalProps {
   title: string
   show: boolean
   setShow: (show: boolean) => void
-  children?: React.ReactNode
+  children?: ReactNode
   size: {
     width: number
     height: number
