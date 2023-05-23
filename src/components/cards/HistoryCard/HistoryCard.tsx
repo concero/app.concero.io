@@ -64,17 +64,20 @@ const historyItems = [
 ]
 export const HistoryCard: FC<HistoryCardProps> = () => {
   const [historyType, setHistoryType] = useState<'All' | 'Own'>('All')
-  const testButton = () => (
-    <Button
-      variant="subtle"
-      rightIcon={{ name: 'ChevronDown', iconProps: { size: '0.85rem', color: colors.grey.medium } }}
-      size="sm"
-    >
-      <p className="body1">{historyType}</p>
-    </Button>
-  )
 
-  const ButtonWithPopover = WithPopover(testButton, MenuPopover, {
+  function ToggleHistoyButton() {
+    return (
+      <Button
+        variant="subtle"
+        rightIcon={{ name: 'ChevronDown', iconProps: { size: '0.85rem', color: colors.grey.medium } }}
+        size="sm"
+      >
+        <p className="body1">{historyType}</p>
+      </Button>
+    )
+  }
+
+  const ButtonWithPopover = WithPopover(ToggleHistoyButton, MenuPopover, {
     items: [
       { title: 'All', onClick: () => setHistoryType('All') },
       { title: 'Own', onClick: () => setHistoryType('Own') },

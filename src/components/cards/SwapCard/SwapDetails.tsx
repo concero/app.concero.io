@@ -1,10 +1,9 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import classNames from './SwapCard.module.pcss'
-import { Button } from '../../buttons/Button/Button'
-import Icon from '../../Icon'
-import { colors } from '../../../constants/colors'
-import { CryptoIcon } from '../../tags/CryptoSymbol/CryptoIcon'
-import { Avatar } from '../../tags/Avatar/Avatar'
+import { Modal } from '../../modals/Modal/Modal'
+import { RouteButton } from './RouteButton'
+import { RateTag } from './RouteTag'
+import { RouteCard } from '../RouteCard/RouteCard'
 
 interface SwapDetailsProps {
   selection: {
@@ -53,91 +52,64 @@ const route = {
   ],
 }
 
-interface RateTagProps {
-  from: Token
-  to: Token
-  rate: {
-    from: string
-    to: string
-  }
-}
-
-const RateTag: FC<RateTagProps> = ({ from, to, rate }) => (
-  <div className={classNames.swapTagContainer}>
-    <div className={classNames.swapPriceTag}>
-      <p>{rate.from}</p>
-      <CryptoIcon symbol={from.name} />
-    </div>
-    <p className={classNames.equalSign}>=</p>
-    <div className={classNames.swapPriceTag}>
-      <p>{rate.to}</p>
-      <CryptoIcon symbol={to.name} />
-    </div>
-  </div>
-)
-
-interface AvatarsProps {
-  entities: [
-    {
-      id: string
-      name: string
-    }, {
-      id: string
-      name: string
-    },
-  ]
-}
-
-const Avatars: FC<AvatarsProps> = ({ entities }) => (
-  <div className={classNames.avatarContainer}>
-    {entities.map((entity, index) => (
-      <>
-        {(index < 3)
-          && (
-            <Avatar size="xs" key={entity.id} src={entity.name} />
-          )}
-      </>
-    ))}
-    {entities.length > 3 && <p>{`${entities.length}`}</p>}
-  </div>
-)
-
-interface RouteButtonProps {
-  route: {
-    gas_price_usd: string
-    transaction_time_seconds: string
-    entities: [
+const routes = [
+  {
+    id: '1',
+    amount_usd: '7453',
+    amount_token: '1.53 ETH',
+    advantage: 'best',
+    transaction_time_seconds: '120',
+    gas_price_usd: '12',
+    slippage_percent: '0.4',
+    route_steps: [
       {
-        id: string
-        name: string
+        id: '1',
+        transaction_time_seconds: '120',
+        gas_price_usd: '12',
+        slippage_percent: '0.4',
+        from: {
+          token: {
+            name: 'BNB',
+            symbol: 'BNB',
+          },
+          chain: {
+            name: 'Binance Smart Chain',
+            symbol: 'BSC',
+          },
+        },
+        to: {
+          token: {
+            name: 'ETH',
+            symbol: 'ETH',
+          },
+          chain: {
+            name: 'Ethereum',
+            symbol: 'ETH',
+          },
+        },
+        exchange: {
+          name: 'PancakeSwap',
+          symbol: 'PancakeSwap',
+        },
       },
-    ]
-  }
+    ],
+  },
+]
+
+export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => {
+  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
+
+  return (
+    <div className={classNames.swapDetailsContainer}>
+      <RateTag from={selection.from.token} to={selection.to.token} rate={rate} />
+      <RouteButton route={route} onClick={() => setIsSelectRouteModalVisible(true)} />
+      <Modal
+        title="Select route"
+        show={isSelectRouteModalVisible}
+        setShow={setIsSelectRouteModalVisible}
+      >
+        {routes.map((route) => <RouteCard key={route.id} route={route} />)}
+      </Modal>
+    </div>
+  )
 }
-
-const RouteButton: FC<RouteButtonProps> = ({ route }) => (
-  <div>
-    <Button
-      variant="subtle"
-      rightIcon={{ name: 'ChevronRight', iconProps: { size: 16, color: colors.grey.medium } }}
-      size="sm"
-    >
-      <Avatars entities={route.entities} />
-      <div className={classNames.routeInfoContainer}>
-        <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
-        <p>{`$${route.gas_price_usd}`}</p>
-      </div>
-      <div className={classNames.routeInfoContainer}>
-        <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
-        <p>{`${route.transaction_time_seconds}s`}</p>
-      </div>
-    </Button>
-  </div>
-)
-
-export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => (
-  <div className={classNames.swapDetailsContainer}>
-    <RateTag from={selection.from.token} to={selection.to.token} rate={rate} />
-    <RouteButton route={route} />
-  </div>
-)

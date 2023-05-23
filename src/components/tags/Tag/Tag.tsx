@@ -17,18 +17,26 @@ export interface TagProps {
   fgColor?: string
   bgColor?: string
   isLoading?: boolean
-  children?: string
+  children?: string | JSX.Element[] | JSX.Element
+  size?: 'sn' | 'md' | 'lg'
 }
 
-export const Tag: FC<TagProps> = ({ fgColor, bgColor, leftIcon, rightIcon, children }) => (
-  <div className={className.container}>
-    <div className={className.tag} style={{ backgroundColor: bgColor, color: fgColor }}>
-      {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}
-      {children}
-      {rightIcon && <Icon name={rightIcon.name} color={fgColor} {...rightIcon.iconProps} />}
+export const Tag: FC<TagProps> = ({
+  fgColor, bgColor, leftIcon, rightIcon, children,
+  size,
+}) => {
+  const sizeClass = size ? className[size] : className.xs
+
+  return (
+    <div className={className.container}>
+      <div className={`${className.tag}  ${sizeClass}`} style={{ backgroundColor: bgColor, color: fgColor }}>
+        {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}
+        {children}
+        {rightIcon && <Icon name={rightIcon.name} color={fgColor} {...rightIcon.iconProps} />}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export function getSentimentFgColorByText(text: string): string | null {
   switch (text) {

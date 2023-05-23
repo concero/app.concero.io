@@ -7,5 +7,6 @@ export type CssIdentifiersMap = {
   "avatar": string|undefined
   "lg": string|undefined
   "md": string|undefined
+  "sm": string|undefined
   "xs": string|undefined
 }

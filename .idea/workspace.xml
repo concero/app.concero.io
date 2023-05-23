@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="toggle chart type ChartCard.tsx">
-      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
+    <list default="true" id="ac16d7e2-b170-46fe-8023-b78b7cca7e4a" name="Changes" comment="HistoryCard.tsx dropdown menu">
+      <change afterPath="$PROJECT_DIR$/src/components/cards/Card/Card.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/RouteCard/RouteCard.module.pcss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/RouteCard/RouteCard.module.pcss.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/RouteCard/RouteCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/RouteCard/RouteListItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/RouteButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/RouteTag.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.stylelintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.stylelintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/cards/HistoryCard/HistoryCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/HistoryCard/HistoryCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/index.css.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/index.css.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cards/SwapCard/SwapDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tags/Avatar/Avatar.module.pcss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/Avatar/Avatar.module.pcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tags/Avatar/Avatar.module.pcss.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/Avatar/Avatar.module.pcss.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/tags/Tag/Tag.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/tags/Tag/Tag.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +37,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/components/cards/SwapCard/SwapDetails.tsx" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JsBowerSettings">
     <bower-package value="" />
@@ -52,37 +62,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "code.cleanup.on.save": "true",
-    "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "master",
-    "javascript.nodejs.core.library.configured.version": "19.2.0",
-    "javascript.nodejs.core.library.typings.version": "20.2.1",
-    "js.linters.configure.manually.selectedeslint": "true",
-    "jsx.switch.disabled": "true",
-    "last_opened_file_path": "/Users/oleg/Documents/Code/dex-frontend/src/constants",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.stylelint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "/Users/user/Documents/GitHub/frontend/node_modules/eslint",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.stylelint": "/Users/user/Documents/GitHub/frontend/node_modules/stylelint",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "pnpm",
-    "prettierjs.PrettierConfiguration.Package": "/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier",
-    "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "editor.preferences.jsOptions",
-    "ts.external.directory.path": "/Users/user/Documents/GitHub/frontend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;19.2.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.2.1&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;jsx.switch.disabled&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/src/constants&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;/Users/user/Documents/GitHub/frontend/node_modules/eslint&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;/Users/user/Documents/GitHub/frontend/node_modules/stylelint&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/oleg/Documents/Code/dex-frontend/node_modules/prettier&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/user/Documents/GitHub/frontend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/constants" />
@@ -127,7 +137,10 @@
       <workItem from="1684352298621" duration="5376000" />
       <workItem from="1684442071042" duration="20669000" />
       <workItem from="1684589694849" duration="5821000" />
-      <workItem from="1684603004271" duration="694000" />
+      <workItem from="1684603004271" duration="7745000" />
+      <workItem from="1684679790326" duration="25160000" />
+      <workItem from="1684781479396" duration="34000" />
+      <workItem from="1684781554143" duration="1871000" />
     </task>
     <task id="LOCAL-00001" summary="text">
       <created>1682887317120</created>
@@ -332,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684589741172</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="HistoryCard.tsx dropdown menu">
+      <created>1684611384371</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1684611384371</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,7 +371,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="text tests" />
     <MESSAGE value="shared json variables" />
     <MESSAGE value="header done" />
     <MESSAGE value="cards, preCSS &amp; env" />
@@ -376,6 +395,23 @@
     <MESSAGE value="dark/ light theme toggle" />
     <MESSAGE value="header dark/ light theme toggle" />
     <MESSAGE value="toggle chart type ChartCard.tsx" />
-    <option name="LAST_COMMIT_MESSAGE" value="toggle chart type ChartCard.tsx" />
+    <MESSAGE value="HistoryCard.tsx dropdown menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="HistoryCard.tsx dropdown menu" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/cards/SwapCard/SwapDetails.tsx</url>
+          <line>29</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/cards/SwapCard/SwapDetails.tsx</url>
+          <line>34</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

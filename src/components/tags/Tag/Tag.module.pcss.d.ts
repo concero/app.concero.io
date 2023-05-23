@@ -5,5 +5,8 @@ export default identifiersMap
 
 export type CssIdentifiersMap = {
   "container": string|undefined
+  "lg": string|undefined
+  "md": string|undefined
   "tag": string|undefined
+  "xs": string|undefined
 }
