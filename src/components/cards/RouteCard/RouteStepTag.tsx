@@ -7,6 +7,7 @@ import { colors } from '../../../constants/colors'
 interface RouteStepTagProps {
   step: Step,
   isRoutesHidden: true | false
+  length?: number
 }
 
 interface Step {
@@ -66,26 +67,34 @@ function AdditionalInfoTag({ title, type }: { title: string, type: string }) {
   )
 }
 
-export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesHidden }) => {
+export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesHidden, length }) => {
   const style = !isRoutesHidden ? classNames.fullWidth : ''
 
   return (
-    <div className={`${classNames.routeStepContainer} ${style}`}>
-      <div className={classNames.stepInfoContainer}>
-        <Avatar src={`src/assets/cryptoSymbols/${step.exchange.name}.svg`} size="md" />
-        <Icon name="Transform" size={20} />
-        <RouteEndPoint side={step.from} />
-        <Icon name="ArrowRight" size={20} />
-        <RouteEndPoint side={step.to} />
+    <div className={`${style} ${classNames.routeStepContainer}`}>
+      <div className={`${classNames.routeStep} ${classNames.tagStyle} ${style}`}>
+        <div className={classNames.stepInfoContainer}>
+          <Avatar src={`src/assets/cryptoSymbols/${step.exchange.name}.svg`} size="md" />
+          <Icon name="Transform" size={20} />
+          <RouteEndPoint side={step.from} />
+          <Icon name="ArrowRight" size={20} />
+          <RouteEndPoint side={step.to} />
+        </div>
+        <div>
+          {!isRoutesHidden ? (
+            <div style={{ flexDirection: 'row', gap: 10 }}>
+              <AdditionalInfoTag title={step.gas_price_usd} type="time" />
+              <AdditionalInfoTag title={step.transaction_time_seconds} type="gas" />
+            </div>
+          ) : null}
+        </div>
       </div>
-      <div>
-        {!isRoutesHidden ? (
-          <div style={{ flexDirection: 'row', gap: 10 }}>
-            <AdditionalInfoTag title={step.gas_price_usd} type="time" />
-            <AdditionalInfoTag title={step.transaction_time_seconds} type="gas" />
+      {isRoutesHidden
+        ? (
+          <div className={`${classNames.tagStyle} ${classNames.showAllTag}`}>
+            <div><h5>{`+${length} routes`}</h5></div>
           </div>
         ) : null}
-      </div>
     </div>
   )
 }

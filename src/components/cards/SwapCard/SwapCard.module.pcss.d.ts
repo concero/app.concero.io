@@ -6,6 +6,7 @@ export default identifiersMap
 export type CssIdentifiersMap = {
   "avatarContainer": string|undefined
   "equalSign": string|undefined
+  "roueteCardsContainer": string|undefined
   "routeInfoContainer": string|undefined
   "swapContainer": string|undefined
   "swapDetailsContainer": string|undefined

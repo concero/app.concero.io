@@ -7,13 +7,14 @@
         justify-content: space-between;
         width:           100%;
     }
-
+    
     .cardHeaderLeftSide {
         flex-direction: row;
         gap:            20px;
     }
 
     .stepsContainer {
+        gap:     var(--sp-xs);
         padding: var(--sp-md) 0;
     }
 }
@@ -23,35 +24,37 @@
 }
 
 .routeStepContainer {
-    align-items:      center;
-    background-color: var(--color-grey-darker);
-    border-radius:    8px;
-    flex-direction:   row;
-    justify-content:  space-between;
-    padding:          var(--sp-xs) var(--sp-md);
+    flex-direction: row;
+    gap:            var(--sp-xs);
 
-    .endPointContainer {
-        align-items:    center;
-        flex-direction: row;
-        gap:            6px;
+    .routeStep {
+        align-items:     center;
+        flex-direction:  row;
+        justify-content: space-between;
 
-        .avatarContainer {
-            position: relative;
+        .endPointContainer {
+            align-items:    center;
+            flex-direction: row;
+            gap:            6px;
 
-            .chainAvatar {
-                position: absolute;
-                right:    0;
-                top:      -3px;
+            .avatarContainer {
+                position: relative;
+
+                .chainAvatar {
+                    position: absolute;
+                    right:    0;
+                    top:      -3px;
+                }
             }
         }
-    }
 
-    .stepInfoContainer {
-        align-items:    center;
-        flex-direction: row;
-        gap:            10px;
-    }
+        .stepInfoContainer {
+            align-items:    center;
+            flex-direction: row;
+            gap:            10px;
+        }
 
+    }
 }
 
 .additionalInfoTag {
@@ -66,4 +69,16 @@
 
 .fullWidth {
     width: 100%;
+}
+
+.tagStyle {
+    background-color: var(--color-grey-darker);
+    border-radius:    8px;
+    padding:          var(--sp-xs) var(--sp-md);
+}
+
+.showAllTag {
+    align-items:     center;
+    flex-direction:  row;
+    justify-content: center;
 }

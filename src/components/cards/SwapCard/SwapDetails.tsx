@@ -91,13 +91,82 @@ const routes = [
           name: 'PancakeSwap',
           symbol: 'PancakeSwap',
         },
+      }, {
+        id: '2',
+        transaction_time_seconds: '120',
+        gas_price_usd: '12',
+        slippage_percent: '0.4',
+        from: {
+          token: {
+            name: 'BNB',
+            symbol: 'BNB',
+          },
+          chain: {
+            name: 'Binance Smart Chain',
+            symbol: 'BSC',
+          },
+        },
+        to: {
+          token: {
+            name: 'ETH',
+            symbol: 'ETH',
+          },
+          chain: {
+            name: 'Ethereum',
+            symbol: 'ETH',
+          },
+        },
+        exchange: {
+          name: 'PancakeSwap',
+          symbol: 'PancakeSwap',
+        },
+      },
+    ],
+  }, {
+    id: '2',
+    amount_usd: '7453',
+    amount_token: '1.53 ETH',
+    advantage: 'best',
+    transaction_time_seconds: '120',
+    gas_price_usd: '12',
+    slippage_percent: '0.4',
+    route_steps: [
+      {
+        id: '1',
+        transaction_time_seconds: '120',
+        gas_price_usd: '12',
+        slippage_percent: '0.4',
+        from: {
+          token: {
+            name: 'BNB',
+            symbol: 'BNB',
+          },
+          chain: {
+            name: 'Binance Smart Chain',
+            symbol: 'BSC',
+          },
+        },
+        to: {
+          token: {
+            name: 'ETH',
+            symbol: 'ETH',
+          },
+          chain: {
+            name: 'Ethereum',
+            symbol: 'ETH',
+          },
+        },
+        exchange: {
+          name: 'PancakeSwap',
+          symbol: 'PancakeSwap',
+        },
       },
     ],
   },
 ]
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => {
-  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
+  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(true)
 
   return (
     <div className={classNames.swapDetailsContainer}>
@@ -108,7 +177,9 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => {
         show={isSelectRouteModalVisible}
         setShow={setIsSelectRouteModalVisible}
       >
-        {routes.map((route) => <RouteCard key={route.id} route={route} />)}
+        <div className={classNames.roueteCardsContainer}>
+          {routes.map((route) => <RouteCard key={route.id} route={route} />)}
+        </div>
       </Modal>
     </div>
   )

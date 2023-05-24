@@ -12,9 +12,12 @@ export type CssIdentifiersMap = {
   "container": string|undefined
   "endPointContainer": string|undefined
   "fullWidth": string|undefined
+  "routeStep": string|undefined
   "routeStepContainer": string|undefined
+  "showAllTag": string|undefined
   "stepInfoContainer": string|undefined
   "stepsContainer": string|undefined
   "subtitle": string|undefined
+  "tagStyle": string|undefined
   "textSubtitle": string|undefined
 }

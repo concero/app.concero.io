@@ -57,10 +57,12 @@ export const RouteCard: FC<RouteCardProps> = ({ route, onClick }) => {
           onClick={() => setIsRoutesHidden(!isRoutesHidden)}
         />
       </div>
-      <div style={{ flexDirection: 'row' }} className={classNames.stepsContainer}>
-        {route.route_steps.map((step) => (
-          <RouteStepTag key={step.id} step={step} isRoutesHidden={isRoutesHidden} />
-        ))}
+      <div className={classNames.stepsContainer}>
+        {isRoutesHidden
+          ? <RouteStepTag step={route.route_steps[0]} isRoutesHidden={isRoutesHidden} length={route.route_steps.length} />
+          : route.route_steps.map((step) => (
+            <RouteStepTag key={step.id} step={step} isRoutesHidden={isRoutesHidden} />
+          ))}
       </div>
     </Card>
   )
