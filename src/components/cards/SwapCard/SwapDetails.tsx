@@ -166,7 +166,7 @@ const routes = [
 ]
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => {
-  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(true)
+  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
 
   return (
     <div className={classNames.swapDetailsContainer}>
