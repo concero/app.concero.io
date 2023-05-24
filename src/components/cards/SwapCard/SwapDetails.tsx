@@ -126,7 +126,7 @@ const routes = [
     id: '2',
     amount_usd: '7453',
     amount_token: '1.53 ETH',
-    advantage: 'best',
+    advantage: 'fast',
     transaction_time_seconds: '120',
     gas_price_usd: '12',
     slippage_percent: '0.4',
