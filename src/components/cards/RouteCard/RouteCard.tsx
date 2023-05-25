@@ -4,8 +4,9 @@ import classNames from './RouteCard.module.pcss'
 import { Tag } from '../../tags/Tag/Tag'
 import { colors } from '../../../constants/colors'
 import { capitalize } from '../../../utils/formatting'
-import { RouteStepTag } from './RouteStepTag'
 import { Button } from '../../buttons/Button/Button'
+import { renderTags } from './rendersTags'
+import { renderSteps } from './renderSteps'
 
 interface RouteCardProps {
   route: {
@@ -18,7 +19,6 @@ interface RouteCardProps {
     slippage_percent: string,
     route_steps: RouteStep[]
   },
-  onClick?: () => void
 }
 
 interface RouteStep {
@@ -28,7 +28,7 @@ interface RouteStep {
   slippage_percent: string,
 }
 
-const getTagBgColor = (advantage: string) => {
+const getAdvantageTagBgColor = (advantage: string) => {
   switch (advantage) {
     case 'best':
       return colors.primary.main
@@ -38,32 +38,42 @@ const getTagBgColor = (advantage: string) => {
       return colors.primary.darker
   }
 }
-export const RouteCard: FC<RouteCardProps> = ({ route, onClick }) => {
-  const [isRoutesHidden, setIsRoutesHidden] = useState<true | false>(true)
+export const RouteCard: FC<RouteCardProps> = ({ route }) => {
+  const [isRoutesCollapsed, setIsRoutesCollapsed] = useState<true | false>(true)
+  const isBestRoute = route.advantage === 'best'
+  const getTextColor = () => (isBestRoute ? classNames.bestText : '')
+  const getIconColor = () => (isBestRoute ? colors.primary.light : colors.text.secondary)
 
   return (
-    <Card classNames={classNames.container}>
+    <Card classNames={`${classNames.container} ${isBestRoute ? classNames.bestCard : ''}`}>
       <div className={classNames.cardHeader}>
         <div className={classNames.cardHeaderLeftSide}>
           <h3>Net value:</h3>
-          <h3>{`$${route.amount_usd}`}</h3>
-          <h3 className={classNames.subtitle}>{`${route.amount_token}`}</h3>
-          <Tag bgColor={getTagBgColor(route.advantage)}>{capitalize(route.advantage)}</Tag>
+          <h3>{`$${route.net_value_usd}`}</h3>
+          <h3 className={classNames.subtitle}>{`${route.net_value_token}`}</h3>
+          <Tag bgColor={getAdvantageTagBgColor(route.advantage)}>{capitalize(route.advantage)}</Tag>
         </div>
         <Button
           variant="black"
-          rightIcon={{ name: `${isRoutesHidden ? 'ChevronDown' : 'ChevronUp'}`, iconProps: { size: '20px' } }}
+          rightIcon={{ name: `${isRoutesCollapsed ? 'ChevronDown' : 'ChevronUp'}`, iconProps: { size: '20px' } }}
           size="sm"
-          onClick={() => setIsRoutesHidden(!isRoutesHidden)}
+          onClick={() => setIsRoutesCollapsed(!isRoutesCollapsed)}
+          className={isBestRoute ? classNames.bestButton : ''}
         />
       </div>
       <div className={classNames.stepsContainer}>
-        {isRoutesHidden
-          ? <RouteStepTag step={route.route_steps[0]} isRoutesHidden={isRoutesHidden} length={route.route_steps.length} />
-          : route.route_steps.map((step) => (
-            <RouteStepTag key={step.id} step={step} isRoutesHidden={isRoutesHidden} />
-          ))}
+        {renderSteps(
+          route,
+          isRoutesCollapsed,
+          isBestRoute,
+        )}
       </div>
+      {renderTags(
+        route,
+        isBestRoute,
+        getTextColor,
+        getIconColor,
+      )}
     </Card>
   )
 }

@@ -7,7 +7,7 @@
         justify-content: space-between;
         width:           100%;
     }
-    
+
     .cardHeaderLeftSide {
         flex-direction: row;
         gap:            20px;
@@ -80,5 +80,38 @@
 .showAllTag {
     align-items:     center;
     flex-direction:  row;
+    gap:             var(--sp-xs);
     justify-content: center;
+
+   
+}
+
+.bodyColor {
+    color: var(--color-text-secondary);
+}
+
+.infoTagsContainer {
+    flex-direction: row;
+    gap:            var(--sp-xs);
+}
+
+.bestCard {
+    background-color: var(--color-primary-darkest);
+    border:           1px solid var(--color-primary-main);
+}
+
+.bestTag {
+    background-color: var(--color-primary-darker);
+}
+
+.showAllTag .bestText {
+    color: var(--color-primary-light);
+}
+
+.bestText {
+    color: var(--color-primary-light);
+}
+
+.bestButton {
+    background-color: var(--color-primary-darkest);
 }

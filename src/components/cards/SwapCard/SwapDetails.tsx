@@ -55,8 +55,8 @@ const route = {
 const routes = [
   {
     id: '1',
-    amount_usd: '7453',
-    amount_token: '1.53 ETH',
+    net_value_usd: '7453',
+    net_value_token: '1.53 ETH',
     advantage: 'best',
     transaction_time_seconds: '120',
     gas_price_usd: '12',
@@ -91,6 +91,10 @@ const routes = [
           name: 'PancakeSwap',
           symbol: 'PancakeSwap',
         },
+        amount: {
+          usd: '325',
+          token: '0.0001',
+        },
       }, {
         id: '2',
         transaction_time_seconds: '120',
@@ -120,12 +124,16 @@ const routes = [
           name: 'PancakeSwap',
           symbol: 'PancakeSwap',
         },
+        amount: {
+          usd: '325',
+          token: '0.0001',
+        },
       },
     ],
   }, {
     id: '2',
-    amount_usd: '7453',
-    amount_token: '1.53 ETH',
+    net_value_usd: '7453',
+    net_value_token: '1.53 ETH',
     advantage: 'fast',
     transaction_time_seconds: '120',
     gas_price_usd: '12',
@@ -160,18 +168,23 @@ const routes = [
           name: 'PancakeSwap',
           symbol: 'PancakeSwap',
         },
+        amount: {
+          usd: '325',
+          token: '0.0001',
+        },
       },
     ],
   },
 ]
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => {
-  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
+  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(true)
 
   return (
     <div className={classNames.swapDetailsContainer}>
       <RateTag from={selection.from.token} to={selection.to.token} rate={rate} />
       <RouteButton route={route} onClick={() => setIsSelectRouteModalVisible(true)} />
+
       <Modal
         title="Select route"
         show={isSelectRouteModalVisible}

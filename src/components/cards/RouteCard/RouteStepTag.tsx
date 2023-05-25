@@ -2,12 +2,15 @@ import { FC } from 'react'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import Icon from '../../Icon'
 import classNames from './RouteCard.module.pcss'
-import { colors } from '../../../constants/colors'
+import { renderStepsCountTag } from './renderStepsCountTag'
+import { renderAllTagInfo } from './renderAllInfoTag'
+import { RouteEndPoint } from './RouteEndPoint'
 
 interface RouteStepTagProps {
   step: Step,
-  isRoutesHidden: true | false
-  length?: number
+  isRoutesCollapsed: true | false
+  length?: number | undefined
+  isBestRoute: true | false
 }
 
 interface Step {
@@ -39,62 +42,53 @@ interface Step {
     name: string,
     symbol: string,
   },
-
+  amount: {
+    usd: string,
+    token: string,
+  }
 }
 
-function RouteEndPoint({ side }: Step) {
-  return (
-    <div className={classNames.endPointContainer}>
-      <div className={classNames.avatarContainer}>
-        <Avatar src={`src/assets/cryptoSymbols/${side.token.name}.svg`} size="md" />
-        <Avatar src={`src/assets/cryptoSymbols/${side.chain.name}.svg`} size="xs" className={classNames.chainAvatar} />
-      </div>
-      <h5>3.32</h5>
-    </div>
-  )
-}
+export const RouteStepTag: FC<RouteStepTagProps> = ({
+  step, isRoutesCollapsed, length, isBestRoute,
+}) => {
+  const fullWidthStyle = !isRoutesCollapsed ? classNames.fullWidth : ''
 
-function AdditionalInfoTag({ title, type }: { title: string, type: string }) {
-  return (
-    <div className={classNames.additionalInfoTag}>
-      <Icon name={type === 'time' ? 'Clock' : 'GasStation'} size="1rem" color={colors.grey.medium} />
-      <h5
-        className={classNames.textSubtitle}
-      >
-        {`${(type === 'gas') ? '$' : ''}${title}${(type === 'time') ? 's' : ''}`}
-      </h5>
-    </div>
-  )
-}
+  const getColor = (type: string): undefined | string => {
+    if (!isBestRoute) return
 
-export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesHidden, length }) => {
-  const style = !isRoutesHidden ? classNames.fullWidth : ''
+    switch (type) {
+      case 'tag':
+        return classNames.bestTag
+      case 'text':
+        return classNames.bestText
+    }
+  }
 
   return (
-    <div className={`${style} ${classNames.routeStepContainer}`}>
-      <div className={`${classNames.routeStep} ${classNames.tagStyle} ${style}`}>
+    <div className={`${fullWidthStyle} ${classNames.routeStepContainer}`}>
+      <div className={`${classNames.routeStep} ${classNames.tagStyle} ${fullWidthStyle} ${getColor('tag')}`}>
         <div className={classNames.stepInfoContainer}>
           <Avatar src={`src/assets/cryptoSymbols/${step.exchange.name}.svg`} size="md" />
           <Icon name="Transform" size={20} />
-          <RouteEndPoint side={step.from} />
+          <RouteEndPoint side={step.from} amount={step.amount.usd} />
           <Icon name="ArrowRight" size={20} />
-          <RouteEndPoint side={step.to} />
+          <RouteEndPoint side={step.to} amount={step.amount.token} />
         </div>
         <div>
-          {!isRoutesHidden ? (
-            <div style={{ flexDirection: 'row', gap: 10 }}>
-              <AdditionalInfoTag title={step.gas_price_usd} type="time" />
-              <AdditionalInfoTag title={step.transaction_time_seconds} type="gas" />
-            </div>
-          ) : null}
+          {renderAllTagInfo(
+            isRoutesCollapsed,
+            step,
+            isBestRoute,
+            getColor,
+          )}
         </div>
       </div>
-      {isRoutesHidden
-        ? (
-          <div className={`${classNames.tagStyle} ${classNames.showAllTag}`}>
-            <div><h5>{`+${length} routes`}</h5></div>
-          </div>
-        ) : null}
+      {renderStepsCountTag(
+        isRoutesCollapsed,
+        isBestRoute,
+        length,
+        getColor,
+      )}
     </div>
   )
 }
