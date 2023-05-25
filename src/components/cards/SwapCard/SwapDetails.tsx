@@ -178,13 +178,12 @@ const routes = [
 ]
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => {
-  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(true)
+  const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
 
   return (
     <div className={classNames.swapDetailsContainer}>
       <RateTag from={selection.from.token} to={selection.to.token} rate={rate} />
       <RouteButton route={route} onClick={() => setIsSelectRouteModalVisible(true)} />
-
       <Modal
         title="Select route"
         show={isSelectRouteModalVisible}
