@@ -1,22 +1,24 @@
 import { FC } from 'react'
-import styles from '../ExchangeScreen/ExchangeScreen.module.pcss'
+import classNames from './PortfolioScreen.module.pcss'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 import { ChartCard } from '../../cards/ChartCard/ChartCard'
 import { HighlightsCard } from '../../cards/HighlightsCard/HighlightsCard'
+import { BarChartCard } from '../../cards/BarChartCard/BarChartCard'
+import { HoldingsCard } from '../../cards/HoldingsCard/HoldingsCard.tsx'
 
 export interface PortfolioScreenProps {}
 
 export const PortfolioScreen: FC<PortfolioScreenProps> = () => (
-  <div className={`row ${styles.container}`}>
-    <div className={styles.mainCardStack}>
-      <div className="row">
+  <div className={`row ${classNames.container}`}>
+    <div className={classNames.mainCardStack}>
+      <div className={classNames.horizontalCardStack}>
         <HighlightsCard />
-        <HighlightsCard />
+        <BarChartCard />
       </div>
       <ChartCard />
     </div>
-    <div className={styles.secondaryCardStack}>
-      <HistoryCard />
+    <div className={classNames.secondaryCardStack}>
+      <HoldingsCard />
       <HistoryCard />
     </div>
   </div>
