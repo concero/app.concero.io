@@ -48,6 +48,6 @@ const newsData = [
 export const NewsCard: FC<NewsCardProps> = () => (
   <div className={`${classNames.container} card`}>
     <CardHeader title="News" />
-    <Table data={newsData} columns={columns} isHeaderVisible={false} />
+    <Table items={newsData} columns={columns} isHeaderVisible={false} />
   </div>
 )

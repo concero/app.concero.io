@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
-import { Tag } from '../../tags/Tag/Tag.tsx'
-import { colors } from '../../../constants/colors.ts'
+import { Tag } from '../../tags/Tag/Tag'
+import { colors } from '../../../constants/colors'
 
 export interface HoldingsCardProps {}
 
@@ -59,6 +59,6 @@ export const holdingsItems = [
 export const HoldingsCard: FC<HoldingsCardProps> = () => (
   <div className="card">
     <CardHeader title="Holdings" />
-    <Table data={holdingsItems} columns={holdingsColumns} />
+    <Table items={holdingsItems} columns={holdingsColumns} />
   </div>
 )

@@ -12,14 +12,12 @@ export interface TableColumn {
 
 export interface TableProps {
   columns: TableColumn[]
-  data: never[]
+  items: any[]
   isHeaderVisible?: boolean
   onClick?: (item: any) => void
 }
 
-export const Table: FC<TableProps> = ({
-  columns, data, isHeaderVisible = true, onClick,
-}) => {
+export const Table: FC<TableProps> = ({ columns, items, isHeaderVisible = true, onClick }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   return (
@@ -30,7 +28,7 @@ export const Table: FC<TableProps> = ({
         <table>
           {isHeaderVisible && <TableHeader columns={columns} />}
           <tbody className="striped">
-            {data.map((item, index) => (
+            {items.map((item, index) => (
               <TableRow key={index} item={item} columns={columns} onClick={onClick} />
             ))}
           </tbody>
