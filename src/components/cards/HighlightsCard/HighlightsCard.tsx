@@ -1,20 +1,53 @@
-import { FC } from 'react'
-import { Highlight } from '../../tags/Highlight/Highlight'
-import { Tag } from '../../tags/Tag/Tag.tsx'
-import { colors } from '../../../constants/colors.ts'
+import {FC} from 'react'
+import {Highlight} from '../../tags/Highlight/Highlight'
+import classNames from './HighlightsCard.module.pcss'
 
-export interface HighlightsCardProps {}
+export interface HighlightsCardProps {
+}
+
+const SeparatorHorizontal = () => (
+  <div className={classNames.separator}/>
+)
+
+const items = [
+  {
+    id: "1",
+    title: 'Best performer',
+    value: 'ADA',
+    last_24h: '2.55',
+  }, {
+    id: "2",
+    title: 'Worst performer',
+    value: 'SOL',
+    last_24h: '0.55',
+  }, {
+    id: "3",
+    title: 'Highlight',
+    value: 'ADA',
+    last_24h: '5.54',
+  }, {
+    id: "4",
+    title: 'Highlight',
+    value: 'SOL',
+    last_24h: '-0.54',
+  },
+]
+
+const item = {
+  id: "0",
+  title: 'Total portfolio value',
+  value: '$ 1,540.00',
+  valueSecondary: '0.0001 BTC',
+  last_24h: '2.55',
+}
 
 export const HighlightsCard: FC<HighlightsCardProps> = () => (
-  <div className="card f1">
-    <Highlight size="lg" title="Total Value Locked" value="$85000" valueSecondary="3 BTC">
-      <Tag
-        fgColor={colors.green.dark}
-        bgColor={colors.green.darkest}
-        leftIcon={{ name: 'ArrowUpLeft', iconProps: { size: 18 } }}
-      >
-        +2.55%
-      </Tag>
-    </Highlight>
+  <div className={`card ${classNames.highlightsContainer}`}>
+    <Highlight size="lg" item={item}/>
+    <SeparatorHorizontal/>
+    <div className={classNames.bottomGridContainer}>
+      {items.map((item) => (
+        <Highlight key={item.id} item={item}/>))}
+    </div>
   </div>
 )
