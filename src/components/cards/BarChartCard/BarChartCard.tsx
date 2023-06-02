@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import { CardHeader } from '../CardHeader/CardHeader'
-import { colors } from '../../../constants/colors.ts'
+import { colors } from '../../../constants/colors'
+import classNames from './BarChartCard.module.pcss'
 
 export interface BarChartCardProps {}
 
@@ -91,7 +92,7 @@ export function RechartsBarChart() {
   ]
 
   return (
-    <ResponsiveContainer width="100%" height={200}>
+    <ResponsiveContainer width="100%" height={200} className={classNames.chartContainer}>
       <BarChart width={150} height={80} data={data} barSize={24}>
         <Bar dataKey="amount" radius={[5, 5, 5, 5]}>
           {data.map((entry, index) => (
@@ -106,7 +107,7 @@ export function RechartsBarChart() {
 }
 
 export const BarChartCard: FC<BarChartCardProps> = () => (
-  <div className="card f1">
+  <div className={`card f1 ${classNames.container}`}>
     <CardHeader title="Top Holdings" />
     <RechartsBarChart />
   </div>
