@@ -6,9 +6,5 @@ export default identifiersMap
 export type CssIdentifiersMap = {
   "bottomRow": string|undefined
   "container": string|undefined
-  "lg": string|undefined
-  "md": string|undefined
-  "secondary": string|undefined
-  "sm": string|undefined
   "topRow": string|undefined
 }
