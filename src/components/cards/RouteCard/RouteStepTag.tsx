@@ -1,16 +1,16 @@
-import { FC } from 'react'
-import { Avatar } from '../../tags/Avatar/Avatar'
+import {FC} from 'react'
+import {Avatar} from '../../tags/Avatar/Avatar'
 import Icon from '../../Icon'
 import classNames from './RouteCard.module.pcss'
-import { renderStepsCountTag } from './renderStepsCountTag'
-import { renderAllTagInfo } from './renderAllInfoTag'
-import { RouteEndPoint } from './RouteEndPoint'
+import {renderStepsCountTag} from './renderStepsCountTag'
+import {renderAllTagInfo} from './renderAllInfoTag'
+import {RouteEndPoint} from './RouteEndPoint'
 
 interface RouteStepTagProps {
   step: Step,
   isRoutesCollapsed: true | false
   length?: number | undefined
-  isBestRoute: true | false
+  isSelected: true | false
 }
 
 interface Step {
@@ -49,12 +49,15 @@ interface Step {
 }
 
 export const RouteStepTag: FC<RouteStepTagProps> = ({
-  step, isRoutesCollapsed, length, isBestRoute,
-}) => {
+                                                      step,
+                                                      isRoutesCollapsed,
+                                                      length,
+                                                      isSelected,
+                                                    }) => {
   const fullWidthStyle = !isRoutesCollapsed ? classNames.fullWidth : ''
 
   const getColor = (type: string): undefined | string => {
-    if (!isBestRoute) return
+    if (!isSelected) return
 
     switch (type) {
       case 'tag':
@@ -66,26 +69,27 @@ export const RouteStepTag: FC<RouteStepTagProps> = ({
 
   return (
     <div className={`${fullWidthStyle} ${classNames.routeStepContainer}`}>
-      <div className={`${classNames.routeStep} ${classNames.tagStyle} ${fullWidthStyle} ${getColor('tag')}`}>
+      <div
+        className={`${classNames.routeStep} ${classNames.tagStyle} ${fullWidthStyle} ${getColor('tag')}`}>
         <div className={classNames.stepInfoContainer}>
-          <Avatar src={`src/assets/cryptoSymbols/${step.exchange.name}.svg`} size="md" />
-          <Icon name="Transform" size={20} />
-          <RouteEndPoint side={step.from} amount={step.amount.usd} />
-          <Icon name="ArrowRight" size={20} />
-          <RouteEndPoint side={step.to} amount={step.amount.token} />
+          <Avatar src={`src/assets/cryptoSymbols/${step.exchange.name}.svg`} size="md"/>
+          <Icon name="Transform" size={20}/>
+          <RouteEndPoint side={step.from} amount={step.amount.usd}/>
+          <Icon name="ArrowRight" size={20}/>
+          <RouteEndPoint side={step.to} amount={step.amount.token}/>
         </div>
         <div>
           {renderAllTagInfo(
             isRoutesCollapsed,
             step,
-            isBestRoute,
+            isSelected,
             getColor,
           )}
         </div>
       </div>
       {renderStepsCountTag(
         isRoutesCollapsed,
-        isBestRoute,
+        isSelected,
         length,
         getColor,
       )}

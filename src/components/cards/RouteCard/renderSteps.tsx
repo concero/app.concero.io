@@ -1,4 +1,4 @@
-import { RouteStepTag } from './RouteStepTag'
+import {RouteStepTag} from './RouteStepTag'
 
 interface Route {
   id: string,
@@ -39,7 +39,7 @@ interface Step {
 export const renderSteps = (
   route: Route,
   isRoutesCollapsed: boolean,
-  isBestRoute: boolean,
+  isSelected: boolean,
 ) => (
   <>
     {isRoutesCollapsed
@@ -48,11 +48,12 @@ export const renderSteps = (
           step={route.route_steps[0]}
           isRoutesCollapsed={isRoutesCollapsed}
           length={route.route_steps.length}
-          isBestRoute={isBestRoute}
+          isSelected={isSelected}
         />
       )
       : route.route_steps.map((step) => (
-        <RouteStepTag key={step.id} step={step} isRoutesCollapsed={isRoutesCollapsed} isBestRoute={isBestRoute} />
+        <RouteStepTag key={step.id} step={step} isRoutesCollapsed={isRoutesCollapsed}
+                      isSelected={isSelected}/>
       ))}
   </>
 )

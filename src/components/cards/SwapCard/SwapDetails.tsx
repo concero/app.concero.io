@@ -1,9 +1,9 @@
-import { FC, useState } from 'react'
+import {FC, useState} from 'react'
 import classNames from './SwapCard.module.pcss'
-import { Modal } from '../../modals/Modal/Modal'
-import { RouteButton } from './RouteButton'
-import { RateTag } from './RouteTag'
-import { RouteCard } from '../RouteCard/RouteCard'
+import {Modal} from '../../modals/Modal/Modal'
+import {RouteButton} from './RouteButton'
+import {RateTag} from './RouteTag'
+import {RouteCard} from '../RouteCard/RouteCard'
 
 interface SwapDetailsProps {
   selection: {
@@ -177,20 +177,28 @@ const routes = [
   },
 ]
 
-export const SwapDetails: FC<SwapDetailsProps> = ({ selection }) => {
+export const SwapDetails: FC<SwapDetailsProps> = ({selection}) => {
   const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
+
+  const [selectedRouteCard, setSelectedRouteCard] = useState(routes[0])
+
+  const handleSelectRoute = (id: string) => {
+    setSelectedRouteCard(routes.find((route) => route.id === id))
+  }
 
   return (
     <div className={classNames.swapDetailsContainer}>
-      <RateTag from={selection.from.token} to={selection.to.token} rate={rate} />
-      <RouteButton route={route} onClick={() => setIsSelectRouteModalVisible(true)} />
+      <RateTag from={selection.from.token} to={selection.to.token} rate={rate}/>
+      <RouteButton route={route} onClick={() => setIsSelectRouteModalVisible(true)}/>
       <Modal
         title="Select route"
         show={isSelectRouteModalVisible}
         setShow={setIsSelectRouteModalVisible}
       >
         <div className={classNames.roueteCardsContainer}>
-          {routes.map((route) => <RouteCard key={route.id} route={route} />)}
+          {routes.map((route) => <RouteCard key={route.id} route={route}
+                                            isSelected={selectedRouteCard.id === route.id}
+                                            onClick={handleSelectRoute}/>)}
         </div>
       </Modal>
     </div>
