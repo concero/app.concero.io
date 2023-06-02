@@ -2,7 +2,7 @@ import { FC } from 'react'
 import classNames from './Avatar.module.pcss'
 
 interface AvatarProps {
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xs'
   src: string
   className?: string
 }

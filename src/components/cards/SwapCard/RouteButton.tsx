@@ -4,41 +4,23 @@ import { colors } from '../../../constants/colors'
 import classNames from './SwapCard.module.pcss'
 import Icon from '../../Icon'
 import { Avatar } from '../../tags/Avatar/Avatar'
+import { Route, RouteStep } from './SwapCard'
 
 interface AvatarsProps {
-  entities: [
-    {
-      id: string
-      name: string
-    },
-    {
-      id: string
-      name: string
-    },
-  ]
-  onClick: () => void
+  entities: RouteStep[]
 }
 
 const Avatars: FC<AvatarsProps> = ({ entities }) => (
   <div className={classNames.avatarContainer}>
     {entities.map((entity, index) => (
-      <>{index < 3 && <Avatar size="xs" key={entity.id} src={entity.exchange.symbol} />}</>
+      <div>{index < 3 && <Avatar size="xs" key={entity.id} src={entity.exchange.symbol} />}</div>
     ))}
     {entities.length > 3 && <p>{`${entities.length}`}</p>}
   </div>
 )
 
 interface RouteButtonProps {
-  route: {
-    gas_price_usd: string
-    transaction_time_seconds: string
-    entities: [
-      {
-        id: string
-        name: string
-      },
-    ]
-  }
+  route: Route
   onClick: () => void
 }
 
