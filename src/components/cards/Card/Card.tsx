@@ -9,5 +9,9 @@ interface CardProps {
 export const Card: FC<CardProps> = ({ children, classNames, onClick }) => {
   const classes: string = classNames ? `card ${classNames}` : 'card'
 
-  return (<div className={classes} onClick={onClick && onClick}>{children}</div>)
+  return (
+    <div className={classes} onClick={onClick && onClick}>
+      {children}
+    </div>
+  )
 }

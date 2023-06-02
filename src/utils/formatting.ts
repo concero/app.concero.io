@@ -4,11 +4,14 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime)
 
 // Date and time formatting
-export const formatDate = (date: string | Date, format = 'YYYY-MM-DD'): string => dayjs(date).format(format)
+export const formatDate = (date: string | Date, format = 'YYYY-MM-DD'): string =>
+  dayjs(date).format(format)
 
-export const formatDateTime = (date: string | Date, format = 'YYYY-MM-DD HH:mm'): string => dayjs(date).format(format)
+export const formatDateTime = (date: string | Date, format = 'YYYY-MM-DD HH:mm'): string =>
+  dayjs(date).format(format)
 
-export const formatTime = (date: string | Date, format = 'HH:mm'): string => dayjs(date).format(format)
+export const formatTime = (date: string | Date, format = 'HH:mm'): string =>
+  dayjs(date).format(format)
 
 export const fromNow = (date: string | Date): string => dayjs(date).fromNow()
 

@@ -21,15 +21,15 @@ export interface TagProps {
   size?: 'sn' | 'md' | 'lg'
 }
 
-export const Tag: FC<TagProps> = ({
-  fgColor, bgColor, leftIcon, rightIcon, children,
-  size,
-}) => {
+export const Tag: FC<TagProps> = ({ fgColor, bgColor, leftIcon, rightIcon, children, size }) => {
   const sizeClass = size ? className[size] : className.xs
 
   return (
     <div className={className.container}>
-      <div className={`${className.tag}  ${sizeClass}`} style={{ backgroundColor: bgColor, color: fgColor }}>
+      <div
+        className={`${className.tag}  ${sizeClass}`}
+        style={{ backgroundColor: bgColor, color: fgColor }}
+      >
         {leftIcon && <Icon name={leftIcon.name} color={fgColor} {...leftIcon.iconProps} />}
         {children}
         {rightIcon && <Icon name={rightIcon.name} color={fgColor} {...rightIcon.iconProps} />}

@@ -1,5 +1,10 @@
 import { colors } from '../../../constants/colors'
-import { getSentimentBgColorByText, getSentimentFgColorByText, getSentimentIconByText, Tag } from '../../tags/Tag/Tag'
+import {
+  getSentimentBgColorByText,
+  getSentimentFgColorByText,
+  getSentimentIconByText,
+  Tag,
+} from '../../tags/Tag/Tag'
 import Icon from '../../Icon'
 import { fromNow, getHostname } from '../../../utils/formatting'
 

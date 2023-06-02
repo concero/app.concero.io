@@ -5,8 +5,7 @@ import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 
-export interface ExchangeScreenProps {
-}
+export interface ExchangeScreenProps {}
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => (
   <div className={`row ${styles.container}`}>

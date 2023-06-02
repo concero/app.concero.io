@@ -12,7 +12,10 @@ export const arrayToObject = <T>(array: T[], key: keyof T): Record<string, T> =>
 // Object utilities
 export const objectToArray = <T>(object: Record<string, T>): T[] => Object.values(object)
 
-export const objectDeepMerge = (target: Record<string, any>, source: Record<string, any>): Record<string, any> => {
+export const objectDeepMerge = (
+  target: Record<string, any>,
+  source: Record<string, any>,
+): Record<string, any> => {
   const output = { ...target }
   for (const key in source) {
     if (source.hasOwnProperty(key)) {
@@ -26,4 +29,5 @@ export const objectDeepMerge = (target: Record<string, any>, source: Record<stri
   return output
 }
 
-export const isObject = (item: any): boolean => item && typeof item === 'object' && !Array.isArray(item)
+export const isObject = (item: any): boolean =>
+  item && typeof item === 'object' && !Array.isArray(item)
