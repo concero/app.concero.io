@@ -1,10 +1,5 @@
 import { colors } from '../../../constants/colors'
-import {
-  getSentimentBgColorByText,
-  getSentimentFgColorByText,
-  getSentimentIconByText,
-  Tag,
-} from '../../tags/Tag/Tag'
+import { getSentimentColorByText, getSentimentIconByText, Tag } from '../../tags/Tag/Tag'
 import Icon from '../../Icon'
 import { fromNow, getHostname } from '../../../utils/formatting'
 
@@ -17,8 +12,7 @@ export const columns = [
     columnTitle: 'Sentiment',
     cellComponent: (item) => (
       <Tag
-        fgColor={getSentimentFgColorByText(item.sentiment)}
-        bgColor={getSentimentBgColorByText(item.sentiment)}
+        color={getSentimentColorByText(item.sentiment)}
         leftIcon={getSentimentIconByText(item.sentiment)}
       >
         {item.sentiment}

@@ -1,7 +1,7 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useContext } from 'react'
 import classNames from './Highlight.module.pcss'
-import { colors } from '../../../constants/colors.ts'
-import { Tag } from '../Tag/Tag.tsx'
+import { Tag } from '../Tag/Tag'
+import { ThemeContext } from '../../../hooks/themeContext'
 
 interface HighlightProps {
   size: 'sm' | 'md' | 'lg'
@@ -36,10 +36,11 @@ export const Highlight: FC<HighlightProps> = ({
   item: { title, value, valueSecondary, last_24h },
   size = 'md',
 }) => {
+  const { colors } = useContext(ThemeContext)
   const highlightClasses = getHighlightClasses(size)
 
   const textColor = last_24h.split('')[0] === '-' ? colors.red.dark : colors.green.dark
-  const bgColor = last_24h.split('')[0] === '-' ? colors.red.darkest : colors.green.darkest
+  const tagColor = last_24h.split('')[0] === '-' ? 'red' : 'green'
   const tagArrow = last_24h.split('')[0] === '-' ? 'ArrowDownRight' : 'ArrowUpRight'
 
   return (
@@ -48,8 +49,7 @@ export const Highlight: FC<HighlightProps> = ({
         <h5>{title}</h5>
         {valueSecondary ? (
           <Tag
-            fgColor={textColor}
-            bgColor={bgColor}
+            color={tagColor}
             leftIcon={{
               name: tagArrow,
               iconProps: { size: 18 },
@@ -65,8 +65,7 @@ export const Highlight: FC<HighlightProps> = ({
           <div className={classNames.secondary}>{valueSecondary}</div>
         ) : (
           <Tag
-            fgColor={textColor}
-            bgColor={bgColor}
+            color={tagColor}
             leftIcon={{
               name: tagArrow,
               iconProps: { size: 18 },
