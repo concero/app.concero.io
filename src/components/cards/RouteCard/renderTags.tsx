@@ -1,6 +1,7 @@
 import { Tag } from '../../tags/Tag/Tag'
 import { colors } from '../../../constants/colors'
 import classNames from './RouteCard.module.pcss'
+import { Route } from './RouteCard'
 
 export const renderTags = (
   route: Route,

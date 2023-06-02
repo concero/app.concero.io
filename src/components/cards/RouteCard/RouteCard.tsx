@@ -5,7 +5,7 @@ import { Tag } from '../../tags/Tag/Tag'
 import { colors } from '../../../constants/colors'
 import { capitalize } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
-import { renderTags } from './rendersTags'
+import { renderTags } from './renderTags'
 import { renderSteps } from './renderSteps'
 
 interface RouteCardProps {
