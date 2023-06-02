@@ -3,6 +3,8 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
 import { columns } from './columns'
+import { Button } from '../../buttons/Button/Button'
+import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 
 interface NewsCardProps {}
 
@@ -47,7 +49,15 @@ const newsData = [
 
 export const NewsCard: FC<NewsCardProps> = () => (
   <div className={`${classNames.container} card`}>
-    <CardHeader title="News" />
+    <CardHeader title="News">
+      <Button
+        variant={'subtle'}
+        rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}
+        size={'sm'}
+      >
+        <CryptoSymbol name={'BNB'} symbol={'BNB'} />
+      </Button>
+    </CardHeader>
     <Table items={newsData} columns={columns} isHeaderVisible={false} />
   </div>
 )

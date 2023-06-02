@@ -5,6 +5,7 @@ import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
 import { Chart } from './Chart'
 import { Beacon } from '../../layout/Beacon'
+import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 
 export interface ChartCardProps {}
 
@@ -25,7 +26,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
             iconProps: { size: 18 },
           }}
         >
-          BSC / USDT
+          <CryptoSymbol name={'BNB'} symbol={'BNB'} />
         </Button>
         <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
           <Beacon isOn={chartType === 'tradingView'} />
