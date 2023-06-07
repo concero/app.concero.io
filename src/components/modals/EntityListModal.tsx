@@ -36,7 +36,7 @@ export const EntityListModal: FC<EntityListModalProps> = ({
         placeholder="Search chain"
         onChangeText={(val) => filter(val)}
       />
-      <Table columns={columns} data={filteredData} onClick={(item) => onSelect(item)} />
+      <Table columns={columns} items={filteredData} onClick={(item) => onSelect(item)} />
     </Modal>
   )
 }
