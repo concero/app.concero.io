@@ -209,6 +209,13 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const { selection, dispatch } = useSelectionState()
   const { isConnected } = useAccount()
   const [selectedRoute, setSelectedRoute] = useState(routes[0])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const handleSwap = async () => {
+    setIsLoading(true)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    setIsLoading(false)
+  }
 
   return (
     <div className="card">
@@ -230,8 +237,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
             iconProps: { size: 18 },
           }}
           isDisabled={!isConnected}
+          isLoading={isLoading}
+          onClick={() => handleSwap()}
         >
-          {isConnected ? 'Swap' : 'Connect wallet to swap'}
+          {!isLoading && (isConnected ? 'Swap' : 'Connect wallet to swap')}
         </Button>
       </div>
     </div>

@@ -7,8 +7,8 @@ interface AvatarProps {
   className?: string
 }
 
-const getAvatarClasses = (size: AvatarProps['size'], className: AvatarProps['className']) => {
-  const baseClasses = [classNames.avatar]
+const getClasses = (size: AvatarProps['size'], className: AvatarProps['className']) => {
+  const baseClasses = [classNames.container]
   const sizeClass = size ? classNames[size] : ''
   const additionalClasses = className && className.split(' ')
 
@@ -16,5 +16,7 @@ const getAvatarClasses = (size: AvatarProps['size'], className: AvatarProps['cla
 }
 
 export const Avatar: FC<AvatarProps> = ({ size, src, className }) => (
-  <img src={src} alt="avatar" className={getAvatarClasses(size, className)} />
+  <div className={getClasses(size, className)}>
+    <img src={src} alt="avatar" className={classNames.avatar} />
+  </div>
 )

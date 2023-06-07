@@ -70,6 +70,7 @@ export const Button: FC<ButtonProps> = ({
   className,
 }) => {
   const buttonClasses = getButtonClasses(size, variant, isLoading, isDisabled, className)
+
   return (
     <button className={buttonClasses} onClick={onClick}>
       {isLoading ? (
@@ -83,7 +84,7 @@ export const Button: FC<ButtonProps> = ({
   )
 }
 
-const LoadingAnimation: FC = () => (
+const LoadingAnimation = () => (
   <Lottie
     loop
     autoplay
