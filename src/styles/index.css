@@ -15,7 +15,6 @@
 
 header, main, footer, aside, nav, section, article, figure, figcaption, ul, ol, li {
     display: flex;
-
 }
 
 body {
@@ -27,6 +26,13 @@ body {
     overflow:         hidden;
     padding:          0;
     width:            100vw;
+}
+
+@media (max-width: 700px) {
+    body {
+        height: 100%;
+        width: 100%;
+    }
 }
 
 .light {
@@ -108,6 +114,12 @@ body {
 div#root {
     background-color: var(--color-base-background);
     flex:             1;
+}
+@media (max-width: 700px) {
+    div#root {
+        height: 100%;
+        width: 100%;
+    }
 }
 
 div {

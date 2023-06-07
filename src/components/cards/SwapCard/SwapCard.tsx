@@ -239,6 +239,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           isDisabled={!isConnected}
           isLoading={isLoading}
           onClick={() => handleSwap()}
+          className={classNames.swapButton}
         >
           {!isLoading && (isConnected ? 'Swap' : 'Connect wallet to swap')}
         </Button>

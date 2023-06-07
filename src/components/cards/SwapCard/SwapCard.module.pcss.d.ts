@@ -8,6 +8,7 @@ export type CssIdentifiersMap = {
   "equalSign": string|undefined
   "roueteCardsContainer": string|undefined
   "routeInfoContainer": string|undefined
+  "swapButton": string|undefined
   "swapContainer": string|undefined
   "swapDetailsContainer": string|undefined
   "swapPriceTag": string|undefined
