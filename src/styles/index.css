@@ -32,6 +32,7 @@ body {
     body {
         height: 100%;
         width: 100%;
+        overflow-y: scroll;
     }
 }
 
@@ -115,9 +116,9 @@ div#root {
     background-color: var(--color-base-background);
     flex:             1;
 }
+
 @media (max-width: 700px) {
     div#root {
-        height: 100%;
         width: 100%;
     }
 }
