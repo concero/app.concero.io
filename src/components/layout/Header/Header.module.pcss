@@ -1,32 +1,32 @@
 header {
-    align-items:     center;
-    flex-direction:  row;
+    align-items: center;
+    flex-direction: row;
     justify-content: space-between;
-    margin-bottom:   var(--sp-md);
+    margin-bottom: var(--sp-md);
 
     div {
-        align-items:    center;
+        align-items: center;
         flex-direction: row;
-        gap:            var(--sp-md);
+        gap: var(--sp-md);
     }
 }
 
 ul {
-    color:       var(--color-text-secondary);
-    font-size:   0.875rem;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
     font-weight: 500;
-    gap:         var(--sp-sm);
+    gap: var(--sp-sm);
 
     a {
-        border:        1px solid var(--color-base-black);
+        border: 1px solid var(--color-base-black);
         border-radius: 6px;
-        padding:       var(--sp-sm) var(--sp-md);
+        padding: var(--sp-sm) var(--sp-md);
     }
 
     .active {
-        border:     1px solid var(--color-primary-mainDark);
+        border: 1px solid var(--color-primary-mainDark);
         box-shadow: 0px 3px 12px rgba(90, 49, 176, 0.4);
-        color:      var(--color-text-primary);
+        color: var(--color-text-primary);
     }
 
     .active:hover {
@@ -46,4 +46,17 @@ a:hover {
 .logoContainer {
     margin-right: var(--sp-sm);
 
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: var(--sp-sm);
+        align-items: unset;
+
+        div {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
 }

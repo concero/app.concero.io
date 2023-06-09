@@ -5,7 +5,7 @@ import classNames from './Header.module.pcss'
 import { routes } from '../../../constants/routes'
 import { Button } from '../../buttons/Button/Button'
 import { ThemeContext } from '../../../hooks/themeContext'
-import { Logo } from '../Logo.tsx'
+import { Logo } from '../Logo'
 
 export interface HeaderProps {
   style?: CSSProperties
