@@ -30,14 +30,16 @@ interface RouteStep {
   slippage_percent: string
 }
 
-const getAdvantageTagBgColor = (advantage: string) => {
+const getAdvantageTagBgColor = (advantage: string): string => {
   switch (advantage) {
     case 'best':
-      return colors.primary.main
+      return 'main'
     case 'fast':
-      return colors.primary.dark
+      return 'mainDarker'
     case 'shortest':
-      return colors.primary.darker
+      return 'dark'
+    default:
+      return ''
   }
 }
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
@@ -56,7 +58,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
           <h3>Net value:</h3>
           <h3>{`$${route.net_value_usd}`}</h3>
           <h3 className={classNames.subtitle}>{`${route.net_value_token}`}</h3>
-          <Tag bgColor={getAdvantageTagBgColor(route.advantage)}>{capitalize(route.advantage)}</Tag>
+          <Tag color={getAdvantageTagBgColor(route.advantage)}>{capitalize(route.advantage)}</Tag>
         </div>
         <Button
           variant="black"

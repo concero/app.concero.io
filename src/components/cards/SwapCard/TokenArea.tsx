@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import classNames from './SwapCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
-import { EntityListModal } from '../../modals/EntityListModal'
+import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { capitalize } from '../../../utils/formatting'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { CryptoSymbolType } from '../../../types/CryptoSymbol'
