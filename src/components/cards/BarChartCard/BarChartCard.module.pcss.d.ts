@@ -4,6 +4,6 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  chartContainer: string | undefined
-  container: string | undefined
+  "chartContainer": string|undefined
+  "container": string|undefined
 }
