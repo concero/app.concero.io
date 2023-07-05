@@ -9,7 +9,6 @@
     top: 0;
     width: 100%;
     z-index: 10;
-
 }
 
 .container {
@@ -27,4 +26,15 @@
     gap: var(--sp-sm);
     justify-content: space-between;
     padding-bottom: var(--sp-sm);
+}
+
+
+@media (max-width: 768px) {
+    .overlay {
+        padding: 0 var(--sp-sm);
+    }
+
+    .container {
+        width: 100%;
+    }
 }

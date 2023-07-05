@@ -3,6 +3,7 @@ import { FC, useState } from 'react'
 import { TextInput } from '../input/TextInput'
 import { Table } from '../layout/Table/Table'
 import { Modal } from './Modal/Modal'
+import classNames from './EntityListModal.module.pcss'
 
 export interface EntityListModalProps {
   title: string
@@ -29,7 +30,14 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   }
 
   return (
-    <Modal title={title} show={show} setShow={setShow} size={{ width: 400, height: 400 }}>
+    <Modal
+      title={title}
+      show={show}
+      setShow={setShow}
+      className={{
+        container: classNames.container,
+      }}
+    >
       <TextInput
         iconName="Search"
         value=""
