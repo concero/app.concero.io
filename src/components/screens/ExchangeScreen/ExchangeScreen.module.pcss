@@ -1,17 +1,17 @@
 .container {
-    flex:      1;
+    flex: 1;
     flex-wrap: wrap;
-    gap:       var(--sp-sm);
+    gap: var(--sp-sm);
 }
 
 .mainCardStack {
-    flex:      1;
-    gap:       var(--sp-sm);
+    flex: 1;
+    gap: var(--sp-sm);
     min-width: 400px;
 }
 
 .secondaryCardStack {
-    gap:       var(--sp-sm);
+    gap: var(--sp-sm);
     min-width: 350px;
 }
 
@@ -19,7 +19,13 @@
     .container {
         width: 100%;
     }
-    .secondaryCardStack{
+
+    .secondaryCardStack {
         width: 100%;
+    }
+
+    .mainCardStack {
+        width: 100%;
+        min-width: unset;
     }
 }

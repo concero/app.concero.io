@@ -6,17 +6,49 @@ import classNames from './ChartCard.module.pcss'
 import { Chart } from './Chart'
 import { Beacon } from '../../layout/Beacon'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
-import { EntityListModal } from '../../modals/EntityListModal'
+import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 
 const chains = [
-  { name: 'Binance Smart Chain', symbol: 'ETH', balance: '0.000' },
-  { name: 'Binance Smart Chain', symbol: 'BTC', balance: '0.000' },
-  { name: 'Binance Smart Chain', symbol: 'USDT', balance: '0.000' },
-  { name: 'Binance Smart Chain', symbol: 'BNB', balance: '0.000' },
-  { name: 'Binance Smart Chain', symbol: 'ADA', balance: '0.000' },
-  { name: 'Binance Smart Chain', symbol: 'XRP', balance: '0.000' },
-  { name: 'Binance Smart Chain', symbol: 'USDC', balance: '0.000' },
-  { name: 'Binance Smart Chain', symbol: 'DOT', balance: '0.000' },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'ETH',
+    balance: '0.000',
+  },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'BTC',
+    balance: '0.000',
+  },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'USDT',
+    balance: '0.000',
+  },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'BNB',
+    balance: '0.000',
+  },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'ADA',
+    balance: '0.000',
+  },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'XRP',
+    balance: '0.000',
+  },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'USDC',
+    balance: '0.000',
+  },
+  {
+    name: 'Binance Smart Chain',
+    symbol: 'DOT',
+    balance: '0.000',
+  },
 ]
 
 const columns = [

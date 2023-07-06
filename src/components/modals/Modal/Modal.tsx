@@ -9,19 +9,13 @@ export interface ModalProps {
   show: boolean
   setShow: (show: boolean) => void
   children?: ReactNode
-  size: {
-    width: number
-    height: number
-    maxWidth: number
-    maxHeight: number
-  }
 }
 
-export const Modal: FC<ModalProps> = ({ title, show, setShow, size, children }) => (
+export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => (
   <AnimatePresence>
     {show && (
       <motion.div {...fadeAnimation} className={classNames.overlay}>
-        <motion.div {...fadeUpAnimation} className={classNames.container} style={{ ...size }}>
+        <motion.div {...fadeUpAnimation} className={classNames.container}>
           <ModalHeader title={title} onClick={() => setShow(false)} />
           {children}
         </motion.div>
