@@ -1,33 +1,35 @@
 .container {
-    flex:      1;
+    flex: 1;
     flex-wrap: wrap;
-    gap:       var(--sp-sm);
+    gap: var(--sp-sm);
 }
 
 .mainCardStack {
-    flex:      1;
-    gap:       var(--sp-sm);
+    flex: 1;
+    gap: var(--sp-sm);
     min-width: 400px;
 }
 
 .secondaryCardStack {
-    gap:       var(--sp-sm);
+    gap: var(--sp-sm);
     min-width: 350px;
 }
 
 .horizontalCardStack {
     flex-direction: row;
-    gap:            var(--sp-sm);
+    gap: var(--sp-sm);
     flex-wrap: wrap;
 }
 
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
     .mainCardStack {
         width: 100%;
+        min-width: unset;
     }
 
     .secondaryCardStack {
         width: 100%;
+        min-width: unset;
     }
 }

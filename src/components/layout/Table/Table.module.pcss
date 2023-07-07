@@ -4,18 +4,17 @@
 
 table {
     border-collapse: separate;
-    border-spacing:  0;
-
+    border-spacing: 0;
 }
 
 td:first-child {
     border-bottom-left-radius: var(--st-br-sm);
-    border-top-left-radius:    var(--st-br-sm);
+    border-top-left-radius: var(--st-br-sm);
 }
 
 td:last-child {
     border-bottom-right-radius: var(--st-br-sm);
-    border-top-right-radius:    var(--st-br-sm);
+    border-top-right-radius: var(--st-br-sm);
 }
 
 td {
@@ -23,10 +22,10 @@ td {
 }
 
 th {
-    color:       var(--color-grey-medium);
-    font-size:   0.875rem;
+    color: var(--color-grey-medium);
+    font-size: 0.875rem;
     font-weight: 400;
-    text-align:  left;
+    text-align: left;
 }
 
 tbody tr:nth-child(odd) {
@@ -48,30 +47,30 @@ tbody tr:hover {
 
 .skeletonColumns {
     flex: 1;
-    gap:  var(--sp-sm);
+    gap: var(--sp-sm);
 }
 
 .skeletonCell {
-    animation:        skeleton 1s infinite alternate;
+    animation: skeleton 1s infinite alternate;
     background-color: var(--color-grey-darkest);
-    border-radius:    var(--st-br-sm);
-    height:           2rem;
-    padding:          var(--sp-xs) var(--sp-sm);
+    border-radius: var(--st-br-sm);
+    height: 2rem;
+    padding: var(--sp-xs) var(--sp-sm);
 }
 
 .skeletonHeader {
-    animation:      skeleton 1s infinite alternate;
+    animation: skeleton 1s infinite alternate;
     flex-direction: row;
-    gap:            var(--sp-sm);
+    gap: var(--sp-sm);
     padding-bottom: var(--sp-sm);
 }
 
 .skeletonHeaderCell {
     background-color: var(--color-grey-darkest);
-    border-radius:    var(--st-br-sm);
-    color:            var(--color-grey-medium);
-    flex:             1;
-    height:           2rem;
+    border-radius: var(--st-br-sm);
+    color: var(--color-grey-medium);
+    flex: 1;
+    height: 2rem;
 
 }
 

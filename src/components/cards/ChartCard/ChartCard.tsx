@@ -7,6 +7,7 @@ import { Chart } from './Chart'
 import { Beacon } from '../../layout/Beacon'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 const chains = [
   {
@@ -91,6 +92,8 @@ export const ChartCard: FC<ChartCardProps> = () => {
     setIsSelectRightChainModalVisible(false)
   }
 
+  const isDesktop = useMediaQuery('mobile')
+
   return (
     <div className={`card ${classNames.container}`}>
       <CardHeader title="Chart">
@@ -116,10 +119,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
         >
           <CryptoSymbol name={selectedRightChain.symbol} symbol={selectedRightChain.symbol} />
         </Button>
-        <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
-          <Beacon isOn={chartType === 'tradingView'} />
-          TradingView
-        </Button>
+        {isDesktop ? (
+          <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
+            <Beacon isOn={chartType === 'tradingView'} />
+            TradingView
+          </Button>
+        ) : null}
       </CardHeader>
       <div className="f1">
         {chartType === 'chart' ? (
