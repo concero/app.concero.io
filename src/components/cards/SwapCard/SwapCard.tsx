@@ -218,7 +218,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   }
 
   return (
-    <div className="card">
+    <div className={`card ${classNames.container}`}>
       <CardHeader title="Swap" />
       <div className={classNames.swapContainer}>
         <TokenArea direction="from" selection={selection.from} dispatch={dispatch} />
