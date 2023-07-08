@@ -19,7 +19,10 @@ export const fromNow = (date: string | Date): string => dayjs(date).fromNow()
 export const formatNumber = (num: number, decimalPlaces = 2): string => num.toFixed(decimalPlaces)
 
 export const formatCurrency = (amount: number, currency = 'USD'): string =>
-  new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount)
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+  }).format(amount)
 
 // String formatting
 export const toTitleCase = (str: string): string =>
@@ -37,6 +40,7 @@ export const slugify = (str: string): string =>
     .toLowerCase()
     .replace(/ /g, '-')
     .replace(/[^\w-]+/g, '')
+
 export const getHostname = (url: string): string => new URL(url).hostname
 
 // turns 'https://cointelegraph.com/abcd' into cointelegraph

@@ -52,7 +52,10 @@ export const NewsCard: FC<NewsCardProps> = () => (
     <CardHeader title="News">
       <Button
         variant={'subtle'}
-        rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}
+        rightIcon={{
+          name: 'ChevronDown',
+          iconProps: { size: 18 },
+        }}
         size={'sm'}
       >
         <CryptoSymbol name={'BNB'} symbol={'BNB'} />

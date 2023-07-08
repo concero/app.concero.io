@@ -55,7 +55,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
     >
       <div className={classNames.cardHeader}>
         <div className={classNames.cardHeaderLeftSide}>
-          <h3>Net value:</h3>
+          <h4>Net value:</h4>
           <h3>{`$${route.net_value_usd}`}</h3>
           <h3 className={classNames.subtitle}>{`${route.net_value_token}`}</h3>
           <Tag color={getAdvantageTagBgColor(route.advantage)}>{capitalize(route.advantage)}</Tag>

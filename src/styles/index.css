@@ -1,14 +1,14 @@
 :root {
     @import-json '../constants/json/spacing.json';
     @import-json '../constants/json/styles.json';
-    color-scheme:             light dark;
-    font-family:              Poppins, sans-serif;
-    font-size:                16px; /* base font size, 1rem */
-    -webkit-font-smoothing:   antialiased;
-    font-synthesis:           none;
+    color-scheme: light dark;
+    font-family: Poppins, sans-serif;
+    font-size: 16px; /* base font size, 1rem */
+    -webkit-font-smoothing: antialiased;
+    font-synthesis: none;
 
-    -moz-osx-font-smoothing:  grayscale;
-    text-rendering:           optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     -webkit-text-size-adjust: 100%;
 
 }
@@ -19,16 +19,16 @@ header, main, footer, aside, nav, section, article, figure, figcaption, ul, ol, 
 
 body {
     background-color: var(--color-base-background);
-    box-sizing:       border-box;
-    display:          flex;
-    height:           100vh;
-    margin:           0;
-    overflow:         hidden;
-    padding:          0;
-    width:            100vw;
+    box-sizing: border-box;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100vw;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
     body {
         height: 100%;
         width: 100%;
@@ -37,84 +37,86 @@ body {
 }
 
 .light {
-    --color-base-background:   #FFFFFF;
-    --color-base-black:        #FFFFFF;
-    --color-base-white:        #000000;
-    --color-green-dark:        #ABEDD5;
-    --color-green-darker:      #C7F3E3;
-    --color-green-darkest:     #E3F9F1;
-    --color-green-light:       #20A273;
-    --color-green-lighter:     #1A8B65;
-    --color-green-lightest:    #0F271F;
-    --color-green-main:        #26C281;
-    --color-grey-dark:         #CBCACF;
-    --color-grey-darker:       #E5E5E7;
-    --color-grey-darkest:      #F7F7F7;
-    --color-grey-light:        #464646;
-    --color-grey-lighter:      #1C1C1C;
-    --color-grey-lightest:     #131313;
-    --color-grey-medium:       #B0AFB5;
-    --color-grey-mediumLight:  #98959E;
-    --color-primary-dark:      #AB86FA;
-    --color-primary-darker:    #C7AEFC;
-    --color-primary-darkest:   #E3D7FD;
-    --color-primary-light:     #452094;
-    --color-primary-lighter:   #2E1563;
-    --color-primary-lightest:  #170B31;
-    --color-primary-main:      #7335F7;
-    --color-primary-mainDark:  #8F5DF9;
+    --color-base-background: #FFFFFF;
+    --color-base-black: #FFFFFF;
+    --color-base-white: #000000;
+    --color-green-dark: #ABEDD5;
+    --color-green-darker: #C7F3E3;
+    --color-green-darkest: #E3F9F1;
+    --color-green-light: #20A273;
+    --color-green-lighter: #1A8B65;
+    --color-green-lightest: #0F271F;
+    --color-green-main: #26C281;
+    --color-grey-dark: #CBCACF;
+    --color-grey-darker: #E5E5E7;
+    --color-grey-darkest: #F7F7F7;
+    --color-grey-light: #464646;
+    --color-grey-lighter: #1C1C1C;
+    --color-grey-lightest: #131313;
+    --color-grey-medium: #B0AFB5;
+    --color-grey-mediumLight: #98959E;
+    --color-primary-dark: #AB86FA;
+    --color-primary-darker: #C7AEFC;
+    --color-primary-darkest: #E3D7FD;
+    --color-primary-light: #452094;
+    --color-primary-lighter: #2E1563;
+    --color-primary-lightest: #170B31;
+    --color-primary-main: #7335F7;
+    --color-primary-mainDark: #8F5DF9;
     --color-primary-mainLight: #5C2AC6;
-    --color-red-dark:          #F9C9C3;
-    --color-red-darker:        #FBDCD7;
-    --color-red-darkest:       #FDEEEB;
-    --color-red-light:         #D34141;
-    --color-red-lighter:       #B62C2C;
-    --color-red-lightest:      #290C0C;
-    --color-text-primary:      #131313;
-    --color-text-secondary:    #98959E;
+    --color-red-dark: #F9C9C3;
+    /*duplicate of red dark*/
+    --color-red-main: #F9C9C3;
+    --color-red-darker: #FBDCD7;
+    --color-red-darkest: #FDEEEB;
+    --color-red-light: #D34141;
+    --color-red-lighter: #B62C2C;
+    --color-red-lightest: #290C0C;
+    --color-text-primary: #131313;
+    --color-text-secondary: #98959E;
 }
 
 .dark {
-    --color-base-background:   #000000;
-    --color-base-black:        #000000;
-    --color-base-white:        #FFFFFF;
-    --color-green-dark:        #20A273;
-    --color-green-darker:      #1A8B65;
-    --color-green-darkest:     #0F271F;
-    --color-green-light:       #ABEDD5;
-    --color-green-lighter:     #C7F3E3;
-    --color-green-lightest:    #E3F9F1;
-    --color-green-main:        #26C281;
-    --color-grey-dark:         #464646;
-    --color-grey-darker:       #1C1C1C;
-    --color-grey-darkest:      #131313;
-    --color-grey-light:        #CBCACF;
-    --color-grey-lighter:      #E5E5E7;
-    --color-grey-lightest:     #F7F7F7;
-    --color-grey-medium:       #98959E;
-    --color-grey-mediumLight:  #B0AFB5;
-    --color-primary-dark:      #452094;
-    --color-primary-darker:    #2E1563;
-    --color-primary-darkest:   #170B31;
-    --color-primary-light:     #AB86FA;
-    --color-primary-lighter:   #C7AEFC;
-    --color-primary-lightest:  #E3D7FD;
-    --color-primary-main:      #7335F7;
-    --color-primary-mainDark:  #5C2AC6;
+    --color-base-background: #000000;
+    --color-base-black: #000000;
+    --color-base-white: #FFFFFF;
+    --color-green-dark: #20A273;
+    --color-green-darker: #1A8B65;
+    --color-green-darkest: #0F271F;
+    --color-green-light: #ABEDD5;
+    --color-green-lighter: #C7F3E3;
+    --color-green-lightest: #E3F9F1;
+    --color-green-main: #26C281;
+    --color-grey-dark: #464646;
+    --color-grey-darker: #1C1C1C;
+    --color-grey-darkest: #131313;
+    --color-grey-light: #CBCACF;
+    --color-grey-lighter: #E5E5E7;
+    --color-grey-lightest: #F7F7F7;
+    --color-grey-medium: #98959E;
+    --color-grey-mediumLight: #B0AFB5;
+    --color-primary-dark: #452094;
+    --color-primary-darker: #2E1563;
+    --color-primary-darkest: #170B31;
+    --color-primary-light: #AB86FA;
+    --color-primary-lighter: #C7AEFC;
+    --color-primary-lightest: #E3D7FD;
+    --color-primary-main: #7335F7;
+    --color-primary-mainDark: #5C2AC6;
     --color-primary-mainLight: #8F5DF9;
-    --color-red-dark:          #D34141;
-    --color-red-darker:        #B62C2C;
-    --color-red-darkest:       #290C0C;
-    --color-red-light:         #F9C9C3;
-    --color-red-lighter:       #FBDCD7;
-    --color-red-lightest:      #FDEEEB;
-    --color-text-primary:      #F7F7F7;
-    --color-text-secondary:    #7E7B86;
+    --color-red-dark: #D34141;
+    --color-red-darker: #B62C2C;
+    --color-red-darkest: #290C0C;
+    --color-red-light: #F9C9C3;
+    --color-red-lighter: #FBDCD7;
+    --color-red-lightest: #FDEEEB;
+    --color-text-primary: #F7F7F7;
+    --color-text-secondary: #7E7B86;
 }
 
 div#root {
     background-color: var(--color-base-background);
-    flex:             1;
+    flex: 1;
 }
 
 @media (max-width: 700px) {
@@ -124,76 +126,81 @@ div#root {
 }
 
 div {
-    box-sizing:     border-box;
-    color:          var(--color-text-primary);
-    display:        flex;
+    box-sizing: border-box;
+    color: var(--color-text-primary);
+    display: flex;
     flex-direction: column;
+    scrollbar-width: none;
+}
+
+div::-webkit-scrollbar {
+    display: none;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, button, input, label, span, li {
-    box-sizing:          border-box;
-    color:               var(--color-text-primary);
-    font-family:         inherit;
-    margin:              0;
-    padding:             0;
-    -moz-user-select:    none;
-    -ms-user-select:     none;
+    box-sizing: border-box;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+    -moz-user-select: none;
+    -ms-user-select: none;
     -webkit-user-select: none;
-    user-select:         none;
+    user-select: none;
 
 }
 
 ul, ol, li {
-    margin-block:   0;
-    margin-inline:  0;
+    margin-block: 0;
+    margin-inline: 0;
     padding-inline: 0;
 }
 
 h1 {
-    font-size:   2rem;
+    font-size: 2rem;
     font-weight: 600;
 }
 
 h2 {
-    font-size:   1.5rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
 h3 {
-    font-size:   1.25rem;
+    font-size: 1.25rem;
     font-weight: 500;
 }
 
 h4 {
-    font-size:   1rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
 h5 {
-    font-size:   0.875rem;
+    font-size: 0.875rem;
     font-weight: 500;
 }
 
 p {
-    display:     inline;
-    font-size:   1rem;
+    display: inline;
+    font-size: 1rem;
     font-weight: 400;
 }
 
 a {
-    color:           inherit;
+    color: inherit;
     text-decoration: none;
 }
 
 .body1 {
-    color:     var(--color-text-secondary);
+    color: var(--color-text-secondary);
     font-size: 0.85rem;
 }
 
 button {
-    border:      none;
-    cursor:      pointer;
+    border: none;
+    cursor: pointer;
     font-weight: 500;
     line-height: 0;
-    outline:     none;
+    outline: none;
 }

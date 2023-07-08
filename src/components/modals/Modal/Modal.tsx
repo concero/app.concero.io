@@ -11,15 +11,17 @@ export interface ModalProps {
   children?: ReactNode
 }
 
-export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => (
-  <AnimatePresence>
-    {show && (
-      <motion.div {...fadeAnimation} className={classNames.overlay}>
-        <motion.div {...fadeUpAnimation} className={classNames.container}>
-          <ModalHeader title={title} onClick={() => setShow(false)} />
-          {children}
+export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div {...fadeAnimation} className={classNames.overlay}>
+          <motion.div {...fadeUpAnimation} className={classNames.container}>
+            <ModalHeader title={title} onClick={() => setShow(false)} />
+            {children}
+          </motion.div>
         </motion.div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-)
+      )}
+    </AnimatePresence>
+  )
+}

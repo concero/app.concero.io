@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const sizes = {
+const sizes = {
   mobile: '768px',
 }
 
