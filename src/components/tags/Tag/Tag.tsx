@@ -1,9 +1,8 @@
-import { FC, MouseEvent, useContext } from 'react'
+import { FC, MouseEvent } from 'react'
 import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
 import className from './Tag.module.pcss'
 import Icon from '../../Icon'
-import { ThemeContext } from '../../../hooks/themeContext.tsx'
 
 type IconComponentProps = {
   name: keyof typeof Icons
@@ -21,8 +20,6 @@ export interface TagProps {
 }
 
 export const getColors = (color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker') => {
-  const { colors } = useContext(ThemeContext)
-
   switch (color) {
     case 'red':
       return className.red
@@ -32,7 +29,7 @@ export const getColors = (color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker
       return className.grey
     case 'main':
       return className.main
-    case 'mainDarker':
+      // case 'mainDarker':
       return className.mainDarker
     default:
       return className.grey
@@ -90,5 +87,4 @@ export function getSentimentIconByText(text: string): IconComponentProps | null 
         iconProps: { size: 18 },
       }
   }
-  return null
 }

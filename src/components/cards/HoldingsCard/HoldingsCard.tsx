@@ -3,7 +3,6 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { Tag } from '../../tags/Tag/Tag'
-import { colors } from '../../../constants/colors'
 
 export interface HoldingsCardProps {}
 
@@ -24,9 +23,11 @@ export const holdingsColumns = [
     columnTitle: 'Last 24h',
     cellComponent: ({ last_24h }) => (
       <Tag
-        leftIcon={{ name: last_24h > 0 ? 'ArrowUpLeft' : 'ArrowDownLeft', iconProps: { size: 18 } }}
-        fgColor={last_24h > 0 ? colors.green.main : colors.red.dark}
-        bgColor={last_24h > 0 ? colors.green.darkest : colors.red.darkest}
+        leftIcon={{
+          name: last_24h > 0 ? 'ArrowUpRight' : 'ArrowDownRight',
+          iconProps: { size: 18 },
+        }}
+        color={last_24h > 0 ? 'green' : 'red'}
       >
         {last_24h}%
       </Tag>

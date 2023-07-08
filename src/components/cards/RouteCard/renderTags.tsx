@@ -22,9 +22,9 @@ export const renderTags = (
           },
         }}
       >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+        <p className={`${classNames.bodyColor} body2 ${getTextColor()}`}>
           {route.transaction_time_seconds}
-        </h5>
+        </p>
       </Tag>
       <Tag
         color={getBgColor}

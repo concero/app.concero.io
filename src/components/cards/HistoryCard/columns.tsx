@@ -12,9 +12,15 @@ export const columns = [
   },
   {
     columnTitle: 'When',
-    headerStyle: { textAlign: 'right' },
     cellComponent: (item) => (
-      <p style={{ color: colors.text.secondary, textAlign: 'end' }}>{item.created_at}</p>
+      <p
+        style={{
+          color: colors.text.secondary,
+          textAlign: 'end',
+        }}
+      >
+        {item.created_at}
+      </p>
     ),
   },
 ]
