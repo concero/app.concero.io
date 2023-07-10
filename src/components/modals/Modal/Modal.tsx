@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
@@ -12,7 +12,9 @@ export interface ModalProps {
 }
 
 export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
-  show ? (document.body.style.overflowY = 'hidden') : (document.body.style.overflowY = 'scroll')
+  useEffect(() => {
+    show ? (document.body.style.overflowY = 'hidden') : (document.body.style.overflowY = 'scroll')
+  }, [show])
 
   return (
     <AnimatePresence>
