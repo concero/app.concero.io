@@ -6,6 +6,8 @@ import { routes } from '../../../constants/routes'
 import { Button } from '../../buttons/Button/Button'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { Logo } from '../Logo'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { MobileBurgerMenu } from './MobileBurgerMenu'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -28,6 +30,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
   // )
   const matchExchange = useMatch(routes.exchange)
   const matchPortfolio = useMatch(routes.portfolio)
+  const isDesktop = useMediaQuery('mobile')
 
   return (
     <header>
@@ -36,32 +39,44 @@ export const Header: FC<HeaderProps> = ({ children }) => {
         <div className={classNames.logoContainer}>
           <Logo />
         </div>
-        <ul>
-          <Link
-            className={matchExchange ? classNames.active : classNames.link}
-            to={routes.exchange}
-          >
-            Exchange
-          </Link>
-          <Link
-            className={matchPortfolio ? classNames.active : classNames.link}
-            to={routes.portfolio}
-          >
-            Portfolio
-          </Link>
-        </ul>
+        {isDesktop ? (
+          <ul>
+            <Link
+              className={matchExchange ? classNames.active : classNames.link}
+              to={routes.exchange}
+            >
+              Exchange
+            </Link>
+            <Link
+              className={matchPortfolio ? classNames.active : classNames.link}
+              to={routes.portfolio}
+            >
+              Portfolio
+            </Link>
+          </ul>
+        ) : null}
       </div>
       <div>
-        <Web3Button />
-        <Button
-          size="sq-md"
-          onClick={toggleTheme}
-          variant="black"
-          leftIcon={{
-            name: theme === 'light' ? 'Moon' : 'Sun',
-            iconProps: { size: 18 },
-          }}
-        />
+        {isDesktop ? (
+          <div>
+            <Web3Button />
+            <Button
+              size="sq-md"
+              onClick={toggleTheme}
+              variant="black"
+              leftIcon={{
+                name: theme === 'light' ? 'Moon' : 'Sun',
+                iconProps: { size: 18 },
+              }}
+            />
+          </div>
+        ) : (
+          <MobileBurgerMenu
+            matchPortfolio={matchPortfolio}
+            matchExchange={matchExchange}
+            toggleTheme={toggleTheme}
+          />
+        )}
         {/* <ButtonWithPopover */}
         {/*  secondary */}
         {/*  sm */}
