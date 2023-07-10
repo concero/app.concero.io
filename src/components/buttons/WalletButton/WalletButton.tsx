@@ -19,18 +19,20 @@ interface BaseButtonProps {
 
 const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
   const { colors } = useContext(ThemeContext)
-  const { address, isConnected } = useAccount()
+  const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 
-  const getStatus = () => {
-    if (isConnected) {
-      return truncateWallet(address)
-    }
-    return 'Connect Wallet'
-  }
+  const getStatus = () =>
+    isConnected
+      ? truncateWallet(address)
+      : isConnecting
+      ? 'Connecting...'
+      : isDisconnected
+      ? 'Connect Wallet'
+      : 'Connect Wallet'
 
   return (
     <Button
-      variant={!isConnected ? 'filled' : 'subtle'}
+      variant={isConnected ? 'subtle' : 'filled'}
       rightIcon={
         isConnected
           ? {

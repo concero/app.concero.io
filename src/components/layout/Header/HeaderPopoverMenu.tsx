@@ -1,28 +1,35 @@
+import { disconnect } from '@wagmi/core'
+import { useAccount, WagmiConfig } from 'wagmi'
 import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
+import { wagmiConfig } from '../../../web3/rainbowKit'
 
-const items = [
-  {
-    title: 'Copy address',
-    iconName: 'Copy',
-    danger: false,
-    onClick: () => {
-      console.log('Copy address')
-    },
-  },
-  {
-    title: 'Log out',
-    iconName: 'Logout',
-    danger: true,
-    onClick: () => {
-      console.log('Logout')
-    },
-  },
-]
+export function HeaderPopoverMenu() {
+  const { address } = useAccount()
 
-export const HeaderPopoverMenu = () => {
+  const items = [
+    {
+      title: 'Copy address',
+      iconName: 'Copy',
+      danger: false,
+      onClick: () => {
+        navigator.clipboard.writeText(address)
+      },
+    },
+    {
+      title: 'Log out',
+      iconName: 'Logout',
+      danger: true,
+      onClick: () => {
+        disconnect()
+      },
+    },
+  ]
+
   return (
-    <div>
-      <MenuPopover items={items} />
-    </div>
+    <WagmiConfig config={wagmiConfig}>
+      <div>
+        <MenuPopover items={items} />
+      </div>
+    </WagmiConfig>
   )
 }

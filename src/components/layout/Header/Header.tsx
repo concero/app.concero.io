@@ -17,32 +17,30 @@ export const Header: FC<HeaderProps> = ({ children }) => {
   const isDesktop = useMediaQuery('mobile')
 
   return (
-    <div>
-      <header className={classNames.header}>
-        {children}
-        <div className={classNames.navigatorContainer}>
-          <div className={classNames.logoContainer}>
-            <Logo />
-          </div>
-          {isDesktop ? (
-            <ul>
-              <Link
-                className={matchExchange ? classNames.active : classNames.link}
-                to={routes.exchange}
-              >
-                Exchange
-              </Link>
-              <Link
-                className={matchPortfolio ? classNames.active : classNames.link}
-                to={routes.portfolio}
-              >
-                Portfolio
-              </Link>
-            </ul>
-          ) : null}
+    <header className={classNames.header}>
+      {children}
+      <div className={classNames.navigatorContainer}>
+        <div className={classNames.logoContainer}>
+          <Logo />
         </div>
-        <WalletButton />
-      </header>
-    </div>
+        {isDesktop ? (
+          <ul>
+            <Link
+              className={matchExchange ? classNames.active : classNames.link}
+              to={routes.exchange}
+            >
+              Exchange
+            </Link>
+            <Link
+              className={matchPortfolio ? classNames.active : classNames.link}
+              to={routes.portfolio}
+            >
+              Portfolio
+            </Link>
+          </ul>
+        ) : null}
+      </div>
+      <WalletButton />
+    </header>
   )
 }

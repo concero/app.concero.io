@@ -25,15 +25,42 @@ interface TokenAreaProps {
 }
 
 const chainsData = [
-  { name: 'BinanceSmartChain', symbol: 'BSC' },
-  { name: 'eth', symbol: 'ETH' },
-  { name: 'matic', symbol: 'MATIC' },
-  { name: 'avax', symbol: 'AVAX' },
-  { name: 'miota', symbol: 'FTM' },
-  { name: 'pot', symbol: 'ONE' },
-  { name: 'Kucoin', symbol: 'KCS' },
-  { name: 'Solana', symbol: 'SOL' },
-  { name: 'trx', symbol: 'TRX' },
+  {
+    name: 'BinanceSmartChain',
+    symbol: 'BSC',
+  },
+  {
+    name: 'eth',
+    symbol: 'ETH',
+  },
+  {
+    name: 'matic',
+    symbol: 'MATIC',
+  },
+  {
+    name: 'avax',
+    symbol: 'AVAX',
+  },
+  {
+    name: 'miota',
+    symbol: 'FTM',
+  },
+  {
+    name: 'pot',
+    symbol: 'ONE',
+  },
+  {
+    name: 'Kucoin',
+    symbol: 'KCS',
+  },
+  {
+    name: 'Solana',
+    symbol: 'SOL',
+  },
+  {
+    name: 'trx',
+    symbol: 'TRX',
+  },
 ]
 const chainsColumns = [
   {
@@ -56,14 +83,38 @@ const chainsColumns = [
   },
 ]
 const tokensData = [
-  { name: 'ETH', symbol: 'ETH' },
-  { name: 'BTC', symbol: 'BTC' },
-  { name: 'USDT', symbol: 'USDT' },
-  { name: 'BNB', symbol: 'BNB' },
-  { name: 'ADA', symbol: 'ADA' },
-  { name: 'XRP', symbol: 'XRP' },
-  { name: 'USDC', symbol: 'USDC' },
-  { name: 'DOT', symbol: 'DOT' },
+  {
+    name: 'ETH',
+    symbol: 'ETH',
+  },
+  {
+    name: 'BTC',
+    symbol: 'BTC',
+  },
+  {
+    name: 'USDT',
+    symbol: 'USDT',
+  },
+  {
+    name: 'BNB',
+    symbol: 'BNB',
+  },
+  {
+    name: 'ADA',
+    symbol: 'ADA',
+  },
+  {
+    name: 'XRP',
+    symbol: 'XRP',
+  },
+  {
+    name: 'USDC',
+    symbol: 'USDC',
+  },
+  {
+    name: 'DOT',
+    symbol: 'DOT',
+  },
 ]
 const tokensColumns = [
   {
@@ -88,7 +139,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     dispatch({
       type: 'setChain',
       direction,
-      payload: { name: chain.name, symbol: chain.symbol },
+      payload: {
+        name: chain.name,
+        symbol: chain.symbol,
+      },
     })
   }
 
@@ -96,7 +150,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     dispatch({
       type: 'setToken',
       direction,
-      payload: { name: token.name, symbol: token.symbol },
+      payload: {
+        name: token.name,
+        symbol: token.symbol,
+      },
     })
   }
 
@@ -110,7 +167,13 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
               onClick={() => setShowChainsModal(true)}
               size="sm"
               variant="black"
-              rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}
+              rightIcon={{
+                name: 'ChevronDown',
+                iconProps: {
+                  size: 18,
+                  color: colors.text.secondary,
+                },
+              }}
             >
               <CryptoSymbol name={selection.chain.name} symbol={selection.chain.symbol} />
             </Button>
@@ -131,7 +194,13 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
             onClick={() => setShowTokensModal(true)}
             size="sm"
             variant="black"
-            rightIcon={{ name: 'ChevronDown', iconProps: { size: 18 } }}
+            rightIcon={{
+              name: 'ChevronDown',
+              iconProps: {
+                size: 18,
+                color: colors.text.secondary,
+              },
+            }}
           >
             <CryptoSymbol name={selection.token.name} symbol={selection.token.symbol} />
           </Button>
