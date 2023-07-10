@@ -12,6 +12,8 @@ export interface ModalProps {
 }
 
 export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
+  show ? (document.body.style.overflowY = 'hidden') : (document.body.style.overflowY = 'scroll')
+
   return (
     <AnimatePresence>
       {show && (

@@ -29,7 +29,7 @@ export const getColors = (color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker
       return className.grey
     case 'main':
       return className.main
-      // case 'mainDarker':
+    case 'mainDarker':
       return className.mainDarker
     default:
       return className.grey

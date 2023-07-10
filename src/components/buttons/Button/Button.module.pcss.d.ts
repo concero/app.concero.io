@@ -6,6 +6,7 @@ export default identifiersMap
 export type CssIdentifiersMap = {
   "black": string|undefined
   "button": string|undefined
+  "filled": string|undefined
   "isDisabled": string|undefined
   "isLoading": string|undefined
   "lg": string|undefined
