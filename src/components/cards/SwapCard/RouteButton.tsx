@@ -13,7 +13,7 @@ interface AvatarsProps {
 const Avatars: FC<AvatarsProps> = ({ entities }) => (
   <div className={classNames.avatarContainer}>
     {entities.map((entity, index) => (
-      <div>{index < 3 && <Avatar size="xs" key={entity.id} src={entity.exchange.symbol} />}</div>
+      <div key={entity.id}>{index < 3 && <Avatar size="xs" src={entity.exchange.symbol} />}</div>
     ))}
     {entities.length > 3 && <p>{`${entities.length}`}</p>}
   </div>

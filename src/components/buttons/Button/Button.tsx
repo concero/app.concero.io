@@ -14,7 +14,7 @@ type IconComponentProps = {
 
 type ButtonProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
-  variant?: 'primary' | 'secondary' | 'subtle' | 'black'
+  variant?: 'primary' | 'secondary' | 'filled' | 'subtle' | 'black'
   leftIcon?: IconComponentProps
   rightIcon?: IconComponentProps
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -89,7 +89,10 @@ const LoadingAnimation = () => (
     loop
     autoplay
     animationData={loadingAnimation}
-    style={{ width: 30, height: 30 }}
+    style={{
+      width: 30,
+      height: 30,
+    }}
     rendererSettings={{
       preserveAspectRatio: 'xMidYMid slice',
     }}

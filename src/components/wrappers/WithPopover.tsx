@@ -1,4 +1,4 @@
-import { ComponentType, FC, useRef, useState } from 'react'
+import { ComponentType, FC, useEffect, useState } from 'react'
 
 type WithPopoverProps = {
   WrappedComponent: ComponentType<any>
@@ -13,49 +13,64 @@ export const WithPopover: FC<WithPopoverProps> = (
   trigger: 'hover' | 'click' = 'hover',
 ) => {
   const [showPopover, setShowPopover] = useState(false)
-  const [popoverPosition, setPopoverPosition] = useState({ position: 'absolute', top: 0, left: 0 })
-  const wrappedComponentRef = useRef<HTMLDivElement>(null)
+  const [isHovering, setIsHovering] = useState(false)
+
   return function (props: any) {
-    const handleMouseEnter = (e: MouseEvent) => {
+    let timeOut: NodeJS.Timeout
+
+    if (trigger === 'hover') {
+      useEffect(() => {
+        if (isHovering) {
+          clearTimeout(timeOut)
+          setShowPopover(true)
+        } else {
+          setShowPopover(false)
+        }
+      }, [isHovering])
+    }
+
+    const handleMouseEnter = () => {
       if (trigger === 'hover') {
-        e.stopPropagation()
-        updatePopoverPosition()
+        setIsHovering(true)
         setShowPopover(true)
       }
     }
 
-    const handleMouseLeave = (e: MouseEvent) => {
+    const handleMouseLeave = () => {
       if (trigger === 'hover') {
-        e.stopPropagation()
-        setShowPopover(false)
+        timeOut = setTimeout(() => {
+          setIsHovering(false)
+        }, 300)
       }
     }
 
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = () => {
       if (trigger === 'click') {
-        e.stopPropagation()
-        updatePopoverPosition()
         setShowPopover((prevShowPopover) => !prevShowPopover)
-      }
-    }
-
-    const updatePopoverPosition = () => {
-      if (wrappedComponentRef.current) {
-        const rect = wrappedComponentRef.current.getBoundingClientRect()
-        setPopoverPosition({ position: 'absolute', top: rect.height + 10, right: 0 })
       }
     }
 
     return (
       <div
-        ref={wrappedComponentRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
-        style={{ position: 'relative' }}
+        style={{
+          position: 'relative',
+        }}
       >
         <WrappedComponent {...props} />
-        {showPopover && <PopoverComponent {...popoverProps} style={popoverPosition} />}
+        {showPopover && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: -105,
+              left: 0,
+            }}
+          >
+            <PopoverComponent {...popoverProps} />
+          </div>
+        )}
       </div>
     )
   }

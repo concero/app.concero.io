@@ -1,6 +1,6 @@
+import { useAccount } from 'wagmi'
 import { CSSProperties, FC, ReactNode, useContext } from 'react'
 import { Link, useMatch } from 'react-router-dom'
-import { Web3Button } from '@web3modal/react'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../constants/routes'
 import { Button } from '../../buttons/Button/Button'
@@ -8,6 +8,10 @@ import { ThemeContext } from '../../../hooks/themeContext'
 import { Logo } from '../Logo'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { MobileBurgerMenu } from './MobileBurgerMenu'
+import { WithPopover } from '../../wrappers/WithPopover'
+import { WalletButton } from '../../buttons/WalletButton/WalletButton'
+import { HeaderPopoverMenu } from './HeaderPopoverMenu'
+import { useWeb3Modal, Web3Modal } from '@web3modal/react'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -16,26 +20,26 @@ export interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ children }) => {
   const { theme, toggleTheme } = useContext(ThemeContext)
-  // const ButtonWithPopover = WithPopover(
-  //   Button,
-  //   MenuPopover,
-  //   {
-  //     items: [
-  //       { title: 'Copy address', iconName: 'Copy' },
-  //       { title: 'Settings', iconName: 'Settings' },
-  //       { title: 'Logout', iconName: 'Logout', danger: true },
-  //     ],
-  //   },
-  //   'click',
-  // )
   const matchExchange = useMatch(routes.exchange)
   const matchPortfolio = useMatch(routes.portfolio)
   const isDesktop = useMediaQuery('mobile')
+  const { isConnected } = useAccount()
+  const { open, close } = useWeb3Modal()
+
+  const handleWalletButtonClick = () => {
+    if (isConnected) {
+      open()
+    } else {
+      close()
+    }
+  }
+
+  const ButtonWithPopover = WithPopover(WalletButton, HeaderPopoverMenu, 'hover')
 
   return (
-    <header>
+    <header className={classNames.header}>
       {children}
-      <div>
+      <div className={classNames.navigatorContainer}>
         <div className={classNames.logoContainer}>
           <Logo />
         </div>
@@ -59,7 +63,11 @@ export const Header: FC<HeaderProps> = ({ children }) => {
       <div>
         {isDesktop ? (
           <div>
-            <Web3Button />
+            {isConnected ? (
+              <ButtonWithPopover onClick={handleWalletButtonClick} />
+            ) : (
+              <WalletButton />
+            )}
             <Button
               size="sq-md"
               onClick={toggleTheme}
@@ -71,19 +79,17 @@ export const Header: FC<HeaderProps> = ({ children }) => {
             />
           </div>
         ) : (
-          <MobileBurgerMenu
-            matchPortfolio={matchPortfolio}
-            matchExchange={matchExchange}
-            toggleTheme={toggleTheme}
-          />
+          <div style={{ alignItems: 'center' }}>
+            <WalletButton onClick={handleWalletButtonClick} variant={'mobile'} />
+
+            <MobileBurgerMenu
+              matchPortfolio={matchPortfolio}
+              matchExchange={matchExchange}
+              toggleTheme={toggleTheme}
+            />
+          </div>
         )}
-        {/* <ButtonWithPopover */}
-        {/*  secondary */}
-        {/*  sm */}
-        {/*  leftIcon={{ name: 'Wallet', iconProps: { color: colors.base.white, strokeWidth: 2, size: 14 } }} */}
-        {/*  rightIcon={{ name: 'ChevronDown', iconProps: { color: colors.base.white, strokeWidth: 2, size: 14 } }}> */}
-        {/*  0x00000 */}
-        {/* </ButtonWithPopover> */}
+        <Web3Modal />
       </div>
     </header>
   )
