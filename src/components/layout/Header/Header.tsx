@@ -11,7 +11,7 @@ import { MobileBurgerMenu } from './MobileBurgerMenu'
 import { WithPopover } from '../../wrappers/WithPopover'
 import { WalletButton } from '../../buttons/WalletButton/WalletButton'
 import { HeaderPopoverMenu } from './HeaderPopoverMenu'
-import { useWeb3Modal, Web3Modal } from '@web3modal/react'
+import { useWeb3Modal } from '@web3modal/react'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -24,73 +24,61 @@ export const Header: FC<HeaderProps> = ({ children }) => {
   const matchPortfolio = useMatch(routes.portfolio)
   const isDesktop = useMediaQuery('mobile')
   const { isConnected } = useAccount()
-  const { open, close } = useWeb3Modal()
-
-  const handleWalletButtonClick = () => {
-    if (isConnected) {
-      open()
-    } else {
-      close()
-    }
-  }
+  const { open } = useWeb3Modal()
 
   const ButtonWithPopover = WithPopover(WalletButton, HeaderPopoverMenu, 'hover')
 
   return (
-    <header className={classNames.header}>
-      {children}
-      <div className={classNames.navigatorContainer}>
-        <div className={classNames.logoContainer}>
-          <Logo />
+    <div>
+      <header className={classNames.header}>
+        {children}
+        <div className={classNames.navigatorContainer}>
+          <div className={classNames.logoContainer}>
+            <Logo />
+          </div>
+          {isDesktop ? (
+            <ul>
+              <Link
+                className={matchExchange ? classNames.active : classNames.link}
+                to={routes.exchange}
+              >
+                Exchange
+              </Link>
+              <Link
+                className={matchPortfolio ? classNames.active : classNames.link}
+                to={routes.portfolio}
+              >
+                Portfolio
+              </Link>
+            </ul>
+          ) : null}
         </div>
-        {isDesktop ? (
-          <ul>
-            <Link
-              className={matchExchange ? classNames.active : classNames.link}
-              to={routes.exchange}
-            >
-              Exchange
-            </Link>
-            <Link
-              className={matchPortfolio ? classNames.active : classNames.link}
-              to={routes.portfolio}
-            >
-              Portfolio
-            </Link>
-          </ul>
-        ) : null}
-      </div>
-      <div>
-        {isDesktop ? (
-          <div>
-            {isConnected ? (
-              <ButtonWithPopover onClick={handleWalletButtonClick} />
-            ) : (
-              <WalletButton />
-            )}
-            <Button
-              size="sq-md"
-              onClick={toggleTheme}
-              variant="black"
-              leftIcon={{
-                name: theme === 'light' ? 'Moon' : 'Sun',
-                iconProps: { size: 18 },
-              }}
-            />
-          </div>
-        ) : (
-          <div style={{ alignItems: 'center' }}>
-            <WalletButton onClick={handleWalletButtonClick} variant={'mobile'} />
-
-            <MobileBurgerMenu
-              matchPortfolio={matchPortfolio}
-              matchExchange={matchExchange}
-              toggleTheme={toggleTheme}
-            />
-          </div>
-        )}
-        <Web3Modal />
-      </div>
-    </header>
+        <div>
+          {isDesktop ? (
+            <div>
+              {isConnected ? <ButtonWithPopover onClick={open} /> : <WalletButton onClick={open} />}
+              <Button
+                size="sq-md"
+                onClick={toggleTheme}
+                variant="black"
+                leftIcon={{
+                  name: theme === 'light' ? 'Moon' : 'Sun',
+                  iconProps: { size: 18 },
+                }}
+              />
+            </div>
+          ) : (
+            <div style={{ alignItems: 'center' }}>
+              <WalletButton onClick={open} variant={'mobile'} />
+              <MobileBurgerMenu
+                matchPortfolio={matchPortfolio}
+                matchExchange={matchExchange}
+                toggleTheme={toggleTheme}
+              />
+            </div>
+          )}
+        </div>
+      </header>
+    </div>
   )
 }
