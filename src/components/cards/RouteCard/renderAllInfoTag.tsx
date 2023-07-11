@@ -33,9 +33,14 @@ export const renderAllTagInfo = (
   isBestRoute: boolean,
   getColor: () => string | undefined,
 ) => (
-  <>
+  <div>
     {!isRoutesCollapsed ? (
-      <div style={{ flexDirection: 'row', gap: 10 }}>
+      <div
+        style={{
+          flexDirection: 'row',
+          gap: 10,
+        }}
+      >
         <AdditionalInfoTag
           title={step.gas_price_usd}
           type="time"
@@ -50,5 +55,5 @@ export const renderAllTagInfo = (
         />
       </div>
     ) : null}
-  </>
+  </div>
 )
