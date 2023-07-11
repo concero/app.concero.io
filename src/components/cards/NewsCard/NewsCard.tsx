@@ -51,14 +51,14 @@ export const NewsCard: FC<NewsCardProps> = () => (
   <div className={`${classNames.container} card`}>
     <CardHeader title="News">
       <Button
-        variant={'subtle'}
+        variant="subtle"
         rightIcon={{
           name: 'ChevronDown',
           iconProps: { size: 18 },
         }}
-        size={'sm'}
+        size="sm"
       >
-        <CryptoSymbol name={'BNB'} symbol={'BNB'} />
+        <CryptoSymbol name="BNB" symbol="BNB" />
       </Button>
     </CardHeader>
     <Table items={newsData} columns={columns} isHeaderVisible={false} />

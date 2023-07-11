@@ -84,17 +84,19 @@ export const Button: FC<ButtonProps> = ({
   )
 }
 
-const LoadingAnimation = () => (
-  <Lottie
-    loop
-    autoplay
-    animationData={loadingAnimation}
-    style={{
+function LoadingAnimation() {
+  return (
+    <Lottie
+      loop
+      autoplay
+      animationData={loadingAnimation}
+      style={{
       width: 30,
       height: 30,
     }}
-    rendererSettings={{
+      rendererSettings={{
       preserveAspectRatio: 'xMidYMid slice',
     }}
-  />
-)
+    />
+  )
+}

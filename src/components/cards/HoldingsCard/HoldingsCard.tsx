@@ -17,7 +17,12 @@ export const holdingsColumns = [
   },
   {
     columnTitle: 'Value',
-    cellComponent: ({ value_usd }) => <p>${value_usd}</p>,
+    cellComponent: ({ value_usd }) => (
+      <p>
+        $
+        {value_usd}
+      </p>
+),
   },
   {
     columnTitle: 'Last 24h',
@@ -29,7 +34,8 @@ export const holdingsColumns = [
         }}
         color={last_24h > 0 ? 'green' : 'red'}
       >
-        {last_24h}%
+        {last_24h}
+        %
       </Tag>
     ),
   },

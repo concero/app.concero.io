@@ -21,15 +21,12 @@ const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
   const { colors } = useContext(ThemeContext)
   const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 
-  const getStatus = () =>
-    isConnected
-      ? truncateWallet(address)
-      : isConnecting
-      ? 'Connecting...'
-      : isDisconnected
-      ? 'Connect Wallet'
-      : 'Connect Wallet'
-
+  const getStatus = () => {
+    if (isConnected) return truncateWallet(address)
+    if (isConnecting) return 'Connecting...'
+    if (isDisconnected) return 'Connect Wallet'
+    return 'Connect Wallet'
+  }
   return (
     <Button
       variant={isConnected ? 'subtle' : 'filled'}
@@ -87,11 +84,7 @@ export const WalletButton: FC<WalletButtonProps> = () => {
       ) : (
         <div style={{ alignItems: 'center' }}>
           <BaseButton onClick={open} isConnected={isConnected} />
-          <MobileBurgerMenu
-            matchPortfolio={matchPortfolio}
-            matchExchange={matchExchange}
-            toggleTheme={toggleTheme}
-          />
+          <MobileBurgerMenu matchPortfolio={matchPortfolio} matchExchange={matchExchange} toggleTheme={toggleTheme} />
         </div>
       )}
     </div>

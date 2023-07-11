@@ -1,10 +1,10 @@
 import React from 'react'
+import dayjs from 'dayjs'
+import updateLocale from 'dayjs/plugin/updateLocale'
 import { colors } from '../../../constants/colors'
 import { getSentimentColorByText, getSentimentIconByText, Tag } from '../../tags/Tag/Tag'
 import Icon from '../../Icon'
 import { fromNow, getDomain } from '../../../utils/formatting'
-import dayjs from 'dayjs'
-import updateLocale from 'dayjs/plugin/updateLocale'
 import classNames from './NewsCard.module.pcss'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 

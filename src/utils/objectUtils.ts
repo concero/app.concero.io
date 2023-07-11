@@ -3,8 +3,7 @@ export const arrayUnique = <T>(array: T[]): T[] => [...new Set(array)]
 
 export const arrayRemove = <T>(array: T[], value: T): T[] => array.filter((item) => item !== value)
 
-export const arrayToObject = <T>(array: T[], key: keyof T): Record<string, T> =>
-  array.reduce((accumulator, item) => {
+export const arrayToObject = <T>(array: T[], key: keyof T): Record<string, T> => array.reduce((accumulator, item) => {
     accumulator[String(item[key])] = item
     return accumulator
   }, {} as Record<string, T>)
@@ -29,5 +28,4 @@ export const objectDeepMerge = (
   return output
 }
 
-export const isObject = (item: any): boolean =>
-  item && typeof item === 'object' && !Array.isArray(item)
+export const isObject = (item: any): boolean => item && typeof item === 'object' && !Array.isArray(item)

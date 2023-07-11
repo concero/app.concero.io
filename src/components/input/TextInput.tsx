@@ -19,8 +19,7 @@ export const TextInput: FC<TextInputProps> = ({ placeholder, onChangeText, iconN
     setValue(event.target.value)
     onChangeText && onChangeText(event.target.value)
   }
-  const inputClass =
-    variant === 'inline'
+  const inputClass = variant === 'inline'
       ? `${classNames.inputWrapper} ${classNames.inline}`
       : classNames.inputWrapper
 

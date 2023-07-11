@@ -59,11 +59,11 @@ const columns = [
   },
   {
     columnTitle: 'Name',
-    cellComponent: (item) => <p className={'body1'}>{item.name}</p>,
+    cellComponent: (item) => <p className="body1">{item.name}</p>,
   },
   {
     columnTitle: 'Balance',
-    cellComponent: (item) => <p className={'body1'}>{item.balance}</p>,
+    cellComponent: (item) => <p className="body1">{item.balance}</p>,
   },
 ]
 
@@ -75,8 +75,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
     setChartType(chartType === 'chart' ? 'tradingView' : 'chart')
   }
   const [isSelectLeftChainModalVisible, setIsSelectLeftChainModalVisible] = useState<boolean>(false)
-  const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] =
-    useState<boolean>(false)
+  const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
   const [selectedLeftChain, setSelectedLeftChain] = useState<{ name: string; symbol: string }>(
     chains[0],
   )
@@ -140,7 +139,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
         )}
       </div>
       <EntityListModal
-        title={'Select chain'}
+        title="Select chain"
         show={isSelectLeftChainModalVisible}
         setShow={setIsSelectLeftChainModalVisible}
         data={chains}
@@ -148,7 +147,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
         onSelect={(chain) => handleSelectLeftChain(chain)}
       />
       <EntityListModal
-        title={'Select chain'}
+        title="Select chain"
         show={isSelectRightChainModalVisible}
         setShow={setIsSelectRightChainModalVisible}
         data={chains}

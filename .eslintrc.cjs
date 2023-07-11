@@ -16,5 +16,8 @@ module.exports = {
     '@typescript-eslint/semi': ['error', 'never'],
     'import/prefer-default-export': 'off',
     'react/react-in-jsx-scope': 'off',
+    'object-curly-newline': 'off',
+    '@typescript-eslint/indent' : 'off',
+    'max-len': ['warn', { code: 120 }],
   },
 }

@@ -8,7 +8,12 @@ export const columns = [
   },
   {
     columnTitle: 'Value',
-    cellComponent: (item) => <p style={{ color: colors.grey.light }}>${item.value}</p>,
+    cellComponent: (item) => (
+      <p style={{ color: colors.grey.light }}>
+        $
+        {item.value}
+      </p>
+),
   },
   {
     columnTitle: 'When',
