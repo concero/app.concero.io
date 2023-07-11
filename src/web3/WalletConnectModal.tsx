@@ -1,6 +1,6 @@
 import { Web3Modal } from '@web3modal/react'
 import { colors } from '../constants/colors'
-import { ethereumClient, projectId } from './rainbowKit'
+import { ethereumClient, projectId } from './wagmi'
 
 export function WalletConnectModal() {
   return (

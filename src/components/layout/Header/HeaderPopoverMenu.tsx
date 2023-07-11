@@ -1,7 +1,7 @@
-import { disconnect } from '@wagmi/core'
+// import { disconnect } from '@wagmi/core'
 import { useAccount, WagmiConfig } from 'wagmi'
 import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
-import { wagmiConfig } from '../../../web3/rainbowKit'
+import { wagmiConfig } from '../../../web3/wagmi'
 
 export function HeaderPopoverMenu() {
   const { address } = useAccount()
@@ -19,9 +19,6 @@ export function HeaderPopoverMenu() {
       title: 'Log out',
       iconName: 'Logout',
       danger: true,
-      onClick: () => {
-        disconnect()
-      },
     },
   ]
 
