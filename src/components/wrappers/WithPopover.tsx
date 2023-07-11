@@ -1,4 +1,4 @@
-import { ComponentType, FC, useEffect, useState } from 'react'
+import { ComponentType, FC, useState } from 'react'
 
 type WithPopoverProps = {
   WrappedComponent: ComponentType<any>
@@ -13,34 +13,25 @@ export const WithPopover: FC<WithPopoverProps> = (
   trigger: 'hover' | 'click' = 'hover',
 ) => {
   const [showPopover, setShowPopover] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null)
 
   return function (props: any) {
-    let timeOut: NodeJS.Timeout
-
-    if (trigger === 'hover') {
-      useEffect(() => {
-        if (isHovering) {
-          clearTimeout(timeOut)
-          setShowPopover(true)
-        } else {
-          setShowPopover(false)
-        }
-      }, [isHovering])
-    }
-
     const handleMouseEnter = () => {
       if (trigger === 'hover') {
-        setIsHovering(true)
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout)
+        }
         setShowPopover(true)
       }
     }
 
     const handleMouseLeave = () => {
       if (trigger === 'hover') {
-        timeOut = setTimeout(() => {
-          setIsHovering(false)
-        }, 300)
+        setHoverTimeout(
+          setTimeout(() => {
+            setShowPopover(false)
+          }, 300),
+        )
       }
     }
 
