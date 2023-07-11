@@ -81,7 +81,7 @@ export const RouteStepTag: FC<RouteStepTagProps> = ({
           <Icon name="ArrowRight" size={20} />
           <RouteEndPoint side={step.to} amount={step.amount.token} />
         </div>
-        <div>{renderAllTagInfo(isRoutesCollapsed, step, isSelected, getColor)}</div>
+        {renderAllTagInfo(isRoutesCollapsed, step, isSelected, getColor)}
       </div>
       {renderStepsCountTag(isRoutesCollapsed, isSelected, length, getColor)}
     </div>
