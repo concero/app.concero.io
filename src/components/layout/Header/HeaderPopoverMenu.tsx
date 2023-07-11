@@ -1,10 +1,9 @@
-import { useAccount, WagmiConfig } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { disconnect } from '@wagmi/core'
 import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
-import { wagmiConfig } from '../../../web3/wagmi'
 
 export function HeaderPopoverMenu() {
-  const { address } = useAccount()
+  const { address, isConnecting } = useAccount()
 
   const items = [
     {
@@ -19,17 +18,15 @@ export function HeaderPopoverMenu() {
       title: 'Log out',
       iconName: 'Logout',
       danger: true,
-      onClick: () => {
-        disconnect()
+      onClick: async () => {
+        await disconnect()
       },
     },
   ]
 
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <div>
-        <MenuPopover items={items} />
-      </div>
-    </WagmiConfig>
+    <div>
+      <MenuPopover items={items} />
+    </div>
   )
 }

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Link, PathMatch } from 'react-router-dom'
-import { routes } from '../../../constants/routes'
+import { routes } from '../../../../constants/routes'
 import classNames from './MobileBurgerMenu.module.pcss'
 
 export interface MobileBurgerMenuProps {
@@ -9,11 +9,7 @@ export interface MobileBurgerMenuProps {
   toggleTheme: () => void
 }
 
-export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({
-  matchExchange,
-  matchPortfolio,
-  toggleTheme,
-}) => (
+export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ matchExchange, matchPortfolio, toggleTheme }) => (
   <div className={classNames.container}>
     <input className={classNames.menuBtn} type="checkbox" id="menu-btn" />
     <label className={classNames.menuIcon} htmlFor="menu-btn">

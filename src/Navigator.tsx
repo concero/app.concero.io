@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { ExchangeScreen } from './components/screens/ExchangeScreen/ExchangeScreen'
 import { AppScreen } from './components/screens/AppScreen/AppScreen'
-import { Header } from './components/layout/Header/Header'
+import { Header } from './components/layout/Header/Header/Header'
 import { routes } from './constants/routes'
 import { PortfolioScreen } from './components/screens/PortfolioScreen/PortfolioScreen'
 
