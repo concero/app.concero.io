@@ -1,5 +1,4 @@
 import { FC } from 'react'
-
 import { CryptoSymbolType } from '../../../types/CryptoSymbol'
 import classNames from './CryptoSymbol.module.pcss'
 import { CryptoIcon } from './CryptoIcon.tsx'
