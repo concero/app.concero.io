@@ -2,9 +2,8 @@ import React from 'react'
 import dayjs from 'dayjs'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import { colors } from '../../../constants/colors'
-import { getSentimentColorByText, getSentimentIconByText, Tag } from '../../tags/Tag/Tag'
 import Icon from '../../Icon'
-import { fromNow, getDomain } from '../../../utils/formatting'
+import { fromNow } from '../../../utils/formatting'
 import classNames from './NewsCard.module.pcss'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
@@ -41,21 +40,23 @@ export const columns = [
 
       return (
         <div className={classNames.cellComponentContainer}>
-          <Tag
-            color={getSentimentColorByText(item.sentiment)}
-            leftIcon={getSentimentIconByText(item.sentiment)}
-          >
-            {item.sentiment}
-          </Tag>
+          {/* <Tag */}
+          {/*  color={getSentimentColorByText(item.sentiment)} */}
+          {/*  leftIcon={getSentimentIconByText(item.sentiment)} */}
+          {/* > */}
+          {/*  {item.sentiment} */}
+          {/* </Tag> */}
           <div className="row ac gap-xs">
             <Icon name="Calendar" color={colors.text.secondary} size={18} />
             <p style={{ color: colors.text.secondary }}>{fromNow(item.created_at)}</p>
           </div>
           <div className="row ac gap-xs">
             <Icon name="Link" color={colors.text.secondary} size={18} />
-            <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
-              {getDomain(item.source_url)}
-            </p>
+            <a href={item.url} target="_blank" rel="noreferrer">
+              <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
+                {item.source.title}
+              </p>
+            </a>
           </div>
         </div>
       )

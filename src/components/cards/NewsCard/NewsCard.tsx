@@ -1,66 +1,49 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
 import { columns } from './columns'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
+import { getPosts } from '../../../api/cryptopanic/getPosts'
 
 interface NewsCardProps {}
 
-const newsData = [
-  {
-    title: 'Solana (SOL) price prediction: can the coin reach $200?',
-    sentiment: 'bullish',
-    created_at: '2021-10-10T12:00:00.000Z',
-    source_url: 'https://cointelegraph.com/abcd',
-  },
-  {
-    title: 'Solana (SOL) price prediction: can the coin reach $200?',
-    sentiment: 'bearish',
-    created_at: '2021-10-10T12:00:00.000Z',
-    source_url: 'https://cointelegraph.com/abcd',
-  },
-  {
-    title: 'Solana (SOL) price prediction: can the coin reach $200?',
-    sentiment: 'neutral',
-    created_at: '2021-10-10T12:00:00.000Z',
-    source_url: 'https://cointelegraph.com/abcd',
-  },
-  {
-    title: 'Solana (SOL) price prediction: can the coin reach $200?',
-    sentiment: 'neutral',
-    created_at: '2021-10-10T12:00:00.000Z',
-    source_url: 'https://cointelegraph.com/abcd',
-  },
-  {
-    title: 'Solana (SOL) price prediction: can the coin reach $200?',
-    sentiment: 'neutral',
-    created_at: '2021-10-10T12:00:00.000Z',
-    source_url: 'https://cointelegraph.com/abcd',
-  },
-  {
-    title: 'Solana (SOL) price prediction: can the coin reach $200?',
-    sentiment: 'neutral',
-    created_at: '2021-10-10T12:00:00.000Z',
-    source_url: 'https://cointelegraph.com/abcd',
-  },
-]
+export const NewsCard: FC<NewsCardProps> = () => {
+  const [data, setData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [page, setPage] = useState(1)
+  const fetchNews = async (page) => {
+    setIsLoading(true)
+    const response = await getPosts({ currencies: ['BTC', 'ETH', 'BNB'], page })
+    setData([...data, ...response.results])
+    setIsLoading(false)
+  }
+  useEffect(() => {
+    fetchNews(page)
+  }, [])
 
-export const NewsCard: FC<NewsCardProps> = () => (
-  <div className={`${classNames.container} card`}>
-    <CardHeader title="News">
-      <Button
-        variant="subtle"
-        rightIcon={{
-          name: 'ChevronDown',
-          iconProps: { size: 18 },
-        }}
-        size="sm"
-      >
-        <CryptoSymbol name="BNB" symbol="BNB" />
-      </Button>
-    </CardHeader>
-    <Table items={newsData} columns={columns} isHeaderVisible={false} />
-  </div>
-)
+  return (
+    <div className={`${classNames.container} card`}>
+      <CardHeader title="News">
+        <Button
+          variant="subtle"
+          rightIcon={{
+            name: 'ChevronDown',
+            iconProps: { size: 18 },
+          }}
+          size="sm"
+        >
+          <CryptoSymbol name="BNB" symbol="BNB" />
+        </Button>
+      </CardHeader>
+      <Table
+        items={data}
+        columns={columns}
+        isHeaderVisible={false}
+        isLoading={isLoading}
+        onEndReached={() => fetchNews(page + 1)}
+      />
+    </div>
+  )
+}
