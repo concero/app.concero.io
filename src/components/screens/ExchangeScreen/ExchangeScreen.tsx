@@ -1,38 +1,19 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import styles from './ExchangeScreen.module.pcss'
 import { ChartCard } from '../../cards/ChartCard/ChartCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { getPosts } from '../../../api/cryptopanic/cryptoPanic'
 
 export interface ExchangeScreenProps {}
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
   const isDesktop = useMediaQuery('mobile')
-
-  // const socket = io('ws://localhost:4000')
-  // async function connect() {
-  //   const authClient = await AuthClient.init({
-  //     projectId: '47f2338094539d9c202f23c64a764f29',
-  //     metadata: {
-  //       name: 'concero',
-  //       description: 'A dapp using WalletConnect AuthClient',
-  //       url: 'concero.io',
-  //       icons: ['https://my-auth-dapp.com/icons/logo.png'],
-  //     },
-  //   })
-  //   authClient.on('auth_response', ({ params }) => {
-  //     if (params.result?.s) {
-  //       console.log(params.result.s)
-  //       // Response contained a valid signature -> user is authenticated.
-  //     } else {
-  //       // Handle error or invalid signature case
-  //       console.error(params.message)
-  //     }
-  //   })
-  // }
-  // connect()
+  useEffect(() => {
+    getPosts({ currencies: ['BTC'] })
+  }, [])
 
   return (
     <div

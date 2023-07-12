@@ -76,12 +76,8 @@ export const ChartCard: FC<ChartCardProps> = () => {
   }
   const [isSelectLeftChainModalVisible, setIsSelectLeftChainModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
-  const [selectedLeftChain, setSelectedLeftChain] = useState<{ name: string; symbol: string }>(
-    chains[0],
-  )
-  const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(
-    chains[1],
-  )
+  const [selectedLeftChain, setSelectedLeftChain] = useState<{ name: string; symbol: string }>(chains[0])
+  const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(chains[1])
   const handleSelectLeftChain = (chain: { name: string; symbol: string }): void => {
     setSelectedLeftChain(chain)
     setIsSelectLeftChainModalVisible(false)
@@ -135,6 +131,11 @@ export const ChartCard: FC<ChartCardProps> = () => {
             interval="1"
             width="100%"
             height="100%"
+            locale="en"
+            hide_side_toolbar
+            allow_symbol_change
+            save_image
+            container_id="tradingview_9e3a4"
           />
         )}
       </div>

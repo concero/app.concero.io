@@ -7,7 +7,7 @@ interface Request {
   retries: number
 }
 
-const MAX_RETRIES = 2
+const MAX_RETRIES = 0
 
 class Queue {
   private queue: Request[] = []
