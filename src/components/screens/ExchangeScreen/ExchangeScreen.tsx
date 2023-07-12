@@ -11,6 +11,7 @@ export interface ExchangeScreenProps {}
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
   const isDesktop = useMediaQuery('mobile')
+
   useEffect(() => {
     getPosts({ currencies: ['BTC'] })
   }, [])

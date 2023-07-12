@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { debounce } from '../utils/debounceThrottle'
 
 interface Request {
   config: AxiosRequestConfig
@@ -12,6 +13,12 @@ const MAX_RETRIES = 0
 class Queue {
   private queue: Request[] = []
 
+  private processQueueDebounced: () => void
+
+  constructor() {
+    this.processQueueDebounced = debounce(this.processQueue.bind(this), 1000)
+  }
+
   async add(request: AxiosRequestConfig): Promise<AxiosResponse> {
     return new Promise((resolve, reject) => {
       this.queue.push({
@@ -20,11 +27,11 @@ class Queue {
         reject,
         retries: 0,
       })
-      this.process()
+      this.processQueueDebounced()
     })
   }
 
-  async process() {
+  async processQueue() {
     if (this.queue.length === 0) return
 
     const { config, resolve, reject, retries } = this.queue.shift()!
@@ -32,7 +39,7 @@ class Queue {
     try {
       const response = await axios(config)
       resolve(response)
-      this.process()
+      this.processQueueDebounced()
     } catch (error) {
       if (retries < MAX_RETRIES) {
         // Retry the same request
@@ -42,7 +49,7 @@ class Queue {
           reject,
           retries: retries + 1,
         })
-        this.process()
+        this.processQueueDebounced()
       } else {
         reject(error)
       }
