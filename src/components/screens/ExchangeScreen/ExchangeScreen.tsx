@@ -5,7 +5,7 @@ import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
-import { getPosts } from '../../../api/cryptopanic/cryptoPanic'
+import { getPosts } from '../../../api/cryptopanic/getPosts'
 
 export interface ExchangeScreenProps {}
 
