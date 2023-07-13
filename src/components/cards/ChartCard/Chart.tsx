@@ -7,6 +7,7 @@ interface ChartProps {
   selectedChain: {
     name: string
     symbol: string
+    id: string
   }
 }
 
@@ -14,10 +15,10 @@ export const Chart: FC<ChartProps> = ({ selectedChain }) => {
   const ref = useRef()
   const { colors } = useContext(ThemeContext)
   const [data, setData] = useState([])
-  const [dayes, setDayes] = useState('2')
+  const [days, setDays] = useState('2')
 
   const fetchData = async () => {
-    const response = await getData(selectedChain.id, 'usd', dayes)
+    const response = await getData(selectedChain.id, 'usd', days)
     setData(response)
   }
 
