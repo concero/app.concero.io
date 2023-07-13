@@ -5,6 +5,8 @@ import { routes } from '../../../../constants/routes'
 import { Logo } from '../../Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
+import { WithTooltip } from '../../../wrappers/WithTooltip'
+import { Button } from '../../../buttons/Button/Button'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -14,7 +16,23 @@ export interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children }) => {
   const matchExchange = useMatch(routes.exchange)
   const matchPortfolio = useMatch(routes.portfolio)
+
   const isDesktop = useMediaQuery('mobile')
+  function TooltipContent() {
+    return (
+      <Button variant="subtle" size="md">
+        Coming Soon
+      </Button>
+    )
+  }
+  function MyComponent() {
+    return (
+      <Link className={classNames.comingSoon} to="#">
+        Staking
+      </Link>
+    )
+  }
+  const ComponentWithTooltip = WithTooltip({ WrappedComponent: MyComponent, Tooltip: TooltipContent })
 
   return (
     <header className={classNames.header}>
@@ -28,9 +46,13 @@ export const Header: FC<HeaderProps> = ({ children }) => {
             <Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
               Exchange
             </Link>
-            <Link className={matchPortfolio ? classNames.active : classNames.link} to={routes.portfolio}>
-              Portfolio
+            {ComponentWithTooltip}
+            <Link className={classNames.comingSoon} to="#">
+              Staking
             </Link>
+            {/* <Link className={classNames.comingSoon} to="#"> */}
+            {/*  Referral */}
+            {/* </Link> */}
           </ul>
         ) : null}
       </div>
