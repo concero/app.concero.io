@@ -1,8 +1,14 @@
 export const chains = [
   {
-    id: 'ethereum',
+    id: 'bitcoin',
     name: 'Binance Smart Chain',
     symbol: 'BTC',
+    balance: '0.000',
+  },
+  {
+    id: 'ethereum',
+    name: 'Binance Smart Chain',
+    symbol: 'ETH',
     balance: '0.000',
   },
   {
