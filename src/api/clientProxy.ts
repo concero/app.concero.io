@@ -33,7 +33,7 @@ api.interceptors.request.use(
  * @param {GetParams} params - The parameters to send with the GET request.
  * @returns {Promise<any>} A promise that resolves with the response data if the request succeeds, or rejects with an error if it fails.
  */
-export async function get(url: string, axiosConfig: any): Promise<any> {
+export async function get(url: string, axiosConfig?: any): Promise<any> {
   try {
     const response: AxiosResponse = await queue.add({
       method: 'post',
@@ -45,7 +45,7 @@ export async function get(url: string, axiosConfig: any): Promise<any> {
         ...axiosConfig,
       },
     })
-    return response.data
+    return response
   } catch (error) {
     console.error('GET request failed:', error)
     throw error

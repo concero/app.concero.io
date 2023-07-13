@@ -8,49 +8,7 @@ import { Beacon } from '../../layout/Beacon'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
-
-const chains = [
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'ETH',
-    balance: '0.000',
-  },
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'BTC',
-    balance: '0.000',
-  },
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'USDT',
-    balance: '0.000',
-  },
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'BNB',
-    balance: '0.000',
-  },
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'ADA',
-    balance: '0.000',
-  },
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'XRP',
-    balance: '0.000',
-  },
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'USDC',
-    balance: '0.000',
-  },
-  {
-    name: 'Binance Smart Chain',
-    symbol: 'DOT',
-    balance: '0.000',
-  },
-]
+import { chains } from '../../../constants/chains'
 
 const columns = [
   {
@@ -103,17 +61,17 @@ export const ChartCard: FC<ChartCardProps> = () => {
         >
           <CryptoSymbol name={selectedLeftChain.symbol} symbol={selectedLeftChain.symbol} />
         </Button>
-        <Button
-          variant="subtle"
-          size="sm"
-          rightIcon={{
-            name: 'ChevronDown',
-            iconProps: { size: 18 },
-          }}
-          onClick={() => setIsSelectRightChainModalVisible(true)}
-        >
-          <CryptoSymbol name={selectedRightChain.symbol} symbol={selectedRightChain.symbol} />
-        </Button>
+        {/* <Button */}
+        {/*   variant="subtle" */}
+        {/*   size="sm" */}
+        {/*   rightIcon={{ */}
+        {/*     name: 'ChevronDown', */}
+        {/*     iconProps: { size: 18 }, */}
+        {/*   }} */}
+        {/*   onClick={() => setIsSelectRightChainModalVisible(true)} */}
+        {/* > */}
+        {/*   <CryptoSymbol name={selectedRightChain.symbol} symbol={selectedRightChain.symbol} /> */}
+        {/* </Button> */}
         {isDesktop ? (
           <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
             <Beacon isOn={chartType === 'tradingView'} />
@@ -123,7 +81,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
       </CardHeader>
       <div className="f1">
         {chartType === 'chart' ? (
-          <Chart />
+          <Chart selectedChain={selectedLeftChain} />
         ) : (
           <AdvancedRealTimeChart
             theme="dark"
@@ -147,14 +105,14 @@ export const ChartCard: FC<ChartCardProps> = () => {
         columns={columns}
         onSelect={(chain) => handleSelectLeftChain(chain)}
       />
-      <EntityListModal
-        title="Select chain"
-        show={isSelectRightChainModalVisible}
-        setShow={setIsSelectRightChainModalVisible}
-        data={chains}
-        columns={columns}
-        onSelect={(chain) => handleSelectRightChain(chain)}
-      />
+      {/* <EntityListModal */}
+      {/*   title="Select chain" */}
+      {/*   show={isSelectRightChainModalVisible} */}
+      {/*   setShow={setIsSelectRightChainModalVisible} */}
+      {/*   data={chains} */}
+      {/*   columns={columns} */}
+      {/*   onSelect={(chain) => handleSelectRightChain(chain)} */}
+      {/* /> */}
     </div>
   )
 }

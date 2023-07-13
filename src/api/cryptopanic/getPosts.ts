@@ -4,11 +4,11 @@ import { authToken, crypoPanicAxiosConfig } from './config'
 export const getPosts = async ({
   currencies,
   page,
-  filter,
+  filter = '',
 }: {
   currencies: string[]
   page: number
-  filter: string
+  filter?: string
 }) => {
   const currencyParam = currencies.join(',')
   console.log('sending request to cryptopanic', crypoPanicAxiosConfig)
@@ -16,5 +16,5 @@ export const getPosts = async ({
 
   const response = await get(url, crypoPanicAxiosConfig)
   console.log(response)
-  return response
+  return response.data
 }
