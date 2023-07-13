@@ -8,8 +8,9 @@ export type CssIdentifiersMap = {
   "container": string|undefined
   "logOutButton": string|undefined
   "menu": string|undefined
+  "menuActive": string|undefined
   "menuBtn": string|undefined
   "menuIcon": string|undefined
-  "navicon": string|undefined
+  "navIcon": string|undefined
   "secondary": string|undefined
 }

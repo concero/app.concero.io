@@ -44,7 +44,7 @@ header div {
     visibility: visible;
 }
 
-.navicon {
+.navIcon {
     background: #333;
     display: block;
     height: 2px;
@@ -52,15 +52,15 @@ header div {
     position: relative;
 }
 
-.navicon:before {
+.navIcon:before {
     top: 5px;
 }
 
-.navicon:after {
+.navIcon:after {
     top: -5px;
 }
 
-.navicon:before, .navicon:after {
+.navIcon:before, .navIcon:after {
     background: #333;
     display: block;
     width: 100%;
@@ -100,24 +100,24 @@ header div {
     }
 }
 
-.menuBtn:checked ~ .menu {
+.menuActive{
     max-height: 287px;
 }
 
-.menuBtn:checked ~ .menuIcon .navicon {
+.menuBtn:checked ~ .menuIcon .navIcon {
     background: transparent;
 }
 
-.menuBtn:checked ~ .menuIcon .navicon:before {
+.menuBtn:checked ~ .menuIcon .navIcon:before {
     transform: rotate(-45deg);
 }
 
-.menuBtn:checked ~ .menuIcon .navicon:after {
+.menuBtn:checked ~ .menuIcon .navIcon:after {
     transform: rotate(45deg);
 }
 
-.menuBtn:checked ~ .menuIcon .navicon:before,
-.menuBtn:checked ~ .menuIcon .navicon:after {
+.menuBtn:checked ~ .menuIcon .navIcon:before,
+.menuBtn:checked ~ .menuIcon .navIcon:after {
     top: 0;
 }
 

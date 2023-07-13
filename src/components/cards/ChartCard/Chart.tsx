@@ -15,7 +15,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain }) => {
   const ref = useRef()
   const { colors } = useContext(ThemeContext)
   const [data, setData] = useState([])
-  const [days, setDays] = useState('2')
+  const [days, setDays] = useState('1')
 
   const fetchData = async () => {
     const response = await getData(selectedChain.id, 'usd', days)
@@ -47,7 +47,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain }) => {
       },
       timeScale: {
         timeVisible: true,
-        secondsVisible: false,
+        secondsVisible: true,
       },
       crosshair: {
         horzLine: {
@@ -61,6 +61,8 @@ export const Chart: FC<ChartProps> = ({ selectedChain }) => {
           color: colors.grey.dark,
         },
       },
+      handleScroll: false,
+      handleScale: false,
     }
 
     const areaSeriesOptions = {
