@@ -1,107 +1,78 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
-import { ColorType, createChart } from 'lightweight-charts'
+import { createChart } from 'lightweight-charts'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { getData } from '../../../api/chart/getData'
+import { areaSeriesOptions, chartOptions } from './chartOptions'
+import { createTooltip, updateTooltip } from './Tooltip'
+
+interface Chain {
+  name: string
+  symbol: string
+  id: string
+}
+
+interface Interval {
+  title: string
+  value: string
+}
 
 interface ChartProps {
-  selectedChain: {
-    name: string
-    symbol: string
-    id: string
-  }
-  selectedInterval: {
-    title: string
-    value: string
-  }
+  selectedChain: Chain
+  selectedInterval: Interval
 }
 
 export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
-  const ref = useRef()
-  const { colors } = useContext(ThemeContext)
-  const [data, setData] = useState([])
+  const chartRef = useRef<HTMLDivElement>(null)
+  const tooltipRef = useRef<HTMLDivElement | null>(null)
+  const seriesRef = useRef<any>(null)
+  const { text: textColor } = useContext(ThemeContext).colors
 
-  const fetchData = async () => {
-    const response = await getData(selectedChain.id, 'usd', selectedInterval.value)
-    setData(response)
-  }
+  const [data, setData] = useState<any[]>([])
 
+  // Fetch data
   useEffect(() => {
+    const fetchData = async () => {
+      const response = await getData(selectedChain.id, 'usd', selectedInterval.value)
+      setData(response)
+    }
     fetchData()
   }, [selectedChain, selectedInterval])
 
+  // Initialize chart
   useEffect(() => {
-    const chartOptions = {
-      layout: {
-        background: { type: ColorType.Solid, color: colors.base.background },
-        textColor: colors.text.primary,
-        fontFamily: 'Poppins',
-      },
-      grid: {
-        vertLines: {
-          color: colors.grey.darker,
-          style: 1,
-          visible: true,
-        },
-        horzLines: {
-          color: colors.grey.darker,
-          style: 1,
-          visible: true,
-        },
-      },
-      timeScale: {
-        timeVisible: true,
-        secondsVisible: true,
-      },
-      crosshair: {
-        horzLine: {
-          visible: true,
-          labelVisible: false,
-          color: colors.grey.dark,
-        },
-        vertLine: {
-          visible: true,
-          labelVisible: true,
-          color: colors.grey.dark,
-        },
-      },
-      handleScroll: false,
-      handleScale: false,
-    }
+    if (!chartRef.current) return
+    const chart = createChart(chartRef.current, chartOptions)
 
-    const areaSeriesOptions = {
-      baseLineColor: colors.grey.light,
-      baseLineVisible: false,
-      lineType: 2,
-      topColor: colors.primary.dark,
-      bottomColor: colors.base.background,
-      baseLineStyle: 1,
-      lineColor: colors.primary.main,
-    }
-
-    const chart = createChart(ref.current, chartOptions)
-    // Setting the border color for the horizontal axis
-
-    chart.timeScale().fitContent()
-    chart.timeScale().applyOptions({
-      borderColor: colors.base.background,
-    })
-    chart.priceScale('right').applyOptions({
-      borderColor: colors.base.background,
-    })
-
-    const newSeries = chart.addAreaSeries(areaSeriesOptions)
-    newSeries.setData(data)
+    seriesRef.current = chart.addAreaSeries(areaSeriesOptions)
+    seriesRef.current.setData(data)
+    tooltipRef.current = createTooltip(textColor)
+    chartRef.current.appendChild(tooltipRef.current)
 
     const handleResize = () => {
-      chart.resize(ref.current.clientWidth, ref.current.clientHeight)
+      const { clientWidth, clientHeight } = chartRef.current
+      chart.resize(clientWidth, clientHeight)
     }
     window.addEventListener('resize', handleResize)
+    chart.subscribeCrosshairMove((param) => {
+      if (tooltipRef.current) updateTooltip(param, seriesRef.current, tooltipRef.current, chartRef.current)
+    })
 
     return () => {
       window.removeEventListener('resize', handleResize)
       chart.remove()
+      if (tooltipRef.current) {
+        tooltipRef.current.remove()
+        tooltipRef.current = null
+      }
     }
-  }, [colors, data])
+  }, [textColor])
 
-  return <div className="f1" ref={ref} />
+  // Update chart data
+  useEffect(() => {
+    if (seriesRef.current) {
+      seriesRef.current.setData(data)
+    }
+  }, [data])
+
+  return <div className="f1" ref={chartRef} />
 }
