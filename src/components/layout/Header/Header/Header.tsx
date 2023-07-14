@@ -7,6 +7,7 @@ import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { WithTooltip } from '../../../wrappers/WithTooltip'
 import { Button } from '../../../buttons/Button/Button'
+import { colors } from '../../../../constants/colors'
 
 export interface HeaderProps {
   style?: CSSProperties
@@ -20,19 +21,39 @@ export const Header: FC<HeaderProps> = ({ children }) => {
   const isDesktop = useMediaQuery('mobile')
   function TooltipContent() {
     return (
-      <Button variant="subtle" size="md">
+      <Button
+        variant="subtle"
+        size="lg"
+        leftIcon={{
+          name: 'Settings',
+          iconProps: {
+            color: colors.text.secondary,
+            size: 18,
+          },
+        }}
+      >
         Coming Soon
       </Button>
     )
   }
-  function MyComponent() {
+
+  function PortfolioLink() {
     return (
-      <Link className={classNames.comingSoon} to="#">
-        Staking
-      </Link>
+      <div>
+        <Link className={classNames.comingSoon} to="#">
+          Portfolio
+        </Link>
+        <Link className={classNames.comingSoon} to="#">
+          Staking
+        </Link>
+        <Link className={classNames.comingSoon} to="#">
+          My referrals
+        </Link>
+      </div>
     )
   }
-  const ComponentWithTooltip = WithTooltip({ WrappedComponent: MyComponent, Tooltip: TooltipContent })
+
+  const PortfolioSoon = WithTooltip({ WrappedComponent: PortfolioLink, Tooltip: TooltipContent })
 
   return (
     <header className={classNames.header}>
@@ -46,10 +67,8 @@ export const Header: FC<HeaderProps> = ({ children }) => {
             <Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
               Exchange
             </Link>
-            {ComponentWithTooltip}
-            <Link className={classNames.comingSoon} to="#">
-              Staking
-            </Link>
+            {PortfolioSoon}
+
             {/* <Link className={classNames.comingSoon} to="#"> */}
             {/*  Referral */}
             {/* </Link> */}
