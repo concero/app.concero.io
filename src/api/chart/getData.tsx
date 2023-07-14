@@ -2,9 +2,7 @@ import { get } from '../clientProxy'
 
 const toLocalTime = (timestamp: string) => {
   const currentTime = new Date()
-  // Получаем смещение текущего часового пояса в секундах
   const timeZoneOffsetInSeconds = currentTime.getTimezoneOffset() * 60
-
   return Number(timestamp) / 1000 - timeZoneOffsetInSeconds
 }
 
