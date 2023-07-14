@@ -37,6 +37,13 @@ export const NewsCard: FC<NewsCardProps> = () => {
   const fetchNews = async (page) => {
     setIsLoading(true)
     const response = await getPosts({ currencies: [selectedChain.symbol], page })
+    setData(response.results)
+    setIsLoading(false)
+  }
+
+  const fetchMoreNews = async (page) => {
+    setIsLoading(true)
+    const response = await getPosts({ currencies: [selectedChain.symbol], page })
     setData([...data, ...response.results])
     setIsLoading(false)
   }
@@ -71,7 +78,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
           columns={columns}
           isHeaderVisible={false}
           isLoading={isLoading}
-          onEndReached={() => fetchNews(page + 1)}
+          onEndReached={() => fetchMoreNews(page + 1)}
         />
       </div>
       <EntityListModal

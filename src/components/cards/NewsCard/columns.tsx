@@ -3,40 +3,38 @@ import dayjs from 'dayjs'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import { colors } from '../../../constants/colors'
 import Icon from '../../Icon'
-import { fromNow } from '../../../utils/formatting'
+import { fromNow, truncate } from '../../../utils/formatting'
 import classNames from './NewsCard.module.pcss'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 export const columns = [
   {
     columnTitle: 'Title',
-    cellComponent: (item) => <p style={{ color: colors.grey.light }}>{item.title}</p>,
+    cellComponent: (item) => <p style={{ color: colors.grey.light }}>{truncate(item.title, 90)}</p>,
   },
   {
     columnTitle: 'Sentiment',
     cellComponent: (item) => {
       const isDesktop = useMediaQuery('mobile')
 
-      if (!isDesktop) {
-        dayjs.extend(updateLocale)
-        dayjs.updateLocale('en', {
-          relativeTime: {
-            future: 'in %s',
-            past: '%s',
-            s: 'just now',
-            m: 'a min ago',
-            mm: '%dm ago',
-            h: 'an hour ago',
-            hh: '%dh ago',
-            d: 'a day ago',
-            dd: '%dd ago',
-            M: 'a month ago',
-            MM: '%dm ago',
-            y: 'a year ago',
-            yy: '%dy ago',
-          },
-        })
-      }
+      dayjs.extend(updateLocale)
+      dayjs.updateLocale('en', {
+        relativeTime: {
+          future: 'in %s',
+          past: '%s',
+          s: 'now',
+          m: 'a min',
+          mm: '%dm',
+          h: '1h',
+          hh: '%dh',
+          d: 'a day',
+          dd: '%dd',
+          M: 'a month',
+          MM: '%dm',
+          y: 'a year',
+          yy: '%dy',
+        },
+      })
 
       return (
         <div className={classNames.cellComponentContainer}>
@@ -47,7 +45,7 @@ export const columns = [
           {/*  {item.sentiment} */}
           {/* </Tag> */}
           <div className="row ac gap-xs">
-            <Icon name="Calendar" color={colors.text.secondary} size={18} />
+            <Icon name="Clock" color={colors.text.secondary} size={18} />
             <p style={{ color: colors.text.secondary }}>{fromNow(item.created_at)}</p>
           </div>
           <div className="row ac gap-xs">

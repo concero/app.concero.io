@@ -11,7 +11,7 @@ export const getPosts = async ({
   filter?: string
 }) => {
   const currencyParam = currencies.join(',')
-  // console.log('sending request to cryptopanic', crypoPanicAxiosConfig)
+  console.log('sending request to cryptopanic', currencyParam)
   const url = `https://cryptopanic.com/api/v1/posts/?auth_token=${authToken}&currencies=${currencyParam}&filter=${filter}&page=${page}`
 
   const response = await get(url, crypoPanicAxiosConfig)
