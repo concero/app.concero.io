@@ -9,22 +9,25 @@ interface ChartProps {
     symbol: string
     id: string
   }
+  selectedInterval: {
+    title: string
+    value: string
+  }
 }
 
-export const Chart: FC<ChartProps> = ({ selectedChain }) => {
+export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
   const ref = useRef()
   const { colors } = useContext(ThemeContext)
   const [data, setData] = useState([])
-  const [days, setDays] = useState('1')
 
   const fetchData = async () => {
-    const response = await getData(selectedChain.id, 'usd', days)
+    const response = await getData(selectedChain.id, 'usd', selectedInterval.value)
     setData(response)
   }
 
   useEffect(() => {
     fetchData()
-  }, [selectedChain])
+  }, [selectedChain, selectedInterval])
 
   useEffect(() => {
     const chartOptions = {
