@@ -1,7 +1,6 @@
 import { ColorType } from 'lightweight-charts'
-import { colors } from '../../../constants/colors'
 
-export const chartOptions = {
+export const chartOptions = (colors) => ({
   layout: {
     background: { type: ColorType.Solid, color: colors.base.background },
     textColor: colors.text.primary,
@@ -18,14 +17,14 @@ export const chartOptions = {
   },
   handleScroll: false,
   handleScale: false,
-}
+})
 
-export const areaSeriesOptions = {
-  baseLineColor: colors.grey.light,
-  baseLineVisible: false,
-  lineType: 2,
-  topColor: colors.primary.dark,
-  bottomColor: colors.base.background,
-  baseLineStyle: 1,
-  lineColor: colors.primary.main,
-}
+export const areaSeriesOptions = (colors) => ({
+    baseLineColor: colors.grey.light,
+    baseLineVisible: false,
+    lineType: 2,
+    topColor: colors.primary.dark,
+    bottomColor: colors.base.background,
+    baseLineStyle: 1,
+    lineColor: colors.primary.main,
+  })
