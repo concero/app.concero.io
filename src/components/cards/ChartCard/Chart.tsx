@@ -25,7 +25,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
   const chartRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
-  const { text: textColor } = useContext(ThemeContext).colors
+  const { colors } = useContext(ThemeContext)
 
   const [data, setData] = useState<any[]>([])
 
@@ -41,11 +41,14 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
   // Initialize chart
   useEffect(() => {
     if (!chartRef.current) return
-    const chart = createChart(chartRef.current, chartOptions)
+    const chart = createChart(chartRef.current, chartOptions(colors))
+    chart.timeScale().fitContent()
+    chart.timeScale().applyOptions({ borderColor: 'transparent' })
+    chart.priceScale('right').applyOptions({ borderColor: 'transparent' })
 
-    seriesRef.current = chart.addAreaSeries(areaSeriesOptions)
+    seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors))
     seriesRef.current.setData(data)
-    tooltipRef.current = createTooltip(textColor)
+    tooltipRef.current = createTooltip()
     chartRef.current.appendChild(tooltipRef.current)
 
     const handleResize = () => {
@@ -65,7 +68,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
         tooltipRef.current = null
       }
     }
-  }, [textColor])
+  }, [colors])
 
   // Update chart data
   useEffect(() => {
