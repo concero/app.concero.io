@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
-import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
 import { Chart } from './Chart'
@@ -9,21 +8,10 @@ import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { chains } from '../../../constants/chains'
-
-const columns = [
-  {
-    columnTitle: 'Symbol',
-    cellComponent: (item) => <CryptoSymbol name={item.symbol} symbol={item.symbol} />,
-  },
-  {
-    columnTitle: 'Name',
-    cellComponent: (item) => <p className="body1">{item.name}</p>,
-  },
-  {
-    columnTitle: 'Balance',
-    cellComponent: (item) => <p className="body1">{item.balance}</p>,
-  },
-]
+import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedControl'
+import { colors } from '../../../constants/colors'
+import { intervals } from './constants'
+import { columns } from './columns'
 
 export interface ChartCardProps {}
 
@@ -36,10 +24,13 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
   const [selectedLeftChain, setSelectedLeftChain] = useState<{ name: string; symbol: string }>(chains[0])
   const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(chains[1])
+  const [selectedInterval, setSelectedInterval] = useState<{ title: string; id: string } | undefined>(intervals[0])
+
   const handleSelectLeftChain = (chain: { name: string; symbol: string }): void => {
     setSelectedLeftChain(chain)
     setIsSelectLeftChainModalVisible(false)
   }
+
   const handleSelectRightChain = (chain: { name: string; symbol: string }): void => {
     setSelectedRightChain(chain)
     setIsSelectRightChainModalVisible(false)
@@ -49,39 +40,43 @@ export const ChartCard: FC<ChartCardProps> = () => {
 
   return (
     <div className={`card ${classNames.container}`}>
-      <CardHeader title="Chart">
-        <Button
-          variant="subtle"
-          size="sm"
-          rightIcon={{
-            name: 'ChevronDown',
-            iconProps: { size: 18 },
-          }}
-          onClick={() => setIsSelectLeftChainModalVisible(true)}
-        >
-          <CryptoSymbol name={selectedLeftChain.symbol} symbol={selectedLeftChain.symbol} />
-        </Button>
-        {/* <Button */}
-        {/*   variant="subtle" */}
-        {/*   size="sm" */}
-        {/*   rightIcon={{ */}
-        {/*     name: 'ChevronDown', */}
-        {/*     iconProps: { size: 18 }, */}
-        {/*   }} */}
-        {/*   onClick={() => setIsSelectRightChainModalVisible(true)} */}
-        {/* > */}
-        {/*   <CryptoSymbol name={selectedRightChain.symbol} symbol={selectedRightChain.symbol} /> */}
-        {/* </Button> */}
-        {isDesktop ? (
-          <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
-            <Beacon isOn={chartType === 'tradingView'} />
-            TradingView
+      <div className={classNames.headerContainer}>
+        <div className={classNames.selectChainContainer}>
+          <h5>Chart</h5>
+          <Button
+            variant="subtle"
+            size="sm"
+            rightIcon={{
+              name: 'ChevronDown',
+              iconProps: { size: 18, color: colors.text.secondary },
+            }}
+            onClick={() => setIsSelectLeftChainModalVisible(true)}
+          >
+            <CryptoSymbol name={selectedLeftChain.symbol} symbol={selectedLeftChain.symbol} />
           </Button>
-        ) : null}
-      </CardHeader>
+          {/* <Button */}
+          {/*   variant="subtle" */}
+          {/*   size="sm" */}
+          {/*   rightIcon={{ */}
+          {/*     name: 'ChevronDown', */}
+          {/*     iconProps: { size: 18 }, */}
+          {/*   }} */}
+          {/*   onClick={() => setIsSelectRightChainModalVisible(true)} */}
+          {/* > */}
+          {/*   <CryptoSymbol name={selectedRightChain.symbol} symbol={selectedRightChain.symbol} /> */}
+          {/* </Button> */}
+          {isDesktop ? (
+            <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
+              <Beacon isOn={chartType === 'tradingView'} />
+              <p className={'body1'}>TradingView</p>
+            </Button>
+          ) : null}
+        </div>
+        <SegmentedControl data={intervals} selectedItem={selectedInterval} setSelectedItem={setSelectedInterval} />
+      </div>
       <div className="f1">
         {chartType === 'chart' ? (
-          <Chart selectedChain={selectedLeftChain} />
+          <Chart selectedChain={selectedLeftChain} selectedInterval={selectedInterval} />
         ) : (
           <AdvancedRealTimeChart
             theme="dark"

@@ -11,6 +11,6 @@ export interface CryptoSymbolProps {
 export const CryptoSymbol: FC<CryptoSymbolProps> = ({ name, symbol }) => (
   <div className={classNames.container}>
     <CryptoIcon symbol={name} />
-    <p>{symbol}</p>
+    <p className={'body1'}>{symbol}</p>
   </div>
 )

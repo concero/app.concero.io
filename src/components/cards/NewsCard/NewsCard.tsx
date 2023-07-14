@@ -8,6 +8,7 @@ import { getPosts } from '../../../api/cryptopanic/getPosts'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { chains } from '../../../constants/chains'
 import { columns } from './columns'
+import { colors } from '../../../constants/colors'
 
 interface NewsCardProps {}
 
@@ -57,7 +58,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
             variant="subtle"
             rightIcon={{
               name: 'ChevronDown',
-              iconProps: { size: 18 },
+              iconProps: { size: 18, color: colors.text.secondary },
             }}
             size="sm"
             onClick={() => setIsModalVisible(true)}

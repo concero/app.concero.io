@@ -5,6 +5,5 @@ export default identifiersMap
 
 export type CssIdentifiersMap = {
   "container": string|undefined
-  "headerContainer": string|undefined
-  "selectChainContainer": string|undefined
+  "selected": string|undefined
 }
