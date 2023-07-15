@@ -37,18 +37,15 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
   // Fetch data
   useEffect(() => {
     fetchData()
-  }, [selectedChain, selectedInterval])
 
-  useEffect(() => {
     const interval = setInterval(() => {
       fetchData()
-      console.log('fetching data')
-    }, 8000)
+    }, 6000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [selectedChain, selectedInterval])
 
   // Initialize chart
   useEffect(() => {
