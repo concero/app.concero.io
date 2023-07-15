@@ -1,9 +1,9 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
-import { createChart } from 'lightweight-charts'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
 import { getData } from '../../../api/chart/getData'
+import { createChart } from 'lightweight-charts'
 
 interface Chain {
   name: string
@@ -30,7 +30,8 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
   const [data, setData] = useState<any[]>([])
 
   const fetchData = async () => {
-    const response = await getData(selectedChain.id, 'usd', selectedInterval.value)
+    const isCropNeeded = selectedInterval.value === 'max'
+    const response = await getData(selectedChain.id, 'usd', selectedInterval.value, isCropNeeded)
     setData(response)
   }
 
@@ -50,6 +51,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
   // Initialize chart
   useEffect(() => {
     if (!chartRef.current) return
+
     const chart = createChart(chartRef.current, chartOptions(colors))
     chart.timeScale().fitContent()
     chart.timeScale().applyOptions({ borderColor: 'transparent' })
@@ -77,7 +79,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
         tooltipRef.current = null
       }
     }
-  }, [colors])
+  }, [colors, data])
 
   // Update chart data
   useEffect(() => {
