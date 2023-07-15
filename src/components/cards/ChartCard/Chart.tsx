@@ -1,9 +1,9 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { createChart } from 'lightweight-charts'
 import { ThemeContext } from '../../../hooks/themeContext'
-import { getData } from '../../../api/chart/getData'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
+import { getData } from '../../../api/chart/getData'
 
 interface Chain {
   name: string
@@ -29,14 +29,26 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
 
   const [data, setData] = useState<any[]>([])
 
+  const fetchData = async () => {
+    const response = await getData(selectedChain.id, 'usd', selectedInterval.value)
+    setData(response)
+  }
+
   // Fetch data
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getData(selectedChain.id, 'usd', selectedInterval.value)
-      setData(response)
-    }
     fetchData()
   }, [selectedChain, selectedInterval])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchData()
+      console.log('fetching data')
+    }, 8000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
 
   // Initialize chart
   useEffect(() => {
