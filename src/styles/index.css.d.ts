@@ -8,4 +8,5 @@ export type CssIdentifiersMap = {
   "dark": string|undefined
   "light": string|undefined
   "root": string|undefined
+  "tradingview_widget_wrapper": string|undefined
 }

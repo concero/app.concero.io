@@ -72,7 +72,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
             </Button>
           ) : null}
         </div>
-        <SegmentedControl data={intervals} selectedItem={selectedInterval} setSelectedItem={setSelectedInterval} />
+        {chartType === 'chart' ? (
+          <SegmentedControl data={intervals} selectedItem={selectedInterval} setSelectedItem={setSelectedInterval} />
+        ) : null}
       </div>
       <div className="f1">
         {chartType === 'chart' ? (

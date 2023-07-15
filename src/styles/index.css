@@ -208,3 +208,9 @@ button {
     line-height: 0;
     outline: none;
 }
+
+#tradingview_widget_wrapper{
+    div:nth-child(2) {
+        display: none;
+    }
+}
