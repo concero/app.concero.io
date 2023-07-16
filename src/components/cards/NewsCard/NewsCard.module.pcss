@@ -1,34 +1,27 @@
 .container {
     max-height: 220px;
-
-    table {
-        tbody {
-            tr {
-                display: flex;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                border-radius: var(--st-br-sm);
-                align-items: center;
-            }
-        }
-    }
 }
-
-.cellComponentContainer {
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: var(--sp-lg);
-    row-gap: var(--sp-sm);
-}
-
 
 @media (max-width: 768px) {
     .container {
         max-height: 400px;
+        table {
+            tbody {
+                tr {
+                    display: flex;
+                    flex-wrap: wrap;
+                    border-radius: var(--st-br-sm);
+                    align-items: center;
+                }
+            }
+        }
     }
 
     .cellComponentContainer {
+        flex-direction: row;
+        flex-wrap: wrap;
         column-gap: var(--sp-md);
+        row-gap: var(--sp-sm);
     }
 
     .truncate {

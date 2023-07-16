@@ -1,11 +1,9 @@
-import React from 'react'
-import dayjs from 'dayjs'
 import updateLocale from 'dayjs/plugin/updateLocale'
+import dayjs from 'dayjs'
 import { colors } from '../../../constants/colors'
 import Icon from '../../Icon'
 import { fromNow, truncate } from '../../../utils/formatting'
 import classNames from './NewsCard.module.pcss'
-import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 export const columns = [
   {
@@ -15,8 +13,6 @@ export const columns = [
   {
     columnTitle: 'Sentiment',
     cellComponent: (item) => {
-      const isDesktop = useMediaQuery('mobile')
-
       dayjs.extend(updateLocale)
       dayjs.updateLocale('en', {
         relativeTime: {
@@ -48,14 +44,21 @@ export const columns = [
             <Icon name="Clock" color={colors.text.secondary} size={18} />
             <p style={{ color: colors.text.secondary }}>{fromNow(item.created_at)}</p>
           </div>
-          <div className="row ac gap-xs">
-            <Icon name="Link" color={colors.text.secondary} size={18} />
-            <a href={item.url} target="_blank" rel="noreferrer">
-              <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
-                {item.source.title}
-              </p>
-            </a>
-          </div>
+        </div>
+      )
+    },
+  },
+  {
+    columnTitle: 'Sentiment',
+    cellComponent: (item) => {
+      return (
+        <div className="row ac gap-xs">
+          <Icon name="Link" color={colors.text.secondary} size={18} />
+          <a href={item.url} target="_blank" rel="noreferrer">
+            <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
+              {item.source.title}
+            </p>
+          </a>
         </div>
       )
     },
