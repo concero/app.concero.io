@@ -22,7 +22,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
   }
   const [isSelectLeftChainModalVisible, setIsSelectLeftChainModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
-  const [selectedLeftChain, setSelectedLeftChain] = useState<{ name: string; symbol: string }>(chains[0])
+  const [selectedLeftChain, setSelectedLeftChain] = useState<{ name: string; symbol: string; logoURI: string }>(
+    chains[0],
+  )
   const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(chains[1])
   const [selectedInterval, setSelectedInterval] = useState<{ title: string; id: string } | undefined>(intervals[0])
 
@@ -52,7 +54,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
             }}
             onClick={() => setIsSelectLeftChainModalVisible(true)}
           >
-            <CryptoSymbol name={selectedLeftChain.symbol} symbol={selectedLeftChain.symbol} />
+            <CryptoSymbol src={selectedLeftChain.logoURI} symbol={selectedLeftChain.symbol} />
           </Button>
           {/* <Button */}
           {/*   variant="subtle" */}

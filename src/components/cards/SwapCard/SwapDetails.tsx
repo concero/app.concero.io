@@ -4,45 +4,15 @@ import { Modal } from '../../modals/Modal/Modal'
 import { RouteButton } from './RouteButton'
 import { RateTag } from './RouteTag'
 import { RouteCard } from '../RouteCard/RouteCard'
-
-interface SwapDetailsProps {
-  selection: {
-    from: Selection
-    to: Selection
-  }
-  selectedRoute: Route
-  setSelectedRoute: (route: Route) => void
-  routes: Route[]
-}
-
-interface Selection {
-  chain: Chain
-  token: Token
-}
-
-interface Token {
-  name: string
-  symbol: string
-}
-
-interface Chain {
-  name: string
-  symbol: string
-}
+import { SwapDetailsProps } from './types'
 
 const rate = {
   from: '0.15',
   to: '1',
 }
 
-export const SwapDetails: FC<SwapDetailsProps> = ({
-  selection,
-  selectedRoute,
-  setSelectedRoute,
-  routes,
-}) => {
+export const SwapDetails: FC<SwapDetailsProps> = ({ selection, selectedRoute, setSelectedRoute, routes }) => {
   const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
-
   const handleSelectRoute = (id: string) => {
     setSelectedRoute(routes.find((route) => route.id === id))
   }
@@ -51,13 +21,9 @@ export const SwapDetails: FC<SwapDetailsProps> = ({
     <div className={classNames.swapDetailsContainer}>
       <RateTag from={selection.from.token} to={selection.to.token} rate={rate} />
       <RouteButton route={selectedRoute} onClick={() => setIsSelectRouteModalVisible(true)} />
-      <Modal
-        title="Select route"
-        show={isSelectRouteModalVisible}
-        setShow={setIsSelectRouteModalVisible}
-      >
+      <Modal title="Select route" show={isSelectRouteModalVisible} setShow={setIsSelectRouteModalVisible}>
         <div className={classNames.roueteCardsContainer}>
-          {routes.map((route) => (
+          {routes?.map((route) => (
             <RouteCard
               key={route.id}
               route={route}

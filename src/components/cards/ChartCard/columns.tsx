@@ -3,7 +3,7 @@ import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 export const columns = [
   {
     columnTitle: 'Symbol',
-    cellComponent: (item) => <CryptoSymbol name={item.symbol} symbol={item.symbol} />,
+    cellComponent: (item) => <CryptoSymbol src={item.logoURI} symbol={item.symbol} />,
   },
   {
     columnTitle: 'Name',

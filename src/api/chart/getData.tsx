@@ -12,7 +12,7 @@ interface Item {
 }
 
 export const getData = async (chain: string, currency: string, days: string, isCropNeeded: boolean) => {
-  const url = `https://api.coingecko.com/api/v3/coins/${chain}/market_chart?vs_currency=${currency}&days=${days}`
+  const url = `https://api.coingecko.com/api/v3/coins/${chain.toLowerCase()}/market_chart?vs_currency=${currency}&days=${days}`
   const response = await get(url)
 
   if (response.status === 200) {

@@ -31,7 +31,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
 
   const fetchData = async () => {
     const isCropNeeded = selectedInterval.value === 'max'
-    const response = await getData(selectedChain.id, 'usd', selectedInterval.value, isCropNeeded)
+    const response = await getData(selectedChain.name, 'usd', selectedInterval.value, isCropNeeded)
     setData(response)
   }
 

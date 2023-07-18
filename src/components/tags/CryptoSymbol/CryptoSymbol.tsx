@@ -4,13 +4,16 @@ import classNames from './CryptoSymbol.module.pcss'
 import { CryptoIcon } from './CryptoIcon.tsx'
 
 export interface CryptoSymbolProps {
-  name: CryptoSymbolType // TODO rename
+  name?: CryptoSymbolType // TODO rename
   symbol: string
+  src?: string | null
 }
 
-export const CryptoSymbol: FC<CryptoSymbolProps> = ({ name, symbol }) => (
-  <div className={classNames.container}>
-    <CryptoIcon symbol={name} />
-    <p className={'body1'}>{symbol}</p>
-  </div>
-)
+export const CryptoSymbol: FC<CryptoSymbolProps> = ({ name = '', symbol, src = null }) => {
+  return (
+    <div className={classNames.container}>
+      <CryptoIcon symbol={name} src={src ? src : null} />
+      <p className={'body1'}>{symbol}</p>
+    </div>
+  )
+}

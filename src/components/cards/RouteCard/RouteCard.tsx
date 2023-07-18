@@ -1,34 +1,11 @@
 import { FC, useState } from 'react'
 import { Card } from '../Card/Card'
 import classNames from './RouteCard.module.pcss'
-import { Tag } from '../../tags/Tag/Tag'
 import { colors } from '../../../constants/colors'
-import { capitalize } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
 import { renderTags } from './renderTags'
 import { renderSteps } from './renderSteps'
-
-interface RouteCardProps {
-  route: {
-    id: string
-    amount_usd: string
-    amount_token: string
-    advantage: string
-    transaction_time_seconds: string
-    gas_price_usd: string
-    slippage_percent: string
-    route_steps: RouteStep[]
-  }
-  isSelected: boolean
-  onClick: (id: string) => void
-}
-
-interface RouteStep {
-  id: string
-  transaction_time_seconds: string
-  gas_price_usd: string
-  slippage_percent: string
-}
+import { RouteCardProps } from './types'
 
 const getAdvantageTagBgColor = (advantage: string): string => {
   switch (advantage) {
@@ -42,11 +19,14 @@ const getAdvantageTagBgColor = (advantage: string): string => {
       return ''
   }
 }
+
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
   const [isRoutesCollapsed, setIsRoutesCollapsed] = useState<true | false>(true)
 
   const getTextColor = () => (isSelected ? classNames.bestText : '')
   const getIconColor = () => (isSelected ? colors.primary.light : colors.text.secondary)
+
+  const amountTo = parseFloat(route.to.token.amount) / Math.pow(10, route.to.token.decimals)
 
   return (
     <Card
@@ -56,9 +36,9 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
       <div className={classNames.cardHeader}>
         <div className={classNames.cardHeaderLeftSide}>
           <h4>Net value:</h4>
-          <h3>{`$${route.net_value_usd}`}</h3>
-          <h3 className={classNames.subtitle}>{`${route.net_value_token}`}</h3>
-          <Tag color={getAdvantageTagBgColor(route.advantage)}>{capitalize(route.advantage)}</Tag>
+          <h3>{`$${route.to.token.amount_usd}`}</h3>
+          <h3 className={classNames.subtitle}>{`${amountTo.toFixed(4)} ${route.to.token.symbol}`}</h3>
+          {/* <Tag color={getAdvantageTagBgColor(route.advantage)}>{capitalize(route.advantage)}</Tag> */}
         </div>
         <Button
           variant="black"
@@ -71,9 +51,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
           className={isSelected ? classNames.bestButton : ''}
         />
       </div>
-      <div className={classNames.stepsContainer}>
-        {renderSteps(route, isRoutesCollapsed, isSelected)}
-      </div>
+      <div className={classNames.stepsContainer}>{renderSteps(route, isRoutesCollapsed, isSelected)}</div>
       {renderTags(route, isSelected, getTextColor, getIconColor)}
     </Card>
   )

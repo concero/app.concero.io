@@ -7,25 +7,10 @@ import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getPosts } from '../../../api/cryptopanic/getPosts'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { chains } from '../../../constants/chains'
-import { columns } from './columns'
+import { columns, modalColumns } from './columns'
 import { colors } from '../../../constants/colors'
 
 interface NewsCardProps {}
-
-const modalColumns = [
-  {
-    columnTitle: 'Symbol',
-    cellComponent: (item) => <CryptoSymbol name={item.symbol} symbol={item.symbol} />,
-  },
-  {
-    columnTitle: 'Name',
-    cellComponent: (item) => <p className="body1">{item.name}</p>,
-  },
-  {
-    columnTitle: 'Balance',
-    cellComponent: (item) => <p className="body1">{item.balance}</p>,
-  },
-]
 
 export const NewsCard: FC<NewsCardProps> = () => {
   const [data, setData] = useState([])
@@ -70,7 +55,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
             size="sm"
             onClick={() => setIsModalVisible(true)}
           >
-            <CryptoSymbol name={selectedChain.symbol} symbol={selectedChain.symbol} />
+            <CryptoSymbol src={selectedChain.logoURI} symbol={selectedChain.symbol} />
           </Button>
         </CardHeader>
         <Table

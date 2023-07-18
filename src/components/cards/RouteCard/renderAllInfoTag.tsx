@@ -42,17 +42,12 @@ export const renderAllTagInfo = (
         }}
       >
         <AdditionalInfoTag
-          title={step.gas_price_usd}
+          title={step.tool.estimated_execution_time_seconds}
           type="time"
           getColor={getColor}
           isBestRoute={isBestRoute}
         />
-        <AdditionalInfoTag
-          title={step.transaction_time_seconds}
-          type="gas"
-          getColor={getColor}
-          isBestRoute={isBestRoute}
-        />
+        <AdditionalInfoTag title={step.tool.gas_usd} type="gas" getColor={getColor} isBestRoute={isBestRoute} />
       </div>
     ) : null}
   </div>
