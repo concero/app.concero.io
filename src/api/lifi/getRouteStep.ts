@@ -13,6 +13,7 @@ export const getRouteStep = (step: lifiTypes.Step): Step => {
         decimals: step.action.fromToken.decimals,
         price_usd: step.action.fromToken.priceUSD,
         amount: step.action.fromAmount,
+        logo_uri: step.action.fromToken.logoURI,
       },
       chain: {
         id: step.action.fromChainId,
@@ -25,6 +26,7 @@ export const getRouteStep = (step: lifiTypes.Step): Step => {
         symbol: step.action.toToken.symbol,
         decimals: step.action.toToken.decimals,
         price_usd: step.action.toToken.priceUSD,
+        logo_uri: step.action.toToken.logoURI,
       },
       chain: {
         id: step.action.toChainId,

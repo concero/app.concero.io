@@ -25,8 +25,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
         to: selection.to,
         amount: selection.from.amount,
       })
+
       setRoutes(response.routes)
       setSelectedRoute(response.routes[0])
+
       setIsLoading(false)
     }
 

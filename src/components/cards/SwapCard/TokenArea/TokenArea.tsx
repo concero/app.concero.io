@@ -15,7 +15,6 @@ import { tokensColumns } from './tokensColumns'
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
-  const [amount, setAmount] = useState<string>('0.0')
   const balance = 0
 
   const setChain = (chain) => {
@@ -40,6 +39,14 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
         symbol: token.symbol,
         logoURI: token.logoURI,
       },
+    })
+  }
+
+  const setAmount = (amount) => {
+    dispatch({
+      type: 'setAmount',
+      direction,
+      payload: amount,
     })
   }
 
@@ -71,10 +78,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
             <TextInput
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
-              value={amount}
+              value={selection.amount}
               onChangeText={(value) => setAmount(value)}
             />
-            <h5>${amount}</h5>
+            <h5>${selection.amount_usd}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}

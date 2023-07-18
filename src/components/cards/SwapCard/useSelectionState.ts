@@ -28,7 +28,13 @@ type SetTokenAction = {
   payload: { name: string; symbol: string }
 }
 
-type Action = SetChainAction | SetTokenAction
+type SetAmountAction = {
+  type: 'setAmount'
+  direction: Direction
+  payload: string
+}
+
+type Action = SetChainAction | SetTokenAction | SetAmountAction
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -41,6 +47,19 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         [action.direction]: { ...state[action.direction], token: action.payload },
+      }
+    case 'setAmount':
+      const tokenPriceUSD = tokens[state[action.direction].chain.id].find(
+        (token) => token.symbol === state.from.token.symbol,
+      )?.priceUSD
+
+      return {
+        ...state,
+        [action.direction]: {
+          ...state[action.direction],
+          amount: action.payload,
+          amount_usd: action.payload * tokenPriceUSD,
+        },
       }
     default:
       return state
@@ -57,7 +76,8 @@ export const useSelectionState = () => {
         address: chains[0].nativeToken.address,
         logoURI: chains[0].nativeToken.logoURI,
       },
-      amount: '100000000000',
+      amount: 0,
+      amount_usd: 0.0,
       address: '',
     },
     to: {
@@ -68,6 +88,8 @@ export const useSelectionState = () => {
         address: chains[1].nativeToken.address,
         logoURI: chains[1].nativeToken.logoURI,
       },
+      amount: 0,
+      amount_usd: 0.0,
       address: '',
     },
   })

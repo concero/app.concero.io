@@ -1,7 +1,8 @@
+import * as types from '@lifi/sdk/dist/types'
 import { getRouteStep } from './getRouteStep'
 import { Route } from './types'
 
-export const getRoute = (route): Route => {
+export const getRoute = (route: types.Route): Route => {
   return {
     id: route.id,
     from: {
@@ -27,6 +28,7 @@ export const getRoute = (route): Route => {
         price_usd: route.toToken.priceUSD,
         amount_usd: route.toAmountUSD,
         amount: route.toAmount,
+        amount_min: route.toAmountMin,
       },
       chain: {
         id: route.toChainId,

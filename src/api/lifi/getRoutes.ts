@@ -25,6 +25,7 @@ export const getRoutes = async ({ from, to }: GetRoutesParams): Promise<GetRoute
 
   const result = {
     routes: [...response.routes.map((route) => getRoute(route))],
+    originalRoutes: response.routes,
   }
 
   return result

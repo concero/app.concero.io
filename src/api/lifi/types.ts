@@ -23,6 +23,7 @@ export interface Route {
       price_usd: string
       amount: string
       amount_usd: string
+      amount_min: string
     }
     chain: {
       id: number
@@ -48,6 +49,7 @@ export type Step = {
       decimals: number
       price_usd: string
       amount: string
+      logo_uri: string
     }
     chain: {
       id: number
@@ -60,6 +62,7 @@ export type Step = {
       symbol: string
       decimals: number
       price_usd: string
+      logo_uri: string
     }
     chain: {
       id: number

@@ -13,6 +13,7 @@ const rate = {
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ selection, selectedRoute, setSelectedRoute, routes }) => {
   const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
+
   const handleSelectRoute = (id: string) => {
     setSelectedRoute(routes.find((route) => route.id === id))
   }
