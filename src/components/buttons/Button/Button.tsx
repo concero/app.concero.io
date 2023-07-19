@@ -52,7 +52,7 @@ const getButtonClasses = (
  @param {ReactNode} [children] - The children of the button.
  @returns {JSX.Element} - The rendered button element.
  @example
- <Button size={'lg'} leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
+ <Button size={"lg"} leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
  Swap
  </Button>
  */

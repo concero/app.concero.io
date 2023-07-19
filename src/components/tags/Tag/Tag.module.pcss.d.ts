@@ -4,14 +4,14 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "container": string|undefined
-  "green": string|undefined
-  "grey": string|undefined
-  "lg": string|undefined
-  "main": string|undefined
-  "mainDarker": string|undefined
-  "md": string|undefined
-  "red": string|undefined
-  "tag": string|undefined
-  "xs": string|undefined
+  'container': string | undefined
+  'green': string | undefined
+  'grey': string | undefined
+  'lg': string | undefined
+  'main': string | undefined
+  'mainDarker': string | undefined
+  'md': string | undefined
+  'red': string | undefined
+  'tag': string | undefined
+  'xs': string | undefined
 }

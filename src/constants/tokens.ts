@@ -1,5 +1,5 @@
 export const tokens = {
-  '1': [
+  1: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 1,
@@ -14457,7 +14457,7 @@ export const tokens = {
       coinKey: 'AVINOC',
     },
   ],
-  '10': [
+  10: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 10,
@@ -16031,7 +16031,7 @@ export const tokens = {
       coinKey: 'OPX',
     },
   ],
-  '25': [
+  25: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 25,
@@ -18217,7 +18217,7 @@ export const tokens = {
       logoURI: 'https://vvs.finance/images/tokens/0x0A92ea8a197919aCb9BC26660Ed0D43D01ed26b7.svg',
     },
   ],
-  '56': [
+  56: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 56,
@@ -29317,7 +29317,7 @@ export const tokens = {
       coinKey: 'IRON',
     },
   ],
-  '66': [
+  66: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 66,
@@ -29889,7 +29889,7 @@ export const tokens = {
       logoURI: 'https://s3.openocean.finance/token_logos/logos/okex/0x3e259bfe720093abb26a2c3fe57670259b2ebea2.png',
     },
   ],
-  '100': [
+  100: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 100,
@@ -31665,7 +31665,7 @@ export const tokens = {
       logoURI: 'https://etherscan.io/token/images/TheGraph_32.png',
     },
   ],
-  '106': [
+  106: [
     {
       address: '0x0000000000000000000000000000000000000000',
       symbol: 'VLX',
@@ -31698,7 +31698,7 @@ export const tokens = {
       priceUSD: '0',
     },
   ],
-  '122': [
+  122: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 122,
@@ -32026,7 +32026,7 @@ export const tokens = {
         'https://raw.githubusercontent.com/voltfinance/token-logos/main/logos/0x588e24DEd8f850b14BB2e62E9c50A7Cd5Ee13Da9/logo.png',
     },
   ],
-  '137': [
+  137: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 137,
@@ -39244,7 +39244,7 @@ export const tokens = {
       logoURI: '',
     },
   ],
-  '250': [
+  250: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 250,
@@ -42334,7 +42334,7 @@ export const tokens = {
       coinKey: 'gOHM',
     },
   ],
-  '288': [
+  288: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 288,
@@ -42768,7 +42768,7 @@ export const tokens = {
       logoURI: 'https://s3.openocean.finance/token_logos/logos/1640069122683_8257756398337042.png',
     },
   ],
-  '1284': [
+  1284: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 1284,
@@ -43431,7 +43431,7 @@ export const tokens = {
       coinKey: 'DOUBLOON',
     },
   ],
-  '1285': [
+  1285: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 1285,
@@ -44231,7 +44231,7 @@ export const tokens = {
       coinKey: 'gOHM',
     },
   ],
-  '42161': [
+  42161: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 42161,
@@ -47087,7 +47087,7 @@ export const tokens = {
       coinKey: 'HEGIC',
     },
   ],
-  '42220': [
+  42220: [
     {
       address: '0x471ece3750da237f93b8e339c536989b8978a438',
       chainId: 42220,
@@ -47890,7 +47890,7 @@ export const tokens = {
       coinKey: 'mCUSD',
     },
   ],
-  '43114': [
+  43114: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 43114,
@@ -51616,7 +51616,7 @@ export const tokens = {
       logoURI: '',
     },
   ],
-  '1313161554': [
+  1313161554: [
     {
       address: '0x0000000000000000000000000000000000000000',
       chainId: 1313161554,

@@ -4,9 +4,9 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "body1": string|undefined
-  "dark": string|undefined
-  "light": string|undefined
-  "root": string|undefined
-  "tradingview_widget_wrapper": string|undefined
+  'body1': string | undefined
+  'dark': string | undefined
+  'light': string | undefined
+  'root': string | undefined
+  'tradingview_widget_wrapper': string | undefined
 }

@@ -9,11 +9,9 @@ export interface CryptoSymbolProps {
   src?: string | null
 }
 
-export const CryptoSymbol: FC<CryptoSymbolProps> = ({ name = '', symbol, src = null }) => {
-  return (
-    <div className={classNames.container}>
-      <CryptoIcon symbol={name} src={src ? src : null} />
-      <p className={'body1'}>{symbol}</p>
-    </div>
+export const CryptoSymbol: FC<CryptoSymbolProps> = ({ name = '', symbol, src = null }) => (
+  <div className={classNames.container}>
+    <CryptoIcon symbol={name} src={src || null} />
+    <p className="body1">{symbol}</p>
+  </div>
   )
-}

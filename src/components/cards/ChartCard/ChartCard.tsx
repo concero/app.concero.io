@@ -70,7 +70,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
           {isDesktop ? (
             <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
               <Beacon isOn={chartType === 'tradingView'} />
-              <p className={'body1'}>TradingView</p>
+              <p className="body1">TradingView</p>
             </Button>
           ) : null}
         </div>

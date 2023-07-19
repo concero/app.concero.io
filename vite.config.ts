@@ -5,8 +5,8 @@ import postcssPresetEnv from 'postcss-preset-env'
 import postcssSorting from 'postcss-sorting'
 import postcssImport from 'postcss-import'
 import precss from 'precss'
+import postcssDTS from 'postcss-d-ts'
 import EnvironmentPlugin from 'vite-plugin-environment'
-
 // https://vitejs.dev/config/
 
 export default defineConfig({
@@ -15,7 +15,7 @@ export default defineConfig({
     stylelint({
       fix: true,
       //include any .css and .module.css files in src
-      include: ['./src/**/*.css'],
+      include: ['./src/**/*.css', './src/**/*.pcss'],
       configFile: './.stylelintrc.json',
       emitErrorAsWarning: true,
     }),
@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   css: {
     postcss: {
-      plugins: [postcssImport(), postcssSorting(), postcssPresetEnv(), precss()],
+      plugins: [postcssDTS(), postcssImport(), postcssSorting(), postcssPresetEnv(), precss()],
     },
   },
 })

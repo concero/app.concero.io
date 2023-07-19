@@ -4,13 +4,13 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "active": string|undefined
-  "container": string|undefined
-  "logOutButton": string|undefined
-  "menu": string|undefined
-  "menuActive": string|undefined
-  "menuBtn": string|undefined
-  "menuIcon": string|undefined
-  "navIcon": string|undefined
-  "secondary": string|undefined
+  'active': string | undefined
+  'container': string | undefined
+  'logOutButton': string | undefined
+  'menu': string | undefined
+  'menuActive': string | undefined
+  'menuBtn': string | undefined
+  'menuIcon': string | undefined
+  'navIcon': string | undefined
+  'secondary': string | undefined
 }

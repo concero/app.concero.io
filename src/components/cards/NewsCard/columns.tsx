@@ -51,18 +51,16 @@ export const columns = [
   },
   {
     columnTitle: 'Sentiment',
-    cellComponent: (item) => {
-      return (
-        <div className="row ac gap-xs">
-          <Icon name="Link" color={colors.text.secondary} size={18} />
-          <a href={item.url} target="_blank" rel="noreferrer">
-            <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
-              {item.source.title}
-            </p>
-          </a>
-        </div>
-      )
-    },
+    cellComponent: (item) => (
+      <div className="row ac gap-xs">
+        <Icon name="Link" color={colors.text.secondary} size={18} />
+        <a href={item.url} target="_blank" rel="noreferrer">
+          <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
+            {item.source.title}
+          </p>
+        </a>
+      </div>
+      ),
   },
 ]
 

@@ -1,9 +1,9 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
+import { createChart } from 'lightweight-charts'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
 import { getData } from '../../../api/chart/getData'
-import { createChart } from 'lightweight-charts'
 
 interface Chain {
   name: string

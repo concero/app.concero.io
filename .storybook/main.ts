@@ -23,7 +23,8 @@ const config: StorybookConfig = {
   core: {
     builder: '@storybook/builder-vite',
   },
-  async viteFinal(config, options) {
+  async viteFinal(config) {
+    config.css.postcss.plugins = config.css.postcss.plugins.filter((plugin) => plugin.postcssPlugin !== 'postcss-d-ts')
     return config
   },
 }

@@ -81,7 +81,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
               value={selection.amount}
               onChangeText={(value) => setAmount(value)}
             />
-            <h5>${selection.amount_usd}</h5>
+            <h5>
+              $
+              {selection.amount_usd}
+            </h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}

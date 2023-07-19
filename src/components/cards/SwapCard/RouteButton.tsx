@@ -15,31 +15,29 @@ const Avatars: FC<AvatarsProps> = ({ entities }) => (
   </div>
 )
 
-export const RouteButton: FC<RouteButtonProps> = ({ route, onClick }) => {
-  return (
-    <div>
-      <Button
-        variant="subtle"
-        rightIcon={{
+export const RouteButton: FC<RouteButtonProps> = ({ route, onClick }) => (
+  <div>
+    <Button
+      variant="subtle"
+      rightIcon={{
           name: 'ChevronRight',
           iconProps: {
             size: 16,
             color: colors.grey.medium,
           },
         }}
-        size="sm"
-        onClick={onClick}
-      >
-        {/* <Avatars entities={route?.steps} /> */}
-        <div className={classNames.routeInfoContainer}>
-          <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
-          <p>{`$${route?.cost.total_gas_usd ? route.cost.total_gas_usd : ''}`}</p>
-        </div>
-        <div className={classNames.routeInfoContainer}>
-          <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
-          <p>{`${route?.transaction_time_seconds ? route.transaction_time_seconds : ''}s`}</p>
-        </div>
-      </Button>
-    </div>
+      size="sm"
+      onClick={onClick}
+    >
+      {/* <Avatars entities={route?.steps} /> */}
+      <div className={classNames.routeInfoContainer}>
+        <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
+        <p>{`$${route?.cost.total_gas_usd ? route.cost.total_gas_usd : ''}`}</p>
+      </div>
+      <div className={classNames.routeInfoContainer}>
+        <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
+        <p>{`${route?.transaction_time_seconds ? route.transaction_time_seconds : ''}s`}</p>
+      </div>
+    </Button>
+  </div>
   )
-}

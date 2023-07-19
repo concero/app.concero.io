@@ -9,6 +9,7 @@ type Story = StoryObj<typeof Button>
 const meta: Meta<typeof Button> = {
   component: Button,
   title: 'Components/Buttons/Button',
+  tags: ['Button', 'autodocs'],
 }
 
 export const Default: Story = {

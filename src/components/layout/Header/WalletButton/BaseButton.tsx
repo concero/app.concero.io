@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react'
-import { ThemeContext } from '../../../../hooks/themeContext'
 import { useAccount } from 'wagmi'
+import { ThemeContext } from '../../../../hooks/themeContext'
 import { truncateWallet } from '../../../../utils/formatting'
 import { Button } from '../../../buttons/Button/Button'
 

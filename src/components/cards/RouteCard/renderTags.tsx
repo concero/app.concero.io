@@ -22,7 +22,10 @@ export const renderTags = (
           },
         }}
       >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{route.transaction_time_seconds}s</h5>
+        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+          {route.transaction_time_seconds}
+          s
+        </h5>
       </Tag>
       <Tag
         color={getBgColor}
@@ -34,7 +37,10 @@ export const renderTags = (
           },
         }}
       >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{route.slippage_percent}%</h5>
+        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+          {route.slippage_percent}
+          %
+        </h5>
       </Tag>
       <Tag
         color={getBgColor}
@@ -58,7 +64,10 @@ export const renderTags = (
           },
         }}
       >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
+        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+          $
+          {route.cost.total_gas_usd}
+        </h5>
       </Tag>
     </div>
   )

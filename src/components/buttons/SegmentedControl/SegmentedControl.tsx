@@ -13,22 +13,18 @@ interface Item {
   value: string
 }
 
-export const SegmentedControl: FC<SegmentedControlProps> = ({ data, selectedItem, setSelectedItem }) => {
-  return (
-    <div className={classNames.container}>
-      {data.map((item: Item) => {
-        return (
-          <Button
-            key={item.value}
-            variant={'subtle'}
-            size={'sm'}
-            className={selectedItem.value === item.value ? classNames.selected : ''}
-            onClick={() => setSelectedItem(item)}
-          >
-            <p className={'body1'}>{item.title}</p>
-          </Button>
-        )
-      })}
-    </div>
-  )
-}
+export const SegmentedControl: FC<SegmentedControlProps> = ({ data, selectedItem, setSelectedItem }) => (
+  <div className={classNames.container}>
+    {data.map((item: Item) => (
+      <Button
+        key={item.value}
+        variant="subtle"
+        size="sm"
+        className={selectedItem.value === item.value ? classNames.selected : ''}
+        onClick={() => setSelectedItem(item)}
+      >
+        <p className="body1">{item.title}</p>
+      </Button>
+    ))}
+  </div>
+)

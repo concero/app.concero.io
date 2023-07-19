@@ -20,7 +20,7 @@ export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesCollapsed, l
     }
   }
 
-  const amountFrom = parseFloat(step.from.token.amount) / Math.pow(10, 18)
+  const amountFrom = parseFloat(step.from.token.amount) / 10 ** 18
 
   return (
     <div className={`${fullWidthStyle} ${classNames.routeStepContainer}`}>

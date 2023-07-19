@@ -2,7 +2,7 @@ import { useAccount } from 'wagmi'
 import { disconnect } from '@wagmi/core'
 import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
 
-export const HeaderPopoverMenu = () => {
+export function HeaderPopoverMenu() {
   const { address, isConnecting } = useAccount()
 
   const items = [

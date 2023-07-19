@@ -26,7 +26,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
   const getTextColor = () => (isSelected ? classNames.bestText : '')
   const getIconColor = () => (isSelected ? colors.primary.light : colors.text.secondary)
 
-  const amountTo = parseFloat(route.to.token.amount) / Math.pow(10, route.to.token.decimals)
+  const amountTo = parseFloat(route.to.token.amount) / 10 ** route.to.token.decimals
 
   return (
     <Card
