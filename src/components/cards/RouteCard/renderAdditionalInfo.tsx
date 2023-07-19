@@ -1,6 +1,7 @@
 import classNames from './RouteCard.module.pcss'
 import Icon from '../../Icon'
 import { colors } from '../../../constants/colors'
+import { Step } from '../../../api/lifi/types'
 
 function AdditionalInfoTag({
   title,
@@ -27,7 +28,7 @@ function AdditionalInfoTag({
   )
 }
 
-export const renderAllTagInfo = (
+export const renderAdditionalInfo = (
   isRoutesCollapsed: boolean,
   step: Step,
   isBestRoute: boolean,

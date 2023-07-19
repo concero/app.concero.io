@@ -11,10 +11,13 @@ import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { chainsColumns } from './chainsColumns'
 import { tokensColumns } from './tokensColumns'
+import { get } from '../../../../api/clientProxy'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null)
+
   const balance = 0
 
   const setChain = (chain) => {
@@ -42,12 +45,44 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     })
   }
 
-  const setAmount = (amount) => {
+  const getCurrentTokenPriceUSD = async (chainId: string, tokenSymbol: string) => {
+    const url = `https://li.quest/v1/token?chain=${chainId}&token=${tokenSymbol}`
+    const response = await get(url)
+    return response.data.priceUSD
+  }
+
+  const setFromAmount = (amount) => {
     dispatch({
-      type: 'setAmount',
+      type: 'setFromAmount',
       direction,
       payload: amount,
     })
+
+    const fetchPriceUSD = () => {
+      let priceUSD = 0
+      clearTimeout(typingTimeout)
+      setTypingTimeout(
+        setTimeout(async () => {
+          if (amount) priceUSD = await getCurrentTokenPriceUSD(selection.chain.id, selection.token.symbol)
+          dispatch({
+            type: 'setFromAmountUSD',
+            direction,
+            payload: priceUSD * amount,
+          })
+        }, 1500),
+      )
+    }
+
+    if (!amount) {
+      clearTimeout(typingTimeout)
+      dispatch({
+        type: 'setFromAmountUSD',
+        direction,
+        payload: 0,
+      })
+    }
+
+    fetchPriceUSD()
   }
 
   return (
@@ -78,8 +113,9 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
             <TextInput
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
-              value={selection.amount}
-              onChangeText={(value) => setAmount(value)}
+              outerValue={selection.amount ? selection.amount.toString() : ''}
+              onChangeText={(value) => direction === 'from' && setFromAmount(value)}
+              isDisabled={direction === 'to'}
             />
             <h5>
               $

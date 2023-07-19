@@ -16,26 +16,73 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [routes, setRoutes] = useState<Route[]>([])
   const [selectedRoute, setSelectedRoute] = useState(routes[0])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [originalRoutes, setOriginalRoutes] = useState([])
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null)
+  const { address } = useAccount()
+
+  const setToAmount = (amount, amount_usd) => {
+    dispatch({
+      type: 'setToAmount',
+      direction: 'to',
+      payload: { amount: amount, amount_usd: amount_usd },
+    })
+  }
 
   useEffect(() => {
-    const fetchRoutes = async () => {
+    if (typingTimeout) clearTimeout(typingTimeout)
+    const fetchRoutes = () => {
       setIsLoading(true)
-      const response = await getRoutes({
-        from: selection.from,
-        to: selection.to,
-        amount: selection.from.amount,
-      })
-
-      setRoutes(response.routes)
-      setSelectedRoute(response.routes[0])
-
-      setIsLoading(false)
+      try {
+        setTypingTimeout(
+          setTimeout(async () => {
+            const response = await getRoutes({
+              from: selection.from,
+              to: selection.to,
+              address: address,
+            })
+            if (response.routes.length > 0) {
+              setRoutes(response.routes)
+              setOriginalRoutes(response.originalRoutes)
+              setSelectedRoute(response.routes[0])
+              setToAmount(response.routes[0].to.token.amount, response.routes[0].to.token.amount_usd)
+            } else {
+              resetRoutes()
+              console.log('No routes found')
+            }
+            setIsLoading(false)
+          }, 1500),
+        )
+      } catch (e) {
+        console.log(e)
+        setIsLoading(false)
+      }
     }
 
-    fetchRoutes()
-  }, [selection])
+    if (selection.from.amount) {
+      fetchRoutes()
+    } else {
+      resetRoutes()
+    }
+
+    return () => {
+      clearTimeout(typingTimeout)
+    }
+  }, [selection.from.token, selection.from.amount, selection.from.chain, selection.to.token, selection.to.chain])
+
+  useEffect(() => {
+    selectedRoute ? setToAmount(selectedRoute.to.token.amount, selectedRoute.to.token.amount_usd) : null
+  }, [selectedRoute])
+
+  const resetRoutes = () => {
+    if (typingTimeout) clearTimeout(typingTimeout)
+    setRoutes([])
+    setSelectedRoute(null)
+    setToAmount(0, 0)
+    setIsLoading(false)
+  }
 
   const handleSwap = async () => {
+    // originalRoutes.find((route) => route.id === selectedRoute.id)
     setIsLoading(true)
     await new Promise((resolve) => setTimeout(resolve, 2000))
     setIsLoading(false)

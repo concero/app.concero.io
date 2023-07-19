@@ -2,7 +2,8 @@ import * as types from '@lifi/sdk/dist/types'
 import { getRouteStep } from './getRouteStep'
 import { Route } from './types'
 
-export const getRoute = (route: types.Route): Route => ({
+export const routeStandardize = (route: types.Route): Route => {
+  return {
     id: route.id,
     from: {
       token: {
@@ -26,7 +27,7 @@ export const getRoute = (route: types.Route): Route => ({
         decimals: route.toToken.decimals,
         price_usd: route.toToken.priceUSD,
         amount_usd: route.toAmountUSD,
-        amount: route.toAmount,
+        amount: parseFloat((Number(route.toAmount) / Math.pow(10, route.toToken.decimals)).toFixed(4)).toString(),
         amount_min: route.toAmountMin,
       },
       chain: {
@@ -43,18 +44,21 @@ export const getRoute = (route: types.Route): Route => ({
     },
     tags: route.tags,
     slippage_percent: route.steps.reduce(
-      (acc, step) => acc
-        + (step.action.slippage
-          + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
+      (acc, step) =>
+        acc +
+        (step.action.slippage +
+          step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
       0,
     ),
     transaction_time_seconds: route.steps.reduce(
-      (acc: number, step) => acc
-        + (step.estimate.executionDuration
-          + step.includedSteps.reduce(
+      (acc: number, step) =>
+        acc +
+        (step.estimate.executionDuration +
+          step.includedSteps.reduce(
             (innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration,
             0,
           )),
       0,
     ),
-  })
+  }
+}

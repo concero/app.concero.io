@@ -10,6 +10,8 @@ export interface TokenAreaProps {
       name: string
       symbol: string
     }
+    amount: string
+    amount_usd: string
   }
   dispatch: any
 }

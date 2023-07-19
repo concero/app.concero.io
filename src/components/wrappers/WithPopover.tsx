@@ -14,6 +14,7 @@ export const WithPopover: FC<WithPopoverProps> = (
 ) => {
   const [showPopover, setShowPopover] = useState(false)
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null)
+
   return function (props: any) {
     const handleMouseEnter = () => {
       if (trigger === 'hover') {

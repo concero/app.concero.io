@@ -28,13 +28,25 @@ type SetTokenAction = {
   payload: { name: string; symbol: string }
 }
 
-type SetAmountAction = {
-  type: 'setAmount'
+type SetFromAmountAction = {
+  type: 'setFromAmount'
   direction: Direction
   payload: string
 }
 
-type Action = SetChainAction | SetTokenAction | SetAmountAction
+type SetToAmountAction = {
+  type: 'setToAmount'
+  direction: Direction
+  payload: string
+}
+
+type SetFromAmountUSDAction = {
+  type: 'setFromAmountUSD'
+  direction: Direction
+  payload: number
+}
+
+type Action = SetChainAction | SetTokenAction | SetFromAmountAction | SetToAmountAction | SetFromAmountUSDAction
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -48,17 +60,29 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         [action.direction]: { ...state[action.direction], token: action.payload },
       }
-    case 'setAmount':
-      const tokenPriceUSD = tokens[state[action.direction].chain.id].find(
-        (token) => token.symbol === state.from.token.symbol,
-      )?.priceUSD
-
+    case 'setFromAmount':
       return {
         ...state,
         [action.direction]: {
           ...state[action.direction],
           amount: action.payload,
-          amount_usd: action.payload * tokenPriceUSD,
+        },
+      }
+    case 'setFromAmountUSD':
+      return {
+        ...state,
+        [action.direction]: {
+          ...state[action.direction],
+          amount_usd: parseFloat(action.payload).toFixed(2).toString(),
+        },
+      }
+    case 'setToAmount':
+      return {
+        ...state,
+        [action.direction]: {
+          ...state[action.direction],
+          amount: action.payload.amount,
+          amount_usd: action.payload.amount_usd,
         },
       }
     default:
