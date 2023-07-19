@@ -4,22 +4,22 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  'ac': string | undefined
-  'afe': string | undefined
-  'afs': string | undefined
-  'card': string | undefined
-  'f1': string | undefined
-  'fade-in-out': string | undefined
-  'gap-lg': string | undefined
-  'gap-md': string | undefined
-  'gap-sm': string | undefined
-  'gap-xl': string | undefined
-  'gap-xs': string | undefined
-  'hide-down': string | undefined
-  'jc': string | undefined
-  'jfe': string | undefined
-  'jfs': string | undefined
-  'jsb': string | undefined
-  'row': string | undefined
-  'show-up': string | undefined
+  "ac": string|undefined
+  "afe": string|undefined
+  "afs": string|undefined
+  "card": string|undefined
+  "f1": string|undefined
+  "fade-in-out": string|undefined
+  "gap-lg": string|undefined
+  "gap-md": string|undefined
+  "gap-sm": string|undefined
+  "gap-xl": string|undefined
+  "gap-xs": string|undefined
+  "hide-down": string|undefined
+  "jc": string|undefined
+  "jfe": string|undefined
+  "jfs": string|undefined
+  "jsb": string|undefined
+  "row": string|undefined
+  "show-up": string|undefined
 }

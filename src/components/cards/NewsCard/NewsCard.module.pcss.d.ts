@@ -4,7 +4,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  'cellComponentContainer': string | undefined
-  'container': string | undefined
-  'truncate': string | undefined
+  "cellComponentContainer": string|undefined
+  "container": string|undefined
+  "truncate": string|undefined
 }
