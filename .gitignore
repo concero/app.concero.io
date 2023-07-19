@@ -69,4 +69,4 @@ dist-ssr
 *.sln
 *.sw?
 
-*.stylelintcache
+.stylelintcache

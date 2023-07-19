@@ -12,7 +12,7 @@ type IconComponentProps = {
   iconProps?: Omit<IconProps, 'name'>
 }
 
-type ButtonProps = {
+export type ButtonProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
   variant?: 'primary' | 'secondary' | 'filled' | 'subtle' | 'black'
   leftIcon?: IconComponentProps
@@ -36,9 +36,7 @@ const getButtonClasses = (
   const isLoadingClass = isLoading ? styles.isLoading : ''
   const isDisabledClass = isDisabled ? styles.isDisabled : ''
   const additionalClasses = className && className.split(' ')
-  return baseClasses
-    .concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, additionalClasses)
-    .join(' ')
+  return baseClasses.concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, additionalClasses).join(' ')
 }
 
 /**
@@ -73,11 +71,7 @@ export const Button: FC<ButtonProps> = ({
 
   return (
     <button className={buttonClasses} onClick={onClick}>
-      {isLoading ? (
-        <LoadingAnimation />
-      ) : (
-        leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />
-      )}
+      {isLoading ? <LoadingAnimation /> : leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
       {children}
       {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}
     </button>
@@ -91,12 +85,12 @@ function LoadingAnimation() {
       autoplay
       animationData={loadingAnimation}
       style={{
-      width: 30,
-      height: 30,
-    }}
+        width: 30,
+        height: 30,
+      }}
       rendererSettings={{
-      preserveAspectRatio: 'xMidYMid slice',
-    }}
+        preserveAspectRatio: 'xMidYMid slice',
+      }}
     />
   )
 }

@@ -1,6 +1,19 @@
 :root {
-    @import-json '../constants/json/spacing.json';
-    @import-json '../constants/json/styles.json';
+    --st-br-xl: 20px;
+    --st-br-lg: 16px;
+    --st-br-md: 12px;
+    --st-br-sm: 8px;
+    --st-br-xs: 4px;
+    --sp-xxl: 48px;
+    --sp-xl: 32px;
+    --sp-lg: 24px;
+    --sp-md: 12px;
+    --sp-sm: 8px;
+    --sp-xs: 4px;
+    --sp-xxs: 2px;
+    --sp-screen-v: 20px;
+    --sp-screen-h: 20px;
+
     color-scheme: light dark;
     font-family: Poppins, sans-serif;
     font-size: 16px; /* base font size, 1rem */
