@@ -3,7 +3,7 @@ import { createChart } from 'lightweight-charts'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
-import { getData } from '../../../api/chart/getData'
+import { getData, getTokenId } from './fetch'
 
 interface Chain {
   name: string
@@ -17,36 +17,34 @@ interface Interval {
 }
 
 interface ChartProps {
-  selectedChain: Chain
+  selectedToken: Chain
   selectedInterval: Interval
 }
 
-export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
+export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
   const chartRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
-  const { colors } = useContext(ThemeContext)
-
+  const [tokenId, setTokenId] = useState<string>(selectedToken.name.toLowerCase())
   const [data, setData] = useState<any[]>([])
-
-  const fetchData = async () => {
-    const isCropNeeded = selectedInterval.value === 'max'
-    const response = await getData(selectedChain.name, 'usd', selectedInterval.value, isCropNeeded)
-    setData(response)
-  }
+  const { colors } = useContext(ThemeContext)
 
   // Fetch data
   useEffect(() => {
-    fetchData()
+    getData(setData, selectedInterval, tokenId)
 
     const interval = setInterval(() => {
-      fetchData()
+      getData(setData, selectedInterval, tokenId)
     }, 6000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [selectedChain, selectedInterval])
+  }, [selectedInterval, tokenId])
+
+  useEffect(() => {
+    getTokenId(selectedToken.symbol, setTokenId)
+  }, [selectedToken])
 
   // Initialize chart
   useEffect(() => {
