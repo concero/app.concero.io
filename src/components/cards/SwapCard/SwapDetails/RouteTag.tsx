@@ -16,12 +16,12 @@ export const RateTag: FC<RateTagProps> = ({ from, to, rate }) => (
   <div className={classNames.swapTagContainer}>
     <div className={classNames.swapPriceTag}>
       <p>{rate.from}</p>
-      <CryptoIcon symbol={from.name} />
+      <CryptoIcon src={from.logoURI} />
     </div>
     <p className={classNames.equalSign}>=</p>
     <div className={classNames.swapPriceTag}>
       <p>{rate.to}</p>
-      <CryptoIcon symbol={to.name} />
+      <CryptoIcon src={to.logoURI} />
     </div>
   </div>
 )
