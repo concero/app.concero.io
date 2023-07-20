@@ -12,6 +12,7 @@ import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedContro
 import { colors } from '../../../constants/colors'
 import { intervals } from './constants'
 import { columns } from './columns'
+import { tokens } from '../../../constants/tokens'
 
 export interface ChartCardProps {}
 
@@ -20,17 +21,17 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const toggleChartType = (): void => {
     setChartType(chartType === 'chart' ? 'tradingView' : 'chart')
   }
-  const [isSelectLeftChainModalVisible, setIsSelectLeftChainModalVisible] = useState<boolean>(false)
+  const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
-  const [selectedLeftChain, setSelectedLeftChain] = useState<{ name: string; symbol: string; logoURI: string }>(
+  const [selectedLeftToken, setSelectedLeftToken] = useState<{ name: string; symbol: string; logoURI: string }>(
     chains[0],
   )
   const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(chains[1])
   const [selectedInterval, setSelectedInterval] = useState<{ title: string; id: string } | undefined>(intervals[0])
 
-  const handleSelectLeftChain = (chain: { name: string; symbol: string }): void => {
-    setSelectedLeftChain(chain)
-    setIsSelectLeftChainModalVisible(false)
+  const handleSelectLeftToken = (chain: { name: string; symbol: string }): void => {
+    setSelectedLeftToken(chain)
+    setIsSelectLeftTokenModalVisible(false)
   }
 
   const handleSelectRightChain = (chain: { name: string; symbol: string }): void => {
@@ -52,9 +53,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
               name: 'ChevronDown',
               iconProps: { size: 18, color: colors.text.secondary },
             }}
-            onClick={() => setIsSelectLeftChainModalVisible(true)}
+            onClick={() => setIsSelectLeftTokenModalVisible(true)}
           >
-            <CryptoSymbol src={selectedLeftChain.logoURI} symbol={selectedLeftChain.symbol} />
+            <CryptoSymbol src={selectedLeftToken.logoURI} symbol={selectedLeftToken.symbol} />
           </Button>
           {/* <Button */}
           {/*   variant="subtle" */}
@@ -80,7 +81,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
       </div>
       <div className="f1">
         {chartType === 'chart' ? (
-          <Chart selectedChain={selectedLeftChain} selectedInterval={selectedInterval} />
+          <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
         ) : (
           <AdvancedRealTimeChart
             theme="dark"
@@ -98,11 +99,11 @@ export const ChartCard: FC<ChartCardProps> = () => {
       </div>
       <EntityListModal
         title="Select chain"
-        show={isSelectLeftChainModalVisible}
-        setShow={setIsSelectLeftChainModalVisible}
-        data={chains}
+        show={isSelectLeftTokenModalVisible}
+        setShow={setIsSelectLeftTokenModalVisible}
+        data={tokens[1]}
         columns={columns}
-        onSelect={(chain) => handleSelectLeftChain(chain)}
+        onSelect={(chain) => handleSelectLeftToken(chain)}
       />
       {/* <EntityListModal */}
       {/*   title="Select chain" */}

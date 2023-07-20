@@ -1,18 +1,18 @@
 import { get } from '../clientProxy'
 
+interface Item {
+  0: number
+  1: number
+}
+
 const toLocalTime = (timestamp: number): number => {
   const currentTime = new Date()
   const timeZoneOffsetInSeconds = currentTime.getTimezoneOffset() * 60
   return Number(timestamp) / 1000 - timeZoneOffsetInSeconds
 }
 
-interface Item {
-  0: number
-  1: number
-}
-
-export const getData = async (chain: string, currency: string, days: string, isCropNeeded: boolean) => {
-  const url = `https://api.coingecko.com/api/v3/coins/${chain.toLowerCase()}/market_chart?vs_currency=${currency}&days=${days}`
+export const fetchChartData = async (tokenId: string, currency: string, days: string, isCropNeeded: boolean) => {
+  const url = `https://api.coingecko.com/api/v3/coins/${tokenId}/market_chart?vs_currency=${currency}&days=${days}`
   const response = await get(url)
 
   if (response.status === 200) {
