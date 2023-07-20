@@ -9,8 +9,8 @@ import { TextInput } from '../../../input/TextInput'
 import { chains } from '../../../../constants/chains'
 import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
-import { chainsColumns } from './chainsColumns'
-import { tokensColumns } from './tokensColumns'
+import { ChainColumns } from './chainColumns'
+import { TokenColumns } from './tokenColumns'
 import { get } from '../../../../api/clientProxy'
 import { isFloatInput } from '../../../../utils/validation'
 
@@ -134,7 +134,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
       <EntityListModal
         title="Select chain"
         data={chains}
-        columns={chainsColumns}
+        columns={ChainColumns}
         show={showChainsModal}
         setShow={setShowChainsModal}
         onSelect={(chain) => setChain(chain)}
@@ -142,7 +142,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
       <EntityListModal
         title="Select token"
         data={tokens[selection.chain.id]}
-        columns={tokensColumns}
+        columns={TokenColumns}
         show={showTokensModal}
         setShow={setShowTokensModal}
         onSelect={(token) => setToken(token)}

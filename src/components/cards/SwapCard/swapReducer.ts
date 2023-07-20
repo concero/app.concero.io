@@ -1,26 +1,9 @@
 import { useReducer } from 'react'
 import { chains } from '../../../constants/chains'
 import { tokens } from '../../../constants/tokens'
+import { Action, State } from './types'
 
-type State = {
-  from: {
-    chain: { name: string; symbol: string }
-    token: { name: string; symbol: string }
-    amount: string
-  }
-  to: {
-    chain: { name: string; symbol: string }
-    token: { name: string; symbol: string }
-    amount?: string
-  }
-  routes: any[]
-  isLoading: boolean
-  selectedRoute: any
-  originalRoutes: any[]
-  typingTimeout: number
-}
-
-export function swapReducer(state: State, action) {
+export function swapReducer(state: State, action: Action) {
   switch (action.type) {
     // ROUTE-RELATED ACTIONS
     case 'SET_ROUTES':

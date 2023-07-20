@@ -1,7 +1,7 @@
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 
-export const tokensColumns = [
+export const TokenColumns = [
   {
     columnTitle: 'Symbol',
     cellComponent: (token: { name: string; symbol: string; logoURI: string }) => (

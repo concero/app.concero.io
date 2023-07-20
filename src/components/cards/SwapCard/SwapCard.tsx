@@ -4,7 +4,7 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
 import { TokenArea } from './TokenArea/TokenArea'
-import { SwapDetails } from './SwapDetails'
+import { SwapDetails } from './SwapDetails/SwapDetails'
 import { fetchRoutes } from '../../../api/lifi/fetchRoutes'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
@@ -12,12 +12,6 @@ import { useSwapReducer } from './swapReducer'
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const [{ from, to, routes, isLoading, typingTimeout, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
-
-  const clearRoutes = () => {
-    if (typingTimeout) clearTimeout(typingTimeout)
-    swapDispatch({ type: 'CLEAR_ROUTES' })
-    swapDispatch({ type: 'RESET_AMOUNTS' })
-  }
 
   async function getRoutes() {
     if (!from.amount) return clearRoutes()
@@ -45,6 +39,18 @@ export const SwapCard: FC<SwapCardProps> = () => {
     }
   }
 
+  const handleSwap = async () => {
+    swapDispatch({ type: 'SET_IS_LOADING', payload: true })
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    swapDispatch({ type: 'SET_IS_LOADING', payload: false })
+  }
+
+  const clearRoutes = () => {
+    if (typingTimeout) clearTimeout(typingTimeout)
+    swapDispatch({ type: 'CLEAR_ROUTES' })
+    swapDispatch({ type: 'RESET_AMOUNTS' })
+  }
+
   useEffect(() => {
     clearRoutes()
     handleFetchRoutes()
@@ -62,12 +68,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
       },
     })
   }, [selectedRoute])
-
-  const handleSwap = async () => {
-    swapDispatch({ type: 'SET_IS_LOADING', payload: true })
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    swapDispatch({ type: 'SET_IS_LOADING', payload: false })
-  }
 
   return (
     <div className={`card ${classNames.container}`}>

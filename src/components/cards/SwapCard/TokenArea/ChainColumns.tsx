@@ -1,7 +1,7 @@
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 
-export const chainsColumns = [
+export const ChainColumns = [
   {
     columnTitle: 'Symbol',
     cellComponent: (chain: { name: string; symbol: string }) => (

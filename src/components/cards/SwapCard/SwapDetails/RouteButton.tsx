@@ -1,10 +1,10 @@
 import { FC } from 'react'
-import { Button } from '../../buttons/Button/Button'
-import { colors } from '../../../constants/colors'
-import classNames from './SwapCard.module.pcss'
-import Icon from '../../Icon'
-import { Avatar } from '../../tags/Avatar/Avatar'
-import { AvatarsProps, RouteButtonProps } from './types'
+import { Button } from '../../../buttons/Button/Button'
+import { colors } from '../../../../constants/colors'
+import classNames from '../SwapCard.module.pcss'
+import Icon from '../../../Icon'
+import { Avatar } from '../../../tags/Avatar/Avatar'
+import { AvatarsProps, RouteButtonProps } from '../types'
 
 const Avatars: FC<AvatarsProps> = ({ entities }) => (
   <div className={classNames.avatarContainer}>
@@ -20,12 +20,12 @@ export const RouteButton: FC<RouteButtonProps> = ({ route, onClick }) => (
     <Button
       variant="subtle"
       rightIcon={{
-          name: 'ChevronRight',
-          iconProps: {
-            size: 16,
-            color: colors.grey.medium,
-          },
-        }}
+        name: 'ChevronRight',
+        iconProps: {
+          size: 16,
+          color: colors.grey.medium,
+        },
+      }}
       size="sm"
       onClick={onClick}
     >
@@ -40,4 +40,4 @@ export const RouteButton: FC<RouteButtonProps> = ({ route, onClick }) => (
       </div>
     </Button>
   </div>
-  )
+)

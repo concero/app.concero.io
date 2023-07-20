@@ -1,10 +1,10 @@
 import { FC, useState } from 'react'
-import classNames from './SwapCard.module.pcss'
-import { Modal } from '../../modals/Modal/Modal'
+import classNames from '../SwapCard.module.pcss'
+import { Modal } from '../../../modals/Modal/Modal'
 import { RouteButton } from './RouteButton'
 import { RateTag } from './RouteTag'
-import { RouteCard } from '../RouteCard/RouteCard'
-import { SwapDetailsProps } from './types'
+import { RouteCard } from '../../RouteCard/RouteCard'
+import { SwapDetailsProps } from '../types'
 
 const rate = {
   from: '0.15',
