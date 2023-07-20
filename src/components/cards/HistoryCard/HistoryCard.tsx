@@ -7,6 +7,7 @@ import { Button } from '../../buttons/Button/Button'
 import { colors } from '../../../constants/colors'
 import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
 import { WithPopover } from '../../wrappers/WithPopover'
+import { get } from '../../../api/clientProxy'
 
 interface HistoryCardProps {}
 
@@ -76,6 +77,12 @@ function ToggleHistoyButton(historyType) {
 
 export const HistoryCard: FC<HistoryCardProps> = () => {
   const [historyType, setHistoryType] = useState<'All' | 'Own'>('All')
+  const url = 'https://io.dexscreener.com/dex/log/amm/uniswap/all/bsc/0x5dc30Bb8D7F02eFEf28f7E637D17Aea13Fa96906?q=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+
+  const fetchHistory = async () => {
+    const response = await get(url)
+    console.log(response)
+  }
 
   const ButtonWithPopover = WithPopover(
     () => ToggleHistoyButton(historyType),

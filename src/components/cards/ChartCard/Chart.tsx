@@ -35,7 +35,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
 
     const interval = setInterval(() => {
       getData(setData, selectedInterval, tokenId)
-    }, 6000)
+    }, 12000)
 
     return () => {
       clearInterval(interval)
