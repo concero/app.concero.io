@@ -70,7 +70,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
           dispatch({
             type: 'SET_AMOUNT',
             direction,
-            payload: { amount_usd: priceUSD * parseFloat(input) },
+            payload: { amount_usd: (priceUSD * parseFloat(input)).toFixed(2).toString() },
           })
         }, 1500),
       )
@@ -110,10 +110,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
               onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>
-              $
-              {selection.amount_usd}
-            </h5>
+            <h5>${selection.amount_usd}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}

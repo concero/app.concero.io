@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from 'react'
+import { FC, KeyboardEvent, MouseEventHandler, ReactNode, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
@@ -12,15 +12,29 @@ export interface ModalProps {
 }
 
 export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 27) setShow(false)
+  }
+
+  const stopPropagation = (event: MouseEventHandler<HTMLDivElement>) => {
+    event.stopPropagation()
+  }
+
   useEffect(() => {
     show ? (document.body.style.overflowY = 'hidden') : (document.body.style.overflowY = 'scroll')
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
   }, [show])
 
   return (
     <AnimatePresence>
       {show && (
-        <motion.div {...fadeAnimation} className={classNames.overlay}>
-          <motion.div {...fadeUpAnimation} className={classNames.container}>
+        <motion.div {...fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
+          <motion.div {...fadeUpAnimation} className={classNames.container} onClick={stopPropagation}>
             <ModalHeader title={title} onClick={() => setShow(false)} />
             {children}
           </motion.div>
