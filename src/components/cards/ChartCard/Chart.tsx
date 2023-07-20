@@ -41,7 +41,7 @@ export const Chart: FC<ChartProps> = ({ selectedChain, selectedInterval }) => {
 
     const interval = setInterval(() => {
       fetchData()
-    }, 6000)
+    }, 60000)
 
     return () => {
       clearInterval(interval)

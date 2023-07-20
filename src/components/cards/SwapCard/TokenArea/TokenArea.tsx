@@ -12,6 +12,7 @@ import { TokenAreaProps } from './types'
 import { chainsColumns } from './chainsColumns'
 import { tokensColumns } from './tokensColumns'
 import { get } from '../../../../api/clientProxy'
+import { isFloatInput } from '../../../../utils/validation'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
@@ -22,7 +23,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
 
   const setChain = (chain) => {
     dispatch({
-      type: 'setChain',
+      type: 'SET_CHAIN',
       direction,
       payload: {
         name: chain.name,
@@ -35,7 +36,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
 
   const setToken = (token) => {
     dispatch({
-      type: 'setToken',
+      type: 'SET_TOKEN',
       direction,
       payload: {
         name: token.name,
@@ -51,11 +52,13 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     return response.data.priceUSD
   }
 
-  const setFromAmount = (amount) => {
+  const handleAmountChange = (input) => {
+    if (input === '') return dispatch({ type: 'RESET_AMOUNTS', direction })
+    if (!isFloatInput(input)) return
     dispatch({
-      type: 'setFromAmount',
+      type: 'SET_AMOUNT',
       direction,
-      payload: amount,
+      payload: { amount: input },
     })
 
     const fetchPriceUSD = () => {
@@ -63,25 +66,15 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
       clearTimeout(typingTimeout)
       setTypingTimeout(
         setTimeout(async () => {
-          if (amount) priceUSD = await getCurrentTokenPriceUSD(selection.chain.id, selection.token.symbol)
+          if (input) priceUSD = await getCurrentTokenPriceUSD(selection.chain.id, selection.token.symbol)
           dispatch({
-            type: 'setFromAmountUSD',
+            type: 'SET_AMOUNT',
             direction,
-            payload: priceUSD * amount,
+            payload: { amount_usd: priceUSD * parseFloat(input) },
           })
         }, 1500),
       )
     }
-
-    if (!amount) {
-      clearTimeout(typingTimeout)
-      dispatch({
-        type: 'setFromAmountUSD',
-        direction,
-        payload: 0,
-      })
-    }
-
     fetchPriceUSD()
   }
 
@@ -113,8 +106,8 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
             <TextInput
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
-              outerValue={selection.amount ? selection.amount.toString() : ''}
-              onChangeText={(value) => direction === 'from' && setFromAmount(value)}
+              value={selection.amount}
+              onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
             <h5>

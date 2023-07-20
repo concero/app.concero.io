@@ -80,7 +80,7 @@ export type Step = {
   }
 }
 
-export interface GetRoutesParams {
+export interface FetchRoutesParams {
   from: {
     chain: {
       id: number

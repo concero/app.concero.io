@@ -17,13 +17,13 @@ type State = {
 type Direction = 'from' | 'to'
 
 type SetChainAction = {
-  type: 'setChain'
+  type: 'SET_CHAIN'
   direction: Direction
   payload: { name: string; symbol: string; id: number }
 }
 
 type SetTokenAction = {
-  type: 'setToken'
+  type: 'SET_TOKEN'
   direction: Direction
   payload: { name: string; symbol: string }
 }
@@ -50,12 +50,16 @@ type Action = SetChainAction | SetTokenAction | SetFromAmountAction | SetToAmoun
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'setChain':
+    case 'SET_CHAIN':
       return {
         ...state,
-        [action.direction]: { ...state[action.direction], chain: action.payload, token: tokens[action.payload.id][0] },
+        [action.direction]: {
+          ...state[action.direction],
+          chain: action.payload,
+          token: tokens[action.payload.id][0],
+        },
       }
-    case 'setToken':
+    case 'SET_TOKEN':
       return {
         ...state,
         [action.direction]: { ...state[action.direction], token: action.payload },
@@ -90,7 +94,7 @@ const reducer = (state: State, action: Action): State => {
   }
 }
 
-export const useSelectionState = () => {
+export const useCoinSelectionReducer = () => {
   const [selection, dispatch] = useReducer(reducer, {
     from: {
       chain: { name: chains[0].name, symbol: chains[0].symbol, id: chains[0].id, logoURI: chains[0].logoURI },
@@ -118,5 +122,5 @@ export const useSelectionState = () => {
     },
   })
 
-  return { selection, dispatch }
+  return [selection, dispatch]
 }
