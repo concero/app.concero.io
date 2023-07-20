@@ -62,7 +62,8 @@ export type Step = {
       symbol: string
       decimals: number
       price_usd: string
-      logo_uri: string
+      amount: string
+      logo_uri: string | undefined
     }
     chain: {
       id: number
