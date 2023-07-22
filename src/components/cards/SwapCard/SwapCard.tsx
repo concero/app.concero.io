@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
@@ -8,10 +8,17 @@ import { SwapDetails } from './SwapDetails/SwapDetails'
 import { fetchRoutes } from '../../../api/lifi/fetchRoutes'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
+import { SelectionContext } from '../../../hooks/SelectionContext'
+import { setHistoryCard } from './setHistoryCard'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
+  const { dispatch } = useContext(SelectionContext)
   const [{ from, to, routes, isLoading, typingTimeout, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
+
+  useEffect(() => {
+    setHistoryCard(dispatch, from, to)
+  }, [from, to])
 
   async function getRoutes() {
     if (!from.amount) return clearRoutes()

@@ -1,67 +1,17 @@
-import { FC, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import { columns } from './columns'
-import { fromNow } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
 import { colors } from '../../../constants/colors'
 import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
 import { WithPopover } from '../../wrappers/WithPopover'
-import { get } from '../../../api/clientProxy'
+import { fetchTransactionHistory } from '../../../api/dexscreener/fetchTransactionHistory'
+import classNames from './HistoryCard.module.pcss'
+import { SelectionContext } from '../../../hooks/SelectionContext'
+import { fetchPairs } from '../../../api/dexscreener/fetchPairs'
 
 interface HistoryCardProps {}
-
-const historyItems = [
-  {
-    from: 'SOL',
-    to: 'USDT',
-    type: 'buy',
-    value: '540',
-    created_at: fromNow('2021-10-10T12:00:00.000Z'),
-  },
-  {
-    from: 'SOL',
-    to: 'USDT',
-    type: 'sell',
-    value: '350',
-    created_at: fromNow('2021-10-10T12:00:00.000Z'),
-  },
-  {
-    from: 'SOL',
-    to: 'USDT',
-    type: 'buy',
-    value: '540',
-    created_at: fromNow('2021-10-10T12:00:00.000Z'),
-  },
-  {
-    from: 'SOL',
-    to: 'USDT',
-    type: 'sell',
-    value: '350',
-    created_at: fromNow('2021-10-10T12:00:00.000Z'),
-  },
-  {
-    from: 'SOL',
-    to: 'USDT',
-    type: 'sell',
-    value: '350',
-    created_at: fromNow('2021-10-10T12:00:00.000Z'),
-  },
-  {
-    from: 'SOL',
-    to: 'USDT',
-    type: 'buy',
-    value: '540',
-    created_at: fromNow('2021-10-10T12:00:00.000Z'),
-  },
-  {
-    from: 'SOL',
-    to: 'USDT',
-    type: 'sell',
-    value: '350',
-    created_at: fromNow('2021-10-10T12:00:00.000Z'),
-  },
-]
 
 function ToggleHistoyButton(historyType) {
   return (
@@ -77,12 +27,45 @@ function ToggleHistoyButton(historyType) {
 
 export const HistoryCard: FC<HistoryCardProps> = () => {
   const [historyType, setHistoryType] = useState<'All' | 'Own'>('All')
-  const url = 'https://io.dexscreener.com/dex/log/amm/uniswap/all/bsc/0x5dc30Bb8D7F02eFEf28f7E637D17Aea13Fa96906?q=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+  const [isLoading, setIsLoading] = useState(false)
+  const [historyItems, setHistoryItems] = useState([])
+  const [tokensPair, setTokensPair] = useState(null)
+  const { selection } = useContext(SelectionContext)
 
-  const fetchHistory = async () => {
-    const response = await get(url)
-    console.log(response)
+  const getTokensPair = async () => {
+    const { pairs } = await fetchPairs(
+      `${selection.historyCard.from.token.symbol}/${selection.historyCard.to.token.symbol}`,
+    )
+    if (!pairs) throw new Error('No pairs found')
+    setTokensPair(pairs[0])
   }
+
+  const getTransactionHistory = async () => {
+    const response = await fetchTransactionHistory(tokensPair)
+    setHistoryItems(response)
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    getTokensPair()
+  }, [selection])
+
+  useEffect(() => {
+    if (!tokensPair) return
+
+    getTransactionHistory()
+      .then(() => {
+        setIsLoading(false)
+      })
+      .catch((e) => {
+        setIsLoading(false)
+        throw e
+        return
+      })
+
+    const interval = setInterval(getTransactionHistory, 10000)
+    return () => clearInterval(interval)
+  }, [tokensPair])
 
   const ButtonWithPopover = WithPopover(
     () => ToggleHistoyButton(historyType),
@@ -97,11 +80,13 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
   )
 
   return (
-    <div className="card f1">
+    <div className="card f1" style={{ overflow: 'hidden' }}>
       <CardHeader title="History">
         <ButtonWithPopover />
       </CardHeader>
-      <Table items={historyItems} columns={columns} />
+      <div className={classNames.tableContainer}>
+        <Table items={historyItems} columns={columns} isLoading={isLoading} />
+      </div>
     </div>
   )
 }

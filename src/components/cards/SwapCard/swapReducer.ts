@@ -47,10 +47,10 @@ export function swapReducer(state: State, action: Action) {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          ...(action.payload.amount !== undefined
-            && action.payload.amount !== null && { amount: action.payload.amount }),
-          ...(action.payload.amount_usd !== undefined
-            && action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
+          ...(action.payload.amount !== undefined &&
+            action.payload.amount !== null && { amount: action.payload.amount }),
+          ...(action.payload.amount_usd !== undefined &&
+            action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
         },
       }
     case 'RESET_AMOUNTS':
@@ -67,7 +67,7 @@ export function swapReducer(state: State, action: Action) {
   }
 }
 
-export const useSwapReducer = () => {
+export const useSwapReducer = (selectionDispatch) => {
   const [state, dispatch] = useReducer(swapReducer, {
     from: {
       chain: { name: chains[0].name, symbol: chains[0].symbol, id: chains[0].id, logoURI: chains[0].logoURI },
