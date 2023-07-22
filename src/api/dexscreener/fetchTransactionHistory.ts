@@ -8,13 +8,16 @@ export const fetchTransactionHistory = async (tokensPair: string) => {
 
   if (response.status !== 200) throw new Error('Error fetching transaction history')
 
-  return response.data.logs.map((item) => {
-    return {
-      from: tokensPair.baseToken.symbol,
-      to: tokensPair.quoteToken.symbol,
-      type: item.txnType,
-      value: item.volumeUsd,
-      created_at: fromNow(item.blockTimestamp),
+  return response.data.logs.reduce((acc, item) => {
+    if (item.logType === 'swap') {
+      acc.push({
+        from: tokensPair.baseToken.symbol,
+        to: tokensPair.quoteToken.symbol,
+        type: item.txnType,
+        value: item.volumeUsd,
+        created_at: fromNow(item.blockTimestamp),
+      })
     }
-  })
+    return acc
+  }, [])
 }
