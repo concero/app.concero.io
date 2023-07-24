@@ -1,24 +1,20 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useAccount } from 'wagmi'
+import { getWalletClient } from '@wagmi/core'
+import { sepolia } from 'viem/chains'
+import { ethers } from 'ethers'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
 import { TokenArea } from './TokenArea/TokenArea'
 import { SwapDetails } from './SwapDetails/SwapDetails'
-import { fetchRoutes } from '../../../api/lifi/fetchRoutes'
+import { executeRoute, fetchRoutes } from '../../../api/lifi/fetchRoutes'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
-import { SelectionContext } from '../../../hooks/SelectionContext'
-import { setHistoryCard } from './setHistoryCard'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
-  const { dispatch } = useContext(SelectionContext)
   const [{ from, to, routes, isLoading, typingTimeout, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
-
-  useEffect(() => {
-    setHistoryCard(dispatch, from, to)
-  }, [from, to])
 
   async function getRoutes() {
     if (!from.amount) return clearRoutes()
@@ -38,7 +34,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const handleFetchRoutes = async () => {
     try {
       swapDispatch({ type: 'SET_LOADING', payload: true })
-      const typingTimeoutId = setTimeout(() => getRoutes(), 5000)
+      const typingTimeoutId = setTimeout(() => getRoutes(), 750)
       swapDispatch({ type: 'SET_TYPING_TIMEOUT', payload: typingTimeoutId })
     } catch (e) {
       console.error(e)
@@ -46,10 +42,33 @@ export const SwapCard: FC<SwapCardProps> = () => {
     }
   }
 
+  const switchChainHook = async (requiredChainId: number) => {
+    // this is where MetaMask lives
+    const { ethereum } = window as any
+
+    // check if MetaMask is available
+    if (typeof ethereum === 'undefined') return
+
+    // use the MetaMask RPC API to switch chains automatically
+    await ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: requiredChainId }],
+    })
+
+    // build a new provider for the new chain
+    const newProvider = new ethers.providers.Web3Provider(window.ethereum)
+
+    // return the associated Signer
+    return newProvider.getSigner()
+  }
+
   const handleSwap = async () => {
-    swapDispatch({ type: 'SET_IS_LOADING', payload: true })
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    swapDispatch({ type: 'SET_IS_LOADING', payload: false })
+    let signer = await getWalletClient({ chainId: sepolia.id })
+    signer = { ...signer, getAddress: () => address }
+    console.log('signer', signer)
+    swapDispatch({ type: 'SET_LOADING', payload: true })
+    await executeRoute(signer, originalRoutes[0], { switchChainHook })
+    await swapDispatch({ type: 'SET_LOADING', payload: false })
   }
 
   const clearRoutes = () => {
@@ -101,6 +120,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
           className={classNames.swapButton}
         >
           {!isLoading && (isConnected ? 'Swap' : 'Connect wallet to swap')}
+        </Button>
+
+        <Button onClick={() => handleSwap()} size="lg">
+          Swap
         </Button>
       </div>
     </div>
