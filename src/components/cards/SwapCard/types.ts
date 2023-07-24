@@ -10,6 +10,7 @@ export interface SwapDetailsProps {
   selectedRoute: Route
   setSelectedRoute: (route: Route) => void
   routes: Route[]
+  isLoading: boolean
 }
 
 export interface Selection {

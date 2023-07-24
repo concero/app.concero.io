@@ -4,8 +4,6 @@ import { Table } from '../../layout/Table/Table'
 import { columns } from './columns'
 import { Button } from '../../buttons/Button/Button'
 import { colors } from '../../../constants/colors'
-import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
-import { WithPopover } from '../../wrappers/WithPopover'
 import { fetchTransactionHistory } from '../../../api/dexscreener/fetchTransactionHistory'
 import classNames from './HistoryCard.module.pcss'
 import { SelectionContext } from '../../../hooks/SelectionContext'
@@ -26,7 +24,7 @@ function ToggleHistoyButton(historyType) {
 }
 
 export const HistoryCard: FC<HistoryCardProps> = () => {
-  const [historyType, setHistoryType] = useState<'All' | 'Own'>('All')
+  // const [historyType, setHistoryType] = useState<'All' | 'Own'>('All')
   const [isLoading, setIsLoading] = useState(false)
   const [historyItems, setHistoryItems] = useState([])
   const [tokensPair, setTokensPair] = useState(null)
@@ -52,7 +50,6 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
 
   useEffect(() => {
     if (!tokensPair) return
-
     getTransactionHistory()
       .then(() => {
         setIsLoading(false)
@@ -67,23 +64,21 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
     return () => clearInterval(interval)
   }, [tokensPair])
 
-  const ButtonWithPopover = WithPopover(
-    () => ToggleHistoyButton(historyType),
-    MenuPopover,
-    {
-      items: [
-        { title: 'All', onClick: () => setHistoryType('All') },
-        { title: 'Own', onClick: () => setHistoryType('Own') },
-      ],
-    },
-    'click',
-  )
+  // const ButtonWithPopover = WithPopover(
+  //   () => ToggleHistoyButton(historyType),
+  //   MenuPopover,
+  //   {
+  //     items: [
+  //       { title: 'All', onClick: () => setHistoryType('All') },
+  //       { title: 'Own', onClick: () => setHistoryType('Own') },
+  //     ],
+  //   },
+  //   'click',
+  // )
 
   return (
     <div className="card f1" style={{ overflow: 'hidden' }}>
-      <CardHeader title="History">
-        <ButtonWithPopover />
-      </CardHeader>
+      <CardHeader title="History">{/* <ButtonWithPopover /> */}</CardHeader>
       <div className={classNames.tableContainer}>
         <Table items={historyItems} columns={columns} isLoading={isLoading} />
       </div>

@@ -87,6 +87,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           selectedRoute={selectedRoute}
           setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })}
           routes={routes}
+          isLoading={isLoading}
         />
         <Button
           size="lg"
