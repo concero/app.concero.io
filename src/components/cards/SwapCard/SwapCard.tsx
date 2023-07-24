@@ -1,11 +1,14 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { useAccount } from 'wagmi'
+import { getWalletClient } from '@wagmi/core'
+import { sepolia } from 'viem/chains'
+import { ethers } from 'ethers'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
 import { TokenArea } from './TokenArea/TokenArea'
 import { SwapDetails } from './SwapDetails/SwapDetails'
-import { fetchRoutes } from '../../../api/lifi/fetchRoutes'
+import { executeRoute, fetchRoutes } from '../../../api/lifi/fetchRoutes'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
@@ -52,6 +55,35 @@ export const SwapCard: FC<SwapCardProps> = () => {
     }
   }
 
+  const switchChainHook = async (requiredChainId: number) => {
+    // this is where MetaMask lives
+    const { ethereum } = window as any
+
+    // check if MetaMask is available
+    if (typeof ethereum === 'undefined') return
+
+    // use the MetaMask RPC API to switch chains automatically
+    await ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: requiredChainId }],
+    })
+
+    // build a new provider for the new chain
+    const newProvider = new ethers.providers.Web3Provider(window.ethereum)
+
+    // return the associated Signer
+    return newProvider.getSigner()
+  }
+
+  const handleSwap = async () => {
+    let signer = await getWalletClient({ chainId: sepolia.id })
+    signer = { ...signer, getAddress: () => address }
+    console.log('signer', signer)
+    swapDispatch({ type: 'SET_LOADING', payload: true })
+    await executeRoute(signer, originalRoutes[0], { switchChainHook })
+    await swapDispatch({ type: 'SET_LOADING', payload: false })
+  }
+
   const clearRoutes = () => {
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
     swapDispatch({ type: 'CLEAR_ROUTES' })
@@ -80,12 +112,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
   }, [selectedRoute])
 
-  const handleSwap = async () => {
-    swapDispatch({ type: 'SET_LOADING', payload: true })
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    swapDispatch({ type: 'SET_LOADING', payload: false })
-  }
-
   return (
     <div className={`card ${classNames.container}`}>
       <CardHeader title="Swap" />
@@ -111,6 +137,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
           className={classNames.swapButton}
         >
           {!isLoading && (isConnected ? 'Swap' : 'Connect wallet to swap')}
+        </Button>
+
+        <Button onClick={() => handleSwap()} size="lg">
+          Swap
         </Button>
       </div>
     </div>
