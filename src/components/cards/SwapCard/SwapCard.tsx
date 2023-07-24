@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
@@ -14,16 +14,22 @@ import { setHistoryCard } from './setHistoryCard'
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const { dispatch } = useContext(SelectionContext)
-  const [{ from, to, routes, isLoading, typingTimeout, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
-
-  useEffect(() => {
-    setHistoryCard(dispatch, from, to)
-  }, [from, to])
+  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
+  const [response, setResponse] = useState(null)
+  const [prevFromAmount, setPrevFromAmount] = useState(null)
+  const typingTimeoutRef = useRef(null)
 
   async function getRoutes() {
-    if (!from.amount) return clearRoutes()
-    const response = await fetchRoutes({ from, to })
-    if (!response || response.routes.length === 0) return clearRoutes()
+    if (!from.amount) return
+    swapDispatch({ type: 'SET_LOADING', payload: true })
+    const data = await fetchRoutes({ from, to })
+    setPrevFromAmount(from.amount)
+    if (!data || data.routes.length === 0) return
+    setResponse(data)
+  }
+
+  useEffect(() => {
+    if (!from.amount || prevFromAmount !== from.amount) return
     swapDispatch({ type: 'POPULATE_ROUTES', payload: response })
     swapDispatch({
       type: 'SET_AMOUNT',
@@ -33,30 +39,28 @@ export const SwapCard: FC<SwapCardProps> = () => {
         amount_usd: response.routes[0].to.token.amount_usd,
       },
     })
-  }
+  }, [response])
 
   const handleFetchRoutes = async () => {
     try {
-      swapDispatch({ type: 'SET_LOADING', payload: true })
-      const typingTimeoutId = setTimeout(() => getRoutes(), 5000)
-      swapDispatch({ type: 'SET_TYPING_TIMEOUT', payload: typingTimeoutId })
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
+      const typingTimeoutId = setTimeout(() => getRoutes(), 700)
+      typingTimeoutRef.current = typingTimeoutId
     } catch (e) {
       console.error(e)
       swapDispatch({ type: 'SET_LOADING', payload: false })
     }
   }
 
-  const handleSwap = async () => {
-    swapDispatch({ type: 'SET_IS_LOADING', payload: true })
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    swapDispatch({ type: 'SET_IS_LOADING', payload: false })
+  const clearRoutes = () => {
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
+    swapDispatch({ type: 'CLEAR_ROUTES' })
+    swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
   }
 
-  const clearRoutes = () => {
-    if (typingTimeout) clearTimeout(typingTimeout)
-    swapDispatch({ type: 'CLEAR_ROUTES' })
-    swapDispatch({ type: 'RESET_AMOUNTS' })
-  }
+  useEffect(() => {
+    setHistoryCard(dispatch, from, to)
+  }, [from.token, to.token])
 
   useEffect(() => {
     clearRoutes()
@@ -75,6 +79,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
       },
     })
   }, [selectedRoute])
+
+  const handleSwap = async () => {
+    swapDispatch({ type: 'SET_LOADING', payload: true })
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    swapDispatch({ type: 'SET_LOADING', payload: false })
+  }
 
   return (
     <div className={`card ${classNames.container}`}>
@@ -95,7 +105,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
             name: 'ArrowsUpDown',
             iconProps: { size: 18 },
           }}
-          isDisabled={!isConnected}
+          isDisabled={(isConnected && !routes.length) || !isConnected}
           isLoading={isLoading}
           onClick={() => handleSwap()}
           className={classNames.swapButton}

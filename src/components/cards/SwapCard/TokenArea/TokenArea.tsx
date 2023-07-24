@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
@@ -11,13 +11,14 @@ import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './chainColumns'
 import { TokenColumns } from './tokenColumns'
-import { get } from '../../../../api/clientProxy'
 import { isFloatInput } from '../../../../utils/validation'
+import { fetchCurrentTokenPriceUSD } from '../../../../api/lifi/fetchCurrentTokenPriceUSD'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null)
+  const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
 
   const balance = 0
 
@@ -46,37 +47,31 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     })
   }
 
-  const getCurrentTokenPriceUSD = async (chainId: string, tokenSymbol: string) => {
-    const url = `https://li.quest/v1/token?chain=${chainId}&token=${tokenSymbol}`
-    const response = await get(url)
-    return response.data.priceUSD
+  const getCurrentPriceToken = async () => {
+    const response = await fetchCurrentTokenPriceUSD(selection.chain.id, selection.token.symbol)
+    setCurrentTokenPriceUSD(response)
   }
 
   const handleAmountChange = (input) => {
     if (input === '') return dispatch({ type: 'RESET_AMOUNTS', direction })
     if (!isFloatInput(input)) return
+
     dispatch({
       type: 'SET_AMOUNT',
       direction,
       payload: { amount: input },
     })
 
-    const fetchPriceUSD = () => {
-      let priceUSD = 0
-      clearTimeout(typingTimeout)
-      setTypingTimeout(
-        setTimeout(async () => {
-          if (input) priceUSD = await getCurrentTokenPriceUSD(selection.chain.id, selection.token.symbol)
-          dispatch({
-            type: 'SET_AMOUNT',
-            direction,
-            payload: { amount_usd: (priceUSD * parseFloat(input)).toFixed(2).toString() },
-          })
-        }, 1500),
-      )
-    }
-    fetchPriceUSD()
+    dispatch({
+      type: 'SET_AMOUNT',
+      direction,
+      payload: { amount_usd: (currentTokenPriceUSD * parseFloat(input)).toFixed(2).toString() },
+    })
   }
+
+  useEffect(() => {
+    getCurrentPriceToken()
+  }, [])
 
   return (
     <>

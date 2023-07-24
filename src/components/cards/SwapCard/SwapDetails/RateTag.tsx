@@ -13,7 +13,7 @@ interface RateTagProps {
   isLoading: boolean
 }
 
-export const RateTag: FC<RateTagProps> = ({ from, to, rate, isLoading }) => (
+  export const RateTag: FC<RateTagProps> = ({ from, to, rate, isLoading }) => (
   <div className={classNames.swapTagContainer}>
     {rate.from && rate.to && !isLoading ? (
       <>
