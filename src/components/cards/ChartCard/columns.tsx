@@ -1,5 +1,6 @@
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../constants/colors'
+import { truncate } from '../../../utils/formatting'
 
 export const columns = [
   // {
@@ -23,7 +24,7 @@ export const columns = [
   {
     columnTitle: 'Name',
     cellComponent: (token: { name: string; symbol: string }) => (
-      <p style={{ color: colors.grey.medium }}>{token.name}</p>
+      <p style={{ color: colors.grey.medium }}>{truncate(token.name, 20)}</p>
     ),
   },
 ]
