@@ -30,7 +30,7 @@ export const SwapDetails: FC<SwapDetailsProps> = ({
   return (
     <div className={classNames.swapDetailsContainer}>
       <RateTag from={selection.from.token} to={selection.to.token} rate={rate} isLoading={isLoading} />
-      <RouteButton route={selectedRoute} onClick={() => setIsSelectRouteModalVisible(true)} />
+      <RouteButton selectedRoute={selectedRoute} onClick={() => setIsSelectRouteModalVisible(true)} />
       <Modal title="Select route" show={isSelectRouteModalVisible} setShow={setIsSelectRouteModalVisible}>
         <div className={classNames.roueteCardsContainer}>
           {routes?.map((route) => (

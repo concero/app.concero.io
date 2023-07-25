@@ -1,15 +1,16 @@
-import { FC } from 'react'
-import styles from './ExchangeScreen.module.pcss'
-import { ChartCard } from '../../cards/ChartCard/ChartCard'
-import { NewsCard } from '../../cards/NewsCard/NewsCard'
-import { SwapCard } from '../../cards/SwapCard/SwapCard'
-import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
+import { FC, useMemo } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { MobileExchangeScreen } from './MobileExchangeScreen'
+import { DesktopExchangeScreen } from './DesktopExchangeScreen'
 
 export interface ExchangeScreenProps {}
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
   const isDesktop = useMediaQuery('mobile')
+
+  const exchangeScreenComponent = useMemo(() => {
+    return isDesktop ? <DesktopExchangeScreen /> : <MobileExchangeScreen />
+  }, [isDesktop])
 
   return (
     <div
@@ -18,27 +19,7 @@ export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
         height: '100%',
       }}
     >
-      {isDesktop ? (
-        <div className={`row ${styles.container}`}>
-          <div className={styles.mainCardStack}>
-            <ChartCard />
-            <NewsCard />
-          </div>
-          <div className={styles.secondaryCardStack}>
-            <SwapCard />
-            <HistoryCard />
-          </div>
-        </div>
-      ) : (
-        <div className={styles.container}>
-          <div className={styles.mainCardStack}>
-            <SwapCard />
-            <ChartCard />
-            <NewsCard />
-            <HistoryCard />
-          </div>
-        </div>
-      )}
+      {exchangeScreenComponent}
     </div>
   )
 }

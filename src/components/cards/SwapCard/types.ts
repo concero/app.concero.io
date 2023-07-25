@@ -29,7 +29,7 @@ export interface Chain {
 }
 
 export interface RouteButtonProps {
-  route: Route
+  selectedRoute: Route
   onClick: () => void
 }
 
