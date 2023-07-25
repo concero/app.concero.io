@@ -1,5 +1,5 @@
 // todo: remove when api connected
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { TextInput } from '../../input/TextInput'
 import { Table } from '../../layout/Table/Table'
 import { Modal } from '../Modal/Modal'
@@ -11,6 +11,7 @@ export interface EntityListModalProps {
   show: boolean
   setShow: (show: boolean) => void
   onSelect: (item: any) => void
+  onEndReached?: () => void
 }
 
 export const EntityListModal: FC<EntityListModalProps> = ({
@@ -20,23 +21,35 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   show,
   setShow,
   onSelect,
+  onEndReached = null,
 }) => {
   const [filteredData, setFilteredData] = useState<any[]>(data)
+  const [value, setValue] = useState<string>('')
 
   function filter(name) {
+    setValue(name)
     const newData = data.filter((chain) => chain.name.toLowerCase().includes(name.toLowerCase()))
     setFilteredData(newData)
   }
 
+  const handleSelect = (item) => {
+    onSelect(item)
+    setShow(false)
+  }
+
+  useEffect(() => {
+    setFilteredData(data)
+  }, [data])
+
   return (
     <Modal title={title} show={show} setShow={setShow}>
-      <TextInput
-        iconName="Search"
-        value=""
-        placeholder="Search chain"
-        onChangeText={(val) => filter(val)}
+      <TextInput iconName="Search" value={value} placeholder="Search chain" onChangeText={(val) => filter(val)} />
+      <Table
+        columns={columns}
+        items={filteredData}
+        onClick={(item) => handleSelect(item)}
+        onEndReached={onEndReached}
       />
-      <Table columns={columns} items={filteredData} onClick={(item) => onSelect(item)} />
     </Modal>
   )
 }

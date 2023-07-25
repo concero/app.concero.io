@@ -19,6 +19,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
+  const [mapedTokens, setMapedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
 
   const balance = 0
 
@@ -73,6 +74,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     getCurrentPriceToken()
   }, [])
 
+  const handleMapedTokens = () => {
+    setMapedTokens([...mapedTokens, ...tokens[selection.chain.id].slice(mapedTokens.length, mapedTokens.length + 50)])
+  }
+
   return (
     <>
       <div className={classNames.tokenContainer}>
@@ -91,7 +96,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
                 },
               }}
             >
-              <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.symbol} />
+              <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
             </Button>
           </div>
           <p>{`Max: ${balance}`}</p>
@@ -133,11 +138,12 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
       />
       <EntityListModal
         title="Select token"
-        data={tokens[selection.chain.id]}
+        data={mapedTokens}
         columns={TokenColumns}
         show={showTokensModal}
         setShow={setShowTokensModal}
         onSelect={(token) => setToken(token)}
+        onEndReached={() => handleMapedTokens()}
       />
     </>
   )

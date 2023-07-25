@@ -29,9 +29,12 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
   const { selection } = useContext(SelectionContext)
 
   useEffect(() => {
-    const interval: NodeJS.Timeout | null = handleFetchTransactionHistory(setIsLoading, setHistoryItems, selection)
-    return () => clearInterval(interval)
-  }, [selection.swapCard])
+    const interval = handleFetchTransactionHistory(setIsLoading, setHistoryItems, selection)
+
+    return async () => {
+      clearInterval(await interval)
+    }
+  }, [selection.historyCard])
 
   // const ButtonWithPopover = WithPopover(
   //   () => ToggleHistoyButton(historyType),
