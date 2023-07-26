@@ -9,8 +9,10 @@ interface GetRoutes {
   routes: Route[]
 }
 
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
-  tokens[chainId].find((token) => token.address === tokenAddress).decimals
+const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => {
+  console.log('getTokenDecimalsByAddress', chainId, tokenAddress)
+  return tokens[chainId].find((token) => token.address === tokenAddress).decimals
+}
 
 const lifi = new LiFi({ integrator: 'concero' })
 

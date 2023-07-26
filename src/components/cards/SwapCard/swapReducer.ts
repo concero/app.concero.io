@@ -38,6 +38,7 @@ export function swapReducer(state: State, action: Action) {
         },
       }
     case 'SET_TOKEN':
+      console.log('SET_TOKEN', action.direction, action.payload)
       return {
         ...state,
         [action.direction]: { ...state[action.direction], token: action.payload },

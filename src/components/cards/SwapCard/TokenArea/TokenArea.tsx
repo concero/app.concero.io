@@ -43,6 +43,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
         name: token.name,
         symbol: token.symbol,
         logoURI: token.logoURI,
+        address: token.address,
       },
     })
   }
@@ -73,7 +74,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     getCurrentPriceToken()
   }, [selection.chain, selection.token])
 
-  const handleMapedTokens = () => {
+  const handleMappedTokens = () => {
     setMappedTokens([
       ...mappedTokens,
       ...tokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
@@ -146,7 +147,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
         show={showTokensModal}
         setShow={setShowTokensModal}
         onSelect={(token) => setToken(token)}
-        onEndReached={() => handleMapedTokens()}
+        onEndReached={() => handleMappedTokens()}
       />
     </>
   )
