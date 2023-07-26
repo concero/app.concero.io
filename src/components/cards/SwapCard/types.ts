@@ -134,6 +134,12 @@ export type SetFromAmountUSDAction = {
   payload: number
 }
 
+export type SetAddressAction = {
+  type: 'SET_ADDRESS'
+  direction: Direction
+  payload: string
+}
+
 export type Action =
   | SetChainAction
   | SetTokenAction
@@ -149,3 +155,4 @@ export type Action =
   | SetTypingTimeoutAction
   | SetAmountAction
   | ResetAmountsAction
+  | SetAddressAction

@@ -102,6 +102,19 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
   }, [selectedRoute])
 
+  useEffect(() => {
+    swapDispatch({
+      type: 'SET_ADDRESS',
+      direction: 'from',
+      payload: address,
+    })
+    swapDispatch({
+      type: 'SET_ADDRESS',
+      direction: 'to',
+      payload: address,
+    })
+  }, [address])
+
   return (
     <div className={`card ${classNames.container}`}>
       <CardHeader title="Swap" />

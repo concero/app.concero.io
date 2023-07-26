@@ -62,6 +62,14 @@ export function swapReducer(state: State, action: Action) {
           amount_usd: 0.0,
         },
       }
+    case 'SET_ADDRESS':
+      return {
+        ...state,
+        [action.direction]: {
+          ...state[action.direction],
+          address: action.payload,
+        },
+      }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

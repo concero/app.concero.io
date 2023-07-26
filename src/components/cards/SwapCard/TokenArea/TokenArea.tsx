@@ -71,7 +71,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
 
   useEffect(() => {
     getCurrentPriceToken()
-  }, [])
+  }, [selection.chain, selection.token])
 
   const handleMapedTokens = () => {
     setMappedTokens([
