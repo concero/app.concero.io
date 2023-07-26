@@ -1,5 +1,4 @@
 import { ExecutionSettings, LiFi } from '@lifi/sdk'
-
 import { Signer } from 'ethers'
 import { FetchRoutesParams, Route } from './types'
 import { standardiseRoute } from './standardiseRoute'
@@ -10,7 +9,9 @@ interface GetRoutes {
   routes: Route[]
 }
 
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => tokens[chainId].find((token) => token.address === tokenAddress).decimals
+const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
+  tokens[chainId].find((token) => token.address === tokenAddress).decimals
+
 const lifi = new LiFi({ integrator: 'concero' })
 
 export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes | null> => {
@@ -25,9 +26,11 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
   }
 
   console.log('fetchRoutes routesRequest', routesRequest)
+
   const response = await lifi.getRoutes(routesRequest)
-  if (!response.routes) return null
+
   console.log('fetchRoutes response', response)
+  if (!response.routes) return null
   const result = {
     routes: [...response.routes.map((route) => standardiseRoute(route))],
     originalRoutes: response.routes,

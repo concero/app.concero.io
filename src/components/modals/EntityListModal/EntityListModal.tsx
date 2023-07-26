@@ -7,6 +7,7 @@ import { Modal } from '../Modal/Modal'
 export interface EntityListModalProps {
   title: string
   data: any[]
+  visibleData?: any[]
   columns: any[]
   show: boolean
   setShow: (show: boolean) => void
@@ -17,17 +18,21 @@ export interface EntityListModalProps {
 export const EntityListModal: FC<EntityListModalProps> = ({
   title,
   data,
+  visibleData = null,
   columns,
   show,
   setShow,
   onSelect,
   onEndReached = null,
 }) => {
-  const [filteredData, setFilteredData] = useState<any[]>(data)
+  const [filteredData, setFilteredData] = useState<any[]>(visibleData ? visibleData : data)
   const [value, setValue] = useState<string>('')
 
   function filter(name) {
     setValue(name)
+
+    if (!name) return setFilteredData(visibleData || data)
+
     const newData = data.filter((chain) => chain.name.toLowerCase().includes(name.toLowerCase()))
     setFilteredData(newData)
   }
@@ -38,8 +43,8 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   }
 
   useEffect(() => {
-    setFilteredData(data)
-  }, [data])
+    setFilteredData(visibleData || data)
+  }, [visibleData || data])
 
   return (
     <Modal title={title} show={show} setShow={setShow}>

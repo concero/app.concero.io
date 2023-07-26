@@ -17,9 +17,8 @@ import { fetchCurrentTokenPriceUSD } from '../../../../api/lifi/fetchCurrentToke
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
-  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
-  const [mapedTokens, setMapedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
+  const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
 
   const balance = 0
 
@@ -75,7 +74,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
   }, [])
 
   const handleMapedTokens = () => {
-    setMapedTokens([...mapedTokens, ...tokens[selection.chain.id].slice(mapedTokens.length, mapedTokens.length + 50)])
+    setMappedTokens([
+      ...mappedTokens,
+      ...tokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
+    ])
   }
 
   return (
@@ -138,7 +140,8 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
       />
       <EntityListModal
         title="Select token"
-        data={mapedTokens}
+        visibleData={mappedTokens}
+        data={tokens[selection.chain.id]}
         columns={TokenColumns}
         show={showTokensModal}
         setShow={setShowTokensModal}

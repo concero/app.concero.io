@@ -1,8 +1,7 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useBalance, useSwitchNetwork } from 'wagmi'
 import { getWalletClient } from '@wagmi/core'
 import { sepolia } from 'viem/chains'
-import { ethers } from 'ethers'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
@@ -13,6 +12,7 @@ import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { setHistoryCard } from './setHistoryCard'
+import { getEthersSigner } from '../../../web3/ethers'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
@@ -20,7 +20,9 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [{ from, to, routes, isLoading, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
   const [response, setResponse] = useState(null)
   const [prevFromAmount, setPrevFromAmount] = useState(null)
+  const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
+  const { data } = useBalance({ address })
 
   async function getRoutes() {
     if (!from.amount) return
@@ -55,24 +57,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
     }
   }
 
-  const switchChainHook = async (requiredChainId: number) => {
-    // this is where MetaMask lives
-    const { ethereum } = window as any
-
-    // check if MetaMask is available
-    if (typeof ethereum === 'undefined') return
-
-    // use the MetaMask RPC API to switch chains automatically
-    await ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: requiredChainId }],
-    })
-
-    // build a new provider for the new chain
-    const newProvider = new ethers.providers.Web3Provider(window.ethereum)
-
-    // return the associated Signer
-    return newProvider.getSigner()
+  const switchChainHook = (requiredChainId: number) => {
+    if (switchNetwork) switchNetwork(requiredChainId)
+    return getEthersSigner(requiredChainId)
+    // switch chain with hook DONE
+    // get new signer
+    // return new signer
   }
 
   const handleSwap = async () => {
