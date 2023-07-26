@@ -2,6 +2,7 @@ import classNames from './RouteCard.module.pcss'
 import Icon from '../../Icon'
 import { colors } from '../../../constants/colors'
 import { Step } from '../../../api/lifi/types'
+import { secondsConverter } from '../../../utils/formatting'
 
 function AdditionalInfoTag({
   title,
@@ -21,9 +22,9 @@ function AdditionalInfoTag({
         size="1rem"
         color={isBestRoute ? colors.primary.light : colors.grey.medium}
       />
-      <h5 className={`${classNames.textSubtitle} ${getColor('text')}`}>
-        {`${type === 'gas' ? '$' : ''}${title}${type === 'time' ? 's' : ''}`}
-      </h5>
+      <h5 className={`${classNames.textSubtitle} ${getColor('text')}`}>{`${type === 'gas' ? '$' : ''}${
+        type === 'gas' ? title : secondsConverter(title)
+      }`}</h5>
     </div>
   )
 }

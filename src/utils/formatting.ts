@@ -66,3 +66,8 @@ export const addingDecimals = (number: number, decimals: number) => {
 
   return number + '0'.repeat(decimals)
 }
+
+export const secondsConverter = (seconds: number): string => {
+  if (seconds > 60) return `${Math.floor(seconds / 60)}m ${seconds % 60 ? (seconds % 60).toString() + 's' : ''}`
+  return `${seconds}s`
+}

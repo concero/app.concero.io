@@ -5,6 +5,7 @@ import classNames from '../SwapCard.module.pcss'
 import Icon from '../../../Icon'
 import { Avatar } from '../../../tags/Avatar/Avatar'
 import { AvatarsProps, RouteButtonProps } from '../types'
+import { secondsConverter } from '../../../../utils/formatting'
 
 const Avatars: FC<AvatarsProps> = ({ entities }) => (
   <div className={classNames.avatarContainer}>
@@ -37,7 +38,9 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       </div>
       <div className={classNames.routeInfoContainer}>
         <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
-        <p>{`${selectedRoute?.transaction_time_seconds ? selectedRoute.transaction_time_seconds : ''}s`}</p>
+        <p>{`${
+          selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''
+        }`}</p>
       </div>
     </Button>
   </div>
