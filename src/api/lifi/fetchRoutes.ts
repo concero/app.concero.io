@@ -10,7 +10,7 @@ interface GetRoutes {
 }
 
 const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => {
-  console.log('getTokenDecimalsByAddress', chainId, tokenAddress)
+  console.log(tokenAddress)
   return tokens[chainId].find((token) => token.address === tokenAddress).decimals
 }
 
