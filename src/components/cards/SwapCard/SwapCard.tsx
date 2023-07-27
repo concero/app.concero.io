@@ -82,7 +82,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 
   useEffect(() => {
     setHistoryCard(dispatch, from, to)
-  }, [from.token, to.token])
+  }, [from.token.symbol, to.token.symbol])
 
   useEffect(() => {
     clearRoutes()

@@ -1,3 +1,27 @@
 .tableContainer{
     max-height: 430px;
 }
+
+.modalPopoverContainer{
+    width: 300px;
+    background-color: var(--color-grey-darker);
+    border-radius: var(--st-br-md);
+    padding: var(--sp-md) var(--sp-md);
+    z-index: 1;
+    .line{
+        flex-direction: row;
+        justify-content: space-between;
+        .id{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+    .infoContainer{
+        flex-direction: row;
+        padding: 10px;
+        gap: var(--sp-sm);
+        margin-top: var(--sp-md);
+        border-radius: var(--st-br-md);
+        background-color: #2D2D2D;
+    }
+}

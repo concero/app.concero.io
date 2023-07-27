@@ -56,7 +56,7 @@ export const WithPopover: FC<WithPopoverProps> = (
             style={{
               position: 'absolute',
               bottom: -105,
-              left: 0,
+              right: 0,
             }}
           >
             <PopoverComponent {...popoverProps} />

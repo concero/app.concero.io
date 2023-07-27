@@ -71,3 +71,7 @@ export const secondsConverter = (seconds: number): string => {
   if (seconds > 60) return `${Math.floor(seconds / 60)}m ${seconds % 60 ? (seconds % 60).toString() + 's' : ''}`
   return `${seconds}s`
 }
+
+export const numberToFormatString = (number: number, decimals = 4): string => {
+  return parseFloat(number.toFixed(decimals)).toString()
+}

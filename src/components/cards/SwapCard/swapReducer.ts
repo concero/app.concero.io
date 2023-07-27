@@ -80,10 +80,10 @@ export const useSwapReducer = (selectionDispatch) => {
     from: {
       chain: { name: chains[0].name, symbol: chains[0].symbol, id: chains[0].id, logoURI: chains[0].logoURI },
       token: {
-        name: chains[0].nativeToken.name,
-        symbol: chains[0].nativeToken.symbol,
-        address: chains[0].nativeToken.address,
-        logoURI: chains[0].nativeToken.logoURI,
+        name: tokens[chains[0].id][0].name,
+        symbol: tokens[chains[0].id][0].symbol,
+        address: tokens[chains[0].id][0].address,
+        logoURI: tokens[chains[0].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,
@@ -92,10 +92,10 @@ export const useSwapReducer = (selectionDispatch) => {
     to: {
       chain: { name: chains[1].name, symbol: chains[1].symbol, id: chains[1].id, logoURI: chains[1].logoURI },
       token: {
-        name: chains[1].nativeToken.name,
-        symbol: chains[1].nativeToken.symbol,
-        address: chains[1].nativeToken.address,
-        logoURI: chains[1].nativeToken.logoURI,
+        name: tokens[chains[1].id][0].name,
+        symbol: tokens[chains[1].id][0].symbol,
+        address: tokens[chains[1].id][0].address,
+        logoURI: tokens[chains[1].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,
