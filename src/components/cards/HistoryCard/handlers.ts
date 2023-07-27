@@ -14,7 +14,7 @@ const getTokensPair = async (selection) => {
 const getTransactionHistory = async (tokensPair: string, setHistoryItems: () => void) => {
   const response = await fetchTransactionHistory(tokensPair)
 
-  if (!response.length) return
+  if (!response.length) throw new Error('No transactions found')
 
   setHistoryItems(response)
 }
@@ -25,10 +25,11 @@ export const handleFetchTransactionHistory = async (setIsLoading, setHistoryItem
 
   try {
     await getTransactionHistory(tokensPair, setHistoryItems)
-    setIsLoading(false)
   } catch (e) {
-    setIsLoading(false)
     console.error(e)
   }
+
+  setIsLoading(false)
+
   return setInterval(() => getTransactionHistory(tokensPair, setHistoryItems), 10000)
 }

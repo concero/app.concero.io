@@ -7,15 +7,6 @@ export const columns = [
     cellComponent: (item) => <TxFromTo item={item} />,
   },
   {
-    columnTitle: 'Value',
-    cellComponent: (item) => (
-      <p style={{ color: colors.grey.light }}>
-        $
-        {item.value}
-      </p>
-),
-  },
-  {
     columnTitle: 'When',
     cellComponent: (item) => (
       <p

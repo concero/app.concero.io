@@ -11,10 +11,15 @@ export const fetchTransactionHistory = async (tokensPair: string) => {
 
   return response.data.data.swaps.reduce((acc, item) => {
     acc.push({
-      from: tokensPair.baseToken.symbol,
-      to: tokensPair.quoteToken.symbol,
+      to: {
+        symbol: tokensPair.quoteToken.symbol,
+        amount: parseFloat(item.amountToken.toFixed(4)).toString(),
+      },
+      from: {
+        symbol: tokensPair.baseToken.symbol,
+        amount: parseFloat(item.amountETH.toFixed(4)).toString(),
+      },
       type: item.type,
-      value: item.price.toFixed(4).toString(),
       created_at: fromNow(item.timestamp * 1000),
     })
 

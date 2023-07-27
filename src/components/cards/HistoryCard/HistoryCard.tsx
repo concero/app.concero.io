@@ -50,7 +50,7 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
 
   return (
     <div className="card f1" style={{ overflow: 'hidden' }}>
-      <CardHeader title="History">{/* <ButtonWithPopover /> */}</CardHeader>
+      <CardHeader title="Transactions">{/* <ButtonWithPopover /> */}</CardHeader>
       <div className={classNames.tableContainer}>
         <Table items={historyItems} columns={columns} isLoading={isLoading} />
       </div>

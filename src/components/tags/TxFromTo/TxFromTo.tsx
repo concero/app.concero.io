@@ -5,14 +5,22 @@ import { colors } from '../../../constants/colors'
 
 // todo: add chain icons component
 export interface TxFromToProps {
-  from: string
-  to: string
-  showIcons?: boolean
-  color?: string
+  item: {
+    from: {
+      amount: string
+      symbol: string
+    }
+    to: {
+      amount: string
+      symbol: string
+    }
+    type: string
+  }
 }
 
 export const TxFromTo: FC<TxFromToProps> = ({ item }) => {
-  const { from, to, showIcons, type } = item
+  const { from, to, type } = item
+
   const color = getColor(type)
 
   const styles = {
@@ -23,9 +31,11 @@ export const TxFromTo: FC<TxFromToProps> = ({ item }) => {
 
   return (
     <div className={className.container}>
-      <p style={styles.text}>{from}</p>
+      <p style={styles.text}>{from.amount}</p>
+      <p style={styles.text}>{from.symbol}</p>
       <Icon name="ArrowRight" color={color} size={18} />
-      <p style={styles.text}>{to}</p>
+      <p style={styles.text}>{to.amount}</p>
+      <p style={styles.text}>{to.symbol}</p>
     </div>
   )
 }
