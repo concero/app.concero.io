@@ -771,17 +771,6 @@ export const tokens = {
       logoURI: '',
     },
     {
-      address: '0x5dbcf33d8c2e976c6b560249878e6f1491bca25c',
-      chainId: 1,
-      symbol: 'yyDAI+yUSDC+yUSDT+yTUSD',
-      decimals: 18,
-      name: 'yearn Curve.fi yDAI/yUSDC/yUSDT/yTUSD',
-      priceUSD: '0.01389899785400719',
-      logoURI:
-        'https://static.debank.com/image/eth_token/logo_url/0x5dbcf33d8c2e976c6b560249878e6f1491bca25c/1ef3523ec90b78c1071ebb0967761d85.png',
-      coinKey: 'yyDAI+yUSDC+yUSDT+yTUSD',
-    },
-    {
       address: '0xbc19712feb3a26080ebf6f2f7849b417fdd792ca',
       chainId: 1,
       symbol: 'BORING',

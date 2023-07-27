@@ -60,21 +60,17 @@ export const columns = [
           </p>
         </a>
       </div>
-      ),
+    ),
   },
 ]
 
 export const modalColumns = [
   {
     columnTitle: 'Symbol',
-    cellComponent: (item) => <CryptoSymbol src={item.logoURI} symbol={item.symbol} />,
+    cellComponent: (item) => <CryptoSymbol src={item.logoURI} symbol={truncate(item.symbol, 7)} />,
   },
   {
     columnTitle: 'Name',
-    cellComponent: (item) => <p className="body1">{item.name}</p>,
-  },
-  {
-    columnTitle: 'Balance',
-    cellComponent: (item) => <p className="body1">{item.balance}</p>,
+    cellComponent: (item) => <p className="body1">{truncate(item.name, 20)}</p>,
   },
 ]

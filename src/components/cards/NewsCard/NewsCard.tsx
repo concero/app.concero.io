@@ -6,9 +6,9 @@ import { Button } from '../../buttons/Button/Button'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getPosts } from '../../../api/cryptopanic/getPosts'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
-import { chains } from '../../../constants/chains'
 import { columns, modalColumns } from './columns'
 import { colors } from '../../../constants/colors'
+import { tokens } from '../../../constants/tokens'
 
 interface NewsCardProps {}
 
@@ -17,28 +17,29 @@ export const NewsCard: FC<NewsCardProps> = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedChain, setSelectedChain] = useState(chains[0])
+  const [selectedToken, setSelectedToken] = useState(tokens['1'][0])
+  const [mappedTokens, setMappedTokens] = useState(tokens['1'].slice(0, 50))
 
   const fetchNews = async (page) => {
     setIsLoading(true)
-    const response = await getPosts({ currencies: [selectedChain.symbol], page })
+    const response = await getPosts({ currencies: [selectedToken.symbol], page })
     setData(response.results)
     setIsLoading(false)
   }
 
   const fetchMoreNews = async (page) => {
     setIsLoading(true)
-    const response = await getPosts({ currencies: [selectedChain.symbol], page })
+    const response = await getPosts({ currencies: [selectedToken.symbol], page })
     setData([...data, ...response.results])
     setIsLoading(false)
   }
 
   useEffect(() => {
     fetchNews(page)
-  }, [selectedChain])
+  }, [selectedToken])
 
-  const handleSelectChain = (chain) => {
-    setSelectedChain(chain)
+  const handleSelectToken = (token) => {
+    setSelectedToken(token)
     setIsModalVisible(false)
   }
 
@@ -55,7 +56,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
             size="sm"
             onClick={() => setIsModalVisible(true)}
           >
-            <CryptoSymbol src={selectedChain.logoURI} symbol={selectedChain.symbol} />
+            <CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
           </Button>
         </CardHeader>
         <Table
@@ -70,9 +71,13 @@ export const NewsCard: FC<NewsCardProps> = () => {
         title="Select chain"
         show={isModalVisible}
         setShow={setIsModalVisible}
-        data={chains}
+        data={tokens['1']}
+        visibleData={mappedTokens}
         columns={modalColumns}
-        onSelect={(chain) => handleSelectChain(chain)}
+        onSelect={(token) => handleSelectToken(token)}
+        onEndReached={() =>
+          setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
+        }
       />
     </div>
   )

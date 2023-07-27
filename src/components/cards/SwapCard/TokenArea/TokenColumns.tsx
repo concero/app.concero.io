@@ -6,7 +6,7 @@ export const TokenColumns = [
   {
     columnTitle: 'Symbol',
     cellComponent: (token: { name: string; symbol: string; logoURI: string }) => (
-      <CryptoSymbol src={token.logoURI} symbol={token.symbol} />
+      <CryptoSymbol src={token.logoURI} symbol={truncate(token.symbol, 7)} />
     ),
   },
   {

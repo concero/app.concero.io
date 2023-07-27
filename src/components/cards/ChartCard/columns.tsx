@@ -3,22 +3,10 @@ import { colors } from '../../../constants/colors'
 import { truncate } from '../../../utils/formatting'
 
 export const columns = [
-  // {
-  //   columnTitle: 'Symbol',
-  //   cellComponent: (item) => <CryptoSymbol src={item.logoURI} symbol={item.symbol} />,
-  // },
-  // {
-  //   columnTitle: 'Name',
-  //   cellComponent: (item) => <p className="body1">{item.name}</p>,
-  // },
-  // {
-  //   columnTitle: 'Balance',
-  //   cellComponent: (item) => <p className="body1">{item.balance}</p>,
-  // },
   {
     columnTitle: 'Symbol',
     cellComponent: (token: { name: string; symbol: string; logoURI: string }) => (
-      <CryptoSymbol src={token.logoURI} symbol={token.symbol} />
+      <CryptoSymbol src={token.logoURI} symbol={truncate(token.symbol, 7)} />
     ),
   },
   {

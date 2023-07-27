@@ -18,9 +18,6 @@ export interface ChartCardProps {}
 
 export const ChartCard: FC<ChartCardProps> = () => {
   const [chartType, setChartType] = useState<'chart' | 'tradingView'>('chart')
-  const toggleChartType = (): void => {
-    setChartType(chartType === 'chart' ? 'tradingView' : 'chart')
-  }
   const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
   const [selectedLeftToken, setSelectedLeftToken] = useState<{ name: string; symbol: string; logoURI: string }>(
@@ -28,6 +25,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
   )
   const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(chains[1])
   const [selectedInterval, setSelectedInterval] = useState<{ title: string; id: string } | undefined>(intervals[0])
+  const [mappedTokens, setMappedTokens] = useState<{ name: string; symbol: string; logoURI: string }[]>(
+    tokens[1].slice(0, 50),
+  )
 
   const handleSelectLeftToken = (chain: { name: string; symbol: string }): void => {
     setSelectedLeftToken(chain)
@@ -37,6 +37,14 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const handleSelectRightChain = (chain: { name: string; symbol: string }): void => {
     setSelectedRightChain(chain)
     setIsSelectRightChainModalVisible(false)
+  }
+
+  const toggleChartType = (): void => {
+    setChartType(chartType === 'chart' ? 'tradingView' : 'chart')
+  }
+
+  const handleEndReached = () => {
+    setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
   }
 
   const isDesktop = useMediaQuery('mobile')
@@ -98,12 +106,14 @@ export const ChartCard: FC<ChartCardProps> = () => {
         )}
       </div>
       <EntityListModal
-        title="Select chain"
+        title="Select token"
         show={isSelectLeftTokenModalVisible}
         setShow={setIsSelectLeftTokenModalVisible}
         data={tokens[1]}
+        visibleData={mappedTokens}
+        onEndReached={() => handleEndReached()}
         columns={columns}
-        onSelect={(chain) => handleSelectLeftToken(chain)}
+        onSelect={(token) => handleSelectLeftToken(token)}
       />
       {/* <EntityListModal */}
       {/*   title="Select chain" */}

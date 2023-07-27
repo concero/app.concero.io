@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react'
 import { TextInput } from '../../input/TextInput'
 import { Table } from '../../layout/Table/Table'
 import { Modal } from '../Modal/Modal'
+import classNames from './EntityListModal.module.pcss'
 
 export interface EntityListModalProps {
   title: string
@@ -43,18 +44,20 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   }
 
   useEffect(() => {
-    setFilteredData(visibleData || data)
+    setFilteredData(visibleData ? visibleData : data)
   }, [visibleData || data])
 
   return (
     <Modal title={title} show={show} setShow={setShow}>
-      <TextInput iconName="Search" value={value} placeholder="Search chain" onChangeText={(val) => filter(val)} />
-      <Table
-        columns={columns}
-        items={filteredData}
-        onClick={(item) => handleSelect(item)}
-        onEndReached={onEndReached}
-      />
+      <div className={classNames.container}>
+        <TextInput iconName="Search" value={value} placeholder="Search chain" onChangeText={(val) => filter(val)} />
+        <Table
+          columns={columns}
+          items={filteredData}
+          onClick={(item) => handleSelect(item)}
+          onEndReached={onEndReached && onEndReached}
+        />
+      </div>
     </Modal>
   )
 }
