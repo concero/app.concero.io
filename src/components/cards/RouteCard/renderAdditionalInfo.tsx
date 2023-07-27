@@ -36,7 +36,7 @@ export const renderAdditionalInfo = (
   getColor: () => string | undefined,
 ) => (
   <div>
-    {!isRoutesCollapsed ? (
+    {!isRoutesCollapsed &&  ? (
       <div
         style={{
           flexDirection: 'row',

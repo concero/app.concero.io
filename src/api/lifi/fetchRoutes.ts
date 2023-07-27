@@ -10,7 +10,6 @@ interface GetRoutes {
 }
 
 const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => {
-  console.log(tokenAddress)
   return tokens[chainId].find((token) => token.address === tokenAddress).decimals
 }
 
@@ -40,7 +39,6 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
   return result
 }
 
-export const executeRoute = async (signer: Signer, route: Route, settings?: ExecutionSettings): Promise<string> => {
-  const response = await lifi.executeRoute(signer, route, settings)
-  return response
+export const executeRoute = async (signer: Signer, route: Route, settings?: ExecutionSettings): Promise<Route> => {
+  return await lifi.executeRoute(signer, route, settings)
 }

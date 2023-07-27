@@ -10,7 +10,7 @@ export const renderStepsCountTag = (
   getColor: () => string | undefined,
 ) => (
   <>
-    {isRoutesCollapsed ? (
+    {isRoutesCollapsed && length > 1 ? (
       <div
         className={`${classNames.tagStyle} ${classNames.showAllTag} ${getColor('tag')}`}
         onClick={() => setIsRoutesCollapsed(false)}
