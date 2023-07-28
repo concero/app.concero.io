@@ -3,7 +3,7 @@ import { getTokenBalance } from '@lifi/sdk/dist/balance'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
-import { capitalize } from '../../../../utils/formatting'
+import { capitalize, numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
@@ -78,7 +78,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   const fetchBalance = async () => {
     const response = await getTokenBalance(address, getTokenBySymbol(selection.chain.id, selection.token.symbol))
     if (!response) return
-    const result = `${response?.amount / 10 ** response?.decimals} ${response?.symbol}`
+    const result = `${numberToFormatString(response?.amount / 10 ** response?.decimals, 2)} ${response?.symbol}`
     setBalance(result)
   }
 
