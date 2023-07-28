@@ -5,6 +5,7 @@ export default identifiersMap
 
 export type CssIdentifiersMap = {
   "additionalInfoTag": string|undefined
+  "advantageTagColor": string|undefined
   "avatarContainer": string|undefined
   "bestButton": string|undefined
   "bestCard": string|undefined

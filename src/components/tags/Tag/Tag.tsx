@@ -13,13 +13,15 @@ export interface TagProps {
   leftIcon?: IconComponentProps
   rightIcon?: IconComponentProps
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-  color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker'
+  color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker' | 'recommended' | 'cheapest' | 'fastest'
   isLoading?: boolean
   children?: string | JSX.Element[] | JSX.Element
   size?: 'sn' | 'md' | 'lg'
 }
 
-export const getColors = (color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker') => {
+export const getColors = (
+  color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker' | 'recommended' | 'cheapest' | 'fastest',
+) => {
   switch (color) {
     case 'red':
       return className.red
@@ -31,6 +33,12 @@ export const getColors = (color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker
       return className.main
     case 'mainDarker':
       return className.mainDarker
+    case 'recommended':
+      return className.recommended
+    case 'cheapest':
+      return className.cheapest
+    case 'fastest':
+      return className.fastest
     default:
       return className.grey
   }

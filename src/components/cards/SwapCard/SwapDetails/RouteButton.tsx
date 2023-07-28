@@ -34,11 +34,11 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       <Avatars entities={selectedRoute?.steps} />
       <div className={classNames.routeInfoContainer}>
         <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
-        <p>{`$${selectedRoute?.cost.total_gas_usd ? selectedRoute.cost.total_gas_usd : ''}`}</p>
+        <p className={'body1'}>{`$${selectedRoute?.cost.total_gas_usd ? selectedRoute.cost.total_gas_usd : ''}`}</p>
       </div>
       <div className={classNames.routeInfoContainer}>
         <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
-        <p>{`${
+        <p className={'body1'}>{`${
           selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''
         }`}</p>
       </div>

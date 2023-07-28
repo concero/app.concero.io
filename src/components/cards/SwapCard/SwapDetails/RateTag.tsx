@@ -13,17 +13,17 @@ interface RateTagProps {
   isLoading: boolean
 }
 
-  export const RateTag: FC<RateTagProps> = ({ from, to, rate, isLoading }) => (
+export const RateTag: FC<RateTagProps> = ({ from, to, rate, isLoading }) => (
   <div className={classNames.swapTagContainer}>
     {rate.from && rate.to && !isLoading ? (
       <>
         <div className={classNames.swapPriceTag}>
-          <p>{rate.from}</p>
+          <p className={'body1'}>{rate.from}</p>
           <CryptoIcon src={from.logoURI} />
         </div>
-        <p className={classNames.equalSign}>=</p>
+        <p className={`body1 ${classNames.equalSign}`}>=</p>
         <div className={classNames.swapPriceTag}>
-          <p>{rate.to}</p>
+          <p className={'body1'}>{rate.to}</p>
           <CryptoIcon src={to.logoURI} />
         </div>
       </>

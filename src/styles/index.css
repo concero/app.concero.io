@@ -14,6 +14,10 @@
     --sp-screen-v: 20px;
     --sp-screen-h: 20px;
 
+    --color-tag-recommended: #7335F7;
+    --color-tag-fastest: #093D6D;
+    --color-tag-cheapest: #6D0A46;
+
     color-scheme: light dark;
     font-family: Poppins, sans-serif;
     font-size: 16px; /* base font size, 1rem */
