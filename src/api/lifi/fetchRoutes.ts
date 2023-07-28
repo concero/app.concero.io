@@ -1,5 +1,6 @@
 import { ExecutionSettings, LiFi } from '@lifi/sdk'
-import { Signer } from 'ethers'
+import { WalletClient } from 'wagmi'
+import { Account, Transport } from 'viem'
 import { FetchRoutesParams, Route } from './types'
 import { standardiseRoute } from './standardiseRoute'
 import { tokens } from '../../constants/tokens'
@@ -9,11 +10,10 @@ interface GetRoutes {
   routes: Route[]
 }
 
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => {
-  return tokens[chainId].find((token) => token.address === tokenAddress).decimals
-}
+const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => tokens[chainId].find((token) => token.address === tokenAddress).decimals
 
-const lifi = new LiFi({ integrator: 'concero' })
+const lifiConfig = { integrator: 'concero' }
+const lifi = new LiFi(lifiConfig)
 
 export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes | null> => {
   const routesRequest = {
@@ -27,9 +27,7 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
   }
 
   console.log('fetchRoutes routesRequest', routesRequest)
-
   const response = await lifi.getRoutes(routesRequest)
-
   console.log('fetchRoutes response', response)
   if (!response.routes) return null
   const result = {
@@ -39,6 +37,8 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
   return result
 }
 
-export const executeRoute = async (signer: Signer, route: Route, settings?: ExecutionSettings): Promise<Route> => {
-  return await lifi.executeRoute(signer, route, settings)
-}
+export const executeRoute = async (
+  signer: WalletClient<Transport, Chain, Account> | null,
+  route: Route,
+  settings?: ExecutionSettings,
+): Promise<Route> => lifi.executeRoute(signer, route, settings)

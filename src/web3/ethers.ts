@@ -1,7 +1,20 @@
 import { type WalletClient } from 'wagmi'
 import { providers } from 'ethers'
 import { getPublicClient, getWalletClient, type PublicClient, type WalletClient } from '@wagmi/core'
-import { type HttpTransport } from 'viem'
+import { createWalletClient, custom, type HttpTransport } from 'viem'
+
+// viem to ethers
+
+const client0 = createWalletClient({
+  transport: custom(window.ethereum),
+})
+
+// provide client0.chain.id or 'any' to accept flawless chain switch
+const provider = new providers.Web3Provider(client0.transport, 'any')
+export const viemSigner = provider.getSigner()
+console.log(viemSigner)
+
+///
 
 export function publicClientToProvider(publicClient: PublicClient) {
   const { chain, transport } = publicClient
@@ -27,7 +40,6 @@ export function getEthersProvider({ chainId }: { chainId?: number } = {}) {
 }
 
 export function walletClientToSigner(walletClient: WalletClient) {
-  console.log('walletClientToSigner', walletClient)
   const { account, chain, transport } = walletClient
   const network = {
     chainId: chain.id,
