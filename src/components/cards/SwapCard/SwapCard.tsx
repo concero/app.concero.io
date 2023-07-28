@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { useAccount, useBalance, useSwitchNetwork } from 'wagmi'
-import { getWalletClient } from '@wagmi/core'
-import { sepolia } from 'viem/chains'
+import { providers } from 'ethers'
+import { createWalletClient, custom } from 'viem'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
@@ -12,7 +12,7 @@ import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { setHistoryCard } from './setHistoryCard'
-import { getEthersSigner } from '../../../web3/ethers'
+import { viemSigner } from '../../../web3/ethers'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
@@ -57,20 +57,20 @@ export const SwapCard: FC<SwapCardProps> = () => {
     }
   }
 
-  const switchChainHook = (requiredChainId: number) => {
+  const switchChainHook = async (requiredChainId: number) => {
     if (switchNetwork) switchNetwork(requiredChainId)
-    return getEthersSigner(requiredChainId)
-    // switch chain with hook DONE
-    // get new signer
-    // return new signer
+    const client0 = createWalletClient({
+      transport: custom(window.ethereum),
+    })
+
+    const provider = new providers.Web3Provider(client0.transport, 'any')
+    const signer = provider.getSigner()
+    return signer
   }
 
   const handleSwap = async () => {
-    let signer = await getWalletClient({ chainId: sepolia.id })
-    signer = { ...signer, getAddress: () => address }
-    console.log('signer', signer)
     swapDispatch({ type: 'SET_LOADING', payload: true })
-    await executeRoute(signer, originalRoutes[0], { switchChainHook })
+    await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
     await swapDispatch({ type: 'SET_LOADING', payload: false })
   }
 
