@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react'
+import { getTokenBalance } from '@lifi/sdk/dist/balance'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
@@ -14,13 +15,12 @@ import { TokenColumns } from './tokenColumns'
 import { isFloatInput } from '../../../../utils/validation'
 import { fetchCurrentTokenPriceUSD } from '../../../../api/lifi/fetchCurrentTokenPriceUSD'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }) => {
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, address }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
   const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
-
-  const balance = 0
+  const [balance, setBalance] = useState<string>(`0 ${selection.token.symbol}`)
 
   const setChain = (chain) => {
     dispatch({
@@ -71,8 +71,20 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch }
     })
   }
 
+  const getTokenBySymbol = (chainId, symbol) => {
+    return tokens[chainId].find((token) => token.symbol === symbol)
+  }
+
+  const fetchBalance = async () => {
+    const response = await getTokenBalance(address, getTokenBySymbol(selection.chain.id, selection.token.symbol))
+    if (!response) return
+    const result = `${response?.amount / 10 ** response?.decimals} ${response?.symbol}`
+    setBalance(result)
+  }
+
   useEffect(() => {
     getCurrentPriceToken()
+    fetchBalance()
     setMappedTokens(tokens[selection.chain.id].slice(0, 50))
   }, [selection.chain, selection.token])
 

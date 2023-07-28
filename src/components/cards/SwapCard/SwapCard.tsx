@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
-import { useAccount, useBalance, useSwitchNetwork } from 'wagmi'
+import { useAccount, useSwitchNetwork } from 'wagmi'
 import { getWalletClient } from '@wagmi/core'
 import { sepolia } from 'viem/chains'
 import { CardHeader } from '../CardHeader/CardHeader'
@@ -22,7 +22,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [prevFromAmount, setPrevFromAmount] = useState(null)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
-  const { data } = useBalance({ address })
 
   async function getRoutes() {
     if (!from.amount) return
@@ -119,8 +118,8 @@ export const SwapCard: FC<SwapCardProps> = () => {
     <div className={`card ${classNames.container}`}>
       <CardHeader title="Swap" />
       <div className={classNames.swapContainer}>
-        <TokenArea direction="from" selection={from} dispatch={swapDispatch} />
-        <TokenArea direction="to" selection={to} dispatch={swapDispatch} />
+        <TokenArea direction="from" selection={from} dispatch={swapDispatch} address={address} />
+        <TokenArea direction="to" selection={to} dispatch={swapDispatch} address={address} />
         <SwapDetails
           selection={{ from, to }}
           selectedRoute={selectedRoute}

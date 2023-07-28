@@ -1,6 +1,6 @@
 export interface TokenAreaProps {
   direction: 'to' | 'from'
-
+  address: string
   selection: {
     chain: {
       name: string
