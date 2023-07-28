@@ -4,17 +4,20 @@ import { getPublicClient, getWalletClient, type PublicClient, type WalletClient 
 import { createWalletClient, custom, type HttpTransport } from 'viem'
 
 // viem to ethers
+let client0;
+let provider;
+export let viemSigner;
 
-const client0 = createWalletClient({
-  transport: custom(window.ethereum),
-})
+if (window.ethereum) {
+  client0 = createWalletClient({
+    transport: custom(window.ethereum),
+  })
 
-// provide client0.chain.id or 'any' to accept flawless chain switch
-const provider = new providers.Web3Provider(client0.transport, 'any')
-export const viemSigner = provider.getSigner()
-console.log(viemSigner)
-
-///
+  provider = new providers.Web3Provider(client0.transport, 'any')
+  viemSigner = provider.getSigner()
+} else {
+  console.log('Ethereum is not supported in this browser.');
+}
 
 export function publicClientToProvider(publicClient: PublicClient) {
   const { chain, transport } = publicClient
