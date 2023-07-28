@@ -77,8 +77,9 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
 
   const fetchBalance = async () => {
     const response = await getTokenBalance(address, getTokenBySymbol(selection.chain.id, selection.token.symbol))
+    console.log(response)
     if (!response) return
-    const result = `${numberToFormatString(response?.amount / 10 ** response?.decimals, 2)} ${response?.symbol}`
+    const result = `${numberToFormatString(Number(response?.amount))} ${response?.symbol}`
     setBalance(result)
   }
 
