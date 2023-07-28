@@ -1,8 +1,5 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
 import { useAccount, useSwitchNetwork } from 'wagmi'
-import { getWalletClient } from '@wagmi/core'
-import { sepolia } from 'viem/chains'
-import { useAccount, useBalance, useSwitchNetwork } from 'wagmi'
 import { providers } from 'ethers'
 import { createWalletClient, custom } from 'viem'
 import { CardHeader } from '../CardHeader/CardHeader'
