@@ -146,7 +146,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
         >
           {!isLoading && (isConnected ? 'Swap' : 'Connect wallet to swap')}
         </Button>
-        <Button onClick={onClick}>Add Notification</Button>
       </div>
     </div>
   )
