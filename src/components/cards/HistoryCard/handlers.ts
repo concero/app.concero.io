@@ -25,11 +25,10 @@ export const handleFetchTransactionHistory = async (setIsLoading, setHistoryItem
 
   try {
     await getTransactionHistory(tokensPair, setHistoryItems)
+    setIsLoading(false)
+    return setInterval(() => getTransactionHistory(tokensPair, setHistoryItems), 10000)
   } catch (e) {
+    setIsLoading(false)
     console.error(e)
   }
-
-  setIsLoading(false)
-
-  return setInterval(() => getTransactionHistory(tokensPair, setHistoryItems), 10000)
 }
