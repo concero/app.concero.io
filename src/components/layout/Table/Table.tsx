@@ -29,10 +29,11 @@ export const Table: FC<TableProps> = ({
 }) => {
   const handleScroll = (e: any) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
-    if (bottom && onEndReached) {
+    if (bottom && onEndReached && !isLoading) {
       onEndReached()
     }
   }
+
   return (
     <div className={classNames.container} onScroll={onEndReached && handleScroll}>
       {isLoading ? (
