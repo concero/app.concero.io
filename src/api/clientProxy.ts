@@ -29,7 +29,6 @@ api.interceptors.request.use(
 
 export async function get({ url, headers }): Promise<any> {
   try {
-    console.log('get', url)
     const request = {
       method: 'post',
       url: `${config.baseURL}/proxy`,
