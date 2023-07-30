@@ -1,10 +1,10 @@
-import { FC, useContext, useMemo, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import { columns } from './columns'
 import classNames from './HistoryCard.module.pcss'
 import { SelectionContext } from '../../../hooks/SelectionContext'
-import { handleFetchTransactionHistory } from './handlers'
+import { fetchTransactions } from './handlers'
 
 interface HistoryCardProps {}
 
@@ -26,9 +26,9 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
   const [historyItems, setHistoryItems] = useState([])
   const { selection } = useContext(SelectionContext)
 
-  useMemo(() => {
-    const interval = handleFetchTransactionHistory(setIsLoading, setHistoryItems, selection)
-
+  useEffect(() => {
+    if (!selection.historyCard.from.token.symbol || !selection.historyCard.to.token.symbol) return
+    const interval = fetchTransactions(setIsLoading, setHistoryItems, selection)
     return async () => {
       clearInterval(await interval)
     }
