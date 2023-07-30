@@ -13,7 +13,7 @@ const toLocalTime = (timestamp: number): number => {
 
 export const fetchChartData = async (tokenId: string, currency: string, days: string, isCropNeeded: boolean) => {
   const url = `https://api.coingecko.com/api/v3/coins/${tokenId}/market_chart?vs_currency=${currency}&days=${days}`
-  const response = await get(url)
+  const response = await get({ url })
 
   if (response.status === 200) {
     return response.data.prices.reduce((acc: Item[], item: Item, index: number) => {

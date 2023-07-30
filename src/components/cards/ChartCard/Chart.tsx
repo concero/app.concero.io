@@ -32,7 +32,6 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
   // Fetch data
   useEffect(() => {
     getData(setData, selectedInterval, tokenId)
-
     const interval = setInterval(() => {
       getData(setData, selectedInterval, tokenId)
     }, 12000)
@@ -52,9 +51,9 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
 
     const chart = createChart(chartRef.current, chartOptions(colors))
     chart.timeScale().fitContent()
-    chart.timeScale().applyOptions({ borderColor: 'transparent' })
-    chart.priceScale('right').applyOptions({ borderColor: 'transparent' })
 
+    chart.timeScale().applyOptions({ borderColor: 'transparent' })
+    chart.priceScale('right').applyOptions({ borderColor: 'transparent', textColor: colors.text.secondary })
     seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors))
     seriesRef.current.setData(data)
     tooltipRef.current = createTooltip()

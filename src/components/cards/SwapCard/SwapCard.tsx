@@ -13,6 +13,7 @@ import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { setHistoryCard } from './setHistoryCard'
 import { viemSigner } from '../../../web3/ethers'
+import { NotificationsContext } from '../../../hooks/notificationsContext'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
@@ -71,6 +72,11 @@ export const SwapCard: FC<SwapCardProps> = () => {
     swapDispatch({ type: 'SET_LOADING', payload: true })
     await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
     await swapDispatch({ type: 'SET_LOADING', payload: false })
+  }
+  const { addNotification } = useContext(NotificationsContext)
+
+  const onClick = () => {
+    addNotification({ message: 'Hello, world!' })
   }
 
   const clearRoutes = () => {
@@ -140,10 +146,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
         >
           {!isLoading && (isConnected ? 'Swap' : 'Connect wallet to swap')}
         </Button>
-
-        <Button onClick={() => handleSwap()} size="lg">
-          Swap
-        </Button>
+        <Button onClick={onClick}>Add Notification</Button>
       </div>
     </div>
   )

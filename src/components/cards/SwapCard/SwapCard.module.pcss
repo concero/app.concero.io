@@ -1,8 +1,21 @@
 
 .tokenContainer {
-    background-color: var(--color-grey-darker);
+    background-color: var(--color-grey-darkest);
     border-radius: var(--st-br-md);
+    border: 1px solid var(--color-grey-darker);
     padding: var(--sp-md) var(--sp-md);
+    transition: border 0.2s ease-in-out;
+}
+.tokenContainer:hover {
+    border: 1px solid var(--color-grey-dark);
+}
+.tokenContainer:focus-within {
+    border: 1px solid var(--color-primary-main);
+}
+
+.inputFocused {
+border: 1px solid var(--color-primary-main);
+
 }
 
 .swapContainer {

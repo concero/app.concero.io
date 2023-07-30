@@ -26,7 +26,7 @@ export const fetchTransactionHistory = async (tokensPair: string) => {
   })
 
   const url = `https://www.dextools.io/shared/data/swaps?chain=${tokensPair.chainId}&pair=${tokensPair.pairAddress}`
-  const response = await get(url)
+  const response = await get({ url })
 
   if (response.status !== 200) throw new Error('Error fetching transaction history')
 

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { getTokenBalance } from '@lifi/sdk/dist/balance'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -21,6 +21,14 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
   const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
   const [balance, setBalance] = useState<string>(`0 ${selection.token.symbol}`)
+  const [isFocused, setIsFocused] = useState<boolean>(false)
+  const inputRef = useRef()
+
+  const handleClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
 
   const setChain = (chain) => {
     dispatch({
@@ -34,6 +42,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
       },
     })
   }
+  // todo do not destructure
 
   const setToken = (token) => {
     console.log(token)
@@ -71,9 +80,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
     })
   }
 
-  const getTokenBySymbol = (chainId, symbol) => {
-    return tokens[chainId].find((token) => token.symbol === symbol)
-  }
+  const getTokenBySymbol = (chainId, symbol) => tokens[chainId].find((token) => token.symbol === symbol)
 
   const fetchBalance = async () => {
     const response = await getTokenBalance(address, getTokenBySymbol(selection.chain.id, selection.token.symbol))
@@ -97,7 +104,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
 
   return (
     <>
-      <div className={classNames.tokenContainer}>
+      <div
+        className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}
+        onClick={() => handleClick()}
+      >
         <div className={classNames.tokenRow}>
           <div className={classNames.tokenRowHeader}>
             <p>{capitalize(direction)}</p>
@@ -121,6 +131,9 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
         <div className={classNames.tokenRow}>
           <div>
             <TextInput
+              ref={inputRef}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
               value={selection.amount}

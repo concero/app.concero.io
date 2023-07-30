@@ -27,24 +27,21 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-/**
- * Performs a GET request to the specified URL with the given parameters.
- * @param {string} url - The URL to send the GET request to.
- * @param {GetParams} params - The parameters to send with the GET request.
- * @returns {Promise<any>} A promise that resolves with the response data if the request succeeds, or rejects with an error if it fails.
- */
-export async function get(url: string, axiosConfig?: any): Promise<any> {
+export async function get({ url, headers }): Promise<any> {
   try {
-    const response: AxiosResponse = await queue.add({
+    console.log('get', url)
+    const request = {
       method: 'post',
       url: `${config.baseURL}/proxy`,
       headers: config.headers,
       data: {
         url,
         method: 'GET',
-        ...axiosConfig,
+        headers: headers || {},
       },
-    })
+    }
+    // console.log('sending request to proxy', request)
+    const response: AxiosResponse = await queue.add(request)
     return response
   } catch (error) {
     console.error('GET request failed:', error)
@@ -58,7 +55,7 @@ export async function get(url: string, axiosConfig?: any): Promise<any> {
  * @param {PostData} data - The data to send with the POST request.
  * @returns {Promise<any>} A promise that resolves with the response data if the request succeeds, or rejects with an error if it fails.
  */
-export async function post(url: string, axiosConfig: any): Promise<any> {
+export async function post({ url, headers, body }): Promise<any> {
   try {
     const response: AxiosResponse = await queue.add({
       method: 'post',
@@ -67,12 +64,15 @@ export async function post(url: string, axiosConfig: any): Promise<any> {
       data: {
         url,
         method: 'POST',
-        ...axiosConfig,
+        headers: headers || {},
+        body,
       },
     })
-    return response.data
+    return response
   } catch (error) {
     console.error('POST proxy request failed:', error)
     throw error
   }
 }
+
+export default { get, post }

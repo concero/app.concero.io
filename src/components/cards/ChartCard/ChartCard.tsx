@@ -9,7 +9,6 @@ import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { chains } from '../../../constants/chains'
 import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedControl'
-import { colors } from '../../../constants/colors'
 import { intervals } from './constants'
 import { columns } from './columns'
 import { tokens } from '../../../constants/tokens'
@@ -55,12 +54,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
         <div className={classNames.selectChainContainer}>
           <h5>Chart</h5>
           <Button
-            variant="subtle"
+            variant="black"
             size="sm"
-            rightIcon={{
-              name: 'ChevronDown',
-              iconProps: { size: 18, color: colors.text.secondary },
-            }}
+            // rightIcon={{
+            //   name: 'ChevronDown',
+            //   iconProps: { size: 18, color: colors.text.secondary },
+            // }}
             onClick={() => setIsSelectLeftTokenModalVisible(true)}
           >
             <CryptoSymbol src={selectedLeftToken.logoURI} symbol={selectedLeftToken.symbol} />
@@ -77,7 +76,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
           {/*   <CryptoSymbol name={selectedRightChain.symbol} symbol={selectedRightChain.symbol} /> */}
           {/* </Button> */}
           {isDesktop ? (
-            <Button variant="subtle" size="sm" onClick={() => toggleChartType()}>
+            <Button variant="black" size="sm" onClick={() => toggleChartType()}>
               <Beacon isOn={chartType === 'tradingView'} />
               <p className="body1">TradingView</p>
             </Button>

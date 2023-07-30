@@ -3,10 +3,10 @@ import { providers } from 'ethers'
 import { getPublicClient, getWalletClient, type PublicClient, type WalletClient } from '@wagmi/core'
 import { createWalletClient, custom, type HttpTransport } from 'viem'
 
-// viem to ethers
-let client0;
-let provider;
-export let viemSigner;
+// // viem to ethers
+let client0
+let provider
+export let viemSigner
 
 if (window.ethereum) {
   client0 = createWalletClient({
@@ -16,7 +16,7 @@ if (window.ethereum) {
   provider = new providers.Web3Provider(client0.transport, 'any')
   viemSigner = provider.getSigner()
 } else {
-  console.log('Ethereum is not supported in this browser.');
+  console.log('Ethereum is not supported in this browser.')
 }
 
 export function publicClientToProvider(publicClient: PublicClient) {

@@ -4,7 +4,7 @@ import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 
-export const DesktopExchangeScreen = () => {
+export function DesktopExchangeScreen() {
   return (
     <div className={`row ${styles.container}`}>
       <div className={styles.mainCardStack}>

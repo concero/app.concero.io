@@ -5,15 +5,20 @@ import { wagmiConfig } from './web3/wagmi'
 import { WalletConnectModal } from './web3/WalletConnectModal'
 import { ThemeProvider } from './hooks/themeContext'
 import { SelectionProvider } from './hooks/SelectionContext'
+import { Notifications } from './components/overlays/Notifications/Notifications'
+import { NotificationsProvider } from './hooks/notificationsContext'
 
 function App() {
   return (
     <ThemeProvider>
       <SelectionProvider>
-        <WagmiConfig config={wagmiConfig}>
-          <Navigator />
-          <WalletConnectModal />
-        </WagmiConfig>
+        <NotificationsProvider>
+          <Notifications />
+          <WagmiConfig config={wagmiConfig}>
+            <Navigator />
+            <WalletConnectModal />
+          </WagmiConfig>
+        </NotificationsProvider>
       </SelectionProvider>
     </ThemeProvider>
   )

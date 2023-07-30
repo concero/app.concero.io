@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC, ForwardedRef, forwardRef } from 'react'
 import * as Icons from 'tabler-icons-react'
 import Icon from '../Icon'
 import { colors } from '../../constants/colors'
@@ -13,15 +13,10 @@ export interface TextInputProps {
   isDisabled?: boolean
 }
 
-export const TextInput: FC<TextInputProps> = ({
-  value,
-  placeholder,
-  onChangeText = null,
-  iconName,
-  variant,
-  isDisabled = false,
-  ...rest
-}) => {
+export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<
+  HTMLInputElement,
+  TextInputProps
+>(({ value, placeholder, onChangeText = null, iconName, variant, isDisabled = false, ...rest }, ref) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeText && onChangeText(event.target.value)
   }
@@ -32,6 +27,7 @@ export const TextInput: FC<TextInputProps> = ({
     <div className={inputClass}>
       {iconName && <Icon name={iconName} className={classNames.inputIcon} size={18} color={colors.grey.dark} />}
       <input
+        ref={ref}
         type="text"
         placeholder={placeholder}
         value={value}
@@ -41,4 +37,4 @@ export const TextInput: FC<TextInputProps> = ({
       />
     </div>
   )
-}
+})

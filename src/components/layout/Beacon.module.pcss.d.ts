@@ -6,5 +6,7 @@ export default identifiersMap
 export type CssIdentifiersMap = {
   "beacon": string|undefined
   "container": string|undefined
-  "on": string|undefined
+  "green": string|undefined
+  "primary": string|undefined
+  "red": string|undefined
 }

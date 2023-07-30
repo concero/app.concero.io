@@ -7,7 +7,7 @@ import { Button } from '../../buttons/Button/Button'
 const IconWithPopover = () => {
   return (
     <Button
-      variant={'subtle'}
+      variant={'black'}
       size={'xs'}
       leftIcon={{
         name: 'Dots',

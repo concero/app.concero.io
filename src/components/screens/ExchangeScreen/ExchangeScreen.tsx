@@ -7,9 +7,10 @@ export interface ExchangeScreenProps {}
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
   const isDesktop = useMediaQuery('mobile')
-  const exchangeScreenComponent = useMemo(() => {
-    return isDesktop ? <DesktopExchangeScreen /> : <MobileExchangeScreen />
-  }, [isDesktop])
+  const exchangeScreenComponent = useMemo(
+    () => (isDesktop ? <DesktopExchangeScreen /> : <MobileExchangeScreen />),
+    [isDesktop],
+  )
 
   return (
     <div

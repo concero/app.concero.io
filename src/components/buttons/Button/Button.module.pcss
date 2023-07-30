@@ -79,12 +79,13 @@
 }
 
 .subtle {
-    background-color: var(--color-grey-darker);
-    border: none;
+    background-color: var(--color-grey-darkest);
+    border: 1px solid var(--color-grey-darker);
 }
 
 .subtle:hover {
-    background-color: var(--color-grey-dark);
+    background-color: var(--color-grey-darker);
+    border-color: var(--color-grey-dark);
 }
 
 .subtle:active {
@@ -109,13 +110,13 @@
 }
 
 .black {
-    background-color: var(--color-base-background);
+    background-color: transparent;
     border: none;
     color: var(--color-text-primary);
 }
 
 .black:hover {
-    background-color: var(--color-grey-dark);
+    background-color: var(--color-grey-darker);
 }
 
 .black:active {

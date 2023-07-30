@@ -18,7 +18,7 @@ export const SegmentedControl: FC<SegmentedControlProps> = ({ data, selectedItem
     {data.map((item: Item) => (
       <Button
         key={item.value}
-        variant="subtle"
+        variant="black"
         size="sm"
         className={selectedItem.value === item.value ? classNames.selected : ''}
         onClick={() => setSelectedItem(item)}

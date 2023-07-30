@@ -81,8 +81,15 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .card {
-    background-color: var(--color-base-background);
-    border: 1px solid var(--color-grey-dark);
+    background: linear-gradient(154deg, rgba(40,40,40, 0.5), rgba(0, 0, 0, 0)) no-repeat;
+    background-size: 200% 200%;
+    background-position: 200% 200%;
+    border: 1px solid var(--color-grey-darker);
     border-radius: var(--st-br-md);
     padding: var(--sp-md);
+    transition: background-position 0.4s;
+}
+
+.card:hover {
+    background-position: 80% 80%;
 }
