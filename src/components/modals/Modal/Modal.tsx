@@ -15,16 +15,13 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.keyCode === 27) setShow(false)
   }
-
   const stopPropagation = (event: MouseEventHandler<HTMLDivElement>) => {
     event.stopPropagation()
   }
 
   useEffect(() => {
-    show ? (document.body.style.overflowY = 'hidden') : (document.body.style.overflowY = 'scroll')
-
+    show ? (document.body.style.overflowY = 'hidden') : document.body.style.removeProperty('overflow-y')
     document.addEventListener('keydown', handleKeyDown)
-
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
