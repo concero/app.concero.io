@@ -1,4 +1,4 @@
-import { ComponentType, FC, useState } from 'react'
+import { ComponentType, FC, useEffect, useRef, useState } from 'react'
 
 type WithPopoverProps = {
   WrappedComponent: ComponentType<any>
@@ -14,6 +14,8 @@ export const WithPopover: FC<WithPopoverProps> = (
 ) => {
   const [showPopover, setShowPopover] = useState(false)
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null)
+  const popoverRef = useRef(null)
+  const [popoverTopPosition, setPopoverTopPosition] = useState(0)
 
   return function (props: any) {
     const handleMouseEnter = () => {
@@ -41,6 +43,10 @@ export const WithPopover: FC<WithPopoverProps> = (
       }
     }
 
+    useEffect(() => {
+      setPopoverTopPosition(-popoverRef.current?.clientHeight - 4)
+    }, [popoverRef.current?.clientHeight])
+
     return (
       <div
         onMouseEnter={handleMouseEnter}
@@ -53,9 +59,10 @@ export const WithPopover: FC<WithPopoverProps> = (
         <WrappedComponent {...props} />
         {showPopover && (
           <div
+            ref={popoverRef}
             style={{
               position: 'absolute',
-              bottom: -105,
+              bottom: popoverTopPosition || 0,
               right: 0,
             }}
           >

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
@@ -34,7 +34,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
     setIsLoading(false)
   }
 
-  useEffect(() => {
+  useMemo(() => {
     fetchNews(page)
   }, [selectedToken])
 
