@@ -26,7 +26,7 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   onSelect,
   onEndReached = null,
 }) => {
-  const [filteredData, setFilteredData] = useState<any[]>(visibleData ? visibleData : data)
+  const [filteredData, setFilteredData] = useState<any[]>(visibleData || data)
   const [value, setValue] = useState<string>('')
 
   function filter(name) {
@@ -44,7 +44,7 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   }
 
   useEffect(() => {
-    setFilteredData(visibleData ? visibleData : data)
+    setFilteredData(visibleData || data)
   }, [visibleData || data])
 
   return (

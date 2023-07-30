@@ -14,4 +14,4 @@ export const CryptoSymbol: FC<CryptoSymbolProps> = ({ name = '', symbol, src = n
     <CryptoIcon symbol={name} src={src || null} />
     <p className="body1">{symbol}</p>
   </div>
-  )
+)

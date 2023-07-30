@@ -10,8 +10,8 @@ import { TextInput } from '../../../input/TextInput'
 import { chains } from '../../../../constants/chains'
 import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
-import { ChainColumns } from './chainColumns'
-import { TokenColumns } from './tokenColumns'
+import { ChainColumns } from './ChainColumns'
+import { TokenColumns } from './TokenColumns'
 import { isFloatInput } from '../../../../utils/validation'
 import { fetchCurrentTokenPriceUSD } from '../../../../api/lifi/fetchCurrentTokenPriceUSD'
 
@@ -140,7 +140,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>${selection.amount_usd}</h5>
+            <h5>
+              $
+              {selection.amount_usd}
+            </h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}

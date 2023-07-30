@@ -4,7 +4,7 @@ import { ChartCard } from '../../cards/ChartCard/ChartCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 
-export const MobileExchangeScreen = () => {
+export function MobileExchangeScreen() {
   return (
     <div className={styles.container}>
       <div className={styles.mainCardStack}>

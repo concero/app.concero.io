@@ -4,7 +4,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "container": string|undefined
-  "headerContainer": string|undefined
-  "selectChainContainer": string|undefined
+  container: string | undefined
+  headerContainer: string | undefined
+  selectChainContainer: string | undefined
 }

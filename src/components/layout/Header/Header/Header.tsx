@@ -19,6 +19,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
   const matchPortfolio = useMatch(routes.portfolio)
 
   const isDesktop = useMediaQuery('mobile')
+
   function TooltipContent() {
     return (
       <Button

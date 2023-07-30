@@ -129,15 +129,7 @@ function App(conf) {
       // color = cscale(j/ny).hex();
       color = cscale(TMath.randFloat(0, 1)).hex()
       // color = chroma.random().hex();
-      tube = new Tube(
-        -wWidth / 2,
-        -wHeight / 2 + j * conf.resY,
-        wWidth,
-        nx,
-        conf.tubeRadius,
-        color,
-        noiseConf,
-      )
+      tube = new Tube(-wWidth / 2, -wHeight / 2 + j * conf.resY, wWidth, nx, conf.tubeRadius, color, noiseConf)
       objects.push(tube)
       scene.add(tube.mesh)
     }
@@ -282,13 +274,7 @@ class Tube {
     this.radius = radius
 
     this.curve = new CustomCurve(x, y, l, noise)
-    this.geometry = new THREE.TubeBufferGeometry(
-      this.curve,
-      segments,
-      radius,
-      this.radialSegments,
-      false,
-    )
+    this.geometry = new THREE.TubeBufferGeometry(this.curve, segments, radius, this.radialSegments, false)
     // this.material = new THREE.MeshBasicMaterial({ color });
     // this.material = new THREE.MeshLambertMaterial({ color });
     this.material = new THREE.MeshStandardMaterial({ color, metalness: 1 })

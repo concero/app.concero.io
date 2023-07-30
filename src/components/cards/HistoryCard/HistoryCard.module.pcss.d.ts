@@ -4,9 +4,9 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  "id": string|undefined
-  "infoContainer": string|undefined
-  "line": string|undefined
-  "modalPopoverContainer": string|undefined
-  "tableContainer": string|undefined
+  id: string | undefined
+  infoContainer: string | undefined
+  line: string | undefined
+  modalPopoverContainer: string | undefined
+  tableContainer: string | undefined
 }

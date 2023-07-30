@@ -37,7 +37,5 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
     setColors(themeColors.color as Colors)
   }, [theme])
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, colors }}>{children}</ThemeContext.Provider>
-  )
+  return <ThemeContext.Provider value={{ theme, toggleTheme, colors }}>{children}</ThemeContext.Provider>
 }

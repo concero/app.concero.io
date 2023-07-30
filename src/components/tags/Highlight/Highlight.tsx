@@ -32,10 +32,7 @@ const getHighlightClasses = (size: HighlightProps['size']) => {
  <button>Refresh</button>
  </Highlight>
  */
-export const Highlight: FC<HighlightProps> = ({
-  item: { title, value, valueSecondary, last_24h },
-  size = 'md',
-}) => {
+export const Highlight: FC<HighlightProps> = ({ item: { title, value, valueSecondary, last_24h }, size = 'md' }) => {
   const { colors } = useContext(ThemeContext)
   const highlightClasses = getHighlightClasses(size)
 

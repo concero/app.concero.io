@@ -1,4 +1,4 @@
-import { FC, ReactNode, useRef } from 'react'
+import { FC, ReactNode } from 'react'
 
 interface CardProps {
   children: ReactNode

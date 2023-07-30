@@ -66,7 +66,7 @@ const initArgs: SelectionState = {
   newsCard: selectedTokens,
 }
 
-export const SelectionProvider = ({ children }: SelectionProviderProps) => {
+export function SelectionProvider({ children }: SelectionProviderProps) {
   const [selection, dispatch] = useReducer(reducer, initArgs)
 
   return <SelectionContext.Provider value={{ selection, dispatch }}>{children}</SelectionContext.Provider>

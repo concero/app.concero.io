@@ -44,10 +44,12 @@ export const NewsCard: FC<NewsCardProps> = () => {
           columns={columns}
           isHeaderVisible={false}
           isLoading={isLoading}
-          onEndReached={() => fetchNews(setData, setIsLoading, addNotification, true, {
+          onEndReached={() =>
+            fetchNews(setData, setIsLoading, addNotification, true, {
               currencies: [selectedToken.symbol],
               page: page + 1,
-            })}
+            })
+          }
         />
       </div>
       <EntityListModal
@@ -58,7 +60,9 @@ export const NewsCard: FC<NewsCardProps> = () => {
         visibleData={mappedTokens}
         columns={modalColumns}
         onSelect={(token) => handleSelectToken(token)}
-        onEndReached={() => setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])}
+        onEndReached={() =>
+          setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
+        }
       />
     </div>
   )
