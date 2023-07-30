@@ -2,23 +2,7 @@ import { TxFromTo } from '../../tags/TxFromTo/TxFromTo'
 import { colors } from '../../../constants/colors'
 import { WithPopover } from '../../wrappers/WithPopover'
 import { ModalPopover } from './ModalPopover'
-import { Button } from '../../buttons/Button/Button'
-
-const IconWithPopover = () => {
-  return (
-    <Button
-      variant={'subtle'}
-      size={'xs'}
-      leftIcon={{
-        name: 'Dots',
-        iconProps: {
-          size: 20,
-          color: colors.text.secondary,
-        },
-      }}
-    />
-  )
-}
+import { IconWithPopover } from './IconWithPopover'
 
 export const columns = [
   {
@@ -45,7 +29,7 @@ export const columns = [
   {
     columnTitle: '',
     cellComponent: (item) => {
-      const PopoverComponent = WithPopover(IconWithPopover, ModalPopover, { item }, 'hover')
+      const PopoverComponent = WithPopover(IconWithPopover, ModalPopover, { item }, 'click')
       return <PopoverComponent />
     },
   },
