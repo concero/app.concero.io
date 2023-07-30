@@ -19,7 +19,7 @@ const getTransactionHistory = async (tokensPair: string, setHistoryItems: () => 
   setHistoryItems(response)
 }
 
-export const handleFetchTransactionHistory = async (setIsLoading, setHistoryItems, selection) => {
+export const fetchTransactions = async (setIsLoading, setHistoryItems, selection) => {
   setIsLoading(true)
   const tokensPair = await getTokensPair(selection)
 
