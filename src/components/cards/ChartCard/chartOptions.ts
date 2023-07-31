@@ -2,21 +2,40 @@ import { ColorType } from 'lightweight-charts'
 
 export const chartOptions = (colors) => ({
   layout: {
-    background: { type: ColorType.Solid, color: 'transparent' },
+    background: {
+      type: ColorType.Solid,
+      color: 'transparent',
+    },
     textColor: colors.text.secondary,
     fontFamily: 'Poppins',
   },
   grid: {
-    vertLines: { color: colors.grey.darker, style: 1, visible: false },
-    horzLines: { color: colors.grey.darker, style: 1, visible: false },
+    vertLines: {
+      color: colors.grey.darker,
+      style: 1,
+      visible: false,
+    },
+    horzLines: {
+      color: colors.grey.darker,
+      style: 1,
+      visible: false,
+    },
   },
   timeScale: {
     timeVisible: true,
     secondsVisible: true,
   },
   crosshair: {
-    horzLine: { visible: true, labelVisible: false, color: colors.grey.dark },
-    vertLine: { visible: true, labelVisible: false, color: colors.grey.dark },
+    horzLine: {
+      visible: true,
+      labelVisible: false,
+      color: colors.grey.dark,
+    },
+    vertLine: {
+      visible: true,
+      labelVisible: false,
+      color: colors.grey.dark,
+    },
   },
   handleScroll: false,
   handleScale: false,

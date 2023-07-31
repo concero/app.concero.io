@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
@@ -12,6 +12,7 @@ import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedContro
 import { intervals } from './constants'
 import { columns } from './columns'
 import { lifiTokens } from '../../../constants/lifiTokens'
+import { SelectionContext } from '../../../hooks/SelectionContext'
 
 export interface ChartCardProps {}
 
@@ -19,14 +20,35 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const [chartType, setChartType] = useState<'coinGecko' | 'tradingView'>('coinGecko')
   const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
-  const [selectedLeftToken, setSelectedLeftToken] = useState<{ name: string; symbol: string; logoURI: string }>(
-    chains[0],
-  )
-  const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(chains[1])
-  const [selectedInterval, setSelectedInterval] = useState<{ title: string; id: string } | undefined>(intervals[0])
-  const [mappedTokens, setMappedTokens] = useState<{ name: string; symbol: string; logoURI: string }[]>(
-    lifiTokens[1].slice(0, 50),
-  )
+  const [selectedLeftToken, setSelectedLeftToken] = useState<{
+    name: string
+    symbol: string
+    logoURI: string
+  }>(chains[0])
+  const [selectedRightChain, setSelectedRightChain] = useState<{
+    name: string
+    symbol: string
+  }>(chains[1])
+  const [selectedInterval, setSelectedInterval] = useState<
+    | {
+        title: string
+        id: string
+      }
+    | undefined
+  >(intervals[0])
+  const [mappedTokens, setMappedTokens] = useState<
+    {
+      name: string
+      symbol: string
+      logoURI: string
+    }[]
+  >(lifiTokens[1].slice(0, 50))
+  const { selection } = useContext(SelectionContext)
+
+  useEffect(() => {
+    if (!selection.swapCard.to.token) return
+    setSelectedLeftToken(selection.swapCard.to.token)
+  }, [selection.swapCard.to.token])
 
   const handleSelectLeftToken = (chain: { name: string; symbol: string }): void => {
     setSelectedLeftToken(chain)

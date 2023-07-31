@@ -12,6 +12,7 @@ import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { setHistoryCard } from './setHistoryCard'
+import { setSwapCard } from './setSwapCard'
 import { viemSigner } from '../../../web3/ethers'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 
@@ -26,8 +27,14 @@ export const SwapCard: FC<SwapCardProps> = () => {
 
   async function getRoutes() {
     if (!from.amount) return
-    swapDispatch({ type: 'SET_LOADING', payload: true })
-    const data = await fetchRoutes({ from, to })
+    swapDispatch({
+      type: 'SET_LOADING',
+      payload: true,
+    })
+    const data = await fetchRoutes({
+      from,
+      to,
+    })
     setPrevFromAmount(from.amount)
     if (!data || data.routes.length === 0) return
     setResponse(data)
@@ -35,7 +42,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
 
   useEffect(() => {
     if (!from.amount || prevFromAmount !== from.amount) return
-    swapDispatch({ type: 'POPULATE_ROUTES', payload: response })
+    swapDispatch({
+      type: 'POPULATE_ROUTES',
+      payload: response,
+    })
     swapDispatch({
       type: 'SET_AMOUNT',
       direction: 'to',
@@ -53,7 +63,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
       typingTimeoutRef.current = typingTimeoutId
     } catch (e) {
       console.error(e)
-      swapDispatch({ type: 'SET_LOADING', payload: false })
+      swapDispatch({
+        type: 'SET_LOADING',
+        payload: false,
+      })
     }
   }
 
@@ -69,9 +82,15 @@ export const SwapCard: FC<SwapCardProps> = () => {
   }
 
   const handleSwap = async () => {
-    swapDispatch({ type: 'SET_LOADING', payload: true })
+    swapDispatch({
+      type: 'SET_LOADING',
+      payload: true,
+    })
     await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
-    await swapDispatch({ type: 'SET_LOADING', payload: false })
+    await swapDispatch({
+      type: 'SET_LOADING',
+      payload: false,
+    })
   }
   const { addNotification } = useContext(NotificationsContext)
 
@@ -82,11 +101,15 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const clearRoutes = () => {
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
     swapDispatch({ type: 'CLEAR_ROUTES' })
-    swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
+    swapDispatch({
+      type: 'RESET_AMOUNTS',
+      direction: 'to',
+    })
   }
 
   useEffect(() => {
     setHistoryCard(dispatch, from, to)
+    setSwapCard(dispatch, from, to)
   }, [from.token.symbol, to.token.symbol])
 
   useEffect(() => {
@@ -127,9 +150,17 @@ export const SwapCard: FC<SwapCardProps> = () => {
         <TokenArea direction="from" selection={from} dispatch={swapDispatch} address={address} />
         <TokenArea direction="to" selection={to} dispatch={swapDispatch} address={address} />
         <SwapDetails
-          selection={{ from, to }}
+          selection={{
+            from,
+            to,
+          }}
           selectedRoute={selectedRoute}
-          setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })}
+          setSelectedRoute={(route) =>
+            swapDispatch({
+              type: 'SET_SELECTED_ROUTE',
+              payload: route,
+            })
+          }
           routes={routes}
           isLoading={isLoading}
         />
