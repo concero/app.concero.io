@@ -1,5 +1,5 @@
 import { fetchPairs } from '../../../api/dexscreener/fetchPairs'
-import { fetchTransactionHistory } from '../../../api/dexscreener/fetchTransactionHistory'
+import { fetchTransactionHistory } from '../../../api/dextools/fetchTransactionHistory'
 
 const getTokensPair = async (selection) => {
   const { pairs } = await fetchPairs(
@@ -10,8 +10,8 @@ const getTokensPair = async (selection) => {
 
   const result = pairs.reduce((acc, pair) => {
     if (
-      pair.baseToken.symbol.toLowerCase().includes(selection.historyCard.from.token.symbol.toLowerCase()) &&
-      pair.quoteToken.symbol.toLowerCase().includes(selection.historyCard.to.token.symbol.toLowerCase())
+      pair.baseToken.symbol.toLowerCase().includes(selection.historyCard.from.token.symbol.toLowerCase())
+      && pair.quoteToken.symbol.toLowerCase().includes(selection.historyCard.to.token.symbol.toLowerCase())
     ) {
       acc.push(pair)
     }

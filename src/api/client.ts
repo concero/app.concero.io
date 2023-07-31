@@ -37,11 +37,11 @@ export async function get(url: string, params: GetParams = {}): Promise<any> {
   try {
     const response: AxiosResponse = await queue.add({
       method: 'get',
-      url: `${config.baseURL}${url}`,
+      url,
       headers: config.headers,
       params,
     })
-    return response.data
+    return response
   } catch (error) {
     console.error('GET request failed:', error)
     throw error
@@ -58,12 +58,12 @@ export async function post(url: string, data: PostData): Promise<any> {
   try {
     const response: AxiosResponse = await queue.add({
       method: 'post',
-      url: `${config.baseURL}${url}`,
+      url,
       headers: config.headers,
       data,
     })
 
-    return response.data
+    return response
   } catch (error) {
     console.error('POST request failed:', error)
     throw error
@@ -93,3 +93,5 @@ export async function imageUpload(url: string, imageFile: File): Promise<any> {
     throw error
   }
 }
+
+export default { get, post }
