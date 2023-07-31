@@ -15,7 +15,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 
   return (
     <Card
-      classNames={`${classNames.container} ${isSelected ? classNames.bestCard : ''}`}
+      className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`}
       onClick={() => onClick(route.id)}
     >
       <div className={classNames.cardHeader}>

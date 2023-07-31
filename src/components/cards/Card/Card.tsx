@@ -23,7 +23,7 @@ export const Card: FC<CardProps> = ({ children, className, onClick }) => (
   //   cardRef.current.style.backgroundImage = 'none'
   // }
 
-  <div className={className} onClick={onClick && onClick}>
+  <div className={`card ${className}`} onClick={onClick && onClick}>
     {children}
   </div>
 )
