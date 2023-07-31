@@ -30,7 +30,7 @@ export const fetchTransactionHistory = async (tokensPair: string) => {
 
   if (response.status !== 200) throw new Error('Error fetching transaction history')
 
-  return response.data.data.swaps.reduce((acc, item) => {
+  const result = response.data.data.swaps.reduce((acc, item) => {
     acc.push({
       id: item.id,
       type: item.type,
@@ -48,4 +48,6 @@ export const fetchTransactionHistory = async (tokensPair: string) => {
 
     return acc
   }, [])
+  console.log('result', result)
+  return result
 }

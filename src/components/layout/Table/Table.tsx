@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from 'react'
+import { useTransition } from 'react-spring'
 import classNames from './Table.module.pcss'
 import { TableSkeleton } from './TableSkeleton'
 import { TableRow } from './TableRow'
@@ -34,6 +35,13 @@ export const Table: FC<TableProps> = ({
     }
   }
 
+  const transitions = useTransition(items, {
+    from: { opacity: 0, transform: 'translate3d(0, -40px, 0)' },
+    enter: { opacity: 1, transform: 'translate3d(0, 0px, 0)' },
+    leave: { opacity: 0, transform: 'translate3d(0, -40px, 0)' },
+    keys: (item) => item.id,
+  })
+
   return (
     <div className={classNames.container} onScroll={onEndReached && handleScroll}>
       {isLoading ? (
@@ -42,8 +50,8 @@ export const Table: FC<TableProps> = ({
         <table>
           {isHeaderVisible && <TableHeader columns={columns} />}
           <tbody className="striped">
-            {items.map((item, index) => (
-              <TableRow key={index} item={item} columns={columns} onClick={onClick} />
+            {transitions((styles, item) => (
+              <TableRow style={styles} item={item} columns={columns} onClick={onClick} />
             ))}
           </tbody>
         </table>
