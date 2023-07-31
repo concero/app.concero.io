@@ -1,6 +1,6 @@
 import { colors } from '../../../constants/colors'
 import Icon from '../../Icon'
-import { truncate } from '../../../utils/formatting'
+import { fromNow, truncate } from '../../../utils/formatting'
 import classNames from './NewsCard.module.pcss'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 
@@ -16,7 +16,7 @@ export const columns = [
         <div className={classNames.cellComponentContainer}>
           <div className="row ac gap-xs">
             <Icon name="Clock" color={colors.text.secondary} size={18} />
-            <p style={{ color: colors.text.secondary }}>{item.created_at}</p>
+            <p style={{ color: colors.text.secondary }}>{fromNow(item.created_at)}</p>
           </div>
         </div>
       )

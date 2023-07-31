@@ -8,7 +8,17 @@ const getTokensPair = async (selection) => {
 
   if (!pairs) throw new Error('No pairs found')
 
-  return pairs[0]
+  const result = pairs.reduce((acc, pair) => {
+    if (
+      pair.baseToken.symbol.toLowerCase().includes(selection.historyCard.from.token.symbol.toLowerCase()) &&
+      pair.quoteToken.symbol.toLowerCase().includes(selection.historyCard.to.token.symbol.toLowerCase())
+    ) {
+      acc.push(pair)
+    }
+    return acc
+  }, [])
+
+  return result[0] || pairs[0]
 }
 
 const getTransactionHistory = async (tokensPair: string, setHistoryItems: () => void) => {
