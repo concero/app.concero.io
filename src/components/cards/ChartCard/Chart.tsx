@@ -54,7 +54,10 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
     chart.timeScale().fitContent()
 
     chart.timeScale().applyOptions({ borderColor: 'transparent' })
-    chart.priceScale('right').applyOptions({ borderColor: 'transparent', textColor: colors.text.secondary })
+    chart.priceScale('right').applyOptions({
+      borderColor: 'transparent',
+      textColor: colors.text.secondary,
+    })
     seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors))
     seriesRef.current.setData(data)
     tooltipRef.current = createTooltip()
@@ -77,7 +80,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
         tooltipRef.current = null
       }
     }
-  }, [colors, data])
+  }, [colors, data, chartRef])
 
   // Update coinGecko data
   useEffect(() => {

@@ -9,6 +9,7 @@ import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { columns, modalColumns } from './columns'
 import { lifiTokens } from '../../../constants/lifiTokens'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
+import { SelectionContext } from '../../../hooks/SelectionContext'
 
 interface NewsCardProps {}
 
@@ -20,11 +21,20 @@ export const NewsCard: FC<NewsCardProps> = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedToken, setSelectedToken] = useState(lifiTokens['1'][0])
   const [mappedTokens, setMappedTokens] = useState(lifiTokens['1'].slice(0, 50))
+  const { selection } = useContext(SelectionContext)
 
   useEffect(() => {
     if (!selectedToken) return
-    fetchNews(setData, setIsLoading, addNotification, false, { currencies: [selectedToken.symbol], page })
+    fetchNews(setData, setIsLoading, addNotification, false, {
+      currencies: [selectedToken.symbol],
+      page,
+    })
   }, [selectedToken])
+
+  useEffect(() => {
+    if (!selection.swapCard.to.token) return
+    setSelectedToken(selection.swapCard.to.token)
+  }, [selection.swapCard.to.token])
 
   const handleSelectToken = (token) => {
     setSelectedToken(token)
