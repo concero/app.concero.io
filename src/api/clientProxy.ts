@@ -29,7 +29,6 @@ api.interceptors.request.use(
 
 export async function get({ url, headers }): Promise<any> {
   try {
-    // console.log('get', url)
     const request = {
       method: 'post',
       url: `${config.baseURL}/proxy`,
@@ -40,7 +39,6 @@ export async function get({ url, headers }): Promise<any> {
         headers: headers || {},
       },
     }
-    // console.log('sending request to proxy', request)
     const response: AxiosResponse = await queue.add(request)
     return response
   } catch (error) {

@@ -10,8 +10,7 @@ interface GetRoutes {
   routes: Route[]
 }
 
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
-  lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
+const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
 
 const sortByTags = (routeA: Route, routeB: Route): number => {
   const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
@@ -20,9 +19,9 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
 
   if (tagIndexA === -1 && tagIndexB === -1) {
     return 0
-  } else if (tagIndexA === -1) {
+  } if (tagIndexA === -1) {
     return 1
-  } else if (tagIndexB === -1) {
+  } if (tagIndexB === -1) {
     return -1
   }
 
@@ -48,9 +47,7 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
     toAddress: to.address,
   }
 
-  // console.log('fetchRoutes routesRequest', routesRequest)
   const response = await lifi.getRoutes(routesRequest)
-  // console.log('fetchRoutes response', response)
   if (!response.routes) return null
   const result = {
     routes: [...response.routes.map((route) => standardiseRoute(route))],

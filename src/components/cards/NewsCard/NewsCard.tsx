@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
@@ -10,22 +10,18 @@ import { columns, modalColumns } from './columns'
 import { lifiTokens } from '../../../constants/lifiTokens'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SelectionContext } from '../../../hooks/SelectionContext'
+import { useNewsReducer } from './newsReducer'
 
 interface NewsCardProps {}
 
 export const NewsCard: FC<NewsCardProps> = () => {
-  const { addNotification } = useContext(NotificationsContext)
-  const [data, setData] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [page, setPage] = useState(1)
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedToken, setSelectedToken] = useState(lifiTokens['1'][0])
-  const [mappedTokens, setMappedTokens] = useState(lifiTokens['1'].slice(0, 50))
   const { selection } = useContext(SelectionContext)
+  const { addNotification } = useContext(NotificationsContext)
+  const [{ data, isLoading, page, isModalVisible, selectedToken, mappedTokens }, dispatch] = useNewsReducer(selection)
 
   useEffect(() => {
     if (!selectedToken) return
-    fetchNews(setData, setIsLoading, addNotification, false, {
+    fetchNews(data, dispatch, addNotification, false, {
       currencies: [selectedToken.symbol],
       page,
     })
@@ -33,19 +29,19 @@ export const NewsCard: FC<NewsCardProps> = () => {
 
   useEffect(() => {
     if (!selection.swapCard.to.token) return
-    setSelectedToken(selection.swapCard.to.token)
+    dispatch({ type: 'SET_SELECTED_TOKEN', payload: selection.swapCard.to.token })
   }, [selection.swapCard.to.token])
 
   const handleSelectToken = (token) => {
-    setSelectedToken(token)
-    setIsModalVisible(false)
+    dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
+    dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false })
   }
 
   return (
     <div>
       <div className={`${classNames.container} card`}>
         <CardHeader title="News">
-          <Button variant="black" size="sm" onClick={() => setIsModalVisible(true)}>
+          <Button variant="black" size="sm" onClick={() => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })}>
             <CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
           </Button>
         </CardHeader>
@@ -55,23 +51,26 @@ export const NewsCard: FC<NewsCardProps> = () => {
           isHeaderVisible={false}
           isLoading={isLoading}
           onEndReached={() => {
-            fetchNews(setData, setIsLoading, addNotification, true, {
+            fetchNews(data, dispatch, addNotification, true, {
               currencies: [selectedToken.symbol],
               page: page + 1,
             })
-            setPage(page + 1)
+            dispatch({ type: 'INCREMENT_PAGE' })
           }}
         />
       </div>
       <EntityListModal
         title="Select token"
         show={isModalVisible}
-        setShow={setIsModalVisible}
+        setShow={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
         data={lifiTokens['1']}
         visibleData={mappedTokens}
         columns={modalColumns}
         onSelect={(token) => handleSelectToken(token)}
-        onEndReached={() => setMappedTokens([...mappedTokens, ...lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])}
+        onEndReached={() => dispatch({
+            type: 'ADD_MAPPED_TOKENS',
+            payload: lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 50),
+          })}
       />
     </div>
   )

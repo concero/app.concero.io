@@ -27,6 +27,5 @@ export const fetchTransactionHistory = async (tokensPair: string) => {
 
     return acc
   }, [])
-  console.log('result', result)
   return result
 }
