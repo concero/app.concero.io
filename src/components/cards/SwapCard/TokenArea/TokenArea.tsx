@@ -8,18 +8,18 @@ import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
 import { chains } from '../../../../constants/chains'
-import { tokens } from '../../../../constants/tokens'
+import { lifiTokens } from '../../../../constants/lifiTokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
 import { isFloatInput } from '../../../../utils/validation'
-import { fetchCurrentTokenPriceUSD } from '../../../../api/lifi/fetchCurrentTokenPriceUSD'
+import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, address }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
-  const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
+  const [mappedTokens, setMappedTokens] = useState<any[]>(lifiTokens[selection.chain.id].slice(0, 50))
   const [balance, setBalance] = useState<string>(`0 ${selection.token.symbol}`)
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const inputRef = useRef()
@@ -59,7 +59,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   }
 
   const getCurrentPriceToken = async () => {
-    const response = await fetchCurrentTokenPriceUSD(selection.chain.id, selection.token.symbol)
+    const response = await fetchCurrentTokenPriceUSD(selection.token.symbol)
     setCurrentTokenPriceUSD(response)
   }
 
@@ -76,11 +76,13 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
     dispatch({
       type: 'SET_AMOUNT',
       direction,
-      payload: { amount_usd: (currentTokenPriceUSD * parseFloat(input)).toFixed(2).toString() },
+      payload: {
+        amount_usd: (currentTokenPriceUSD * parseFloat(input)).toFixed(2).toString(),
+      },
     })
   }
 
-  const getTokenBySymbol = (chainId, symbol) => tokens[chainId].find((token) => token.symbol === symbol)
+  const getTokenBySymbol = (chainId, symbol) => lifiTokens[chainId].find((token) => token.symbol === symbol)
 
   const fetchBalance = async () => {
     const response = await getTokenBalance(address, getTokenBySymbol(selection.chain.id, selection.token.symbol))
@@ -90,15 +92,15 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   }
 
   useEffect(() => {
-    getCurrentPriceToken()
+    if (direction === 'from') getCurrentPriceToken()
     fetchBalance()
-    setMappedTokens(tokens[selection.chain.id].slice(0, 50))
+    setMappedTokens(lifiTokens[selection.chain.id].slice(0, 50))
   }, [selection.chain, selection.token])
 
   const handleMappedTokens = () => {
     setMappedTokens([
       ...mappedTokens,
-      ...tokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
+      ...lifiTokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
     ])
   }
 
@@ -140,10 +142,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>
-              $
-              {selection.amount_usd}
-            </h5>
+            <h5>${selection.amount_usd}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}
@@ -172,7 +171,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
       <EntityListModal
         title="Select token"
         visibleData={mappedTokens}
-        data={tokens[selection.chain.id]}
+        data={lifiTokens[selection.chain.id]}
         columns={TokenColumns}
         show={showTokensModal}
         setShow={setShowTokensModal}

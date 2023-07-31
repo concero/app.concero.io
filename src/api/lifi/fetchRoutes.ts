@@ -3,7 +3,7 @@ import { WalletClient } from 'wagmi'
 import { Account, Transport } from 'viem'
 import { FetchRoutesParams, Route } from './types'
 import { standardiseRoute } from './standardiseRoute'
-import { tokens } from '../../constants/tokens'
+import { lifiTokens } from '../../constants/lifiTokens'
 import { addingDecimals } from '../../utils/formatting'
 
 interface GetRoutes {
@@ -11,7 +11,7 @@ interface GetRoutes {
 }
 
 const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
-  tokens[chainId].find((token) => token.address === tokenAddress).decimals
+  lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
 
 const sortByTags = (routeA: Route, routeB: Route): number => {
   const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
@@ -48,9 +48,9 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
     toAddress: to.address,
   }
 
-  console.log('fetchRoutes routesRequest', routesRequest)
+  // console.log('fetchRoutes routesRequest', routesRequest)
   const response = await lifi.getRoutes(routesRequest)
-  console.log('fetchRoutes response', response)
+  // console.log('fetchRoutes response', response)
   if (!response.routes) return null
   const result = {
     routes: [...response.routes.map((route) => standardiseRoute(route))],

@@ -7,7 +7,7 @@ import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { fetchNews } from '../../../api/cryptopanic/fetchNews'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { columns, modalColumns } from './columns'
-import { tokens } from '../../../constants/tokens'
+import { lifiTokens } from '../../../constants/lifiTokens'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 
 interface NewsCardProps {}
@@ -18,8 +18,8 @@ export const NewsCard: FC<NewsCardProps> = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedToken, setSelectedToken] = useState(tokens['1'][0])
-  const [mappedTokens, setMappedTokens] = useState(tokens['1'].slice(0, 50))
+  const [selectedToken, setSelectedToken] = useState(lifiTokens['1'][0])
+  const [mappedTokens, setMappedTokens] = useState(lifiTokens['1'].slice(0, 50))
 
   useEffect(() => {
     if (!selectedToken) return
@@ -53,15 +53,15 @@ export const NewsCard: FC<NewsCardProps> = () => {
         />
       </div>
       <EntityListModal
-        title="Select chain"
+        title="Select token"
         show={isModalVisible}
         setShow={setIsModalVisible}
-        data={tokens['1']}
+        data={lifiTokens['1']}
         visibleData={mappedTokens}
         columns={modalColumns}
         onSelect={(token) => handleSelectToken(token)}
         onEndReached={() =>
-          setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
+          setMappedTokens([...mappedTokens, ...lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
         }
       />
     </div>

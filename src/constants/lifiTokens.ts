@@ -1,4 +1,4 @@
-export const tokens = {
+export const lifiTokens = {
   1: [
     {
       address: '0x0000000000000000000000000000000000000000',

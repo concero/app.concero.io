@@ -11,12 +11,12 @@ import { chains } from '../../../constants/chains'
 import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedControl'
 import { intervals } from './constants'
 import { columns } from './columns'
-import { tokens } from '../../../constants/tokens'
+import { lifiTokens } from '../../../constants/lifiTokens'
 
 export interface ChartCardProps {}
 
 export const ChartCard: FC<ChartCardProps> = () => {
-  const [chartType, setChartType] = useState<'chart' | 'tradingView'>('chart')
+  const [chartType, setChartType] = useState<'coinGecko' | 'tradingView'>('coinGecko')
   const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
   const [selectedLeftToken, setSelectedLeftToken] = useState<{ name: string; symbol: string; logoURI: string }>(
@@ -25,7 +25,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const [selectedRightChain, setSelectedRightChain] = useState<{ name: string; symbol: string }>(chains[1])
   const [selectedInterval, setSelectedInterval] = useState<{ title: string; id: string } | undefined>(intervals[0])
   const [mappedTokens, setMappedTokens] = useState<{ name: string; symbol: string; logoURI: string }[]>(
-    tokens[1].slice(0, 50),
+    lifiTokens[1].slice(0, 50),
   )
 
   const handleSelectLeftToken = (chain: { name: string; symbol: string }): void => {
@@ -39,11 +39,11 @@ export const ChartCard: FC<ChartCardProps> = () => {
   }
 
   const toggleChartType = (): void => {
-    setChartType(chartType === 'chart' ? 'tradingView' : 'chart')
+    setChartType(chartType === 'coinGecko' ? 'tradingView' : 'coinGecko')
   }
 
   const handleEndReached = () => {
-    setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
+    setMappedTokens([...mappedTokens, ...lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
   }
 
   const isDesktop = useMediaQuery('mobile')
@@ -82,12 +82,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
             </Button>
           ) : null}
         </div>
-        {chartType === 'chart' ? (
+        {chartType === 'coinGecko' ? (
           <SegmentedControl data={intervals} selectedItem={selectedInterval} setSelectedItem={setSelectedInterval} />
         ) : null}
       </div>
       <div className="f1">
-        {chartType === 'chart' ? (
+        {chartType === 'coinGecko' ? (
           <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
         ) : (
           <AdvancedRealTimeChart
@@ -108,7 +108,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
         title="Select token"
         show={isSelectLeftTokenModalVisible}
         setShow={setIsSelectLeftTokenModalVisible}
-        data={tokens[1]}
+        data={lifiTokens[1]}
         visibleData={mappedTokens}
         onEndReached={() => handleEndReached()}
         columns={columns}

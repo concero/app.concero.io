@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { chains } from '../../../constants/chains'
-import { tokens } from '../../../constants/tokens'
+import { lifiTokens } from '../../../constants/lifiTokens'
 import { Action, State } from './types'
 
 export function swapReducer(state: State, action: Action) {
@@ -34,7 +34,7 @@ export function swapReducer(state: State, action: Action) {
         [action.direction]: {
           ...state[action.direction],
           chain: action.payload,
-          token: tokens[action.payload.id][0],
+          token: lifiTokens[action.payload.id][0],
         },
       }
     case 'SET_TOKEN':
@@ -80,10 +80,10 @@ export const useSwapReducer = (selectionDispatch) => {
     from: {
       chain: { name: chains[0].name, symbol: chains[0].symbol, id: chains[0].id, logoURI: chains[0].logoURI },
       token: {
-        name: tokens[chains[0].id][0].name,
-        symbol: tokens[chains[0].id][0].symbol,
-        address: tokens[chains[0].id][0].address,
-        logoURI: tokens[chains[0].id][0].logoURI,
+        name: lifiTokens[chains[0].id][0].name,
+        symbol: lifiTokens[chains[0].id][0].symbol,
+        address: lifiTokens[chains[0].id][0].address,
+        logoURI: lifiTokens[chains[0].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,
@@ -92,10 +92,10 @@ export const useSwapReducer = (selectionDispatch) => {
     to: {
       chain: { name: chains[1].name, symbol: chains[1].symbol, id: chains[1].id, logoURI: chains[1].logoURI },
       token: {
-        name: tokens[chains[1].id][0].name,
-        symbol: tokens[chains[1].id][0].symbol,
-        address: tokens[chains[1].id][0].address,
-        logoURI: tokens[chains[1].id][0].logoURI,
+        name: lifiTokens[chains[1].id][0].name,
+        symbol: lifiTokens[chains[1].id][0].symbol,
+        address: lifiTokens[chains[1].id][0].address,
+        logoURI: lifiTokens[chains[1].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,
