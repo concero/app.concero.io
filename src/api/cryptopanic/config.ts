@@ -1,6 +1,7 @@
 import { config } from '../../constants/config'
 
 export const authToken = config.CRYPTOPANIC_API_KEY
+export const baseURL = 'https://cryptopanic.com/api/v1'
 
 export const headers = {
   Authorization: `Bearer ${authToken}`,

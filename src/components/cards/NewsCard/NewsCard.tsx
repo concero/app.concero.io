@@ -4,7 +4,7 @@ import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
-import { fetchNews } from '../../../api/cryptopanic/fetchNews'
+import { getNews } from './getNews'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { columns, modalColumns } from './columns'
 import { lifiTokens } from '../../../constants/lifiTokens'
@@ -21,7 +21,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 
   useEffect(() => {
     if (!selectedToken) return
-    fetchNews(data, dispatch, addNotification, false, {
+    getNews(data, dispatch, addNotification, false, {
       currencies: [selectedToken.symbol],
       page,
     })
@@ -51,7 +51,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
           isHeaderVisible={false}
           isLoading={isLoading}
           onEndReached={() => {
-            fetchNews(data, dispatch, addNotification, true, {
+            getNews(data, dispatch, addNotification, true, {
               currencies: [selectedToken.symbol],
               page: page + 1,
             })

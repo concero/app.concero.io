@@ -1,5 +1,5 @@
 export const config = {
-  baseURL: 'http://192.168.1.108:4000',
+  baseURL: 'http://localhost:4000',
   headers: {
     'Content-Type': 'application/json',
   },
