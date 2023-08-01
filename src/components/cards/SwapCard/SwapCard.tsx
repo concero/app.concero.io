@@ -3,11 +3,11 @@ import { useAccount, useSwitchNetwork } from 'wagmi'
 import { providers } from 'ethers'
 import { createWalletClient, custom } from 'viem'
 import { CardHeader } from '../CardHeader/CardHeader'
-import { Button } from '../../buttons/Button/Button'
 import classNames from './SwapCard.module.pcss'
 import { TokenArea } from './TokenArea/TokenArea'
 import { SwapDetails } from './SwapDetails/SwapDetails'
 import { executeRoute, fetchRoutes } from '../../../api/lifi/fetchRoutes'
+import { getTokenBalance } from '@lifi/sdk/dist/balance'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
@@ -15,6 +15,9 @@ import { setHistoryCard } from './setHistoryCard'
 import { setSwapCard } from './setSwapCard'
 import { viemSigner } from '../../../web3/ethers'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
+import { SwapButton } from '../../buttons/SwapButton/SwapButton'
+import { numberToFormatString } from '../../../utils/formatting'
+import { lifiTokens } from '../../../constants/lifiTokens'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
@@ -22,8 +25,18 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [{ from, to, routes, isLoading, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
   const [response, setResponse] = useState(null)
   const [prevFromAmount, setPrevFromAmount] = useState(null)
+  const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
+
+  const getTokenBySymbol = (chainId, symbol) => lifiTokens[chainId].find((token) => token.symbol === symbol)
+
+  const fetchBalance = async () => {
+    const response = await getTokenBalance(address, getTokenBySymbol(from.chain.id, from.token.symbol))
+    if (!response) return
+    const result = `${numberToFormatString(Number(response?.amount))} ${response?.symbol}`
+    setBalance(result)
+  }
 
   async function getRoutes() {
     if (!from.amount) return
@@ -86,17 +99,19 @@ export const SwapCard: FC<SwapCardProps> = () => {
       type: 'SET_LOADING',
       payload: true,
     })
-    await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
+    try {
+      const executedRoute = await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
+      console.log('executedRoute', executedRoute)
+    } catch (e) {
+      const error = e
+      console.log(error)
+    }
     await swapDispatch({
       type: 'SET_LOADING',
       payload: false,
     })
   }
   const { addNotification } = useContext(NotificationsContext)
-
-  const onClick = () => {
-    addNotification({ message: 'Hello, world!' })
-  }
 
   const clearRoutes = () => {
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
@@ -111,6 +126,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
     setHistoryCard(dispatch, from, to)
     setSwapCard(dispatch, from, to)
   }, [from.token.symbol, to.token.symbol])
+
+  useEffect(() => {
+    fetchBalance()
+  }, [from.token.symbol])
 
   useEffect(() => {
     clearRoutes()
@@ -147,7 +166,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
     <div className={`card ${classNames.container}`}>
       <CardHeader title="Swap" />
       <div className={classNames.swapContainer}>
-        <TokenArea direction="from" selection={from} dispatch={swapDispatch} address={address} />
+        <TokenArea direction="from" selection={from} dispatch={swapDispatch} address={address} balance={balance} />
         <TokenArea direction="to" selection={to} dispatch={swapDispatch} address={address} />
         <SwapDetails
           selection={{
@@ -164,19 +183,15 @@ export const SwapCard: FC<SwapCardProps> = () => {
           routes={routes}
           isLoading={isLoading}
         />
-        <Button
-          size="lg"
-          leftIcon={{
-            name: 'ArrowsUpDown',
-            iconProps: { size: 18 },
-          }}
-          isDisabled={(isConnected && !routes.length) || !isConnected}
-          isLoading={isLoading}
+        <SwapButton
           onClick={() => handleSwap()}
-          className={classNames.swapButton}
-        >
-          {!isLoading && (isConnected ? 'Swap' : 'Connect wallet to swap')}
-        </Button>
+          from={from}
+          to={to}
+          isLoading={isLoading}
+          isConnected={isConnected}
+          routes={routes}
+          balance={balance}
+        />
       </div>
     </div>
   )
