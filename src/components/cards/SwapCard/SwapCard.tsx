@@ -6,8 +6,7 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
 import { TokenArea } from './TokenArea/TokenArea'
 import { SwapDetails } from './SwapDetails/SwapDetails'
-import { executeRoute, fetchRoutes } from '../../../api/lifi/fetchRoutes'
-import { getTokenBalance } from '@lifi/sdk/dist/balance'
+import { executeRoute } from '../../../api/lifi/fetchRoutes'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
@@ -16,8 +15,9 @@ import { setSwapCard } from './setSwapCard'
 import { viemSigner } from '../../../web3/ethers'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SwapButton } from '../../buttons/SwapButton/SwapButton'
-import { numberToFormatString } from '../../../utils/formatting'
-import { lifiTokens } from '../../../constants/lifiTokens'
+import { getBalance } from './getBalance'
+import { getRoutes } from './getRoutes'
+import { clearRoutes } from './clearRoutes'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
@@ -28,30 +28,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
-
-  const getTokenBySymbol = (chainId, symbol) => lifiTokens[chainId].find((token) => token.symbol === symbol)
-
-  const fetchBalance = async () => {
-    const response = await getTokenBalance(address, getTokenBySymbol(from.chain.id, from.token.symbol))
-    if (!response) return
-    const result = `${numberToFormatString(Number(response?.amount))} ${response?.symbol}`
-    setBalance(result)
-  }
-
-  async function getRoutes() {
-    if (!from.amount) return
-    swapDispatch({
-      type: 'SET_LOADING',
-      payload: true,
-    })
-    const data = await fetchRoutes({
-      from,
-      to,
-    })
-    setPrevFromAmount(from.amount)
-    if (!data || data.routes.length === 0) return
-    setResponse(data)
-  }
 
   useEffect(() => {
     if (!from.amount || prevFromAmount !== from.amount) return
@@ -72,7 +48,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const handleFetchRoutes = async () => {
     try {
       if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-      const typingTimeoutId = setTimeout(() => getRoutes(), 700)
+      const typingTimeoutId = setTimeout(() => getRoutes(from, to, swapDispatch, setPrevFromAmount, setResponse), 700)
       typingTimeoutRef.current = typingTimeoutId
     } catch (e) {
       console.error(e)
@@ -103,8 +79,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
       const executedRoute = await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
       console.log('executedRoute', executedRoute)
     } catch (e) {
-      const error = e
-      console.log(error)
+      console.log(e)
     }
     await swapDispatch({
       type: 'SET_LOADING',
@@ -113,28 +88,19 @@ export const SwapCard: FC<SwapCardProps> = () => {
   }
   const { addNotification } = useContext(NotificationsContext)
 
-  const clearRoutes = () => {
-    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-    swapDispatch({ type: 'CLEAR_ROUTES' })
-    swapDispatch({
-      type: 'RESET_AMOUNTS',
-      direction: 'to',
-    })
-  }
-
   useEffect(() => {
     setHistoryCard(dispatch, from, to)
     setSwapCard(dispatch, from, to)
   }, [from.token.symbol, to.token.symbol])
 
   useEffect(() => {
-    fetchBalance()
+    getBalance(address, from, setBalance)
   }, [from.token.symbol])
 
   useEffect(() => {
-    clearRoutes()
+    clearRoutes(typingTimeoutRef, swapDispatch)
     handleFetchRoutes()
-    return () => clearRoutes()
+    return () => clearRoutes(typingTimeoutRef, swapDispatch)
   }, [from.token, from.amount, from.chain, to.token, to.chain])
 
   useEffect(() => {

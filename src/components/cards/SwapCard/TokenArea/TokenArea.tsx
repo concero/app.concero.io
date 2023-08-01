@@ -54,6 +54,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
       },
     })
   }
+
   const setAmountUsd = (input) => {
     dispatch({
       type: 'SET_AMOUNT',
@@ -141,10 +142,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>
-              $
-              {selection.amount_usd}
-            </h5>
+            <h5>${selection.amount_usd}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}
@@ -172,13 +170,14 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
       />
       <EntityListModal
         title="Select token"
-        visibleData={mappedTokens}
         data={lifiTokens[selection.chain.id]}
+        visibleData={mappedTokens}
         columns={TokenColumns}
         show={showTokensModal}
         setShow={setShowTokensModal}
         onSelect={(token) => setToken(token)}
         onEndReached={() => handleMappedTokens()}
+        isAnimationNeeded={false}
       />
     </>
   )

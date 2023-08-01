@@ -14,6 +14,7 @@ export interface EntityListModalProps {
   setShow: (show: boolean) => void
   onSelect: (item: any) => void
   onEndReached?: () => void
+  isAnimationNeeded?: boolean
 }
 
 export const EntityListModal: FC<EntityListModalProps> = ({
@@ -25,6 +26,7 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   setShow,
   onSelect,
   onEndReached = null,
+  isAnimationNeeded = true,
 }) => {
   const [filteredData, setFilteredData] = useState<any[]>(visibleData || data)
   const [value, setValue] = useState<string>('')
@@ -56,6 +58,7 @@ export const EntityListModal: FC<EntityListModalProps> = ({
           items={filteredData}
           onClick={(item) => handleSelect(item)}
           onEndReached={onEndReached && onEndReached}
+          isAnimationNeeded={isAnimationNeeded}
         />
       </div>
     </Modal>

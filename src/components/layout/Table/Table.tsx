@@ -18,6 +18,7 @@ export interface TableProps {
   isLoading?: boolean
   onClick?: (item: any) => void
   onEndReached?: () => void
+  isAnimationNeeded?: boolean
 }
 
 export const Table: FC<TableProps> = ({
@@ -27,6 +28,7 @@ export const Table: FC<TableProps> = ({
   isLoading,
   onClick,
   onEndReached = null,
+  isAnimationNeeded = true,
 }) => {
   const handleScroll = (e: any) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
@@ -36,9 +38,18 @@ export const Table: FC<TableProps> = ({
   }
 
   const transitions = useTransition(items, {
-    from: { opacity: 0, transform: 'translate3d(0, -40px, 0)' },
-    enter: { opacity: 1, transform: 'translate3d(0, 0px, 0)' },
-    leave: { opacity: 0, transform: 'translate3d(0, -40px, 0)' },
+    from: {
+      opacity: 0,
+      transform: 'translate3d(0, -40px, 0)',
+    },
+    enter: {
+      opacity: 1,
+      transform: 'translate3d(0, 0px, 0)',
+    },
+    leave: {
+      opacity: 0,
+      transform: 'translate3d(0, -40px, 0)',
+    },
     keys: (item) => item.id,
   })
 
@@ -50,9 +61,11 @@ export const Table: FC<TableProps> = ({
         <table>
           {isHeaderVisible && <TableHeader columns={columns} />}
           <tbody className="striped">
-            {transitions((styles, item) => (
-              <TableRow style={styles} item={item} columns={columns} onClick={onClick} />
-            ))}
+            {isAnimationNeeded
+              ? transitions((styles, item) => (
+                  <TableRow style={styles} item={item} columns={columns} onClick={onClick} />
+                ))
+              : items.map((item, index) => <TableRow key={index} item={item} columns={columns} onClick={onClick} />)}
           </tbody>
         </table>
       )}
