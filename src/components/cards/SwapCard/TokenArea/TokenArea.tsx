@@ -43,7 +43,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   // todo do not destructure
 
   const setToken = (token) => {
-    console.log(token)
     dispatch({
       type: 'SET_TOKEN',
       direction,
@@ -142,7 +141,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>${selection.amount_usd}</h5>
+            <h5>
+              $
+              {selection.amount_usd}
+            </h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}
