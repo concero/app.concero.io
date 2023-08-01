@@ -67,6 +67,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
       const { clientWidth, clientHeight } = chartRef.current
       chart.resize(clientWidth, clientHeight)
     }
+
     window.addEventListener('resize', handleResize)
     chart.subscribeCrosshairMove((param) => {
       if (tooltipRef.current) updateTooltip(param, seriesRef.current, tooltipRef.current, chartRef.current)

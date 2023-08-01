@@ -1,9 +1,8 @@
 import { FC, useEffect, useRef, useState } from 'react'
-import { getTokenBalance } from '@lifi/sdk/dist/balance'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
-import { capitalize, numberToFormatString } from '../../../../utils/formatting'
+import { capitalize } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
@@ -15,12 +14,11 @@ import { TokenColumns } from './TokenColumns'
 import { isFloatInput } from '../../../../utils/validation'
 import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, address }) => {
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, balance = null }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
   const [mappedTokens, setMappedTokens] = useState<any[]>(lifiTokens[selection.chain.id].slice(0, 50))
-  const [balance, setBalance] = useState<string>(`0 ${selection.token.symbol}`)
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const inputRef = useRef()
 
@@ -57,22 +55,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
       },
     })
   }
-
-  const getCurrentPriceToken = async () => {
-    const response = await fetchCurrentTokenPriceUSD(selection.token.symbol)
-    setCurrentTokenPriceUSD(response)
-  }
-
-  const handleAmountChange = (input) => {
-    if (input === '') return dispatch({ type: 'RESET_AMOUNTS', direction })
-    if (!isFloatInput(input)) return
-
-    dispatch({
-      type: 'SET_AMOUNT',
-      direction,
-      payload: { amount: input },
-    })
-
+  const setAmountUsd = (input) => {
     dispatch({
       type: 'SET_AMOUNT',
       direction,
@@ -82,20 +65,37 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
     })
   }
 
-  const getTokenBySymbol = (chainId, symbol) => lifiTokens[chainId].find((token) => token.symbol === symbol)
+  const getCurrentPriceToken = async () => {
+    const response = await fetchCurrentTokenPriceUSD(selection.token.symbol)
+    setCurrentTokenPriceUSD(response)
+  }
 
-  const fetchBalance = async () => {
-    const response = await getTokenBalance(address, getTokenBySymbol(selection.chain.id, selection.token.symbol))
-    if (!response) return
-    const result = `${numberToFormatString(Number(response?.amount))} ${response?.symbol}`
-    setBalance(result)
+  const handleAmountChange = (input) => {
+    if (input === '') {
+      return dispatch({
+        type: 'RESET_AMOUNTS',
+        direction,
+      })
+    }
+    if (!isFloatInput(input)) return
+
+    dispatch({
+      type: 'SET_AMOUNT',
+      direction,
+      payload: { amount: input },
+    })
+
+    setAmountUsd(input)
   }
 
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken()
-    fetchBalance()
     setMappedTokens(lifiTokens[selection.chain.id].slice(0, 50))
   }, [selection.chain, selection.token])
+
+  useEffect(() => {
+    if (selection.amount) setAmountUsd(selection.amount)
+  }, [currentTokenPriceUSD])
 
   const handleMappedTokens = () => {
     setMappedTokens([
@@ -128,7 +128,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
             </Button>
           </div>
-          <p>{`Max: ${balance}`}</p>
+          {balance !== null ? <p>{`Max: ${balance}`}</p> : null}
         </div>
         <div className={classNames.tokenRow}>
           <div>

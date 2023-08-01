@@ -1,6 +1,5 @@
 export interface TokenAreaProps {
   direction: 'to' | 'from'
-  address: string
   selection: {
     chain: {
       name: string
@@ -14,4 +13,5 @@ export interface TokenAreaProps {
     amount_usd: string
   }
   dispatch: any
+  balance?: string
 }
