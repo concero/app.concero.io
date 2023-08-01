@@ -114,7 +114,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
         ) : (
           <AdvancedRealTimeChart
             theme="dark"
-            symbol="BINANCE:BTCUSDT"
+            symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
             interval="1"
             width="100%"
             height="100%"
