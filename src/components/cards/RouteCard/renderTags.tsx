@@ -9,7 +9,6 @@ export const renderTags = (
   getTextColor: () => string,
   getIconColor: () => string,
 ) => {
-  const getBgColor = isSelected ? 'mainDarker' : 'grey'
   const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
 
   return (
@@ -20,7 +19,7 @@ export const renderTags = (
         </Tag>
       ) : null}
       <Tag
-        color={getBgColor}
+        color={'transparent'}
         leftIcon={{
           name: 'Clock',
           iconProps: {
@@ -34,7 +33,7 @@ export const renderTags = (
         </h5>
       </Tag>
       <Tag
-        color={getBgColor}
+        color={'transparent'}
         leftIcon={{
           name: 'ArrowWaveRightUp',
           iconProps: {
@@ -46,7 +45,7 @@ export const renderTags = (
         <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{route.slippage_percent}%</h5>
       </Tag>
       <Tag
-        color={getBgColor}
+        color={'transparent'}
         leftIcon={{
           name: 'GasStation',
           iconProps: {
