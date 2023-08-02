@@ -32,7 +32,7 @@ export async function apiRequestExec(req_fn) {
   return { response, ok, err }
 }
 
-export async function api(req_fn, on_ok = null, on_err = null) {
+export async function api(req_fn, on_ok, on_err) {
   // executes req_fn and calls on_ok or on_err depending on the result
   const { response, ok, err } = await apiRequestExec(req_fn)
   if (ok) {
@@ -40,14 +40,14 @@ export async function api(req_fn, on_ok = null, on_err = null) {
   } else if (on_err) on_err(err)
 }
 
-export async function apiRequest(res) {
+export async function apiRequest(response) {
   // gets response, determines if it's ok, and returns { response, ok, err }
   let ok = false
   let err = null
-  if (res.status >= 200 && res.status < 300) {
+  if (response.status >= 200 && response.status < 300) {
     ok = true
   } else {
-    err = res
+    err = response?.data?.error || response?.data?.message || response?.data || response
   }
-  return { response: res, ok, err }
+  return { res: response, ok, err }
 }
