@@ -37,7 +37,7 @@ export const fetchChartData = async (
 
   function on_err(res: { data: { error: any } }) {
     addNotification({
-      title: "Couldn't fetch chart data",
+      title: "Couldn't fetch coinGecko data",
       message: res.data.error,
       color: 'red',
     })

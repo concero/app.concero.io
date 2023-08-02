@@ -18,6 +18,13 @@
     --color-tag-fastest: #093D6D;
     --color-tag-cheapest: #6D0A46;
 
+    --color-button-disabled: #45336D;
+    --color-border-disabled: #7335F7;
+    --color-button-wrong: #421C28;
+    --color-border-wrong: #7A253E;
+    --color-button-success: #1E4839;
+    --color-border-success: #20A273;
+
     color-scheme: light dark;
     font-family: Poppins, sans-serif;
     font-size: 16px; /* base font size, 1rem */
@@ -226,7 +233,7 @@ button {
     outline: none;
 }
 
-#tradingview_widget_wrapper{
+#tradingview_widget_wrapper {
     div:nth-child(2) {
         display: none;
     }

@@ -154,7 +154,6 @@ function App(conf) {
     light2.color = new THREE.Color(chroma.random().hex())
     light3.color = new THREE.Color(chroma.random().hex())
     light4.color = new THREE.Color(chroma.random().hex())
-    console.log(light1.color, light2.color, light3.color, light4.color)
   }
 
   function updateCScale(color) {
@@ -170,7 +169,6 @@ function App(conf) {
         .hex(),
       0xffffff,
     ]
-    console.log(colors)
     cscale = chroma.scale(colors)
   }
 

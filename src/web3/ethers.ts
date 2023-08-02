@@ -16,7 +16,7 @@ if (window.ethereum) {
   provider = new providers.Web3Provider(client0.transport, 'any')
   viemSigner = provider.getSigner()
 } else {
-  console.log('Ethereum is not supported in this browser.')
+  console.error('Ethereum is not supported in this browser.')
 }
 
 export function publicClientToProvider(publicClient: PublicClient) {

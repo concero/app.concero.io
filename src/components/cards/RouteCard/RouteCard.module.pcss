@@ -1,6 +1,8 @@
 .container {
     width: 500px;
     cursor: pointer;
+    flex-direction: column;
+    overflow-y: scroll;
 
     .cardHeader {
         align-items: center;
@@ -19,6 +21,11 @@
         gap: var(--sp-xs);
         padding: var(--sp-md) 0;
     }
+}
+
+.selectedCard {
+    background-color: var(--color-primary-darkest);
+    border: 1px solid var(--color-primary-main);
 }
 
 .subtitle {
@@ -100,11 +107,6 @@
     .advantageTagColor {
         color: var(--color-base-white);
     }
-}
-
-.bestCard {
-    background-color: var(--color-primary-darkest);
-    border: 1px solid var(--color-primary-main);
 }
 
 .bestTag {

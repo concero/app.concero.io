@@ -10,12 +10,13 @@ export const renderTags = (
   getIconColor: () => string,
 ) => {
   const getBgColor = isSelected ? 'mainDarker' : 'grey'
+  const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
 
   return (
     <div className={classNames.infoTagsContainer}>
       {route?.tags[0]?.length > 0 ? (
         <Tag color={route.tags[0].toLowerCase()}>
-          <p className={`body1 ${classNames.advantageTagColor}`}>{capitalize(route.tags[0].toLowerCase())}</p>
+          <p className={`body1 ${classNames.advantageTagColor}`}>{capitalize(advantageTagText)}</p>
         </Tag>
       ) : null}
       <Tag

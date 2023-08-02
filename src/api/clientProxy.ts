@@ -39,7 +39,6 @@ export async function get({ url, headers }): Promise<any> {
         headers: headers || {},
       },
     }
-    // console.log('sending request to proxy', request)
     const response: AxiosResponse = await queue.add(request)
     return response
   } catch (error) {

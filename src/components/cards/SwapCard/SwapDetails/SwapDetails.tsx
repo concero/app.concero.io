@@ -32,14 +32,11 @@ export const SwapDetails: FC<SwapDetailsProps> = ({
       <RateTag from={selection.from.token} to={selection.to.token} rate={rate} isLoading={isLoading} />
       <RouteButton selectedRoute={selectedRoute} onClick={() => setIsSelectRouteModalVisible(true)} />
       <Modal title="Select route" show={isSelectRouteModalVisible} setShow={setIsSelectRouteModalVisible}>
-        <div className={classNames.roueteCardsContainer}>
+        <div className={classNames.routeCardsContainer}>
           {routes?.map((route) => (
-            <RouteCard
-              key={route.id}
-              route={route}
-              isSelected={selectedRoute.id === route.id}
-              onClick={handleSelectRoute}
-            />
+            <div key={route.id}>
+              <RouteCard route={route} isSelected={selectedRoute.id === route.id} onClick={handleSelectRoute} />
+            </div>
           ))}
         </div>
       </Modal>

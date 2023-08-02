@@ -6,6 +6,7 @@ import { Button } from '../../buttons/Button/Button'
 import { renderTags } from './renderTags'
 import { renderSteps } from './renderSteps'
 import { RouteCardProps } from './types'
+import { numberToFormatString } from '../../../utils/formatting'
 
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
   const [isRoutesCollapsed, setIsRoutesCollapsed] = useState<true | false>(true)
@@ -15,14 +16,16 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 
   return (
     <Card
-      classNames={`${classNames.container} ${isSelected ? classNames.bestCard : ''}`}
+      className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`}
       onClick={() => onClick(route.id)}
     >
       <div className={classNames.cardHeader}>
         <div className={classNames.cardHeaderLeftSide}>
           <h4>Net value:</h4>
           <h3>{`$${route.to.token.amount_usd}`}</h3>
-          <h3 className={classNames.subtitle}>{`${route.to.token.amount} ${route.to.token.symbol}`}</h3>
+          <h3 className={classNames.subtitle}>{`${numberToFormatString(Number(route.to.token.amount), 2)} ${
+            route.to.token.symbol
+          }`}</h3>
         </div>
         <Button
           variant="black"

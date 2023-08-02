@@ -13,7 +13,7 @@ export function getCoordinateY(coordinate, maxCoordinate) {
 
 export function createTooltip() {
   const toolTip = document.createElement('div')
-  toolTip.className = 'chart-tooltip'
+  toolTip.className = 'coinGecko-tooltip'
   toolTip.style = `
     position: absolute;
     opacity: 0;

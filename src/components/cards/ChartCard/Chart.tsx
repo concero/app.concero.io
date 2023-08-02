@@ -3,9 +3,9 @@ import { createChart } from 'lightweight-charts'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
-import { fetchChartData } from '../../../api/chart/fetchChartData'
+import { fetchChartData } from '../../../api/coinGecko/fetchChartData'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
-import { fetchTokenIdBySymbol } from '../../../api/chart/fetchTokenIdBySymbol'
+import { getCoingeckoTokenIdBySymbol } from '../../../api/coinGecko/getCoingeckoTokenIdBySymbol'
 
 interface Chain {
   name: string
@@ -29,18 +29,14 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
   const chartRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
-  const [tokenId, setTokenId] = useState<string>(selectedToken.name.toLowerCase())
   const [data, setData] = useState<any[]>([])
   const { colors } = useContext(ThemeContext)
 
-  const getTokenId = async (symbol: string) => {
-    const id = await fetchTokenIdBySymbol(symbol)
-    setTokenId(id)
-  }
-
   // Fetch data
   useEffect(() => {
+    const tokenId = getCoingeckoTokenIdBySymbol(selectedToken.symbol)
     fetchChartData(setData, addNotification, tokenId, selectedInterval)
+
     const interval = setInterval(() => {
       fetchChartData(setData, addNotification, tokenId, selectedInterval)
     }, 12000)
@@ -48,13 +44,9 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
     return () => {
       clearInterval(interval)
     }
-  }, [selectedInterval, tokenId])
+  }, [selectedInterval, selectedToken])
 
-  useEffect(() => {
-    getTokenId(selectedToken.symbol, setTokenId)
-  }, [selectedToken])
-
-  // Initialize chart
+  // Initialize coinGecko
   useEffect(() => {
     if (!chartRef.current) return
 
@@ -62,7 +54,10 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
     chart.timeScale().fitContent()
 
     chart.timeScale().applyOptions({ borderColor: 'transparent' })
-    chart.priceScale('right').applyOptions({ borderColor: 'transparent', textColor: colors.text.secondary })
+    chart.priceScale('right').applyOptions({
+      borderColor: 'transparent',
+      textColor: colors.text.secondary,
+    })
     seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors))
     seriesRef.current.setData(data)
     tooltipRef.current = createTooltip()
@@ -72,6 +67,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
       const { clientWidth, clientHeight } = chartRef.current
       chart.resize(clientWidth, clientHeight)
     }
+
     window.addEventListener('resize', handleResize)
     chart.subscribeCrosshairMove((param) => {
       if (tooltipRef.current) updateTooltip(param, seriesRef.current, tooltipRef.current, chartRef.current)
@@ -85,9 +81,9 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
         tooltipRef.current = null
       }
     }
-  }, [colors, data])
+  }, [colors, data, chartRef])
 
-  // Update chart data
+  // Update coinGecko data
   useEffect(() => {
     if (seriesRef.current) {
       seriesRef.current.setData(data)
