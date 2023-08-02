@@ -32,7 +32,7 @@ export const getNews = async (data, dispatch, selectedToken, timestamp, addNotif
   // not parsing data further, because of the newsColumns
   function on_ok(res) {
     const news = res.data.Data
-    console.log('NEWS ', news)
+
     dispatch({
       type: 'SET_LOADING',
       payload: false,

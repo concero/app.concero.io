@@ -18,11 +18,13 @@ import { SwapButton } from '../../buttons/SwapButton/SwapButton'
 import { getBalance } from './getBalance'
 import { getRoutes } from './getRoutes'
 import { clearRoutes } from './clearRoutes'
+import { handleTransactionError } from './handleTransactionError'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const { dispatch } = useContext(SelectionContext)
-  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
+  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes, transactionResponse }, swapDispatch] =
+    useSwapReducer()
   const [response, setResponse] = useState(null)
   const [prevFromAmount, setPrevFromAmount] = useState(null)
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
@@ -76,9 +78,19 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
     try {
       const executedRoute = await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
-      console.log('executedRoute', executedRoute)
+      if (executedRoute) {
+        swapDispatch({
+          type: 'SET_RESPONSES',
+          payload: {
+            provider: 'lifi',
+            isOk: true,
+            massage: 'Success',
+          },
+        })
+      }
     } catch (e) {
-      console.log(e)
+      console.log('ERROR: ', e)
+      handleTransactionError(e, swapDispatch)
     }
     await swapDispatch({
       type: 'SET_LOADING',
@@ -156,6 +168,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           isConnected={isConnected}
           routes={routes}
           balance={balance}
+          transactionResponse={transactionResponse}
         />
       </div>
     </div>

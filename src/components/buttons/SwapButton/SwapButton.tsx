@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { useButtonReducer } from './buttonReducer'
@@ -10,30 +10,60 @@ interface SwapButtonProps {
   isLoading: boolean
   routes: any[]
   onClick: () => void
+  balance: string
+  transactionResponse: any[]
 }
 
-const getStatus = (from, to, isConnected: boolean, isLoading: boolean, dispatch, routes, balance) => {
+const setStatus = (
+  from,
+  to,
+  isConnected: boolean,
+  isLoading: boolean,
+  dispatch,
+  routes,
+  balance,
+  transactionResponse,
+) => {
   if (isLoading) {
-    dispatch({ type: 'LOADING_BUTTON' })
+    dispatch({ type: 'LOADING' })
   } else if (!isConnected) {
-    dispatch({ type: 'DISCONNECTED_BUTTON' })
-  } else if (!from.amount) {
-    dispatch({ type: 'NO_AMOUNT_BUTTON' })
+    dispatch({ type: 'DISCONNECTED' })
+  } else if (transactionResponse) {
+    if (!transactionResponse.isOk) {
+      if (transactionResponse.massage === 'user rejected') {
+        dispatch({ type: 'CANCELED' })
+      } else if (transactionResponse.massage === 'unknown error') {
+        dispatch({ type: 'WRONG' })
+      }
+    } else if (transactionResponse.isOk) {
+      dispatch({ type: 'SUCCESS' })
+    }
+  } else if (!from.amount || (from.amount && !routes.length)) {
+    dispatch({ type: 'NO_AMOUNT' })
   } else if (from.amount > balance) {
-    dispatch({ type: 'LOW_BALANCE_BUTTON' })
+    dispatch({ type: 'LOW_BALANCE' })
   } else if (from.amount && to.amount && routes.length) {
-    dispatch({ type: 'SWAP_BUTTON' })
+    dispatch({ type: 'SWAP' })
   } else if (!routes.length) {
-    dispatch({ type: 'NO_ROUTE_BUTTON' })
+    dispatch({ type: 'NO_ROUTE' })
   }
 }
 
-export const SwapButton = ({ from, to, isConnected, isLoading, routes, onClick, balance }) => {
+export const SwapButton: FC<SwapButtonProps> = ({
+  from,
+  to,
+  isConnected,
+  isLoading,
+  routes,
+  onClick,
+  balance,
+  transactionResponse,
+}) => {
   const [buttonState, dispatch] = useButtonReducer()
 
   useEffect(() => {
-    getStatus(from, to, isConnected, isLoading, dispatch, routes, balance)
-  }, [from, to, isLoading, isConnected, routes])
+    setStatus(from, to, isConnected, isLoading, dispatch, routes, balance, transactionResponse)
+  }, [from, to, isLoading, isConnected, routes, transactionResponse])
 
   return (
     <Button

@@ -39574,7 +39574,7 @@ export const lifiTokens = {
       coinKey: 'HND',
     },
     {
-      address: '0x90e892fed501ae00596448aecf998c88816e5c0f',
+      address: '0xf792f5fd59679eda6f3a9b0443dc4c1338a95df1',
       chainId: 250,
       symbol: 'DMD',
       decimals: 18,
@@ -39931,7 +39931,7 @@ export const lifiTokens = {
         'https://raw.githubusercontent.com/SoulSwapFinance/assets/master/blockchains/fantom/assets/0x208234F4f8B1bBEA59cfDc38666141654e851DCe/logo.png',
     },
     {
-      address: '0x6e209329a33a63c463dbb65ae2d6655fe5c98411',
+      address: '0xf792f5fd59679eda6f3a9b0443dc4c1338a95df1',
       chainId: 250,
       symbol: 'DSHARE',
       decimals: 18,
