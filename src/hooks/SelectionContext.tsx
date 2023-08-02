@@ -1,11 +1,17 @@
 import { createContext, ReactNode, useReducer } from 'react'
 import { lifiTokens } from '../constants/lifiTokens'
+import { chains } from '../constants/chains'
 
 export const SelectionContext = createContext(null)
 
 type SelectedTokens = {
   from: {
-    chainId: number
+    chain: {
+      id: number
+      name: string
+      symbol: string
+      logoURI: string
+    }
     token: {
       symbol: string
       address: string
@@ -13,7 +19,12 @@ type SelectedTokens = {
     }
   }
   to: {
-    chainId: number
+    chain: {
+      id: number
+      name: string
+      symbol: string
+      logoURI: string
+    }
     token: {
       symbol: string
       address: string
@@ -51,7 +62,12 @@ const reducer = (state, action) => {
 
 const selectedTokens: SelectedTokens = {
   from: {
-    chainId: 1,
+    chain: {
+      id: 1,
+      name: chains[0].name,
+      symbol: chains[0].symbol,
+      logoURI: chains[0].logoURI,
+    },
     token: {
       symbol: lifiTokens['1'][0].symbol,
       address: lifiTokens['1'][0].address,
@@ -59,7 +75,12 @@ const selectedTokens: SelectedTokens = {
     },
   },
   to: {
-    chainId: 137,
+    chain: {
+      id: 137,
+      name: chains[1].name,
+      symbol: chains[1].symbol,
+      logoURI: chains[1].logoURI,
+    },
     token: {
       symbol: lifiTokens['137'][0].symbol,
       address: lifiTokens['137'][0].address,

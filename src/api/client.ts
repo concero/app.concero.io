@@ -16,14 +16,16 @@ const request = async (options: AxiosRequestConfig): Promise<any> => {
   }
 }
 
-export const get = async (url: string, params?: any): Promise<any> => request({
+export const get = async (url: string, params?: any, headers?: any): Promise<any> => request({
     url,
     method: 'GET',
     params,
+    headers,
   })
 
-export const post = async (url: string, data: any): Promise<any> => request({
+export const post = async (url: string, data: any, headers?: any): Promise<any> => request({
     url,
     method: 'POST',
     data,
+    headers,
   })
