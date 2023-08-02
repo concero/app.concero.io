@@ -20,11 +20,14 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const [chartType, setChartType] = useState<'coinGecko' | 'tradingView'>('coinGecko')
   const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
+  const { selection } = useContext(SelectionContext)
+
   const [selectedLeftToken, setSelectedLeftToken] = useState<{
     name: string
     symbol: string
     logoURI: string
-  }>(chains[0])
+  }>(selection.swapCard.to.token)
+
   const [selectedRightChain, setSelectedRightChain] = useState<{
     name: string
     symbol: string
@@ -43,7 +46,6 @@ export const ChartCard: FC<ChartCardProps> = () => {
       logoURI: string
     }[]
   >(lifiTokens[1].slice(0, 50))
-  const { selection } = useContext(SelectionContext)
 
   useEffect(() => {
     if (!selection.swapCard.to.token) return
