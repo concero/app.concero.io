@@ -39,7 +39,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
 
     const interval = setInterval(() => {
       fetchChartData(setData, addNotification, tokenId, selectedInterval)
-    }, 12000)
+    }, 15000)
 
     return () => {
       clearInterval(interval)
@@ -66,6 +66,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
     const handleResize = () => {
       const { clientWidth, clientHeight } = chartRef.current
       chart.resize(clientWidth, clientHeight)
+      // chart.applyOptions({ width: chartContainerRef.current.clientWidth })
     }
 
     window.addEventListener('resize', handleResize)
@@ -83,12 +84,12 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
     }
   }, [colors, data, chartRef])
 
-  // Update coinGecko data
-  useEffect(() => {
-    if (seriesRef.current) {
-      seriesRef.current.setData(data)
-    }
-  }, [data])
+  // // Update coinGecko data
+  // useEffect(() => {
+  //   if (seriesRef.current) {
+  //     seriesRef.current.setData(data)
+  //   }
+  // }, [data])
 
   return <div className="f1" ref={chartRef} />
 }

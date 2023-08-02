@@ -66,8 +66,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
 
     const provider = new providers.Web3Provider(client0.transport, 'any')
-    const signer = provider.getSigner()
-    return signer
+    return provider.getSigner()
   }
 
   const handleSwap = async () => {
