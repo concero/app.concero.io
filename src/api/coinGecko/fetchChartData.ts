@@ -11,6 +11,14 @@ const toLocalTime = (timestamp: number): number => {
   return Number(timestamp) - timeZoneOffsetInSeconds
 }
 
+const getPeriod = (interval) => {
+  if (interval.value === '1') return '5m'
+  if (interval.value === '7') return '35m'
+  if (interval.value === '30') return '150m'
+  if (interval.value === '365') return '1825m'
+  if (interval.value === 'max') return '3w'
+}
+
 export const fetchChartData = async (
   setData: (data: Item[]) => void,
   addNotification,
@@ -45,14 +53,13 @@ export const fetchChartData = async (
   //   console.log('res', res)
   // }
 
-  const start = Date.now() / 1000 - 60 * 60 * 24
+  const endTimestamp = Date.now() / 1000
 
-  console.log('start', start)
-  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?start=${start}&span=144&period=10m&searchWidth=5m`
-  console.log('url', url)
+  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?end=${endTimestamp}&span=289&period=${getPeriod(
+    interval,
+  )}&searchWidth=10m`
+
   const response = await get(url)
-
-  console.log('response', response.data.coins[`coingecko:${tokenId}`].prices)
 
   if (response.status !== 200) return
 
@@ -65,5 +72,4 @@ export const fetchChartData = async (
   }, [])
 
   setData(result)
-  console.log('result', result)
 }
