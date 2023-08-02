@@ -46,9 +46,11 @@ export const fetchChartData = async (
   // }
 
   const start = Date.now() / 1000 - 60 * 60 * 24
+  const span = 288
+  const period = '5m'
+  const searchWidth = '10m'
 
-  console.log('start', start)
-  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?start=${start}&span=144&period=10m&searchWidth=5m`
+  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?start=${start}&span=${span}&period=${period}&searchWidth=${searchWidth}`
   console.log('url', url)
   const response = await get(url)
 
