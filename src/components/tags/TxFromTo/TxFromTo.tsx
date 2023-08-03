@@ -18,9 +18,7 @@ export interface TxFromToProps {
   }
 }
 
-export const TxFromTo: FC<TxFromToProps> = ({ item }) => {
-  const { from, to, type } = item
-
+export const TxFromTo: FC<TxFromToProps> = ({ from, to, type }) => {
   const color = getColor(type)
 
   const styles = {

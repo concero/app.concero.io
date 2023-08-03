@@ -34,7 +34,7 @@ export const chains = [
   {
     key: 'pol',
     chainType: 'EVM',
-    name: 'Polygon',
+    name: 'Matic',
     symbol: 'MATIC',
     id: 137,
     mainnet: true,

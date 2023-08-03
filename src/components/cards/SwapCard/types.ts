@@ -55,6 +55,13 @@ export type State = {
   selectedRoute: any
   originalRoutes: any[]
   typingTimeout: number
+  transactionResponse: Response | null
+}
+
+type Response = {
+  provider: string
+  isOk: boolean
+  message: string
 }
 
 type Direction = 'from' | 'to'
@@ -140,6 +147,11 @@ export type SetAddressAction = {
   payload: string
 }
 
+export type SetResponses = {
+  type: 'SET_RESPONSES'
+  payload: Response
+}
+
 export type Action =
   | SetChainAction
   | SetTokenAction
@@ -156,3 +168,4 @@ export type Action =
   | SetAmountAction
   | ResetAmountsAction
   | SetAddressAction
+  | SetResponses

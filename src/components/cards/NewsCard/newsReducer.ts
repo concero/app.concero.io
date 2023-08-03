@@ -4,7 +4,7 @@ import { lifiTokens } from '../../../constants/lifiTokens'
 export const initialState = (selection) => ({
   data: [],
   isLoading: false,
-  page: 1,
+  timestamp: 0,
   isModalVisible: false,
   selectedToken: selection.swapCard.to.token,
   mappedTokens: lifiTokens['1'].slice(0, 50),
@@ -16,8 +16,8 @@ export function newsReducer(state, action) {
       return { ...state, data: action.payload }
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload }
-    case 'INCREMENT_PAGE':
-      return { ...state, page: state.page + 1 }
+    case 'SET_TIMESTAMP':
+      return { ...state, timestamp: action.payload }
     case 'SET_MODAL_VISIBILITY':
       return { ...state, isModalVisible: action.payload }
     case 'SET_SELECTED_TOKEN':

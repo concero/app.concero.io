@@ -5,4 +5,8 @@ export const clearRoutes = (typingTimeoutRef, swapDispatch) => {
     type: 'RESET_AMOUNTS',
     direction: 'to',
   })
+  swapDispatch({
+    type: 'SET_RESPONSES',
+    payload: null,
+  })
 }

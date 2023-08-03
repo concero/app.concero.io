@@ -18,19 +18,21 @@ import { SwapButton } from '../../buttons/SwapButton/SwapButton'
 import { getBalance } from './getBalance'
 import { getRoutes } from './getRoutes'
 import { clearRoutes } from './clearRoutes'
+import { handleTransactionError } from './handleTransactionError'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const { dispatch } = useContext(SelectionContext)
-  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes }, swapDispatch] = useSwapReducer()
-  const [response, setResponse] = useState(null)
-  const [prevFromAmount, setPrevFromAmount] = useState(null)
+  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes, transactionResponse }, swapDispatch] =
+    useSwapReducer()
+  const [response, setResponse] = useState(null) // todo move to reducer
+  const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
 
   useEffect(() => {
-    if (!from.amount || prevFromAmount !== from.amount) return
+    if (!from.amount || prevFromAmount !== from.amount || response.routes.length <= 0) return
     swapDispatch({
       type: 'POPULATE_ROUTES',
       payload: response,
@@ -66,8 +68,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
 
     const provider = new providers.Web3Provider(client0.transport, 'any')
-    const signer = provider.getSigner()
-    return signer
+    return provider.getSigner()
   }
 
   const handleSwap = async () => {
@@ -77,9 +78,19 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
     try {
       const executedRoute = await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
-      console.log('executedRoute', executedRoute)
+      if (executedRoute) {
+        swapDispatch({
+          type: 'SET_RESPONSES',
+          payload: {
+            provider: 'lifi',
+            isOk: true,
+            message: 'Success',
+          },
+        })
+      }
     } catch (e) {
-      console.log(e)
+      console.log('ERROR: ', e)
+      handleTransactionError(e, swapDispatch)
     }
     await swapDispatch({
       type: 'SET_LOADING',
@@ -100,6 +111,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   useEffect(() => {
     clearRoutes(typingTimeoutRef, swapDispatch)
     handleFetchRoutes()
+    console.log('FROM CHAIN ', from.chain)
     return () => clearRoutes(typingTimeoutRef, swapDispatch)
   }, [from.token, from.amount, from.chain, to.token, to.chain])
 
@@ -157,6 +169,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           isConnected={isConnected}
           routes={routes}
           balance={balance}
+          transactionResponse={transactionResponse}
         />
       </div>
     </div>

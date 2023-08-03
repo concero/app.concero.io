@@ -7,9 +7,11 @@ import { renderTags } from './renderTags'
 import { renderSteps } from './renderSteps'
 import { RouteCardProps } from './types'
 import { numberToFormatString } from '../../../utils/formatting'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
   const [isRoutesCollapsed, setIsRoutesCollapsed] = useState<true | false>(true)
+  const isDesktop = useMediaQuery('mobile')
 
   const getTextColor = () => (isSelected ? classNames.bestText : '')
   const getIconColor = () => (isSelected ? colors.primary.light : colors.text.secondary)
@@ -21,7 +23,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
     >
       <div className={classNames.cardHeader}>
         <div className={classNames.cardHeaderLeftSide}>
-          <h4>Net value:</h4>
+          {isDesktop ? <h4>Net value:</h4> : null}
           <h3>{`$${route.to.token.amount_usd}`}</h3>
           <h3 className={classNames.subtitle}>{`${numberToFormatString(Number(route.to.token.amount), 2)} ${
             route.to.token.symbol

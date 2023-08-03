@@ -3,7 +3,13 @@ export const setSwapCard = (dispatch, from, to) => {
     type: 'SET_SWAP_CARD',
     payload: {
       from: {
-        chainId: from.chain.id,
+        // chainId: from.chain.id,
+        chain: {
+          id: from.chain.id,
+          name: from.chain.name,
+          logoURI: from.chain.logoURI,
+          symbol: from.chain.symbol,
+        },
         token: {
           symbol: from.token.symbol,
           address: from.token.address,
@@ -11,7 +17,13 @@ export const setSwapCard = (dispatch, from, to) => {
         },
       },
       to: {
-        chainId: to.chain.id,
+        // chainId: to.chain.id,
+        chain: {
+          id: to.chain.id,
+          name: to.chain.name,
+          logoURI: to.chain.logoURI,
+          symbol: to.chain.symbol,
+        },
         token: {
           symbol: to.token.symbol,
           address: to.token.address,

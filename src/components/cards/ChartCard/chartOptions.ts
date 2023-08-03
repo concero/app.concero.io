@@ -33,7 +33,7 @@ export const chartOptions = (colors) => ({
     },
     vertLine: {
       visible: true,
-      labelVisible: false,
+      labelVisible: true,
       color: colors.grey.dark,
     },
   },

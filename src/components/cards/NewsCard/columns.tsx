@@ -1,6 +1,6 @@
 import { colors } from '../../../constants/colors'
 import Icon from '../../Icon'
-import { fromNow, truncate } from '../../../utils/formatting'
+import { truncate, unixtimeFromNow } from '../../../utils/formatting'
 import classNames from './NewsCard.module.pcss'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 
@@ -10,17 +10,15 @@ export const columns = [
     cellComponent: (item) => <p style={{ color: colors.grey.light }}>{truncate(item.title, 90)}</p>,
   },
   {
-    columnTitle: 'Sentiment',
-    cellComponent: (item) => {
-      return (
-        <div className={classNames.cellComponentContainer}>
-          <div className="row ac gap-xs">
-            <Icon name="Clock" color={colors.text.secondary} size={18} />
-            <p style={{ color: colors.text.secondary }}>{fromNow(item.created_at)}</p>
-          </div>
+    columnTitle: 'When',
+    cellComponent: (item) => (
+      <div className={classNames.cellComponentContainer}>
+        <div className="row ac gap-xs">
+          <Icon name="Clock" color={colors.text.secondary} size={18} />
+          <p style={{ color: colors.text.secondary }}>{unixtimeFromNow(item.published_on)}</p>
         </div>
-      )
-    },
+      </div>
+    ),
   },
   {
     columnTitle: 'Sentiment',
@@ -29,13 +27,47 @@ export const columns = [
         <Icon name="Link" color={colors.text.secondary} size={18} />
         <a href={item.url} target="_blank" rel="noreferrer">
           <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
-            {item.source.title}
+            {item.source_info.name}
           </p>
         </a>
       </div>
     ),
   },
 ]
+
+// OLD (CRYPTOPANIC)
+// export const columns = [
+//   {
+//     columnTitle: 'Title',
+//     cellComponent: (item) => <p style={{ color: colors.grey.light }}>{truncate(item.title, 90)}</p>,
+//   },
+//   {
+//     columnTitle: 'Sentiment',
+//     cellComponent: (item) => {
+//       return (
+//         <div className={classNames.cellComponentContainer}>
+//           <div className="row ac gap-xs">
+//             <Icon name="Clock" color={colors.text.secondary} size={18} />
+//             <p style={{ color: colors.text.secondary }}>{fromNow(item.created_at)}</p>
+//           </div>
+//         </div>
+//       )
+//     },
+//   },
+//   {
+//     columnTitle: 'Sentiment',
+//     cellComponent: (item) => (
+//       <div className="row ac gap-xs">
+//         <Icon name="Link" color={colors.text.secondary} size={18} />
+//         <a href={item.url} target="_blank" rel="noreferrer">
+//           <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
+//             {item.source.title}
+//           </p>
+//         </a>
+//       </div>
+//     ),
+//   },
+// ]
 
 export const modalColumns = [
   {

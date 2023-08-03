@@ -94,6 +94,11 @@ export function swapReducer(state: State, action: Action) {
           address: action.payload,
         },
       }
+    case 'SET_RESPONSES':
+      return {
+        ...state,
+        transactionResponse: action.payload,
+      }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }
@@ -140,7 +145,7 @@ export const useSwapReducer = (selectionDispatch) => {
     selectedRoute: null,
     originalRoutes: [],
     typingTimeout: 0,
-    errors: [],
+    transactionResponse: null,
   })
 
   return [state, dispatch]

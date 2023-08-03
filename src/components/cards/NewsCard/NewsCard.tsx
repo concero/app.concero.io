@@ -4,7 +4,7 @@ import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
-import { getNews } from './getNews'
+import { getMoreNews, getNews } from './getNews'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { columns, modalColumns } from './columns'
 import { lifiTokens } from '../../../constants/lifiTokens'
@@ -17,14 +17,11 @@ interface NewsCardProps {}
 export const NewsCard: FC<NewsCardProps> = () => {
   const { selection } = useContext(SelectionContext)
   const { addNotification } = useContext(NotificationsContext)
-  const [{ data, isLoading, page, isModalVisible, selectedToken, mappedTokens }, dispatch] = useNewsReducer(selection)
+  const [{ data, isLoading, timestamp, isModalVisible, selectedToken, mappedTokens }, dispatch] = useNewsReducer(selection)
 
   useEffect(() => {
     if (!selectedToken) return
-    getNews(data, dispatch, addNotification, false, {
-      currencies: [selectedToken.symbol],
-      page,
-    })
+    getNews(data, dispatch, selectedToken, timestamp, addNotification)
   }, [selectedToken])
 
   useEffect(() => {
@@ -35,6 +32,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
   const handleSelectToken = (token) => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
     dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false })
+    dispatch({ type: 'SET_TIMESTAMP', payload: 0 })
   }
 
   return (
@@ -50,13 +48,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
           columns={columns}
           isHeaderVisible={false}
           isLoading={isLoading}
-          onEndReached={() => {
-            getNews(data, dispatch, addNotification, true, {
-              currencies: [selectedToken.symbol],
-              page: page + 1,
-            })
-            dispatch({ type: 'INCREMENT_PAGE' })
-          }}
+          onEndReached={() => getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)}
         />
       </div>
       <EntityListModal
