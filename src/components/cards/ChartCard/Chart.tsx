@@ -64,9 +64,9 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
     chartRef.current.appendChild(tooltipRef.current)
 
     const handleResize = () => {
-      const { clientWidth, clientHeight } = chartRef.current
-      chart.resize(clientWidth, clientHeight)
-      // chart.applyOptions({ width: chartContainerRef.current.clientWidth })
+      const { offsetWidth, offsetHeight } = chartRef.current
+      console.log(offsetWidth, offsetHeight)
+      chart.resize(offsetWidth, offsetHeight)
     }
 
     window.addEventListener('resize', handleResize)
