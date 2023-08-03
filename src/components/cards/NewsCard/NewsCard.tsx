@@ -17,7 +17,8 @@ interface NewsCardProps {}
 export const NewsCard: FC<NewsCardProps> = () => {
   const { selection } = useContext(SelectionContext)
   const { addNotification } = useContext(NotificationsContext)
-  const [{ data, isLoading, timestamp, isModalVisible, selectedToken, mappedTokens }, dispatch] = useNewsReducer(selection)
+  const [{ data, isLoading, timestamp, isModalVisible, selectedToken, mappedTokens }, dispatch] =
+    useNewsReducer(selection)
 
   useEffect(() => {
     if (!selectedToken) return
@@ -26,20 +27,41 @@ export const NewsCard: FC<NewsCardProps> = () => {
 
   useEffect(() => {
     if (!selection.swapCard.to.token) return
-    dispatch({ type: 'SET_SELECTED_TOKEN', payload: selection.swapCard.to.token })
-  }, [selection.swapCard.to.token])
+    dispatch({
+      type: 'SET_SELECTED_TOKEN',
+      payload: selection.swapCard.to.token,
+    })
+  }, [selection.swapCard.to.token.symbol])
 
   const handleSelectToken = (token) => {
-    dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
-    dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false })
-    dispatch({ type: 'SET_TIMESTAMP', payload: 0 })
+    dispatch({
+      type: 'SET_SELECTED_TOKEN',
+      payload: token,
+    })
+    dispatch({
+      type: 'SET_MODAL_VISIBILITY',
+      payload: false,
+    })
+    dispatch({
+      type: 'SET_TIMESTAMP',
+      payload: 0,
+    })
   }
 
   return (
     <div>
       <div className={`${classNames.container} card`}>
         <CardHeader title="News">
-          <Button variant="black" size="sm" onClick={() => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })}>
+          <Button
+            variant="black"
+            size="sm"
+            onClick={() =>
+              dispatch({
+                type: 'SET_MODAL_VISIBILITY',
+                payload: true,
+              })
+            }
+          >
             <CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
           </Button>
         </CardHeader>
@@ -54,15 +76,22 @@ export const NewsCard: FC<NewsCardProps> = () => {
       <EntityListModal
         title="Select token"
         show={isModalVisible}
-        setShow={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
+        setShow={(value) =>
+          dispatch({
+            type: 'SET_MODAL_VISIBILITY',
+            payload: value,
+          })
+        }
         data={lifiTokens['1']}
         visibleData={mappedTokens}
         columns={modalColumns}
         onSelect={(token) => handleSelectToken(token)}
-        onEndReached={() => dispatch({
+        onEndReached={() =>
+          dispatch({
             type: 'ADD_MAPPED_TOKENS',
             payload: lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 50),
-          })}
+          })
+        }
       />
     </div>
   )

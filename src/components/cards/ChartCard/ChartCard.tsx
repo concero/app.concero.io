@@ -50,7 +50,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   useEffect(() => {
     if (!selection.swapCard.to.token) return
     setSelectedLeftToken(selection.swapCard.to.token)
-  }, [selection.swapCard.to.token])
+  }, [selection.swapCard.to.token.symbol])
 
   const handleSelectLeftToken = (chain: { name: string; symbol: string }): void => {
     setSelectedLeftToken(chain)
