@@ -111,7 +111,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
   useEffect(() => {
     clearRoutes(typingTimeoutRef, swapDispatch)
     handleFetchRoutes()
-    console.log('FROM CHAIN ', from.chain)
     return () => clearRoutes(typingTimeoutRef, swapDispatch)
   }, [from.token, from.amount, from.chain, to.token, to.chain])
 

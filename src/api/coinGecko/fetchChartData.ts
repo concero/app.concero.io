@@ -1,4 +1,4 @@
-import { get } from '../client'
+import { get } from '../../api/client'
 
 interface Item {
   time: number
@@ -16,7 +16,18 @@ const getPeriod = (interval) => {
   if (interval.value === '7') return '35m'
   if (interval.value === '30') return '150m'
   if (interval.value === '365') return '1825m'
-  if (interval.value === 'max') return '3w'
+  if (interval.value === 'max') return '1w'
+}
+
+const getPointQuery = (interval) => {
+  if (interval.value === 'max') return 'start=1551477600'
+  const endTimestamp = Date.now() / 1000
+  return `end=${endTimestamp}`
+}
+
+const getSearchWidth = (interval) => {
+  if (interval.value === 'max') return '10h'
+  return '10m'
 }
 
 export const fetchChartData = async (
@@ -50,14 +61,11 @@ export const fetchChartData = async (
   //     message: res.data.error,
   //     color: 'red',
   //   })
-  //   console.log('res', res)
   // }
 
-  const endTimestamp = Date.now() / 1000
-
-  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?end=${endTimestamp}&span=289&period=${getPeriod(
+  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?${getPointQuery(interval)}&span=289&period=${getPeriod(
     interval,
-  )}&searchWidth=10m`
+  )}&searchWidth=${getSearchWidth(interval)}`
 
   const response = await get(url)
 

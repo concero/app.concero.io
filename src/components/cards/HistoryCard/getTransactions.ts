@@ -4,7 +4,6 @@ import { getDexTrades } from '../../../api/bitquery/getDexTrades'
 export async function getTransactions(selection, setHistoryItems, setIsLoading) {
   function on_ok(res) {
     setIsLoading(false)
-    console.log('RES ', res)
     const transactions = res.data.data.ethereum.dexTrades
     setHistoryItems(transactions)
   }
@@ -14,7 +13,6 @@ export async function getTransactions(selection, setHistoryItems, setIsLoading) 
     console.log('ERR ', err)
   }
 
-  console.log('selection ', selection)
   const network = selection.from.chain.name.toLowerCase()
   let baseCurrency = selection.from.token.address
   let quoteCurrency = lifiTokens[selection.from.chain.id].find(
@@ -34,7 +32,12 @@ export async function getTransactions(selection, setHistoryItems, setIsLoading) 
   // console.log('quoteCurrency ', quoteCurrency)
   // console.log('network ', network)
   setIsLoading(true)
-  const { res, ok, err } = await getDexTrades({ network, limit, baseCurrency, quoteCurrency })
+  const { res, ok, err } = await getDexTrades({
+    network,
+    limit,
+    baseCurrency,
+    quoteCurrency,
+  })
   if (ok) on_ok(res)
   if (err) on_err(err)
 }
