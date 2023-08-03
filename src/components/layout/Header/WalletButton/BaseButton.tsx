@@ -39,7 +39,7 @@ export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
           size: 18,
         },
       }}
-      size="sm"
+      size="md"
       onClick={() => onClick && onClick()}
     >
       <p className={isConnected ? 'body1' : ''}>{getStatus()}</p>
