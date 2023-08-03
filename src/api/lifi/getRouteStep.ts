@@ -42,7 +42,7 @@ export const getRouteStep = (step: lifiTypes.Step): Step => {
       estimated_execution_time_seconds: step.estimate.executionDuration, // todo: check if this is needed
       slippage_limit: step.action.slippage,
       // fees: step.estimate.feeCosts.reduce((acc, fee) => acc + Number(fee.amount) / 10 ** decimals, 0),
-      fees_usd: step.estimate.feeCosts.reduce((acc: number, fee) => acc + Number(fee.amountUSD), 0),
+      fees_usd: step.estimate.feeCosts.reduce((acc: number, fee) => acc + Number(fee.amountUSD), 0), // todo: BREAKS WHEN theres no AMOUNT USD
       gas: step.estimate.gasCosts.reduce((acc, gas) => acc + Number(gas.amount), 0),
       gas_usd: step.estimate.gasCosts.reduce((acc, gas) => acc + Number(gas.amountUSD), 0),
       // total_cost: step.estimate.totalCost, ???

@@ -25,14 +25,14 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const { dispatch } = useContext(SelectionContext)
   const [{ from, to, routes, isLoading, selectedRoute, originalRoutes, transactionResponse }, swapDispatch] =
     useSwapReducer()
-  const [response, setResponse] = useState(null)
-  const [prevFromAmount, setPrevFromAmount] = useState(null)
+  const [response, setResponse] = useState(null) // todo move to reducer
+  const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
 
   useEffect(() => {
-    if (!from.amount || prevFromAmount !== from.amount) return
+    if (!from.amount || prevFromAmount !== from.amount || response.routes.length <= 0) return
     swapDispatch({
       type: 'POPULATE_ROUTES',
       payload: response,
@@ -84,7 +84,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           payload: {
             provider: 'lifi',
             isOk: true,
-            massage: 'Success',
+            message: 'Success',
           },
         })
       }
@@ -152,10 +152,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
             to,
           }}
           selectedRoute={selectedRoute}
-          setSelectedRoute={(route) => swapDispatch({
+          setSelectedRoute={(route) =>
+            swapDispatch({
               type: 'SET_SELECTED_ROUTE',
               payload: route,
-            })}
+            })
+          }
           routes={routes}
           isLoading={isLoading}
         />

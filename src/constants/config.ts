@@ -1,6 +1,5 @@
 export const config = {
-  baseURL: 'http://localhost:4000',
-  // baseURL: 'https://api.concero.io',
+  baseURL: 'https://api.concero.io',
   headers: {
     'Content-Type': 'application/json',
   },
