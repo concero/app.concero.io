@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react'
+import { CSSProperties, FC, useRef } from 'react'
 import { useTransition } from 'react-spring'
 import classNames from './Table.module.pcss'
 import { TableSkeleton } from './TableSkeleton'
@@ -18,7 +18,7 @@ export interface TableProps {
   isLoading?: boolean
   onClick?: (item: any) => void
   onEndReached?: () => void
-  isAnimationNeeded?: boolean
+  animate?: boolean
 }
 
 export const Table: FC<TableProps> = ({
@@ -28,7 +28,7 @@ export const Table: FC<TableProps> = ({
   isLoading,
   onClick,
   onEndReached = null,
-  isAnimationNeeded = true,
+  animate = true,
 }) => {
   const handleScroll = (e: any) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
@@ -51,6 +51,14 @@ export const Table: FC<TableProps> = ({
       transform: 'translate3d(0, -40px, 0)',
     },
     keys: (item) => item.id,
+    onRest: () => {
+      // removes all transform translate3d from tr elements
+      const trs = document.querySelectorAll('tr')
+      console.log(trs)
+      trs.forEach((tr) => {
+        tr.style.transform = ''
+      })
+    },
   })
 
   return (
@@ -61,7 +69,7 @@ export const Table: FC<TableProps> = ({
         <table>
           {isHeaderVisible && <TableHeader columns={columns} />}
           <tbody className="striped">
-            {isAnimationNeeded
+            {animate
               ? transitions((styles, item) => (
                   <TableRow style={styles} item={item} columns={columns} onClick={onClick} />
                 ))

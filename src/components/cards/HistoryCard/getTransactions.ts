@@ -1,11 +1,23 @@
 import { lifiTokens } from '../../../constants/lifiTokens'
 import { getDexTrades } from '../../../api/bitquery/getDexTrades'
 
-export async function getTransactions(selection, setHistoryItems, setIsLoading) {
+export function setTransactions(setHistoryItems, transactions) {
+  setHistoryItems(transactions)
+}
+export function appendTransactions(setHistoryItems, transactions) {
+  setHistoryItems((prev) => [...prev, ...transactions])
+}
+export async function getTransactions(selection, historyItems, setHistoryItems, setIsLoading) {
   function on_ok(res) {
     setIsLoading(false)
     const transactions = res.data.data.ethereum.dexTrades
-    setHistoryItems(transactions)
+
+    // if historyItems not empty, append , else set
+    // if (historyItems.length > 0) {
+    //   appendTransactions(setHistoryItems, transactions)
+    // } else {
+    setTransactions(setHistoryItems, transactions)
+    // }
   }
 
   function on_err(err) {
@@ -38,6 +50,7 @@ export async function getTransactions(selection, setHistoryItems, setIsLoading) 
     baseCurrency,
     quoteCurrency,
   })
+  console.log('res ', res)
   if (ok) on_ok(res)
   if (err) on_err(err)
 }

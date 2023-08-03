@@ -54,6 +54,7 @@ export const WithPopover: FC<WithPopoverProps> = (
         onClick={handleClick}
         style={{
           position: 'relative',
+          transform: 'translateZ(0px)',
         }}
       >
         <WrappedComponent {...props} />
@@ -64,6 +65,7 @@ export const WithPopover: FC<WithPopoverProps> = (
               position: 'absolute',
               bottom: popoverTopPosition || 0,
               right: 0,
+              transform: 'translateZ(0px)',
             }}
           >
             <PopoverComponent {...popoverProps} />

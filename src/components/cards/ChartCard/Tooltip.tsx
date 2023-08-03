@@ -1,3 +1,5 @@
+import { numberToFormatString } from '../../../utils/formatting'
+
 export function isOutsideBounds(point, chartElement) {
   return point.x < 0 || point.x > chartElement.clientWidth || point.y < 0 || point.y > chartElement.clientHeight
 }
@@ -43,9 +45,10 @@ export function updateTooltip(param, newSeries, toolTip, chartElement) {
   toolTip.style.opacity = 1
   const data = param.seriesData.get(newSeries)
   const price = data.value ?? data.close
-  toolTip.innerHTML = `<div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">$${
-    Math.round(100 * price) / 100
-  }</div>`
+  toolTip.innerHTML = `<div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">$${numberToFormatString(
+    price,
+    4,
+  )}</div>`
 
   const coordinate = newSeries.priceToCoordinate(price)
   if (coordinate === null) return

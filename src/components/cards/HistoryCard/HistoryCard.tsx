@@ -27,8 +27,19 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
   const { selection } = useContext(SelectionContext)
 
   useEffect(() => {
-    if (!selection.historyCard.from.token.symbol || !selection.historyCard.to.token.symbol) return
-    getTransactions(selection.swapCard, setHistoryItems, setIsLoading)
+    const fetchTransactions = () => {
+      if (!selection.historyCard.from.token.symbol || !selection.historyCard.to.token.symbol) return
+      getTransactions(selection.swapCard, historyItems, setHistoryItems, setIsLoading)
+    }
+
+    // Call once on mount
+    fetchTransactions()
+
+    // Set up interval for every 60 seconds
+    const intervalId = setInterval(fetchTransactions, 60 * 1000)
+
+    // Clear interval on unmount
+    return () => clearInterval(intervalId)
   }, [selection.historyCard.from.token.symbol, selection.historyCard.to.token.symbol])
 
   // const ButtonWithPopover = WithPopover(

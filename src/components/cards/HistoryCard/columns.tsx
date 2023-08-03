@@ -37,13 +37,13 @@ export const columns = [
       </div>
     ),
   },
-  {
-    columnTitle: '',
-    cellComponent: (item) => {
-      const PopoverComponent = WithPopover(IconWithPopover, ModalPopover, { item }, 'click')
-      return <PopoverComponent />
-    },
-  },
+  // {
+  //   columnTitle: '',
+  //   cellComponent: (item) => {
+  //     const PopoverComponent = WithPopover(IconWithPopover, ModalPopover, { item, onclick }, 'click')
+  //     return <PopoverComponent />
+  //   },
+  // },
 ]
 
 // OLD (DEXTOOLS + DEXSCREENER)

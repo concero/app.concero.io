@@ -27,7 +27,7 @@ const reducer = (state, action) => {
     case 'DISCONNECTED':
       return {
         isDisabled: true,
-        text: 'Connect Wallet',
+        text: 'Connect wallet to swap',
         icon: '',
         className: 'disabled',
       }
@@ -49,7 +49,7 @@ const reducer = (state, action) => {
     case 'SUCCESS':
       return {
         isDisabled: true,
-        text: 'Swap started successfully!',
+        text: 'Swap initiated!',
         icon: 'ArrowsUpDown',
         className: 'success',
       }

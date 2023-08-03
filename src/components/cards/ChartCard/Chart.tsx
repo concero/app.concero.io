@@ -65,7 +65,6 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
 
     const handleResize = () => {
       const { offsetWidth, offsetHeight } = chartRef.current
-      console.log(offsetWidth, offsetHeight)
       chart.resize(offsetWidth, offsetHeight)
     }
 

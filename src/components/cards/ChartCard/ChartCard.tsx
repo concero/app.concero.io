@@ -45,7 +45,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
       symbol: string
       logoURI: string
     }[]
-  >(lifiTokens[1].slice(0, 50))
+  >(lifiTokens[1].slice(0, 20))
 
   useEffect(() => {
     if (!selection.swapCard.to.token) return
@@ -67,7 +67,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   }
 
   const handleEndReached = () => {
-    setMappedTokens([...mappedTokens, ...lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 50)])
+    setMappedTokens([...mappedTokens, ...lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 20)])
   }
 
   const isDesktop = useMediaQuery('mobile')

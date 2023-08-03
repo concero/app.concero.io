@@ -177,7 +177,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
         setShow={setShowTokensModal}
         onSelect={(token) => setToken(token)}
         onEndReached={() => handleMappedTokens()}
-        isAnimationNeeded={false}
+        animate={false}
       />
     </>
   )
