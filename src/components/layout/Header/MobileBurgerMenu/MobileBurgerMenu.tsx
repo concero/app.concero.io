@@ -1,3 +1,4 @@
+import { disconnect } from '@wagmi/core'
 import { FC, useState } from 'react'
 import { Link, PathMatch } from 'react-router-dom'
 import { routes } from '../../../../constants/routes'
@@ -34,10 +35,10 @@ export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ matchExchange, mat
         {/* <Link to={routes.portfolio}> */}
         {/*   <h4 className={matchPortfolio ? classNames.active : classNames.secondary}>Portfolio</h4> */}
         {/* </Link> */}
-        <a onClick={toggleTheme}>
-          <h4 className={classNames.secondary}>Toggle theme</h4>
-        </a>
-        <a>
+        {/* <a onClick={toggleTheme}> */}
+        {/*  <h4 className={classNames.secondary}>Toggle theme</h4> */}
+        {/* </a> */}
+        <a onClick={() => disconnect()}>
           <h4 className={classNames.logOutButton}>Log out</h4>
         </a>
       </nav>
