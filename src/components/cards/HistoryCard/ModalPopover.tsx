@@ -12,7 +12,7 @@ interface ModalPopoverProps {
 
 export const ModalPopover = ({ item }): FC<ModalPopoverProps> => {
   const handleClick = () => {
-    navigator.clipboard.writeText(item.id)
+    navigator.clipboard.writeText(item.transaction.hash)
   }
 
   return (
@@ -20,7 +20,7 @@ export const ModalPopover = ({ item }): FC<ModalPopoverProps> => {
       <div className={classNames.line}>
         <p className={`body1`}>Transaction ID:</p>
         <p className={classNames.id} onClick={() => handleClick()}>
-          {truncateWallet(item.id)}
+          {truncateWallet(item.transaction.hash)}
         </p>
       </div>
       {item.isBot ? (
