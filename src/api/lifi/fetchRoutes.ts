@@ -54,9 +54,9 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
     toTokenAddress: to.token.address,
     toAddress: to.address,
   }
-  console.log('routesRequest', routesRequest)
+  // console.log('routesRequest', routesRequest)
   const response = await lifi.getRoutes(routesRequest)
-  console.log('RoutesResponse', response)
+  // console.log('RoutesResponse', response)
 
   if (response.routes.length > 0) {
     result.routes = [...response.routes.map((route) => standardiseRoute(route))]

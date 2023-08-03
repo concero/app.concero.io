@@ -54,7 +54,7 @@ export const Table: FC<TableProps> = ({
     onRest: () => {
       // removes all transform translate3d from tr elements
       const trs = document.querySelectorAll('tr')
-      console.log(trs)
+      // console.log(trs)
       trs.forEach((tr) => {
         tr.style.transform = ''
       })

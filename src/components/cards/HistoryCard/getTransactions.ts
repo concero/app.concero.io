@@ -22,7 +22,7 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
 
   function on_err(err) {
     setIsLoading(false)
-    console.log('ERR ', err)
+    console.error('ERR ', err)
   }
 
   const network = selection.from.chain.name.toLowerCase()
@@ -50,7 +50,7 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
     baseCurrency,
     quoteCurrency,
   })
-  console.log('res ', res)
+  // console.log('res ', res)
   if (ok) on_ok(res)
   if (err) on_err(err)
 }

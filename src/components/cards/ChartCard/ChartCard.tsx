@@ -110,24 +110,24 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <SegmentedControl data={intervals} selectedItem={selectedInterval} setSelectedItem={setSelectedInterval} />
         ) : null}
       </div>
-      <div className="f1">
-        {chartType === 'coinGecko' ? (
-          <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
-        ) : (
-          <AdvancedRealTimeChart
-            theme="dark"
-            symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
-            interval="1"
-            width="100%"
-            height="100%"
-            locale="en"
-            hide_side_toolbar
-            allow_symbol_change
-            save_image
-            container_id="tradingview_9e3a4"
-          />
-        )}
-      </div>
+
+      {chartType === 'coinGecko' ? (
+        <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
+      ) : (
+        <AdvancedRealTimeChart
+          theme="dark"
+          symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
+          interval="1"
+          width="100%"
+          height="100%"
+          locale="en"
+          hide_side_toolbar
+          allow_symbol_change
+          save_image
+          container_id="tradingview_9e3a4"
+        />
+      )}
+
       <EntityListModal
         title="Select token"
         show={isSelectLeftTokenModalVisible}
