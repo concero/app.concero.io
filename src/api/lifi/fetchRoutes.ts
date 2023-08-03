@@ -1,4 +1,4 @@
-import { ExecutionSettings, LiFi } from '@lifi/sdk'
+import { Chain, ExecutionSettings, LiFi } from '@lifi/sdk'
 import { WalletClient } from 'wagmi'
 import { Account, Transport } from 'viem'
 import { FetchRoutesParams, Route } from './types'
@@ -10,7 +10,8 @@ interface GetRoutes {
   routes: Route[]
 }
 
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
+const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
+  lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
 
 const sortByTags = (routeA: Route, routeB: Route): number => {
   const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
@@ -19,9 +20,11 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
 
   if (tagIndexA === -1 && tagIndexB === -1) {
     return 0
-  } if (tagIndexA === -1) {
+  }
+  if (tagIndexA === -1) {
     return 1
-  } if (tagIndexB === -1) {
+  }
+  if (tagIndexB === -1) {
     return -1
   }
 
@@ -36,7 +39,12 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
 const lifiConfig = { integrator: 'concero' }
 const lifi = new LiFi(lifiConfig)
 
-export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes | null> => {
+export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
+  const result = {
+    routes: [],
+    originalRoutes: [],
+  }
+
   const routesRequest = {
     fromChainId: from.chain.id,
     fromAmount: addingDecimals(Number(from.amount), getTokenDecimalsByAddress(from.chain.id, from.token.address)),
@@ -46,16 +54,15 @@ export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetR
     toTokenAddress: to.token.address,
     toAddress: to.address,
   }
-
+  console.log('routesRequest', routesRequest)
   const response = await lifi.getRoutes(routesRequest)
-  if (!response.routes) return null
-  const result = {
-    routes: [...response.routes.map((route) => standardiseRoute(route))],
-    originalRoutes: response.routes,
+  console.log('RoutesResponse', response)
+
+  if (response.routes.length > 0) {
+    result.routes = [...response.routes.map((route) => standardiseRoute(route))]
+    result.originalRoutes = response.routes
+    result.routes.sort(sortByTags)
   }
-
-  result.routes.sort(sortByTags)
-
   return result
 }
 

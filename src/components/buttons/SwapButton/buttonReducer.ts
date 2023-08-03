@@ -41,7 +41,7 @@ const reducer = (state, action) => {
     case 'NO_ROUTE': {
       return {
         isDisabled: true,
-        text: 'No route found',
+        text: 'No routes found',
         icon: '',
         className: 'disabled',
       }

@@ -30,22 +30,16 @@ const setStatus = (
     dispatch({ type: 'DISCONNECTED' })
   } else if (transactionResponse) {
     if (!transactionResponse.isOk) {
-      if (transactionResponse.massage === 'user rejected') {
-        dispatch({ type: 'CANCELED' })
-      } else if (transactionResponse.massage === 'unknown error') {
-        dispatch({ type: 'WRONG' })
-      }
-    } else if (transactionResponse.isOk) {
-      dispatch({ type: 'SUCCESS' })
-    }
+      if (transactionResponse.message === 'user rejected') dispatch({ type: 'CANCELED' })
+      else if (transactionResponse.message === 'unknown error') dispatch({ type: 'WRONG' })
+      else if (transactionResponse.message === 'No Routes found') dispatch({ type: 'NO_ROUTE' })
+    } else if (transactionResponse.isOk) dispatch({ type: 'SUCCESS' })
   } else if (!from.amount || (from.amount && !routes.length)) {
     dispatch({ type: 'NO_AMOUNT' })
   } else if (from.amount > balance) {
     dispatch({ type: 'LOW_BALANCE' })
   } else if (from.amount && to.amount && routes.length) {
     dispatch({ type: 'SWAP' })
-  } else if (!routes.length) {
-    dispatch({ type: 'NO_ROUTE' })
   }
 }
 

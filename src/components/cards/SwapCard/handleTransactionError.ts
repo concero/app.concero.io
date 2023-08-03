@@ -5,7 +5,7 @@ export const handleTransactionError = (e, swapDispatch) => {
       payload: {
         provider: 'lifi',
         isOk: false,
-        massage: 'user rejected',
+        message: 'user rejected',
       },
     })
   } else {
@@ -14,7 +14,7 @@ export const handleTransactionError = (e, swapDispatch) => {
       payload: {
         provider: 'lifi',
         isOk: false,
-        massage: 'unknown error',
+        message: 'unknown error',
       },
     })
   }
