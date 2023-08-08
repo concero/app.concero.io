@@ -1,16 +1,20 @@
+import { useContext } from 'react'
 import { Web3Modal } from '@web3modal/react'
-import { colors } from '../constants/colors'
 import { ethereumClient, projectId } from './wagmi'
-import walletLogo from '../assets/branding/walletConnectLogo.png'
+import walletLogoDark from '../assets/branding/walletConnectLogoDark.png'
+import walletLogoLight from '../assets/branding/walletConnectLogoLight.png'
+import { ThemeContext } from '../hooks/themeContext'
 
 export function WalletConnectModal() {
+  const { theme, colors } = useContext(ThemeContext)
+
   return (
     <Web3Modal
-      themeMode="dark"
+      themeMode={theme}
       themeVariables={{
         '--w3m-accent-color': colors.primary.main,
-        '--w3m-background-color': colors.grey.darkest,
-        '--w3m-logo-image-url': walletLogo,
+        '--w3m-background-color': theme === 'light' ? 'rgb(255,255,255)' : colors.grey.darkest,
+        '--w3m-logo-image-url': theme === 'light' ? walletLogoLight : walletLogoDark,
         '--w3m-overlay-backdrop-filter': 'blur(10px)',
         '--w3m-color-overlay': 'transparent',
       }}
