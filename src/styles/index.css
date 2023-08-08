@@ -101,8 +101,10 @@ body::-webkit-scrollbar {
     --color-red-lighter: #B62C2C;
     --color-red-lightest: #290C0C;
     --color-text-primary: #131313;
-    --color-text-secondary: #98959E;
-    --color-main-card-gradient: rgba(40, 40, 40, 0.1);
+    --color-text-secondary: #7E7B86;
+    --color-main-card-gradient: rgba(40, 40, 40, 0.06);
+    --color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0.01);
+    --color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0.01);
 }
 
 .dark {
@@ -142,6 +144,8 @@ body::-webkit-scrollbar {
     --color-text-primary: #F7F7F7;
     --color-text-secondary: #7E7B86;
     --color-main-card-gradient: rgba(40, 40, 40, 0.5);
+    --color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0.20);
+    --color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0.20);
 }
 
 div#root {
