@@ -3,6 +3,7 @@ import { useAccount } from 'wagmi'
 import { ThemeContext } from '../../../../hooks/themeContext'
 import { truncateWallet } from '../../../../utils/formatting'
 import { Button } from '../../../buttons/Button/Button'
+import classNames from './BaseButton.module.pcss'
 
 interface BaseButtonProps {
   onClick?: () => void
@@ -10,6 +11,7 @@ interface BaseButtonProps {
 
 export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
   const { colors } = useContext(ThemeContext)
+
   const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 
   const getStatus = () => {
@@ -35,14 +37,14 @@ export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
       leftIcon={{
         name: 'Wallet',
         iconProps: {
-          color: isConnected ? colors.text.secondary : colors.base.white,
+          color: isConnected ? colors.text.secondary : colors.white,
           size: 18,
         },
       }}
       size="sm"
       onClick={() => onClick && onClick()}
     >
-      <p className={isConnected ? 'body1' : ''}>{getStatus()}</p>
+      <p className={!isConnected ? classNames.buttonText : 'body1'}>{getStatus()}</p>
     </Button>
   )
 }

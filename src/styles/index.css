@@ -65,9 +65,9 @@ body::-webkit-scrollbar {
 }
 
 .light {
-    --color-base-background: #FFFFFF;
-    --color-base-black: #FFFFFF;
-    --color-base-white: #000000;
+    --color-base-background: #FBFBFB;
+    --color-base-black: #FBFBFB;
+    --color-base-white: #FBFBFB;
     --color-green-dark: #ABEDD5;
     --color-green-darker: #C7F3E3;
     --color-green-darkest: #E3F9F1;
@@ -102,12 +102,13 @@ body::-webkit-scrollbar {
     --color-red-lightest: #290C0C;
     --color-text-primary: #131313;
     --color-text-secondary: #98959E;
+    --color-main-card-gradient: rgba(40, 40, 40, 0.1);
 }
 
 .dark {
     --color-base-background: #000000;
     --color-base-black: #000000;
-    --color-base-white: #FFFFFF;
+    --color-base-white: #FBFBFB;
     --color-green-dark: #20A273;
     --color-green-darker: #1A8B65;
     --color-green-darkest: #0F271F;
@@ -140,6 +141,7 @@ body::-webkit-scrollbar {
     --color-red-lightest: #FDEEEB;
     --color-text-primary: #F7F7F7;
     --color-text-secondary: #7E7B86;
+    --color-main-card-gradient: rgba(40, 40, 40, 0.5);
 }
 
 div#root {

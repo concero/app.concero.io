@@ -19,9 +19,7 @@ type ThemeProviderProps = {
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
   const bodyClassTheme = document.body.classList.contains('dark') ? 'dark' : 'light'
-
   const [theme, setTheme] = useState<'light' | 'dark'>(bodyClassTheme)
-
   const [colors, setColors] = useState<Colors>(lightColors.color as Colors)
 
   const toggleTheme = () => {
