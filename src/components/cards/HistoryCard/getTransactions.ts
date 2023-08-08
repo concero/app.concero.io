@@ -4,9 +4,11 @@ import { getDexTrades } from '../../../api/bitquery/getDexTrades'
 export function setTransactions(setHistoryItems, transactions) {
   setHistoryItems(transactions)
 }
+
 export function appendTransactions(setHistoryItems, transactions) {
   setHistoryItems((prev) => [...prev, ...transactions])
 }
+
 export async function getTransactions(selection, historyItems, setHistoryItems, setIsLoading) {
   function on_ok(res) {
     setIsLoading(false)
@@ -50,7 +52,7 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
     baseCurrency,
     quoteCurrency,
   })
-  console.log('res ', res)
+
   if (ok) on_ok(res)
   if (err) on_err(err)
 }

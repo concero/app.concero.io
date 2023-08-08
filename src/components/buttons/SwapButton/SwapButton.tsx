@@ -30,9 +30,11 @@ const setStatus = (
     dispatch({ type: 'DISCONNECTED' })
   } else if (transactionResponse) {
     if (!transactionResponse.isOk) {
-      if (transactionResponse.message === 'user rejected') dispatch({ type: 'CANCELED' })
-      else if (transactionResponse.message === 'unknown error') dispatch({ type: 'WRONG' })
-      else if (transactionResponse.message === 'No Routes found') dispatch({ type: 'NO_ROUTE' })
+      if (transactionResponse.message === 'user rejected') {
+        dispatch({ type: 'CANCELED' })
+      } else if (transactionResponse.message === 'unknown error') {
+        dispatch({ type: 'WRONG' })
+      } else if (transactionResponse.message === 'No Routes found') dispatch({ type: 'NO_ROUTE' })
     } else if (transactionResponse.isOk) dispatch({ type: 'SUCCESS' })
   } else if (!from.amount || (from.amount && !routes.length)) {
     dispatch({ type: 'NO_AMOUNT' })
@@ -66,7 +68,10 @@ export const SwapButton: FC<SwapButtonProps> = ({
         buttonState.icon
           ? {
               name: buttonState.icon,
-              iconProps: { size: 18 },
+              iconProps: {
+                size: 18,
+                color: 'white',
+              },
             }
           : null
       }
@@ -75,7 +80,7 @@ export const SwapButton: FC<SwapButtonProps> = ({
       onClick={onClick}
       className={`${classNames.swapButton} ${classNames[buttonState.className]}`}
     >
-      {buttonState.text}
+      <p className={classNames.buttonText}>{buttonState.text}</p>
     </Button>
   )
 }

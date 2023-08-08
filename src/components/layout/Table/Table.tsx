@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useRef } from 'react'
+import { CSSProperties, FC } from 'react'
 import { useTransition } from 'react-spring'
 import classNames from './Table.module.pcss'
 import { TableSkeleton } from './TableSkeleton'
@@ -54,7 +54,6 @@ export const Table: FC<TableProps> = ({
     onRest: () => {
       // removes all transform translate3d from tr elements
       const trs = document.querySelectorAll('tr')
-      console.log(trs)
       trs.forEach((tr) => {
         tr.style.transform = ''
       })
