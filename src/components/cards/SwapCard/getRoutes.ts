@@ -1,4 +1,4 @@
-import { fetchRoutes } from '../../../api/lifi/fetchRoutes'
+import { fetchLifiRoutes } from '../../../api/lifi/fetchLifiRoutes'
 
 export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setResponse) => {
   if (!from.amount) return
@@ -6,7 +6,7 @@ export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setRe
     type: 'SET_LOADING',
     payload: true,
   })
-  const data = await fetchRoutes({
+  const data = await fetchLifiRoutes({
     from,
     to,
   })

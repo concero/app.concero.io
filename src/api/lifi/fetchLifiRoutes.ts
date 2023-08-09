@@ -10,23 +10,16 @@ interface GetRoutes {
   routes: Route[]
 }
 
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
-  lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
+const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
 
 const sortByTags = (routeA: Route, routeB: Route): number => {
   const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
   const tagIndexA = routeA.tags ? tagsOrder.indexOf(routeA.tags[0]) : -1
   const tagIndexB = routeB.tags ? tagsOrder.indexOf(routeB.tags[0]) : -1
 
-  if (tagIndexA === -1 && tagIndexB === -1) {
-    return 0
-  }
-  if (tagIndexA === -1) {
-    return 1
-  }
-  if (tagIndexB === -1) {
-    return -1
-  }
+  if (tagIndexA === -1 && tagIndexB === -1) return 0
+  if (tagIndexA === -1) return 1
+  if (tagIndexB === -1) return -1
 
   if (tagIndexA < tagIndexB) {
   } else if (tagIndexA > tagIndexB) {
@@ -39,7 +32,7 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
 const lifiConfig = { integrator: 'concero' }
 const lifi = new LiFi(lifiConfig)
 
-export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
+export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
   const result = {
     routes: [],
     originalRoutes: [],
