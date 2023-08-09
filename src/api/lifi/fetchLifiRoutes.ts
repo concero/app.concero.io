@@ -29,7 +29,7 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
   }
 }
 
-const lifiConfig = { integrator: 'concero', defaultrouteoptions: { fee: 0.03 } }
+const lifiConfig = { integrator: 'concero', defaultrouteoptions: { fee: 0.002 }, insurance: true }
 const lifi = new LiFi(lifiConfig)
 
 export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
