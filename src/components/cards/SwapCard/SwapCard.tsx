@@ -29,7 +29,8 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const typingTimeoutRef = useRef(null)
 
   useEffect(() => {
-    if (!from.amount || prevFromAmount !== from.amount || response.routes.length <= 0) return
+    console.log('response', response)
+    if (!from.amount || prevFromAmount !== from.amount || response.length <= 0) return
     swapDispatch({
       type: 'POPULATE_ROUTES',
       payload: response,
@@ -38,8 +39,8 @@ export const SwapCard: FC<SwapCardProps> = () => {
       type: 'SET_AMOUNT',
       direction: 'to',
       payload: {
-        amount: response.routes[0].to.token.amount,
-        amount_usd: response.routes[0].to.token.amount_usd,
+        amount: response[0].to.token.amount,
+        amount_usd: response[0].to.token.amount_usd,
       },
     })
   }, [response])
@@ -116,7 +117,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           isLoading={isLoading}
         />
         <SwapButton
-          onClick={() => handleSwap(swapDispatch, originalRoutes, switchChainHook)}
+          onClick={() => handleSwap(swapDispatch, selectedRoute.originalRoute, switchChainHook)}
           from={from}
           to={to}
           isLoading={isLoading}

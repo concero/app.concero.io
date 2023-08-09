@@ -5,22 +5,21 @@ import { DotsIconButton } from './DotsIconButton'
 import { numberToFormatString, unixtimeFromNow } from '../../../utils/formatting'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 
-export const columns = (setModalData, setIsModalOpen) => {
-  return [
+export const columns = (setModalData, setIsModalOpen) => [
     {
       columnTitle: 'From / to',
       cellComponent: (item) => {
         const { selection } = useContext(SelectionContext)
-        const type = item.baseCurrency.address === item.buyCurrency.address ? 'buy' : 'sell'
+        const type = item.baseCurrency?.address === item.buyCurrency.address ? 'buy' : 'sell'
         return (
           <TxFromTo
             from={{
               amount: numberToFormatString(item.baseAmount, 3),
-              symbol: item.baseCurrency.symbol,
+              symbol: item.baseCurrency?.symbol,
             }}
             to={{
               amount: numberToFormatString(item.quoteAmount, 3),
-              symbol: item.quoteCurrency.symbol,
+              symbol: item.quoteCurrency?.symbol,
             }}
             type={type}
           />
@@ -50,19 +49,16 @@ export const columns = (setModalData, setIsModalOpen) => {
     },
     {
       columnTitle: '',
-      cellComponent: (item) => {
-        return (
-          <DotsIconButton
-            onCLick={() => {
+      cellComponent: (item) => (
+        <DotsIconButton
+          onCLick={() => {
               setModalData(item)
               setIsModalOpen(true)
             }}
-          />
-        )
-      },
+        />
+        ),
     },
   ]
-}
 
 // OLD (DEXTOOLS + DEXSCREENER)
 // export const columns = [

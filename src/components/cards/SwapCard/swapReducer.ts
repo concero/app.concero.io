@@ -15,9 +15,9 @@ export function swapReducer(state: State, action: Action) {
       return {
         ...state,
         isLoading: false,
-        routes: action.payload.routes,
+        routes: action.payload,
         originalRoutes: action.payload.originalRoutes,
-        selectedRoute: action.payload.routes[0],
+        selectedRoute: action.payload[0],
       }
     case 'CLEAR_ROUTES':
       return {
@@ -71,10 +71,10 @@ export function swapReducer(state: State, action: Action) {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          ...(action.payload.amount !== undefined &&
-            action.payload.amount !== null && { amount: action.payload.amount }),
-          ...(action.payload.amount_usd !== undefined &&
-            action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
+          ...(action.payload.amount !== undefined
+            && action.payload.amount !== null && { amount: action.payload.amount }),
+          ...(action.payload.amount_usd !== undefined
+            && action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
         },
       }
     case 'RESET_AMOUNTS':

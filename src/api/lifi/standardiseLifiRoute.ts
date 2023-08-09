@@ -2,8 +2,9 @@ import * as types from '@lifi/sdk/dist/types'
 import { getRouteStep } from './getRouteStep'
 import { Route } from './types'
 
-export const standardiseRoute = (route: types.Route): Route => ({
+export const standardiseLifiRoute = (route: types.Route): Route => ({
   id: route.id,
+  provider: 'lifi',
   from: {
     token: {
       name: route.fromToken.name,
@@ -43,16 +44,15 @@ export const standardiseRoute = (route: types.Route): Route => ({
   },
   tags: route.tags,
   slippage_percent: route.steps.reduce(
-    (acc, step) =>
-      acc +
-      (step.action.slippage +
-        step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
+    (acc, step) => acc
+      + (step.action.slippage
+        + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
     0,
   ),
   transaction_time_seconds: route.steps.reduce(
-    (acc: number, step) =>
-      acc +
-      step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
+    (acc: number, step) => acc
+      + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
     0,
   ),
+  originalRoute: route,
 })
