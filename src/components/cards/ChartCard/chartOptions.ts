@@ -43,11 +43,10 @@ export const chartOptions = (colors) => ({
 })
 
 export const areaSeriesOptions = (colors) => ({
-  baseLineColor: colors.grey.light,
   baseLineVisible: false,
   lineType: 2,
-  topColor: colors.primary.dark,
-  bottomColor: 'transparent',
+  topColor: colors.primary.darker,
+  bottomColor: colors.base.black,
   baseLineStyle: 1,
   lineColor: colors.primary.main,
 })
