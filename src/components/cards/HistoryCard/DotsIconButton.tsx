@@ -1,9 +1,15 @@
+import { FC } from 'react'
 import { Button } from '../../buttons/Button/Button'
 import { colors } from '../../../constants/colors'
 
-export const IconWithPopover = () => {
+interface DotsIconButtonProps {
+  onCLick: () => void
+}
+
+export const DotsIconButton: FC<DotsIconButtonProps> = ({ onCLick }) => {
   return (
     <Button
+      onClick={onCLick}
       variant={'subtle'}
       size={'xs'}
       leftIcon={{

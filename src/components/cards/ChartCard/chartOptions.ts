@@ -37,6 +37,7 @@ export const chartOptions = (colors) => ({
       color: colors.grey.dark,
     },
   },
+  autoSize: true,
   handleScroll: false,
   handleScale: false,
 })
