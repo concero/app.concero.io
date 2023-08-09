@@ -13,6 +13,7 @@ import { intervals } from './constants'
 import { columns } from './columns'
 import { lifiTokens } from '../../../constants/lifiTokens'
 import { SelectionContext } from '../../../hooks/SelectionContext'
+import { ThemeContext } from '../../../hooks/ThemeContext'
 
 export interface ChartCardProps {}
 
@@ -21,6 +22,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
   const { selection } = useContext(SelectionContext)
+  const { theme } = useContext(ThemeContext)
 
   const [selectedLeftToken, setSelectedLeftToken] = useState<{
     name: string
@@ -115,7 +117,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
         ) : (
           <AdvancedRealTimeChart
-            theme="dark"
+            theme={theme}
             symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
             interval="1"
             width="100%"

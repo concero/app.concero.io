@@ -50,7 +50,7 @@ export const Table: FC<TableProps> = ({
       opacity: 0,
       transform: 'translate3d(0, -40px, 0)',
     },
-    keys: (item) => item.id,
+    // keys: (item) => item.id,
     onRest: () => {
       // removes all transform translate3d from tr elements
       const trs = document.querySelectorAll('tr')
