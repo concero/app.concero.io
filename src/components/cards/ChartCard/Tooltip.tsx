@@ -1,4 +1,5 @@
-import { numberToFormatString } from '../../../utils/formatting'
+import { numberToFormatString, unixTimeFormat } from '../../../utils/formatting'
+import classNames from './ChartCard.module.pcss'
 
 export function isOutsideBounds(point, chartElement) {
   return point.x < 0 || point.x > chartElement.clientWidth || point.y < 0 || point.y > chartElement.clientHeight
@@ -15,23 +16,11 @@ export function getCoordinateY(coordinate, maxCoordinate) {
 
 export function createTooltip() {
   const toolTip = document.createElement('div')
-  toolTip.className = 'coinGecko-tooltip'
+  toolTip.className = classNames.tooltip
   toolTip.style = `
     position: absolute;
-    opacity: 0;
-    padding: 8px 12px;
-    box-sizing: border-box;
-    font-size: 12px;
-    text-align: left;
-    z-index: 100;
     top: 12px;
     left: 12px;
-    pointer-events: none;
-    border-radius: var(--st-br-md);
-    background-color: var(--color-base-background);
-    box-shadow: var(--st-sh-sm);
-    border: 1px solid var(--color-grey-darker);
-    transition: opacity 0.2s ease-in-out;
   `
   return toolTip
 }
@@ -45,10 +34,15 @@ export function updateTooltip(param, newSeries, toolTip, chartElement) {
   toolTip.style.opacity = 1
   const data = param.seriesData.get(newSeries)
   const price = data.value ?? data.close
-  toolTip.innerHTML = `<div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">$${numberToFormatString(
-    price,
-    4,
-  )}</div>`
+  toolTip.innerHTML = `
+<div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
+<span style="font-weight: 500; color: var(--color-grey-light);">$${numberToFormatString(price, 5)}</span>
+<span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(
+    param.time,
+    'MMM DD, HH:MM:ss',
+  )}</span>
+  
+</div>`
 
   const coordinate = newSeries.priceToCoordinate(price)
   if (coordinate === null) return
