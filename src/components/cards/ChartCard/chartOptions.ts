@@ -33,7 +33,7 @@ export const chartOptions = (colors) => ({
     },
     vertLine: {
       visible: true,
-      labelVisible: true,
+      labelVisible: false,
       color: colors.grey.dark,
     },
   },
@@ -45,6 +45,8 @@ export const chartOptions = (colors) => ({
 export const areaSeriesOptions = (colors) => ({
   baseLineVisible: false,
   lineType: 2,
+  lineWidth: 1.8,
+  strokeLinecap: 'round',
   topColor: colors.primary.darker,
   bottomColor: colors.base.black,
   baseLineStyle: 1,

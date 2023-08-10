@@ -31,11 +31,17 @@ const lifiConfig = {
   defaultrouteoptions: { fee: 0.002 },
   insurance: true,
 }
+
 const lifi = new LiFi(lifiConfig)
 
 export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
   let result = []
 
+  const routeOptions = {
+    fee: 0.002,
+    insurance: true,
+    integrator: 'concero',
+  }
   const routesRequest = {
     fromChainId: from.chain.id,
     fromAmount: addingDecimals(Number(from.amount), from.token.decimals),
@@ -44,9 +50,10 @@ export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<
     toChainId: to.chain.id,
     toTokenAddress: to.token.address,
     toAddress: to.address,
+    options: routeOptions,
   }
   console.log('routesRequest', routesRequest)
-  const response = await lifi.getRoutes(routesRequest) // TODO handle errors
+  const response = await lifi.getRoutes(routesRequest)
   console.log('RoutesResponse', response)
 
   if (response.routes.length > 0) {

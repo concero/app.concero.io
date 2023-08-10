@@ -33,6 +33,9 @@ export const formatTime = (date: string | Date, format = 'HH:mm'): string => day
 export const fromNow = (date: string | Date): string => dayjs(date).fromNow()
 
 export const unixtimeFromNow = (unixtime: number): string => dayjs.unix(unixtime).fromNow()
+
+export const unixTimeFormat = (unixtime: number, format = 'YYYY-MM-DD HH:mm'): string => dayjs.unix(unixtime).format(format)
+
 // Number and currency formatting
 export const formatNumber = (num: number, decimalPlaces = 2): string => num.toFixed(decimalPlaces)
 
