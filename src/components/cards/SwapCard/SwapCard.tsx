@@ -101,8 +101,8 @@ export const SwapCard: FC<SwapCardProps> = () => {
     <div className={`card ${classNames.container}`}>
       <CardHeader title="Swap" />
       <div className={classNames.swapContainer}>
-        <TokenArea direction="from" selection={from} dispatch={swapDispatch} address={address} balance={balance} />
-        <TokenArea direction="to" selection={to} dispatch={swapDispatch} address={address} />
+        <TokenArea direction="from" selection={from} oppositeSelection={to} dispatch={swapDispatch} balance={balance} />
+        <TokenArea direction="to" selection={to} oppositeSelection={from} dispatch={swapDispatch} />
         <SwapDetails
           selection={{
             from,

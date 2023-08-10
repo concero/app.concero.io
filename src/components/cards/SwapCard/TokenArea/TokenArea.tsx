@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
-import { capitalize } from '../../../../utils/formatting'
+import { capitalize, numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
@@ -32,27 +32,15 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
     dispatch({
       type: 'SET_CHAIN',
       direction,
-      payload: {
-        name: chain.name,
-        symbol: chain.symbol,
-        id: chain.id,
-        logoURI: chain.logoURI,
-      },
+      payload: { chain },
     })
   }
-  // todo do not destructure
 
   const setToken = (token) => {
     dispatch({
       type: 'SET_TOKEN',
       direction,
-      payload: {
-        name: token.name,
-        symbol: token.symbol,
-        logoURI: token.logoURI,
-        decimals: token.decimals,
-        address: token.address,
-      },
+      payload: { token },
     })
   }
 
@@ -143,7 +131,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>${selection.amount_usd}</h5>
+            <h5>${numberToFormatString(Number(selection.amount_usd), 2)}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}

@@ -50,12 +50,13 @@ export function swapReducer(state: State, action: Action) {
 
     // INPUT_RELATED ACTIONS
     case 'SET_CHAIN':
+      const { chain } = action.payload
       return {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          chain: action.payload,
-          token: tokens[action.payload.id][0],
+          chain: chain,
+          token: tokens[chain.id][0],
         },
       }
     case 'SET_TOKEN':
@@ -63,7 +64,7 @@ export function swapReducer(state: State, action: Action) {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          token: action.payload,
+          token: action.payload.token,
         },
       }
     case 'SET_AMOUNT':
@@ -112,6 +113,14 @@ export const useSwapReducer = (selectionDispatch) => {
         symbol: chains[0].symbol,
         id: chains[0].id,
         logoURI: chains[0].logoURI,
+        providers: {
+          ...(chains[0].providers.lifi && {
+            lifi: { key: chains[0].providers.lifi.key },
+          }),
+          ...(chains[0].providers.rango && {
+            rango: { key: chains[0].providers.rango.key },
+          }),
+        },
       },
       token: {
         name: tokens[chains[0].id][0].name,
@@ -130,6 +139,14 @@ export const useSwapReducer = (selectionDispatch) => {
         symbol: chains[1].symbol,
         id: chains[1].id,
         logoURI: chains[1].logoURI,
+        providers: {
+          ...(chains[1].providers.lifi && {
+            lifi: { key: chains[1].providers.lifi.key },
+          }),
+          ...(chains[1].providers.rango && {
+            rango: { key: chains[1].providers.rango.key },
+          }),
+        },
       },
       token: {
         name: tokens[chains[1].id][0].name,

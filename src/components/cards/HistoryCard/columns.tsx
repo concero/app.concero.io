@@ -6,59 +6,59 @@ import { numberToFormatString, unixtimeFromNow } from '../../../utils/formatting
 import { SelectionContext } from '../../../hooks/SelectionContext'
 
 export const columns = (setModalData, setIsModalOpen) => [
-    {
-      columnTitle: 'From / to',
-      cellComponent: (item) => {
-        const { selection } = useContext(SelectionContext)
-        const type = item.baseCurrency?.address === item.buyCurrency.address ? 'buy' : 'sell'
-        return (
-          <TxFromTo
-            from={{
-              amount: numberToFormatString(item.baseAmount, 3),
-              symbol: item.baseCurrency?.symbol,
-            }}
-            to={{
-              amount: numberToFormatString(item.quoteAmount, 3),
-              symbol: item.quoteCurrency?.symbol,
-            }}
-            type={type}
-          />
-        )
-      },
+  {
+    columnTitle: 'From / to',
+    cellComponent: (item) => {
+      const { selection } = useContext(SelectionContext)
+      const type = item.baseCurrency?.address === item.buyCurrency?.address ? 'buy' : 'sell'
+      return (
+        <TxFromTo
+          from={{
+            amount: numberToFormatString(item.baseAmount, 3),
+            symbol: item.baseCurrency?.symbol,
+          }}
+          to={{
+            amount: numberToFormatString(item.quoteAmount, 3),
+            symbol: item.quoteCurrency?.symbol,
+          }}
+          type={type}
+        />
+      )
     },
-    {
-      columnTitle: 'When',
-      cellComponent: (item) => (
-        <div
+  },
+  {
+    columnTitle: 'When',
+    cellComponent: (item) => (
+      <div
+        style={{
+          alignItems: 'center',
+          flexDirection: 'row',
+          gap: 10,
+        }}
+      >
+        <p
           style={{
-            alignItems: 'center',
-            flexDirection: 'row',
-            gap: 10,
+            color: colors.text.secondary,
+            textAlign: 'end',
           }}
         >
-          <p
-            style={{
-              color: colors.text.secondary,
-              textAlign: 'end',
-            }}
-          >
-            {unixtimeFromNow(item.block.timestamp.unixtime)}
-          </p>
-        </div>
-      ),
-    },
-    {
-      columnTitle: '',
-      cellComponent: (item) => (
-        <DotsIconButton
-          onCLick={() => {
-              setModalData(item)
-              setIsModalOpen(true)
-            }}
-        />
-        ),
-    },
-  ]
+          {unixtimeFromNow(item.block.timestamp.unixtime)}
+        </p>
+      </div>
+    ),
+  },
+  {
+    columnTitle: '',
+    cellComponent: (item) => (
+      <DotsIconButton
+        onCLick={() => {
+          setModalData(item)
+          setIsModalOpen(true)
+        }}
+      />
+    ),
+  },
+]
 
 // OLD (DEXTOOLS + DEXSCREENER)
 // export const columns = [

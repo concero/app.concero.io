@@ -49,7 +49,9 @@ export const renderAdditionalInfo = (
           getColor={getColor}
           isBestRoute={isBestRoute}
         />
-        <AdditionalInfoTag title={step.tool.gas_usd} type="gas" getColor={getColor} isBestRoute={isBestRoute} />
+        {step.tool.gas_usd ? (
+          <AdditionalInfoTag title={step.tool.gas_usd} type="gas" getColor={getColor} isBestRoute={isBestRoute} />
+        ) : null}
       </div>
     ) : null}
   </div>

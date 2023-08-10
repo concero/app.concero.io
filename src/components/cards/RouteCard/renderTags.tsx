@@ -32,30 +32,34 @@ export const renderTags = (
           {secondsConverter(route.transaction_time_seconds)}
         </h5>
       </Tag>
-      <Tag
-        color={'transparent'}
-        leftIcon={{
-          name: 'ArrowWaveRightUp',
-          iconProps: {
-            size: 20,
-            color: getIconColor(),
-          },
-        }}
-      >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{route.slippage_percent}%</h5>
-      </Tag>
-      <Tag
-        color={'transparent'}
-        leftIcon={{
-          name: 'GasStation',
-          iconProps: {
-            size: 20,
-            color: getIconColor(),
-          },
-        }}
-      >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
-      </Tag>
+      {route.slippage_percent ? (
+        <Tag
+          color={'transparent'}
+          leftIcon={{
+            name: 'ArrowWaveRightUp',
+            iconProps: {
+              size: 20,
+              color: getIconColor(),
+            },
+          }}
+        >
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{route.slippage_percent}%</h5>
+        </Tag>
+      ) : null}
+      {route.cost.total_gas_usd ? (
+        <Tag
+          color={'transparent'}
+          leftIcon={{
+            name: 'GasStation',
+            iconProps: {
+              size: 20,
+              color: getIconColor(),
+            },
+          }}
+        >
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
+        </Tag>
+      ) : null}
     </div>
   )
 }
