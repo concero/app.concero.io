@@ -14,15 +14,15 @@
     --sp-screen-v: 20px;
     --sp-screen-h: 20px;
 
-    --color-tag-recommended: #7335F7;
-    --color-tag-fastest: #093D6D;
-    --color-tag-cheapest: #6D0A46;
-    --color-button-disabled: #45336D;
-    --color-border-disabled: #7335F7;
-    --color-button-wrong: #421C28;
-    --color-border-wrong: #7A253E;
-    --color-button-success: #1E4839;
-    --color-border-success: #20A273;
+    /*--color-tag-recommended: #7335F7;*/
+    /*--color-tag-fastest: #093D6D;*/
+    /*--color-tag-cheapest: #6D0A46;*/
+    /*--color-button-disabled: #45336D;*/
+    /*--color-border-disabled: #7335F7;*/
+    /*--color-button-wrong: #421C28;*/
+    /*--color-border-wrong: #7A253E;*/
+    /*--color-button-success: #1E4839;*/
+    /*--color-border-success: #20A273;*/
 
     color-scheme: light dark;
     font-family: Poppins, sans-serif;
@@ -119,6 +119,7 @@ body::-webkit-scrollbar {
 
     /* text */
     --color-text-primary: #131313;
+    --color-button-text-primary: #FBFBFB;
     --color-text-secondary: #7E7B86;
 
     /* gradients */
@@ -182,6 +183,7 @@ body::-webkit-scrollbar {
 
     /* text */
     --color-text-primary: #F7F7F7;
+    --color-button-text-primary: #FBFBFB;
     --color-text-secondary: #7E7B86;
 
     /* gradients */

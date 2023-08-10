@@ -15,11 +15,16 @@ export const renderTags = (
     <div className={classNames.infoTagsContainer}>
       {route?.tags[0]?.length > 0 ? (
         <Tag color={route.tags[0].toLowerCase()}>
-          <p className={`body1 ${classNames.advantageTagColor}`}>{capitalize(advantageTagText)}</p>
+          <p style={{ color: 'inherit' }}>{capitalize(advantageTagText)}</p>
+        </Tag>
+      ) : null}
+      {route.insurance ? (
+        <Tag color="green">
+          <p style={{ color: 'inherit' }}>{route.insurance.state}</p>
         </Tag>
       ) : null}
       <Tag
-        color={'transparent'}
+        color="transparent"
         leftIcon={{
           name: 'Clock',
           iconProps: {
@@ -34,7 +39,7 @@ export const renderTags = (
       </Tag>
       {route.slippage_percent ? (
         <Tag
-          color={'transparent'}
+          color="transparent"
           leftIcon={{
             name: 'ArrowWaveRightUp',
             iconProps: {
@@ -43,12 +48,15 @@ export const renderTags = (
             },
           }}
         >
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{route.slippage_percent}%</h5>
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+            {route.slippage_percent}
+            %
+          </h5>
         </Tag>
       ) : null}
       {route.cost.total_gas_usd ? (
         <Tag
-          color={'transparent'}
+          color="transparent"
           leftIcon={{
             name: 'GasStation',
             iconProps: {
@@ -57,7 +65,10 @@ export const renderTags = (
             },
           }}
         >
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+            $
+            {route.cost.total_gas_usd}
+          </h5>
         </Tag>
       ) : null}
     </div>

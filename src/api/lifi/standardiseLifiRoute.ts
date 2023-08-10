@@ -43,6 +43,10 @@ export const standardiseLifiRoute = (route: types.Route): Route => ({
     total_gas_usd: route.gasCostUSD,
   },
   tags: route.tags,
+  insurance: {
+    state: route.insurance.state,
+    fee_amount_usd: route.insurance.feeAmountUsd,
+  },
   slippage_percent: route.steps.reduce(
     (acc, step) => acc
       + (step.action.slippage

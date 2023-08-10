@@ -37,10 +37,7 @@ export function updateTooltip(param, newSeries, toolTip, chartElement) {
   toolTip.innerHTML = `
 <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
 <span style="font-weight: 500; color: var(--color-grey-light);">$${numberToFormatString(price, 5)}</span>
-<span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(
-    param.time,
-    'MMM DD, HH:MM:ss',
-  )}</span>
+<span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
   
 </div>`
 

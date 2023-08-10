@@ -9,8 +9,9 @@ export const columns = (setModalData, setIsModalOpen) => [
   {
     columnTitle: 'From / to',
     cellComponent: (item) => {
+      if (!item) return null
       const { selection } = useContext(SelectionContext)
-      const type = item.baseCurrency?.address === item.buyCurrency?.address ? 'buy' : 'sell'
+      const type = item.baseCurrency?.address === item.buyCurrency.address ? 'buy' : 'sell'
       return (
         <TxFromTo
           from={{
@@ -28,35 +29,41 @@ export const columns = (setModalData, setIsModalOpen) => [
   },
   {
     columnTitle: 'When',
-    cellComponent: (item) => (
-      <div
-        style={{
-          alignItems: 'center',
-          flexDirection: 'row',
-          gap: 10,
-        }}
-      >
-        <p
+    cellComponent: (item) => {
+      if (!item) return null
+      return (
+        <div
           style={{
-            color: colors.text.secondary,
-            textAlign: 'end',
+            alignItems: 'center',
+            flexDirection: 'row',
+            gap: 10,
           }}
         >
-          {unixtimeFromNow(item.block.timestamp.unixtime)}
-        </p>
-      </div>
-    ),
+          <p
+            style={{
+              color: colors.text.secondary,
+              textAlign: 'end',
+            }}
+          >
+            {unixtimeFromNow(item.block?.timestamp.unixtime)}
+          </p>
+        </div>
+      )
+    },
   },
   {
     columnTitle: '',
-    cellComponent: (item) => (
-      <DotsIconButton
-        onCLick={() => {
-          setModalData(item)
-          setIsModalOpen(true)
-        }}
-      />
-    ),
+    cellComponent: (item) => {
+      if (!item) return null
+      return (
+        <DotsIconButton
+          onCLick={() => {
+            setModalData(item)
+            setIsModalOpen(true)
+          }}
+        />
+      )
+    },
   },
 ]
 
