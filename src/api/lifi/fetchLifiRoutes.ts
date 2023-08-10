@@ -36,6 +36,7 @@ const lifi = new LiFi(lifiConfig)
 
 export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
   let result = []
+  console.log('LIFI INTEGRATOR', process.env.LIFI_INTEGRATOR)
 
   const routeOptions = {
     fee: 0.002,

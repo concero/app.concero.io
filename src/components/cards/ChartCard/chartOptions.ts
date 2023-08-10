@@ -1,6 +1,6 @@
 import { ColorType } from 'lightweight-charts'
 
-export const chartOptions = (colors) => ({
+export const chartOptions = (colors, theme) => ({
   layout: {
     background: {
       type: ColorType.Solid,
@@ -42,13 +42,13 @@ export const chartOptions = (colors) => ({
   handleScale: false,
 })
 
-export const areaSeriesOptions = (colors) => ({
+export const areaSeriesOptions = (colors, theme) => ({
   baseLineVisible: false,
   lineType: 2,
   lineWidth: 1.8,
   strokeLinecap: 'round',
   topColor: colors.primary.darker,
-  bottomColor: colors.base.black,
+  bottomColor: theme === 'dark' ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)',
   baseLineStyle: 1,
   lineColor: colors.primary.main,
 })
