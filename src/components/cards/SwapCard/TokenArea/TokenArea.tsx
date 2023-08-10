@@ -50,6 +50,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
         name: token.name,
         symbol: token.symbol,
         logoURI: token.logoURI,
+        decimals: token.decimals,
         address: token.address,
       },
     })

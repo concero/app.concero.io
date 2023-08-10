@@ -3,15 +3,11 @@ import { WalletClient } from 'wagmi'
 import { Account, Transport } from 'viem'
 import { FetchRoutesParams, Route } from './types'
 import { standardiseLifiRoute } from './standardiseLifiRoute'
-import { tokens } from '../../constants/tokens'
 import { addingDecimals } from '../../utils/formatting'
 
 interface GetRoutes {
   (params: FetchRoutesParams): Promise<Route[]>
 }
-
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
-  tokens[chainId].find((token) => token.address === tokenAddress).decimals
 
 const sortByTags = (routeA: Route, routeB: Route): number => {
   const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
@@ -42,14 +38,14 @@ export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<
 
   const routesRequest = {
     fromChainId: from.chain.id,
-    fromAmount: addingDecimals(Number(from.amount), getTokenDecimalsByAddress(from.chain.id, from.token.address)), // TODO: add decimals to from/to object
+    fromAmount: addingDecimals(Number(from.amount), from.token.decimals),
     fromTokenAddress: from.token.address,
-    fromAddress: from.address, // todo: hangs if address is provided
+    fromAddress: from.address,
     toChainId: to.chain.id,
     toTokenAddress: to.token.address,
     toAddress: to.address,
   }
-
+  console.log('routesRequest', routesRequest)
   const response = await lifi.getRoutes(routesRequest) // TODO handle errors
   console.log('RoutesResponse', response)
 
