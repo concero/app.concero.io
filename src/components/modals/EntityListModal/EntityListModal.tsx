@@ -36,7 +36,7 @@ export const EntityListModal: FC<EntityListModalProps> = ({
 
     if (!name) return setFilteredData(visibleData || data)
 
-    const newData = data.filter((chain) => chain.name.toLowerCase().includes(name.toLowerCase()))
+    const newData = data.filter((chain) => chain.symbol.toLowerCase().includes(name.toLowerCase()))
     setFilteredData(newData)
   }
 

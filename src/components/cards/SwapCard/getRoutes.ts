@@ -1,4 +1,5 @@
 import { fetchLifiRoutes } from '../../../api/lifi/fetchLifiRoutes'
+import { fetchRangoRoutes } from '../../../api/rango/fetchRangoRoutes'
 
 export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setResponse) => {
   if (!from.amount) return
@@ -7,7 +8,11 @@ export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setRe
     payload: true,
   })
   const routes = []
-  const lifiRoutes = await fetchLifiRoutes({ from, to })
+  fetchRangoRoutes()
+  const lifiRoutes = await fetchLifiRoutes({
+    from,
+    to,
+  })
   routes.push(...lifiRoutes)
   console.log('lifidata', lifiRoutes)
   console.log('routes', routes)

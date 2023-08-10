@@ -1,8 +1,8 @@
 import { getTokenBalance } from '@lifi/sdk/dist/balance'
 import { numberToFormatString } from '../../../utils/formatting'
-import { lifiTokens } from '../../../constants/lifiTokens'
+import { tokens } from '../../../constants/tokens'
 
-const getTokenBySymbol = (chainId, symbol) => lifiTokens[chainId].find((token) => token.symbol === symbol)
+const getTokenBySymbol = (chainId, symbol) => tokens[chainId].find((token) => token.symbol === symbol)
 
 export const getBalance = async (address: string, from, setBalance) => {
   const response = await getTokenBalance(address, getTokenBySymbol(from.chain.id, from.token.symbol))

@@ -74,6 +74,6 @@ export const modalColumns = [
   },
   {
     columnTitle: 'Name',
-    cellComponent: (item) => <p className="body1">{truncate(item.name, 20)}</p>,
+    cellComponent: (item) => <p className="body1">{item.name ? truncate(item.name, 20) : ''}</p>,
   },
 ]

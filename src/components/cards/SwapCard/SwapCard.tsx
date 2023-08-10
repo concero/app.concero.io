@@ -21,7 +21,8 @@ import { handleFetchRoutes } from './handleFetchRoutes'
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const { dispatch } = useContext(SelectionContext)
-  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes, transactionResponse }, swapDispatch] = useSwapReducer()
+  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes, transactionResponse }, swapDispatch] =
+    useSwapReducer()
   const [response, setResponse] = useState(null) // todo move to reducer
   const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
@@ -29,7 +30,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const typingTimeoutRef = useRef(null)
 
   useEffect(() => {
-    console.log('response', response)
     if (!from.amount || prevFromAmount !== from.amount || response.length <= 0) return
     swapDispatch({
       type: 'POPULATE_ROUTES',
@@ -109,10 +109,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
             to,
           }}
           selectedRoute={selectedRoute}
-          setSelectedRoute={(route) => swapDispatch({
+          setSelectedRoute={(route) =>
+            swapDispatch({
               type: 'SET_SELECTED_ROUTE',
               payload: route,
-            })}
+            })
+          }
           routes={routes}
           isLoading={isLoading}
         />

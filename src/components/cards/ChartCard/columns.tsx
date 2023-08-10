@@ -12,7 +12,7 @@ export const columns = [
   {
     columnTitle: 'Name',
     cellComponent: (token: { name: string; symbol: string }) => (
-      <p style={{ color: colors.grey.medium }}>{truncate(token.name, 20)}</p>
+      <p style={{ color: colors.grey.medium }}>{token.name ? truncate(token.name, 20) : ''}</p>
     ),
   },
 ]

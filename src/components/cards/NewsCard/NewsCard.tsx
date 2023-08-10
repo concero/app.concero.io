@@ -7,7 +7,7 @@ import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getMoreNews, getNews } from './getNews'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { columns, modalColumns } from './columns'
-import { lifiTokens } from '../../../constants/lifiTokens'
+import { tokens } from '../../../constants/tokens'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { useNewsReducer } from './newsReducer'
@@ -82,14 +82,14 @@ export const NewsCard: FC<NewsCardProps> = () => {
             payload: value,
           })
         }
-        data={lifiTokens['1']}
+        data={tokens['1']}
         visibleData={mappedTokens}
         columns={modalColumns}
         onSelect={(token) => handleSelectToken(token)}
         onEndReached={() =>
           dispatch({
             type: 'ADD_MAPPED_TOKENS',
-            payload: lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 50),
+            payload: tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50),
           })
         }
       />

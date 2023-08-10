@@ -11,7 +11,7 @@ import { chains } from '../../../constants/chains'
 import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedControl'
 import { intervals } from './constants'
 import { columns } from './columns'
-import { lifiTokens } from '../../../constants/lifiTokens'
+import { tokens } from '../../../constants/tokens'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { ThemeContext } from '../../../hooks/ThemeContext'
 
@@ -47,7 +47,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
       symbol: string
       logoURI: string
     }[]
-  >(lifiTokens[1].slice(0, 20))
+  >(tokens[1].slice(0, 20))
 
   useEffect(() => {
     if (!selection.swapCard.to.token) return
@@ -69,7 +69,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   }
 
   const handleEndReached = () => {
-    setMappedTokens([...mappedTokens, ...lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 20)])
+    setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 20)])
   }
 
   const isDesktop = useMediaQuery('mobile')
@@ -134,7 +134,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
         title="Select token"
         show={isSelectLeftTokenModalVisible}
         setShow={setIsSelectLeftTokenModalVisible}
-        data={lifiTokens[1]}
+        data={tokens[1]}
         visibleData={mappedTokens}
         onEndReached={() => handleEndReached()}
         columns={columns}

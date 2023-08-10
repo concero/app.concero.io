@@ -1,565 +1,762 @@
 export const chains = [
   {
-    key: 'eth',
-    chainType: 'EVM',
+    id: 1,
     name: 'Ethereum',
     symbol: 'ETH',
-    id: 1,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg',
-    tokenlistUrl: 'https://gateway.ipfs.io/ipns/tokens.uniswap.org',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x1',
-      blockExplorerUrls: ['https://etherscan.io/'],
-      chainName: 'Ethereum Mainnet',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'ETH',
       },
-      rpcUrls: ['https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 1,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'ETH',
-      priceUSD: '1931.14',
-      logoURI: 'https://static.debank.com/image/token/logo_url/eth/935ae4e4d1d12d59a99717a24f2540b5.png',
-      coinKey: 'ETH',
+      rango: {
+        key: 'ETH',
+      },
     },
   },
   {
-    key: 'pol',
-    chainType: 'EVM',
+    id: 137,
     name: 'Matic',
     symbol: 'MATIC',
-    id: 137,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/polygon.svg',
-    tokenlistUrl: 'https://unpkg.com/quickswap-default-token-list@1.0.71/build/quickswap-default.tokenlist.json',
-    faucetUrls: ['https://stakely.io/faucet/polygon-matic'],
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x89',
-      blockExplorerUrls: ['https://polygonscan.com/', 'https://explorer-mainnet.maticvigil.com/'],
-      chainName: 'Matic(Polygon) Mainnet',
-      nativeCurrency: {
-        name: 'MATIC',
-        symbol: 'MATIC',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'MATIC',
       },
-      rpcUrls: ['https://polygon-rpc.com/', 'https://rpc-mainnet.maticvigil.com/'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 137,
-      symbol: 'MATIC',
-      decimals: 18,
-      name: 'MATIC',
-      priceUSD: '0.783213',
-      logoURI: 'https://static.debank.com/image/matic_token/logo_url/matic/6f5a6b6f0732a7a235131bd7804d357c.png',
-      coinKey: 'MATIC',
+      rango: {
+        key: 'POLYGON',
+      },
     },
   },
   {
-    key: 'bsc',
-    chainType: 'EVM',
+    id: 56,
     name: 'BSC',
     symbol: 'BNB',
-    id: 56,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/bsc.svg',
-    tokenlistUrl: 'https://tokens.pancakeswap.finance/pancakeswap-extended.json',
-    faucetUrls: ['https://stakely.io/faucet/bsc-chain-bnb'],
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x38',
-      blockExplorerUrls: ['https://bscscan.com/'],
-      chainName: 'Binance Smart Chain Mainnet',
-      nativeCurrency: {
-        name: 'BNB',
-        symbol: 'BNB',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'BNB',
       },
-      rpcUrls: [
-        'https://bsc-dataseed.binance.org/',
-        'https://bsc-dataseed1.defibit.io/',
-        'https://bsc-dataseed1.ninicoin.io/',
-      ],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 56,
-      symbol: 'BNB',
-      decimals: 18,
-      name: 'BNB',
-      priceUSD: '243.5',
-      logoURI: 'https://static.debank.com/image/coin/logo_url/bnb/9784283a36f23a58982fc964574ea530.png',
-      coinKey: 'BNB',
+      rango: {
+        key: 'BSC',
+      },
     },
   },
   {
-    key: 'dai',
-    chainType: 'EVM',
+    id: 100,
     name: 'Gnosis',
     symbol: 'DAI',
-    id: 100,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/gnosis.svg',
-    tokenlistUrl: 'https://tokens.honeyswap.org/',
-    faucetUrls: ['https://stakely.io/faucet/xdai-chain'],
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x64',
-      blockExplorerUrls: ['https://blockscout.com/xdai/mainnet/'],
-      chainName: 'Gnosis Chain',
-      nativeCurrency: {
-        name: 'xDai',
-        symbol: 'xDai',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'DAI',
       },
-      rpcUrls: ['https://rpc.gnosischain.com/', 'https://rpc.ankr.com/gnosis', 'https://xdai-rpc.gateway.pokt.network'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 100,
-      symbol: 'xDAI',
-      decimals: 18,
-      name: 'xDAI Native Token',
-      priceUSD: '1',
-      logoURI: 'https://static.debank.com/image/xdai_token/logo_url/xdai/1207e67652b691ef3bfe04f89f4b5362.png',
-      coinKey: 'DAI',
+      rango: {
+        key: 'GNOSIS',
+      },
     },
   },
   {
-    key: 'ftm',
-    chainType: 'EVM',
+    id: 250,
     name: 'Fantom',
     symbol: 'FTM',
-    id: 250,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/fantom.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/SpookySwap/spooky-info/master/src/constants/token/spookyswap.json',
-    faucetUrls: [
-      'https://stakely.io/faucet/fantom-blockchain-ftm',
-      'https://docs.spookyswap.finance/getting-started/how-to-get-fantom-gas',
-    ],
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0xfa',
-      blockExplorerUrls: ['https://ftmscan.com/'],
-      chainName: 'Fantom Opera',
-      nativeCurrency: {
-        name: 'FTM',
-        symbol: 'FTM',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'FTM',
       },
-      rpcUrls: ['https://rpc.ftm.tools/', 'https://rpcapi.fantom.network'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 250,
-      symbol: 'FTM',
-      decimals: 18,
-      name: 'FTM',
-      priceUSD: '0.2685',
-      logoURI: 'https://static.debank.com/image/ftm_token/logo_url/ftm/33fdb9c5067e94f3a1b9e78f6fa86984.png',
-      coinKey: 'FTM',
+      rango: {
+        key: 'FANTOM',
+      },
     },
   },
   {
-    key: 'okt',
-    chainType: 'EVM',
+    id: 66,
     name: 'OKXChain',
     symbol: 'OKT',
-    id: 66,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/okx.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/sushiswap/default-token-list/master/tokens/okex.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x42',
-      blockExplorerUrls: ['https://www.oklink.com/en/okc/'],
-      chainName: 'OKXChain Mainnet',
-      nativeCurrency: {
-        name: 'OKT',
-        symbol: 'OKT',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'OKT',
       },
-      rpcUrls: ['https://exchainrpc.okex.org'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 66,
-      symbol: 'OKT',
-      decimals: 18,
-      name: 'OKT',
-      priceUSD: '15.09',
-      logoURI:
-        'https://static.debank.com/image/okt_token/logo_url/0x8f8526dbfd6e38e3d8307702ca8469bae6c56c15/54a64333ea780b76b96435d66ab41146.png',
-      coinKey: 'OKT',
+      rango: {
+        key: 'OKC',
+      },
     },
   },
   {
-    key: 'ava',
-    chainType: 'EVM',
+    id: 43114,
     name: 'Avalanche',
     symbol: 'AVAX',
-    id: 43114,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/avalanche.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/sushiswap/default-token-list/master/tokens/avalanche.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0xa86a',
-      blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
-      chainName: 'Avalanche Mainnet',
-      nativeCurrency: {
-        name: 'AVAX',
-        symbol: 'AVAX',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'AVAX',
       },
-      rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 43114,
-      symbol: 'AVAX',
-      decimals: 18,
-      name: 'AVAX',
-      priceUSD: '14.62',
-      logoURI: 'https://static.debank.com/image/avax_token/logo_url/avax/0b9c84359c84d6bdd5bfda9c2d4c4a82.png',
-      coinKey: 'AVAX',
+      rango: {
+        key: 'AVAX_CCHAIN',
+      },
     },
   },
   {
-    key: 'arb',
-    chainType: 'EVM',
+    id: 42161,
     name: 'Arbitrum',
     symbol: 'ETH',
-    id: 42161,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/arbitrum.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/sushiswap/default-token-list/master/tokens/arbitrum.json',
-    faucetUrls: ['https://bridge.arbitrum.io/'],
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0xa4b1',
-      blockExplorerUrls: ['https://arbiscan.io/'],
-      chainName: 'Arbitrum',
-      nativeCurrency: {
-        name: 'AETH',
-        symbol: 'AETH',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'ETH',
       },
-      rpcUrls: ['https://arb1.arbitrum.io/rpc'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 42161,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'ETH',
-      priceUSD: '1931.14',
-      logoURI: 'https://static.debank.com/image/arb_token/logo_url/arb/d61441782d4a08a7479d54aea211679e.png',
-      coinKey: 'ETH',
+      rango: {
+        key: 'ARBITRUM',
+      },
     },
   },
   {
-    key: 'opt',
-    chainType: 'EVM',
+    id: 10,
     name: 'Optimism',
     symbol: 'ETH',
-    id: 10,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/optimism.svg',
-    tokenlistUrl: 'https://static.optimism.io/optimism.tokenlist.json',
-    faucetUrls: ['https://gateway.optimism.io/'],
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0xa',
-      blockExplorerUrls: ['https://optimistic.etherscan.io/'],
-      chainName: 'Optimism',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'ETH',
       },
-      rpcUrls: ['https://mainnet.optimism.io/'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 10,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'ETH',
-      priceUSD: '1931.14',
-      logoURI: 'https://static.debank.com/image/op_token/logo_url/op/d61441782d4a08a7479d54aea211679e.png',
-      coinKey: 'ETH',
+      rango: {
+        key: 'OPTIMISM',
+      },
     },
   },
   {
-    key: 'mor',
-    chainType: 'EVM',
+    id: 1285,
     name: 'Moonriver',
     symbol: 'MOVR',
-    id: 1285,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/moonriver.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/sushiswap/default-token-list/master/tokens/moonriver.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x505',
-      blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/'],
-      chainName: 'Moonriver',
-      nativeCurrency: {
-        name: 'Moonriver',
-        symbol: 'MOVR',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'MOVR',
       },
-      rpcUrls: ['https://rpc.api.moonriver.moonbeam.network'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 1285,
-      symbol: 'MOVR',
-      decimals: 18,
-      name: 'MOVR',
-      priceUSD: '5.22',
-      logoURI:
-        'https://static.debank.com/image/mtr_token/logo_url/0xb158870beb809ad955bf56065c5c10d7fd957cc0/aa42368ae1d5856d15c13ecc0ff74af6.png',
-      coinKey: 'MOVR',
+      rango: {
+        key: 'MOONRIVER',
+      },
     },
   },
   {
-    key: 'moo',
-    chainType: 'EVM',
+    id: 1284,
     name: 'Moonbeam',
     symbol: 'GLMR',
-    id: 1284,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/moonbeam.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/BeamSwap/beamswap-tokenlist/main/tokenlist.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x504',
-      blockExplorerUrls: ['https://blockscout.moonbeam.network/'],
-      chainName: 'Moonbeam',
-      nativeCurrency: {
-        name: 'GLMR',
-        symbol: 'GLMR',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'GLMR',
       },
-      rpcUrls: ['https://rpc.api.moonbeam.network'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 1284,
-      symbol: 'GLMR',
-      decimals: 18,
-      name: 'GLMR',
-      priceUSD: '0.2404',
-      logoURI: 'https://static.debank.com/image/mobm_token/logo_url/mobm/a8442077d76b258297181c3e6eb8c9cc.png',
-      coinKey: 'GLMR',
+      rango: {
+        key: 'MOONBEAM',
+      },
     },
   },
   {
-    key: 'cel',
-    chainType: 'EVM',
+    id: 42220,
     name: 'CELO',
     symbol: 'CELO',
-    id: 42220,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/celo.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/sushiswap/default-token-list/master/tokens/celo.json',
-    faucetUrls: ['https://stakely.io/faucet/celo-platform', 'https://free-online-app.com/faucet-for-eth-evm-chains/'],
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0xa4ec',
-      blockExplorerUrls: ['https://explorer.celo.org/'],
-      chainName: 'Celo Mainnet',
-      nativeCurrency: {
-        name: 'CELO',
-        symbol: 'CELO',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'CELO',
       },
-      rpcUrls: ['https://forno.celo.org'],
-    },
-    nativeToken: {
-      address: '0x471ece3750da237f93b8e339c536989b8978a438',
-      chainId: 42220,
-      symbol: 'CELO',
-      decimals: 18,
-      name: 'CELO',
-      priceUSD: '0.566',
-      logoURI:
-        'https://static.debank.com/image/celo_token/logo_url/0x471ece3750da237f93b8e339c536989b8978a438/d5d37c2a693d70240afb561beb7e6821.png',
-      coinKey: 'CELO',
     },
   },
   {
-    key: 'fus',
-    chainType: 'EVM',
+    id: 122,
     name: 'FUSE',
     symbol: 'FUSE',
-    id: 122,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/fuse.svg',
-    tokenlistUrl: 'https://raw.githubusercontent.com/sushiswap/default-token-list/master/tokens/fuse.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x7a',
-      blockExplorerUrls: ['https://explorer.fuse.io/'],
-      chainName: 'Fuse Mainnet',
-      nativeCurrency: {
-        name: 'FUSE',
-        symbol: 'FUSE',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'FUSE',
       },
-      rpcUrls: ['https://rpc.fuse.io'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 122,
-      symbol: 'FUSE',
-      decimals: 18,
-      name: 'FUSE',
-      priceUSD: '0.06075',
-      logoURI: 'https://static.debank.com/image/fuse_token/logo_url/fuse/6342e1cc4646e22d1e91956fdee942eb.png',
-      coinKey: 'FUSE',
+      rango: {
+        key: 'FUSE',
+      },
     },
   },
   {
-    key: 'cro',
-    chainType: 'EVM',
+    id: 25,
     name: 'Cronos',
     symbol: 'CRO',
-    id: 25,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/cronos.svg',
-    tokenlistUrl:
-      'https://raw.githubusercontent.com/cronaswap/cronaswap-tokenlists/main/cronaswap-default.tokenlist.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x19',
-      blockExplorerUrls: ['https://cronos.crypto.org/explorer/'],
-      chainName: 'Cronos',
-      nativeCurrency: {
-        name: 'Crypto.org Coin',
-        symbol: 'CRO',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'CRO',
       },
-      rpcUrls: ['https://evm-cronos.crypto.org'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 25,
-      symbol: 'CRO',
-      decimals: 18,
-      name: 'CRO',
-      priceUSD: '0.06019',
-      logoURI: 'https://static.debank.com/image/cro_token/logo_url/cro/affddd53019ffb9dbad0c724e12500c0.png',
-      coinKey: 'CRO',
+      rango: {
+        key: 'CRONOS',
+      },
     },
   },
   {
-    key: 'bob',
-    chainType: 'EVM',
+    id: 288,
     name: 'Boba',
     symbol: 'ETH',
-    id: 288,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/boba.png',
-    tokenlistUrl:
-      'https://raw.githubusercontent.com/OolongSwap/boba-community-token-list/main/build/boba.tokenlist.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x120',
-      blockExplorerUrls: ['https://blockexplorer.boba.network/'],
-      chainName: 'Boba',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'ETH',
       },
-      rpcUrls: ['https://mainnet.boba.network/'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 288,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'ETH',
-      priceUSD: '1931.14',
-      logoURI: 'https://static.debank.com/image/boba_token/logo_url/boba/b1947b38a90e559eb950453965714be4.png',
-      coinKey: 'ETH',
+      rango: {
+        key: 'BOBA',
+      },
     },
   },
   {
-    key: 'vel',
-    chainType: 'EVM',
+    id: 106,
     name: 'Velas',
     symbol: 'VLX',
-    id: 106,
-    mainnet: true,
-    multicallAddress: '0x6ede559F2Bd951777470595761672091CCD21Ac6',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/velas.png',
-    faucetUrls: ['https://stakely.io/faucet/velas-vlx'],
-    metamask: {
-      chainId: '0x6a',
-      blockExplorerUrls: ['https://evmexplorer.velas.com/'],
-      chainName: 'Velas',
-      nativeCurrency: {
-        name: 'VLX',
-        symbol: 'VLX',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'VLX',
       },
-      rpcUrls: ['https://evmexplorer.velas.com/rpc'],
-    },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      symbol: 'VLX',
-      decimals: 18,
-      chainId: 106,
-      name: 'Velas',
-      coinKey: 'VLX',
-      logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/tokens/vlx.png',
-      priceUSD: '0',
     },
   },
   {
-    key: 'aur',
-    chainType: 'EVM',
+    id: 1313161554,
     name: 'Aurora',
     symbol: 'ETH',
-    id: 1313161554,
-    mainnet: true,
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/aurora.png',
-    tokenlistUrl: 'https://aurora.dev/tokens.json',
-    multicallAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    metamask: {
-      chainId: '0x4e454152',
-      blockExplorerUrls: ['https://aurorascan.dev/'],
-      chainName: 'Aurora',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
+    providers: {
+      lifi: {
+        key: 'ETH',
       },
-      rpcUrls: ['https://mainnet.aurora.dev'],
+      rango: {
+        key: 'AURORA',
+      },
     },
-    nativeToken: {
-      address: '0x0000000000000000000000000000000000000000',
-      chainId: 1313161554,
-      symbol: 'AETH',
-      decimals: 18,
-      name: 'AETH',
-      priceUSD: '1931.14',
-      logoURI: 'https://static.debank.com/image/aurora_token/logo_url/aurora/d61441782d4a08a7479d54aea211679e.png',
-      coinKey: 'ETH',
+  },
+  {
+    id: '324',
+    name: 'ZKSYNC',
+    symbol: 'ZKSYNC',
+    logoURI: 'https://api.rango.exchange/blockchains/zksync.png',
+    providers: {
+      rango: {
+        key: 'ZKSYNC',
+      },
+    },
+  },
+  {
+    id: 'SN_MAIN',
+    name: 'STARKNET',
+    symbol: 'STARKNET',
+    logoURI: 'https://api.rango.exchange/blockchains/starknet.svg',
+    providers: {
+      rango: {
+        key: 'STARKNET',
+      },
+    },
+  },
+  {
+    id: '1101',
+    name: 'POLYGONZK',
+    symbol: 'POLYGONZK',
+    logoURI: 'https://api.rango.exchange/blockchains/zkevmpolygon.png',
+    providers: {
+      rango: {
+        key: 'POLYGONZK',
+      },
+    },
+  },
+  {
+    id: '728126428',
+    name: 'TRON',
+    symbol: 'TRON',
+    logoURI: 'https://api.rango.exchange/blockchains/tron.svg',
+    providers: {
+      rango: {
+        key: 'TRON',
+      },
+    },
+  },
+  {
+    id: '',
+    name: 'BTC',
+    symbol: 'BTC',
+    logoURI: 'https://api.rango.exchange/blockchains/btc.svg',
+    providers: {
+      rango: {
+        key: 'DOGE',
+      },
+    },
+  },
+  {
+    id: 'cosmoshub-4',
+    name: 'COSMOS',
+    symbol: 'COSMOS',
+    logoURI: 'https://api.rango.exchange/blockchains/cosmos.svg',
+    providers: {
+      rango: {
+        key: 'COSMOS',
+      },
+    },
+  },
+  {
+    id: 'osmosis-1',
+    name: 'OSMOSIS',
+    symbol: 'OSMOSIS',
+    logoURI: 'https://api.rango.exchange/blockchains/osmosis.svg',
+    providers: {
+      rango: {
+        key: 'OSMOSIS',
+      },
+    },
+  },
+  {
+    id: 'neutron-1',
+    name: 'NEUTRON',
+    symbol: 'NEUTRON',
+    logoURI: 'https://api.rango.exchange/blockchains/neutron.svg',
+    providers: {
+      rango: {
+        key: 'NEUTRON',
+      },
+    },
+  },
+  {
+    id: 'mainnet-beta',
+    name: 'SOLANA',
+    symbol: 'SOLANA',
+    logoURI: 'https://api.rango.exchange/blockchains/solana.svg',
+    providers: {
+      rango: {
+        key: 'SOLANA',
+      },
+    },
+  },
+  {
+    id: 'thorchain-mainnet-v1',
+    name: 'THOR',
+    symbol: 'THOR',
+    logoURI: 'https://api.rango.exchange/blockchains/thorchain.svg',
+    providers: {
+      rango: {
+        key: 'THOR',
+      },
+    },
+  },
+  {
+    id: '56288',
+    name: 'BOBA_BNB',
+    symbol: 'BOBA_BNB',
+    logoURI: 'https://api.rango.exchange/blockchains/boba.png',
+    providers: {
+      rango: {
+        key: 'BOBA_BNB',
+      },
+    },
+  },
+  {
+    id: '43288',
+    name: 'BOBA_AVALANCHE',
+    symbol: 'BOBA_AVALANCHE',
+    logoURI: 'https://api.rango.exchange/blockchains/boba.png',
+    providers: {
+      rango: {
+        key: 'BOBA_AVALANCHE',
+      },
+    },
+  },
+  {
+    id: '1666600000',
+    name: 'HARMONY',
+    symbol: 'HARMONY',
+    logoURI: 'https://api.rango.exchange/blockchains/harmony.svg',
+    providers: {
+      rango: {
+        key: 'HARMONY',
+      },
+    },
+  },
+  {
+    id: '9001',
+    name: 'EVMOS',
+    symbol: 'EVMOS',
+    logoURI: 'https://api.rango.exchange/blockchains/evmos.png',
+    providers: {
+      rango: {
+        key: 'EVMOS',
+      },
+    },
+  },
+  {
+    id: '128',
+    name: 'HECO',
+    symbol: 'HECO',
+    logoURI: 'https://api.rango.exchange/blockchains/heco.png',
+    providers: {
+      rango: {
+        key: 'HECO',
+      },
+    },
+  },
+  {
+    id: 'sifchain-1',
+    name: 'SIF',
+    symbol: 'SIF',
+    logoURI: 'https://api.rango.exchange/blockchains/sif.png',
+    providers: {
+      rango: {
+        key: 'SIF',
+      },
+    },
+  },
+  {
+    id: '32520',
+    name: 'BRISE',
+    symbol: 'BRISE',
+    logoURI: 'https://api.rango.exchange/blockchains/bitgert.png',
+    providers: {
+      rango: {
+        key: 'BRISE',
+      },
+    },
+  },
+  {
+    id: 'stargaze-1',
+    name: 'STARGAZE',
+    symbol: 'STARGAZE',
+    logoURI: 'https://api.rango.exchange/blockchains/stargaze.png',
+    providers: {
+      rango: {
+        key: 'STARGAZE',
+      },
+    },
+  },
+  {
+    id: 'crypto-org-chain-mainnet-1',
+    name: 'CRYPTO_ORG',
+    symbol: 'CRYPTO_ORG',
+    logoURI: 'https://api.rango.exchange/blockchains/crypto_org.png',
+    providers: {
+      rango: {
+        key: 'CRYPTO_ORG',
+      },
+    },
+  },
+  {
+    id: 'chihuahua-1',
+    name: 'CHIHUAHUA',
+    symbol: 'CHIHUAHUA',
+    logoURI: 'https://api.rango.exchange/blockchains/chihuahua.png',
+    providers: {
+      rango: {
+        key: 'CHIHUAHUA',
+      },
+    },
+  },
+  {
+    id: 'laozi-mainnet',
+    name: 'BANDCHAIN',
+    symbol: 'BANDCHAIN',
+    logoURI: 'https://api.rango.exchange/blockchains/bandchain.svg',
+    providers: {
+      rango: {
+        key: 'BANDCHAIN',
+      },
+    },
+  },
+  {
+    id: 'comdex-1',
+    name: 'COMDEX',
+    symbol: 'COMDEX',
+    logoURI: 'https://api.rango.exchange/blockchains/comdex.svg',
+    providers: {
+      rango: {
+        key: 'COMDEX',
+      },
+    },
+  },
+  {
+    id: 'regen-1',
+    name: 'REGEN',
+    symbol: 'REGEN',
+    logoURI: 'https://api.rango.exchange/blockchains/regen.png',
+    providers: {
+      rango: {
+        key: 'REGEN',
+      },
+    },
+  },
+  {
+    id: 'irishub-1',
+    name: 'IRIS',
+    symbol: 'IRIS',
+    logoURI: 'https://api.rango.exchange/blockchains/iris.png',
+    providers: {
+      rango: {
+        key: 'IRIS',
+      },
+    },
+  },
+  {
+    id: 'emoney-3',
+    name: 'EMONEY',
+    symbol: 'EMONEY',
+    logoURI: 'https://api.rango.exchange/blockchains/emoney.svg',
+    providers: {
+      rango: {
+        key: 'EMONEY',
+      },
+    },
+  },
+  {
+    id: 'juno-1',
+    name: 'JUNO',
+    symbol: 'JUNO',
+    logoURI: 'https://api.rango.exchange/blockchains/juno.svg',
+    providers: {
+      rango: {
+        key: 'JUNO',
+      },
+    },
+  },
+  {
+    id: 'axelar-dojo-1',
+    name: 'AXELAR',
+    symbol: 'AXELAR',
+    logoURI: 'https://api.rango.exchange/blockchains/axelar.png',
+    providers: {
+      rango: {
+        key: 'AXELAR',
+      },
+    },
+  },
+  {
+    id: 'stride-1',
+    name: 'STRIDE',
+    symbol: 'STRIDE',
+    logoURI: 'https://api.rango.exchange/blockchains/stride.svg',
+    providers: {
+      rango: {
+        key: 'STRIDE',
+      },
+    },
+  },
+  {
+    id: '321',
+    name: 'KCC',
+    symbol: 'KCC',
+    logoURI: 'https://api.rango.exchange/blockchains/kcc.png',
+    providers: {
+      rango: {
+        key: 'KCC',
+      },
+    },
+  },
+  {
+    id: 'mars-1',
+    name: 'MARS',
+    symbol: 'MARS',
+    logoURI: 'https://api.rango.exchange/blockchains/mars.svg',
+    providers: {
+      rango: {
+        key: 'MARS',
+      },
+    },
+  },
+  {
+    id: 'phoenix-1',
+    name: 'TERRA',
+    symbol: 'TERRA',
+    logoURI: 'https://api.rango.exchange/blockchains/terra.png',
+    providers: {
+      rango: {
+        key: 'TERRA',
+      },
+    },
+  },
+  {
+    id: '40',
+    name: 'TELOS',
+    symbol: 'TELOS',
+    logoURI: 'https://api.rango.exchange/blockchains/telos.png',
+    providers: {
+      rango: {
+        key: 'TELOS',
+      },
+    },
+  },
+  {
+    id: 'bitsong-2b',
+    name: 'BITSONG',
+    symbol: 'BITSONG',
+    logoURI: 'https://api.rango.exchange/blockchains/bitsong.svg',
+    providers: {
+      rango: {
+        key: 'BITSONG',
+      },
+    },
+  },
+  {
+    id: 'akashnet-2',
+    name: 'AKASH',
+    symbol: 'AKASH',
+    logoURI: 'https://api.rango.exchange/blockchains/akash.svg',
+    providers: {
+      rango: {
+        key: 'AKASH',
+      },
+    },
+  },
+  {
+    id: 'kichain-2',
+    name: 'KI',
+    symbol: 'KI',
+    logoURI: 'https://api.rango.exchange/blockchains/ki.png',
+    providers: {
+      rango: {
+        key: 'KI',
+      },
+    },
+  },
+  {
+    id: 'core-1',
+    name: 'PERSISTENCE',
+    symbol: 'PERSISTENCE',
+    logoURI: 'https://api.rango.exchange/blockchains/persistence.png',
+    providers: {
+      rango: {
+        key: 'PERSISTENCE',
+      },
+    },
+  },
+  {
+    id: 'panacea-3',
+    name: 'MEDIBLOC',
+    symbol: 'MEDIBLOC',
+    logoURI: 'https://api.rango.exchange/blockchains/medibloc.png',
+    providers: {
+      rango: {
+        key: 'MEDIBLOC',
+      },
+    },
+  },
+  {
+    id: 'kaiyo-1',
+    name: 'KUJIRA',
+    symbol: 'KUJIRA',
+    logoURI: 'https://api.rango.exchange/blockchains/kuji.svg',
+    providers: {
+      rango: {
+        key: 'KUJIRA',
+      },
+    },
+  },
+  {
+    id: 'sentinelhub-2',
+    name: 'SENTINEL',
+    symbol: 'SENTINEL',
+    logoURI: 'https://api.rango.exchange/blockchains/sentinel.png',
+    providers: {
+      rango: {
+        key: 'SENTINEL',
+      },
+    },
+  },
+  {
+    id: 'injective-1',
+    name: 'INJECTIVE',
+    symbol: 'INJECTIVE',
+    logoURI: 'https://api.rango.exchange/blockchains/injective.svg',
+    providers: {
+      rango: {
+        key: 'INJECTIVE',
+      },
+    },
+  },
+  {
+    id: 'secret-4',
+    name: 'SECRET',
+    symbol: 'SECRET',
+    logoURI: 'https://api.rango.exchange/blockchains/secret.svg',
+    providers: {
+      rango: {
+        key: 'SECRET',
+      },
+    },
+  },
+  {
+    id: 'darchub',
+    name: 'KONSTELLATION',
+    symbol: 'KONSTELLATION',
+    logoURI: 'https://api.rango.exchange/blockchains/konstellation.svg',
+    providers: {
+      rango: {
+        key: 'KONSTELLATION',
+      },
+    },
+  },
+  {
+    id: 'iov-mainnet-ibc',
+    name: 'STARNAME',
+    symbol: 'STARNAME',
+    logoURI: 'https://api.rango.exchange/blockchains/starname.png',
+    providers: {
+      rango: {
+        key: 'STARNAME',
+      },
+    },
+  },
+  {
+    id: 'bitcanna-1',
+    name: 'BITCANNA',
+    symbol: 'BITCANNA',
+    logoURI: 'https://api.rango.exchange/blockchains/bitcanna.svg',
+    providers: {
+      rango: {
+        key: 'BITCANNA',
+      },
+    },
+  },
+  {
+    id: 'umee-1',
+    name: 'UMEE',
+    symbol: 'UMEE',
+    logoURI: 'https://api.rango.exchange/blockchains/umee.svg',
+    providers: {
+      rango: {
+        key: 'UMEE',
+      },
+    },
+  },
+  {
+    id: 'desmos-mainnet',
+    name: 'DESMOS',
+    symbol: 'DESMOS',
+    logoURI: 'https://api.rango.exchange/blockchains/desmos.svg',
+    providers: {
+      rango: {
+        key: 'DESMOS',
+      },
+    },
+  },
+  {
+    id: 'lum-network-1',
+    name: 'LUMNETWORK',
+    symbol: 'LUMNETWORK',
+    logoURI: 'https://api.rango.exchange/blockchains/lumnetwork.png',
+    providers: {
+      rango: {
+        key: 'LUMNETWORK',
+      },
+    },
+  },
+  {
+    id: 'columbus-5',
+    name: 'TERRA_CLASSIC',
+    symbol: 'TERRA_CLASSIC',
+    logoURI: 'https://api.rango.exchange/blockchains/terraclassic.svg',
+    providers: {
+      rango: {
+        key: 'TERRA_CLASSIC',
+      },
     },
   },
 ]

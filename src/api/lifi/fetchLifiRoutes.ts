@@ -3,14 +3,15 @@ import { WalletClient } from 'wagmi'
 import { Account, Transport } from 'viem'
 import { FetchRoutesParams, Route } from './types'
 import { standardiseLifiRoute } from './standardiseLifiRoute'
-import { lifiTokens } from '../../constants/lifiTokens'
+import { tokens } from '../../constants/tokens'
 import { addingDecimals } from '../../utils/formatting'
 
 interface GetRoutes {
   (params: FetchRoutesParams): Promise<Route[]>
 }
 
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number => lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
+const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
+  tokens[chainId].find((token) => token.address === tokenAddress).decimals
 
 const sortByTags = (routeA: Route, routeB: Route): number => {
   const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
@@ -29,7 +30,11 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
   }
 }
 
-const lifiConfig = { integrator: 'concero', defaultrouteoptions: { fee: 0.002 }, insurance: true }
+const lifiConfig = {
+  integrator: 'concero',
+  defaultrouteoptions: { fee: 0.002 },
+  insurance: true,
+}
 const lifi = new LiFi(lifiConfig)
 
 export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
@@ -37,15 +42,15 @@ export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<
 
   const routesRequest = {
     fromChainId: from.chain.id,
-    fromAmount: addingDecimals(Number(from.amount), getTokenDecimalsByAddress(from.chain.id, from.token.address)),
+    fromAmount: addingDecimals(Number(from.amount), getTokenDecimalsByAddress(from.chain.id, from.token.address)), // TODO: add decimals to from/to object
     fromTokenAddress: from.token.address,
     fromAddress: from.address, // todo: hangs if address is provided
     toChainId: to.chain.id,
     toTokenAddress: to.token.address,
     toAddress: to.address,
   }
-  console.log('routesRequest', routesRequest)
-  const response = await lifi.getRoutes(routesRequest)
+
+  const response = await lifi.getRoutes(routesRequest) // TODO handle errors
   console.log('RoutesResponse', response)
 
   if (response.routes.length > 0) {

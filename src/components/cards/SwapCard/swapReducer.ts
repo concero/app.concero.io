@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { chains } from '../../../constants/chains'
-import { lifiTokens } from '../../../constants/lifiTokens'
+import { tokens } from '../../../constants/tokens'
 import { Action, State } from './types'
 
 export function swapReducer(state: State, action: Action) {
@@ -55,7 +55,7 @@ export function swapReducer(state: State, action: Action) {
         [action.direction]: {
           ...state[action.direction],
           chain: action.payload,
-          token: lifiTokens[action.payload.id][0],
+          token: tokens[action.payload.id][0],
         },
       }
     case 'SET_TOKEN':
@@ -71,10 +71,10 @@ export function swapReducer(state: State, action: Action) {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          ...(action.payload.amount !== undefined
-            && action.payload.amount !== null && { amount: action.payload.amount }),
-          ...(action.payload.amount_usd !== undefined
-            && action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
+          ...(action.payload.amount !== undefined &&
+            action.payload.amount !== null && { amount: action.payload.amount }),
+          ...(action.payload.amount_usd !== undefined &&
+            action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
         },
       }
     case 'RESET_AMOUNTS':
@@ -114,10 +114,10 @@ export const useSwapReducer = (selectionDispatch) => {
         logoURI: chains[0].logoURI,
       },
       token: {
-        name: lifiTokens[chains[0].id][0].name,
-        symbol: lifiTokens[chains[0].id][0].symbol,
-        address: lifiTokens[chains[0].id][0].address,
-        logoURI: lifiTokens[chains[0].id][0].logoURI,
+        name: tokens[chains[0].id][0].name,
+        symbol: tokens[chains[0].id][0].symbol,
+        address: tokens[chains[0].id][0].address,
+        logoURI: tokens[chains[0].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,
@@ -131,10 +131,10 @@ export const useSwapReducer = (selectionDispatch) => {
         logoURI: chains[1].logoURI,
       },
       token: {
-        name: lifiTokens[chains[1].id][0].name,
-        symbol: lifiTokens[chains[1].id][0].symbol,
-        address: lifiTokens[chains[1].id][0].address,
-        logoURI: lifiTokens[chains[1].id][0].logoURI,
+        name: tokens[chains[1].id][0].name,
+        symbol: tokens[chains[1].id][0].symbol,
+        address: tokens[chains[1].id][0].address,
+        logoURI: tokens[chains[1].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,
