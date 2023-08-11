@@ -21,6 +21,8 @@ export const fetchRangoRoutes = async ({ from, to }) => {
     amount: addingDecimals(Number(from.amount), from.token.decimals),
   }
 
+  console.log('routesRequest', routesRequest)
+
   const quote = await rangoClient.quote(routesRequest)
 
   return standardizeRangoRoutes(quote)

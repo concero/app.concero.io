@@ -7,20 +7,19 @@ export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setRe
     type: 'SET_LOADING',
     payload: true,
   })
+
   const routes = []
-  const rangoRoute = await fetchRangoRoutes({
+
+  const rangoRoutePromise = fetchRangoRoutes({
     from,
     to,
   })
-  const lifiRoutes = await fetchLifiRoutes({
+  const lifiRoutePromise = fetchLifiRoutes({
     from,
     to,
   })
-  console.log('RANGO routes', rangoRoute)
-
-  routes.push(...lifiRoutes, ...[rangoRoute])
-
-  console.log('ROUTES', routes)
+  const [rangoRoute, lifiRoutes] = await Promise.all([rangoRoutePromise, lifiRoutePromise])
+  routes.push(...[rangoRoute], ...lifiRoutes)
 
   swapDispatch({
     type: 'SET_LOADING',

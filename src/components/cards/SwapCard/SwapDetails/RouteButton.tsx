@@ -12,7 +12,7 @@ const Avatars: FC<AvatarsProps> = ({ entities }) => (
     {entities?.map((entity, index) => (
       <div key={entity.id}>{index < 3 && <Avatar size="xs" src={entity?.tool.logo_uri} />}</div>
     ))}
-    {entities?.length > 3 && <p>{`${entities?.length}`}</p>}
+    {entities?.length > 3 && <p className={'body1'}>{`+${entities?.length - 3}`}</p>}
   </div>
 )
 
@@ -32,10 +32,12 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       className={selectedRoute ? '' : classNames.invisible}
     >
       <Avatars entities={selectedRoute?.steps} />
-      <div className={classNames.routeInfoContainer}>
-        <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
-        <p className={'body1'}>{`$${selectedRoute?.cost.total_gas_usd ? selectedRoute.cost.total_gas_usd : ''}`}</p>
-      </div>
+      {selectedRoute?.cost.total_gas_usd ? (
+        <div className={classNames.routeInfoContainer}>
+          <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
+          <p className={'body1'}>{`$${selectedRoute.cost.total_gas_usd}`}</p>
+        </div>
+      ) : null}
       <div className={classNames.routeInfoContainer}>
         <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
         <p className={'body1'}>{`${
