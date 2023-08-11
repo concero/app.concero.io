@@ -105,7 +105,7 @@ export function swapReducer(state: State, action: Action) {
   }
 }
 
-export const useSwapReducer = (selectionDispatch) => {
+export const useSwapReducer = () => {
   const [state, dispatch] = useReducer(swapReducer, {
     from: {
       chain: {

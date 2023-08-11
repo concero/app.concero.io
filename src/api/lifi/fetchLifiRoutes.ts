@@ -36,7 +36,6 @@ const lifi = new LiFi(lifiConfig)
 
 export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
   let result = []
-  console.log('LIFI INTEGRATOR', process.env.LIFI_INTEGRATOR)
 
   const routeOptions = {
     fee: 0.002,
@@ -53,9 +52,8 @@ export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<
     toAddress: to.address,
     options: routeOptions,
   }
-  console.log('routesRequest', routesRequest)
+
   const response = await lifi.getRoutes(routesRequest)
-  console.log('RoutesResponse', response)
 
   if (response.routes.length > 0) {
     result = [...response.routes.map((route) => standardiseLifiRoute(route))]

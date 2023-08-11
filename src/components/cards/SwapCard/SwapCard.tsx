@@ -9,14 +9,14 @@ import { SwapDetails } from './SwapDetails/SwapDetails'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
-import { setHistoryCard } from './setHistoryCard'
-import { setSwapCard } from './setSwapCard'
+import { setHistoryCard } from './handlers/setHistoryCard'
+import { setSwapCard } from './handlers/setSwapCard'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SwapButton } from '../../buttons/SwapButton/SwapButton'
-import { handleBalance } from './handleBalance'
-import { clearRoutes } from './clearRoutes'
-import { handleSwap } from './handleSwap'
-import { handleFetchRoutes } from './handleFetchRoutes'
+import { handleBalance } from './handlers/handleBalance'
+import { clearRoutes } from './handlers/clearRoutes'
+import { handleSwap } from './swap/handleSwap'
+import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
@@ -26,10 +26,13 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [response, setResponse] = useState(null) // todo move to reducer
   const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
+  const nullAddress = '0x0000000000000000000000000000000000000000'
   const { data } = useBalance({
     address,
     chainId: from.chain.id,
+    ...(from.token.address !== nullAddress ? { token: from.token.address } : {}),
   })
+
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
 
@@ -126,7 +129,16 @@ export const SwapCard: FC<SwapCardProps> = () => {
           isLoading={isLoading}
         />
         <SwapButton
-          onClick={() => handleSwap(swapDispatch, selectedRoute.originalRoute, switchChainHook)}
+          onClick={() =>
+            handleSwap(
+              swapDispatch,
+              selectedRoute.originalRoute,
+              switchChainHook,
+              selectedRoute.provider,
+              address,
+              from,
+            )
+          }
           from={from}
           to={to}
           isLoading={isLoading}

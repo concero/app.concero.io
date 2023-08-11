@@ -1,8 +1,6 @@
-import { RangoClient } from 'rango-sdk-basic'
+import { rangoClient } from './rangoClient'
 import { addingDecimals } from '../../utils/formatting'
 import { standardizeRangoRoutes } from './standardizeRangoRoutes'
-
-export const rangoClient = new RangoClient(process.env.RANGO_API_KEY)
 
 const nullAddress = '0x0000000000000000000000000000000000000000'
 

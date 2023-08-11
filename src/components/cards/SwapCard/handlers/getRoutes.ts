@@ -1,5 +1,5 @@
-import { fetchLifiRoutes } from '../../../api/lifi/fetchLifiRoutes'
-import { fetchRangoRoutes } from '../../../api/rango/fetchRangoRoutes'
+import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
+import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 
 export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setResponse) => {
   if (!from.amount) return
