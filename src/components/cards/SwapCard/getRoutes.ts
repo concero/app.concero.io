@@ -9,7 +9,6 @@ export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setRe
   })
 
   const routes = []
-
   const rangoRoutePromise = fetchRangoRoutes({
     from,
     to,
@@ -38,4 +37,3 @@ export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setRe
   setPrevFromAmount(from.amount)
   setResponse(routes)
 }
-// different providers

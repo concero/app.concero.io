@@ -9,6 +9,7 @@ export const handleSwap = async (swapDispatch, originalRoute, switchChainHook) =
     payload: true,
   })
   try {
+    console.log(originalRoute)
     const executedRoute = await executeRoute(viemSigner, originalRoute, { switchChainHook })
     console.log('executedRoute', executedRoute)
 
