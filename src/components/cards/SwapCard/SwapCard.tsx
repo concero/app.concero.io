@@ -144,7 +144,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           isLoading={isLoading}
           isConnected={isConnected}
           routes={routes}
-          balance={balance}
+          balance={data}
           transactionResponse={transactionResponse}
         />
       </div>
