@@ -2,27 +2,18 @@ import { FC, useEffect } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { useButtonReducer } from './buttonReducer'
-
-interface SwapButtonProps {
-  from: any
-  to: any
-  isConnected: boolean
-  isLoading: boolean
-  routes: any[]
-  onClick: () => void
-  balance: string
-  transactionResponse: any[]
-}
+import { Route } from '../../../api/lifi/types'
+import { Dispatch, From, SwapButtonProps, To } from './types'
 
 const setStatus = (
-  from,
-  to,
+  from: From,
+  to: To,
   isConnected: boolean,
   isLoading: boolean,
-  dispatch,
-  routes,
-  balance,
-  transactionResponse,
+  dispatch: Dispatch,
+  routes: Route[],
+  balance: string,
+  transactionResponse: any[],
 ) => {
   if (isLoading) {
     dispatch({ type: 'LOADING' })

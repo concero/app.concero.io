@@ -1,9 +1,34 @@
-import { numberToFormatString } from '../../../../utils/formatting'
+import { fetchTokenBalance } from '../../../../api/rango/fetchTokenBalance'
+import { addingTokenDecimals } from '../../../../utils/formatting'
 
-export const handleBalance = ({ setBalance, data }) => {
-  const balance = data?.value ? numberToFormatString(Number(data?.value) / Math.pow(10, data?.decimals)) : 0
-  const symbol = data?.symbol ? data.symbol : ''
+interface HandleBalanceProps {
+  setBalance: (balance: string) => void
+  from: {
+    chain: {
+      providers: {
+        rango: {
+          key: string
+        }
+      }
+    }
+    token: {
+      address: string
+      symbol: string
+      decimals: number
+    }
+  }
+  address: string
+}
 
-  const result = `${balance} ${symbol}`
+export const handleBalance = async ({ setBalance, from, address }: HandleBalanceProps) => {
+  const response = await fetchTokenBalance(
+    from.chain.providers.rango.key,
+    from.token.address,
+    address,
+    from.token.symbol,
+  )
+
+  const result = `${addingTokenDecimals(response.data, from.token.decimals)} ${from.token.symbol}`
+
   setBalance(result)
 }

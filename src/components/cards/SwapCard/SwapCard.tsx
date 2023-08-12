@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react'
-import { useAccount, useBalance, useSwitchNetwork } from 'wagmi'
+import { useAccount, useSwitchNetwork } from 'wagmi'
 import { providers } from 'ethers'
 import { createWalletClient, custom } from 'viem'
 import { CardHeader } from '../CardHeader/CardHeader'
@@ -21,17 +21,10 @@ import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const { dispatch } = useContext(SelectionContext)
-  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes, transactionResponse }, swapDispatch] =
-    useSwapReducer()
+  const [{ from, to, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
   const [response, setResponse] = useState(null) // todo move to reducer
   const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
-  const nullAddress = '0x0000000000000000000000000000000000000000'
-  const { data } = useBalance({
-    address,
-    chainId: from.chain.id,
-    ...(from.token.address !== nullAddress ? { token: from.token.address } : {}),
-  })
 
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
@@ -72,9 +65,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
   useEffect(() => {
     handleBalance({
       setBalance,
-      data,
+      from,
+      address,
     })
-  }, [from.token.symbol])
+  }, [from.token.symbol, address])
 
   useEffect(() => {
     clearRoutes(typingTimeoutRef, swapDispatch)
@@ -144,7 +138,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
           isLoading={isLoading}
           isConnected={isConnected}
           routes={routes}
-          balance={data}
+          balance={balance}
           transactionResponse={transactionResponse}
         />
       </div>
