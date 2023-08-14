@@ -18,15 +18,15 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover,
   return (
     <div>
       {isConnected ? <ButtonWithPopover onClick={open} /> : <BaseButton onClick={open} />}
-      {/* <Button */}
-      {/*  size="sq-md" */}
-      {/*  onClick={toggleTheme} */}
-      {/*  variant="black" */}
-      {/*  leftIcon={{ */}
-      {/*    name: theme === 'light' ? 'Moon' : 'Sun', */}
-      {/*    iconProps: { size: 18 }, */}
-      {/*  }} */}
-      {/* /> */}
+      <Button
+        size="sq-md"
+        onClick={toggleTheme}
+        variant="black"
+        leftIcon={{
+          name: theme === 'light' ? 'Moon' : 'Sun',
+          iconProps: { size: 18 },
+        }}
+      />
     </div>
   )
 }
