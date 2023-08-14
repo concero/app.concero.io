@@ -13,7 +13,7 @@ import { intervals } from './constants'
 import { columns } from './columns'
 import { tokens } from '../../../constants/tokens'
 import { SelectionContext } from '../../../hooks/SelectionContext'
-import { ThemeContext } from '../../../hooks/ThemeContext'
+import { ThemeContext } from '../../../hooks/themeContext'
 
 export interface ChartCardProps {}
 
