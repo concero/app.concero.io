@@ -57,11 +57,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
   }
 
   const toggleInsurance = (routeId) => {
-    console.log('start toggleInsurance')
-    swapDispatch({
-      type: 'SET_SELECTED_ROUTE',
-      payload: routes.find((route) => route.id === routeId),
-    })
     swapDispatch({
       type: 'TOGGLE_INSURANCE',
       payload: routeId,

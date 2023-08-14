@@ -29,7 +29,7 @@ export const renderTags = (
       ) : null}
       {route.insurance ? (
         <Tag color="green" onClick={(e) => handleInsuranceButtonClick(e)}>
-          <p className="body1">Insurance</p>
+          Insurance
           <Beacon isOn={route.insurance?.state === 'INSURED'} color={'green'} />
         </Tag>
       ) : // <Button variant="green" size="sm" onClick={(e) => handleInsuranceButtonClick(e)}>
