@@ -28,7 +28,7 @@ export const handleBalance = async ({ setBalance, from, address }: HandleBalance
     from.token.symbol,
   )
 
-  const result = `${addingTokenDecimals(response.data, from.token.decimals)} ${from.token.symbol}`
+  const result = `${addingTokenDecimals(Number(response.data), from.token.decimals)} ${from.token.symbol}`
 
   setBalance(result)
 }

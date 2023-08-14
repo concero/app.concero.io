@@ -25,7 +25,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const { dispatch } = useContext(SelectionContext)
   const [response, setResponse] = useState(null) // todo move to reducer
   const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
-  const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
+  const [balance, setBalance] = useState<string>(null)
   const { addNotification } = useContext(NotificationsContext)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
