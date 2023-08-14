@@ -11,13 +11,13 @@ import { useSwapReducer } from './swapReducer/swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
-import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SwapButton } from '../../buttons/SwapButton/SwapButton'
 import { handleBalance } from './handlers/handleBalance'
 import { clearRoutes } from './handlers/clearRoutes'
 import { handleSwap } from './swapExecution/handleSwap'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 import { InsuranceProvider } from './InsuranceContext'
+import { NotificationsContext } from '../../../hooks/notificationsContext'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
@@ -26,7 +26,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [response, setResponse] = useState(null) // todo move to reducer
   const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
-
+  const { addNotification } = useContext(NotificationsContext)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
 
@@ -56,7 +56,13 @@ export const SwapCard: FC<SwapCardProps> = () => {
     return provider.getSigner()
   }
 
-  const { addNotification } = useContext(NotificationsContext)
+  const toggleInsurance = (routeId) => {
+    console.log('start toggleInsurance')
+    swapDispatch({
+      type: 'TOGGLE_INSURANCE',
+      payload: routeId,
+    })
+  }
 
   useEffect(() => {
     setHistoryCard(dispatch, from, to)
@@ -102,12 +108,9 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
   }, [address])
 
-  const toggleInsurance = (routeId) => {
-    swapDispatch({
-      type: 'TOGGLE_INSURANCE',
-      payload: routeId,
-    })
-  }
+  useEffect(() => {
+    console.log('USEEFFECT', selectedRoute)
+  }, [selectedRoute?.insurance?.state])
 
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>

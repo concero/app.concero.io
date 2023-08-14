@@ -4,15 +4,9 @@ import { handleTransactionError } from '../handlers/handleTransactionError'
 import { executeRangoRoute } from './executeRangoRoute'
 
 const handleExecuteRoute = async (route, provider, switchChainHook, address, from) => {
-  let response: any
-
-  if (provider === 'lifi') {
-    response = await executeRoute(viemSigner, route, { switchChainHook })
-  } else if (provider === 'rango') {
-    response = await executeRangoRoute(route, address, from)
-  }
-
-  return response
+  console.log('ROUTE TO EXECUTE: ', route)
+  if (provider === 'lifi') return await executeRoute(viemSigner, route, { switchChainHook })
+  if (provider === 'rango') return await executeRangoRoute(route, address, from)
 }
 
 export const handleSwap = async (swapDispatch, originalRoute, switchChainHook, provider, address, from) => {

@@ -4,7 +4,7 @@ import { tokens } from '../../../../constants/tokens'
 import { Action, State } from '../types'
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 
-export function swapReducer(state: State, action: Action) {
+function swapReducer(state: State, action: Action) {
   switch (action.type) {
     // ROUTE-RELATED ACTIONS
     case 'SET_ROUTES':
@@ -102,7 +102,9 @@ export function swapReducer(state: State, action: Action) {
         transactionResponse: action.payload,
       }
     case 'TOGGLE_INSURANCE':
-      return toggleRouteInsurance(state, action.payload)
+      const result = toggleRouteInsurance(state, action.payload)
+      console.log('RESULT IN REDUCER: ', result)
+      return result
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

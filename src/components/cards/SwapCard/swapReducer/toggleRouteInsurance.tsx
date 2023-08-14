@@ -11,10 +11,12 @@ const getUpdatedTokenAmount = (route) => {
     ? numberToFormatString(
         parseFloat(route.to.token.amount) -
           parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
+        2,
       )
     : numberToFormatString(
         parseFloat(route.to.token.amount) +
           parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
+        2,
       )
 }
 
@@ -29,7 +31,7 @@ const getUpdatedRoute = (route) => {
     ...route,
     insurance: {
       ...route.insurance,
-      state: route.insurance.state === 'INSURED' ? 'UNINSURED' : 'INSURED',
+      state: route.insurance.state === 'INSURED' ? 'INSURABLE' : 'INSURED',
     },
     to: {
       ...route.to,
@@ -43,15 +45,27 @@ const getUpdatedRoute = (route) => {
       ...route.cost,
       total_gas_usd: getUpdatedGasUsd(route),
     },
+    originalRoute: {
+      ...route.originalRoute,
+      insurance: {
+        ...route.originalRoute.insurance,
+        state: route.insurance.state === 'INSURED' ? 'INSURABLE' : 'INSURED',
+      },
+    },
   }
 }
 
 export const toggleRouteInsurance = (state: SwapState, routeId) => {
+  let newRoute
   return {
     ...state,
     routes: state.routes.map((route) => {
-      if (route.id === routeId) return getUpdatedRoute(route)
+      if (route.id === routeId) {
+        newRoute = getUpdatedRoute(route)
+        return newRoute
+      }
       return route
     }),
+    selectedRoute: newRoute,
   }
 }
