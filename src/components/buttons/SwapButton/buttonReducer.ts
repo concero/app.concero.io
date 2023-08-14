@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case 'NO_AMOUNT': {
       return {
         isDisabled: true,
-        text: 'Enter amount to swapExecution',
+        text: 'Enter amount to swap',
         icon: '',
         className: 'disabled',
       }
