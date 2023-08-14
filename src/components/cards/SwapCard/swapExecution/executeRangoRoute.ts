@@ -24,7 +24,7 @@ const getRangoSwapOptions = (route, address, from) => {
     },
     amount,
     disableEstimate: false,
-    slippage: '1.5',
+    slippage: '3',
     fromAddress: address,
     toAddress: address,
     referrerAddress: null,
@@ -49,5 +49,5 @@ export const executeRangoRoute = async (route, address, from) => {
   const mainTx = prepareEvmTransaction(evmTransaction, false)
   const mainTxHash = (await viemSigner.sendTransaction(mainTx)).hash
 
-  return await checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient)
+  return checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient)
 }
