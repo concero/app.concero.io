@@ -10,7 +10,7 @@ import { addingDecimals } from '../../../../utils/formatting'
 
 const getRangoSwapOptions = (route, address, from) => {
   const amount = addingDecimals(from.amount, from.token.decimals)
-
+  console.log('AMOUNT: ', amount, from.amount, from.token.decimals)
   return {
     from: {
       blockchain: route.from.blockchain,
@@ -24,15 +24,19 @@ const getRangoSwapOptions = (route, address, from) => {
     },
     amount,
     disableEstimate: false,
-    slippage: 3,
+    slippage: '1.5',
     fromAddress: address,
     toAddress: address,
+    referrerAddress: null,
+    referrerFee: null,
   }
 }
 
 export const executeRangoRoute = async (route, address, from) => {
-  const response = await rangoClient.swap(getRangoSwapOptions(route, address, from))
-
+  const swapOptions = getRangoSwapOptions(route, address, from)
+  console.log('SWAP OPTIONS: ', swapOptions)
+  const response = await rangoClient.swap(swapOptions)
+  console.log('RESPONSE: ', response)
   if (response.error) throw new Error(response.error)
   const evmTransaction = response.tx as EvmTransaction
 
