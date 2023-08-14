@@ -1,9 +1,10 @@
 import { useReducer } from 'react'
-import { chains } from '../../../constants/chains'
-import { lifiTokens } from '../../../constants/lifiTokens'
-import { Action, State } from './types'
+import { chains } from '../../../../constants/chains'
+import { tokens } from '../../../../constants/tokens'
+import { Action, State } from '../types'
+import { toggleRouteInsurance } from './toggleRouteInsurance'
 
-export function swapReducer(state: State, action: Action) {
+function swapReducer(state: State, action: Action) {
   switch (action.type) {
     // ROUTE-RELATED ACTIONS
     case 'SET_ROUTES':
@@ -15,9 +16,9 @@ export function swapReducer(state: State, action: Action) {
       return {
         ...state,
         isLoading: false,
-        routes: action.payload.routes,
+        routes: action.payload,
         originalRoutes: action.payload.originalRoutes,
-        selectedRoute: action.payload.routes[0],
+        selectedRoute: action.payload[0],
       }
     case 'CLEAR_ROUTES':
       return {
@@ -50,12 +51,13 @@ export function swapReducer(state: State, action: Action) {
 
     // INPUT_RELATED ACTIONS
     case 'SET_CHAIN':
+      const { chain } = action.payload
       return {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          chain: action.payload,
-          token: lifiTokens[action.payload.id][0],
+          chain: chain,
+          token: tokens[chain.id][0],
         },
       }
     case 'SET_TOKEN':
@@ -63,7 +65,7 @@ export function swapReducer(state: State, action: Action) {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          token: action.payload,
+          token: action.payload.token,
         },
       }
     case 'SET_AMOUNT':
@@ -99,12 +101,14 @@ export function swapReducer(state: State, action: Action) {
         ...state,
         transactionResponse: action.payload,
       }
+    case 'TOGGLE_INSURANCE':
+      return toggleRouteInsurance(state, action.payload)
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }
 }
 
-export const useSwapReducer = (selectionDispatch) => {
+export const useSwapReducer = () => {
   const [state, dispatch] = useReducer(swapReducer, {
     from: {
       chain: {
@@ -112,12 +116,21 @@ export const useSwapReducer = (selectionDispatch) => {
         symbol: chains[0].symbol,
         id: chains[0].id,
         logoURI: chains[0].logoURI,
+        providers: {
+          ...(chains[0].providers.lifi && {
+            lifi: { key: chains[0].providers.lifi.key },
+          }),
+          ...(chains[0].providers.rango && {
+            rango: { key: chains[0].providers.rango.key },
+          }),
+        },
       },
       token: {
-        name: lifiTokens[chains[0].id][0].name,
-        symbol: lifiTokens[chains[0].id][0].symbol,
-        address: lifiTokens[chains[0].id][0].address,
-        logoURI: lifiTokens[chains[0].id][0].logoURI,
+        name: tokens[chains[0].id][0].name,
+        symbol: tokens[chains[0].id][0].symbol,
+        address: tokens[chains[0].id][0].address,
+        decimals: tokens[chains[0].id][0].decimals,
+        logoURI: tokens[chains[0].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,
@@ -129,12 +142,21 @@ export const useSwapReducer = (selectionDispatch) => {
         symbol: chains[1].symbol,
         id: chains[1].id,
         logoURI: chains[1].logoURI,
+        providers: {
+          ...(chains[1].providers.lifi && {
+            lifi: { key: chains[1].providers.lifi.key },
+          }),
+          ...(chains[1].providers.rango && {
+            rango: { key: chains[1].providers.rango.key },
+          }),
+        },
       },
       token: {
-        name: lifiTokens[chains[1].id][0].name,
-        symbol: lifiTokens[chains[1].id][0].symbol,
-        address: lifiTokens[chains[1].id][0].address,
-        logoURI: lifiTokens[chains[1].id][0].logoURI,
+        name: tokens[chains[1].id][0].name,
+        symbol: tokens[chains[1].id][0].symbol,
+        address: tokens[chains[1].id][0].address,
+        decimals: tokens[chains[1].id][0].decimals,
+        logoURI: tokens[chains[1].id][0].logoURI,
       },
       amount: '',
       amount_usd: 0.0,

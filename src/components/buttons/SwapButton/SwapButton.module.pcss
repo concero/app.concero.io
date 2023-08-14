@@ -1,18 +1,51 @@
 .swapButton {
     height: 45px;
+
+    .buttonText {
+        color: var(--color-button-text-primary);
+    }
 }
 
 .disabled {
-    background-color: var(--color-button-disabled);
-    border: 1px solid var(--color-border-disabled);
+    background-color: var(--color-primary-dark);
+    border: 1px solid var(--color-primary-main);
+    color: var(--color-button-text-primary);
+
+    svg {
+        stroke: var(--color-button-text-primary);
+    }
+
+    .buttonText {
+        color: var(--color-button-text-primary);
+    }
+
+
 }
 
 .wrong {
-    background-color: var(--color-button-wrong);
-    border: 1px solid var(--color-border-wrong);
+    background-color: var(--color-red-darkest);
+    border: 1px solid var(--color-red-darker);
+
+    .buttonText {
+
+        color: var(--color-red-light);
+    }
+
+    svg {
+        stroke: var(--color-red-light);
+    }
+
 }
 
 .success {
-    background-color: var(--color-button-success);
-    border: 1px solid var(--color-border-success);
+    background-color: var(--color-green-darkest);
+    border: 1px solid var(--color-green-main);
+
+    .buttonText {
+        color: var(--color-green-main);
+    }
+
+    svg {
+        stroke: var(--color-green-main);
+    }
 }

@@ -16,6 +16,11 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
   const getTextColor = () => (isSelected ? classNames.bestText : '')
   const getIconColor = () => (isSelected ? colors.primary.light : colors.text.secondary)
 
+  const handleButtonClick = (event) => {
+    event.stopPropagation()
+    setIsRoutesCollapsed(!isRoutesCollapsed)
+  }
+
   return (
     <Card
       className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`}
@@ -24,7 +29,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
       <div className={classNames.cardHeader}>
         <div className={classNames.cardHeaderLeftSide}>
           {isDesktop ? <h4>Net value:</h4> : null}
-          <h3>{`$${route.to.token.amount_usd}`}</h3>
+          <h3>{`$${numberToFormatString(Number(route.to.token.amount_usd), 2)}`}</h3>
           <h3 className={classNames.subtitle}>{`${numberToFormatString(Number(route.to.token.amount), 2)} ${
             route.to.token.symbol
           }`}</h3>
@@ -36,7 +41,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
             iconProps: { size: '20px' },
           }}
           size="sm"
-          onClick={() => setIsRoutesCollapsed(!isRoutesCollapsed)}
+          onClick={(e) => handleButtonClick(e)}
           className={isSelected ? classNames.bestButton : ''}
         />
       </div>

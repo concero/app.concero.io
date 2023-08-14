@@ -19,40 +19,12 @@ export interface TagProps {
   size?: 'sn' | 'md' | 'lg'
 }
 
-export const getColors = (
-  color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker' | 'recommended' | 'cheapest' | 'fastest' | 'transparent',
-) => {
-  switch (color) {
-    case 'red':
-      return className.red
-    case 'green':
-      return className.green
-    case 'grey':
-      return className.grey
-    case 'main':
-      return className.main
-    case 'mainDarker':
-      return className.mainDarker
-    case 'recommended':
-      return className.recommended
-    case 'cheapest':
-      return className.cheapest
-    case 'fastest':
-      return className.fastest
-    case 'transparent':
-      return className.transparent
-    default:
-      return className.grey
-  }
-}
-
-export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color }) => {
+export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color, onClick }) => {
   const sizeClass = size ? className[size] : className.xs
-  const colorClass = getColors(color)
 
   return (
-    <div className={className.container}>
-      <div className={`${className.tag}  ${sizeClass} ${colorClass}`}>
+    <div className={className.container} onClick={onClick ? onClick : null}>
+      <div className={`${className.tag}  ${sizeClass} ${className[color]}`}>
         {leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
         {children}
         {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}

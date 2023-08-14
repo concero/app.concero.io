@@ -43,9 +43,10 @@
       "secondary": "#98959E"
     },
     "base": {
-      "background": "#ffffff",
-      "black": "#ffffff",
+      "background": "#FBFBFB",
+      "black": "#FBFBFB",
       "white": "#000000"
-    }
+    },
+    "white": "#FBFBFB"
   }
 }

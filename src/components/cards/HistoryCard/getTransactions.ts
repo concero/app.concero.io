@@ -1,12 +1,14 @@
-import { lifiTokens } from '../../../constants/lifiTokens'
+import { tokens } from '../../../constants/tokens'
 import { getDexTrades } from '../../../api/bitquery/getDexTrades'
 
 export function setTransactions(setHistoryItems, transactions) {
   setHistoryItems(transactions)
 }
+
 export function appendTransactions(setHistoryItems, transactions) {
   setHistoryItems((prev) => [...prev, ...transactions])
 }
+
 export async function getTransactions(selection, historyItems, setHistoryItems, setIsLoading) {
   function on_ok(res) {
     setIsLoading(false)
@@ -22,12 +24,12 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
 
   function on_err(err) {
     setIsLoading(false)
-    console.error('ERR ', err)
+    console.log('ERR ', err)
   }
 
   const network = selection.from.chain.name.toLowerCase()
   let baseCurrency = selection.from.token.address
-  let quoteCurrency = lifiTokens[selection.from.chain.id].find(
+  let quoteCurrency = tokens[selection.from.chain.id].find(
     (token) => token.symbol === selection.to.token.symbol,
   ).address
 
@@ -35,10 +37,10 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
   const nullAddress = '0x0000000000000000000000000000000000000000'
 
   if (baseCurrency === nullAddress) {
-    baseCurrency = lifiTokens[selection.from.chain.id][1].address
+    baseCurrency = tokens[selection.from.chain.id][1].address
   }
   if (quoteCurrency === nullAddress) {
-    quoteCurrency = lifiTokens[selection.from.chain.id][1].address
+    quoteCurrency = tokens[selection.from.chain.id][1].address
   }
   // console.log('baseCurrency ', baseCurrency)
   // console.log('quoteCurrency ', quoteCurrency)
@@ -50,7 +52,7 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
     baseCurrency,
     quoteCurrency,
   })
-  // console.log('res ', res)
+
   if (ok) on_ok(res)
   if (err) on_err(err)
 }

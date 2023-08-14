@@ -2,27 +2,18 @@ import { FC, useEffect } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { useButtonReducer } from './buttonReducer'
-
-interface SwapButtonProps {
-  from: any
-  to: any
-  isConnected: boolean
-  isLoading: boolean
-  routes: any[]
-  onClick: () => void
-  balance: string
-  transactionResponse: any[]
-}
+import { Route } from '../../../api/lifi/types'
+import { Dispatch, From, SwapButtonProps, To } from './types'
 
 const setStatus = (
-  from,
-  to,
+  from: From,
+  to: To,
   isConnected: boolean,
   isLoading: boolean,
-  dispatch,
-  routes,
-  balance,
-  transactionResponse,
+  dispatch: Dispatch,
+  routes: Route[],
+  balance: string,
+  transactionResponse: any[],
 ) => {
   if (isLoading) {
     dispatch({ type: 'LOADING' })
@@ -30,13 +21,15 @@ const setStatus = (
     dispatch({ type: 'DISCONNECTED' })
   } else if (transactionResponse) {
     if (!transactionResponse.isOk) {
-      if (transactionResponse.message === 'user rejected') dispatch({ type: 'CANCELED' })
-      else if (transactionResponse.message === 'unknown error') dispatch({ type: 'WRONG' })
-      else if (transactionResponse.message === 'No Routes found') dispatch({ type: 'NO_ROUTE' })
+      if (transactionResponse.message === 'user rejected') {
+        dispatch({ type: 'CANCELED' })
+      } else if (transactionResponse.message === 'unknown error') {
+        dispatch({ type: 'WRONG' })
+      } else if (transactionResponse.message === 'No Routes found') dispatch({ type: 'NO_ROUTE' })
     } else if (transactionResponse.isOk) dispatch({ type: 'SUCCESS' })
   } else if (!from.amount || (from.amount && !routes.length)) {
     dispatch({ type: 'NO_AMOUNT' })
-  } else if (from.amount > balance) {
+  } else if (balance && from.amount > parseFloat(balance)) {
     dispatch({ type: 'LOW_BALANCE' })
   } else if (from.amount && to.amount && routes.length) {
     dispatch({ type: 'SWAP' })
@@ -66,7 +59,10 @@ export const SwapButton: FC<SwapButtonProps> = ({
         buttonState.icon
           ? {
               name: buttonState.icon,
-              iconProps: { size: 18 },
+              iconProps: {
+                size: 18,
+                color: 'white',
+              },
             }
           : null
       }
@@ -75,7 +71,7 @@ export const SwapButton: FC<SwapButtonProps> = ({
       onClick={onClick}
       className={`${classNames.swapButton} ${classNames[buttonState.className]}`}
     >
-      {buttonState.text}
+      <p className={classNames.buttonText}>{buttonState.text}</p>
     </Button>
   )
 }

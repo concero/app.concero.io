@@ -11,8 +11,9 @@ import { chains } from '../../../constants/chains'
 import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedControl'
 import { intervals } from './constants'
 import { columns } from './columns'
-import { lifiTokens } from '../../../constants/lifiTokens'
+import { tokens } from '../../../constants/tokens'
 import { SelectionContext } from '../../../hooks/SelectionContext'
+import { ThemeContext } from '../../../hooks/themeContext'
 
 export interface ChartCardProps {}
 
@@ -21,6 +22,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
   const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
   const { selection } = useContext(SelectionContext)
+  const { theme } = useContext(ThemeContext)
 
   const [selectedLeftToken, setSelectedLeftToken] = useState<{
     name: string
@@ -45,7 +47,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
       symbol: string
       logoURI: string
     }[]
-  >(lifiTokens[1].slice(0, 20))
+  >(tokens[1].slice(0, 20))
 
   useEffect(() => {
     if (!selection.swapCard.to.token) return
@@ -67,7 +69,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   }
 
   const handleEndReached = () => {
-    setMappedTokens([...mappedTokens, ...lifiTokens['1'].slice(mappedTokens.length, mappedTokens.length + 20)])
+    setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 20)])
   }
 
   const isDesktop = useMediaQuery('mobile')
@@ -110,29 +112,29 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <SegmentedControl data={intervals} selectedItem={selectedInterval} setSelectedItem={setSelectedInterval} />
         ) : null}
       </div>
-
-      {chartType === 'coinGecko' ? (
-        <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
-      ) : (
-        <AdvancedRealTimeChart
-          theme="dark"
-          symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
-          interval="1"
-          width="100%"
-          height="100%"
-          locale="en"
-          hide_side_toolbar
-          allow_symbol_change
-          save_image
-          container_id="tradingview_9e3a4"
-        />
-      )}
-
+      <div className="f1">
+        {chartType === 'coinGecko' ? (
+          <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
+        ) : (
+          <AdvancedRealTimeChart
+            theme={theme}
+            symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
+            interval="1"
+            width="100%"
+            height="100%"
+            locale="en"
+            hide_side_toolbar
+            allow_symbol_change
+            save_image
+            container_id="tradingview_9e3a4"
+          />
+        )}
+      </div>
       <EntityListModal
         title="Select token"
         show={isSelectLeftTokenModalVisible}
         setShow={setIsSelectLeftTokenModalVisible}
-        data={lifiTokens[1]}
+        data={tokens[1]}
         visibleData={mappedTokens}
         onEndReached={() => handleEndReached()}
         columns={columns}

@@ -7,7 +7,7 @@ import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 export const columns = [
   {
     columnTitle: 'Title',
-    cellComponent: (item) => <p style={{ color: colors.grey.light }}>{truncate(item.title, 90)}</p>,
+    cellComponent: (item) => <p className={classNames.newsTitle}>{truncate(item.title, 90)}</p>,
   },
   {
     columnTitle: 'When',
@@ -15,7 +15,7 @@ export const columns = [
       <div className={classNames.cellComponentContainer}>
         <div className="row ac gap-xs">
           <Icon name="Clock" color={colors.text.secondary} size={18} />
-          <p style={{ color: colors.text.secondary }}>{unixtimeFromNow(item.published_on)}</p>
+          <p className={classNames.truncate}>{unixtimeFromNow(item.published_on)}</p>
         </div>
       </div>
     ),
@@ -26,9 +26,7 @@ export const columns = [
       <div className="row ac gap-xs">
         <Icon name="Link" color={colors.text.secondary} size={18} />
         <a href={item.url} target="_blank" rel="noreferrer">
-          <p style={{ color: colors.text.secondary }} className={classNames.truncate}>
-            {item.source_info.name}
-          </p>
+          <p className={classNames.truncate}>{item.source_info.name}</p>
         </a>
       </div>
     ),
@@ -76,6 +74,6 @@ export const modalColumns = [
   },
   {
     columnTitle: 'Name',
-    cellComponent: (item) => <p className="body1">{truncate(item.name, 20)}</p>,
+    cellComponent: (item) => <p className="body1">{item.name ? truncate(item.name, 20) : ''}</p>,
   },
 ]

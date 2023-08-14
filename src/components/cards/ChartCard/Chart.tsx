@@ -30,7 +30,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
   const [data, setData] = useState<any[]>([])
-  const { colors } = useContext(ThemeContext)
+  const { colors, theme } = useContext(ThemeContext)
 
   // Fetch data
   useEffect(() => {
@@ -50,7 +50,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
   useEffect(() => {
     if (!chartRef.current) return
 
-    const chart = createChart(chartRef.current, chartOptions(colors))
+    const chart = createChart(chartRef.current, chartOptions(colors, theme))
     chart.timeScale().fitContent()
 
     chart.timeScale().applyOptions({ borderColor: 'transparent' })
@@ -58,7 +58,7 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
       borderColor: 'transparent',
       textColor: colors.text.secondary,
     })
-    seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors))
+    seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
     seriesRef.current.setData(data)
     tooltipRef.current = createTooltip()
     chartRef.current.appendChild(tooltipRef.current)

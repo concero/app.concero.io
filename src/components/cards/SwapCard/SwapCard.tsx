@@ -6,33 +6,32 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
 import { TokenArea } from './TokenArea/TokenArea'
 import { SwapDetails } from './SwapDetails/SwapDetails'
-import { executeRoute } from '../../../api/lifi/fetchRoutes'
 import { SwapCardProps } from './types'
-import { useSwapReducer } from './swapReducer'
+import { useSwapReducer } from './swapReducer/swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
-import { setHistoryCard } from './setHistoryCard'
-import { setSwapCard } from './setSwapCard'
-import { viemSigner } from '../../../web3/ethers'
-import { NotificationsContext } from '../../../hooks/notificationsContext'
+import { setHistoryCard } from './handlers/setHistoryCard'
+import { setSwapCard } from './handlers/setSwapCard'
 import { SwapButton } from '../../buttons/SwapButton/SwapButton'
-import { getBalance } from './getBalance'
-import { getRoutes } from './getRoutes'
-import { clearRoutes } from './clearRoutes'
-import { handleTransactionError } from './handleTransactionError'
+import { handleBalance } from './handlers/handleBalance'
+import { clearRoutes } from './handlers/clearRoutes'
+import { handleSwap } from './swapExecution/handleSwap'
+import { handleFetchRoutes } from './handlers/handleFetchRoutes'
+import { InsuranceProvider } from './InsuranceContext'
+import { NotificationsContext } from '../../../hooks/notificationsContext'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
+  const [{ from, to, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
-  const [{ from, to, routes, isLoading, selectedRoute, originalRoutes, transactionResponse }, swapDispatch] =
-    useSwapReducer()
   const [response, setResponse] = useState(null) // todo move to reducer
   const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
-  const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
+  const [balance, setBalance] = useState<string>(null)
+  const { addNotification } = useContext(NotificationsContext)
   const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
 
   useEffect(() => {
-    if (!from.amount || prevFromAmount !== from.amount || response.routes.length <= 0) return
+    if (!from.amount || prevFromAmount !== from.amount || response.length <= 0) return
     swapDispatch({
       type: 'POPULATE_ROUTES',
       payload: response,
@@ -41,25 +40,11 @@ export const SwapCard: FC<SwapCardProps> = () => {
       type: 'SET_AMOUNT',
       direction: 'to',
       payload: {
-        amount: response.routes[0].to.token.amount,
-        amount_usd: response.routes[0].to.token.amount_usd,
+        amount: response[0].to.token.amount,
+        amount_usd: response[0].to.token.amount_usd,
       },
     })
   }, [response])
-
-  const handleFetchRoutes = async () => {
-    try {
-      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-      const typingTimeoutId = setTimeout(() => getRoutes(from, to, swapDispatch, setPrevFromAmount, setResponse), 700)
-      typingTimeoutRef.current = typingTimeoutId
-    } catch (e) {
-      console.error(e)
-      swapDispatch({
-        type: 'SET_LOADING',
-        payload: false,
-      })
-    }
-  }
 
   const switchChainHook = async (requiredChainId: number) => {
     if (switchNetwork) switchNetwork(requiredChainId)
@@ -71,33 +56,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
     return provider.getSigner()
   }
 
-  const handleSwap = async () => {
+  const toggleInsurance = (routeId) => {
     swapDispatch({
-      type: 'SET_LOADING',
-      payload: true,
-    })
-    try {
-      const executedRoute = await executeRoute(viemSigner, originalRoutes[0], { switchChainHook })
-      if (executedRoute) {
-        swapDispatch({
-          type: 'SET_RESPONSES',
-          payload: {
-            provider: 'lifi',
-            isOk: true,
-            message: 'Success',
-          },
-        })
-      }
-    } catch (e) {
-      console.log('ERROR: ', e)
-      handleTransactionError(e, swapDispatch)
-    }
-    await swapDispatch({
-      type: 'SET_LOADING',
-      payload: false,
+      type: 'TOGGLE_INSURANCE',
+      payload: routeId,
     })
   }
-  const { addNotification } = useContext(NotificationsContext)
 
   useEffect(() => {
     setHistoryCard(dispatch, from, to)
@@ -105,12 +69,16 @@ export const SwapCard: FC<SwapCardProps> = () => {
   }, [from.token.symbol, to.token.symbol])
 
   useEffect(() => {
-    getBalance(address, from, setBalance)
-  }, [from.token.symbol])
+    handleBalance({
+      setBalance,
+      from,
+      address,
+    })
+  }, [from.token.symbol, address])
 
   useEffect(() => {
     clearRoutes(typingTimeoutRef, swapDispatch)
-    handleFetchRoutes()
+    handleFetchRoutes(from, to, swapDispatch, setPrevFromAmount, setResponse, typingTimeoutRef)
     return () => clearRoutes(typingTimeoutRef, swapDispatch)
   }, [from.token, from.amount, from.chain, to.token, to.chain])
 
@@ -140,37 +108,54 @@ export const SwapCard: FC<SwapCardProps> = () => {
   }, [address])
 
   return (
-    <div className={`card ${classNames.container}`}>
-      <CardHeader title="Swap" />
-      <div className={classNames.swapContainer}>
-        <TokenArea direction="from" selection={from} dispatch={swapDispatch} address={address} balance={balance} />
-        <TokenArea direction="to" selection={to} dispatch={swapDispatch} address={address} />
-        <SwapDetails
-          selection={{
-            from,
-            to,
-          }}
-          selectedRoute={selectedRoute}
-          setSelectedRoute={(route) =>
-            swapDispatch({
-              type: 'SET_SELECTED_ROUTE',
-              payload: route,
-            })
-          }
-          routes={routes}
-          isLoading={isLoading}
-        />
-        <SwapButton
-          onClick={() => handleSwap()}
-          from={from}
-          to={to}
-          isLoading={isLoading}
-          isConnected={isConnected}
-          routes={routes}
-          balance={balance}
-          transactionResponse={transactionResponse}
-        />
+    <InsuranceProvider toggleInsurance={toggleInsurance}>
+      <div className={`card ${classNames.container}`}>
+        <CardHeader title="Swap" />
+        <div className={classNames.swapContainer}>
+          <TokenArea
+            direction="from"
+            selection={from}
+            oppositeSelection={to}
+            dispatch={swapDispatch}
+            balance={balance}
+          />
+          <TokenArea direction="to" selection={to} oppositeSelection={from} dispatch={swapDispatch} />
+          <SwapDetails
+            selection={{
+              from,
+              to,
+            }}
+            selectedRoute={selectedRoute}
+            setSelectedRoute={(route) =>
+              swapDispatch({
+                type: 'SET_SELECTED_ROUTE',
+                payload: route,
+              })
+            }
+            routes={routes}
+            isLoading={isLoading}
+          />
+          <SwapButton
+            onClick={() =>
+              handleSwap(
+                swapDispatch,
+                selectedRoute.originalRoute,
+                switchChainHook,
+                selectedRoute.provider,
+                address,
+                from,
+              )
+            }
+            from={from}
+            to={to}
+            isLoading={isLoading}
+            isConnected={isConnected}
+            routes={routes}
+            balance={balance}
+            transactionResponse={transactionResponse}
+          />
+        </div>
       </div>
-    </div>
+    </InsuranceProvider>
   )
 }

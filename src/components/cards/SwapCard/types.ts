@@ -41,14 +41,48 @@ export interface AvatarsProps {
 
 export type State = {
   from: {
-    chain: { name: string; symbol: string }
-    token: { name: string; symbol: string }
+    chain: {
+      name: string
+      symbol: string
+      id: string
+      logoURI: string
+      providers: {
+        lifi?: { key: string }
+        rango?: { key: string }
+      }
+    }
+    token: {
+      name: string
+      symbol: string
+      address: `0x${string}`
+      decimals: number
+      logoURI: string
+    }
     amount: string
+    amount_usd: number
+    address: string
   }
   to: {
-    chain: { name: string; symbol: string }
-    token: { name: string; symbol: string }
-    amount?: string
+    chain: {
+      name: string
+      symbol: string
+      id: string
+      logoURI: string
+      providers: {
+        lifi?: { key: string }
+        rango?: { key: string }
+      }
+    }
+    token: {
+      name: string
+      symbol: string
+      address: `0x${string}`
+      decimals: number
+      logoURI: string
+    }
+    amount: string
+    amount_usd: number
+    address: string
   }
   routes: any[]
   isLoading: boolean
@@ -152,6 +186,11 @@ export type SetResponses = {
   payload: Response
 }
 
+export type ToggleInsurance = {
+  type: 'TOGGLE_INSURANCE'
+  payload: Response
+}
+
 export type Action =
   | SetChainAction
   | SetTokenAction
@@ -169,3 +208,4 @@ export type Action =
   | ResetAmountsAction
   | SetAddressAction
   | SetResponses
+  | ToggleInsurance

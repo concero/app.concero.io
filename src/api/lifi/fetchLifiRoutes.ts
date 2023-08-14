@@ -2,31 +2,21 @@ import { Chain, ExecutionSettings, LiFi } from '@lifi/sdk'
 import { WalletClient } from 'wagmi'
 import { Account, Transport } from 'viem'
 import { FetchRoutesParams, Route } from './types'
-import { standardiseRoute } from './standardiseRoute'
-import { lifiTokens } from '../../constants/lifiTokens'
+import { standardiseLifiRoute } from './standardiseLifiRoute'
 import { addingDecimals } from '../../utils/formatting'
 
 interface GetRoutes {
-  routes: Route[]
+  (params: FetchRoutesParams): Promise<Route[]>
 }
-
-const getTokenDecimalsByAddress = (chainId: number, tokenAddress: string): number =>
-  lifiTokens[chainId].find((token) => token.address === tokenAddress).decimals
 
 const sortByTags = (routeA: Route, routeB: Route): number => {
   const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
   const tagIndexA = routeA.tags ? tagsOrder.indexOf(routeA.tags[0]) : -1
   const tagIndexB = routeB.tags ? tagsOrder.indexOf(routeB.tags[0]) : -1
 
-  if (tagIndexA === -1 && tagIndexB === -1) {
-    return 0
-  }
-  if (tagIndexA === -1) {
-    return 1
-  }
-  if (tagIndexB === -1) {
-    return -1
-  }
+  if (tagIndexA === -1 && tagIndexB === -1) return 0
+  if (tagIndexA === -1) return 1
+  if (tagIndexB === -1) return -1
 
   if (tagIndexA < tagIndexB) {
   } else if (tagIndexA > tagIndexB) {
@@ -36,33 +26,41 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
   }
 }
 
-const lifiConfig = { integrator: 'concero' }
+const lifiConfig = {
+  integrator: 'concero',
+  defaultrouteoptions: { fee: 0.002 },
+  insurance: false,
+}
+
 const lifi = new LiFi(lifiConfig)
 
-export const fetchRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
-  const result = {
-    routes: [],
-    originalRoutes: [],
+export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
+  let result = []
+
+  const routeOptions = {
+    fee: 0.002,
+    insurance: false,
+    integrator: 'concero',
   }
 
   const routesRequest = {
     fromChainId: from.chain.id,
-    fromAmount: addingDecimals(Number(from.amount), getTokenDecimalsByAddress(from.chain.id, from.token.address)),
+    fromAmount: addingDecimals(Number(from.amount), from.token.decimals),
     fromTokenAddress: from.token.address,
-    fromAddress: from.address, // todo: hangs if address is provided
+    fromAddress: from.address,
     toChainId: to.chain.id,
     toTokenAddress: to.token.address,
     toAddress: to.address,
+    options: routeOptions,
   }
-  // console.log('routesRequest', routesRequest)
-  const response = await lifi.getRoutes(routesRequest)
-  // console.log('RoutesResponse', response)
 
+  const response = await lifi.getRoutes(routesRequest)
   if (response.routes.length > 0) {
-    result.routes = [...response.routes.map((route) => standardiseRoute(route))]
-    result.originalRoutes = response.routes
-    result.routes.sort(sortByTags)
+    result = [...response.routes.map((route) => standardiseLifiRoute(route))]
+    result.sort(sortByTags)
   }
+
+  console.log(response)
   return result
 }
 

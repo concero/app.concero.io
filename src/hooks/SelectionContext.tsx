@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useReducer } from 'react'
-import { lifiTokens } from '../constants/lifiTokens'
+import { tokens } from '../constants/tokens'
 import { chains } from '../constants/chains'
 
 export const SelectionContext = createContext(null)
@@ -69,9 +69,9 @@ const selectedTokens: SelectedTokens = {
       logoURI: chains[0].logoURI,
     },
     token: {
-      symbol: lifiTokens['1'][0].symbol,
-      address: lifiTokens['1'][0].address,
-      logoURI: lifiTokens['1'][0].logoURI,
+      symbol: tokens['1'][0].symbol,
+      address: tokens['1'][0].address,
+      logoURI: tokens['1'][0].logoURI,
     },
   },
   to: {
@@ -82,9 +82,9 @@ const selectedTokens: SelectedTokens = {
       logoURI: chains[1].logoURI,
     },
     token: {
-      symbol: lifiTokens['137'][0].symbol,
-      address: lifiTokens['137'][0].address,
-      logoURI: lifiTokens['137'][0].logoURI,
+      symbol: tokens['137'][0].symbol,
+      address: tokens['137'][0].address,
+      logoURI: tokens['137'][0].logoURI,
     },
   },
 }

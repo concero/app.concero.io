@@ -2,12 +2,12 @@ import { FC, useEffect, useRef, useState } from 'react'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
-import { capitalize } from '../../../../utils/formatting'
+import { capitalize, numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
 import { chains } from '../../../../constants/chains'
-import { lifiTokens } from '../../../../constants/lifiTokens'
+import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
@@ -18,7 +18,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
-  const [mappedTokens, setMappedTokens] = useState<any[]>(lifiTokens[selection.chain.id].slice(0, 50))
+  const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const inputRef = useRef()
 
@@ -32,26 +32,15 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
     dispatch({
       type: 'SET_CHAIN',
       direction,
-      payload: {
-        name: chain.name,
-        symbol: chain.symbol,
-        id: chain.id,
-        logoURI: chain.logoURI,
-      },
+      payload: { chain },
     })
   }
-  // todo do not destructure
 
   const setToken = (token) => {
     dispatch({
       type: 'SET_TOKEN',
       direction,
-      payload: {
-        name: token.name,
-        symbol: token.symbol,
-        logoURI: token.logoURI,
-        address: token.address,
-      },
+      payload: { token },
     })
   }
 
@@ -90,7 +79,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
 
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken()
-    setMappedTokens(lifiTokens[selection.chain.id].slice(0, 50))
+    setMappedTokens(tokens[selection.chain.id].slice(0, 50))
   }, [selection.chain, selection.token])
 
   useEffect(() => {
@@ -100,7 +89,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   const handleMappedTokens = () => {
     setMappedTokens([
       ...mappedTokens,
-      ...lifiTokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
+      ...tokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
     ])
   }
 
@@ -142,7 +131,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>${selection.amount_usd}</h5>
+            <h5>${numberToFormatString(Number(selection.amount_usd), 2)}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}
@@ -170,7 +159,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
       />
       <EntityListModal
         title="Select token"
-        data={lifiTokens[selection.chain.id]}
+        data={tokens[selection.chain.id]}
         visibleData={mappedTokens}
         columns={TokenColumns}
         show={showTokensModal}

@@ -70,3 +70,4 @@ dist-ssr
 *.sw?
 
 .stylelintcache
+.env
