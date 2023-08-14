@@ -186,6 +186,11 @@ export type SetResponses = {
   payload: Response
 }
 
+export type ToggleInsurance = {
+  type: 'TOGGLE_INSURANCE'
+  payload: Response
+}
+
 export type Action =
   | SetChainAction
   | SetTokenAction
@@ -203,3 +208,4 @@ export type Action =
   | ResetAmountsAction
   | SetAddressAction
   | SetResponses
+  | ToggleInsurance

@@ -16,6 +16,11 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
   const getTextColor = () => (isSelected ? classNames.bestText : '')
   const getIconColor = () => (isSelected ? colors.primary.light : colors.text.secondary)
 
+  const handleButtonClick = (event) => {
+    event.stopPropagation()
+    setIsRoutesCollapsed(!isRoutesCollapsed)
+  }
+
   return (
     <Card
       className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`}
@@ -36,7 +41,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
             iconProps: { size: '20px' },
           }}
           size="sm"
-          onClick={() => setIsRoutesCollapsed(!isRoutesCollapsed)}
+          onClick={(e) => handleButtonClick(e)}
           className={isSelected ? classNames.bestButton : ''}
         />
       </div>

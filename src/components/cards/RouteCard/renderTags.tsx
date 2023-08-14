@@ -1,7 +1,10 @@
+import { useContext } from 'react'
 import { Tag } from '../../tags/Tag/Tag'
 import classNames from './RouteCard.module.pcss'
 import { Route } from '../../../api/lifi/types'
 import { capitalize, numberToFormatString, secondsConverter } from '../../../utils/formatting'
+import { Beacon } from '../../layout/Beacon'
+import { InsuranceContext } from '../SwapCard/InsuranceContext'
 
 export const renderTags = (
   route: Route,
@@ -10,6 +13,12 @@ export const renderTags = (
   getIconColor: () => string,
 ) => {
   const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
+  const { toggleInsurance } = useContext(InsuranceContext)
+
+  const handleInsuranceButtonClick = (event) => {
+    event.stopPropagation()
+    toggleInsurance(route.id)
+  }
 
   return (
     <div className={classNames.infoTagsContainer}>
@@ -19,10 +28,14 @@ export const renderTags = (
         </Tag>
       ) : null}
       {route.insurance ? (
-        <Tag color="green">
-          <p style={{ color: 'inherit' }}>{route.insurance.state}</p>
+        <Tag color="green" onClick={(e) => handleInsuranceButtonClick(e)}>
+          Insurance
+          <Beacon isOn={route.insurance?.state === 'INSURED'} color={'green'} />
         </Tag>
-      ) : null}
+      ) : // <Button variant="green" size="sm" onClick={(e) => handleInsuranceButtonClick(e)}>
+      //
+      // </Button>
+      null}
       <Tag
         color="transparent"
         leftIcon={{

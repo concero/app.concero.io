@@ -29,7 +29,7 @@ const setStatus = (
     } else if (transactionResponse.isOk) dispatch({ type: 'SUCCESS' })
   } else if (!from.amount || (from.amount && !routes.length)) {
     dispatch({ type: 'NO_AMOUNT' })
-  } else if (from.amount > parseFloat(balance.formatted)) {
+  } else if (balance && from.amount > parseFloat(balance)) {
     dispatch({ type: 'LOW_BALANCE' })
   } else if (from.amount && to.amount && routes.length) {
     dispatch({ type: 'SWAP' })
