@@ -4,7 +4,6 @@ import classNames from './RouteCard.module.pcss'
 import { Route } from '../../../api/lifi/types'
 import { capitalize, numberToFormatString, secondsConverter } from '../../../utils/formatting'
 import { Beacon } from '../../layout/Beacon'
-import { Button } from '../../buttons/Button/Button'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
 
 export const renderTags = (
@@ -29,14 +28,14 @@ export const renderTags = (
         </Tag>
       ) : null}
       {route.insurance ? (
-        // <Tag color="green">
-        //   <p style={{ color: 'inherit' }}>{route.insurance.state}</p>
-        // </Tag>
-        <Button variant="black" size="sm" onClick={(e) => handleInsuranceButtonClick(e)}>
+        <Tag color="green" onClick={(e) => handleInsuranceButtonClick(e)}>
           <p className="body1">Insurance</p>
-          <Beacon isOn={route.insurance?.state === 'INSURED'} />
-        </Button>
-      ) : null}
+          <Beacon isOn={route.insurance?.state === 'INSURED'} color={'green'} />
+        </Tag>
+      ) : // <Button variant="green" size="sm" onClick={(e) => handleInsuranceButtonClick(e)}>
+      //
+      // </Button>
+      null}
       <Tag
         color="transparent"
         leftIcon={{

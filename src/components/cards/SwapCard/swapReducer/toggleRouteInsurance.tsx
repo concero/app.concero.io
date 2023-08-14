@@ -2,19 +2,19 @@ import { numberToFormatString } from '../../../../utils/formatting'
 
 const getUpdatedTokenAmountUsd = (route) => {
   return route.insurance.state === 'INSURED'
-    ? numberToFormatString(parseFloat(route.to.token.amount_usd) - parseFloat(route.insurance.fee_amount_usd), 2)
-    : numberToFormatString(parseFloat(route.to.token.amount_usd) + parseFloat(route.insurance.fee_amount_usd), 2)
+    ? numberToFormatString(parseFloat(route.to.token.amount_usd) + parseFloat(route.insurance.fee_amount_usd), 2)
+    : numberToFormatString(parseFloat(route.to.token.amount_usd) - parseFloat(route.insurance.fee_amount_usd), 2)
 }
 
 const getUpdatedTokenAmount = (route) => {
   return route.insurance.state === 'INSURED'
     ? numberToFormatString(
-        parseFloat(route.to.token.amount) -
+        parseFloat(route.to.token.amount) +
           parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
         2,
       )
     : numberToFormatString(
-        parseFloat(route.to.token.amount) +
+        parseFloat(route.to.token.amount) -
           parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
         2,
       )
