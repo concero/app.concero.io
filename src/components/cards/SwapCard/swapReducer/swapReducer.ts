@@ -1,7 +1,8 @@
 import { useReducer } from 'react'
-import { chains } from '../../../constants/chains'
-import { tokens } from '../../../constants/tokens'
-import { Action, State } from './types'
+import { chains } from '../../../../constants/chains'
+import { tokens } from '../../../../constants/tokens'
+import { Action, State } from '../types'
+import { toggleRouteInsurance } from './toggleRouteInsurance'
 
 export function swapReducer(state: State, action: Action) {
   switch (action.type) {
@@ -100,6 +101,8 @@ export function swapReducer(state: State, action: Action) {
         ...state,
         transactionResponse: action.payload,
       }
+    case 'TOGGLE_INSURANCE':
+      return toggleRouteInsurance(state, action.payload)
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

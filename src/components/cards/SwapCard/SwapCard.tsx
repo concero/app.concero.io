@@ -7,7 +7,7 @@ import classNames from './SwapCard.module.pcss'
 import { TokenArea } from './TokenArea/TokenArea'
 import { SwapDetails } from './SwapDetails/SwapDetails'
 import { SwapCardProps } from './types'
-import { useSwapReducer } from './swapReducer'
+import { useSwapReducer } from './swapReducer/swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
@@ -15,13 +15,14 @@ import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SwapButton } from '../../buttons/SwapButton/SwapButton'
 import { handleBalance } from './handlers/handleBalance'
 import { clearRoutes } from './handlers/clearRoutes'
-import { handleSwap } from './swap/handleSwap'
+import { handleSwap } from './swapExecution/handleSwap'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
+import { InsuranceProvider } from './InsuranceContext'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
-  const { dispatch } = useContext(SelectionContext)
   const [{ from, to, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
+  const { dispatch } = useContext(SelectionContext)
   const [response, setResponse] = useState(null) // todo move to reducer
   const [prevFromAmount, setPrevFromAmount] = useState(null) // todo move to reducer
   const [balance, setBalance] = useState<string>(`0 ${from.token.symbol}`)
@@ -101,47 +102,62 @@ export const SwapCard: FC<SwapCardProps> = () => {
     })
   }, [address])
 
+  const toggleInsurance = (routeId) => {
+    swapDispatch({
+      type: 'TOGGLE_INSURANCE',
+      payload: routeId,
+    })
+  }
+
   return (
-    <div className={`card ${classNames.container}`}>
-      <CardHeader title="Swap" />
-      <div className={classNames.swapContainer}>
-        <TokenArea direction="from" selection={from} oppositeSelection={to} dispatch={swapDispatch} balance={balance} />
-        <TokenArea direction="to" selection={to} oppositeSelection={from} dispatch={swapDispatch} />
-        <SwapDetails
-          selection={{
-            from,
-            to,
-          }}
-          selectedRoute={selectedRoute}
-          setSelectedRoute={(route) =>
-            swapDispatch({
-              type: 'SET_SELECTED_ROUTE',
-              payload: route,
-            })
-          }
-          routes={routes}
-          isLoading={isLoading}
-        />
-        <SwapButton
-          onClick={() =>
-            handleSwap(
-              swapDispatch,
-              selectedRoute.originalRoute,
-              switchChainHook,
-              selectedRoute.provider,
-              address,
+    <InsuranceProvider toggleInsurance={toggleInsurance}>
+      <div className={`card ${classNames.container}`}>
+        <CardHeader title="Swap" />
+        <div className={classNames.swapContainer}>
+          <TokenArea
+            direction="from"
+            selection={from}
+            oppositeSelection={to}
+            dispatch={swapDispatch}
+            balance={balance}
+          />
+          <TokenArea direction="to" selection={to} oppositeSelection={from} dispatch={swapDispatch} />
+          <SwapDetails
+            selection={{
               from,
-            )
-          }
-          from={from}
-          to={to}
-          isLoading={isLoading}
-          isConnected={isConnected}
-          routes={routes}
-          balance={balance}
-          transactionResponse={transactionResponse}
-        />
+              to,
+            }}
+            selectedRoute={selectedRoute}
+            setSelectedRoute={(route) =>
+              swapDispatch({
+                type: 'SET_SELECTED_ROUTE',
+                payload: route,
+              })
+            }
+            routes={routes}
+            isLoading={isLoading}
+          />
+          <SwapButton
+            onClick={() =>
+              handleSwap(
+                swapDispatch,
+                selectedRoute.originalRoute,
+                switchChainHook,
+                selectedRoute.provider,
+                address,
+                from,
+              )
+            }
+            from={from}
+            to={to}
+            isLoading={isLoading}
+            isConnected={isConnected}
+            routes={routes}
+            balance={balance}
+            transactionResponse={transactionResponse}
+          />
+        </div>
       </div>
-    </div>
+    </InsuranceProvider>
   )
 }

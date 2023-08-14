@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case 'NO_AMOUNT': {
       return {
         isDisabled: true,
-        text: 'Enter amount to swap',
+        text: 'Enter amount to swapExecution',
         icon: '',
         className: 'disabled',
       }
@@ -27,7 +27,7 @@ const reducer = (state, action) => {
     case 'DISCONNECTED':
       return {
         isDisabled: true,
-        text: 'Connect wallet to swap',
+        text: 'Connect wallet to swapExecution',
         icon: '',
         className: 'disabled',
       }
@@ -74,7 +74,7 @@ const reducer = (state, action) => {
 
 export const useButtonReducer = () => {
   const [buttonState, dispatch] = useReducer(reducer, {
-    text: 'Enter amount to swap',
+    text: 'Enter amount to swapExecution',
     isDisabled: true,
     icon: '',
     className: 'disabled',
