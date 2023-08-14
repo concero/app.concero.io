@@ -55,17 +55,15 @@ const getUpdatedRoute = (route) => {
   }
 }
 
-export const toggleRouteInsurance = (state: SwapState, routeId) => {
-  let newRoute
+export const toggleRouteInsurance = (state: SwapState, routeId: string) => {
   return {
     ...state,
     routes: state.routes.map((route) => {
       if (route.id === routeId) {
-        newRoute = getUpdatedRoute(route)
-        return newRoute
+        return getUpdatedRoute(route)
       }
       return route
     }),
-    selectedRoute: newRoute,
+    selectedRoute: state.selectedRoute?.id === routeId ? getUpdatedRoute(state.selectedRoute) : state.selectedRoute,
   }
 }

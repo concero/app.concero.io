@@ -102,9 +102,7 @@ function swapReducer(state: State, action: Action) {
         transactionResponse: action.payload,
       }
     case 'TOGGLE_INSURANCE':
-      const result = toggleRouteInsurance(state, action.payload)
-      console.log('RESULT IN REDUCER: ', result)
-      return result
+      return toggleRouteInsurance(state, action.payload)
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

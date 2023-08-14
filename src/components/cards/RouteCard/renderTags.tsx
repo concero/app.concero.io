@@ -16,6 +16,11 @@ export const renderTags = (
   const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
   const { toggleInsurance } = useContext(InsuranceContext)
 
+  const handleInsuranceButtonClick = (event) => {
+    event.stopPropagation()
+    toggleInsurance(route.id)
+  }
+
   return (
     <div className={classNames.infoTagsContainer}>
       {route?.tags[0]?.length > 0 ? (
@@ -27,7 +32,7 @@ export const renderTags = (
         // <Tag color="green">
         //   <p style={{ color: 'inherit' }}>{route.insurance.state}</p>
         // </Tag>
-        <Button variant="black" size="sm" onClick={() => toggleInsurance(route.id)}>
+        <Button variant="black" size="sm" onClick={(e) => handleInsuranceButtonClick(e)}>
           <p className="body1">Insurance</p>
           <Beacon isOn={route.insurance?.state === 'INSURED'} />
         </Button>
