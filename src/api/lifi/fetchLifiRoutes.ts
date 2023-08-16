@@ -1,9 +1,7 @@
-import { Chain, ExecutionSettings, LiFi } from '@lifi/sdk'
-import { WalletClient } from 'wagmi'
-import { Account, Transport } from 'viem'
 import { FetchRoutesParams, Route } from './types'
 import { standardiseLifiRoute } from './standardiseLifiRoute'
 import { addingDecimals } from '../../utils/formatting'
+import { lifi } from './lifi'
 
 interface GetRoutes {
   (params: FetchRoutesParams): Promise<Route[]>
@@ -25,14 +23,6 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
     return 0
   }
 }
-
-const lifiConfig = {
-  integrator: 'concero',
-  defaultrouteoptions: { fee: 0.002 },
-  insurance: false,
-}
-
-const lifi = new LiFi(lifiConfig)
 
 export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
   let result = []
@@ -60,12 +50,5 @@ export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<
     result.sort(sortByTags)
   }
 
-  console.log(response)
   return result
 }
-
-export const executeRoute = async (
-  signer: WalletClient<Transport, Chain, Account> | null,
-  route: Route,
-  settings?: ExecutionSettings,
-): Promise<Route> => lifi.executeRoute(signer, route, settings)

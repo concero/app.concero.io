@@ -14,8 +14,4 @@ export const ChainColumns = [
       <p style={{ color: colors.grey.medium }}>{chain.name}</p>
     ),
   },
-  {
-    columnTitle: 'Balance',
-    cellComponent: (chain: { name: string; symbol: string }) => <p style={{ color: colors.grey.medium }}>0.000</p>,
-  },
 ]
