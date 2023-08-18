@@ -2,7 +2,7 @@ import { fetchTokenBalance } from '../../../../api/rango/fetchTokenBalance'
 import { addingTokenDecimals } from '../../../../utils/formatting'
 
 interface HandleBalanceProps {
-  setBalance: (balance: string) => void
+  swapDispatch: any
   from: {
     chain: {
       providers: {
@@ -20,7 +20,7 @@ interface HandleBalanceProps {
   address: string
 }
 
-export const handleBalance = async ({ setBalance, from, address }: HandleBalanceProps) => {
+export const handleBalance = async ({ swapDispatch, from, address }: HandleBalanceProps) => {
   const response = await fetchTokenBalance(
     from.chain.providers.rango.key,
     from.token.address,
@@ -29,6 +29,5 @@ export const handleBalance = async ({ setBalance, from, address }: HandleBalance
   )
 
   const result = `${addingTokenDecimals(Number(response.data), from.token.decimals)} ${from.token.symbol}`
-
-  setBalance(result)
+  swapDispatch({ type: 'SET_BALANCE', payload: result })
 }

@@ -13,11 +13,12 @@ function swapReducer(state: State, action: Action) {
         routes: action.payload,
       }
     case 'POPULATE_ROUTES':
+      if (action.fromAmount !== state.from.amount) return state
       return {
         ...state,
         isLoading: false,
         routes: action.payload,
-        originalRoutes: action.payload.originalRoutes,
+        // originalRoutes: action.payload.originalRoutes,
         selectedRoute: action.payload[0],
       }
     case 'CLEAR_ROUTES':
@@ -26,8 +27,15 @@ function swapReducer(state: State, action: Action) {
         isLoading: false,
         routes: [],
         selectedRoute: null,
-        originalRoutes: [],
+        // originalRoutes: [],
       }
+
+    case 'SET_BALANCE':
+      return {
+        ...state,
+        balance: action.payload,
+      }
+
     case 'SET_LOADING':
       return {
         ...state,
@@ -56,7 +64,7 @@ function swapReducer(state: State, action: Action) {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          chain: chain,
+          chain,
           token: tokens[chain.id][0],
         },
       }
@@ -73,10 +81,10 @@ function swapReducer(state: State, action: Action) {
         ...state,
         [action.direction]: {
           ...state[action.direction],
-          ...(action.payload.amount !== undefined &&
-            action.payload.amount !== null && { amount: action.payload.amount }),
-          ...(action.payload.amount_usd !== undefined &&
-            action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
+          ...(action.payload.amount !== undefined
+            && action.payload.amount !== null && { amount: action.payload.amount }),
+          ...(action.payload.amount_usd !== undefined
+            && action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
         },
       }
     case 'RESET_AMOUNTS':
@@ -162,6 +170,7 @@ export const useSwapReducer = () => {
       amount_usd: 0.0,
       address: '',
     },
+    balance: '0',
     routes: [],
     isLoading: false,
     selectedRoute: null,

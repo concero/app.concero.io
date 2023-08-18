@@ -191,6 +191,11 @@ export type ToggleInsurance = {
   payload: Response
 }
 
+export type SetBalanceAction = {
+  type: 'SET_BALANCE'
+  payload: string
+}
+
 export type Action =
   | SetChainAction
   | SetTokenAction
@@ -209,3 +214,4 @@ export type Action =
   | SetAddressAction
   | SetResponses
   | ToggleInsurance
+  | SetBalanceAction

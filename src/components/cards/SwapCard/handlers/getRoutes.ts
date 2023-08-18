@@ -1,7 +1,7 @@
 import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
 import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 
-export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setResponse) => {
+export const getRoutes = async (from, to, swapDispatch) => {
   if (!from.amount) return
 
   swapDispatch({
@@ -22,9 +22,7 @@ export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setRe
   })
 
   const [lifiRoutes, rangoRoute] = await Promise.all([lifiRoutePromise, rangoRoutePromise])
-
   routes.push(...[rangoRoute], ...lifiRoutes)
-
   swapDispatch({
     type: 'SET_LOADING',
     payload: false,
@@ -39,6 +37,6 @@ export const getRoutes = async (from, to, swapDispatch, setPrevFromAmount, setRe
       },
     })
   }
-  setPrevFromAmount(from.amount)
-  setResponse(routes)
+
+  swapDispatch({ type: 'POPULATE_ROUTES', payload: routes, fromAmount: from.amount })
 }
