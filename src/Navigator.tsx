@@ -5,6 +5,7 @@ import { AppScreen } from './components/screens/AppScreen/AppScreen'
 import { Header } from './components/layout/Header/Header/Header'
 import { routes } from './constants/routes'
 import { PortfolioScreen } from './components/screens/PortfolioScreen/PortfolioScreen'
+import { StakingScreen } from './components/screens/StakingScreen/StakingScreen'
 
 export interface NavigatorProps {}
 
@@ -15,8 +16,9 @@ export const Navigator: FC<NavigatorProps> = ({}) => (
       <Routes>
         <Route path={routes.exchange} element={<ExchangeScreen />} />
         <Route path={routes.portfolio} element={<PortfolioScreen />} />
+        <Route path={routes.staking} element={<StakingScreen />} />
         <Route path={routes.root} element={<Navigate to={routes.exchange} />} />
       </Routes>
     </AppScreen>
   </BrowserRouter>
-  )
+)

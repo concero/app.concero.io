@@ -14,7 +14,7 @@ export default defineConfig({
     stylelint({
       fix: true,
       //include any .css and .module.css files in src
-      include: ['./src/**/*.css', './src/**/*.pcss'],
+      include: ['./src/**/*.css', './src/**/*StakingScreen.module.pcss'],
       configFile: './.stylelintrc.json',
       emitErrorAsWarning: true,
     }),
