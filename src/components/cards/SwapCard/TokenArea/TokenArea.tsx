@@ -11,8 +11,8 @@ import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
-import { isFloatInput } from '../../../../utils/validation'
 import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
+import { handleAmountChange, handleAreaClick, handleMappedTokens } from './handlers'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, balance = null }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
@@ -21,12 +21,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const inputRef = useRef()
-
-  const handleClick = () => {
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
-  }
 
   const setChain = (chain) => {
     dispatch({
@@ -59,24 +53,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
     setCurrentTokenPriceUSD(response)
   }
 
-  const handleAmountChange = (input) => {
-    if (input === '') {
-      return dispatch({
-        type: 'RESET_AMOUNTS',
-        direction,
-      })
-    }
-    if (!isFloatInput(input)) return
-
-    dispatch({
-      type: 'SET_AMOUNT',
-      direction,
-      payload: { amount: input },
-    })
-
-    setAmountUsd(input)
-  }
-
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken()
     setMappedTokens(tokens[selection.chain.id].slice(0, 50))
@@ -86,18 +62,11 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
     if (selection.amount) setAmountUsd(selection.amount)
   }, [currentTokenPriceUSD])
 
-  const handleMappedTokens = () => {
-    setMappedTokens([
-      ...mappedTokens,
-      ...tokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
-    ])
-  }
-
   return (
     <>
       <div
         className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}
-        onClick={() => handleClick()}
+        onClick={() => handleAreaClick({ inputRef })}
       >
         <div className={classNames.tokenRow}>
           <div className={classNames.tokenRowHeader}>
@@ -128,7 +97,15 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
               value={selection.amount}
-              onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
+              onChangeText={(value) =>
+                direction === 'from' &&
+                handleAmountChange({
+                  value,
+                  dispatch,
+                  setAmountUsd,
+                  direction,
+                })
+              }
               isDisabled={direction === 'to'}
             />
             <h5>${numberToFormatString(Number(selection.amount_usd), 2)}</h5>
@@ -165,7 +142,12 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
         show={showTokensModal}
         setShow={setShowTokensModal}
         onSelect={(token) => setToken(token)}
-        onEndReached={() => handleMappedTokens()}
+        onEndReached={() =>
+          handleMappedTokens({
+            selection,
+            setMappedTokens,
+          })
+        }
         animate={false}
       />
     </>
