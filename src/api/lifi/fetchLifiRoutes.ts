@@ -45,6 +45,7 @@ export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<
   }
 
   const response = await lifi.getRoutes(routesRequest)
+
   if (response.routes.length > 0) {
     result = [...response.routes.map((route) => standardiseLifiRoute(route))]
     result.sort(sortByTags)
