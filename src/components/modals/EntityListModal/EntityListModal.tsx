@@ -8,56 +8,59 @@ import classNames from './EntityListModal.module.pcss'
 export interface EntityListModalProps {
   title: string
   data: any[]
-  visibleData?: any[]
   columns: any[]
   show: boolean
   setShow: (show: boolean) => void
   onSelect: (item: any) => void
   onEndReached?: () => void
   animate?: boolean
+  entitiesVisible?: number
 }
 
 export const EntityListModal: FC<EntityListModalProps> = ({
   title,
   data,
-  visibleData = null,
   columns,
   show,
   setShow,
   onSelect,
   onEndReached = null,
   animate = true,
+  entitiesVisible = 20,
 }) => {
-  const [filteredData, setFilteredData] = useState<any[]>(visibleData || data)
+  const [filteredData, setFilteredData] = useState<any[]>([])
   const [value, setValue] = useState<string>('')
 
-  function filter(name) {
-    setValue(name)
+  useEffect(() => {
+    const newData = value ? data.filter((chain) => chain.symbol.toLowerCase().includes(value.toLowerCase())) : data
 
-    if (!name) return setFilteredData(visibleData || data)
-
-    const newData = data.filter((chain) => chain.symbol.toLowerCase().includes(name.toLowerCase()))
-    setFilteredData(newData)
-  }
+    setFilteredData(newData.slice(0, entitiesVisible))
+  }, [data, entitiesVisible, value])
 
   const handleSelect = (item) => {
     onSelect(item)
     setShow(false)
   }
 
-  useEffect(() => {
-    setFilteredData(visibleData || data)
-  }, [visibleData || data])
+  const handleEndReached = () => {
+    if (onEndReached) {
+      onEndReached()
+    } else {
+      const startIndex = filteredData.length
+      const endIndex = startIndex + entitiesVisible
+      setFilteredData((prevData) => [...prevData, ...data.slice(startIndex, endIndex)])
+    }
+  }
 
   return (
     <Modal title={title} show={show} setShow={setShow}>
       <div className={classNames.container}>
-        <TextInput iconName="Search" value={value} placeholder="Search..." onChangeText={(val) => filter(val)} />
+        <TextInput iconName="Search" value={value} placeholder="Search..." onChangeText={(val) => setValue(val)} />
         <Table
           columns={columns}
           items={filteredData}
           onClick={(item) => handleSelect(item)}
-          onEndReached={onEndReached && onEndReached}
+          onEndReached={handleEndReached}
           animate={animate}
         />
       </div>

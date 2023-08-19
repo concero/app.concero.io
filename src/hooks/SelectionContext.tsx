@@ -13,6 +13,7 @@ type SelectedTokens = {
       logoURI: string
     }
     token: {
+      name: string
       symbol: string
       address: string
       logoURI: string
@@ -26,6 +27,7 @@ type SelectedTokens = {
       logoURI: string
     }
     token: {
+      name: string
       symbol: string
       address: string
       logoURI: string

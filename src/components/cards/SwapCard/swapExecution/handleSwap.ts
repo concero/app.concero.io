@@ -5,8 +5,8 @@ import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 
 const handleExecuteRoute = async (route, provider, switchChainHook, address, from) => {
   console.log('ROUTE TO EXECUTE: ', route)
-  if (provider === 'lifi') return await executeLifiRoute(viemSigner, route, { switchChainHook })
-  if (provider === 'rango') return await executeRangoRoute(route, address, from)
+  if (provider === 'lifi') return executeLifiRoute(viemSigner, route, { switchChainHook })
+  if (provider === 'rango') return executeRangoRoute(route, address, from)
 }
 
 const handleRangoResponse = (executedRoute, swapDispatch) => {
@@ -44,7 +44,7 @@ const handleLifiResponse = (executedRoute, swapDispatch) => {
   }
 }
 
-export const handleSwap = async (swapDispatch, originalRoute, switchChainHook, provider, address, from) => {
+export const handleSwap = async (swapDispatch, originalRoute, switchChain, provider, address, from) => {
   if (!originalRoute) return console.error('No original route passed')
 
   swapDispatch({
@@ -53,7 +53,7 @@ export const handleSwap = async (swapDispatch, originalRoute, switchChainHook, p
   })
 
   try {
-    const executedRoute = await handleExecuteRoute(originalRoute, provider, switchChainHook, address, from)
+    const executedRoute = await handleExecuteRoute(originalRoute, provider, switchChain, address, from)
     console.log('EXECUTED ROUTE: ', executedRoute)
 
     if (provider === 'rango') {
