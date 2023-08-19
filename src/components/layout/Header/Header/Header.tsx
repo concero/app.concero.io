@@ -16,7 +16,7 @@ export interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ children }) => {
   const matchExchange = useMatch(routes.exchange)
-  const matchStacking = useMatch(routes.staking)
+  const matchStaking = useMatch(routes.staking)
   const matchPortfolio = useMatch(routes.portfolio)
 
   const isDesktop = useMediaQuery('mobile')
@@ -69,7 +69,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
             <Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
               Exchange
             </Link>
-            <Link className={matchStacking ? classNames.active : classNames.link} to={routes.staking}>
+            <Link className={matchStaking ? classNames.active : classNames.link} to={routes.staking}>
               Staking
             </Link>
             {PortfolioSoon}

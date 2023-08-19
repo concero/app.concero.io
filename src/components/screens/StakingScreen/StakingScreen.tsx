@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import classNames from './StakingScreen.module.pcss'
-import { StackingOpportunitiesCard } from '../../cards/StackingOpportunitesCard/StackingOpportunitiesCard'
+import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 
 export interface StakingScreenProps {}
 
@@ -19,7 +19,7 @@ export const SelectedOpportunityCard = () => {
 export const StakingScreen: FC<StakingScreenProps> = () => {
   return (
     <div className={classNames.container}>
-      <StackingOpportunitiesCard />
+      <StakingOpportunitiesCard />
       <div className={classNames.mainCardStack}>
         <SelectedOpportunityCard />
         {/* <Chart/> */}

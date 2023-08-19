@@ -1,4 +1,4 @@
-import classNames from './StackingOpportunitiesCard.module.pcss'
+import classNames from './StakingOpportunitiesCard.module.pcss'
 import { Tag } from '../../tags/Tag/Tag'
 import { colors } from '../../../constants/colors'
 
