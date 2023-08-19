@@ -1,10 +1,10 @@
 import { FC, useState } from 'react'
 import classNames from './StakingCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
-import Icon from '../../Icon'
-import { secondsConverter } from '../../../utils/formatting'
 import { colors } from '../../../constants/colors'
 import { Button } from '../../buttons/Button/Button'
+import { StakeButtons } from './StakeButtons'
+import { renderTags } from './renderTags'
 
 interface StakingCardProps {
   isSelected: boolean
@@ -34,12 +34,7 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, route, onClick }
           >{`${route.from.token.symbol}/${route.to.token.symbol}`}</h5>
         </div>
         <div className={classNames.headerSideContainer}>
-          <Icon name={'Lock'} className={`${classNames.icon} ${isSelected ? classNames.selectedText : ''}`} />
-          <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>
-            {secondsConverter(route.execution_duration_sec)}
-          </h5>
-          <Icon name={'Stack2'} className={`${classNames.icon} ${isSelected ? classNames.selectedText : ''}`} />
-          {route.insured ? <Icon name={'Shield'} className={classNames.icon} color={colors.green.main} /> : null}
+          {renderTags({ route, isSelected })}
           <Button
             onClick={(e) => handleChevronClick(e)}
             variant={'black'}
@@ -51,18 +46,7 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, route, onClick }
           />
         </div>
       </div>
-      {!isCollapsed ? (
-        <div className={classNames.buttonContainer}>
-          <Button variant={'primary'} className={classNames.stakeButton}>
-            <Icon name={'ArrowsDiff'} className={classNames.buttonIcon} />
-            Stake more
-          </Button>
-          <Button variant={'primary'} className={classNames.stakeButton}>
-            <Icon name={'ArrowsDiff'} className={classNames.buttonIcon} />
-            Claim rewards
-          </Button>
-        </div>
-      ) : null}
+      <StakeButtons isCollapsed={isCollapsed} />
     </div>
   )
 }
