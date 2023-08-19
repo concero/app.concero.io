@@ -1,52 +1,19 @@
-import { FC, useContext, useEffect, useRef, useState } from 'react'
+import { FC, useContext, useEffect, useRef } from 'react'
 import { createChart } from 'lightweight-charts'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
-import { fetchChartData } from '../../../api/coinGecko/fetchChartData'
-import { NotificationsContext } from '../../../hooks/notificationsContext'
-import { getCoingeckoTokenIdBySymbol } from '../../../api/coinGecko/getCoingeckoTokenIdBySymbol'
-
-interface Chain {
-  name: string
-  symbol: string
-  id: string
-}
-
-interface Interval {
-  title: string
-  value: string
-}
 
 interface ChartProps {
-  selectedToken: Chain
-  selectedInterval: Interval
+  data: any[]
 }
 
-export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
-  const { addNotification } = useContext(NotificationsContext)
-
+export const Chart: FC<ChartProps> = ({ data }) => {
   const chartRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
-  const [data, setData] = useState<any[]>([])
   const { colors, theme } = useContext(ThemeContext)
 
-  // Fetch data
-  useEffect(() => {
-    const tokenId = getCoingeckoTokenIdBySymbol(selectedToken.symbol)
-    fetchChartData(setData, addNotification, tokenId, selectedInterval)
-
-    const interval = setInterval(() => {
-      fetchChartData(setData, addNotification, tokenId, selectedInterval)
-    }, 15000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [selectedInterval, selectedToken])
-
-  // Initialize coinGecko
   useEffect(() => {
     if (!chartRef.current) return
 
@@ -82,13 +49,6 @@ export const Chart: FC<ChartProps> = ({ selectedToken, selectedInterval }) => {
       }
     }
   }, [colors, data, chartRef])
-
-  // // Update coinGecko data
-  // useEffect(() => {
-  //   if (seriesRef.current) {
-  //     seriesRef.current.setData(data)
-  //   }
-  // }, [data])
 
   return <div className="f1" ref={chartRef} />
 }

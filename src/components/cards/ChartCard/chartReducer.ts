@@ -17,9 +17,10 @@ const initialState = (selection) => ({
     },
   },
   interval: {
-    title: '1m',
+    title: '1d',
     value: '30',
   },
+  chartData: [],
 })
 
 const chartReducer = (state, action) => {
@@ -55,6 +56,11 @@ const chartReducer = (state, action) => {
             modalVisible: !state.token[action.tokenType].modalVisible,
           },
         },
+      }
+    case 'SET_CHART_DATA':
+      return {
+        ...state,
+        chartData: action.payload,
       }
     default:
       return state
