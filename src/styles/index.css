@@ -275,6 +275,11 @@ a {
     font-size: 0.85rem;
 }
 
+.tagBody {
+    color: var(--color-base-white);
+    font-size: 0.85rem;
+}
+
 button {
     border: none;
     cursor: pointer;
