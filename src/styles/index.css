@@ -288,3 +288,7 @@ button {
         display: none;
     }
 }
+
+.cardHeaderTitle {
+    color: var(--color-grey-medium)
+}

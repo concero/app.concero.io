@@ -16,6 +16,7 @@ export interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ children }) => {
   const matchExchange = useMatch(routes.exchange)
+  const matchStacking = useMatch(routes.staking)
   const matchPortfolio = useMatch(routes.portfolio)
 
   const isDesktop = useMediaQuery('mobile')
@@ -45,16 +46,16 @@ export const Header: FC<HeaderProps> = ({ children }) => {
           Portfolio
         </Link>
         <Link className={classNames.comingSoon} to="#">
-          Staking
-        </Link>
-        <Link className={classNames.comingSoon} to="#">
           My referrals
         </Link>
       </div>
     )
   }
 
-  const PortfolioSoon = WithTooltip({ WrappedComponent: PortfolioLink, Tooltip: TooltipContent })
+  const PortfolioSoon = WithTooltip({
+    WrappedComponent: PortfolioLink,
+    Tooltip: TooltipContent,
+  })
 
   return (
     <header className={classNames.header}>
@@ -67,6 +68,9 @@ export const Header: FC<HeaderProps> = ({ children }) => {
           <ul>
             <Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
               Exchange
+            </Link>
+            <Link className={matchStacking ? classNames.active : classNames.link} to={routes.staking}>
+              Staking
             </Link>
             {PortfolioSoon}
 

@@ -78,7 +78,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
     <div className={`card ${classNames.container}`}>
       <div className={classNames.headerContainer}>
         <div className={classNames.selectChainContainer}>
-          <h5>Chart</h5>
+          <h5 className={'cardHeaderTitle'}>Chart</h5>
           <Button
             variant="black"
             size="sm"
