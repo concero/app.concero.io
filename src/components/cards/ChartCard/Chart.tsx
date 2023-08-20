@@ -6,9 +6,10 @@ import { createTooltip, updateTooltip } from './Tooltip'
 
 interface ChartProps {
   data: any[]
+  secondData?: any[] | null
 }
 
-export const Chart: FC<ChartProps> = ({ data }) => {
+export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
   const chartRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
@@ -27,6 +28,10 @@ export const Chart: FC<ChartProps> = ({ data }) => {
     })
     seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
     seriesRef.current.setData(data)
+
+    const secondSeries = chart.addAreaSeries(areaSeriesOptions(colors, theme))
+    if (secondData) secondSeries.setData(secondData)
+
     tooltipRef.current = createTooltip()
     chartRef.current.appendChild(tooltipRef.current)
 

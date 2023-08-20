@@ -2,6 +2,7 @@ import { FC } from 'react'
 import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
+import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
 
 export interface StakingScreenProps {}
 
@@ -42,7 +43,7 @@ export const StakingScreen: FC<StakingScreenProps> = () => {
       <StakingOpportunitiesCard />
       <div className={classNames.mainCardStack}>
         <StakingHeaderCard route={route} />
-        {/* <Chart/> */}
+        <StakingChartCard />
       </div>
       <div
         className={classNames.secondaryCardStack}

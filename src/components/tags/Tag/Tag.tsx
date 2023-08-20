@@ -34,7 +34,11 @@ export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color, 
   const sizeClass = size ? className[size] : className.xs
 
   return (
-    <div className={className.container} onClick={onClick ? onClick : null}>
+    <div
+      className={className.container}
+      onClick={onClick ? onClick : null}
+      style={onClick ? { cursor: 'pointer' } : null}
+    >
       <div className={`${className.tag}  ${sizeClass} ${className[color]}`}>
         {leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
         {children}
