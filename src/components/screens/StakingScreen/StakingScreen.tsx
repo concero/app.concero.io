@@ -5,6 +5,7 @@ import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCa
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
 import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
 import { RatioCard } from '../../cards/RatioCard/RatioCard'
+import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 
 export interface StakingScreenProps {}
 
@@ -47,14 +48,10 @@ export const StakingScreen: FC<StakingScreenProps> = () => {
         <StakingHeaderCard route={route} />
         <StakingChartCard />
       </div>
-      <div
-        className={classNames.secondaryCardStack}
-        style={{
-          width: 300,
-        }}
-      >
+      <div className={classNames.secondaryCardStack}>
         <StakingHighlightsCard />
         <RatioCard />
+        <DetailsCard />
       </div>
     </div>
   )
