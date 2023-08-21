@@ -3,6 +3,8 @@ import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
+import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
+import { RatioCard } from '../../cards/RatioCard/RatioCard'
 
 export interface StakingScreenProps {}
 
@@ -50,7 +52,10 @@ export const StakingScreen: FC<StakingScreenProps> = () => {
         style={{
           width: 300,
         }}
-      ></div>
+      >
+        <StakingHighlightsCard />
+        <RatioCard />
+      </div>
     </div>
   )
 }

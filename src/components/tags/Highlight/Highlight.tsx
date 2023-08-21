@@ -43,7 +43,7 @@ export const Highlight: FC<HighlightProps> = ({ item: { title, value, valueSecon
   return (
     <div className={highlightClasses}>
       <div className={classNames.topRow}>
-        <h5>{title}</h5>
+        {title ? <h5 className={'cardHeaderTitle'}>{title}</h5> : null}
         {valueSecondary ? (
           <Tag
             color={tagColor}
@@ -51,9 +51,9 @@ export const Highlight: FC<HighlightProps> = ({ item: { title, value, valueSecon
               name: tagArrow,
               iconProps: { size: 18 },
             }}
-          >
-            {`${last_24h}%`}
-          </Tag>
+            size={size}
+            title={`${last_24h}%`}
+          />
         ) : null}
       </div>
       <div className={classNames.bottomRow}>
@@ -67,9 +67,9 @@ export const Highlight: FC<HighlightProps> = ({ item: { title, value, valueSecon
               name: tagArrow,
               iconProps: { size: 18 },
             }}
-          >
-            {`${last_24h}%`}
-          </Tag>
+            size={size}
+            title={`${last_24h}%`}
+          />
         )}
       </div>
     </div>
