@@ -3,7 +3,7 @@ import { numberToFormatString } from '../../utils/formatting'
 
 export const standardizeRangoRoutes = (rangoResponse) => {
   const { route } = rangoResponse
-  console.log('RANGO RESPONSE: ', rangoResponse)
+
   return {
     id: rangoResponse.requestId,
     provider: 'rango',

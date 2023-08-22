@@ -15,7 +15,6 @@ const setStatus = (
   balance: string,
   transactionResponse: any[],
 ) => {
-  console.log('transactionResponse', transactionResponse)
   if (isLoading) {
     dispatch({ type: 'LOADING' })
   } else if (!isConnected) {

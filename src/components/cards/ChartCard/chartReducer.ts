@@ -17,8 +17,8 @@ const initialState = (selection) => ({
     },
   },
   interval: {
-    title: '1m',
-    value: '30',
+    title: '1d',
+    value: '1',
   },
 })
 

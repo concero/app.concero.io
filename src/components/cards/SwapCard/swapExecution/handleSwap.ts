@@ -4,12 +4,11 @@ import { executeRangoRoute } from './executeRangoRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 
 const handleExecuteRoute = async (route, provider, switchChainHook, address, from) => {
-  console.log('ROUTE TO EXECUTE: ', route)
-  if (provider === 'lifi') return executeLifiRoute(viemSigner, route, { switchChainHook })
-  if (provider === 'rango') return executeRangoRoute(route, address, from)
+  if (provider === 'lifi') return await executeLifiRoute(viemSigner, route, { switchChainHook })
+  if (provider === 'rango') return await executeRangoRoute(route, address, from)
 }
 
-const handleRangoResponse = (executedRoute, swapDispatch) => {
+const handleRangoResponse = (executedRoute, swapDispatch, provider) => {
   if (executedRoute.status === 'failed') {
     swapDispatch({
       type: 'SET_RESPONSES',
@@ -31,7 +30,7 @@ const handleRangoResponse = (executedRoute, swapDispatch) => {
   }
 }
 
-const handleLifiResponse = (executedRoute, swapDispatch) => {
+const handleLifiResponse = (executedRoute, swapDispatch, provider) => {
   if (executedRoute) {
     swapDispatch({
       type: 'SET_RESPONSES',
@@ -54,19 +53,18 @@ export const handleSwap = async (swapDispatch, originalRoute, switchChain, provi
 
   try {
     const executedRoute = await handleExecuteRoute(originalRoute, provider, switchChain, address, from)
-    console.log('EXECUTED ROUTE: ', executedRoute)
 
     if (provider === 'rango') {
-      handleRangoResponse(executedRoute, swapDispatch)
+      handleRangoResponse(executedRoute, swapDispatch, provider)
     } else if (provider === 'lifi') {
-      handleLifiResponse(executedRoute, swapDispatch)
+      handleLifiResponse(executedRoute, swapDispatch, provider)
     }
   } catch (e) {
     console.log('ERROR: ', e)
     handleTransactionError(e, swapDispatch)
   }
 
-  await swapDispatch({
+  swapDispatch({
     type: 'SET_LOADING',
     payload: false,
   })

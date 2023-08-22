@@ -15,13 +15,8 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
   if (tagIndexA === -1 && tagIndexB === -1) return 0
   if (tagIndexA === -1) return 1
   if (tagIndexB === -1) return -1
-
-  if (tagIndexA < tagIndexB) {
-  } else if (tagIndexA > tagIndexB) {
-    return 1
-  } else {
-    return 0
-  }
+  if (tagIndexA > tagIndexB) return 1
+  return 0
 }
 
 export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
@@ -31,6 +26,7 @@ export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<
     fee: 0.002,
     insurance: false,
     integrator: 'concero',
+    slippage: 0.01,
   }
 
   const routesRequest = {
