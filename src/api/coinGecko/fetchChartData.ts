@@ -38,7 +38,6 @@ export const fetchChartData = async (
     value: string
   },
 ) => {
-  console.log('fetching ', interval)
   // const url = `https://api.coingecko.com/api/v3/coins/${tokenId}/market_chart?vs_currency=${'usd'}&days=${
   //   interval.value
   // }`

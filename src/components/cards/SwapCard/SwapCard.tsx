@@ -23,7 +23,17 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const typingTimeoutRef = useRef(null)
 
   const populateRoutes = (routes) => {
-    swapDispatch({ type: 'POPULATE_ROUTES', payload: routes })
+    swapDispatch({
+      type: 'POPULATE_ROUTES',
+      payload: routes,
+    })
+  }
+
+  const toggleInsurance = (routeId) => {
+    swapDispatch({
+      type: 'TOGGLE_INSURANCE',
+      payload: routeId,
+    })
   }
 
   useSwapCardEffects({
@@ -38,7 +48,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   })
 
   return (
-    <InsuranceProvider toggleInsurance={() => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })}>
+    <InsuranceProvider toggleInsurance={toggleInsurance}>
       <div className={`card ${classNames.container}`}>
         <CardHeader title="Swap" />
         <div className={classNames.swapContainer}>
@@ -56,15 +66,19 @@ export const SwapCard: FC<SwapCardProps> = () => {
               to,
             }}
             selectedRoute={selectedRoute}
-            setSelectedRoute={(route) => swapDispatch({
+            setSelectedRoute={(route) =>
+              swapDispatch({
                 type: 'SET_SELECTED_ROUTE',
                 payload: route,
-              })}
+              })
+            }
             routes={routes}
             isLoading={isLoading}
           />
           <SwapButton
-            onClick={() => handleSwap(swapDispatch, selectedRoute.originalRoute, switchChain, selectedRoute.provider, address, from)}
+            onClick={() =>
+              handleSwap(swapDispatch, selectedRoute.originalRoute, switchChain, selectedRoute.provider, address, from)
+            }
             from={from}
             to={to}
             isLoading={isLoading}

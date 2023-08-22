@@ -9,7 +9,7 @@ export const standardizeRangoRoutes = (rangoResponse) => {
     provider: 'rango',
     from: {
       token: {
-        name: route.from.name,
+        name: route?.from?.name,
         address: route.from.address,
         symbol: route.from.symbol,
         decimals: route.from.decimals,
