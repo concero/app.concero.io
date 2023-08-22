@@ -37,7 +37,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
         <Button
           variant="black"
           rightIcon={{
-            name: `${isRoute  sCollapsed ? 'ChevronDown' : 'ChevronUp'}`,
+            name: `${isRoutesCollapsed ? 'ChevronDown' : 'ChevronUp'}`,
             iconProps: { size: '20px' },
           }}
           size="sm"
