@@ -2,8 +2,9 @@ import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
 
 const populateRoutes = ({ routes, from, swapDispatch }) => {
+  console.log('ROUTES: ', routes)
   if (routes.length <= 0) {
-    return swapDispatch({
+    swapDispatch({
       type: 'SET_RESPONSES',
       payload: {
         isOk: false,
@@ -11,7 +12,6 @@ const populateRoutes = ({ routes, from, swapDispatch }) => {
       },
     })
   }
-
   swapDispatch({
     type: 'POPULATE_ROUTES',
     payload: routes,
@@ -49,6 +49,8 @@ const handleFetchRangoRoutes = ({ routes, swapDispatch, from, to }) => {
     to,
   })
     .then((rangoRoute) => {
+      console.log('RANGO ROUTE: ', rangoRoute)
+      if (rangoRoute === null) return
       routes.push(rangoRoute)
       populateRoutes({
         routes,
