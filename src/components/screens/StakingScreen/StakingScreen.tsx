@@ -44,14 +44,16 @@ export const StakingScreen: FC<StakingScreenProps> = () => {
   return (
     <div className={classNames.container}>
       <StakingOpportunitiesCard />
-      <div className={classNames.mainCardStack}>
-        <StakingHeaderCard route={route} />
-        <StakingChartCard />
-      </div>
-      <div className={classNames.secondaryCardStack}>
-        <StakingHighlightsCard />
-        <RatioCard />
-        <DetailsCard />
+      <div className={classNames.stacksContainer}>
+        <div className={classNames.mainCardStack}>
+          <StakingHeaderCard route={route} />
+          <StakingChartCard />
+        </div>
+        <div className={classNames.secondaryCardStack}>
+          <StakingHighlightsCard />
+          <RatioCard />
+          <DetailsCard />
+        </div>
       </div>
     </div>
   )
