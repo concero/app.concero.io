@@ -18,7 +18,7 @@ enum FeedbackTags {
 
 export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
   const [selectedTag, setSelectedTag] = useState<FeedbackTags | null>(null)
-
+  const [textValue, setTextValue] = useState('')
   const feedbackOptions = [
     { label: 'Question', value: FeedbackTags.QUESTION },
     { label: 'Issue', value: FeedbackTags.ISSUE },
@@ -42,10 +42,11 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
           ))}
         </div>
         <div className={classNames.textareaContainer}>
-          <TextArea />
+          <TextArea value={textValue} onChangeText={(e) => setTextValue(e.target.value)} placeholder="Tell us more" />
         </div>
         <Button
           variant="primary"
+          isDisabled={!textValue}
           leftIcon={{
             name: 'Send',
             iconProps: { size: 16 },
