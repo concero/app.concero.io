@@ -15,7 +15,7 @@ interface DesktopButtonProps {
 }
 
 export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover, toggleTheme, theme }) => {
-  const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(true)
+  const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
   const { isConnected } = useAccount()
 
   const handleHelpButtonClick = () => {
