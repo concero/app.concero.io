@@ -1,6 +1,7 @@
 import { useAccount } from 'wagmi'
 import { disconnect } from '@wagmi/core'
-import { MenuPopover } from '../../overlays/MenuPopover/MenuPopover'
+import { MenuPopover } from '../../../overlays/MenuPopover/MenuPopover'
+import classNames from './HeaderPopoverMenu.module.pcss'
 
 export function HeaderPopoverMenu() {
   const { address, isConnecting } = useAccount()
@@ -25,7 +26,7 @@ export function HeaderPopoverMenu() {
   ]
 
   return (
-    <div>
+    <div className={classNames.container}>
       <MenuPopover items={items} />
     </div>
   )

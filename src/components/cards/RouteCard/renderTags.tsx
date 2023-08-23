@@ -3,7 +3,7 @@ import { Tag } from '../../tags/Tag/Tag'
 import classNames from './RouteCard.module.pcss'
 import { Route } from '../../../api/lifi/types'
 import { capitalize, numberToFormatString, secondsConverter } from '../../../utils/formatting'
-import { Beacon } from '../../layout/Beacon'
+import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
 
 export const renderTags = (

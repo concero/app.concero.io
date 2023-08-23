@@ -25,7 +25,7 @@ const setStatus = (
         dispatch({ type: 'CANCELED' })
       } else if (transactionResponse.message === 'unknown error') {
         dispatch({ type: 'WRONG' })
-      } else if (transactionResponse.message === 'No Routes found') dispatch({ type: 'NO_ROUTE' })
+      } else if (transactionResponse.message === 'No routes found') dispatch({ type: 'NO_ROUTE' })
     } else if (transactionResponse.isOk) dispatch({ type: 'SUCCESS' })
   } else if (!from.amount || (from.amount && !routes.length)) {
     dispatch({ type: 'NO_AMOUNT' })

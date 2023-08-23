@@ -1,8 +1,10 @@
 import { JSX } from 'react/jsx-runtime'
-import { FC, ReactElement } from 'react'
+import { FC, ReactElement, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { BaseButton } from './BaseButton'
 import { Button } from '../../../buttons/Button/Button'
+import classNames from './WalletButton.module.pcss'
+import { FeedbackModal } from '../../../../modals/FeedbackModal/FeedbackModal'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface DesktopButtonProps {
@@ -13,10 +15,18 @@ interface DesktopButtonProps {
 }
 
 export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover, toggleTheme, theme }) => {
+  const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
   const { isConnected } = useAccount()
 
+  const handleHelpButtonClick = () => {
+    setIsFeedbackModalOpened((prev) => !prev)
+  }
+
   return (
-    <div>
+    <div className={classNames.container}>
+      <Button size="sm" className={classNames.helpButton} onClick={() => handleHelpButtonClick()}>
+        <p>Help us improve</p>
+      </Button>
       {isConnected ? <ButtonWithPopover onClick={open} /> : <BaseButton onClick={open} />}
       <Button
         size="sq-md"
@@ -27,6 +37,7 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover,
           iconProps: { size: 18 },
         }}
       />
+      <FeedbackModal show={isFeedbackModalOpened} setShow={setIsFeedbackModalOpened} />
     </div>
   )
 }
