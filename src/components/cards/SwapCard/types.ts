@@ -47,8 +47,12 @@ export type State = {
       id: string
       logoURI: string
       providers: {
-        lifi?: { key: string }
-        rango?: { key: string }
+        lifi?: {
+          key: string
+        }
+        rango?: {
+          key: string
+        }
       }
     }
     token: {
@@ -69,8 +73,12 @@ export type State = {
       id: string
       logoURI: string
       providers: {
-        lifi?: { key: string }
-        rango?: { key: string }
+        lifi?: {
+          key: string
+        }
+        rango?: {
+          key: string
+        }
       }
     }
     token: {
@@ -137,7 +145,10 @@ export type SetTypingTimeoutAction = {
 export type SetAmountAction = {
   type: 'SET_AMOUNT'
   direction: Direction
-  payload: { amount?: string; amount_usd?: number }
+  payload: {
+    amount?: string
+    amount_usd?: number
+  }
 }
 
 export type ResetAmountsAction = {
@@ -148,13 +159,20 @@ export type ResetAmountsAction = {
 export type SetChainAction = {
   type: 'SET_CHAIN'
   direction: Direction
-  payload: { name: string; symbol: string; id: number }
+  payload: {
+    name: string
+    symbol: string
+    id: number
+  }
 }
 
 export type SetTokenAction = {
   type: 'SET_TOKEN'
   direction: Direction
-  payload: { name: string; symbol: string }
+  payload: {
+    name: string
+    symbol: string
+  }
 }
 
 export type SetFromAmountAction = {
