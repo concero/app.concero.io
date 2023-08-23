@@ -93,6 +93,4 @@ export const getRoutes = async (from, to, swapDispatch) => {
       payload: false,
     })
   }
-
-  await Promise.all([handleFetchLifi, handleFetchRango])
 }
