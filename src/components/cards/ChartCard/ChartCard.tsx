@@ -3,7 +3,7 @@ import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
 import { Chart } from './Chart'
-import { Beacon } from '../../layout/Beacon'
+import { Beacon } from '../../layout/Beacon/Beacon'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
@@ -31,7 +31,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <Button
             variant="black"
             size="sm"
-            onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}
+            onClick={() =>
+              dispatch({
+                type: 'TOGGLE_MODAL_VISIBLE',
+                tokenType: 'base',
+              })
+            }
           >
             <CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
           </Button>
@@ -46,7 +51,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <SegmentedControl
             data={intervals}
             selectedItem={interval}
-            setSelectedItem={(item) => dispatch({ type: 'SET_INTERVAL', payload: item })}
+            setSelectedItem={(item) =>
+              dispatch({
+                type: 'SET_INTERVAL',
+                payload: item,
+              })
+            }
           />
         ) : null}
       </div>
@@ -71,11 +81,22 @@ export const ChartCard: FC<ChartCardProps> = () => {
       <EntityListModal
         title="Select token"
         show={token.base.modalVisible}
-        setShow={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}
+        setShow={() =>
+          dispatch({
+            type: 'TOGGLE_MODAL_VISIBLE',
+            tokenType: 'base',
+          })
+        }
         data={tokens[selection.swapCard.to.chain.id]}
         entitiesVisible={15}
         columns={columns}
-        onSelect={(token) => dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: token })}
+        onSelect={(token) =>
+          dispatch({
+            type: 'SET_TOKEN',
+            tokenType: 'base',
+            payload: token,
+          })
+        }
       />
     </div>
   )

@@ -1,7 +1,7 @@
 import { useWeb3Modal } from '@web3modal/react'
 import { FC, useContext } from 'react'
 import { WithPopover } from '../../../wrappers/WithPopover'
-import { HeaderPopoverMenu } from '../HeaderPopoverMenu'
+import { HeaderPopoverMenu } from '../HeaderPopoverMenu/HeaderPopoverMenu'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { ThemeContext } from '../../../../hooks/themeContext'
 import { MobileButton } from './MobileButton'

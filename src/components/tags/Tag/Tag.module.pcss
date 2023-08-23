@@ -32,6 +32,10 @@
     color: var(--color-green-main);
     background-color: var(--color-green-darkest);
     border: 1px solid var(--color-green-darker);
+
+    .title {
+        color: var(--color-green-main);
+    }
 }
 
 .grey {
@@ -41,7 +45,10 @@
 
 .main {
     background-color: var(--color-primary-main);
-    color: var(--color-primary-white);
+
+    .title {
+        color: var(--color-base-white);
+    }
 }
 
 .mainDarker {
@@ -66,4 +73,13 @@
 
 .transparent {
     background-color: none;
+}
+
+.secondary {
+    background-color: var(--color-grey-darkest);
+    border: 1px solid var(--color-grey-darker);
+
+    .title {
+        color: var(--color-grey-medium);
+    }
 }

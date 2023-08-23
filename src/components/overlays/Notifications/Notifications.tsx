@@ -3,21 +3,31 @@ import { animated, useTransition } from 'react-spring'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import classNames from './Notifications.module.pcss'
 import { Button } from '../../buttons/Button/Button'
-import { Beacon } from '../../layout/Beacon'
+import { Beacon } from '../../layout/Beacon/Beacon'
 
 export function Notifications() {
   const { notifications, removeNotification } = useContext(NotificationsContext)
 
   const transitions = useTransition(notifications, {
-    from: { opacity: 0, transform: 'translate3d(0,-40px,0)' },
-    enter: { opacity: 1, transform: 'translate3d(0,0px,0)' },
-    leave: { opacity: 0, transform: 'translate3d(0,-40px,0)' },
+    from: {
+      opacity: 0,
+      transform: 'translate3d(0,-40px,0)',
+    },
+    enter: {
+      opacity: 1,
+      transform: 'translate3d(0,0px,0)',
+    },
+    leave: {
+      opacity: 0,
+      transform: 'translate3d(0,-40px,0)',
+    },
     keys: (notification) => notification.id,
   })
 
   useEffect(() => {
     const timers = notifications.map(
-      (notification) => setTimeout(() => {
+      (notification) =>
+        setTimeout(() => {
           removeNotification(notification.id)
         }, 3500), // Change this to your preferred delay time in milliseconds
     )
@@ -36,7 +46,10 @@ export function Notifications() {
               <Button
                 variant="black"
                 onClick={() => removeNotification(item.id)}
-                leftIcon={{ name: 'X', iconProps: { size: 18 } }}
+                leftIcon={{
+                  name: 'X',
+                  iconProps: { size: 18 },
+                }}
               />
             </div>
             <p className="body1">{item.message}</p>

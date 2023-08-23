@@ -19,4 +19,4 @@ export const Navigator: FC<NavigatorProps> = ({}) => (
       </Routes>
     </AppScreen>
   </BrowserRouter>
-  )
+)

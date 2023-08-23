@@ -13,20 +13,36 @@ export interface TagProps {
   leftIcon?: IconComponentProps
   rightIcon?: IconComponentProps
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-  color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker' | 'recommended' | 'cheapest' | 'fastest' | 'transparent'
+  color:
+    | 'red'
+    | 'green'
+    | 'grey'
+    | 'main'
+    | 'mainDarker'
+    | 'recommended'
+    | 'cheapest'
+    | 'fastest'
+    | 'transparent'
+    | 'secondary'
   isLoading?: boolean
   children?: string | JSX.Element[] | JSX.Element
   size?: 'sn' | 'md' | 'lg'
+  title?: string
 }
 
-export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color, onClick }) => {
+export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color, onClick, title = null }) => {
   const sizeClass = size ? className[size] : className.xs
 
   return (
-    <div className={className.container} onClick={onClick ? onClick : null}>
+    <div
+      className={className.container}
+      onClick={onClick ? onClick : null}
+      style={onClick ? { cursor: 'pointer' } : null}
+    >
       <div className={`${className.tag}  ${sizeClass} ${className[color]}`}>
         {leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
         {children}
+        {title ? <p className={className.title}>{title}</p> : null}
         {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}
       </div>
     </div>

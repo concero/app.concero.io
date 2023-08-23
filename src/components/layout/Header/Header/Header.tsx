@@ -2,7 +2,7 @@ import { CSSProperties, FC, ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../../constants/routes'
-import { Logo } from '../../Logo'
+import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { WithTooltip } from '../../../wrappers/WithTooltip'
@@ -40,7 +40,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 
   function PortfolioLink() {
     return (
-      <div>
+      <div className={classNames.comingSoonContainer}>
         <Link className={classNames.comingSoon} to="#">
           Portfolio
         </Link>
@@ -54,7 +54,10 @@ export const Header: FC<HeaderProps> = ({ children }) => {
     )
   }
 
-  const PortfolioSoon = WithTooltip({ WrappedComponent: PortfolioLink, Tooltip: TooltipContent })
+  const PortfolioSoon = WithTooltip({
+    WrappedComponent: PortfolioLink,
+    Tooltip: TooltipContent,
+  })
 
   return (
     <header className={classNames.header}>
@@ -69,10 +72,6 @@ export const Header: FC<HeaderProps> = ({ children }) => {
               Exchange
             </Link>
             {PortfolioSoon}
-
-            {/* <Link className={classNames.comingSoon} to="#"> */}
-            {/*  Referral */}
-            {/* </Link> */}
           </ul>
         ) : null}
       </div>
