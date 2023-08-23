@@ -2,7 +2,7 @@ import { CSSProperties, FC, ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../../constants/routes'
-import { Logo } from '../../Logo'
+import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { WithTooltip } from '../../../wrappers/WithTooltip'
@@ -41,7 +41,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 
   function PortfolioLink() {
     return (
-      <div>
+      <div className="row">
         <Link className={classNames.comingSoon} to="#">
           Portfolio
         </Link>
