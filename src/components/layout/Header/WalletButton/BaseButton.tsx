@@ -22,7 +22,7 @@ export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
   }
   return (
     <Button
-      variant={isConnected ? 'subtle' : 'filled'}
+      variant={isConnected ? 'subtle' : 'primary'}
       rightIcon={
         isConnected
           ? {
