@@ -15,10 +15,8 @@ export interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children }) => {
-  const matchExchange = useMatch(routes.exchange)
-  const matchPortfolio = useMatch(routes.portfolio)
-
   const isDesktop = useMediaQuery('mobile')
+  const matchExchange = useMatch(routes.exchange)
 
   function TooltipContent() {
     return (
