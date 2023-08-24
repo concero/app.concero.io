@@ -29,8 +29,8 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
       <div className={classNames.cardHeader}>
         <div className={classNames.cardHeaderLeftSide}>
           {isDesktop ? <h4>Net value:</h4> : null}
-          <h3>{`$${numberToFormatString(Number(route.to.token.amount_usd), 2)}`}</h3>
-          <h3 className={classNames.subtitle}>{`${numberToFormatString(Number(route.to.token.amount), 2)} ${
+          <h3>{`$${numberToFormatString(Number(route.to.token.amount_usd), 2, true)}`}</h3>
+          <h3 className={classNames.subtitle}>{`${numberToFormatString(Number(route.to.token.amount), 2, true)} ${
             route.to.token.symbol
           }`}</h3>
         </div>

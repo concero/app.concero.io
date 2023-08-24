@@ -7,17 +7,16 @@ const getUpdatedTokenAmountUsd = (route) => {
 }
 
 const getUpdatedTokenAmount = (route) => {
-  return route.insurance.state === 'INSURED'
-    ? numberToFormatString(
-        parseFloat(route.to.token.amount) +
-          parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
-        2,
-      )
-    : numberToFormatString(
-        parseFloat(route.to.token.amount) -
-          parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
-        2,
-      )
+  const result =
+    route.insurance.state === 'INSURED'
+      ? parseFloat(route.to.token.amount) +
+        parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd)
+      : parseFloat(route.to.token.amount) -
+        parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd)
+
+  if (result <= 0) return '0'
+
+  return result
 }
 
 const getUpdatedGasUsd = (route) => {
