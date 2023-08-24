@@ -10,7 +10,6 @@ import { SelectionContext } from '../../../hooks/SelectionContext'
 import { SwapButton } from '../../buttons/SwapButton/SwapButton'
 import { handleSwap } from './swapExecution/handleSwap'
 import { InsuranceProvider } from './InsuranceContext'
-import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { useSwapCardEffects } from './SwapCardEffects'
 import { switchChain } from './switchChain'
 
@@ -18,8 +17,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const [{ from, to, balance, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
-  const { addNotification } = useContext(NotificationsContext)
-
   const typingTimeoutRef = useRef(null)
 
   const populateRoutes = (routes) => {
@@ -46,6 +43,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
     selectedRoute,
     typingTimeoutRef,
   })
+
+  const switchChainHook = () => {
+    switchChain(from.chain.id)
+  }
 
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>
@@ -77,7 +78,14 @@ export const SwapCard: FC<SwapCardProps> = () => {
           />
           <SwapButton
             onClick={() =>
-              handleSwap(swapDispatch, selectedRoute.originalRoute, switchChain, selectedRoute.provider, address, from)
+              handleSwap(
+                swapDispatch,
+                selectedRoute.originalRoute,
+                selectedRoute.provider,
+                address,
+                from,
+                switchChainHook,
+              )
             }
             from={from}
             to={to}

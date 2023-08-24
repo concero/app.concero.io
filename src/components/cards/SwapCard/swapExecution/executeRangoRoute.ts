@@ -7,11 +7,10 @@ import {
 } from '../../../../api/rango/prepareEvmTransaction'
 import { viemSigner } from '../../../../web3/ethers'
 import { addingDecimals } from '../../../../utils/formatting'
-import { switchChain } from '../../../../web3/switchChain'
 
 const getRangoSwapOptions = (route, address, from) => {
   const amount = addingDecimals(from.amount, from.token.decimals)
-  console.log('AMOUNT: ', amount, from.amount, from.token.decimals)
+
   return {
     from: {
       blockchain: route.from.blockchain,
@@ -34,11 +33,7 @@ const getRangoSwapOptions = (route, address, from) => {
 }
 
 export const executeRangoRoute = async (route, address, from) => {
-  await switchChain(from.chain.id)
-
   const swapOptions = getRangoSwapOptions(route, address, from)
-
-  console.log('SWAP OPTIONS: ', swapOptions)
 
   const response = await rangoClient.swap(swapOptions)
 
@@ -46,8 +41,6 @@ export const executeRangoRoute = async (route, address, from) => {
     const msg = `Error swapping, message: ${response.error}, status: ${response.resultType}`
     throw new Error(msg)
   }
-
-  console.log('RESPONSE: ', response)
 
   const evmTransaction = response.tx as EvmTransaction
 
