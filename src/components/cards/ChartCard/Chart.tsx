@@ -29,8 +29,10 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
     seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
     seriesRef.current.setData(data)
 
-    const secondSeries = chart.addAreaSeries(areaSeriesOptions(colors, theme))
-    if (secondData) secondSeries.setData(secondData)
+    if (secondData) {
+      const secondSeries = chart.addAreaSeries(areaSeriesOptions(colors, theme, 'secondLine'))
+      secondSeries.setData(secondData)
+    }
 
     tooltipRef.current = createTooltip()
     chartRef.current.appendChild(tooltipRef.current)
