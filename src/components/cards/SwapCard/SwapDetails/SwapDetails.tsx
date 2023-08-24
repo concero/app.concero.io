@@ -5,6 +5,7 @@ import { RouteButton } from './RouteButton'
 import { RateTag } from './RateTag'
 import { RouteCard } from '../../RouteCard/RouteCard'
 import { SwapDetailsProps } from '../types'
+import { numberToFormatString } from '../../../../utils/formatting'
 
 export const SwapDetails: FC<SwapDetailsProps> = ({
   selection,
@@ -19,7 +20,7 @@ export const SwapDetails: FC<SwapDetailsProps> = ({
     from: selection.to.amount ? 1 : 0,
     to:
       selection.to.amount && selection.from.amount
-        ? parseFloat(selection.to.amount / selection.from.amount).toFixed(2)
+        ? numberToFormatString(parseFloat(selection.to.amount / selection.from.amount), 2, true)
         : 0,
   }
 
