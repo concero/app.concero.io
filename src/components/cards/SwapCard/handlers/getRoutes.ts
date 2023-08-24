@@ -10,51 +10,30 @@ const populateRoutes = ({ routes, from, swapDispatch }) => {
         message: 'No routes found',
       },
     })
+  } else {
+    swapDispatch({
+      type: 'POPULATE_ROUTES',
+      payload: routes,
+      fromAmount: from.amount,
+    })
   }
-
-  swapDispatch({
-    type: 'POPULATE_ROUTES',
-    payload: routes,
-    fromAmount: from.amount,
-  })
-
-  swapDispatch({
-    type: 'SET_LOADING',
-    payload: false,
-  })
 }
 
-const handleFetchLifiRoutes = async ({ routes, swapDispatch, from, to }) => {
+const handleFetchLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
   try {
-    console.log('Fetching lifi routes')
-    const lifiRoutes = await fetchLifiRoutes({
-      from,
-      to,
-    })
+    const lifiRoutes = await fetchLifiRoutes({ from, to })
     routes.push(...lifiRoutes)
-    populateRoutes({
-      routes,
-      from,
-      swapDispatch,
-    })
+    populateRoutes({ routes, from, swapDispatch })
   } catch (error) {
     console.log(error)
   }
 }
 
-const handleFetchRangoRoutes = async ({ routes, swapDispatch, from, to }) => {
+const handleFetchRangoRoutes = async ({ routes, from, to, swapDispatch }) => {
   try {
-    console.log('Fetching rango routes')
-    const rangoRoute = await fetchRangoRoutes({
-      from,
-      to,
-    })
-    routes.push(...rangoRoute)
-    populateRoutes({
-      routes,
-      from,
-      swapDispatch,
-    })
+    const rangoRoutes = await fetchRangoRoutes({ from, to })
+    routes.push(...rangoRoutes)
+    populateRoutes({ routes, from, swapDispatch })
   } catch (error) {
     console.log(error)
   }
@@ -70,19 +49,23 @@ export const getRoutes = async (from, to, swapDispatch) => {
 
   const routes = []
 
-  // Helper to handle promise rejection
-  const handleRejection = async (promise) => {
-    try {
-      await promise
-    } catch (e) {
-      // Do nothing or log error
-    }
-  }
-
   await Promise.all([
-    handleRejection(handleFetchLifiRoutes({ routes, swapDispatch, from, to })),
-    handleRejection(handleFetchRangoRoutes({ routes, swapDispatch, from, to })),
+    handleFetchLifiRoutes({ routes, from, to, swapDispatch }),
+    handleFetchRangoRoutes({ routes, from, to, swapDispatch }),
   ])
 
-  populateRoutes({ routes, from, swapDispatch })
+  if (routes.length === 0) {
+    swapDispatch({
+      type: 'SET_RESPONSES',
+      payload: {
+        isOk: false,
+        message: 'No routes found',
+      },
+    })
+  }
+
+  swapDispatch({
+    type: 'SET_LOADING',
+    payload: false,
+  })
 }
