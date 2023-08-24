@@ -61,7 +61,7 @@ export const handleSwap = async (swapDispatch, originalRoute, switchChain, provi
     }
   } catch (e) {
     console.log('ERROR: ', e)
-    handleTransactionError(e, swapDispatch)
+    handleTransactionError(e, swapDispatch, provider)
   }
 
   swapDispatch({

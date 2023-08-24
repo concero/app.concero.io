@@ -2,10 +2,25 @@ import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
 
 const populateRoutes = ({ routes, from, swapDispatch }) => {
+  if (routes.length <= 0) {
+    swapDispatch({
+      type: 'SET_RESPONSES',
+      payload: {
+        isOk: false,
+        message: 'No routes found',
+      },
+    })
+  }
+
   swapDispatch({
     type: 'POPULATE_ROUTES',
     payload: routes,
     fromAmount: from.amount,
+  })
+
+  swapDispatch({
+    type: 'SET_LOADING',
+    payload: false,
   })
 }
 
@@ -52,45 +67,18 @@ export const getRoutes = async (from, to, swapDispatch) => {
   })
 
   const routes = []
-  let lifiRoutesFetched = false
-  let rangoRoutesFetched = false
 
-  const handleFetchLifi = handleFetchLifiRoutes({
+  handleFetchLifiRoutes({
     routes,
     swapDispatch,
     from,
     to,
-  }).finally(() => {
-    lifiRoutesFetched = true
-    checkCompletion()
   })
 
-  const handleFetchRango = handleFetchRangoRoutes({
+  handleFetchRangoRoutes({
     routes,
     swapDispatch,
     from,
     to,
-  }).finally(() => {
-    rangoRoutesFetched = true
-    checkCompletion()
   })
-
-  const checkCompletion = () => {
-    if (!lifiRoutesFetched || !rangoRoutesFetched) return
-
-    if (routes.length <= 0) {
-      swapDispatch({
-        type: 'SET_RESPONSES',
-        payload: {
-          isOk: false,
-          message: 'No routes found',
-        },
-      })
-    }
-
-    swapDispatch({
-      type: 'SET_LOADING',
-      payload: false,
-    })
-  }
 }
