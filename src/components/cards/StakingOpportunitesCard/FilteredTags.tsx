@@ -1,25 +1,27 @@
 import classNames from './StakingOpportunitiesCard.module.pcss'
-import { Tag } from '../../tags/Tag/Tag'
 import { colors } from '../../../constants/colors'
+import { Button } from '../../buttons/Button/Button'
 
 export const FilteredTags = () => {
   return (
     <div className={classNames.filteredTagsContainer}>
-      <Tag color={'main'} title={'All'} />
-      <Tag color={'secondary'} title={'My holdings'} />
-      <Tag
-        color={'secondary'}
-        title={'Chains: All'}
+      <Button variant={'primary'}>All</Button>
+      <Button variant={'subtle'}>My holdings</Button>
+      <Button
+        variant={'subtle'}
         rightIcon={{ name: 'ChevronDown', iconProps: { size: 13, color: colors.text.secondary } }}
-      />
-      <Tag color={'secondary'} title={'LP'} />
-      <Tag color={'secondary'} title={'Compound'} />
-      <Tag color={'secondary'} title={'Insurable'} />
-      <Tag
-        color={'secondary'}
-        title={'Sort: Recommended'}
+      >
+        Chains: All
+      </Button>
+      <Button variant={'subtle'}>LP</Button>
+      <Button variant={'subtle'}>Compound</Button>
+      <Button variant={'subtle'}>Insurable</Button>
+      <Button
+        variant={'subtle'}
         rightIcon={{ name: 'ChevronDown', iconProps: { size: 13, color: colors.text.secondary } }}
-      />
+      >
+        Sort: Recommended
+      </Button>
     </div>
   )
 }
