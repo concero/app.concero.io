@@ -26,6 +26,7 @@ const populateRoutes = ({ routes, from, swapDispatch }) => {
 
 const handleFetchLifiRoutes = async ({ routes, swapDispatch, from, to }) => {
   try {
+    console.log('Fetching lifi routes')
     const lifiRoutes = await fetchLifiRoutes({
       from,
       to,
@@ -43,6 +44,7 @@ const handleFetchLifiRoutes = async ({ routes, swapDispatch, from, to }) => {
 
 const handleFetchRangoRoutes = async ({ routes, swapDispatch, from, to }) => {
   try {
+    console.log('Fetching rango routes')
     const rangoRoute = await fetchRangoRoutes({
       from,
       to,
@@ -68,17 +70,19 @@ export const getRoutes = async (from, to, swapDispatch) => {
 
   const routes = []
 
-  handleFetchLifiRoutes({
-    routes,
-    swapDispatch,
-    from,
-    to,
-  })
+  // Helper to handle promise rejection
+  const handleRejection = async (promise) => {
+    try {
+      await promise
+    } catch (e) {
+      // Do nothing or log error
+    }
+  }
 
-  handleFetchRangoRoutes({
-    routes,
-    swapDispatch,
-    from,
-    to,
-  })
+  await Promise.all([
+    handleRejection(handleFetchLifiRoutes({ routes, swapDispatch, from, to })),
+    handleRejection(handleFetchRangoRoutes({ routes, swapDispatch, from, to })),
+  ])
+
+  populateRoutes({ routes, from, swapDispatch })
 }

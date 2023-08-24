@@ -1,6 +1,36 @@
 import { Dispatch, From, To } from './types'
 import { Route } from '../../../api/lifi/types'
 
+const handleTransactionResponse = (
+  transactionResponse: { isOk: boolean; message: string },
+  routes: Route[],
+  dispatch: Dispatch,
+) => {
+  if (!transactionResponse.isOk) {
+    switch (transactionResponse.message) {
+      case 'user rejected':
+        dispatch({ type: 'CANCELED' })
+        break
+      case 'unknown error':
+        dispatch({ type: 'WRONG' })
+        break
+      case 'No routes found':
+        if (!routes.length) {
+          dispatch({ type: 'NO_ROUTES' })
+        }
+        break
+      case 'Insufficient balance':
+        dispatch({ type: 'LOW_BALANCE' })
+        break
+      default:
+        dispatch({ type: 'SET_RESPONSE', payload: transactionResponse })
+        break
+    }
+  } else {
+    dispatch({ type: 'SUCCESS' })
+  }
+}
+
 export const setStatus = (
   from: From,
   to: To,
@@ -15,31 +45,26 @@ export const setStatus = (
   },
 ) => {
   if (isLoading) {
-    dispatch({ type: 'LOADING' })
-  } else if (!isConnected) {
-    dispatch({ type: 'DISCONNECTED' })
-  } else if (transactionResponse) {
-    if (!transactionResponse.isOk) {
-      if (transactionResponse.message === 'user rejected') {
-        dispatch({ type: 'CANCELED' })
-      } else if (transactionResponse.message === 'unknown error') {
-        dispatch({ type: 'WRONG' })
-      } else if (!routes.length && transactionResponse.message === 'No routes found') {
-        dispatch({ type: 'NO_ROUTES' })
-      } else if (transactionResponse.message === 'Insufficient balance') {
-        dispatch({ type: 'LOW_BALANCE' })
-      } else {
-        dispatch({
-          type: 'SET_RESPONSE',
-          payload: transactionResponse,
-        })
-      }
-    } else if (transactionResponse.isOk) dispatch({ type: 'SUCCESS' })
-  } else if (!from.amount || (from.amount && !routes.length)) {
-    dispatch({ type: 'NO_AMOUNT' })
-  } else if (balance && from.amount > parseFloat(balance)) {
-    dispatch({ type: 'LOW_BALANCE' })
-  } else if (from.amount && to.amount && routes.length) {
-    dispatch({ type: 'SWAP' })
+    return dispatch({ type: 'LOADING' })
+  }
+
+  if (!isConnected) {
+    return dispatch({ type: 'DISCONNECTED' })
+  }
+
+  if (transactionResponse) {
+    return handleTransactionResponse(transactionResponse, routes, dispatch)
+  }
+
+  if (!from.amount || (from.amount && !routes.length)) {
+    return dispatch({ type: 'NO_AMOUNT' })
+  }
+
+  if (balance && from.amount > parseFloat(balance)) {
+    return dispatch({ type: 'LOW_BALANCE' })
+  }
+
+  if (from.amount && to.amount && routes.length) {
+    return dispatch({ type: 'SWAP' })
   }
 }
