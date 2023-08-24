@@ -6,28 +6,25 @@ const handleTransactionResponse = (
   routes: Route[],
   dispatch: Dispatch,
 ) => {
-  console.log('transactionResponse', transactionResponse)
   if (!transactionResponse.isOk) {
     switch (transactionResponse.message) {
       case 'user rejected':
         dispatch({ type: 'CANCELED' })
-        return
+        break
       case 'unknown error':
         dispatch({ type: 'WRONG' })
-        return
+        break
       case 'No routes found':
         if (!routes.length) {
           dispatch({ type: 'NO_ROUTES' })
         }
-        return
+        break
       case 'Insufficient balance':
         dispatch({ type: 'LOW_BALANCE' })
-        return
+        break
       default:
-        dispatch({
-          type: 'SET_RESPONSE',
-          payload: transactionResponse,
-        })
+        dispatch({ type: 'SET_RESPONSE', payload: transactionResponse })
+        break
     }
   } else {
     dispatch({ type: 'SUCCESS' })
