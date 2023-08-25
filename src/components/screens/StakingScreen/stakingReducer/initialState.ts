@@ -66,6 +66,8 @@ const protocols = {
 export const initialState: InitialState = {
   filter: {
     search: '',
+    all: true,
+    my_holdings: false,
     types: ['staking', 'lp'],
     insurable: false,
     compound: false,

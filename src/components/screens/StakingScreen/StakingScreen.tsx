@@ -8,11 +8,17 @@ import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 
 export const StakingScreen = () => {
-  const [{ selectedVault, vaults, protocols }, dispatch] = useStakingReducer()
+  const [{ selectedVault, vaults, protocols, filter }, dispatch] = useStakingReducer()
 
   return (
     <div className={classNames.container}>
-      <StakingOpportunitiesCard vaults={vaults} selectedVault={selectedVault} protocols={protocols} />
+      <StakingOpportunitiesCard
+        vaults={vaults}
+        selectedVault={selectedVault}
+        protocols={protocols}
+        dispatch={dispatch}
+        filter={filter}
+      />
       <div className={classNames.stacksContainer}>
         <div className={classNames.mainCardStack}>
           <StakingHeaderCard vault={selectedVault} protocols={protocols} />

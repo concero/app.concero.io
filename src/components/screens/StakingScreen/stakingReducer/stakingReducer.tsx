@@ -5,8 +5,16 @@ const stakingReducer = (state, action) => {
   switch (action.type) {
     case 'SET_ROUTE':
       return { ...state, route: action.payload }
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          [action.payload.filter]: action.payload.value,
+        },
+      }
     default:
-      return state
+      throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 

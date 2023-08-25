@@ -7,6 +7,8 @@ export interface InitialState {
 
 export type Filter = {
   search: string
+  all: boolean
+  my_holdings: boolean
   types: string[]
   insurable: boolean
   compound: boolean
