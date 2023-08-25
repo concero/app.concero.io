@@ -1,6 +1,6 @@
 import { ColorType } from 'lightweight-charts'
 
-export const chartOptions = (colors, theme) => ({
+export const chartOptions = (colors) => ({
   layout: {
     background: {
       type: ColorType.Solid,

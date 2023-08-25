@@ -1,7 +1,7 @@
 import { numberToFormatString, unixTimeFormat } from '../../../utils/formatting'
 import classNames from '../../cards/ChartCard/ChartCard.module.pcss'
 
-export function isOutsideBounds(point, chartElement) {
+function isOutsideBounds(point, chartElement) {
   return point.x < 0 || point.x > chartElement.clientWidth || point.y < 0 || point.y > chartElement.clientHeight
 }
 
@@ -10,8 +10,12 @@ function getShiftedCoordinate(coordinate, maxCoordinate) {
   return Math.max(0, Math.min(maxCoordinate - 80, shiftedCoordinate))
 }
 
-function getCoordinateY(coordinate, maxCoordinate) {
-  return coordinate + 80 > maxCoordinate ? coordinate - 80 : Math.max(0, Math.min(maxCoordinate - 80, coordinate))
+function getCoordinateY(coordinate, maxCoordinate, tooltipHeight) {
+  const tooltipOffset = 40
+  if (coordinate + tooltipOffset + tooltipHeight > maxCoordinate) {
+    return coordinate - tooltipOffset - tooltipHeight
+  }
+  return Math.max(0, coordinate - tooltipOffset)
 }
 
 export function createTooltip() {
@@ -38,14 +42,15 @@ export function updateTooltip(param, newSeries, toolTip, chartElement) {
 <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
 <span style="font-weight: 500; color: var(--color-grey-light);">$${numberToFormatString(price, 5)}</span>
 <span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
-  
 </div>`
 
   const coordinate = newSeries.priceToCoordinate(price)
   if (coordinate === null) return
 
+  const tooltipHeight = toolTip.clientHeight
+
   const shiftedCoordinate = getShiftedCoordinate(param.point.x, chartElement.clientWidth)
-  const coordinateY = getCoordinateY(coordinate, chartElement.clientHeight)
+  const coordinateY = getCoordinateY(coordinate, chartElement.clientHeight, tooltipHeight)
   toolTip.style.left = `${shiftedCoordinate}px`
   toolTip.style.top = `${coordinateY}px`
 }

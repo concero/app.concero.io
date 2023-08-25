@@ -12,13 +12,14 @@ interface ChartProps {
 export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
   const chartRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement | null>(null)
+  const secondTooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
   const { colors, theme } = useContext(ThemeContext)
 
   useEffect(() => {
     if (!chartRef.current) return
 
-    const chart = createChart(chartRef.current, chartOptions(colors, theme))
+    const chart = createChart(chartRef.current, chartOptions(colors))
     chart.timeScale().fitContent()
 
     chart.timeScale().applyOptions({ borderColor: 'transparent' })
@@ -29,9 +30,11 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
     seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
     seriesRef.current.setData(data)
 
+    const secondSeries = chart.addAreaSeries(areaSeriesOptions(colors, theme, 'secondLine'))
     if (secondData) {
-      const secondSeries = chart.addAreaSeries(areaSeriesOptions(colors, theme, 'secondLine'))
       secondSeries.setData(secondData)
+      secondTooltipRef.current = createTooltip()
+      chartRef.current.appendChild(secondTooltipRef.current)
     }
 
     tooltipRef.current = createTooltip()
@@ -46,6 +49,7 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 
     chart.subscribeCrosshairMove((param) => {
       if (tooltipRef.current) updateTooltip(param, seriesRef.current, tooltipRef.current, chartRef.current)
+      if (secondTooltipRef.current) updateTooltip(param, secondSeries, secondTooltipRef.current, chartRef.current)
     })
 
     return () => {
@@ -54,6 +58,10 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
       if (tooltipRef.current) {
         tooltipRef.current.remove()
         tooltipRef.current = null
+      }
+      if (secondTooltipRef.current) {
+        secondTooltipRef.current.remove()
+        secondTooltipRef.current = null
       }
     }
   }, [colors, data, chartRef])
