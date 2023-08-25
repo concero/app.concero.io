@@ -1,15 +1,19 @@
 import { InitialState } from './types'
 
 export const initialState: InitialState = {
+  filter: {
+  search: '',
+  types: ['staking', 'lp'],
+  insurable: false,
+   compound: false,
+},
+sort: 'recommended',
   vaults: [
     {
       id: '',
       name: '',
       type: '',
-      protocol: {
-        name: '',
-        id: '',
-      },
+      protocol_id: '',
       total_apy: '',
       total_fees_usd: '',
       yields: [
@@ -30,7 +34,7 @@ export const initialState: InitialState = {
           fee_description: '',
         },
       ],
-      tags: [],
+      // tags: [],
       underlying_assets: [
         {
           chain_id: '',
@@ -49,7 +53,8 @@ export const initialState: InitialState = {
     },
   ],
 
-  protocol: {
+  protocols: {
+    'staking' : {
     id: '',
     name: '',
     description: '',
