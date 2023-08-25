@@ -42,9 +42,10 @@ export const chartOptions = (colors, theme) => ({
   handleScale: false,
 })
 
-export const areaSeriesOptions = (colors, theme, lineNumber) => {
+export const areaSeriesOptions = (colors, theme, lineNumber = null) => {
   const lineColor = lineNumber === 'secondLine' ? '#1B7BEA' : colors.primary.main
   const topColor = lineNumber === 'secondLine' ? '#042245' : colors.primary.darker
+  const dark = theme === 'dark'
 
   return {
     baseLineVisible: false,
@@ -52,7 +53,7 @@ export const areaSeriesOptions = (colors, theme, lineNumber) => {
     lineWidth: 1.8,
     strokeLinecap: 'round',
     topColor,
-    bottomColor: 'dark' ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)',
+    bottomColor: dark ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)',
     baseLineStyle: 1,
     lineColor,
   }

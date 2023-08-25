@@ -1,16 +1,16 @@
 import { numberToFormatString, unixTimeFormat } from '../../../utils/formatting'
-import classNames from './ChartCard.module.pcss'
+import classNames from '../../cards/ChartCard/ChartCard.module.pcss'
 
 export function isOutsideBounds(point, chartElement) {
   return point.x < 0 || point.x > chartElement.clientWidth || point.y < 0 || point.y > chartElement.clientHeight
 }
 
-export function getShiftedCoordinate(coordinate, maxCoordinate) {
+function getShiftedCoordinate(coordinate, maxCoordinate) {
   const shiftedCoordinate = coordinate - 50
   return Math.max(0, Math.min(maxCoordinate - 80, shiftedCoordinate))
 }
 
-export function getCoordinateY(coordinate, maxCoordinate) {
+function getCoordinateY(coordinate, maxCoordinate) {
   return coordinate + 80 > maxCoordinate ? coordinate - 80 : Math.max(0, Math.min(maxCoordinate - 80, coordinate))
 }
 

@@ -1,4 +1,4 @@
-import { Chart } from '../ChartCard/Chart'
+import { Chart } from '../../layout/Chart/Chart'
 import classNames from './StakingChartCard.module.pcss'
 import { data } from './data'
 import { secondData } from './secondData'
