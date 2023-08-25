@@ -98,7 +98,7 @@ export const secondsConverter = (seconds: number): string => {
 }
 
 export const numberToFormatString = (number: number, decimals = 4): string =>
-  parseFloat(number.toFixed(decimals)).toString()
+  parseFloat(number?.toFixed(decimals))?.toString()
 
 export const addingTokenDecimals = (amount: number, decimals: number): string => {
   return numberToFormatString(amount / Math.pow(10, decimals), 4)

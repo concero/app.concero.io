@@ -37,7 +37,7 @@ export function updateTooltip(param, newSeries, toolTip, chartElement) {
 
   toolTip.style.opacity = 1
   const data = param.seriesData.get(newSeries)
-  const price = data.value ?? data.close
+  const price = data?.value ?? data?.close
   toolTip.innerHTML = `
 <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
 <span style="font-weight: 500; color: var(--color-grey-light);">$${numberToFormatString(price, 5)}</span>
