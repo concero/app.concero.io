@@ -1,21 +1,27 @@
 export interface InitialState {
-  vaults: Vaults[] | []
-  protocol: Protocol
+  filter: Filter
+  vaults: Vault[] | []
+  selectedVault: Vaults | null
+  protocols: Protocol
 }
 
-type Vaults = {
+export type Filter = {
+  search: string
+  types: string[]
+  insurable: boolean
+  compound: boolean
+  sort: string
+}
+
+export type Vault = {
   id: string
   name: string
   type: 'staking' | 'lp' | 'alm' | 'dex' | 'lending' | ''
-  protocol: {
-    name: string
-    id: string
-  }
+  protocol_id: string
   total_apy: string
   total_fees_usd: string
   yields: Yields[]
   fees: Fees[]
-  tags: string[]
   underlying_assets: Yields[]
   min_deposit: string
   min_withdrawal: string
@@ -39,10 +45,12 @@ type Fees = {
   fee_description: string
 }
 
-type Protocol = {
-  id: string
-  name: string
-  description: string
-  logo_url: string
-  tvl_usd: string
+export type Protocol = {
+  [key: string]: {
+    id: string
+    name: string
+    description: string
+    logo_url: string
+    tvl_usd: string
+  }
 }

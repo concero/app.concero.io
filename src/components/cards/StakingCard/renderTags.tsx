@@ -1,23 +1,20 @@
 import { FC } from 'react'
-import Icon from '../../Icon'
-import classNames from './StakingCard.module.pcss'
-import { secondsConverter } from '../../../utils/formatting'
-import { colors } from '../../../constants/colors'
+import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 
 interface RenderTagsProps {
-  route: any
+  vault: Vault
   isSelected: boolean
 }
 
-export const renderTags: FC<RenderTagsProps> = ({ route, isSelected }) => {
+export const renderTags: FC<RenderTagsProps> = ({ vault, isSelected }) => {
   return (
     <>
-      <Icon name={'Lock'} className={`${classNames.icon} ${isSelected ? classNames.selectedText : ''}`} />
-      <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>
-        {secondsConverter(route.execution_duration_sec)}
-      </h5>
-      <Icon name={'Stack2'} className={`${classNames.icon} ${isSelected ? classNames.selectedText : ''}`} />
-      {route.insured ? <Icon name={'Shield'} className={classNames.icon} color={colors.green.main} /> : null}
+      {/* <Icon name={'Lock'} className={`${classNames.icon} ${isSelected ? classNames.selectedText : ''}`} /> */}
+      {/* <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}> */}
+      {/*   {secondsConverter(vault.execution_duration_sec)} */}
+      {/* </h5> */}
+      {/* <Icon name={'Stack2'} className={`${classNames.icon} ${isSelected ? classNames.selectedText : ''}`} /> */}
+      {/* {vault.insured ? <Icon name={'Shield'} className={classNames.icon} color={colors.green.main} /> : null} */}
     </>
   )
 }

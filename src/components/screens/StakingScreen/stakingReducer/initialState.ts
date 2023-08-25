@@ -1,64 +1,77 @@
 import { InitialState } from './types'
 
+const vaults = [
+  {
+    id: '1',
+    name: '',
+    type: '',
+    protocol_id: 'uniswap',
+    total_apy: '',
+    total_fees_usd: '',
+    yields: [
+      {
+        chain_id: '',
+        name: '',
+        symbol: '',
+        address: '',
+        decimals: 0,
+        logo: '',
+        apy: 0,
+      },
+    ],
+    fees: [
+      {
+        fee_bps: 0,
+        fee_type: '',
+        fee_description: '',
+      },
+    ],
+    underlying_assets: [
+      {
+        chain_id: '1',
+        name: 'Ethereum',
+        symbol: 'ETH',
+        address: '',
+        decimals: 0,
+        logo: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880',
+        apy: 0,
+      },
+      {
+        chain_id: '56',
+        name: 'POLIGON',
+        symbol: 'MATIC',
+        address: '',
+        decimals: 0,
+        logo: 'https://assets.coingecko.com/coins/images/4713/small/matic___polygon.jpg?1612939050',
+        apy: 0,
+      },
+    ],
+    min_deposit: '',
+    min_withdrawal: '',
+    max_withdrawal: '',
+    max_deposit: '',
+  },
+]
+
+const protocols = {
+  uniswap: {
+    id: 'uniswap',
+    name: 'Uniswap',
+    description: 'Uniswap is a protocol for automated token exchange on Ethereum.',
+    logo_url: 'https://assets.coingecko.com/coins/images/12504/small/uniswap-uni.png?1600306604',
+    tvl_usd: '1,000,000,000',
+  },
+}
+
 export const initialState: InitialState = {
   filter: {
-  search: '',
-  types: ['staking', 'lp'],
-  insurable: false,
-   compound: false,
-},
-sort: 'recommended',
-  vaults: [
-    {
-      id: '',
-      name: '',
-      type: '',
-      protocol_id: '',
-      total_apy: '',
-      total_fees_usd: '',
-      yields: [
-        {
-          chain_id: '',
-          name: '',
-          symbol: '',
-          address: '',
-          decimals: 0,
-          logo: '',
-          apy: 0,
-        },
-      ],
-      fees: [
-        {
-          fee_bps: 0,
-          fee_type: '',
-          fee_description: '',
-        },
-      ],
-      // tags: [],
-      underlying_assets: [
-        {
-          chain_id: '',
-          name: '',
-          symbol: '',
-          address: '',
-          decimals: 0,
-          logo: '',
-          apy: 0,
-        },
-      ],
-      min_deposit: '',
-      min_withdrawal: '',
-      max_withdrawal: '',
-      max_deposit: '',
-    },
-  ],
-
-  protocols: {
-    'staking' : {
-    id: '',
-    name: '',
-    description: '',
-    logo_url: '',
-    tvl_usd: '',
+    search: '',
+    types: ['staking', 'lp'],
+    insurable: false,
+    compound: false,
+    sort: 'recommended',
   },
+  vaults,
+  selectedVault: vaults[0],
+  protocols,
 }

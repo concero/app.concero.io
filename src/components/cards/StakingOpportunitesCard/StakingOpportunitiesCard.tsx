@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { FC } from 'react'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
-import { routes } from './routes'
+import { Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 
-export const StakingOpportunitiesCard = () => {
-  const [selectedRoute, setSelectedRoute] = useState(routes[0])
+interface StakingOpportunitiesProps {
+  selectedVault: Vault
+  vaults: Vault[]
+  protocols: Protocol
+}
 
-  const handleSelect = (id: string) => {
-    const route = routes.find((route) => route.id === id)
-    if (route) setSelectedRoute(route)
+export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ selectedVault, vaults, protocols }) => {
+  const handleSelect = (vault) => {
+    console.log('vault', vault)
   }
 
   return (
@@ -17,13 +20,14 @@ export const StakingOpportunitiesCard = () => {
       <h5 className={'cardHeaderTitle'}>Staking opportunities</h5>
       <FilteredTags />
       <div className={classNames.stakingCardsContainer}>
-        {routes.map((route) => {
+        {vaults.map((vault) => {
           return (
             <StakingCard
-              key={route.id}
-              isSelected={selectedRoute.id === route.id}
-              route={route}
+              key={vault.id}
+              isSelected={selectedVault.id === vault.id}
+              vault={vault}
               onClick={handleSelect}
+              protocols={protocols}
             />
           )
         })}

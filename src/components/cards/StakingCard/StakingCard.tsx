@@ -5,15 +5,18 @@ import { colors } from '../../../constants/colors'
 import { Button } from '../../buttons/Button/Button'
 import { StakeButtons } from './StakeButtons'
 import { renderTags } from './renderTags'
+import { Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 
 interface StakingCardProps {
   isSelected: boolean
-  route: any
+  vault: Vault
+  protocols: Protocol
   onClick: (id: string) => void
 }
 
-export const StakingCard: FC<StakingCardProps> = ({ isSelected, route, onClick }) => {
+export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols, onClick }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
+  const pairSymbol = `${vault.underlying_assets.map((asset) => asset.symbol).join('/')}`
 
   const handleChevronClick = (e) => {
     e.stopPropagation()
@@ -23,18 +26,16 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, route, onClick }
   return (
     <div
       className={`${classNames.container} ${isSelected ? classNames.selectedContainer : ''}`}
-      onClick={() => onClick(route.id)}
+      onClick={() => onClick(vault.id)}
     >
       <div className={classNames.headerContainer}>
         <div className={classNames.headerSideContainer}>
-          <Avatar src={route.dex.logoURI} size={'md'} />
-          <h5>{route.interest_rate}</h5>
-          <h5
-            className={`body1 ${isSelected ? classNames.selectedText : ''}`}
-          >{`${route.from.token.symbol}/${route.to.token.symbol}`}</h5>
+          <Avatar src={protocols[vault.protocol_id].logo_url} size="md" />
+          <h5>{`${vault.yields[0].apy}%`}</h5>
+          <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{pairSymbol}</h5>
         </div>
         <div className={classNames.headerSideContainer}>
-          {renderTags({ route, isSelected })}
+          {renderTags({ vault, isSelected })}
           <Button
             onClick={(e) => handleChevronClick(e)}
             variant={'black'}
