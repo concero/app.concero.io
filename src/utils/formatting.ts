@@ -98,10 +98,10 @@ export const secondsConverter = (seconds: number): string => {
 }
 
 export const numberToFormatString = (number: number, decimals = 4, isTransformNeeded = false): string => {
-  const result = parseFloat(number.toFixed(decimals))
+  const result = parseFloat(number?.toFixed(decimals))
   if (isTransformNeeded && result === 0) return '< 0.01'
 
-  return result.toString()
+  return result?.toString()
 }
 
 export const addingTokenDecimals = (amount: number, decimals: number): string => {
