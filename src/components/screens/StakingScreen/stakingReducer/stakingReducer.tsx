@@ -10,7 +10,7 @@ const stakingReducer = (state, action) => {
   }
 }
 
-export const useStakingReducer = () => {
+export const stakingReducer = () => {
   const [state, dispatch] = useReducer(stakingReducer, initialState)
 
   return [state, dispatch]
