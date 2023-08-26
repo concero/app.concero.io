@@ -103,3 +103,9 @@ export const numberToFormatString = (number: number, decimals = 4): string =>
 export const addingTokenDecimals = (amount: number, decimals: number): string => {
   return numberToFormatString(amount / Math.pow(10, decimals), 4)
 }
+
+export const timestampToLocalTime = (timestamp: number): number => {
+  const currentTime = new Date()
+  const timeZoneOffsetInSeconds = currentTime.getTimezoneOffset() * 60
+  return Number(timestamp) - timeZoneOffsetInSeconds
+}

@@ -22,7 +22,7 @@ export const StakingScreen = () => {
       <div className={classNames.stacksContainer}>
         <div className={classNames.mainCardStack}>
           <StakingHeaderCard vault={selectedVault} protocols={protocols} />
-          <StakingChartCard />
+          <StakingChartCard selectedVault={selectedVault} />
         </div>
         <div className={classNames.secondaryCardStack}>
           <StakingHighlightsCard />

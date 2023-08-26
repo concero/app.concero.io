@@ -1,14 +1,9 @@
 import { get } from '../client'
+import { timestampToLocalTime } from '../../utils/formatting'
 
 interface Item {
   time: number
   value: number
-}
-
-const toLocalTime = (timestamp: number): number => {
-  const currentTime = new Date()
-  const timeZoneOffsetInSeconds = currentTime.getTimezoneOffset() * 60
-  return Number(timestamp) - timeZoneOffsetInSeconds
 }
 
 const getPeriod = (interval) => {
@@ -73,7 +68,7 @@ export const fetchChartData = async (
 
   const result = response.data.coins[`coingecko:${tokenId}`].prices.reduce((acc: Item[], item: Item) => {
     acc.push({
-      time: toLocalTime(item.timestamp),
+      time: timestampToLocalTime(item.timestamp),
       value: item.price,
     })
     return acc
