@@ -8,10 +8,10 @@ const getPoolIdByTokensAddresses = (tokensAddresses: string[]): string | undefin
   })?.id
 }
 
-const standardizeItem = (item) => {
+const standardizeItem = (item, type) => {
   return {
     time: timestampToLocalTime(Date.parse(item.timestamp) / 1000),
-    value: item.apy,
+    value: item[type],
   }
 }
 
@@ -21,8 +21,8 @@ export const fetchTvlApyChartData = async (addresses: string[]) => {
   const response = await get(`https://yields.llama.fi/chart/${poolId}`)
   if (response.status !== 200) throw new Error('Error fetching data')
 
-  const apy = response.data.data.map((item) => standardizeItem(item))
-  const tvlUsd = response.data.data.map((item) => standardizeItem(item))
+  const apy = response.data.data.map((item) => standardizeItem(item, 'apy'))
+  const tvlUsd = response.data.data.map((item) => standardizeItem(item, 'tvlUsd'))
 
   return {
     apy,
