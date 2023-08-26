@@ -15,7 +15,7 @@ import { ThemeContext } from '../../../hooks/themeContext'
 import { useChartReducer } from './chartReducer'
 import { tokens } from '../../../constants/tokens'
 import { getCoingeckoTokenIdBySymbol } from '../../../api/coinGecko/getCoingeckoTokenIdBySymbol'
-import { fetchChartData } from '../../../api/coinGecko/fetchChartData'
+import { fetchChartData } from '../../../api/defilama/fetchChartData'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 
 export interface ChartCardProps {}
@@ -28,7 +28,10 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const isDesktop = useMediaQuery('mobile')
 
   const setData = (data: any[]) => {
-    dispatch({ type: 'SET_CHART_DATA', payload: data })
+    dispatch({
+      type: 'SET_CHART_DATA',
+      payload: data,
+    })
   }
 
   useEffect(() => {
