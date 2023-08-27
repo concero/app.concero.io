@@ -7,7 +7,7 @@ const getPoolIdByTokensAddresses = (tokensAddresses: string[]): string | undefin
   })?.id
 }
 
-export const fetchTvlApyChartData = async (addresses: string[]) => {
+export const fetchStakingChartData = async (addresses: string[]) => {
   const poolId = getPoolIdByTokensAddresses(addresses)
   if (!poolId) throw new Error('Pool not found')
   const response = await get(`https://yields.llama.fi/chart/${poolId}`)
