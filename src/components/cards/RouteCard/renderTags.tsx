@@ -70,7 +70,7 @@ export const renderTags = (
         <Tag
           color="transparent"
           leftIcon={{
-            name: 'GasStation',
+            name: 'PigMoney',
             iconProps: {
               size: 20,
               color: getIconColor(),

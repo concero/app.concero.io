@@ -2,39 +2,8 @@ import { FC, useEffect } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { useButtonReducer } from './buttonReducer'
-import { Route } from '../../../api/lifi/types'
-import { Dispatch, From, SwapButtonProps, To } from './types'
-
-const setStatus = (
-  from: From,
-  to: To,
-  isConnected: boolean,
-  isLoading: boolean,
-  dispatch: Dispatch,
-  routes: Route[],
-  balance: string,
-  transactionResponse: any[],
-) => {
-  if (isLoading) {
-    dispatch({ type: 'LOADING' })
-  } else if (!isConnected) {
-    dispatch({ type: 'DISCONNECTED' })
-  } else if (transactionResponse) {
-    if (!transactionResponse.isOk) {
-      if (transactionResponse.message === 'user rejected') {
-        dispatch({ type: 'CANCELED' })
-      } else if (transactionResponse.message === 'unknown error') {
-        dispatch({ type: 'WRONG' })
-      } else if (transactionResponse.message === 'No routes found') dispatch({ type: 'NO_ROUTE' })
-    } else if (transactionResponse.isOk) dispatch({ type: 'SUCCESS' })
-  } else if (!from.amount || (from.amount && !routes.length)) {
-    dispatch({ type: 'NO_AMOUNT' })
-  } else if (balance && from.amount > parseFloat(balance)) {
-    dispatch({ type: 'LOW_BALANCE' })
-  } else if (from.amount && to.amount && routes.length) {
-    dispatch({ type: 'SWAP' })
-  }
-}
+import { SwapButtonProps } from './types'
+import { setStatus } from './setStatus'
 
 export const SwapButton: FC<SwapButtonProps> = ({
   from,

@@ -38,7 +38,7 @@ export const standardizeRangoRoutes = (rangoResponse) => {
     steps: [...route.path.map((step, index) => getRangoRouteStep(step, index))],
     cost: {
       total_usd: null,
-      total_gas_usd: null,
+      total_gas_usd: numberToFormatString(route.feeUsd, 2),
     },
     tags: [],
     slippage_percent: null,

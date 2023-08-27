@@ -21,6 +21,7 @@ export interface Selection {
 export interface Token {
   name: string
   symbol: string
+  logoURI: string
 }
 
 export interface Chain {
