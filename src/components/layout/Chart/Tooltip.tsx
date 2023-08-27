@@ -18,7 +18,7 @@ function getCoordinateY(coordinate, maxCoordinate, tooltipHeight) {
   return Math.max(0, coordinate - tooltipOffset)
 }
 
-export function createTooltip(symbol = '$') {
+export function createTooltip() {
   const toolTip = document.createElement('div')
   toolTip.className = classNames.tooltip
   toolTip.style = `
@@ -35,9 +35,11 @@ export function updateTooltip(param, newSeries, toolTip, chartElement, symbol) {
     return
   }
 
-  toolTip.style.opacity = 1
   const data = param.seriesData.get(newSeries)
   const price = data?.value ?? data?.close
+  if (price === undefined || price === null) return
+
+  toolTip.style.opacity = 1
   toolTip.innerHTML = `
 <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
 <span style="font-weight: 500; color: var(--color-grey-light);">${symbol}${numberToFormatString(price, 4)}</span>
