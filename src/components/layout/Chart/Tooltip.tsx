@@ -39,10 +39,11 @@ export function updateTooltip(param, newSeries, toolTip, chartElement, symbol) {
   const price = data?.value ?? data?.close
   if (price === undefined || price === null) return
 
+  const value = `${symbol === '$' ? symbol : ''}${numberToFormatString(price, 4)}${symbol !== '$' ? symbol : ''}`
   toolTip.style.opacity = 1
   toolTip.innerHTML = `
 <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
-<span style="font-weight: 500; color: var(--color-grey-light);">${symbol}${numberToFormatString(price, 4)}</span>
+<span style="font-weight: 500; color: var(--color-grey-light);">${value}</span>
 <span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
 </div>`
 
