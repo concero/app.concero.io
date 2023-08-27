@@ -30,8 +30,13 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
     seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
     seriesRef.current.setData(data)
 
-    const secondSeries = chart.addAreaSeries(areaSeriesOptions(colors, theme, 'secondLine'))
+    let secondSeries = null
+
     if (secondData) {
+      secondSeries = chart.addAreaSeries({
+        priceScaleId: 'secondPriceScale',
+        ...areaSeriesOptions(colors, theme, 'secondLine'),
+      })
       secondSeries.setData(secondData)
       secondTooltipRef.current = createTooltip()
       chartRef.current.appendChild(secondTooltipRef.current)
@@ -48,8 +53,8 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
     window.addEventListener('resize', handleResize)
 
     chart.subscribeCrosshairMove((param) => {
-      if (tooltipRef.current) updateTooltip(param, seriesRef.current, tooltipRef.current, chartRef.current)
-      if (secondTooltipRef.current) updateTooltip(param, secondSeries, secondTooltipRef.current, chartRef.current)
+      if (secondTooltipRef.current) updateTooltip(param, secondSeries, secondTooltipRef.current, chartRef.current, '%')
+      if (tooltipRef.current) updateTooltip(param, seriesRef.current, tooltipRef.current, chartRef.current, '$')
     })
 
     return () => {

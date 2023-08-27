@@ -1,12 +1,11 @@
 import { fetchTvlApyChartData } from '../../../api/defilama/fetchTvlApy'
 
-export const getChartData = async ({ selectedVault, setData }) => {
+export const fetchData = async ({ selectedVault, setResponse }) => {
   const addresses = selectedVault.underlying_assets.map((asset) => asset.address)
 
   try {
     const response = await fetchTvlApyChartData(addresses)
-    console.log(response)
-    setData(response)
+    setResponse(response)
   } catch (e) {
     console.log(e)
   }

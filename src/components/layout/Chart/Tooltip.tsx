@@ -18,7 +18,7 @@ function getCoordinateY(coordinate, maxCoordinate, tooltipHeight) {
   return Math.max(0, coordinate - tooltipOffset)
 }
 
-export function createTooltip() {
+export function createTooltip(symbol = '$') {
   const toolTip = document.createElement('div')
   toolTip.className = classNames.tooltip
   toolTip.style = `
@@ -29,7 +29,7 @@ export function createTooltip() {
   return toolTip
 }
 
-export function updateTooltip(param, newSeries, toolTip, chartElement) {
+export function updateTooltip(param, newSeries, toolTip, chartElement, symbol) {
   if (!param.point || !param.time || isOutsideBounds(param.point, chartElement)) {
     toolTip.style.opacity = 0
     return
@@ -40,7 +40,7 @@ export function updateTooltip(param, newSeries, toolTip, chartElement) {
   const price = data?.value ?? data?.close
   toolTip.innerHTML = `
 <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
-<span style="font-weight: 500; color: var(--color-grey-light);">$${numberToFormatString(price, 5)}</span>
+<span style="font-weight: 500; color: var(--color-grey-light);">${symbol}${numberToFormatString(price, 4)}</span>
 <span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
 </div>`
 

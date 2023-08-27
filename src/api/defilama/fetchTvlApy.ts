@@ -1,6 +1,5 @@
 import { pools } from '../../constants/pools'
 import { get } from '../client'
-import { timestampToLocalTime } from '../../utils/formatting'
 
 const getPoolIdByTokensAddresses = (tokensAddresses: string[]): string | undefined => {
   return pools.find((p) => {
@@ -8,24 +7,10 @@ const getPoolIdByTokensAddresses = (tokensAddresses: string[]): string | undefin
   })?.id
 }
 
-const standardizeItem = (item, type) => {
-  return {
-    time: timestampToLocalTime(Date.parse(item.timestamp) / 1000),
-    value: item[type],
-  }
-}
-
 export const fetchTvlApyChartData = async (addresses: string[]) => {
   const poolId = getPoolIdByTokensAddresses(addresses)
   if (!poolId) throw new Error('Pool not found')
   const response = await get(`https://yields.llama.fi/chart/${poolId}`)
   if (response.status !== 200) throw new Error('Error fetching data')
-
-  const apy = response.data.data.map((item) => standardizeItem(item, 'apy'))
-  const tvlUsd = response.data.data.map((item) => standardizeItem(item, 'tvlUsd'))
-
-  return {
-    apy,
-    tvlUsd,
-  }
+  return response
 }
