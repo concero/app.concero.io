@@ -13,6 +13,7 @@ export type Filter = {
   insurable: boolean
   compound: boolean
   sort: string
+  chains: string[]
 }
 
 export type Vault = {

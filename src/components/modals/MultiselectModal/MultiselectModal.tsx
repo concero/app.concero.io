@@ -4,17 +4,15 @@ import { Button } from '../../buttons/Button/Button'
 import classNames from './MultiselectModal.module.pcss'
 import { MultiSelectModalProps } from './types'
 import { TextInput } from '../../input/TextInput'
-import { handleSelect } from './handlers'
 
 export const MultiselectModal: FC<MultiSelectModalProps> = ({
   isOpen,
   setIsOpen,
-  type,
   items,
   title,
   RowComponent,
-  selectedItemsIds,
-  setSelectedItemsIds,
+  selectedItems,
+  onSelect,
 }) => {
   return (
     <Modal show={isOpen} setShow={setIsOpen} title={title}>
@@ -24,13 +22,9 @@ export const MultiselectModal: FC<MultiSelectModalProps> = ({
         </div>
         <div className={classNames.itemsContainer}>
           {items.map((item) => {
-            const isSelected = selectedItemsIds.includes(item.id)
+            const isSelected = selectedItems.includes(item)
             return (
-              <Button
-                key={item.id}
-                variant={isSelected ? 'filled' : 'black'}
-                onClick={() => handleSelect(item, type, setSelectedItemsIds)}
-              >
+              <Button key={item.id} variant={isSelected ? 'filled' : 'black'} onClick={() => onSelect(item)}>
                 <RowComponent item={item} isSelected={isSelected} />
               </Button>
             )

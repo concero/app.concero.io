@@ -72,6 +72,7 @@ export const initialState: InitialState = {
     insurable: false,
     compound: false,
     sort: 'recommended',
+    chains: [],
   },
   vaults,
   selectedVault: vaults[0],

@@ -11,7 +11,7 @@ export interface MultiSelectModalProps {
   items: any[]
   title: string
   RowComponent: FC<RowsComponentProps>
-  selectedItemsIds: string[]
-  setSelectedItemsIds: (key: any) => void
+  selectedItems: any[]
+  onSelect: (item: any) => void
   type: 'multiselect' | 'singleselect'
 }

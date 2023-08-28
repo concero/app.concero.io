@@ -4,7 +4,7 @@ import { colors } from '../../../../constants/colors'
 import { Button } from '../../../buttons/Button/Button'
 import { Filter } from '../../../screens/StakingScreen/stakingReducer/types'
 import { MultiselectModal } from '../../../modals/MultiselectModal/MultiselectModal'
-import { chains } from '../../../../constants/chains'
+import { chains as Chains } from '../../../../constants/chains'
 import { ChainSelectionRow } from './ChainSelectionRow'
 
 interface FilteredTagsProps {
@@ -12,10 +12,16 @@ interface FilteredTagsProps {
   filter: Filter
 }
 
+const getChainTitle = (chains) => {
+  if (chains.length === 0) return 'All'
+  if (chains.length === 1) return chains[0].name
+  if (chains.length > 1) return chains.length
+}
+
 export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, filter }) => {
   const [isChainsModalOpened, setIsChainsModalOpened] = useState(false)
-  const [selectedItemsIds, setSelectedItemsIds] = useState<string[]>([])
-  const { all, my_holdings, compound } = filter
+  const [selectedItems, setSelectedItems] = useState<any[]>([])
+  const { all, my_holdings, compound, chains } = filter
 
   const handleClick = (filterKey, value) => {
     dispatch({
@@ -29,6 +35,24 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, filter }) => {
 
   const getSelectedStyle = (isSelected: boolean) => {
     return isSelected ? 'primary' : 'subtle'
+  }
+
+  const handleSelectChains = (item) => {
+    let value = []
+
+    if (chains.includes(item)) {
+      value = chains.filter((chain) => chain !== item)
+    } else {
+      value = [...chains, ...[item]]
+    }
+
+    dispatch({
+      type: 'SET_FILTER',
+      payload: {
+        filter: 'chains',
+        value,
+      },
+    })
   }
 
   return (
@@ -45,7 +69,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, filter }) => {
       </Button>
       <Button
         size={'sm'}
-        variant={'subtle'}
+        variant={getChainTitle(chains) === 'All' ? 'subtle' : 'primary'}
         rightIcon={{
           name: 'ChevronDown',
           iconProps: {
@@ -55,7 +79,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, filter }) => {
         }}
         onClick={() => setIsChainsModalOpened(true)}
       >
-        Chains: All
+        {`Chains: ${getChainTitle(chains)}`}
       </Button>
       <Button size={'sm'} variant={'subtle'}>
         LP
@@ -82,11 +106,11 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, filter }) => {
       <MultiselectModal
         isOpen={isChainsModalOpened}
         setIsOpen={setIsChainsModalOpened}
-        items={chains}
+        items={Chains}
         title="Select chain"
         RowComponent={ChainSelectionRow}
-        selectedItemsIds={selectedItemsIds}
-        setSelectedItemsIds={setSelectedItemsIds}
+        selectedItems={chains}
+        onSelect={handleSelectChains}
         type="multiselect"
       />
     </div>
