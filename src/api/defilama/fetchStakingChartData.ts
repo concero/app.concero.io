@@ -2,9 +2,11 @@ import { pools } from '../../constants/pools'
 import { get } from '../client'
 
 const getPoolIdByTokensAddresses = (tokensAddresses: string[]): string | undefined => {
-  return pools.find((p) => {
+  const pool = pools.find((p) => {
     return p.underlyingTokens?.some((address) => tokensAddresses.includes(address))
-  })?.id
+  })
+
+  return pool?.id
 }
 
 export const fetchStakingChartData = async (addresses: string[]) => {
