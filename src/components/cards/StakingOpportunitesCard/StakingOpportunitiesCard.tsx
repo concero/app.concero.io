@@ -1,6 +1,6 @@
 import { Dispatch, FC } from 'react'
 import classNames from './StakingOpportunitiesCard.module.pcss'
-import { FilteredTags } from './FilteredTags'
+import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
 import { Filter, Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 

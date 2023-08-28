@@ -65,7 +65,9 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) =
           ))}
         </div>
       </div>
-      <Chart data={data.main} secondData={data.secondary} />
+      <div className={classNames.chartContainer}>
+        <Chart data={data.main} secondData={data.secondary} />
+      </div>
     </div>
   )
 }
