@@ -12,13 +12,12 @@ import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
 import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
-import { handleAmountChange, handleAreaClick, handleMappedTokens } from './handlers'
+import { handleAmountChange, handleAreaClick } from './handlers'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, balance = null }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
-  const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const inputRef = useRef()
 
@@ -55,7 +54,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
 
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken()
-    setMappedTokens(tokens[selection.chain.id].slice(0, 50))
   }, [selection.chain, selection.token])
 
   useEffect(() => {
@@ -137,17 +135,10 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
       <EntityListModal
         title="Select token"
         data={tokens[selection.chain.id]}
-        visibleData={mappedTokens}
         columns={TokenColumns}
         show={showTokensModal}
         setShow={setShowTokensModal}
         onSelect={(token) => setToken(token)}
-        onEndReached={() =>
-          handleMappedTokens({
-            selection,
-            setMappedTokens,
-          })
-        }
         animate={false}
       />
     </>

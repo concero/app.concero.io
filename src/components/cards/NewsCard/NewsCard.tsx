@@ -17,8 +17,7 @@ interface NewsCardProps {}
 export const NewsCard: FC<NewsCardProps> = () => {
   const { selection } = useContext(SelectionContext)
   const { addNotification } = useContext(NotificationsContext)
-  const [{ data, isLoading, timestamp, isModalVisible, selectedToken, mappedTokens }, dispatch] =
-    useNewsReducer(selection)
+  const [{ data, isLoading, timestamp, isModalVisible, selectedToken }, dispatch] = useNewsReducer(selection)
 
   useEffect(() => {
     if (!selectedToken) return
@@ -83,15 +82,8 @@ export const NewsCard: FC<NewsCardProps> = () => {
           })
         }
         data={tokens['1']}
-        visibleData={mappedTokens}
         columns={modalColumns}
         onSelect={(token) => handleSelectToken(token)}
-        onEndReached={() =>
-          dispatch({
-            type: 'ADD_MAPPED_TOKENS',
-            payload: tokens['1'].slice(mappedTokens.length, mappedTokens.length + 50),
-          })
-        }
       />
     </div>
   )

@@ -748,15 +748,4 @@ export const chains = [
       },
     },
   },
-  {
-    id: 'columbus-5',
-    name: 'TERRA_CLASSIC',
-    symbol: 'TERRA_CLASSIC',
-    logoURI: 'https://api.rango.exchange/blockchains/terraclassic.svg',
-    providers: {
-      rango: {
-        key: 'TERRA_CLASSIC',
-      },
-    },
-  },
 ]

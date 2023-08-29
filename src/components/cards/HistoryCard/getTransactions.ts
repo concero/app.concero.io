@@ -14,12 +14,7 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
     setIsLoading(false)
     const transactions = res.data.data.ethereum.dexTrades
 
-    // if historyItems not empty, append , else set
-    // if (historyItems.length > 0) {
-    //   appendTransactions(setHistoryItems, transactions)
-    // } else {
     setTransactions(setHistoryItems, transactions)
-    // }
   }
 
   function on_err(err) {
@@ -42,9 +37,7 @@ export async function getTransactions(selection, historyItems, setHistoryItems, 
   if (quoteCurrency === nullAddress) {
     quoteCurrency = tokens[selection.from.chain.id][1].address
   }
-  // console.log('baseCurrency ', baseCurrency)
-  // console.log('quoteCurrency ', quoteCurrency)
-  // console.log('network ', network)
+
   setIsLoading(true)
   const { res, ok, err } = await getDexTrades({
     network,
