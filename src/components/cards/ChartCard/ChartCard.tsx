@@ -14,6 +14,7 @@ import { SelectionContext } from '../../../hooks/SelectionContext'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { useChartReducer } from './chartReducer'
 import { tokens } from '../../../constants/tokens'
+import { Card } from '../Card/Card'
 
 export interface ChartCardProps {}
 
@@ -24,7 +25,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const isDesktop = useMediaQuery('mobile')
 
   return (
-    <div className={`card ${classNames.container}`}>
+    <Card className={classNames.container}>
       <div className={classNames.headerContainer}>
         <div className={classNames.selectChainContainer}>
           <h5>Chart</h5>
@@ -98,6 +99,6 @@ export const ChartCard: FC<ChartCardProps> = () => {
           })
         }
       />
-    </div>
+    </Card>
   )
 }
