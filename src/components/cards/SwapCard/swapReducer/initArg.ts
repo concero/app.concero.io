@@ -54,7 +54,7 @@ export const initArg = {
     amount_usd: 0.0,
     address: '',
   },
-  balance: '0',
+  balance: null,
   routes: [],
   isLoading: false,
   selectedRoute: null,
