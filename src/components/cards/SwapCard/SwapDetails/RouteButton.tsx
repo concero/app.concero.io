@@ -34,7 +34,7 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       <Avatars entities={selectedRoute?.steps} />
       {selectedRoute?.cost.total_gas_usd ? (
         <div className={classNames.routeInfoContainer}>
-          <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
+          <Icon name="PigMoney" size="0.85rem" color={colors.text.secondary} />
           <p className={'body1'}>{`$${selectedRoute.cost.total_gas_usd}`}</p>
         </div>
       ) : null}

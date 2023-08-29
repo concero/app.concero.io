@@ -18,7 +18,7 @@ function AdditionalInfoTag({
   return (
     <div className={classNames.additionalInfoTag}>
       <Icon
-        name={type === 'time' ? 'Clock' : 'GasStation'}
+        name={type === 'time' ? 'Clock' : 'PigMoney'}
         size="1rem"
         color={isBestRoute ? colors.primary.light : colors.grey.medium}
       />

@@ -5,11 +5,11 @@ interface CardProps {
   children: ReactNode
   className?: string
   onClick?: () => void
-  isOK?: boolean
+  isOk?: boolean
   setIsOk?: (value: boolean) => void
 }
 
-export const Card: FC<CardProps> = ({ children, className = '', onClick = null, isOk, setIsOk }) => {
+export const Card: FC<CardProps> = ({ children, className = '', onClick = null, isOk = true, setIsOk }) => {
   return (
     <div className={`card ${className}`} onClick={onClick && onClick}>
       {isOk ? children : <ErrorCard setIsOk={setIsOk} />}
