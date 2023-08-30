@@ -24,7 +24,7 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover,
 
   return (
     <div className={classNames.container}>
-      <Button size="sm" className={classNames.helpButton} onClick={() => handleHelpButtonClick()}>
+      <Button variant="subtle" size="sm" className={classNames.helpButton} onClick={() => handleHelpButtonClick()}>
         <p>Help us improve</p>
       </Button>
       {isConnected ? <ButtonWithPopover onClick={open} /> : <BaseButton onClick={open} />}

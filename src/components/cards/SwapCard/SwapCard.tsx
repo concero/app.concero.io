@@ -19,6 +19,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const [{ from, to, balance, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
   const typingTimeoutRef = useRef(null)
+
   const populateRoutes = (routes) => {
     swapDispatch({
       type: 'POPULATE_ROUTES',
@@ -53,13 +54,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
       <Card className={classNames.container}>
         <CardHeader title="Swap" />
         <div className={classNames.swapContainer}>
-          <TokenArea
-            direction="from"
-            selection={from}
-            oppositeSelection={to}
-            dispatch={swapDispatch}
-            balance={balance}
-          />
+          <TokenArea direction="from" selection={from} dispatch={swapDispatch} balance={balance} />
           <TokenArea direction="to" selection={to} dispatch={swapDispatch} />
           <SwapDetails
             selection={{

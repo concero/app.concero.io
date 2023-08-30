@@ -8,6 +8,9 @@ export async function getTransactions(selection, state, dispatch, tokens) {
     if (state.error) dispatch({ type: 'SET_ERROR', payload: null })
     const transactions = res.data.data.ethereum.dexTrades
     dispatch({ type: 'SET_ITEMS', payload: transactions })
+    if (transactions.length === 0) {
+      dispatch({ type: 'SET_ERROR', payload: 'empty' })
+    }
   }
 
   function on_err(err) {
@@ -35,6 +38,7 @@ export async function getTransactions(selection, state, dispatch, tokens) {
     quoteCurrency,
   })
   dispatch({ type: 'SET_LOADING', payload: false })
+
   if (ok) on_ok(res)
   if (err) on_err(err)
 }

@@ -17,7 +17,6 @@ interface HistoryCardProps {}
 export const HistoryCard: FC<HistoryCardProps> = () => {
   const { selection } = useContext(SelectionContext)
   const [state, dispatch] = useHistoryReducer(selection)
-
   const fetchTransactions = () => {
     if (!selection.historyCard.from.token.symbol || !selection.historyCard.to.token.symbol) return
     getTransactions(selection.swapCard, state, dispatch, tokens)
