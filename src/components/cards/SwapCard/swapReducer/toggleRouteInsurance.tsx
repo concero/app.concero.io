@@ -1,4 +1,4 @@
-import { numberToFormatString } from '../../../../utils/formatting'
+import { numberToFormatString, roundNumberByDecimals } from '../../../../utils/formatting'
 
 const getUpdatedTokenAmountUsd = (route) => {
   return route.insurance.state === 'INSURED'
@@ -19,7 +19,7 @@ const getUpdatedTokenAmount = (route) => {
 
   if (result <= 0) return '0'
 
-  return result
+  return roundNumberByDecimals(result)
 }
 
 const getUpdatedGasUsd = (route) => {

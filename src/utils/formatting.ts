@@ -104,6 +104,14 @@ export const numberToFormatString = (number: number, decimals = 4, isTransformNe
   return result?.toString()
 }
 
+export const roundNumberByDecimals = (number: number, decimals = 4): number => {
+  const decimalPart = number.toString().split('.')[1]
+  let count = 0
+  if (decimalPart) while (decimalPart[count] === '0') count++
+  const factor = Math.max(count, decimals)
+  return parseFloat(number?.toFixed(factor))
+}
+
 export const addingTokenDecimals = (amount: number, decimals: number): string => {
   return numberToFormatString(amount / Math.pow(10, decimals), 4)
 }
