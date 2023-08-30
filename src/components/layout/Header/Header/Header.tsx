@@ -6,10 +6,10 @@ import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { WithTooltip } from '../../../wrappers/WithTooltip'
-import { Button } from '../../../buttons/Button/Button'
-import { colors } from '../../../../constants/colors'
+import { TooltipContent } from './TooltipContent'
+import { PortfolioLink } from './PortfolioLink'
 
-export interface HeaderProps {
+interface HeaderProps {
   style?: CSSProperties
   children?: ReactNode
 }
@@ -17,40 +17,6 @@ export interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children }) => {
   const isDesktop = useMediaQuery('mobile')
   const matchExchange = useMatch(routes.exchange)
-
-  function TooltipContent() {
-    return (
-      <Button
-        variant="subtle"
-        size="lg"
-        leftIcon={{
-          name: 'Settings',
-          iconProps: {
-            color: colors.text.secondary,
-            size: 18,
-          },
-        }}
-      >
-        Coming Soon
-      </Button>
-    )
-  }
-
-  function PortfolioLink() {
-    return (
-      <div className={classNames.comingSoonContainer}>
-        <Link className={classNames.comingSoon} to="#">
-          Portfolio
-        </Link>
-        <Link className={classNames.comingSoon} to="#">
-          Staking
-        </Link>
-        <Link className={classNames.comingSoon} to="#">
-          My referrals
-        </Link>
-      </div>
-    )
-  }
 
   const PortfolioSoon = WithTooltip({
     WrappedComponent: PortfolioLink,
