@@ -19,13 +19,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const { dispatch } = useContext(SelectionContext)
   const typingTimeoutRef = useRef(null)
 
-  const populateRoutes = (routes) => {
-    swapDispatch({
-      type: 'POPULATE_ROUTES',
-      payload: routes,
-    })
-  }
-
   const toggleInsurance = (routeId) => {
     swapDispatch({
       type: 'TOGGLE_INSURANCE',
@@ -39,7 +32,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
     swapDispatch,
     address,
     dispatch,
-    setResponse: populateRoutes,
     selectedRoute,
     typingTimeoutRef,
   })

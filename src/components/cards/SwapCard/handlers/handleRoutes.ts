@@ -10,3 +10,10 @@ export const clearRoutes = (typingTimeoutRef, swapDispatch) => {
     payload: null,
   })
 }
+
+export const populateRoutes = (routes) => {
+  swapDispatch({
+    type: 'POPULATE_ROUTES',
+    payload: routes,
+  })
+}

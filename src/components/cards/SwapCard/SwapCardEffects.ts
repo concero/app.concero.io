@@ -2,19 +2,10 @@ import { useEffect } from 'react'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
 import { handleBalance } from './handlers/handleBalance'
-import { clearRoutes } from './handlers/clearRoutes'
+import { clearRoutes } from './handlers/handleRoutes'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 
-export function useSwapCardEffects({
-  from,
-  to,
-  swapDispatch,
-  address,
-  dispatch,
-  setResponse,
-  selectedRoute,
-  typingTimeoutRef,
-}) {
+export function useSwapCardEffects({ from, to, swapDispatch, address, dispatch, selectedRoute, typingTimeoutRef }) {
   useEffect(() => {
     setHistoryCard(dispatch, from, to)
     setSwapCard(dispatch, from, to)
@@ -26,7 +17,7 @@ export function useSwapCardEffects({
 
   useEffect(() => {
     clearRoutes(typingTimeoutRef, swapDispatch)
-    handleFetchRoutes(from, to, swapDispatch, setResponse, typingTimeoutRef)
+    handleFetchRoutes(from, to, swapDispatch, typingTimeoutRef)
     return () => clearRoutes(typingTimeoutRef, swapDispatch)
   }, [from.token, from.amount, from.chain, to.token, to.chain])
 
