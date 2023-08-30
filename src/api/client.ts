@@ -11,11 +11,10 @@ const request = async (options: AxiosRequestConfig): Promise<any> => {
     const response: AxiosResponse = await client(options)
     return response
   } catch (error) {
-    console.error('Error', error.response)
-    throw error.response
+    console.error('Error', error)
+    return error
   }
 }
-
 export const get = async (url: string, params?: any, headers?: any): Promise<any> => request({
     url,
     method: 'GET',

@@ -1,5 +1,4 @@
 import { useReducer } from 'react'
-import { tokens } from '../../../constants/tokens'
 
 export const initialState = (selection) => ({
   data: [],
@@ -7,7 +6,6 @@ export const initialState = (selection) => ({
   timestamp: 0,
   isModalVisible: false,
   selectedToken: selection.swapCard.to.token,
-  mappedTokens: tokens['1'].slice(0, 50),
 })
 
 export function newsReducer(state, action) {
@@ -36,11 +34,6 @@ export function newsReducer(state, action) {
       return {
         ...state,
         selectedToken: action.payload,
-      }
-    case 'ADD_MAPPED_TOKENS':
-      return {
-        ...state,
-        mappedTokens: [...state.mappedTokens, ...action.payload],
       }
     default:
       throw new Error(`Unknown action type: ${action.type}`)

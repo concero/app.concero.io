@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
 import classNames from './FeedbackModal.module.pcss'
-import { Modal } from '../../components/modals/Modal/Modal'
-import { TextArea } from '../../components/layout/TextArea/TextArea'
-import { Button } from '../../components/buttons/Button/Button'
+import { Modal } from '../Modal/Modal'
+import { TextArea } from '../../layout/TextArea/TextArea'
+import { Button } from '../../buttons/Button/Button'
 
 interface FeedbackModalProps {
   show: boolean

@@ -8,13 +8,10 @@ export const handleAreaClick = ({ inputRef }) => {
 }
 
 export const handleMappedTokens = ({ selection, setMappedTokens }) => {
-  setMappedTokens((prevMappedToekns) => [
-    ...prevMappedToekns,
-    ...tokens[selection.chain.id].slice(prevMappedToekns.length, prevMappedToekns.length + 50),
-  ])
+  setMappedTokens((prev) => [...prev, ...tokens[selection.chain.id].slice([prev].length, [prev].length + 50)])
 }
 
-export const handleAmountChange = ({ value, dispatch, setAmountUsd, direction }) => {
+export const handleAmountChange = ({ value, state, dispatch, direction }) => {
   if (value === '') {
     return dispatch({
       type: 'RESET_AMOUNTS',
@@ -27,8 +24,6 @@ export const handleAmountChange = ({ value, dispatch, setAmountUsd, direction })
   dispatch({
     type: 'SET_AMOUNT',
     direction,
-    payload: { amount: value },
+    payload: { amount: value, amount_usd: (state.currentTokenPriceUSD * parseFloat(value)).toFixed(2).toString() },
   })
-
-  setAmountUsd(value)
 }

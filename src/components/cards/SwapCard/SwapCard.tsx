@@ -12,13 +12,13 @@ import { handleSwap } from './swapExecution/handleSwap'
 import { InsuranceProvider } from './InsuranceContext'
 import { useSwapCardEffects } from './SwapCardEffects'
 import { switchChain } from './switchChain'
+import { Card } from '../Card/Card'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const [{ from, to, balance, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
   const typingTimeoutRef = useRef(null)
-
   const populateRoutes = (routes) => {
     swapDispatch({
       type: 'POPULATE_ROUTES',
@@ -50,7 +50,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>
-      <div className={`card ${classNames.container}`}>
+      <Card className={classNames.container}>
         <CardHeader title="Swap" />
         <div className={classNames.swapContainer}>
           <TokenArea
@@ -60,33 +60,29 @@ export const SwapCard: FC<SwapCardProps> = () => {
             dispatch={swapDispatch}
             balance={balance}
           />
-          <TokenArea direction="to" selection={to} oppositeSelection={from} dispatch={swapDispatch} />
+          <TokenArea direction="to" selection={to} dispatch={swapDispatch} />
           <SwapDetails
             selection={{
               from,
               to,
             }}
             selectedRoute={selectedRoute}
-            setSelectedRoute={(route) =>
-              swapDispatch({
+            setSelectedRoute={(route) => swapDispatch({
                 type: 'SET_SELECTED_ROUTE',
                 payload: route,
-              })
-            }
+              })}
             routes={routes}
             isLoading={isLoading}
           />
           <SwapButton
-            onClick={() =>
-              handleSwap(
+            onClick={() => handleSwap(
                 swapDispatch,
                 selectedRoute.originalRoute,
                 selectedRoute.provider,
                 address,
                 from,
                 switchChainHook,
-              )
-            }
+              )}
             from={from}
             to={to}
             isLoading={isLoading}
@@ -96,7 +92,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
             transactionResponse={transactionResponse}
           />
         </div>
-      </div>
+      </Card>
     </InsuranceProvider>
   )
 }

@@ -4,7 +4,7 @@ import { useAccount } from 'wagmi'
 import { BaseButton } from './BaseButton'
 import { Button } from '../../../buttons/Button/Button'
 import classNames from './WalletButton.module.pcss'
-import { FeedbackModal } from '../../../../modals/FeedbackModal/FeedbackModal'
+import { FeedbackModal } from '../../../modals/FeedbackModal/FeedbackModal'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface DesktopButtonProps {

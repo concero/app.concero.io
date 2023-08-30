@@ -6,11 +6,13 @@ import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/Staking
 import { RatioCard } from '../../cards/RatioCard/RatioCard'
 import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
-export const StakingScreen = () => {
+export const StakingScreen: React.FC = () => {
   const [{ selectedVault, vaults, protocols, filter }, dispatch] = useStakingReducer()
+  const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
-  return (
+  const desktopLayout = (
     <div className={classNames.container}>
       <StakingOpportunitiesCard
         vaults={vaults}
@@ -32,4 +34,25 @@ export const StakingScreen = () => {
       </div>
     </div>
   )
+
+  const mobileLayout = (
+    <div className={classNames.container}>
+      <StakingOpportunitiesCard
+        vaults={vaults}
+        selectedVault={selectedVault}
+        protocols={protocols}
+        dispatch={dispatch}
+        filter={filter}
+      />
+      <div className={classNames.mainCardStack}>
+        <StakingHeaderCard vault={selectedVault} protocols={protocols} />
+        <StakingChartCard selectedVault={selectedVault} />
+        <StakingHighlightsCard />
+        <RatioCard />
+        <DetailsCard />
+      </div>
+    </div>
+  )
+
+  return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
 }

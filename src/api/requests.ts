@@ -41,13 +41,17 @@ export async function api(req_fn, on_ok, on_err) {
 }
 
 export async function apiRequest(response) {
-  // gets response, determines if it's ok, and returns { response, ok, err }
   let ok = false
   let err = null
-  if (response.status >= 200 && response.status < 300) {
-    ok = true
+
+  if (response) {
+    if (response.status >= 200 && response.status < 300) {
+      ok = true
+    } else {
+      err = response?.data?.error || response?.data?.message || response?.data || response
+    }
   } else {
-    err = response?.data?.error || response?.data?.message || response?.data || response
+    err = 'No response object. Likely a network error.'
   }
   return { res: response, ok, err }
 }
