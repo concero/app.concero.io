@@ -21,7 +21,7 @@ interface RouteEndPointProps {
 }
 
 export const RouteEndPoint: FC<RouteEndPointProps> = ({ side, amount }) => {
-  const chainLogoURI = getChainLogoURIById(side.chain.id)
+  const chainLogoURI = getChainLogoURIById(Number(side.chain.id))
 
   return (
     <div className={classNames.endPointContainer}>
