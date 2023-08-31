@@ -3,6 +3,7 @@ import classNames from './FeedbackModal.module.pcss'
 import { Modal } from '../../components/modals/Modal/Modal'
 import { TextArea } from '../../components/layout/TextArea/TextArea'
 import { Button } from '../../components/buttons/Button/Button'
+import { submitFeedback } from '../../api/concero/submitFeedback'
 
 interface FeedbackModalProps {
   show: boolean
@@ -18,13 +19,25 @@ enum FeedbackTags {
 
 export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
   const [selectedTag, setSelectedTag] = useState<FeedbackTags | null>(null)
-
+  const [message, setMessage] = useState<string>('')
   const feedbackOptions = [
     { label: 'Question', value: FeedbackTags.QUESTION },
     { label: 'Issue', value: FeedbackTags.ISSUE },
     { label: 'Suggestion', value: FeedbackTags.SUGGESTION },
     { label: 'I like something', value: FeedbackTags.LIKE },
   ]
+
+  const handleSubmit = async () => {
+    if (selectedTag && message) {
+      const { res } = await submitFeedback({
+        type: feedbackOptions[selectedTag - 1].label.toLowerCase(),
+        message: message.trim(),
+      })
+      if (res) {
+        setShow(false) // Close the modal upon success
+      }
+    }
+  }
 
   return (
     <Modal title="Help us improve" show={show} setShow={setShow}>
@@ -42,7 +55,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
           ))}
         </div>
         <div className={classNames.textareaContainer}>
-          <TextArea />
+          <TextArea onChange={(e) => setMessage(e.target.value)} />
         </div>
         <Button
           variant="primary"
@@ -50,6 +63,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
             name: 'Send',
             iconProps: { size: 16 },
           }}
+          onClick={handleSubmit}
         >
           Send
         </Button>

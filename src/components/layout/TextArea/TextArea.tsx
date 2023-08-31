@@ -1,9 +1,14 @@
 import classNames from './TextArea.module.pcss'
 
-export const TextArea = () => {
+export function TextArea({ onChange, ...rest }) {
   return (
     <div className={classNames.container}>
-      <textarea className={classNames.textarea} placeholder="Enter text here..." />
+      <textarea
+        onChange={onChange && onChange}
+        className={classNames.textarea}
+        placeholder="Enter text here..."
+        {...rest}
+      />
     </div>
   )
 }
