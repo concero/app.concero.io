@@ -26,7 +26,7 @@ export interface TagProps {
     | 'secondary'
   isLoading?: boolean
   children?: string | JSX.Element[] | JSX.Element
-  size?: 'sn' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xxs'
   title?: string
 }
 

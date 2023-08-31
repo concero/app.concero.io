@@ -60,4 +60,6 @@ export const initArg = {
   selectedRoute: null,
   typingTimeout: 0,
   transactionResponse: null,
+  transactionStep: 'input',
+  transactionProgress: [],
 }

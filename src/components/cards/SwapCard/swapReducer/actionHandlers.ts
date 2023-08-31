@@ -91,4 +91,16 @@ export const actionHandlers = {
     transactionResponse: action.payload,
   }),
   TOGGLE_INSURANCE: (state, action) => toggleRouteInsurance(state, action.payload),
+  SET_SWAP_STEP: (state, action) => ({
+    ...state,
+    transactionStep: action.payload,
+  }),
+  PUSH_SWAP_PROGRESS: (state, action) => ({
+    ...state,
+    transactionProgress: [...state.transactionProgress, action.payload],
+  }),
+  SET_SWAP_PROGRESS: (state, action) => ({
+    ...state,
+    transactionProgress: [action.payload],
+  }),
 }

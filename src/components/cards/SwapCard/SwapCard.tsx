@@ -1,9 +1,7 @@
 import { FC, useContext, useRef } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useSwitchNetwork } from 'wagmi'
 import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
-import { TokenArea } from './TokenArea/TokenArea'
-import { SwapDetails } from './SwapDetails/SwapDetails'
 import { SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer/swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
@@ -11,12 +9,19 @@ import { SwapButton } from '../../buttons/SwapButton/SwapButton'
 import { handleSwap } from './swapExecution/handleSwap'
 import { InsuranceProvider } from './InsuranceContext'
 import { useSwapCardEffects } from './SwapCardEffects'
-import { switchChain } from './switchChain'
+import { SwapInput } from './SwapInput/SwapInput'
+import { SwapProgress } from './SwapProgress/SwapProgress'
+import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
+import { switchChain } from '../../../web3/switchChain'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
-  const [{ from, to, balance, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
+  const [
+    { from, to, balance, routes, isLoading, selectedRoute, transactionResponse, transactionStep, transactionProgress },
+    swapDispatch,
+  ] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
+  const { switchNetwork } = useSwitchNetwork()
   const typingTimeoutRef = useRef(null)
 
   const toggleInsurance = (routeId) => {
@@ -37,47 +42,37 @@ export const SwapCard: FC<SwapCardProps> = () => {
   })
 
   const switchChainHook = () => {
-    switchChain(from.chain.id)
+    switchChain(from.chain.id, switchNetwork)
   }
 
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>
       <div className={`card ${classNames.container}`}>
-        <CardHeader title="Swap" />
+        <CardHeader title={getCardTitleByStatus(transactionStep)} isLoading={isLoading} />
         <div className={classNames.swapContainer}>
-          <TokenArea
-            direction="from"
-            selection={from}
-            oppositeSelection={to}
-            dispatch={swapDispatch}
-            balance={balance}
-          />
-          <TokenArea direction="to" selection={to} oppositeSelection={from} dispatch={swapDispatch} />
-          <SwapDetails
-            selection={{
-              from,
-              to,
-            }}
-            selectedRoute={selectedRoute}
-            setSelectedRoute={(route) =>
-              swapDispatch({
-                type: 'SET_SELECTED_ROUTE',
-                payload: route,
-              })
-            }
-            routes={routes}
-            isLoading={isLoading}
-          />
+          {transactionStep === 'input' ? (
+            <SwapInput
+              from={from}
+              to={to}
+              swapDispatch={swapDispatch}
+              balance={balance}
+              routes={routes}
+              isLoading={isLoading}
+              selectedRoute={selectedRoute}
+            />
+          ) : (
+            <SwapProgress from={from} to={to} transactionProgress={transactionProgress} />
+          )}
           <SwapButton
             onClick={() =>
-              handleSwap(
+              handleSwap({
                 swapDispatch,
-                selectedRoute.originalRoute,
-                selectedRoute.provider,
+                originalRoute: selectedRoute.originalRoute,
+                provider: selectedRoute.provider,
                 address,
                 from,
                 switchChainHook,
-              )
+              })
             }
             from={from}
             to={to}

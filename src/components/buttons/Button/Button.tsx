@@ -1,9 +1,8 @@
 import { FC } from 'react'
 import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
-import Lottie from 'lottie-react'
 import Icon from '../../Icon'
-import loadingAnimation from '../../../assets/animations/circle-loading.json'
+import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
 
 import styles from './Button.module.pcss'
 
@@ -75,22 +74,5 @@ export const Button: FC<ButtonProps> = ({
       {children}
       {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}
     </button>
-  )
-}
-
-function LoadingAnimation() {
-  return (
-    <Lottie
-      loop
-      autoplay
-      animationData={loadingAnimation}
-      style={{
-        width: 30,
-        height: 30,
-      }}
-      rendererSettings={{
-        preserveAspectRatio: 'xMidYMid slice',
-      }}
-    />
   )
 }

@@ -8,6 +8,13 @@ export const handleTransactionError = (e, swapDispatch, provider) => {
         message: 'user rejected',
       },
     })
+    swapDispatch({
+      type: 'SET_SWAP_PROGRESS',
+      payload: {
+        title: 'Cancelled by user',
+        status: 'error',
+      },
+    })
   } else if (e.toString().toLowerCase().includes('insufficient')) {
     swapDispatch({
       type: 'SET_RESPONSES',

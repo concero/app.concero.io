@@ -43,7 +43,7 @@ const handleLifiResponse = (executedRoute, swapDispatch, provider) => {
   }
 }
 
-export const handleSwap = async (swapDispatch, originalRoute, provider, address, from, switchChainHook) => {
+export const handleSwap = async ({ swapDispatch, originalRoute, provider, address, from, switchChainHook }) => {
   if (!originalRoute) return console.error('No original route passed')
 
   swapDispatch({
@@ -51,7 +51,30 @@ export const handleSwap = async (swapDispatch, originalRoute, provider, address,
     payload: true,
   })
 
-  await switchChainHook()
+  swapDispatch({
+    type: 'SET_SWAP_STEP',
+    payload: 'progress',
+  })
+
+  swapDispatch({
+    type: 'PUSH_SWAP_PROGRESS',
+    payload: {
+      title: 'Transaction in progress',
+      body: 'Waiting for confirmation',
+      status: 'pending',
+    },
+  })
+
+  try {
+    await switchChainHook()
+  } catch (e) {
+    console.log('ERROR: ', e)
+    swapDispatch({
+      type: 'SET_LOADING',
+      payload: false,
+    })
+    return
+  }
 
   try {
     const executedRoute = await handleExecuteRoute(originalRoute, provider, address, from)
