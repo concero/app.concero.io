@@ -1,8 +1,8 @@
 import { FC, useContext } from 'react'
 import { useAccount } from 'wagmi'
-import { ThemeContext } from '../../../../hooks/themeContext'
-import { truncateWallet } from '../../../../utils/formatting'
-import { Button } from '../../../buttons/Button/Button'
+import { ThemeContext } from '../../../../../hooks/themeContext'
+import { truncateWallet } from '../../../../../utils/formatting'
+import { Button } from '../../../../buttons/Button/Button'
 import classNames from './BaseButton.module.pcss'
 
 interface BaseButtonProps {

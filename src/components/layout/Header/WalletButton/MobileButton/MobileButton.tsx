@@ -1,9 +1,11 @@
+import { FC } from 'react'
 import { JSX } from 'react/jsx-runtime'
 import { useAccount } from 'wagmi'
 import { useMatch } from 'react-router-dom'
-import { routes } from '../../../../constants/routes'
-import { MobileBurgerMenu } from '../MobileBurgerMenu/MobileBurgerMenu'
-import { BaseButton } from './BaseButton'
+import { routes } from '../../../../../constants/routes'
+import { MobileBurgerMenu } from '../../MobileBurgerMenu/MobileBurgerMenu'
+import { BaseButton } from '../BaseButton/BaseButton'
+import classNames from './MobileButton.module.pcss'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface MobileButtonProps {
@@ -17,7 +19,7 @@ export const MobileButton: FC<MobileButtonProps> = ({ open, toggleTheme }) => {
   const { isConnected } = useAccount()
 
   return (
-    <div style={{ alignItems: 'center' }}>
+    <div className={classNames.container}>
       <BaseButton onClick={open} isConnected={isConnected} />
       <MobileBurgerMenu matchPortfolio={matchPortfolio} matchExchange={matchExchange} toggleTheme={toggleTheme} />
     </div>
