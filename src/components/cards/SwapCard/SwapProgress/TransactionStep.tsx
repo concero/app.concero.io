@@ -19,15 +19,19 @@ export const TransactionStep: FC<TransactionStepProps> = ({ step }) => {
   return (
     <div className={classNames.transactionStep}>
       <div>
-        <Tag color={'grey'} size={'xxs'}>
-          {status === 'pending' ? (
+        {status === 'pending' ? (
+          <Tag color={'grey'} size={'xxs'}>
             <LoadingAnimation size={16} color={'secondary'} />
-          ) : status === 'success' ? (
+          </Tag>
+        ) : status === 'success' ? (
+          <Tag color={'green'} size={'xxs'}>
             <Icon name={'Check'} size={16} color={colors.green.darker} />
-          ) : (
+          </Tag>
+        ) : (
+          <Tag color={'red'} size={'xxs'}>
             <Icon name={'X'} size={16} color={colors.red.dark} />
-          )}
-        </Tag>
+          </Tag>
+        )}
       </div>
       <div className={classNames.transactionStepText}>
         <h5>{title}</h5>

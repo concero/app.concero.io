@@ -10,9 +10,11 @@ export const SwapProgress: FC = ({ from, to, transactionProgress }) => {
         <TokenInfo direction={from} />
         <TokenInfo direction={to} />
       </div>
-      {transactionProgress.map((step, index) => {
-        return <TransactionStep key={index.toString()} step={step} />
-      })}
+      <div className={classNames.progressContainer}>
+        {transactionProgress.map((step, index) => {
+          return <TransactionStep key={index.toString()} step={step} />
+        })}
+      </div>
     </div>
   )
 }

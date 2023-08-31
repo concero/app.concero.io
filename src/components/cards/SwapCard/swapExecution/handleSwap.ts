@@ -2,9 +2,19 @@ import { viemSigner } from '../../../../web3/ethers'
 import { handleTransactionError } from '../handlers/handleTransactionError'
 import { executeRangoRoute } from './executeRangoRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
+import { Route } from '../../../../api/lifi/types'
+
+const updateCallback = (updatedRoute: Route) => {
+  console.log('Ping! Everytime a status update is made!')
+  console.log('Updated route: ', JSON.stringify(updatedRoute))
+}
 
 const handleExecuteRoute = async (route, provider, address, from) => {
-  if (provider === 'lifi') return await executeLifiRoute(viemSigner, route, {})
+  if (provider === 'lifi') {
+    const response = await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback })
+    console.log(response)
+    return response
+  }
   if (provider === 'rango') return await executeRangoRoute(route, address, from)
 }
 

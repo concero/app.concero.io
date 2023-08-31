@@ -1,7 +1,9 @@
 .container {
     width: 100%;
     height: 100%;
+    max-height: 400px;
     gap: var(--sp-md);
+    overflow: hidden;
 }
 
 .tokensInfoContainer {
@@ -31,4 +33,10 @@
             color: var(--color-text-secondary);
         }
     }
+}
+
+.progressContainer {
+    overflow-y: scroll;
+    gap: var(--sp-md);
+    
 }
