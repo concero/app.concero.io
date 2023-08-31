@@ -1,6 +1,6 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider/src.ts/index'
 import { EvmTransaction, TransactionStatus } from 'rango-sdk-basic'
-import { RangoClient } from './rangoClient'
+import { post } from '../client'
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -41,6 +41,8 @@ export async function checkApprovalSync(requestId: string, txId: string, rangoCl
 }
 
 export const checkTransactionStatusSync = async (requestId: string, txId: string, rangoClient: RangoClient) => {
+  console.log('INIT DATA: ', 'rqID: ', requestId, 'txID: ', txId)
+
   while (true) {
     const txStatus = await rangoClient
       .status({
@@ -50,6 +52,35 @@ export const checkTransactionStatusSync = async (requestId: string, txId: string
       .catch((e) => {
         console.error(e)
       })
+
+    console.log('txStatus: ')
+    console.log(JSON.stringify(txStatus))
+
+    const response1 = await post(
+      'https://api.rango.exchange/tx/check-status?apiKey=b6867e4d-d65c-4cd9-8532-59b6fc1f2c00',
+      {
+        requestId,
+        txId,
+        step: '1',
+      },
+    )
+
+    console.log('stepStatus_1: ')
+    console.log(JSON.stringify(response1))
+
+    const response2 = await post(
+      'https://api.rango.exchange/tx/check-status?apiKey=b6867e4d-d65c-4cd9-8532-59b6fc1f2c00',
+      {
+        requestId,
+        txId,
+        step: '2',
+      },
+    )
+
+    if (response2.status === 200) {
+      console.log('stepStatus_2: ')
+      console.log(JSON.stringify(response2))
+    }
 
     if (!!txStatus) {
       if (!!txStatus.status && [TransactionStatus.FAILED, TransactionStatus.SUCCESS].includes(txStatus.status)) {

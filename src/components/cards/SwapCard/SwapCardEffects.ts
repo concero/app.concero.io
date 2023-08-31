@@ -13,7 +13,7 @@ export function useSwapCardEffects({ from, to, swapDispatch, address, dispatch, 
 
   useEffect(() => {
     handleBalance({ swapDispatch, from, address })
-  }, [from.token.symbol, address])
+  }, [from.token.symbol, from.chain.id, address])
 
   useEffect(() => {
     clearRoutes(typingTimeoutRef, swapDispatch)

@@ -6,7 +6,7 @@ import { Button } from '../../buttons/Button/Button'
 import { renderTags } from './renderTags'
 import { renderSteps } from './renderSteps'
 import { RouteCardProps } from './types'
-import { numberToFormatString } from '../../../utils/formatting'
+import { numberToFormatString, roundNumberByDecimals } from '../../../utils/formatting'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
@@ -30,7 +30,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
         <div className={classNames.cardHeaderLeftSide}>
           {isDesktop ? <h4>Net value:</h4> : null}
           <h3>{`$${numberToFormatString(Number(route.to.token.amount_usd), 2, true)}`}</h3>
-          <h3 className={classNames.subtitle}>{`${numberToFormatString(Number(route.to.token.amount), 2, true)} ${
+          <h3 className={classNames.subtitle}>{`${roundNumberByDecimals(Number(route.to.token.amount), 4)} ${
             route.to.token.symbol
           }`}</h3>
         </div>
