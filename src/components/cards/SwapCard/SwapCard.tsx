@@ -54,7 +54,13 @@ export const SwapCard: FC<SwapCardProps> = () => {
               transactionResponse={transactionResponse}
             />
           ) : (
-            <SwapProgress from={from} to={to} transactionProgress={transactionProgress} />
+            <SwapProgress
+              from={from}
+              to={to}
+              transactionProgress={transactionProgress}
+              transactionStep={transactionStep}
+              swapDispatch={swapDispatch}
+            />
           )}
         </div>
       </div>

@@ -129,6 +129,10 @@ export const handleSwap = async ({ swapDispatch, selectedRoute, provider, addres
     } catch (e) {
       console.log('ERROR: ', e)
       handleTransactionError(e, swapDispatch, provider)
+      swapDispatch({
+        type: 'SET_SWAP_STEP',
+        payload: 'failed',
+      })
     } finally {
       swapDispatch({
         type: 'SET_LOADING',
