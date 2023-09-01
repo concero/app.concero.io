@@ -61,4 +61,7 @@ export const initialState = {
   typingTimeout: 0,
   transactionResponse: null,
   settingsModalOpen: false,
+  settings: {
+    slippage_percent: '5',
+  },
 }

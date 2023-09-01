@@ -19,9 +19,10 @@ const populateRoutes = ({ routes, from, swapDispatch }) => {
   }
 }
 
-const handleFetchLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
+const handleFetchLifiRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
   try {
-    const lifiRoutes = await fetchLifiRoutes({ from, to })
+    const lifiRoutes = await fetchLifiRoutes({ from, to, settings })
+    console.log('lifiRoutes', lifiRoutes)
     routes.push(...lifiRoutes)
     populateRoutes({ routes, from, swapDispatch })
   } catch (error) {
@@ -29,9 +30,10 @@ const handleFetchLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
   }
 }
 
-const handleFetchRangoRoutes = async ({ routes, from, to, swapDispatch }) => {
+const handleFetchRangoRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
   try {
-    const rangoRoutes = await fetchRangoRoutes({ from, to })
+    const rangoRoutes = await fetchRangoRoutes({ from, to, settings })
+    console.log('rangoRoutes', rangoRoutes)
     routes.push(...rangoRoutes)
     populateRoutes({ routes, from, swapDispatch })
   } catch (error) {
@@ -39,7 +41,7 @@ const handleFetchRangoRoutes = async ({ routes, from, to, swapDispatch }) => {
   }
 }
 
-export const getRoutes = async (from, to, swapDispatch) => {
+export const getRoutes = async (from, to, settings, swapDispatch) => {
   if (!from.amount) return
 
   swapDispatch({
@@ -50,8 +52,8 @@ export const getRoutes = async (from, to, swapDispatch) => {
   const routes = []
 
   await Promise.all([
-    handleFetchLifiRoutes({ routes, from, to, swapDispatch }),
-    handleFetchRangoRoutes({ routes, from, to, swapDispatch }),
+    handleFetchLifiRoutes({ routes, from, to, settings, swapDispatch }),
+    handleFetchRangoRoutes({ routes, from, to, settings, swapDispatch }),
   ])
 
   if (routes.length === 0) {

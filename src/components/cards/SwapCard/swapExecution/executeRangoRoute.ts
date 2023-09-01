@@ -8,7 +8,7 @@ import {
 import { viemSigner } from '../../../../web3/ethers'
 import { addingDecimals } from '../../../../utils/formatting'
 
-const getRangoSwapOptions = (route, address, from) => {
+const getRangoSwapOptions = (route, address, from, settings) => {
   const amount = addingDecimals(from.amount, from.token.decimals)
 
   return {
@@ -24,7 +24,7 @@ const getRangoSwapOptions = (route, address, from) => {
     },
     amount,
     disableEstimate: false,
-    slippage: '3',
+    slippage: settings.slippage_percent,
     fromAddress: address,
     toAddress: address,
     referrerAddress: null,
@@ -32,8 +32,8 @@ const getRangoSwapOptions = (route, address, from) => {
   }
 }
 
-export const executeRangoRoute = async (route, address, from) => {
-  const swapOptions = getRangoSwapOptions(route, address, from)
+export const executeRangoRoute = async (route, address, from, settings) => {
+  const swapOptions = getRangoSwapOptions(route, address, from, settings)
 
   const response = await rangoClient.swap(swapOptions)
 
@@ -53,5 +53,5 @@ export const executeRangoRoute = async (route, address, from) => {
   const mainTx = prepareEvmTransaction(evmTransaction, false)
   const mainTxHash = (await viemSigner.sendTransaction(mainTx)).hash
 
-  return await checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient)
+  return checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient)
 }

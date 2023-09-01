@@ -19,7 +19,7 @@ import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
   const [
-    { from, to, balance, routes, isLoading, selectedRoute, transactionResponse, settingsModalOpen },
+    { from, to, balance, routes, isLoading, selectedRoute, transactionResponse, settingsModalOpen, settings },
     swapDispatch,
   ] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
@@ -39,6 +39,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
     address,
     dispatch,
     selectedRoute,
+    settings,
     typingTimeoutRef,
   })
 
@@ -76,6 +77,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
                 selectedRoute.provider,
                 address,
                 from,
+                settings,
                 switchChainHook,
               )}
             from={from}
@@ -91,6 +93,8 @@ export const SwapCard: FC<SwapCardProps> = () => {
       <SwapSettingsModal
         show={settingsModalOpen}
         setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+        swapDispatch={swapDispatch}
+        settings={settings}
       />
     </InsuranceProvider>
   )

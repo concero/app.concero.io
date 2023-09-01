@@ -95,4 +95,11 @@ export const actionHandlers = {
     transactionResponse: action.payload,
   }),
   TOGGLE_INSURANCE: (state, action) => toggleRouteInsurance(state, action.payload),
+  SET_SETTINGS: (state, action) => ({
+    ...state,
+    settings: {
+      ...state.settings,
+      ...action.payload,
+    },
+  }),
 }

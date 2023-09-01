@@ -3,7 +3,8 @@ import { addingDecimals } from '../../utils/formatting'
 import { standardizeRangoRoutes } from './standardizeRangoRoutes'
 import { tokenNullAddress } from '../../constants/tokenNullAddress'
 
-export const fetchRangoRoutes = async ({ from, to }) => {
+export const fetchRangoRoutes = async ({ from, to, settings }) => {
+  // todo: how to control rango slippage?
   const routesRequest = {
     from: {
       blockchain: from.chain.providers.rango.key,

@@ -19,14 +19,14 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
   return 0
 }
 
-export const fetchLifiRoutes = async ({ from, to }: FetchRoutesParams): Promise<GetRoutes> => {
+export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams): Promise<GetRoutes> => {
   let result = []
 
   const routeOptions = {
     fee: 0.002,
     insurance: false,
     integrator: 'concero',
-    slippage: 0.01,
+    slippage: settings.slippage_percent / 100,
   }
 
   const routesRequest = {
