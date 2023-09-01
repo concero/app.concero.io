@@ -14,40 +14,47 @@ interface TransactionStepProps {
   }
 }
 
+const renderTag = (status: string) => {
+  const color = status === 'success' ? 'green' : status === 'error' ? 'red' : 'grey'
+  const iconSize = 16
+  const content = () => {
+    switch (status) {
+      case 'pending':
+        return <LoadingAnimation size={iconSize} color="secondary" />
+      case 'success':
+        return <Icon name="Check" size={iconSize} color={colors.green.darker} />
+      case 'error':
+        return <Icon name="X" size={iconSize} color={colors.red.dark} />
+      default:
+        return <div style={{ width: iconSize, height: iconSize }} />
+    }
+  }
+
+  return (
+    <div className={classNames.tagContainer}>
+      <Tag color={color} size="xxs">
+        {content()}
+      </Tag>
+    </div>
+  )
+}
+
 export const TransactionStep: FC<TransactionStepProps> = ({ step }) => {
   const { title, body, status, txLink } = step
 
   return (
     <div className={classNames.transactionStep}>
-      <div className={classNames.tagContainer}>
-        {status === 'pending' ? (
-          <Tag color={'grey'} size={'xxs'}>
-            <LoadingAnimation size={16} color={'secondary'} />
-          </Tag>
-        ) : status === 'success' ? (
-          <Tag color={'green'} size={'xxs'}>
-            <Icon name={'Check'} size={16} color={colors.green.darker} />
-          </Tag>
-        ) : status === 'error' ? (
-          <Tag color={'red'} size={'xxs'}>
-            <Icon name={'X'} size={16} color={colors.red.dark} />
-          </Tag>
-        ) : (
-          <Tag color={'grey'} size={'xxs'}>
-            <div style={{ width: 16, height: 16 }} />
-          </Tag>
-        )}
-      </div>
+      {renderTag(status)}
       <div className={classNames.transactionStepText}>
         <div className={classNames.titleContainer}>
           <h5>{title}</h5>
-          {txLink ? (
-            <a href={txLink} target="_blank">
-              <Icon name={'ExternalLink'} size={16} color={colors.text.secondary} />
+          {txLink && (
+            <a href={txLink} target="_blank" rel="noopener noreferrer">
+              <Icon name="ExternalLink" size={16} color={colors.text.secondary} />
             </a>
-          ) : null}
+          )}
         </div>
-        {body ? <p className={'body1'}>{body}</p> : null}
+        {body && <p className="body1">{body}</p>}
       </div>
     </div>
   )

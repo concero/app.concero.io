@@ -32,7 +32,7 @@ const getRangoSwapOptions = (route, address, from) => {
   }
 }
 
-export const executeRangoRoute = async (route, address, from) => {
+export const executeRangoRoute = async (route, address, from, swapDispatch) => {
   const swapOptions = getRangoSwapOptions(route, address, from)
 
   const response = await rangoClient.swap(swapOptions)
@@ -53,5 +53,5 @@ export const executeRangoRoute = async (route, address, from) => {
   const mainTx = prepareEvmTransaction(evmTransaction, false)
   const mainTxHash = (await viemSigner.sendTransaction(mainTx)).hash
 
-  return await checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient)
+  return checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient, swapDispatch)
 }

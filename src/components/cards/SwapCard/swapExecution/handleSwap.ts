@@ -11,7 +11,6 @@ const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch
     const updateCallback = (updatedRoute: Route) => {
       console.log(JSON.stringify(updatedRoute))
       const stdRoute = standardiseLifiRoute(updatedRoute)
-
       updateLifiSteps({
         swapDispatch,
         selectedRoute: stdRoute,
@@ -19,7 +18,7 @@ const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch
     }
     return await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback, switchChainHook })
   }
-  if (provider === 'rango') return await executeRangoRoute(route, address, from)
+  if (provider === 'rango') return executeRangoRoute(route, address, from, swapDispatch)
 }
 
 const handleRangoResponse = (executedRoute, swapDispatch, provider) => {
@@ -75,6 +74,18 @@ export const handleSwap = async ({ swapDispatch, selectedRoute, provider, addres
     updateLifiSteps({
       swapDispatch,
       selectedRoute,
+    })
+  } else if (provider === 'rango') {
+    swapDispatch({
+      type: 'SET_SWAP_PROGRESS',
+      payload: [
+        {
+          title: 'Waiting for confirmation',
+          body: 'Please confirm the transaction in your wallet',
+          status: 'await',
+          txLink: null,
+        },
+      ],
     })
   }
 

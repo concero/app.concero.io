@@ -1,14 +1,10 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider/src.ts/index'
-import { EvmTransaction, TransactionStatus } from 'rango-sdk-basic'
-import { post } from '../client'
+import { EvmTransaction, RangoClient, TransactionStatus } from 'rango-sdk-basic'
 
-const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export function prepareEvmTransaction(evmTx: EvmTransaction, isApprove: boolean): TransactionRequest {
-  const gasPrice =
-    !!evmTx.gasPrice && !evmTx.gasPrice.startsWith('0x') ? '0x' + parseInt(evmTx.gasPrice).toString(16) : null
+  const gasPrice = !!evmTx.gasPrice && !evmTx.gasPrice.startsWith('0x') ? `0x${parseInt(evmTx.gasPrice).toString(16)}` : null
 
   const manipulatedTx = {
     ...evmTx,
@@ -16,16 +12,16 @@ export function prepareEvmTransaction(evmTx: EvmTransaction, isApprove: boolean)
   }
 
   let tx = {}
-  if (!!manipulatedTx.from) tx = { ...tx, from: manipulatedTx.from }
+  if (manipulatedTx.from) tx = { ...tx, from: manipulatedTx.from }
   if (isApprove) {
-    if (!!manipulatedTx.approveTo) tx = { ...tx, to: manipulatedTx.approveTo }
-    if (!!manipulatedTx.approveData) tx = { ...tx, data: manipulatedTx.approveData }
+    if (manipulatedTx.approveTo) tx = { ...tx, to: manipulatedTx.approveTo }
+    if (manipulatedTx.approveData) tx = { ...tx, data: manipulatedTx.approveData }
   } else {
-    if (!!manipulatedTx.txTo) tx = { ...tx, to: manipulatedTx.txTo }
-    if (!!manipulatedTx.txData) tx = { ...tx, data: manipulatedTx.txData }
-    if (!!manipulatedTx.value) tx = { ...tx, value: manipulatedTx.value }
-    if (!!manipulatedTx.gasLimit) tx = { ...tx, gasLimit: manipulatedTx.gasLimit }
-    if (!!manipulatedTx.gasPrice) tx = { ...tx, gasPrice: manipulatedTx.gasPrice }
+    if (manipulatedTx.txTo) tx = { ...tx, to: manipulatedTx.txTo }
+    if (manipulatedTx.txData) tx = { ...tx, data: manipulatedTx.txData }
+    if (manipulatedTx.value) tx = { ...tx, value: manipulatedTx.value }
+    if (manipulatedTx.gasLimit) tx = { ...tx, gasLimit: manipulatedTx.gasLimit }
+    if (manipulatedTx.gasPrice) tx = { ...tx, gasPrice: manipulatedTx.gasPrice }
   }
   return tx
 }
@@ -40,9 +36,51 @@ export async function checkApprovalSync(requestId: string, txId: string, rangoCl
   }
 }
 
-export const checkTransactionStatusSync = async (requestId: string, txId: string, rangoClient: RangoClient) => {
-  console.log('INIT DATA: ', 'rqID: ', requestId, 'txID: ', txId)
+const dispatchTransactionStatus = (txStatus, swapDispatch) => {
+  switch (txStatus.status) {
+    case TransactionStatus.FAILED:
+      swapDispatch({
+        type: 'SET_SWAP_PROGRESS',
+        payload: [{ status: 'error', title: 'Transaction failed', body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}` }],
+      })
+    case TransactionStatus.SUCCESS:
+      swapDispatch({
+        type: 'SET_SWAP_PROGRESS',
+        payload: [
+          { status: 'success', title: 'Transaction success', body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}` },
+        ],
+      })
+    case TransactionStatus.RUNNING:
+      swapDispatch({
+        type: 'SET_SWAP_PROGRESS',
+        payload: [
+          {
+            status: 'pending',
+            title: 'Transaction pending',
+            body: `Please be patient, this may take up to 20 minutes. Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
+          },
+        ],
+      })
+    default:
+      swapDispatch({
+        type: 'SET_SWAP_PROGRESS',
+        payload: [
+          {
+            status: 'await',
+            title: 'Executing transaction',
+            body: `Please be patient, this may take up to 20 minutes. Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
+          },
+        ],
+      })
+  }
+}
 
+export const checkTransactionStatusSync = async (
+  requestId: string,
+  txId: string,
+  rangoClient: RangoClient,
+  swapDispatch,
+) => {
   while (true) {
     const txStatus = await rangoClient
       .status({
@@ -53,39 +91,12 @@ export const checkTransactionStatusSync = async (requestId: string, txId: string
         console.error(e)
       })
 
-    console.log('txStatus: ')
-    console.log(JSON.stringify(txStatus))
-
-    const response1 = await post(
-      'https://api.rango.exchange/tx/check-status?apiKey=b6867e4d-d65c-4cd9-8532-59b6fc1f2c00',
-      {
-        requestId,
-        txId,
-        step: '1',
-      },
-    )
-
-    console.log('stepStatus_1: ')
-    console.log(JSON.stringify(response1))
-
-    const response2 = await post(
-      'https://api.rango.exchange/tx/check-status?apiKey=b6867e4d-d65c-4cd9-8532-59b6fc1f2c00',
-      {
-        requestId,
-        txId,
-        step: '2',
-      },
-    )
-
-    if (response2.status === 200) {
-      console.log('stepStatus_2: ')
-      console.log(JSON.stringify(response2))
+    if (txStatus) {
+      console.log(txStatus)
+      dispatchTransactionStatus(txStatus, swapDispatch)
     }
-
-    if (!!txStatus) {
-      if (!!txStatus.status && [TransactionStatus.FAILED, TransactionStatus.SUCCESS].includes(txStatus.status)) {
-        return txStatus
-      }
+    if (!!txStatus.status && [TransactionStatus.FAILED, TransactionStatus.SUCCESS].includes(txStatus.status)) {
+      return txStatus
     }
     await sleep(3000)
   }
