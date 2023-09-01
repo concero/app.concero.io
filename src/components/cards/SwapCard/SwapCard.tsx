@@ -12,10 +12,16 @@ import { handleSwap } from './swapExecution/handleSwap'
 import { InsuranceProvider } from './InsuranceContext'
 import { useSwapCardEffects } from './SwapCardEffects'
 import { switchChain } from './switchChain'
+import { Button } from '../../buttons/Button/Button'
+import { colors } from '../../../constants/colors'
+import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address, isConnected } = useAccount()
-  const [{ from, to, balance, routes, isLoading, selectedRoute, transactionResponse }, swapDispatch] = useSwapReducer()
+  const [
+    { from, to, balance, routes, isLoading, selectedRoute, transactionResponse, settingsModalOpen },
+    swapDispatch,
+  ] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
   const typingTimeoutRef = useRef(null)
 
@@ -43,42 +49,35 @@ export const SwapCard: FC<SwapCardProps> = () => {
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>
       <div className={`card ${classNames.container}`}>
-        <CardHeader title="Swap" />
+        <CardHeader title="Swap">
+          <div className="f1 row asb">
+            <Button
+              variant="black"
+              size="sq-sm"
+              onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+              leftIcon={{ name: 'Settings', iconProps: { size: 16, color: colors.grey.medium } }}
+            />
+          </div>
+        </CardHeader>
         <div className={classNames.swapContainer}>
-          <TokenArea
-            direction="from"
-            selection={from}
-            oppositeSelection={to}
-            dispatch={swapDispatch}
-            balance={balance}
-          />
-          <TokenArea direction="to" selection={to} oppositeSelection={from} dispatch={swapDispatch} />
+          <TokenArea direction="from" selection={from} dispatch={swapDispatch} balance={balance} />
+          <TokenArea direction="to" selection={to} dispatch={swapDispatch} />
           <SwapDetails
-            selection={{
-              from,
-              to,
-            }}
+            selection={{ from, to }}
             selectedRoute={selectedRoute}
-            setSelectedRoute={(route) =>
-              swapDispatch({
-                type: 'SET_SELECTED_ROUTE',
-                payload: route,
-              })
-            }
+            setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })}
             routes={routes}
             isLoading={isLoading}
           />
           <SwapButton
-            onClick={() =>
-              handleSwap(
+            onClick={() => handleSwap(
                 swapDispatch,
                 selectedRoute.originalRoute,
                 selectedRoute.provider,
                 address,
                 from,
                 switchChainHook,
-              )
-            }
+              )}
             from={from}
             to={to}
             isLoading={isLoading}
@@ -89,6 +88,10 @@ export const SwapCard: FC<SwapCardProps> = () => {
           />
         </div>
       </div>
+      <SwapSettingsModal
+        show={settingsModalOpen}
+        setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+      />
     </InsuranceProvider>
   )
 }

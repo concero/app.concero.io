@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { Action, State } from '../types'
-import { initArg } from './initArg'
+import { initialState } from './initialState'
 import { actionHandlers } from './actionHandlers'
 
 function swapReducer(state: State, action: Action) {
@@ -10,7 +10,7 @@ function swapReducer(state: State, action: Action) {
 }
 
 export const useSwapReducer = () => {
-  const [state, dispatch] = useReducer(swapReducer, initArg)
+  const [state, dispatch] = useReducer(swapReducer, initialState)
 
   return [state, dispatch]
 }

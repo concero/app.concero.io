@@ -1,7 +1,7 @@
 import { chains } from '../../../../constants/chains'
 import { tokens } from '../../../../constants/tokens'
 
-export const initArg = {
+export const initialState = {
   from: {
     chain: {
       name: chains[0].name,
@@ -60,4 +60,5 @@ export const initArg = {
   selectedRoute: null,
   typingTimeout: 0,
   transactionResponse: null,
+  settingsModalOpen: false,
 }
