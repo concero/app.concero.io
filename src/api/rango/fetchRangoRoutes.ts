@@ -16,6 +16,7 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
       symbol: to.token.symbol,
       address: to.token.address === tokenNullAddress ? null : to.token.address,
     },
+    slippage: settings.slippage_percent,
     amount: addingDecimals(Number(from.amount), from.token.decimals),
   }
 
