@@ -10,6 +10,7 @@ const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch
   if (provider === 'lifi') {
     const updateCallback = (updatedRoute: Route) => {
       console.log(JSON.stringify(updatedRoute))
+      console.log(updatedRoute)
       const stdRoute = standardiseLifiRoute(updatedRoute)
       updateLifiSteps({
         swapDispatch,
