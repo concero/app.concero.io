@@ -12,10 +12,10 @@ const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch
       console.log('updatedRoute', updatedRoute)
       const stdRoute = standardiseLifiRoute(updatedRoute)
       console.log('stdRoute', stdRoute)
-      // updateLifiSteps({
-      //   swapDispatch,
-      //   selectedRoute: stdRoute,
-      // })
+      updateLifiSteps({
+        swapDispatch,
+        selectedRoute: stdRoute,
+      })
     }
     return await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback })
   }
