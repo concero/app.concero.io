@@ -6,18 +6,18 @@ import { Route } from '../../../../api/lifi/types'
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { updateLifiSteps } from './updateLifiSteps'
 
-const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch }) => {
+const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch, switchChainHook }) => {
   if (provider === 'lifi') {
     const updateCallback = (updatedRoute: Route) => {
-      console.log('updatedRoute', updatedRoute)
+      console.log(JSON.stringify(updatedRoute))
       const stdRoute = standardiseLifiRoute(updatedRoute)
-      console.log('stdRoute', stdRoute)
+
       updateLifiSteps({
         swapDispatch,
         selectedRoute: stdRoute,
       })
     }
-    return await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback })
+    return await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback, switchChainHook })
   }
   if (provider === 'rango') return await executeRangoRoute(route, address, from)
 }
@@ -78,19 +78,26 @@ export const handleSwap = async ({ swapDispatch, selectedRoute, provider, addres
     })
   }
 
-  try {
-    await switchChainHook()
-  } catch (e) {
-    console.log('ERROR: ', e)
-    swapDispatch({
-      type: 'SET_LOADING',
-      payload: false,
-    })
-    return
-  }
+  // try {
+  //   await switchChainFunction()
+  // } catch (e) {
+  //   console.log('ERROR: ', e)
+  //   swapDispatch({
+  //     type: 'SET_LOADING',
+  //     payload: false,
+  //   })
+  //   return
+  // }
 
   try {
-    const executedRoute = await handleExecuteRoute({ route: originalRoute, provider, address, from, swapDispatch })
+    const executedRoute = await handleExecuteRoute({
+      route: originalRoute,
+      provider,
+      address,
+      from,
+      swapDispatch,
+      switchChainHook,
+    })
 
     if (provider === 'rango') {
       handleRangoResponse(executedRoute, swapDispatch, provider)

@@ -8,8 +8,9 @@ import { colors } from '../../../../constants/colors'
 interface TransactionStepProps {
   step: {
     title: string
-    body: string
+    body?: string
     status: 'pending' | 'success' | 'error' | 'await'
+    txLink?: string
   }
 }
 

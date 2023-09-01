@@ -6,4 +6,5 @@ export interface SwapInputProps {
   routes: any
   isLoading: boolean
   selectedRoute: any
+  typingTimeout: any
 }

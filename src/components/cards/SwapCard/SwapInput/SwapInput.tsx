@@ -6,7 +6,8 @@ import classNames from './SwapInput.module.pcss'
 import { SwapInputProps } from './types'
 import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
 import { handleSwap } from '../swapExecution/handleSwap'
-import { switchChain } from '../../../../web3/switchChain'
+import { createWalletClient, custom } from 'viem'
+import { providers } from 'ethers'
 
 export const SwapInput: FC<SwapInputProps> = ({
   from,
@@ -18,11 +19,17 @@ export const SwapInput: FC<SwapInputProps> = ({
   selectedRoute,
   transactionResponse,
 }) => {
-  const { switchNetwork } = useSwitchNetwork()
   const { address, isConnected } = useAccount()
+  const { switchNetwork } = useSwitchNetwork()
 
-  const switchChainHook = () => {
-    switchChain(from.chain.id, switchNetwork)
+  const switchChainHook = (requiredChainId) => {
+    if (switchNetwork) switchNetwork(requiredChainId)
+    const client0 = createWalletClient({
+      transport: custom(window.ethereum),
+    })
+
+    const provider = new providers.Web3Provider(client0.transport, 'any')
+    return provider.getSigner()
   }
 
   return (

@@ -4,7 +4,11 @@ const getStepStatus = (action) => {
       return 'error'
     case 'done':
       return 'success'
+    case 'success':
+      return 'success'
     case 'action_required':
+      return 'pending'
+    case 'pending':
       return 'pending'
     default:
       return 'await'
@@ -12,7 +16,7 @@ const getStepStatus = (action) => {
 }
 
 const getStepTitle = (action) => {
-  return action.message || action.error.message || null
+  return action?.message || action?.error?.message || null
 }
 
 export const updateLifiSteps = ({ swapDispatch, selectedRoute }) => {
@@ -26,6 +30,19 @@ export const updateLifiSteps = ({ swapDispatch, selectedRoute }) => {
       txLink: action.txLink || null,
     }
   })
+
+  // const messages = selectedRoute.execution.reduce((acc, step) => {
+  //     const stepMessages = step.process.map((action) => {
+  //       return {
+  //         title: getStepTitle(action),
+  //         body: action.substatusMessage || null,
+  //         status: getStepStatus(action),
+  //         txLink: action.txLink || null,
+  //       }
+  //     })
+  //     return [...acc, ...stepMessages]
+  //   }
+  // })
 
   swapDispatch({
     type: 'SET_SWAP_PROGRESS',
