@@ -101,6 +101,6 @@ export const actionHandlers = {
   }),
   SET_SWAP_PROGRESS: (state, action) => ({
     ...state,
-    transactionProgress: [action.payload],
+    transactionProgress: action.payload,
   }),
 }

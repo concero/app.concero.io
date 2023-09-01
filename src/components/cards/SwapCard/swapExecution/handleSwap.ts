@@ -3,17 +3,21 @@ import { handleTransactionError } from '../handlers/handleTransactionError'
 import { executeRangoRoute } from './executeRangoRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 import { Route } from '../../../../api/lifi/types'
+import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
+import { updateLifiSteps } from './updateLifiSteps'
 
-const updateCallback = (updatedRoute: Route) => {
-  console.log('Ping! Everytime a status update is made!')
-  console.log('Updated route: ', JSON.stringify(updatedRoute))
-}
-
-const handleExecuteRoute = async (route, provider, address, from) => {
+const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch }) => {
   if (provider === 'lifi') {
-    const response = await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback })
-    console.log(response)
-    return response
+    const updateCallback = (updatedRoute: Route) => {
+      console.log('updatedRoute', updatedRoute)
+      const stdRoute = standardiseLifiRoute(updatedRoute)
+      console.log('stdRoute', stdRoute)
+      // updateLifiSteps({
+      //   swapDispatch,
+      //   selectedRoute: stdRoute,
+      // })
+    }
+    return await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback })
   }
   if (provider === 'rango') return await executeRangoRoute(route, address, from)
 }
@@ -53,7 +57,8 @@ const handleLifiResponse = (executedRoute, swapDispatch, provider) => {
   }
 }
 
-export const handleSwap = async ({ swapDispatch, originalRoute, provider, address, from, switchChainHook }) => {
+export const handleSwap = async ({ swapDispatch, selectedRoute, provider, address, from, switchChainHook }) => {
+  const { originalRoute } = selectedRoute
   if (!originalRoute) return console.error('No original route passed')
 
   swapDispatch({
@@ -66,14 +71,12 @@ export const handleSwap = async ({ swapDispatch, originalRoute, provider, addres
     payload: 'progress',
   })
 
-  swapDispatch({
-    type: 'PUSH_SWAP_PROGRESS',
-    payload: {
-      title: 'Transaction in progress',
-      body: 'Waiting for confirmation',
-      status: 'pending',
-    },
-  })
+  if (provider === 'lifi') {
+    updateLifiSteps({
+      swapDispatch,
+      selectedRoute,
+    })
+  }
 
   try {
     await switchChainHook()
@@ -87,7 +90,7 @@ export const handleSwap = async ({ swapDispatch, originalRoute, provider, addres
   }
 
   try {
-    const executedRoute = await handleExecuteRoute(originalRoute, provider, address, from)
+    const executedRoute = await handleExecuteRoute({ route: originalRoute, provider, address, from, swapDispatch })
 
     if (provider === 'rango') {
       handleRangoResponse(executedRoute, swapDispatch, provider)

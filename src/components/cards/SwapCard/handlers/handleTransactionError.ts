@@ -10,10 +10,12 @@ export const handleTransactionError = (e, swapDispatch, provider) => {
     })
     swapDispatch({
       type: 'SET_SWAP_PROGRESS',
-      payload: {
-        title: 'Cancelled by user',
-        status: 'error',
-      },
+      payload: [
+        {
+          title: 'Cancelled by user',
+          status: 'error',
+        },
+      ],
     })
   } else if (e.toString().toLowerCase().includes('insufficient')) {
     swapDispatch({
