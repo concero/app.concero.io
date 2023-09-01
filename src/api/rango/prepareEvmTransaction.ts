@@ -38,18 +38,41 @@ export async function checkApprovalSync(requestId: string, txId: string, rangoCl
 
 const dispatchTransactionStatus = (txStatus, swapDispatch) => {
   switch (txStatus.status) {
-    case TransactionStatus.FAILED:
-      swapDispatch({
-        type: 'SET_SWAP_PROGRESS',
-        payload: [{ status: 'error', title: 'Transaction failed', body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}` }],
-      })
-    case TransactionStatus.SUCCESS:
+    case TransactionStatus.FAILED: {
       swapDispatch({
         type: 'SET_SWAP_PROGRESS',
         payload: [
-          { status: 'success', title: 'Transaction success', body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}` },
+          {
+            status: 'error',
+            title: 'Transaction failed',
+            body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
+            txLink: txStatus.explorerUrl[0].url ?? null,
+          },
         ],
       })
+      swapDispatch({
+        type: 'SET_SWAP_STEP',
+        payload: 'failed',
+      })
+    }
+
+    case TransactionStatus.SUCCESS: {
+      swapDispatch({
+        type: 'SET_SWAP_PROGRESS',
+        payload: [
+          {
+            status: 'success',
+            title: 'Transaction success',
+            body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
+            txLink: txStatus.explorerUrl[0].url ?? null,
+          },
+        ],
+      })
+      swapDispatch({
+        type: 'SET_SWAP_STEP',
+        payload: 'success',
+      })
+    }
     case TransactionStatus.RUNNING:
       swapDispatch({
         type: 'SET_SWAP_PROGRESS',
@@ -58,6 +81,7 @@ const dispatchTransactionStatus = (txStatus, swapDispatch) => {
             status: 'pending',
             title: 'Transaction pending',
             body: `Please be patient, this may take up to 20 minutes. Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
+            txLink: txStatus.explorerUrl[0].url ?? null,
           },
         ],
       })
@@ -69,6 +93,7 @@ const dispatchTransactionStatus = (txStatus, swapDispatch) => {
             status: 'await',
             title: 'Executing transaction',
             body: `Please be patient, this may take up to 20 minutes. Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
+            txLink: txStatus.explorerUrl[0].url ?? null,
           },
         ],
       })

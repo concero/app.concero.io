@@ -20,7 +20,7 @@ const renderTag = (status: string) => {
   const content = () => {
     switch (status) {
       case 'pending':
-        return <LoadingAnimation size={iconSize} color="secondary" />
+        return <LoadingAnimation size={iconSize} color={colors.text.secondary} />
       case 'success':
         return <Icon name="Check" size={iconSize} color={colors.green.darker} />
       case 'error':

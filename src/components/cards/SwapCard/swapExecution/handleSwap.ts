@@ -8,7 +8,7 @@ import { updateLifiSteps } from './updateLifiSteps'
 
 const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch, switchChainHook }) => {
   if (provider === 'lifi') {
-    const updateCallback = (updatedRoute: Route) => {
+    const updateRouteHook = (updatedRoute: Route) => {
       console.log(JSON.stringify(updatedRoute))
       console.log(updatedRoute)
       const stdRoute = standardiseLifiRoute(updatedRoute)
@@ -17,7 +17,7 @@ const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch
         selectedRoute: stdRoute,
       })
     }
-    return await executeLifiRoute(viemSigner, route, { updateRouteHook: updateCallback, switchChainHook })
+    return executeLifiRoute(viemSigner, route, { updateRouteHook, switchChainHook })
   }
   if (provider === 'rango') return executeRangoRoute(route, address, from, swapDispatch)
 }
@@ -88,41 +88,52 @@ export const handleSwap = async ({ swapDispatch, selectedRoute, provider, addres
         },
       ],
     })
-  }
-
-  // try {
-  //   await switchChainFunction()
-  // } catch (e) {
-  //   console.log('ERROR: ', e)
-  //   swapDispatch({
-  //     type: 'SET_LOADING',
-  //     payload: false,
-  //   })
-  //   return
-  // }
-
-  try {
-    const executedRoute = await handleExecuteRoute({
-      route: originalRoute,
-      provider,
-      address,
-      from,
-      swapDispatch,
-      switchChainHook,
-    })
-
-    if (provider === 'rango') {
-      handleRangoResponse(executedRoute, swapDispatch, provider)
-    } else if (provider === 'lifi') {
-      handleLifiResponse(executedRoute, swapDispatch, provider)
-    }
-  } catch (e) {
-    console.log('ERROR: ', e)
-    handleTransactionError(e, swapDispatch, provider)
-  } finally {
     swapDispatch({
-      type: 'SET_LOADING',
-      payload: false,
+      type: 'SET_SWAP_PROGRESS',
+      payload: [
+        {
+          status: 'success',
+          title: 'Transaction success',
+          // body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
+          // txLink: txStatus.explorerUrl[0].url ?? null,
+        },
+      ],
     })
+
+    // try {
+    //   await switchChainFunction()
+    // } catch (e) {
+    //   console.log('ERROR: ', e)
+    //   swapDispatch({
+    //     type: 'SET_LOADING',
+    //     payload: false,
+    //   })
+    //   return
+    // }
+
+    try {
+      const executedRoute = await handleExecuteRoute({
+        route: originalRoute,
+        provider,
+        address,
+        from,
+        swapDispatch,
+        switchChainHook,
+      })
+
+      if (provider === 'rango') {
+        handleRangoResponse(executedRoute, swapDispatch, provider)
+      } else if (provider === 'lifi') {
+        handleLifiResponse(executedRoute, swapDispatch, provider)
+      }
+    } catch (e) {
+      console.log('ERROR: ', e)
+      handleTransactionError(e, swapDispatch, provider)
+    } finally {
+      swapDispatch({
+        type: 'SET_LOADING',
+        payload: false,
+      })
+    }
   }
 }
