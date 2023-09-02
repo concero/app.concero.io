@@ -22,7 +22,7 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
       onClick={onClick}
       className={`${classNames.swapButton} ${classNames[buttonState.className]}`}
     >
-      <p className={classNames.buttonText}>{buttonState.text}</p>
+      {buttonState.text}
     </Button>
   )
 }

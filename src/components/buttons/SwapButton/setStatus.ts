@@ -48,9 +48,10 @@ export const setStatus = (
     return dispatch({ type: 'DISCONNECTED' })
   }
 
-  if (response) {
-    return handleresponse(response, routes, dispatch)
-  }
+  // disabling since we're managing transaction state in swapProgress.tsx
+  // if (response) {
+  //   return handleresponse(response, routes, dispatch)
+  // }
 
   if (!from.amount || (from.amount && !routes.length)) {
     return dispatch({ type: 'NO_AMOUNT' })
