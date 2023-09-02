@@ -13,7 +13,7 @@ type IconComponentProps = {
 
 export type ButtonProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
-  variant?: 'primary' | 'secondary' | 'filled' | 'subtle' | 'black'
+  variant?: 'primary' | 'secondary' | 'filled' | 'subtle' | 'black' | 'goBack'
   leftIcon?: IconComponentProps
   rightIcon?: IconComponentProps
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void

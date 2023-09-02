@@ -8,8 +8,6 @@ import { executeRangoRoute } from './executeRangoRoute'
 export const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch, switchChainHook }) => {
   if (provider === 'lifi') {
     const updateRouteHook = (updatedRoute: Route) => {
-      console.log(JSON.stringify(updatedRoute))
-      console.log(updatedRoute)
       const stdRoute = standardiseLifiRoute(updatedRoute)
       updateLifiSteps({
         swapDispatch,

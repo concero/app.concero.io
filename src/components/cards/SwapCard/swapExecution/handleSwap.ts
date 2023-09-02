@@ -59,7 +59,6 @@ export const handleSwap = async ({ swapDispatch, selectedRoute, address, from, s
   // }
 
   try {
-    console.log('EXECUTE ROUTE')
     const executedRoute = await handleExecuteRoute({
       route: originalRoute,
       provider,
@@ -79,7 +78,7 @@ export const handleSwap = async ({ swapDispatch, selectedRoute, address, from, s
     handleTransactionError(e, swapDispatch, provider)
     swapDispatch({
       type: 'SET_SWAP_STEP',
-      payload: 'failed',
+      payload: 'error',
     })
   } finally {
     swapDispatch({

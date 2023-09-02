@@ -39,6 +39,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({
           leftIcon={{ name: 'ArrowLeft', iconProps: { size: 20 } }}
           className={classNames.goBackButton}
           onClick={() => handleGoBack()}
+          variant={'goBack'}
         >
           Go back
         </Button>
