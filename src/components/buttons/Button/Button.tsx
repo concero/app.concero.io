@@ -37,17 +37,7 @@ const getButtonClasses = (
   return baseClasses.concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, additionalClasses).join(' ')
 }
 
-export const Button: FC<ButtonProps> = ({
-  size = 'md',
-  variant = 'primary',
-  leftIcon,
-  rightIcon,
-  isLoading,
-  isDisabled,
-  children,
-  onClick,
-  className,
-}) => {
+export const Button: FC<ButtonProps> = ({ size = 'md', variant = 'primary', leftIcon, rightIcon, isLoading, isDisabled, children, onClick, className }) => {
   const buttonClasses = getButtonClasses(size, variant, isLoading, isDisabled, className)
 
   return (

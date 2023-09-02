@@ -56,13 +56,7 @@ export const EntityListModal: FC<EntityListModalProps> = ({
     <Modal title={title} show={show} setShow={setShow}>
       <div className={classNames.container}>
         <TextInput iconName="Search" value={value} placeholder="Search..." onChangeText={(val) => setValue(val)} />
-        <Table
-          columns={columns}
-          items={filteredData}
-          onClick={(item) => handleSelect(item)}
-          onEndReached={handleEndReached}
-          animate={animate}
-        />
+        <Table columns={columns} items={filteredData} onClick={(item) => handleSelect(item)} onEndReached={handleEndReached} animate={animate} />
       </div>
     </Modal>
   )

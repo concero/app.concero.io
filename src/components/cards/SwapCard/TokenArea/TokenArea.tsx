@@ -62,10 +62,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, balance, s
 
   return (
     <>
-      <div
-        className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}
-        onClick={() => handleAreaClick({ inputRef })}
-      >
+      <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick({ inputRef })}>
         <div className={classNames.tokenRow}>
           <div className={classNames.tokenRowHeader}>
             <p>{capitalize(direction)}</p>
@@ -95,19 +92,18 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, balance, s
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
               value={selection.amount}
-              onChangeText={(value) => direction === 'from'
-                && handleAmountChange({
+              onChangeText={(value) =>
+                direction === 'from' &&
+                handleAmountChange({
                   value,
                   dispatch: swapDispatch,
                   setAmountUsd,
                   direction,
-                })}
+                })
+              }
               isDisabled={direction === 'to'}
             />
-            <h5>
-              $
-              {numberToFormatString(Number(selection.amount_usd), 2)}
-            </h5>
+            <h5>${numberToFormatString(Number(selection.amount_usd), 2)}</h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}

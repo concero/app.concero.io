@@ -1,10 +1,6 @@
 import { EvmTransaction } from 'rango-sdk-basic'
 import { rangoClient } from '../../../../api/rango/rangoClient'
-import {
-  checkApprovalSync,
-  checkTransactionStatusSync,
-  prepareEvmTransaction,
-} from '../../../../api/rango/prepareEvmTransaction'
+import { checkApprovalSync, checkTransactionStatusSync, prepareEvmTransaction } from '../../../../api/rango/prepareEvmTransaction'
 import { viemSigner } from '../../../../web3/ethers'
 import { addingDecimals } from '../../../../utils/formatting'
 

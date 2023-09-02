@@ -27,15 +27,8 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
     <div className={classNames.container}>
       <TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
       <TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} />
-      <SwapDetails
-        swapState={swapState}
-        setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })}
-      />
-      <SwapButton
-        swapState={swapState}
-        isConnected={isConnected}
-        onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook })}
-      />
+      <SwapDetails swapState={swapState} setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })} />
+      <SwapButton swapState={swapState} isConnected={isConnected} onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook })} />
     </div>
   )
 }

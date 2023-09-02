@@ -40,9 +40,7 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       ) : null}
       <div className={classNames.routeInfoContainer}>
         <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
-        <p className={'body1'}>{`${
-          selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''
-        }`}</p>
+        <p className={'body1'}>{`${selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''}`}</p>
       </div>
     </Button>
   </div>

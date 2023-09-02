@@ -1,50 +1,48 @@
 input {
-    background-color: var(--color-base-background);
-    border: 1px solid var(--color-grey-dark);
-    border-radius: var(--st-br-sm);
-    color: var(--color-text-primary);
-    font-size: 16px;
-    font-weight: 400;
-    outline: none;
-    padding: var(--sp-sm) var(--sp-md);
-    transition: border 0.2s ease-out, background-color 0.2s ease-out;
+  background-color: var(--color-base-background);
+  border: 1px solid var(--color-grey-dark);
+  border-radius: var(--st-br-sm);
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  padding: var(--sp-sm) var(--sp-md);
+  transition: border 0.2s ease-out, background-color 0.2s ease-out;
 }
 
 input::placeholder {
-    color: var(--color-grey-medium);
+  color: var(--color-grey-medium);
 }
 
 input:hover {
-
-    border: 1px solid var(--color-primary-dark);
+  border: 1px solid var(--color-primary-dark);
 }
 
 input:focus {
-    background-color: var(--color-primary-darkest);
-    border: 1px solid var(--color-primary-main);
+  background-color: var(--color-primary-darkest);
+  border: 1px solid var(--color-primary-main);
 }
 
 .inputWrapper {
-    position: relative;
+  position: relative;
 
-    .inputIcon {
-        position: absolute;
-        right: var(--sp-md);
-        top: 50%;
-        transform: translateY(-50%);
+  .inputIcon {
+    position: absolute;
+    right: var(--sp-md);
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-    }
-
-    input {
-        padding-right: var(--sp-xl);
-    }
+  input {
+    padding-right: var(--sp-xl);
+  }
 }
 
 .inline {
-    input {
-        background-color: transparent;
-        border: none;
-        border-radius: 0;
-        padding: 0;
-    }
+  input {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+  }
 }

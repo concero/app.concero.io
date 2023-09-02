@@ -13,28 +13,19 @@ export interface TextInputProps {
   isDisabled?: boolean
 }
 
-export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<
-  HTMLInputElement,
-  TextInputProps
->(({ value, placeholder, onChangeText = null, iconName, variant, isDisabled = false, ...rest }, ref) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeText && onChangeText(event.target.value)
-  }
+export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<HTMLInputElement, TextInputProps>(
+  ({ value, placeholder, onChangeText = null, iconName, variant, isDisabled = false, ...rest }, ref) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChangeText && onChangeText(event.target.value)
+    }
 
-  const inputClass = variant === 'inline' ? `${classNames.inputWrapper} ${classNames.inline}` : classNames.inputWrapper
+    const inputClass = variant === 'inline' ? `${classNames.inputWrapper} ${classNames.inline}` : classNames.inputWrapper
 
-  return (
-    <div className={inputClass}>
-      {iconName && <Icon name={iconName} className={classNames.inputIcon} size={18} color={colors.grey.dark} />}
-      <input
-        ref={ref}
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        disabled={isDisabled}
-        {...rest}
-      />
-    </div>
-  )
-})
+    return (
+      <div className={inputClass}>
+        {iconName && <Icon name={iconName} className={classNames.inputIcon} size={18} color={colors.grey.dark} />}
+        <input ref={ref} type="text" placeholder={placeholder} value={value} onChange={handleChange} disabled={isDisabled} {...rest} />
+      </div>
+    )
+  },
+)

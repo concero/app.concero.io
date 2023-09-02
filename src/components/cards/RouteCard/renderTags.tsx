@@ -6,12 +6,7 @@ import { capitalize, numberToFormatString, secondsConverter } from '../../../uti
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
 
-export const renderTags = (
-  route: Route,
-  isSelected: boolean,
-  getTextColor: () => string,
-  getIconColor: () => string,
-) => {
+export const renderTags = (route: Route, isSelected: boolean, getTextColor: () => string, getIconColor: () => string) => {
   const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
   const { toggleInsurance } = useContext(InsuranceContext)
 
@@ -46,9 +41,7 @@ export const renderTags = (
           },
         }}
       >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
-          {secondsConverter(route.transaction_time_seconds)}
-        </h5>
+        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
       </Tag>
       {route.slippage_percent ? (
         <Tag
@@ -61,9 +54,7 @@ export const renderTags = (
             },
           }}
         >
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
-            {numberToFormatString(route.slippage_percent)}%
-          </h5>
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>
         </Tag>
       ) : null}
       {route.cost.total_gas_usd ? (

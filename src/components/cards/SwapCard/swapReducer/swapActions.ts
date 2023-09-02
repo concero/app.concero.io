@@ -28,8 +28,7 @@ export const swapActions = {
     [action.direction]: {
       ...state[action.direction],
       ...(action.payload.amount !== undefined && action.payload.amount !== null && { amount: action.payload.amount }),
-      ...(action.payload.amount_usd !== undefined
-        && action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
+      ...(action.payload.amount_usd !== undefined && action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
     },
   }),
   RESET_AMOUNTS: (state, action) => ({

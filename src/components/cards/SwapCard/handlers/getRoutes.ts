@@ -49,10 +49,7 @@ export const getRoutes = async (from, to, swapDispatch) => {
 
   const routes = []
 
-  await Promise.all([
-    handleFetchLifiRoutes({ routes, from, to, swapDispatch }),
-    handleFetchRangoRoutes({ routes, from, to, swapDispatch }),
-  ])
+  await Promise.all([handleFetchLifiRoutes({ routes, from, to, swapDispatch }), handleFetchRangoRoutes({ routes, from, to, swapDispatch })])
 
   // if (routes.length === 0) {
   //   swapDispatch({

@@ -30,11 +30,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch })
         ))}
       </div>
       {status === 'failure' || status === 'success' ? (
-        <Button
-          leftIcon={{ name: 'ArrowLeft', iconProps: { size: 20 } }}
-          onClick={() => handleGoBack()}
-          variant="secondary"
-        >
+        <Button leftIcon={{ name: 'ArrowLeft', iconProps: { size: 20 } }} onClick={() => handleGoBack()} variant="secondary">
           Go back
         </Button>
       ) : null}

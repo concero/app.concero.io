@@ -63,9 +63,9 @@ export const fetchChartData = async (
   //   })
   // }
 
-  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?${getPointQuery(interval)}&span=289&period=${getPeriod(
+  const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?${getPointQuery(interval)}&span=289&period=${getPeriod(interval)}&searchWidth=${getSearchWidth(
     interval,
-  )}&searchWidth=${getSearchWidth(interval)}`
+  )}`
   const response = await get(url)
 
   if (response.status !== 200) return

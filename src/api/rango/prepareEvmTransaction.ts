@@ -100,12 +100,7 @@ const dispatchTransactionStatus = (txStatus, swapDispatch) => {
   }
 }
 
-export const checkTransactionStatusSync = async (
-  requestId: string,
-  txId: string,
-  rangoClient: RangoClient,
-  swapDispatch,
-) => {
+export const checkTransactionStatusSync = async (requestId: string, txId: string, rangoClient: RangoClient, swapDispatch) => {
   while (true) {
     const txStatus = await rangoClient
       .status({

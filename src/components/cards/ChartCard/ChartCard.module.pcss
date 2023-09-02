@@ -1,41 +1,41 @@
 .container {
-    flex: 1;
+  flex: 1;
 }
 
 .tooltip {
-    opacity: 0;
-    padding: 8px 12px;
-    box-sizing: border-box;
-    font-size: 12px;
-    text-align: left;
-    z-index: 100;
-    pointer-events: none;
-    border-radius: var(--st-br-md);
-    background-color: var(--color-base-background);
-    box-shadow: var(--st-sh-sm);
-    border: 1px solid var(--color-grey-darker);
-    transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  font-size: 12px;
+  text-align: left;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: var(--st-br-md);
+  background-color: var(--color-base-background);
+  box-shadow: var(--st-sh-sm);
+  border: 1px solid var(--color-grey-darker);
+  transition: opacity 0.2s ease-in-out;
 }
 
 .selectChainContainer {
-    flex-direction: row;
-    gap: var(--sp-sm);
-    align-items: center;
+  flex-direction: row;
+  gap: var(--sp-sm);
+  align-items: center;
 
-    h5 {
-        color: var(--color-grey-medium)
-    }
+  h5 {
+    color: var(--color-grey-medium);
+  }
 }
 
 .headerContainer {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: var(--sp-md);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--sp-md);
 }
 
 @media (max-width: 700px) {
-    .container {
-        max-height: 50vh;
-    }
+  .container {
+    max-height: 50vh;
+  }
 }

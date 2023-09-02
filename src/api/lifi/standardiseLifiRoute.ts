@@ -45,16 +45,11 @@ export const standardiseLifiRoute = (route: types.Route): Route => ({
     fee_amount_usd: route.insurance.feeAmountUsd,
   },
   slippage_percent: route.steps.reduce(
-    (acc, step) =>
-      acc +
-      (step.action.slippage +
-        step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
+    (acc, step) => acc + (step.action.slippage + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
     0,
   ),
   transaction_time_seconds: route.steps.reduce(
-    (acc: number, step) =>
-      acc +
-      step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
+    (acc: number, step) => acc + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
     0,
   ),
   execution: route.steps.map((step) => step.execution),
