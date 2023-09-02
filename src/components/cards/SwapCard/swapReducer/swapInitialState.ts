@@ -1,7 +1,8 @@
 import { chains } from '../../../../constants/chains'
 import { tokens } from '../../../../constants/tokens'
+import { State } from '../types'
 
-export const swapInitialState = {
+export const swapInitialState: State = {
   from: {
     chain: {
       name: chains[0].name,
@@ -60,6 +61,7 @@ export const swapInitialState = {
   selectedRoute: null,
   typingTimeout: 0,
   response: null,
-  stage: 'input',
-  steps: [],
+  stage: 'input', // input, progress
+  steps: [], // [ { status, title, body, txLink } ]
+  status: 'pending', // success, failure, pending, awaiting
 }

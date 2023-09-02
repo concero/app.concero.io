@@ -25,17 +25,6 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
         },
       ],
     })
-    swapDispatch({
-      type: 'SET_SWAP_STEPS',
-      payload: [
-        {
-          status: 'success',
-          title: 'Transaction success',
-          // body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
-          // txLink: txStatus.explorerUrl[0].url ?? null,
-        },
-      ],
-    })
   }
 
   // try {
@@ -67,7 +56,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
   } catch (e) {
     console.log('ERROR: ', e)
     handleTransactionError(e, swapDispatch, provider)
-    swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'error' })
+    swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
   } finally {
     swapDispatch({ type: 'SET_LOADING', payload: false })
   }

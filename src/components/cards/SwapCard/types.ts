@@ -85,6 +85,9 @@ export type State = {
   originalRoutes: any[]
   typingTimeout: number
   response: Response | null
+  stage: 'input' | 'progress'
+  steps: Step[]
+  status: 'pending' | 'success' | 'fail' | 'awaiting'
 }
 
 type Response = {

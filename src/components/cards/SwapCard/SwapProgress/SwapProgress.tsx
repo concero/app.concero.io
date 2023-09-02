@@ -5,17 +5,15 @@ import { TransactionStep } from './TransactionStep'
 import { Button } from '../../../buttons/Button/Button'
 
 interface SwapProgressProps {
-  from: any
-  to: any
-  steps: any[]
-  stage: string
+  swapState: any
   swapDispatch: any
 }
 
 export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch }) => {
-  const { from, to, steps, stage } = swapState
+  const { from, to, steps, status } = swapState
   const handleGoBack = () => {
     swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'input' })
+    swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'pending' })
   }
 
   return (
@@ -29,7 +27,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch })
           <TransactionStep key={index.toString()} step={step} />
         ))}
       </div>
-      {stage !== 'progress' ? (
+      {status === 'failure' || status === 'success' ? (
         <Button
           leftIcon={{ name: 'ArrowLeft', iconProps: { size: 20 } }}
           className={classNames.goBackButton}

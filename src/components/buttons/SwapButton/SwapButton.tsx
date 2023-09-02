@@ -16,17 +16,7 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
   return (
     <Button
       size="lg"
-      leftIcon={
-        buttonState.icon
-          ? {
-              name: buttonState.icon,
-              iconProps: {
-                size: 18,
-                color: 'white',
-              },
-            }
-          : null
-      }
+      leftIcon={buttonState.icon ? { name: buttonState.icon, iconProps: { size: 18, color: 'white' } } : null}
       isDisabled={buttonState.isDisabled}
       isLoading={isLoading}
       onClick={onClick}
