@@ -5,7 +5,7 @@ import { LoadingAnimation } from '../../../layout/LoadingAnimation/LoadingAnimat
 import Icon from '../../../Icon'
 import { colors } from '../../../../constants/colors'
 
-interface TransactionStepProps {
+interface stageProps {
   step: {
     title: string
     body?: string
@@ -39,13 +39,13 @@ const renderTag = (status: string) => {
   )
 }
 
-export const TransactionStep: FC<TransactionStepProps> = ({ step }) => {
+export const TransactionStep: FC<stageProps> = ({ step }) => {
   const { title, body, status, txLink } = step
 
   return (
-    <div className={classNames.transactionStep}>
+    <div className={classNames.stage}>
       {renderTag(status)}
-      <div className={classNames.transactionStepText}>
+      <div className={classNames.stageText}>
         <div className={classNames.titleContainer}>
           <h5>{title}</h5>
           {txLink && (

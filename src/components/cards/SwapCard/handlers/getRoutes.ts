@@ -4,7 +4,7 @@ import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
 const populateRoutes = ({ routes, from, swapDispatch }) => {
   // if (routes.length <= 0) {
   //   swapDispatch({
-  //     type: 'SET_RESPONSES',
+  //     type: 'SET_RESPONSE',
   //     payload: {
   //       isOk: false,
   //       message: 'No routes found',
@@ -56,7 +56,7 @@ export const getRoutes = async (from, to, swapDispatch) => {
 
   // if (routes.length === 0) {
   //   swapDispatch({
-  //     type: 'SET_RESPONSES',
+  //     type: 'SET_RESPONSE',
   //     payload: {
   //       isOk: false,
   //       message: 'No routes found',

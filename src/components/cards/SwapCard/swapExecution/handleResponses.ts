@@ -3,7 +3,7 @@ import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 export const handleRangoResponse = (executedRoute, swapDispatch, provider) => {
   if (executedRoute.status === 'failed') {
     swapDispatch({
-      type: 'SET_RESPONSES',
+      type: 'SET_RESPONSE',
       payload: {
         provider,
         isOk: false,
@@ -12,7 +12,7 @@ export const handleRangoResponse = (executedRoute, swapDispatch, provider) => {
     })
   } else if (executedRoute.status === 'success') {
     swapDispatch({
-      type: 'SET_RESPONSES',
+      type: 'SET_RESPONSE',
       payload: {
         provider,
         isOk: true,
@@ -28,7 +28,7 @@ export const handleLifiResponse = (executedRoute, swapDispatch, provider) => {
 
   if (lastExecutionStep?.status.toLowerCase() === 'done') {
     swapDispatch({
-      type: 'SET_RESPONSES',
+      type: 'SET_RESPONSE',
       payload: {
         provider,
         isOk: true,

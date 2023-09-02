@@ -40,7 +40,7 @@ const dispatchTransactionStatus = (txStatus, swapDispatch) => {
   switch (txStatus.status) {
     case TransactionStatus.FAILED: {
       swapDispatch({
-        type: 'SET_SWAP_PROGRESS',
+        type: 'SET_SWAP_STEP',
         payload: [
           {
             status: 'error',
@@ -51,14 +51,14 @@ const dispatchTransactionStatus = (txStatus, swapDispatch) => {
         ],
       })
       swapDispatch({
-        type: 'SET_SWAP_STEP',
+        type: 'SET_SWAP_STAGE',
         payload: 'failed',
       })
     }
 
     case TransactionStatus.SUCCESS: {
       swapDispatch({
-        type: 'SET_SWAP_PROGRESS',
+        type: 'SET_SWAP_STEPS',
         payload: [
           {
             status: 'success',
@@ -69,13 +69,13 @@ const dispatchTransactionStatus = (txStatus, swapDispatch) => {
         ],
       })
       swapDispatch({
-        type: 'SET_SWAP_STEP',
+        type: 'SET_SWAP_STAGE',
         payload: 'success',
       })
     }
     case TransactionStatus.RUNNING:
       swapDispatch({
-        type: 'SET_SWAP_PROGRESS',
+        type: 'SET_SWAP_STEPS',
         payload: [
           {
             status: 'pending',
@@ -87,7 +87,7 @@ const dispatchTransactionStatus = (txStatus, swapDispatch) => {
       })
     default:
       swapDispatch({
-        type: 'SET_SWAP_PROGRESS',
+        type: 'SET_SWAP_STEPS',
         payload: [
           {
             status: 'await',

@@ -13,10 +13,7 @@ import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address } = useAccount()
-  const [
-    { from, to, balance, routes, isLoading, selectedRoute, transactionResponse, transactionStep, transactionProgress },
-    swapDispatch,
-  ] = useSwapReducer()
+  const [swapState, swapDispatch] = useSwapReducer()
   const { dispatch } = useContext(SelectionContext)
   const typingTimeoutRef = useRef(null)
 
@@ -28,39 +25,22 @@ export const SwapCard: FC<SwapCardProps> = () => {
   }
 
   useSwapCardEffects({
-    from,
-    to,
+    swapState,
     swapDispatch,
     address,
     dispatch,
-    selectedRoute,
     typingTimeoutRef,
   })
 
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>
       <div className={`card ${classNames.container}`}>
-        <CardHeader title={getCardTitleByStatus(transactionStep)} isLoading={isLoading} />
+        <CardHeader title={getCardTitleByStatus(swapState.stage)} isLoading={swapState.isLoading} />
         <div className={classNames.swapContainer}>
-          {transactionStep === 'input' ? (
-            <SwapInput
-              from={from}
-              to={to}
-              swapDispatch={swapDispatch}
-              balance={balance}
-              routes={routes}
-              isLoading={isLoading}
-              selectedRoute={selectedRoute}
-              transactionResponse={transactionResponse}
-            />
+          {swapState.stage === 'input' ? (
+            <SwapInput swapState={swapState} swapDispatch={swapDispatch} />
           ) : (
-            <SwapProgress
-              from={from}
-              to={to}
-              transactionProgress={transactionProgress}
-              transactionStep={transactionStep}
-              swapDispatch={swapDispatch}
-            />
+            <SwapProgress swapState={swapState} swapDispatch={swapDispatch} />
           )}
         </div>
       </div>

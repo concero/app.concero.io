@@ -14,7 +14,7 @@ import { TokenColumns } from './TokenColumns'
 import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
 import { handleAmountChange, handleAreaClick } from './handlers'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, balance = null }) => {
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, balance, swapDispatch }) => {
   const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
   const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
   const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
@@ -22,7 +22,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   const inputRef = useRef()
 
   const setChain = (chain) => {
-    dispatch({
+    swapDispatch({
       type: 'SET_CHAIN',
       direction,
       payload: { chain },
@@ -30,7 +30,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   }
 
   const setToken = (token) => {
-    dispatch({
+    swapDispatch({
       type: 'SET_TOKEN',
       direction,
       payload: { token },
@@ -38,7 +38,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   }
 
   const setAmountUsd = (input) => {
-    dispatch({
+    swapDispatch({
       type: 'SET_AMOUNT',
       direction,
       payload: {
@@ -84,7 +84,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
             </Button>
           </div>
-          {balance !== null ? <p>{`Max: ${balance}`}</p> : null}
+          {balance ? <p>{`Max: ${balance}`}</p> : null}
         </div>
         <div className={classNames.tokenRow}>
           <div>
@@ -95,18 +95,19 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
               value={selection.amount}
-              onChangeText={(value) =>
-                direction === 'from' &&
-                handleAmountChange({
+              onChangeText={(value) => direction === 'from'
+                && handleAmountChange({
                   value,
-                  dispatch,
+                  dispatch: swapDispatch,
                   setAmountUsd,
                   direction,
-                })
-              }
+                })}
               isDisabled={direction === 'to'}
             />
-            <h5>${numberToFormatString(Number(selection.amount_usd), 2)}</h5>
+            <h5>
+              $
+              {numberToFormatString(Number(selection.amount_usd), 2)}
+            </h5>
           </div>
           <Button
             onClick={() => setShowTokensModal(true)}

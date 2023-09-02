@@ -5,21 +5,13 @@ import { useButtonReducer } from './buttonReducer'
 import { SwapButtonProps } from './types'
 import { setStatus } from './setStatus'
 
-export const SwapButton: FC<SwapButtonProps> = ({
-  from,
-  to,
-  isConnected,
-  isLoading,
-  routes,
-  onClick,
-  balance,
-  transactionResponse,
-}) => {
+export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
+  const { from, to, routes, balance, response, isLoading } = swapState
   const [buttonState, dispatch] = useButtonReducer()
 
   useEffect(() => {
-    setStatus(from, to, isConnected, isLoading, dispatch, routes, balance, transactionResponse)
-  }, [from, to, isLoading, isConnected, routes, transactionResponse])
+    setStatus(from, to, isConnected, isLoading, dispatch, routes, balance, response)
+  }, [from, to, isLoading, isConnected, routes, response])
 
   return (
     <Button

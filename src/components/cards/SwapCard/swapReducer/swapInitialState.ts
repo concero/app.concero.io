@@ -1,7 +1,7 @@
 import { chains } from '../../../../constants/chains'
 import { tokens } from '../../../../constants/tokens'
 
-export const initArg = {
+export const swapInitialState = {
   from: {
     chain: {
       name: chains[0].name,
@@ -59,7 +59,7 @@ export const initArg = {
   isLoading: false,
   selectedRoute: null,
   typingTimeout: 0,
-  transactionResponse: null,
-  transactionStep: 'input',
-  transactionProgress: [],
+  response: null,
+  stage: 'input',
+  steps: [],
 }

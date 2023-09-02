@@ -15,28 +15,24 @@ const getStepStatus = (action) => {
   }
 }
 
-const getStepTitle = (action) => {
-  return action?.message || action?.error?.message || null
-}
+const getStepTitle = (action) => action?.message || action?.error?.message || null
 
 export const updateLifiSteps = ({ swapDispatch, selectedRoute }) => {
   const messages = selectedRoute.execution.reduce((acc, step) => {
     if (!step?.process) return acc
 
-    const stepMessages = step.process.map((action) => {
-      return {
-        title: getStepTitle(action),
-        body: action.substatusMessage || null,
-        status: getStepStatus(action),
-        txLink: action.txLink || null,
-      }
-    })
+    const stepMessages = step.process.map((action) => ({
+      title: getStepTitle(action),
+      body: action.substatusMessage || null,
+      status: getStepStatus(action),
+      txLink: action.txLink || null,
+    }))
 
     return [...acc, ...stepMessages]
   }, [])
 
   swapDispatch({
-    type: 'SET_SWAP_PROGRESS',
+    type: 'SET_SWAP_STEPS',
     payload: messages,
   })
 }

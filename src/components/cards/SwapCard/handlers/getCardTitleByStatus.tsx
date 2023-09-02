@@ -1,6 +1,6 @@
-export const getCardTitleByStatus = (transactionStep: string) => {
-  if (transactionStep === 'input') return 'Swap'
-  if (transactionStep === 'progress') return 'Swap in progress'
-  if (transactionStep === 'success') return 'Swap successful'
-  if (transactionStep === 'error') return 'Swap failed'
+export const getCardTitleByStatus = (stage: string) => {
+  if (stage === 'input') return 'Swap'
+  if (stage === 'progress') return 'Swap in progress'
+  if (stage === 'success') return 'Swap successful'
+  if (stage === 'error') return 'Swap failed'
 }

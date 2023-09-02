@@ -9,16 +9,7 @@ import { SwapInputProps } from './types'
 import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
 import { handleSwap } from '../swapExecution/handleSwap'
 
-export const SwapInput: FC<SwapInputProps> = ({
-  from,
-  to,
-  swapDispatch,
-  balance,
-  routes,
-  isLoading,
-  selectedRoute,
-  transactionResponse,
-}) => {
+export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   const { address, isConnected } = useAccount()
   const { switchNetwork } = useSwitchNetwork()
 
@@ -34,40 +25,16 @@ export const SwapInput: FC<SwapInputProps> = ({
 
   return (
     <div className={classNames.container}>
-      <TokenArea direction="from" selection={from} dispatch={swapDispatch} balance={balance} />
-      <TokenArea direction="to" selection={to} dispatch={swapDispatch} />
+      <TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
+      <TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} />
       <SwapDetails
-        selection={{
-          from,
-          to,
-        }}
-        selectedRoute={selectedRoute}
-        setSelectedRoute={(route) =>
-          swapDispatch({
-            type: 'SET_SELECTED_ROUTE',
-            payload: route,
-          })
-        }
-        routes={routes}
-        isLoading={isLoading}
+        swapState={swapState}
+        setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })}
       />
       <SwapButton
-        onClick={() =>
-          handleSwap({
-            swapDispatch,
-            selectedRoute,
-            address,
-            from,
-            switchChainHook,
-          })
-        }
-        from={from}
-        to={to}
-        isLoading={isLoading}
+        swapState={swapState}
         isConnected={isConnected}
-        routes={routes}
-        balance={balance}
-        transactionResponse={transactionResponse}
+        onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook })}
       />
     </div>
   )
