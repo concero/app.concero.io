@@ -1,3 +1,5 @@
+import { createWalletClient, custom } from 'viem'
+import { providers } from 'ethers'
 import { useAccount, useSwitchNetwork } from 'wagmi'
 import { FC } from 'react'
 import { TokenArea } from '../TokenArea/TokenArea'
@@ -6,8 +8,6 @@ import classNames from './SwapInput.module.pcss'
 import { SwapInputProps } from './types'
 import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
 import { handleSwap } from '../swapExecution/handleSwap'
-import { createWalletClient, custom } from 'viem'
-import { providers } from 'ethers'
 
 export const SwapInput: FC<SwapInputProps> = ({
   from,
@@ -42,22 +42,25 @@ export const SwapInput: FC<SwapInputProps> = ({
           to,
         }}
         selectedRoute={selectedRoute}
-        setSelectedRoute={(route) => swapDispatch({
+        setSelectedRoute={(route) =>
+          swapDispatch({
             type: 'SET_SELECTED_ROUTE',
             payload: route,
-          })}
+          })
+        }
         routes={routes}
         isLoading={isLoading}
       />
       <SwapButton
-        onClick={() => handleSwap({
+        onClick={() =>
+          handleSwap({
             swapDispatch,
             selectedRoute,
-            provider: selectedRoute.provider,
             address,
             from,
             switchChainHook,
-          })}
+          })
+        }
         from={from}
         to={to}
         isLoading={isLoading}

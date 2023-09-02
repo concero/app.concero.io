@@ -20,8 +20,6 @@ const getStepTitle = (action) => {
 }
 
 export const updateLifiSteps = ({ swapDispatch, selectedRoute }) => {
-  if (!selectedRoute.execution[0]) return
-
   const messages = selectedRoute.execution.reduce((acc, step) => {
     if (!step?.process) return acc
 

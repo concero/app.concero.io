@@ -1,64 +1,10 @@
-import { viemSigner } from '../../../../web3/ethers'
 import { handleTransactionError } from '../handlers/handleTransactionError'
-import { executeRangoRoute } from './executeRangoRoute'
-import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
-import { Route } from '../../../../api/lifi/types'
-import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { updateLifiSteps } from './updateLifiSteps'
+import { handleLifiResponse, handleRangoResponse } from './handleResponses'
+import { handleExecuteRoute } from './handleExecutionRoute'
 
-const handleExecuteRoute = async ({ route, provider, address, from, swapDispatch, switchChainHook }) => {
-  if (provider === 'lifi') {
-    const updateRouteHook = (updatedRoute: Route) => {
-      console.log(JSON.stringify(updatedRoute))
-      console.log(updatedRoute)
-      const stdRoute = standardiseLifiRoute(updatedRoute)
-      updateLifiSteps({
-        swapDispatch,
-        selectedRoute: stdRoute,
-      })
-    }
-    return executeLifiRoute(viemSigner, route, { updateRouteHook, switchChainHook })
-  }
-  if (provider === 'rango') return executeRangoRoute(route, address, from, swapDispatch)
-}
-
-const handleRangoResponse = (executedRoute, swapDispatch, provider) => {
-  if (executedRoute.status === 'failed') {
-    swapDispatch({
-      type: 'SET_RESPONSES',
-      payload: {
-        provider,
-        isOk: false,
-        message: executedRoute.error,
-      },
-    })
-  } else if (executedRoute.status === 'success') {
-    swapDispatch({
-      type: 'SET_RESPONSES',
-      payload: {
-        provider,
-        isOk: true,
-        message: 'Success',
-      },
-    })
-  }
-}
-
-const handleLifiResponse = (executedRoute, swapDispatch, provider) => {
-  if (executedRoute) {
-    swapDispatch({
-      type: 'SET_RESPONSES',
-      payload: {
-        provider,
-        isOk: true,
-        message: 'Success',
-      },
-    })
-  }
-}
-
-export const handleSwap = async ({ swapDispatch, selectedRoute, provider, address, from, switchChainHook }) => {
-  const { originalRoute } = selectedRoute
+export const handleSwap = async ({ swapDispatch, selectedRoute, address, from, switchChainHook }) => {
+  const { originalRoute, provider } = selectedRoute
   if (!originalRoute) return console.error('No original route passed')
 
   swapDispatch({
@@ -99,45 +45,46 @@ export const handleSwap = async ({ swapDispatch, selectedRoute, provider, addres
         },
       ],
     })
+  }
 
-    // try {
-    //   await switchChainFunction()
-    // } catch (e) {
-    //   console.log('ERROR: ', e)
-    //   swapDispatch({
-    //     type: 'SET_LOADING',
-    //     payload: false,
-    //   })
-    //   return
-    // }
+  // try {
+  //   await switchChainFunction()
+  // } catch (e) {
+  //   console.log('ERROR: ', e)
+  //   swapDispatch({
+  //     type: 'SET_LOADING',
+  //     payload: false,
+  //   })
+  //   return
+  // }
 
-    try {
-      const executedRoute = await handleExecuteRoute({
-        route: originalRoute,
-        provider,
-        address,
-        from,
-        swapDispatch,
-        switchChainHook,
-      })
+  try {
+    console.log('EXECUTE ROUTE')
+    const executedRoute = await handleExecuteRoute({
+      route: originalRoute,
+      provider,
+      address,
+      from,
+      swapDispatch,
+      switchChainHook,
+    })
 
-      if (provider === 'rango') {
-        handleRangoResponse(executedRoute, swapDispatch, provider)
-      } else if (provider === 'lifi') {
-        handleLifiResponse(executedRoute, swapDispatch, provider)
-      }
-    } catch (e) {
-      console.log('ERROR: ', e)
-      handleTransactionError(e, swapDispatch, provider)
-      swapDispatch({
-        type: 'SET_SWAP_STEP',
-        payload: 'failed',
-      })
-    } finally {
-      swapDispatch({
-        type: 'SET_LOADING',
-        payload: false,
-      })
+    if (provider === 'rango') {
+      handleRangoResponse(executedRoute, swapDispatch, provider)
+    } else if (provider === 'lifi') {
+      handleLifiResponse(executedRoute, swapDispatch, provider)
     }
+  } catch (e) {
+    console.log('ERROR: ', e)
+    handleTransactionError(e, swapDispatch, provider)
+    swapDispatch({
+      type: 'SET_SWAP_STEP',
+      payload: 'failed',
+    })
+  } finally {
+    swapDispatch({
+      type: 'SET_LOADING',
+      payload: false,
+    })
   }
 }
