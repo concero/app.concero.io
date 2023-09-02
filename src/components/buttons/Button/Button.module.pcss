@@ -78,8 +78,9 @@
 }
 
 .secondary {
-    background-color: var(--color-base-background);
-    border-color: var(--color-primary-mainLight);
+    background-color: var(--color-primary-darkest);
+    border-color: var(--color-primary-darker);
+    color: var(--color-primary-to-lightest);
 }
 
 .subtle {
@@ -134,14 +135,9 @@
     color: var(--color-text-primary);
 }
 
-.goBack {
-    background-color: var(--color-primary-darkest);
-    border: 1px solid var(--color-primary-darker);
-    color: var(--color-primary-main);
-}
-
-.goBack:hover {
-    background-color: var(--color-primary-dark);
+.secondary:hover {
+    background-color: var(--color-primary-darker);
+    border-color: var(--color-primary-main);
 }
 
 @media (max-width: 768px) {

@@ -1,15 +1,12 @@
 .swapButton {
     height: 45px;
-
-    .buttonText {
-        color: var(--color-button-text-primary);
-    }
+    color: var(--color-button-text-primary)
 }
 
 .disabled {
-    background-color: var(--color-primary-dark);
-    border: 1px solid var(--color-primary-main);
-    color: var(--color-button-text-primary);
+    background-color: var(--color-primary-darkest);
+    border: 1px solid var(--color-primary-darker);
+    color: var(--color-primary-to-lightest);
 
     svg {
         stroke: var(--color-button-text-primary);
@@ -23,11 +20,7 @@
 .wrong {
     background-color: var(--color-red-darkest);
     border: 1px solid var(--color-red-darker);
-
-    .buttonText {
-
-        color: var(--color-red-light);
-    }
+    color: var(--color-red-light);
 
     svg {
         stroke: var(--color-red-light);
@@ -38,10 +31,7 @@
 .success {
     background-color: var(--color-green-darkest);
     border: 1px solid var(--color-green-main);
-
-    .buttonText {
-        color: var(--color-green-main);
-    }
+    color: var(--color-green-main);
 
     svg {
         stroke: var(--color-green-main);
