@@ -10,6 +10,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 
   swapDispatch({ type: 'SET_LOADING', payload: true })
   swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'progress' })
+  swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'progress' })
 
   if (provider === 'lifi') {
     updateLifiSteps({ swapDispatch, selectedRoute })

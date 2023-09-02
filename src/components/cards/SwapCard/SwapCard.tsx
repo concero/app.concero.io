@@ -25,7 +25,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>
       <div className={`card ${classNames.container}`}>
-        <CardHeader title={getCardTitleByStatus(swapState.stage)} isLoading={swapState.isLoading} />
+        <CardHeader title={getCardTitleByStatus(swapState.status)} isLoading={swapState.isLoading} />
         <div className={classNames.swapContainer}>
           {swapState.stage === 'input' ? (
             <SwapInput swapState={swapState} swapDispatch={swapDispatch} />
