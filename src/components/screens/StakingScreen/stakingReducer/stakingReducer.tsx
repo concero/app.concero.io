@@ -13,6 +13,9 @@ const stakingReducer = (state, action) => {
           [action.payload.filter]: action.payload.value,
         },
       }
+    case 'SET_SELECTED_VAULT':
+      return { ...state, selectedVault: action.payload }
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }

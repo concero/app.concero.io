@@ -1,4 +1,5 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
+import { animated, useSpring } from 'react-spring'
 import classNames from './StakingCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { colors } from '../../../constants/colors'
@@ -15,19 +16,19 @@ interface StakingCardProps {
 }
 
 export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols, onClick }) => {
-  const [isCollapsed, setIsCollapsed] = useState(true)
   const pairSymbol = `${vault.underlying_assets.map((asset) => asset.symbol).join('/')}`
+  const animProps = useSpring({
+    height: isSelected ? 54 : 0,
+    from: { height: isSelected ? 0 : 54 },
+    config: { mass: 1, tension: 500, friction: 50 },
+  })
 
   const handleChevronClick = (e) => {
     e.stopPropagation()
-    setIsCollapsed(!isCollapsed)
   }
 
   return (
-    <div
-      className={`${classNames.container} ${isSelected ? classNames.selectedContainer : ''}`}
-      onClick={() => onClick(vault.id)}
-    >
+    <div className={`${classNames.container} ${isSelected ? classNames.selected : ''}`} onClick={() => onClick(vault)}>
       <div className={classNames.headerContainer}>
         <div className={classNames.headerSideContainer}>
           <Avatar src={protocols[vault.protocol_id].logo_url} size="md" />
@@ -38,16 +39,18 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols
           {renderTags({ vault, isSelected })}
           <Button
             onClick={(e) => handleChevronClick(e)}
-            variant={'black'}
-            size={'sm'}
+            variant="black"
+            size="sm"
             rightIcon={{
-              name: `${isCollapsed ? 'ChevronDown' : 'ChevronUp'}`,
+              name: `${!isSelected ? 'ChevronDown' : 'ChevronUp'}`,
               iconProps: { size: 18, color: colors.text.secondary },
             }}
           />
         </div>
       </div>
-      <StakeButtons isCollapsed={isCollapsed} />
+      <animated.div style={animProps}>
+        <StakeButtons isSelected={isSelected} />
+      </animated.div>
     </div>
   )
 }

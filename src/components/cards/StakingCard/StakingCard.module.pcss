@@ -5,9 +5,11 @@
     background-color: var(--color-grey-darkest);
     border: 1px solid transparent;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
-.selectedContainer {
+
+.selected {
     background-color: var(--color-primary-darkest);
     border: 1px solid var(--color-primary-dark);
 }
@@ -38,13 +40,9 @@
 
 .buttonContainer {
     flex-direction: row;
-    width: 100%;
     gap: var(--sp-sm);
     padding: var(--sp-sm) 0 0;
 
-    .stakeButton {
-        flex: 1;
-    }
 
     .buttonIcon {
         width: 18px;
@@ -52,4 +50,8 @@
         color: var(--color-base-white);
         rotate: 90deg;
     }
+}
+
+.stakeButton {
+    flex: 1;
 }
