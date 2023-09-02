@@ -23,7 +23,7 @@
     }
 }
 
-.stage {
+.step {
     flex-direction: row;
     align-items: flex-start;
     gap: var(--sp-md);
@@ -33,9 +33,24 @@
     align-items: center;
     justify-content: center;
     flex: none;
+    border-radius: var(--st-br-sm);
+    padding: var(--sp-sm) var(--sp-sm);
+    background-color: var(--color-grey-darkest);
+
+    &.success {
+        background-color: var(--color-green-darkest);
+    }
+
+    &.error {
+        background-color: var(--color-red-darkest);
+    }
+
+    &.pending {
+        background-color: var(--color-primary-darkest);
+    }
 }
 
-.stageText {
+.stepText {
     width: 100%;
 
     h5 {

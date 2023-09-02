@@ -45,4 +45,5 @@ export const swapActions = {
   SET_SWAP_STAGE: (state, action) => ({ ...state, stage: action.payload }),
   SET_SWAP_STEPS: (state, action) => ({ ...state, steps: action.payload }),
   SET_SWAP_STATUS: (state, action) => ({ ...state, status: action.payload }),
+  APPEND_SWAP_STEP: (state, action) => ({ ...state, steps: [...state.steps, action.payload] }),
 }

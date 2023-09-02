@@ -1,6 +1,6 @@
 import { FC } from 'react'
+import { Ping } from '@uiball/loaders'
 import classNames from './SwapProgress.module.pcss'
-import { Tag } from '../../../tags/Tag/Tag'
 import { LoadingAnimation } from '../../../layout/LoadingAnimation/LoadingAnimation'
 import Icon from '../../../Icon'
 import { colors } from '../../../../constants/colors'
@@ -15,12 +15,13 @@ interface stageProps {
 }
 
 const renderTag = (status: string) => {
-  const color = status === 'success' ? 'green' : status === 'error' ? 'red' : 'grey'
-  const iconSize = 16
+  const iconSize = 18
   const content = () => {
     switch (status) {
       case 'pending':
-        return <LoadingAnimation size={iconSize} color={colors.text.secondary} />
+        return <LoadingAnimation size={iconSize} color="var(--color-text-secondary)" />
+      case 'await':
+        return <Ping size={24} color="var(--color-text-secondary)" />
       case 'success':
         return <Icon name="Check" size={iconSize} color={colors.green.darker} />
       case 'error':
@@ -30,20 +31,14 @@ const renderTag = (status: string) => {
     }
   }
 
-  return (
-    <div className={classNames.tagContainer}>
-      <Tag color={color} size="xxs">
-        {content()}
-      </Tag>
-    </div>
-  )
+  return <div className={`${classNames.tagContainer} ${classNames[status]}`}>{content()}</div>
 }
 
 export const TransactionStep: FC<stageProps> = ({ step }) => {
   const { title, body, status, txLink } = step
 
   return (
-    <div className={classNames.stage}>
+    <div className={classNames.step}>
       {renderTag(status)}
       <div className={classNames.stageText}>
         <div className={classNames.titleContainer}>

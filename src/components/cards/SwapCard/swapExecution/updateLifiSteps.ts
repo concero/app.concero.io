@@ -1,15 +1,12 @@
 const getStepStatus = (action) => {
+  console.log('actionstatus: ', action.status)
   switch (action.status.toLowerCase()) {
-    case 'failed':
-      return 'error'
     case 'done':
       return 'success'
-    case 'success':
-      return 'success'
-    case 'action_required':
-      return 'pending'
     case 'pending':
       return 'pending'
+    case 'failed':
+      return 'error'
     default:
       return 'await'
   }

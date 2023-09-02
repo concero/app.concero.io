@@ -54,9 +54,19 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
     } else if (provider === 'lifi') {
       handleLifiResponse(executedRoute, swapDispatch, provider)
     }
-  } catch (e) {
-    console.log('ERROR: ', e)
-    handleTransactionError(e, swapDispatch, provider)
+  } catch (error) {
+    console.log('ERROR: ', error)
+    handleTransactionError(error, swapDispatch, provider)
+    swapDispatch({
+      type: 'APPEND_SWAP_STEP',
+      payload: {
+        index: 0,
+        status: 'error',
+        title: 'Transaction failed',
+        body: error.message ?? error.message ?? error ?? 'Something went wrong',
+      },
+    })
+
     swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
   } finally {
     swapDispatch({ type: 'SET_LOADING', payload: false })

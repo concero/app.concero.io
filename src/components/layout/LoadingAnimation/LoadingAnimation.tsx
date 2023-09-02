@@ -1,24 +1,10 @@
-import Lottie from 'lottie-react'
-import loadingAnimation from '../../../assets/animations/circle-loading.json'
+import { Ring } from '@uiball/loaders'
 
 interface LoadingAnimationProps {
-  color?: 'primary' | 'secondary'
+  color?: string
   size?: number
 }
 
-export function LoadingAnimation({ color = 'primary', size = 30 }) {
-  return (
-    <Lottie
-      loop
-      autoplay
-      animationData={loadingAnimation}
-      style={{
-        width: size,
-        height: size,
-      }}
-      rendererSettings={{
-        preserveAspectRatio: 'xMidYMid slice',
-      }}
-    />
-  )
+export function LoadingAnimation({ color = 'var(--color-text-primary)', size = 18 }) {
+  return <Ring color={color} size={size} />
 }
