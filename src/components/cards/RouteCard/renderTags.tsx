@@ -19,18 +19,15 @@ export const renderTags = (route: Route, isSelected: boolean, getTextColor: () =
     <div className={classNames.infoTagsContainer}>
       {route?.tags[0]?.length > 0 ? (
         <Tag color={route.tags[0].toLowerCase()}>
-          <p style={{ color: 'inherit' }}>{capitalize(advantageTagText)}</p>
+          <p style={{ color: 'inherit', flexWrap: 'nowrap' }}>{capitalize(advantageTagText)}</p>
         </Tag>
       ) : null}
       {route.insurance ? (
         <Tag color="green" onClick={(e) => handleInsuranceButtonClick(e)}>
-          Insurance
+          <p style={{ color: 'inherit', flexWrap: 'nowrap' }}>Insurance</p>
           <Beacon isOn={route.insurance?.state === 'INSURED'} color={'green'} />
         </Tag>
-      ) : // <Button variant="green" size="sm" onClick={(e) => handleInsuranceButtonClick(e)}>
-      //
-      // </Button>
-      null}
+      ) : null}
       <Tag
         color="transparent"
         leftIcon={{
