@@ -1,8 +1,8 @@
-import { FC, useContext } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
-import { Chart } from './Chart'
+import { Chart } from '../../layout/Chart/Chart'
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
@@ -14,6 +14,9 @@ import { SelectionContext } from '../../../hooks/SelectionContext'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { useChartReducer } from './chartReducer'
 import { tokens } from '../../../constants/tokens'
+import { getCoingeckoTokenIdBySymbol } from '../../../api/coinGecko/getCoingeckoTokenIdBySymbol'
+import { fetchChartData } from '../../../api/coinGecko/fetchChartData'
+import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { Card } from '../Card/Card'
 
 export interface ChartCardProps {}
@@ -21,14 +24,33 @@ export interface ChartCardProps {}
 export const ChartCard: FC<ChartCardProps> = () => {
   const { selection } = useContext(SelectionContext)
   const { theme } = useContext(ThemeContext)
-  const [{ chartType, token, interval }, dispatch] = useChartReducer(selection.swapCard)
+  const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
+  const { addNotification } = useContext(NotificationsContext)
   const isDesktop = useMediaQuery('mobile')
+
+  const setData = (data: any[]) => {
+    dispatch({
+      type: 'SET_CHART_DATA',
+      payload: data,
+    })
+  }
+
+  useEffect(() => {
+    const tokenId = getCoingeckoTokenIdBySymbol(token.base.symbol)
+    fetchChartData(setData, addNotification, tokenId, interval)
+
+    const intervalId = setInterval(() => {
+      fetchChartData(setData, addNotification, tokenId, interval)
+    }, 15000)
+
+    return () => clearInterval(intervalId)
+  }, [interval, token.base])
 
   return (
     <Card className={classNames.container}>
       <div className={classNames.headerContainer}>
         <div className={classNames.selectChainContainer}>
-          <h5>Chart</h5>
+          <h5 className="cardHeaderTitle">Chart</h5>
           <Button
             variant="black"
             size="sm"
@@ -63,7 +85,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
       </div>
       <div className="f1">
         {chartType === 'coinGecko' ? (
-          <Chart selectedToken={token.base} selectedInterval={interval} />
+          <Chart data={chartData} />
         ) : (
           <AdvancedRealTimeChart
             theme={theme}
