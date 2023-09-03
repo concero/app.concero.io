@@ -1,4 +1,5 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
+import { animated, useSpring } from 'react-spring'
 import { Card } from '../Card/Card'
 import classNames from './RouteCard.module.pcss'
 import { colors } from '../../../constants/colors'
@@ -10,8 +11,10 @@ import { numberToFormatString, roundNumberByDecimals } from '../../../utils/form
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
-  const [isRoutesCollapsed, setIsRoutesCollapsed] = useState<true | false>(true)
+  const stepsContainerRef = useRef(null)
   const isDesktop = useMediaQuery('mobile')
+  const [isRoutesCollapsed, setIsRoutesCollapsed] = useState(true)
+  const [springProps, setSpringProps] = useSpring(() => ({ height: 'auto' }))
 
   const getTextColor = () => (isSelected ? classNames.bestText : '')
   const getIconColor = () => (isSelected ? colors.primary.light : colors.text.secondary)
@@ -20,6 +23,11 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
     event.stopPropagation()
     setIsRoutesCollapsed(!isRoutesCollapsed)
   }
+
+  useEffect(() => {
+    const height = isRoutesCollapsed ? 54 : stepsContainerRef.current.scrollHeight + 8
+    setSpringProps({ height })
+  }, [isRoutesCollapsed])
 
   return (
     <Card className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`} onClick={() => onClick(route.id)}>
@@ -40,7 +48,9 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
           className={isSelected ? classNames.bestButton : ''}
         />
       </div>
-      <div className={classNames.stepsContainer}>{renderSteps(route, isRoutesCollapsed, setIsRoutesCollapsed, isSelected)}</div>
+      <animated.div className={classNames.stepsContainer} style={springProps} ref={stepsContainerRef}>
+        {renderSteps(route, isRoutesCollapsed, setIsRoutesCollapsed, isSelected)}
+      </animated.div>
       {renderTags(route, isSelected, getTextColor, getIconColor)}
     </Card>
   )
