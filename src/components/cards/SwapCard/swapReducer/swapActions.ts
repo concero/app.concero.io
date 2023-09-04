@@ -1,5 +1,6 @@
 import { tokens } from '../../../../constants/tokens'
 import { toggleRouteInsurance } from './toggleRouteInsurance'
+import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 
 export const swapActions = {
   /* ROUTE-RELATED ACTIONS */
@@ -41,7 +42,14 @@ export const swapActions = {
   }),
   SET_RESPONSE: (state, action) => ({ ...state, response: action.payload }),
   TOGGLE_INSURANCE: (state, action) => toggleRouteInsurance(state, action.payload),
-  SET_SWAP_STAGE: (state, action) => ({ ...state, stage: action.payload }),
+  SET_SWAP_STAGE: (state, action) => {
+    if (action.payload === 'progress') {
+      window.addEventListener('beforeunload', handleBeforeUnload)
+    } else {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+    return { ...state, stage: action.payload }
+  },
   SET_SWAP_STEPS: (state, action) => ({ ...state, steps: action.payload }),
   SET_SWAP_STATUS: (state, action) => ({ ...state, status: action.payload }),
   APPEND_SWAP_STEP: (state, action) => ({ ...state, steps: [...state.steps, action.payload] }),

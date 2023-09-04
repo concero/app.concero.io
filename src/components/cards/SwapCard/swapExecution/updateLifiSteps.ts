@@ -1,5 +1,4 @@
 const getStepStatus = (action) => {
-  console.log('actionstatus: ', action.status)
   switch (action.status.toLowerCase()) {
     case 'done':
       return 'success'
