@@ -11,10 +11,10 @@ import { handleSwap } from '../swapExecution/handleSwap'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   const { address, isConnected } = useAccount()
-  const { switchNetwork } = useSwitchNetwork()
+  const { switchNetworkAsync } = useSwitchNetwork()
 
   const switchChainFunction = async (requiredChainId) => {
-    if (switchNetwork) switchNetwork(requiredChainId)
+    if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
 
     const client0 = createWalletClient({
       transport: custom(window.ethereum),

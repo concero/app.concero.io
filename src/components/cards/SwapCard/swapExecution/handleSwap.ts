@@ -57,15 +57,15 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
   } catch (error) {
     console.log('ERROR: ', error)
     handleTransactionError(error, swapDispatch, provider)
-    swapDispatch({
-      type: 'APPEND_SWAP_STEP',
-      payload: {
-        index: 0,
-        status: 'error',
-        title: 'Transaction failed',
-        body: error.message ?? error.message ?? error ?? 'Something went wrong',
-      },
-    })
+    // swapDispatch({
+    //   type: 'APPEND_SWAP_STEP',
+    //   payload: {
+    //     index: 0,
+    //     status: 'error',
+    //     title: 'Transaction failed',
+    //     body: error.message ?? error.message ?? error ?? 'Something went wrong',
+    //   },
+    // })
 
     swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
   } finally {

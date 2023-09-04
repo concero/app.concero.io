@@ -39,10 +39,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
         </div>
         <Button
           variant="black"
-          rightIcon={{
-            name: `${isRoutesCollapsed ? 'ChevronDown' : 'ChevronUp'}`,
-            iconProps: { size: '20px' },
-          }}
+          rightIcon={{ name: `${isRoutesCollapsed ? 'ChevronDown' : 'ChevronUp'}`, iconProps: { size: '20px' } }}
           size="sm"
           onClick={(e) => handleButtonClick(e)}
           className={isSelected ? classNames.bestButton : ''}
