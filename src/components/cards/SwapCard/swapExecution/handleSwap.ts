@@ -25,18 +25,8 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
         },
       ],
     })
+    switchChainHook()
   }
-
-  // try {
-  //   await switchChainFunction()
-  // } catch (e) {
-  //   console.log('ERROR: ', e)
-  //   swapDispatch({
-  //     type: 'SET_LOADING',
-  //     payload: false,
-  //   })
-  //   return
-  // }
 
   try {
     const executedRoute = await handleExecuteRoute({
