@@ -87,7 +87,7 @@ export type State = {
   response: Response | null
   stage: 'input' | 'progress'
   steps: Step[]
-  status: 'pending' | 'success' | 'fail' | 'awaiting'
+  status: 'pending' | 'success' | 'failure' | 'awaiting'
 }
 
 type Response = {

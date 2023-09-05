@@ -51,6 +51,11 @@ export const swapActions = {
     return { ...state, stage: action.payload }
   },
   SET_SWAP_STEPS: (state, action) => ({ ...state, steps: action.payload }),
-  SET_SWAP_STATUS: (state, action) => ({ ...state, status: action.payload }),
+  SET_SWAP_STATUS: (state, action) => {
+    if (action.payload === 'success' || action.payload === 'failure') {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+    return { ...state, status: action.payload }
+  },
   APPEND_SWAP_STEP: (state, action) => ({ ...state, steps: [...state.steps, action.payload] }),
 }

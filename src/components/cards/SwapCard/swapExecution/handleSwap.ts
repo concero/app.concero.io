@@ -1,5 +1,4 @@
 import { handleTransactionError } from '../handlers/handleTransactionError'
-import { updateLifiSteps } from './updateLifiSteps'
 import { handleLifiResponse, handleRangoResponse } from './handleResponses'
 import { handleExecuteRoute } from './handleExecutionRoute'
 
@@ -13,7 +12,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
   swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'progress' })
 
   if (provider === 'lifi') {
-    updateLifiSteps({ swapDispatch, selectedRoute })
+    // updateLifiSteps({ swapDispatch, selectedRoute })
   } else if (provider === 'rango') {
     swapDispatch({
       type: 'SET_SWAP_STEPS',

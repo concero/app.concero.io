@@ -4,6 +4,7 @@ import classNames from './SwapProgress.module.pcss'
 import { LoadingAnimation } from '../../../layout/LoadingAnimation/LoadingAnimation'
 import Icon from '../../../Icon'
 import { colors } from '../../../../constants/colors'
+import { Button } from '../../../buttons/Button/Button'
 
 interface stageProps {
   step: {
@@ -21,7 +22,7 @@ const renderTag = (status: string) => {
       case 'pending':
         return <LoadingAnimation size={iconSize} color="var(--color-text-secondary)" />
       case 'await':
-        return <Ping size={24} color="var(--color-text-secondary)" />
+        return <Ping size={24} color="var(--color-primary-main)" />
       case 'success':
         return <Icon name="Check" size={iconSize} color={colors.green.darker} />
       case 'error':
@@ -45,7 +46,9 @@ export const TransactionStep: FC<stageProps> = ({ step }) => {
           <h5>{title}</h5>
           {txLink && (
             <a href={txLink} target="_blank" rel="noopener noreferrer">
-              <Icon name="ExternalLink" size={16} color={colors.text.secondary} />
+              <Button variant={'black'} size={'xs'}>
+                <Icon name="ExternalLink" size={16} color={colors.text.secondary} />
+              </Button>
             </a>
           )}
         </div>

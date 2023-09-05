@@ -12,7 +12,9 @@ interface SwapProgressProps {
 export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch }) => {
   const { from, to, steps, status } = swapState
   const handleGoBack = () => {
-    console.log('handleGoBack')
+    swapDispatch({ type: 'RESET_AMOUNTS', direction: 'from' })
+    swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
+    swapDispatch({ type: 'CLEAR_ROUTES' })
     swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'input' })
     swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'pending' })
     swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
