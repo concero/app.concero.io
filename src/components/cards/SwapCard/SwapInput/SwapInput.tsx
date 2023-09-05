@@ -25,8 +25,8 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   }
 
   const switchChainHook = async (requiredChainId) => {
-    const signer = await switchChainFunction(requiredChainId)
-    return signer
+    if (!window.ethereum.chainId || !requiredChainId || parseInt(window.ethereum.chainId) === parseInt(requiredChainId)) return
+    return await switchChainFunction(requiredChainId)
   }
 
   return (

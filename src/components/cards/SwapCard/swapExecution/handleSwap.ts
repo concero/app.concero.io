@@ -1,10 +1,12 @@
 import { handleTransactionError } from '../handlers/handleTransactionError'
 import { handleLifiResponse, handleRangoResponse } from './handleResponses'
 import { handleExecuteRoute } from './handleExecutionRoute'
+import { updateLifiSteps } from './updateLifiSteps'
 
 export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook }) => {
   const { from, selectedRoute } = swapState
   const { originalRoute, provider } = selectedRoute
+
   if (!originalRoute) return console.error('No original route passed')
 
   swapDispatch({ type: 'SET_LOADING', payload: true })
@@ -12,7 +14,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
   swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'progress' })
 
   if (provider === 'lifi') {
-    // updateLifiSteps({ swapDispatch, selectedRoute })
+    updateLifiSteps({ swapDispatch, selectedRoute })
   } else if (provider === 'rango') {
     swapDispatch({
       type: 'SET_SWAP_STEPS',
@@ -25,7 +27,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
         },
       ],
     })
-    switchChainHook()
+    await switchChainHook(from.chain.id)
   }
 
   try {
