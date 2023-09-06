@@ -20,8 +20,8 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
       type: 'SET_SWAP_STEPS',
       payload: [
         {
-          title: 'Waiting for confirmation',
-          body: 'Please confirm the transaction in your wallet',
+          title: 'Action required',
+          body: 'Please approve the transaction in your wallet',
           status: 'await',
           txLink: null,
         },

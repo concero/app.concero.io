@@ -16,6 +16,9 @@ export const fetchRangoRoutes = async ({ from, to }) => {
       address: to.token.address === tokenNullAddress ? null : to.token.address,
     },
     amount: addingDecimals(Number(from.amount), from.token.decimals),
+    // slippage: '0.1',
+    // slippage_percent: '0.1',
+    // slippage_limit: '0.1',
   }
 
   const quote = await rangoClient.quote(routesRequest)

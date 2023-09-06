@@ -1,5 +1,6 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider/src.ts/index'
 import { EvmTransaction, RangoClient, TransactionStatus } from 'rango-sdk-basic'
+import { addingTokenDecimals } from '../../utils/formatting'
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -29,73 +30,63 @@ export function prepareEvmTransaction(evmTx: EvmTransaction, isApprove: boolean)
 export async function checkApprovalSync(requestId: string, txId: string, rangoClient: RangoClient) {
   while (true) {
     const approvalResponse = await rangoClient.isApproved(requestId, txId)
-    if (approvalResponse.isApproved) {
-      return true
-    }
+    if (approvalResponse.isApproved) return true
     await sleep(3000)
   }
 }
 
-const dispatchTransactionStatus = (txStatus, swapDispatch) => {
-  switch (txStatus.status) {
+// uses interval to send each object in test_rango_replies to handleRangoResponse
+export const dispatchTransactionStatus = (txStatus, swapDispatch) => {
+  const txLink = txStatus.explorerUrl[0]?.url ?? null
+
+  const { status, bridgeData, output } = txStatus
+  // const { srcChainId, destChainId, srcTokenAmt, destTokenAmt } = bridgeData
+
+  // let extraInfo = ''
+  // if (srcTokenAmt && destTokenAmt && tokens[srcChainId] && tokens[destChainId]) {
+  //   extraInfo = `Swapping ${parseFloat(srcTokenAmt) / 10 ** 18} ${tokens[srcChainId][]} to ${parseFloat(destTokenAmt) / 10 ** 18} ${tokens[destChainId]}.`
+  // }
+
+  switch (status) {
     case TransactionStatus.FAILED: {
       swapDispatch({
-        type: 'SET_SWAP_STEP',
-        payload: [
-          {
-            status: 'error',
-            title: 'Transaction failed',
-            body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
-            txLink: txStatus.explorerUrl[0].url ?? null,
-          },
-        ],
+        type: 'APPEND_SWAP_STEP',
+        payload: {
+          status: 'error',
+          title: 'Transaction failed',
+          body: 'Please look up the transaction in the explorer to find out the details.',
+          txLink,
+        },
       })
-      swapDispatch({
-        type: 'SET_SWAP_STAGE',
-        payload: 'failed',
-      })
+      swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'failed' })
+      break
     }
-
     case TransactionStatus.SUCCESS: {
+      let body = 'Your transaction was successful.'
+      if (bridgeData.destTokenAmt && bridgeData.destTokenDecimals && output.receivedToken.symbol) {
+        body = `${addingTokenDecimals(bridgeData.destTokenAmt, bridgeData.destTokenDecimals)} ${output.receivedToken.symbol} were added to your wallet.`
+      }
+
       swapDispatch({
-        type: 'SET_SWAP_STEPS',
-        payload: [
-          {
-            status: 'success',
-            title: 'Transaction success',
-            body: `Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
-            txLink: txStatus.explorerUrl[0].url ?? null,
-          },
-        ],
+        type: 'APPEND_SWAP_STEP',
+        payload: { status: 'success', title: 'Swap completed', body, txLink },
       })
-      swapDispatch({
-        type: 'SET_SWAP_STAGE',
-        payload: 'success',
-      })
+      swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'success' })
+      break
     }
-    case TransactionStatus.RUNNING:
+    case TransactionStatus.RUNNING: {
+      const body = 'Please wait, this may take up to 20 minutes.'
+      // if (extraInfo) body += ` ${extraInfo}`
       swapDispatch({
-        type: 'SET_SWAP_STEPS',
-        payload: [
-          {
-            status: 'pending',
-            title: 'Transaction pending',
-            body: `Please be patient, this may take up to 20 minutes. Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
-            txLink: txStatus.explorerUrl[0].url ?? null,
-          },
-        ],
+        type: 'UPSERT_SWAP_STEP',
+        payload: { status: 'pending', title: 'Transaction pending', body, txLink },
       })
+      break
+    }
     default:
       swapDispatch({
-        type: 'SET_SWAP_STEPS',
-        payload: [
-          {
-            status: 'await',
-            title: 'Executing transaction',
-            body: `Please be patient, this may take up to 20 minutes. Tx Hash: ${txStatus.bridgeData.srcTxHash}`,
-            txLink: txStatus.explorerUrl[0].url ?? null,
-          },
-        ],
+        type: 'APPEND_SWAP_STEP',
+        payload: { status: 'await', title: 'Transaction in progress', body: 'Please be patient, this may take up to 20 minutes.', txLink },
       })
   }
 }

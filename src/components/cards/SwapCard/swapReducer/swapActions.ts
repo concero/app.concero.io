@@ -59,4 +59,14 @@ export const swapActions = {
   },
   APPEND_SWAP_STEP: (state, action) => ({ ...state, steps: [...state.steps, action.payload] }),
   SET_TO_ADDRESS: (state, action) => ({ ...state, to: { ...state.to, address: action.payload } }),
+  UPSERT_SWAP_STEP: (state, action) => {
+    const { title, ...rest } = action.payload
+    const index = state.steps.findIndex((step) => step.title === title)
+    if (index === -1) {
+      return { ...state, steps: [...state.steps, { title, ...rest }] }
+    }
+    const newSteps = [...state.steps]
+    newSteps[index] = { ...newSteps[index], ...rest }
+    return { ...state, steps: newSteps }
+  },
 }
