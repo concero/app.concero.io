@@ -2,16 +2,6 @@ import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
 
 const populateRoutes = ({ routes, from, swapDispatch }) => {
-  // if (routes.length <= 0) {
-  //   swapDispatch({
-  //     type: 'SET_RESPONSE',
-  //     payload: {
-  //       isOk: false,
-  //       message: 'No routes found',
-  //     },
-  //   })
-  // } else {
-  // }
   swapDispatch({
     type: 'POPULATE_ROUTES',
     payload: routes,
@@ -27,7 +17,7 @@ const getLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
     return lifiRoutes // Return the lifiRoutes for Promise.all
   } catch (error) {
     console.log(error)
-    throw error // Re-throw the error to be caught by Promise.all
+    // throw error // Re-throw the error to be caught by Promise.all
   }
 }
 
@@ -39,42 +29,34 @@ const getRangoRoutes = async ({ routes, from, to, swapDispatch }) => {
     return rangoRoutes // Return the rangoRoutes for Promise.all
   } catch (error) {
     console.log(error)
-    throw error // Re-throw the error to be caught by Promise.all
+    // throw error // Re-throw the error to be caught by Promise.all
   }
 }
 
 export const getRoutes = async (from, to, swapDispatch) => {
   if (!from.amount) return
-
-  swapDispatch({
-    type: 'SET_LOADING',
-    payload: true,
-  })
+  swapDispatch({ type: 'SET_LOADING', payload: true })
 
   const routes = []
 
   try {
     const [lifiRoutes, rangoRoutes] = await Promise.all([getLifiRoutes({ routes, from, to, swapDispatch }), getRangoRoutes({ routes, from, to, swapDispatch })])
+    // swapDispatch({ type: 'SET_LOADING', payload: false })
 
+    if (routes.length === 0) {
+      swapDispatch({
+        type: 'SET_RESPONSE',
+        payload: {
+          isOk: false,
+          message: 'No routes found',
+        },
+      })
+    }
     // Handle the fulfilled promises here if needed
     // lifiRoutes and rangoRoutes contain the resolved values
   } catch (error) {
-    // Handle the rejected promises here
     console.log(error)
   } finally {
-    // if (routes.length === 0) {
-    //   swapDispatch({
-    //     type: 'SET_RESPONSE',
-    //     payload: {
-    //       isOk: false,
-    //       message: 'No routes found',
-    //     },
-    //   })
-    // }
-
-    swapDispatch({
-      type: 'SET_LOADING',
-      payload: false,
-    })
+    swapDispatch({ type: 'SET_LOADING', payload: false })
   }
 }
