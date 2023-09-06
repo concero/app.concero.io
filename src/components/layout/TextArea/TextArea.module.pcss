@@ -2,8 +2,6 @@
     flex: 1;
     border-radius: var(--st-br-md);
     overflow: hidden;
-
-//border: 1px solid var(--color-grey-dark);
 }
 
 .textarea {
@@ -25,6 +23,7 @@
     border: 1px solid var(--color-grey-dark);
 }
 
-.textarea:focus-within {
+.textarea:focus-visible {
+    outline: unset;
     border: 1px solid var(--color-primary-main);
 }

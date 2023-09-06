@@ -17,13 +17,7 @@ export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ matchExchange, mat
   return (
     <div className={classNames.container}>
       <Button onClick={() => setIsMenuOpen(!isMenuOpen)} variant="black">
-        <input
-          className={classNames.menuBtn}
-          type="checkbox"
-          id="menu-btn"
-          checked={isMenuOpen}
-          onChange={() => setIsMenuOpen(!isMenuOpen)}
-        />
+        <input className={classNames.menuBtn} type="checkbox" id="menu-btn" checked={isMenuOpen} onChange={() => setIsMenuOpen(!isMenuOpen)} />
         <label className={classNames.menuIcon}>
           <span className={classNames.navIcon} />
         </label>

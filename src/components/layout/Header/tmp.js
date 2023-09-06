@@ -252,10 +252,7 @@ CustomCurve.prototype.constructor = CustomCurve
 CustomCurve.prototype.getPoint = function (t) {
   const x = this.x + t * this.l
   const xn = x * this.noise.coef
-  const noise1 = simplex.noise2D(
-    xn + this.noise.time + this.noise.mouseX / 2,
-    this.yn - this.noise.time + this.noise.mouseY / 2,
-  )
+  const noise1 = simplex.noise2D(xn + this.noise.time + this.noise.mouseX / 2, this.yn - this.noise.time + this.noise.mouseY / 2)
   const noise2 = simplex.noise2D(this.yn + this.noise.time, xn - this.noise.time)
   const z = noise2 * this.noise.height
   const y = this.y + noise1 * this.noise.height

@@ -2,72 +2,61 @@ import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
 
 const populateRoutes = ({ routes, from, swapDispatch }) => {
-  if (routes.length <= 0) {
-    swapDispatch({
-      type: 'SET_RESPONSES',
-      payload: {
-        isOk: false,
-        message: 'No routes found',
-      },
-    })
-  } else {
-    swapDispatch({
-      type: 'POPULATE_ROUTES',
-      payload: routes,
-      fromAmount: from.amount,
-    })
-  }
+  swapDispatch({
+    type: 'POPULATE_ROUTES',
+    payload: routes,
+    fromAmount: from.amount,
+  })
 }
 
-const handleFetchLifiRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
+const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
   try {
     const lifiRoutes = await fetchLifiRoutes({ from, to, settings })
-    console.log('lifiRoutes', lifiRoutes)
     routes.push(...lifiRoutes)
     populateRoutes({ routes, from, swapDispatch })
+    return lifiRoutes // Return the lifiRoutes for Promise.all
   } catch (error) {
     console.log(error)
+    // throw error // Re-throw the error to be caught by Promise.all
   }
 }
 
-const handleFetchRangoRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
+const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
   try {
     const rangoRoutes = await fetchRangoRoutes({ from, to, settings })
-    console.log('rangoRoutes', rangoRoutes)
     routes.push(...rangoRoutes)
     populateRoutes({ routes, from, swapDispatch })
+    return rangoRoutes // Return the rangoRoutes for Promise.all
   } catch (error) {
     console.log(error)
+    // throw error // Re-throw the error to be caught by Promise.all
   }
 }
 
 export const getRoutes = async (from, to, settings, swapDispatch) => {
   if (!from.amount) return
-
-  swapDispatch({
-    type: 'SET_LOADING',
-    payload: true,
-  })
+  swapDispatch({ type: 'SET_LOADING', payload: true })
 
   const routes = []
 
-  await Promise.all([
-    handleFetchLifiRoutes({ routes, from, to, settings, swapDispatch }),
-    handleFetchRangoRoutes({ routes, from, to, settings, swapDispatch }),
-  ])
+  try {
+    const [lifiRoutes, rangoRoutes] = await Promise.all([getLifiRoutes({ routes, from, to, swapDispatch }), getRangoRoutes({ routes, from, to, swapDispatch })])
+    // swapDispatch({ type: 'SET_LOADING', payload: false })
 
-  if (routes.length === 0) {
-    swapDispatch({
-      type: 'SET_RESPONSES',
-      payload: {
-        isOk: false,
-        message: 'No routes found',
-      },
-    })
+    if (routes.length === 0) {
+      swapDispatch({
+        type: 'SET_RESPONSE',
+        payload: {
+          isOk: false,
+          message: 'No routes found',
+        },
+      })
+    }
+    // Handle the fulfilled promises here if needed
+    // lifiRoutes and rangoRoutes contain the resolved values
+  } catch (error) {
+    console.log(error)
+  } finally {
+    swapDispatch({ type: 'SET_LOADING', payload: false })
   }
-
-  swapDispatch({
-    type: 'SET_LOADING',
-    payload: false,
-  })
 }

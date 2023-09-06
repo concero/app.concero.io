@@ -1,10 +1,6 @@
 import { EvmTransaction } from 'rango-sdk-basic'
 import { rangoClient } from '../../../../api/rango/rangoClient'
-import {
-  checkApprovalSync,
-  checkTransactionStatusSync,
-  prepareEvmTransaction,
-} from '../../../../api/rango/prepareEvmTransaction'
+import { checkApprovalSync, checkTransactionStatusSync, prepareEvmTransaction } from '../../../../api/rango/prepareEvmTransaction'
 import { viemSigner } from '../../../../web3/ethers'
 import { addingDecimals } from '../../../../utils/formatting'
 
@@ -32,7 +28,7 @@ const getRangoSwapOptions = (route, address, from, settings) => {
   }
 }
 
-export const executeRangoRoute = async (route, address, from, settings) => {
+export const executeRangoRoute = async (route, address, from, settings, swapDispatch) => {
   const swapOptions = getRangoSwapOptions(route, address, from, settings)
 
   const response = await rangoClient.swap(swapOptions)
@@ -53,5 +49,5 @@ export const executeRangoRoute = async (route, address, from, settings) => {
   const mainTx = prepareEvmTransaction(evmTransaction, false)
   const mainTxHash = (await viemSigner.sendTransaction(mainTx)).hash
 
-  return checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient)
+  return checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient, swapDispatch)
 }

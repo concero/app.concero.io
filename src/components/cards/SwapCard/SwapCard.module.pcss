@@ -1,3 +1,13 @@
+.container {
+    width: 400px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+}
+
 .tokenContainer {
     background-color: var(--color-grey-darkest);
     border-radius: var(--st-br-md);
@@ -36,9 +46,6 @@
                 flex-direction: row;
                 gap: var(--sp-xs);
             }
-
-            .equalSign {
-            }
         }
 
         .routeInfoContainer {
@@ -61,10 +68,12 @@
     }
 
     p {
-        color: var(--color-grey-medium)
+        color: var(--color-grey-medium);
     }
 
-    h3, h4, h5 {
+    h3,
+    h4,
+    h5 {
         color: var(--color-grey-medium);
     }
 }
@@ -93,5 +102,5 @@ p {
 }
 
 .invisible {
-    opacity: 0
+    visibility: hidden;
 }

@@ -3,14 +3,8 @@ import { Route, Step } from '../../../api/lifi/types'
 export interface SwapCardProps {}
 
 export interface SwapDetailsProps {
-  selection: {
-    from: Selection
-    to: Selection
-  }
-  selectedRoute: Route
+  swapState: any
   setSelectedRoute: (route: Route) => void
-  routes: Route[]
-  isLoading: boolean
 }
 
 export interface Selection {
@@ -90,7 +84,10 @@ export type State = {
   selectedRoute: any
   originalRoutes: any[]
   typingTimeout: number
-  transactionResponse: Response | null
+  response: Response | null
+  stage: 'input' | 'progress'
+  steps: Step[]
+  status: 'pending' | 'success' | 'failure' | 'awaiting'
 }
 
 type Response = {
@@ -183,7 +180,7 @@ export type SetAddressAction = {
 }
 
 export type SetResponses = {
-  type: 'SET_RESPONSES'
+  type: 'SET_RESPONSE'
   payload: Response
 }
 

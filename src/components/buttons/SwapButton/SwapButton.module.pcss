@@ -1,51 +1,38 @@
 .swapButton {
-    height: 45px;
-
-    .buttonText {
-        color: var(--color-button-text-primary);
-    }
+  height: 45px;
+  color: var(--color-button-text-primary);
 }
 
 .disabled {
-    background-color: var(--color-primary-dark);
-    border: 1px solid var(--color-primary-main);
+  background-color: var(--color-primary-darkest);
+  border: 1px solid var(--color-primary-darker);
+  color: var(--color-primary-to-lightest);
+
+  svg {
+    stroke: var(--color-button-text-primary);
+  }
+
+  .buttonText {
     color: var(--color-button-text-primary);
-
-    svg {
-        stroke: var(--color-button-text-primary);
-    }
-
-    .buttonText {
-        color: var(--color-button-text-primary);
-    }
-
-
+  }
 }
 
 .wrong {
-    background-color: var(--color-red-darkest);
-    border: 1px solid var(--color-red-darker);
+  background-color: var(--color-red-darkest);
+  border: 1px solid var(--color-red-darker);
+  color: var(--color-red-light);
 
-    .buttonText {
-
-        color: var(--color-red-light);
-    }
-
-    svg {
-        stroke: var(--color-red-light);
-    }
-
+  svg {
+    stroke: var(--color-red-light);
+  }
 }
 
 .success {
-    background-color: var(--color-green-darkest);
-    border: 1px solid var(--color-green-main);
+  background-color: var(--color-green-darkest);
+  border: 1px solid var(--color-green-main);
+  color: var(--color-green-main);
 
-    .buttonText {
-        color: var(--color-green-main);
-    }
-
-    svg {
-        stroke: var(--color-green-main);
-    }
+  svg {
+    stroke: var(--color-green-main);
+  }
 }

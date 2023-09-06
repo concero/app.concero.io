@@ -21,7 +21,6 @@ const sortByTags = (routeA: Route, routeB: Route): number => {
 
 export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams): Promise<GetRoutes> => {
   let result = []
-
   const routeOptions = {
     fee: 0.002,
     insurance: false,

@@ -1,13 +1,9 @@
 import { Dispatch, From, To } from './types'
 import { Route } from '../../../api/lifi/types'
 
-const handleTransactionResponse = (
-  transactionResponse: { isOk: boolean; message: string },
-  routes: Route[],
-  dispatch: Dispatch,
-) => {
-  if (!transactionResponse.isOk) {
-    switch (transactionResponse.message) {
+const handleresponse = (response: { isOk: boolean; message: string }, routes: Route[], dispatch: Dispatch) => {
+  if (!response.isOk) {
+    switch (response.message) {
       case 'user rejected':
         dispatch({ type: 'CANCELED' })
         break
@@ -23,7 +19,7 @@ const handleTransactionResponse = (
         dispatch({ type: 'LOW_BALANCE' })
         break
       default:
-        dispatch({ type: 'SET_RESPONSE', payload: transactionResponse })
+        dispatch({ type: 'SET_RESPONSE', payload: response })
         break
     }
   } else {
@@ -39,7 +35,7 @@ export const setStatus = (
   dispatch: Dispatch,
   routes: Route[],
   balance: string,
-  transactionResponse: {
+  response: {
     isOk: boolean
     message: string
   },
@@ -52,9 +48,10 @@ export const setStatus = (
     return dispatch({ type: 'DISCONNECTED' })
   }
 
-  if (transactionResponse) {
-    return handleTransactionResponse(transactionResponse, routes, dispatch)
-  }
+  // disabling since we're managing transaction state in swapProgress.tsx
+  // if (response) {
+  //   return handleresponse(response, routes, dispatch)
+  // }
 
   if (!from.amount || (from.amount && !routes.length)) {
     return dispatch({ type: 'NO_AMOUNT' })

@@ -18,6 +18,9 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
     },
     slippage: settings.slippage_percent,
     amount: addingDecimals(Number(from.amount), from.token.decimals),
+    // slippage: '0.1',
+    // slippage_percent: '0.1',
+    // slippage_limit: '0.1',
   }
 
   const quote = await rangoClient.quote(routesRequest)

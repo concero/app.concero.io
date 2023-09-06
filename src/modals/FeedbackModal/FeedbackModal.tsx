@@ -44,12 +44,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
       <div className={classNames.container}>
         <div className={classNames.tagContainer}>
           {feedbackOptions.map((option) => (
-            <Button
-              key={option.value}
-              size="sm"
-              variant={selectedTag === option.value ? 'primary' : 'subtle'}
-              onClick={() => setSelectedTag(option.value)}
-            >
+            <Button key={option.value} size="sm" variant={selectedTag === option.value ? 'primary' : 'subtle'} onClick={() => setSelectedTag(option.value)}>
               {option.label}
             </Button>
           ))}

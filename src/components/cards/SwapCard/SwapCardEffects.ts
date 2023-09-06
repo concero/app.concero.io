@@ -5,16 +5,8 @@ import { handleBalance } from './handlers/handleBalance'
 import { clearRoutes } from './handlers/handleRoutes'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 
-export function useSwapCardEffects({
-  from,
-  to,
-  swapDispatch,
-  address,
-  dispatch,
-  selectedRoute,
-  settings,
-  typingTimeoutRef,
-}) {
+export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef }) {
+  const { from, to, settings, selectedRoute } = swapState
   useEffect(() => {
     setHistoryCard(dispatch, from, to)
     setSwapCard(dispatch, from, to)

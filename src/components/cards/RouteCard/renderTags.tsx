@@ -6,12 +6,7 @@ import { capitalize, numberToFormatString, secondsConverter } from '../../../uti
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
 
-export const renderTags = (
-  route: Route,
-  isSelected: boolean,
-  getTextColor: () => string,
-  getIconColor: () => string,
-) => {
+export const renderTags = (route: Route, isSelected: boolean, getTextColor: () => string, getIconColor: () => string) => {
   const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
   const { toggleInsurance } = useContext(InsuranceContext)
 
@@ -24,18 +19,15 @@ export const renderTags = (
     <div className={classNames.infoTagsContainer}>
       {route?.tags[0]?.length > 0 ? (
         <Tag color={route.tags[0].toLowerCase()}>
-          <p style={{ color: 'inherit' }}>{capitalize(advantageTagText)}</p>
+          <p style={{ color: 'inherit', flexWrap: 'nowrap' }}>{capitalize(advantageTagText)}</p>
         </Tag>
       ) : null}
       {route.insurance ? (
         <Tag color="green" onClick={(e) => handleInsuranceButtonClick(e)}>
-          Insurance
+          <p style={{ color: 'inherit', flexWrap: 'nowrap' }}>Insurance</p>
           <Beacon isOn={route.insurance?.state === 'INSURED'} color={'green'} />
         </Tag>
-      ) : // <Button variant="green" size="sm" onClick={(e) => handleInsuranceButtonClick(e)}>
-      //
-      // </Button>
-      null}
+      ) : null}
       <Tag
         color="transparent"
         leftIcon={{
@@ -46,9 +38,7 @@ export const renderTags = (
           },
         }}
       >
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
-          {secondsConverter(route.transaction_time_seconds)}
-        </h5>
+        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
       </Tag>
       {route.slippage_percent ? (
         <Tag
@@ -61,9 +51,7 @@ export const renderTags = (
             },
           }}
         >
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
-            {numberToFormatString(route.slippage_percent)}%
-          </h5>
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>
         </Tag>
       ) : null}
       {route.cost.total_gas_usd ? (

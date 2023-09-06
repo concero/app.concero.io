@@ -1,8 +1,8 @@
 export interface TokenAreaProps {
   direction: 'to' | 'from'
   selection: Selection
-  dispatch: any
-  balance?: string
+  balance?: number
+  swapDispatch: any
 }
 
 type Selection = {

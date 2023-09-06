@@ -17,7 +17,8 @@
   "dependencies": {
     "@lifi/sdk": "^2.3.0",
     "@react-spring/web": "^9.7.3",
-    "@wagmi/core": "^1.3.9",
+    "@uiball/loaders": "^1.3.0",
+    "@wagmi/core": "^1.3.10",
     "@walletconnect/auth-client": "^2.1.1",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
@@ -30,7 +31,6 @@
     "framer-motion": "^10.16.2",
     "i": "^0.3.7",
     "lightweight-charts": "^4.0.1",
-    "lottie-react": "^2.4.0",
     "plotly.js": "^2.26.0",
     "posthog-js": "^1.77.2",
     "rango-sdk-basic": "^0.1.40",
@@ -40,12 +40,12 @@
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-spring": "^9.7.2",
-    "react-ts-tradingview-widgets": "^1.0.16",
+    "react-ts-tradingview-widgets": "^1.1.0",
     "recharts": "^2.8.0",
     "socket.io-client": "^4.7.2",
     "tabler-icons-react": "^1.56.0",
-    "viem": "^1.9.2",
-    "wagmi": "^1.3.10"
+    "viem": "^1.9.5",
+    "wagmi": "^1.3.11"
   },
   "devDependencies": {
     "@daltontan/postcss-import-json": "^1.1.1",

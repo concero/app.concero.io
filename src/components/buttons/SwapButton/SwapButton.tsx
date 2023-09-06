@@ -5,42 +5,24 @@ import { useButtonReducer } from './buttonReducer'
 import { SwapButtonProps } from './types'
 import { setStatus } from './setStatus'
 
-export const SwapButton: FC<SwapButtonProps> = ({
-  from,
-  to,
-  isConnected,
-  isLoading,
-  routes,
-  onClick,
-  balance,
-  transactionResponse,
-}) => {
+export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
+  const { from, to, routes, balance, response, isLoading } = swapState
   const [buttonState, dispatch] = useButtonReducer()
 
   useEffect(() => {
-    setStatus(from, to, isConnected, isLoading, dispatch, routes, balance, transactionResponse)
-  }, [from, to, isLoading, isConnected, routes, transactionResponse])
+    setStatus(from, to, isConnected, isLoading, dispatch, routes, balance, response)
+  }, [from, to, isLoading, isConnected, routes, response])
 
   return (
     <Button
       size="lg"
-      leftIcon={
-        buttonState.icon
-          ? {
-              name: buttonState.icon,
-              iconProps: {
-                size: 18,
-                color: 'white',
-              },
-            }
-          : null
-      }
+      leftIcon={buttonState.icon ? { name: buttonState.icon, iconProps: { size: 18, color: 'white' } } : null}
       isDisabled={buttonState.isDisabled}
       isLoading={isLoading}
       onClick={onClick}
       className={`${classNames.swapButton} ${classNames[buttonState.className]}`}
     >
-      <p className={classNames.buttonText}>{buttonState.text}</p>
+      {buttonState.text}
     </Button>
   )
 }

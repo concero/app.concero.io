@@ -21,15 +21,7 @@ export interface TableProps {
   animate?: boolean
 }
 
-export const Table: FC<TableProps> = ({
-  columns,
-  items,
-  isHeaderVisible = true,
-  isLoading,
-  onClick,
-  onEndReached = null,
-  animate = true,
-}) => {
+export const Table: FC<TableProps> = ({ columns, items, isHeaderVisible = true, isLoading, onClick, onEndReached = null, animate = true }) => {
   const handleScroll = (e: any) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
     if (bottom && onEndReached && !isLoading) {
@@ -69,9 +61,7 @@ export const Table: FC<TableProps> = ({
           {isHeaderVisible && <TableHeader columns={columns} />}
           <tbody className="striped">
             {animate
-              ? transitions((styles, item) => (
-                  <TableRow style={styles} item={item} columns={columns} onClick={onClick} />
-                ))
+              ? transitions((styles, item) => <TableRow style={styles} item={item} columns={columns} onClick={onClick} />)
               : items.map((item, index) => <TableRow key={index} item={item} columns={columns} onClick={onClick} />)}
           </tbody>
         </table>

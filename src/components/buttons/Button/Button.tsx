@@ -1,10 +1,8 @@
 import { FC } from 'react'
 import * as Icons from 'tabler-icons-react'
 import { IconProps } from 'tabler-icons-react'
-import Lottie from 'lottie-react'
 import Icon from '../../Icon'
-import loadingAnimation from '../../../assets/animations/circle-loading.json'
-
+import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
 import styles from './Button.module.pcss'
 
 type IconComponentProps = {
@@ -39,34 +37,7 @@ const getButtonClasses = (
   return baseClasses.concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, additionalClasses).join(' ')
 }
 
-/**
- A customizable button component that can display icons and animations
- @param {string} [size='md'] - The size of the button. Can be one of 'sm', 'md', 'lg', or 'xl'.
- @param {string} [variant='primary'] - The variant of the button. Can be one of 'primary', 'secondary', 'subtle', or 'black'.
- @param {Object} [leftIcon] - The object describing the left icon displayed in the button. It contains a name property (which must match one of the icons from tabler-icons-react) and an optional iconProps property that gets passed to the Icon component.
- @param {Object} [rightIcon] - The object describing the right icon displayed in the button. It contains a name property (which must match one of the icons from tabler-icons-react) and an optional iconProps property that gets passed to the Icon component.
- @param {Function} [onClick] - The function to be called when the button is clicked.
- @param {boolean} [isLoading=false] - A boolean indicating whether the button is in a loading state.
- @param {boolean} [isDisabled=false] - A boolean indicating whether the button is disabled.
- @param {string} [className] - A string of additional CSS classes to apply to the button.
- @param {ReactNode} [children] - The children of the button.
- @returns {JSX.Element} - The rendered button element.
- @example
- <Button size={"lg"} leftIcon={{ name: 'ArrowsUpDown', iconProps: { size: 18 } }}>
- Swap
- </Button>
- */
-export const Button: FC<ButtonProps> = ({
-  size = 'md',
-  variant = 'primary',
-  leftIcon,
-  rightIcon,
-  isLoading,
-  isDisabled,
-  children,
-  onClick,
-  className,
-}) => {
+export const Button: FC<ButtonProps> = ({ size = 'md', variant = 'primary', leftIcon, rightIcon, isLoading, isDisabled, children, onClick, className }) => {
   const buttonClasses = getButtonClasses(size, variant, isLoading, isDisabled, className)
 
   return (
@@ -75,22 +46,5 @@ export const Button: FC<ButtonProps> = ({
       {children}
       {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}
     </button>
-  )
-}
-
-function LoadingAnimation() {
-  return (
-    <Lottie
-      loop
-      autoplay
-      animationData={loadingAnimation}
-      style={{
-        width: 30,
-        height: 30,
-      }}
-      rendererSettings={{
-        preserveAspectRatio: 'xMidYMid slice',
-      }}
-    />
   )
 }

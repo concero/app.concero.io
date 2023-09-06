@@ -34,8 +34,7 @@ export const fromNow = (date: string | Date): string => dayjs(date).fromNow()
 
 export const unixtimeFromNow = (unixtime: number): string => dayjs.unix(unixtime).fromNow()
 
-export const unixTimeFormat = (unixtime: number, format = 'YYYY-MM-DD HH:mm'): string =>
-  dayjs.unix(unixtime).format(format)
+export const unixTimeFormat = (unixtime: number, format = 'YYYY-MM-DD HH:mm'): string => dayjs.unix(unixtime).format(format)
 
 // Number and currency formatting
 export const formatNumber = (num: number, decimalPlaces = 2): string => num.toFixed(decimalPlaces)
@@ -47,14 +46,11 @@ export const formatCurrency = (amount: number, currency = 'USD'): string =>
   }).format(amount)
 
 // String formatting
-export const toTitleCase = (str: string): string =>
-  str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+export const toTitleCase = (str: string): string => str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 
-export const toCamelCase = (str: string): string =>
-  str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''))
+export const toCamelCase = (str: string): string => str.replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''))
 
-export const toSnakeCase = (str: string): string =>
-  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`).replace(/^-/, '')
+export const toSnakeCase = (str: string): string => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`).replace(/^-/, '')
 
 // URL formatting
 export const slugify = (str: string): string =>
@@ -69,8 +65,7 @@ export const getHostname = (url: string): string => new URL(url).hostname
 export const getDomain = (url: string): string => getHostname(url).replace('www.', '').split('.')[0]
 // String manipulation
 
-export const truncate = (str: string, length = 100, ending = '...'): string =>
-  str.length > length ? str.substring(0, length - ending.length) + ending : str
+export const truncate = (str: string, length = 100, ending = '...'): string => (str.length > length ? str.substring(0, length - ending.length) + ending : str)
 
 // trucate wallet address to 6 characters on the end
 export const truncateWallet = (str: string): string => `${str.slice(0, 6)}...${str.slice(-4)}`

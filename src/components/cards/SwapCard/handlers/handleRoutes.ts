@@ -6,14 +6,7 @@ export const clearRoutes = (typingTimeoutRef, swapDispatch) => {
     direction: 'to',
   })
   swapDispatch({
-    type: 'SET_RESPONSES',
+    type: 'SET_RESPONSE',
     payload: null,
-  })
-}
-
-export const populateRoutes = (routes) => {
-  swapDispatch({
-    type: 'POPULATE_ROUTES',
-    payload: routes,
   })
 }

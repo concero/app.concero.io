@@ -3,11 +3,7 @@ import * as cookieUtils from './cookies'
 
 export type StorageType = 'localStorage' | 'cookie'
 
-export const setItem = (
-  key: string,
-  value: any,
-  storageType: StorageType = 'localStorage',
-): void => {
+export const setItem = (key: string, value: any, storageType: StorageType = 'localStorage'): void => {
   if (storageType === 'localStorage') {
     localStorageUtils.setItem(key, value)
   } else if (storageType === 'cookie') {
@@ -15,11 +11,7 @@ export const setItem = (
   }
 }
 
-export const getItem = <T>(
-  key: string,
-  defaultValue: T,
-  storageType: StorageType = 'localStorage',
-): T => {
+export const getItem = <T>(key: string, defaultValue: T, storageType: StorageType = 'localStorage'): T => {
   if (storageType === 'localStorage') {
     return localStorageUtils.getItem(key, defaultValue)
   }
