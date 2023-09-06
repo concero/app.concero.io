@@ -11,11 +11,16 @@ const getStepStatus = (action) => {
   }
 }
 
-const getStepTitle = (action) => {
-  if (action?.type === 'SWITCH_CHAIN') return 'Switching chain'
+const getActionTitle = (action) => {
+  if (action?.type === 'SWITCH_CHAIN') return 'Action Required'
   if (action?.message) return action.message
   if (action?.error?.message) return action.error.message
   return 'Transaction in progress'
+}
+
+const getActionBody = (action) => {
+  if (action?.type === 'SWITCH_CHAIN') return 'Please approve the chain switch in your wallet'
+  return action.substatusMessage ?? null
 }
 
 export const updateLifiSteps = ({ swapDispatch, selectedRoute }) => {
@@ -23,10 +28,10 @@ export const updateLifiSteps = ({ swapDispatch, selectedRoute }) => {
     if (!step?.process) return acc
 
     const stepMessages = step.process.map((action) => ({
-      title: getStepTitle(action),
-      body: action.substatusMessage || null,
+      title: getActionTitle(action),
+      body: getActionBody(action),
       status: getStepStatus(action),
-      txLink: action.txLink || null,
+      txLink: action.txLink ?? null,
     }))
 
     return [...acc, ...stepMessages]
