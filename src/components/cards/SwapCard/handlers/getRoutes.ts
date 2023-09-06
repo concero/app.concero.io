@@ -19,7 +19,7 @@ const populateRoutes = ({ routes, from, swapDispatch }) => {
   })
 }
 
-const handleFetchLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
+const getLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
   try {
     const lifiRoutes = await fetchLifiRoutes({ from, to })
     routes.push(...lifiRoutes)
@@ -29,7 +29,7 @@ const handleFetchLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
   }
 }
 
-const handleFetchRangoRoutes = async ({ routes, from, to, swapDispatch }) => {
+const getRangoRoutes = async ({ routes, from, to, swapDispatch }) => {
   try {
     const rangoRoutes = await fetchRangoRoutes({ from, to })
     routes.push(...rangoRoutes)
@@ -49,7 +49,7 @@ export const getRoutes = async (from, to, swapDispatch) => {
 
   const routes = []
 
-  await Promise.all([handleFetchLifiRoutes({ routes, from, to, swapDispatch }), handleFetchRangoRoutes({ routes, from, to, swapDispatch })])
+  await Promise.all([getLifiRoutes({ routes, from, to, swapDispatch }), getRangoRoutes({ routes, from, to, swapDispatch })])
 
   // if (routes.length === 0) {
   //   swapDispatch({
