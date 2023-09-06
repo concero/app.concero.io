@@ -58,4 +58,5 @@ export const swapActions = {
     return { ...state, status: action.payload }
   },
   APPEND_SWAP_STEP: (state, action) => ({ ...state, steps: [...state.steps, action.payload] }),
+  SET_TO_ADDRESS: (state, action) => ({ ...state, to: { ...state.to, address: action.payload } }),
 }

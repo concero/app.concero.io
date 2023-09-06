@@ -8,6 +8,7 @@ import classNames from './SwapInput.module.pcss'
 import { SwapInputProps } from './types'
 import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
 import { handleSwap } from '../swapExecution/handleSwap'
+import { AddressInput } from './AddressInput/AddressInput'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   const { address, isConnected } = useAccount()
@@ -33,6 +34,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
     <div className={classNames.container}>
       <TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
       <TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} />
+      <AddressInput swapDispatch={swapDispatch} swapState={swapState} />
       <SwapDetails swapState={swapState} setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })} />
       <SwapButton swapState={swapState} isConnected={isConnected} onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook })} />
     </div>
