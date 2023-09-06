@@ -11,7 +11,12 @@ const getStepStatus = (action) => {
   }
 }
 
-const getStepTitle = (action) => action?.message || action?.error?.message || null
+const getStepTitle = (action) => {
+  if (action?.type === 'SWITCH_CHAIN') return 'Switching chain'
+  if (action?.message) return action.message
+  if (action?.error?.message) return action.error.message
+  return 'Transaction in progress'
+}
 
 export const updateLifiSteps = ({ swapDispatch, selectedRoute }) => {
   const messages = selectedRoute.execution.reduce((acc, step) => {
