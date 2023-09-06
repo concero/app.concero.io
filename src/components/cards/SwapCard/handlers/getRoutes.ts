@@ -24,8 +24,10 @@ const getLifiRoutes = async ({ routes, from, to, swapDispatch }) => {
     const lifiRoutes = await fetchLifiRoutes({ from, to })
     routes.push(...lifiRoutes)
     populateRoutes({ routes, from, swapDispatch })
+    return lifiRoutes // Return the lifiRoutes for Promise.all
   } catch (error) {
     console.log(error)
+    throw error // Re-throw the error to be caught by Promise.all
   }
 }
 
@@ -34,8 +36,10 @@ const getRangoRoutes = async ({ routes, from, to, swapDispatch }) => {
     const rangoRoutes = await fetchRangoRoutes({ from, to })
     routes.push(...rangoRoutes)
     populateRoutes({ routes, from, swapDispatch })
+    return rangoRoutes // Return the rangoRoutes for Promise.all
   } catch (error) {
     console.log(error)
+    throw error // Re-throw the error to be caught by Promise.all
   }
 }
 
@@ -49,20 +53,28 @@ export const getRoutes = async (from, to, swapDispatch) => {
 
   const routes = []
 
-  await Promise.all([getLifiRoutes({ routes, from, to, swapDispatch }), getRangoRoutes({ routes, from, to, swapDispatch })])
+  try {
+    const [lifiRoutes, rangoRoutes] = await Promise.all([getLifiRoutes({ routes, from, to, swapDispatch }), getRangoRoutes({ routes, from, to, swapDispatch })])
 
-  // if (routes.length === 0) {
-  //   swapDispatch({
-  //     type: 'SET_RESPONSE',
-  //     payload: {
-  //       isOk: false,
-  //       message: 'No routes found',
-  //     },
-  //   })
-  // }
+    // Handle the fulfilled promises here if needed
+    // lifiRoutes and rangoRoutes contain the resolved values
+  } catch (error) {
+    // Handle the rejected promises here
+    console.log(error)
+  } finally {
+    // if (routes.length === 0) {
+    //   swapDispatch({
+    //     type: 'SET_RESPONSE',
+    //     payload: {
+    //       isOk: false,
+    //       message: 'No routes found',
+    //     },
+    //   })
+    // }
 
-  swapDispatch({
-    type: 'SET_LOADING',
-    payload: false,
-  })
+    swapDispatch({
+      type: 'SET_LOADING',
+      payload: false,
+    })
+  }
 }
