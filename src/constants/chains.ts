@@ -4,6 +4,7 @@ export const chains = [
     name: 'Ethereum',
     symbol: 'ETH',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg',
+    destinationAddressRequired: true,
     providers: {
       lifi: {
         key: 'ETH',
