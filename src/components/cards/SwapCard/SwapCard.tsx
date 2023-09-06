@@ -17,9 +17,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
   const { dispatch } = useContext(SelectionContext)
   const typingTimeoutRef = useRef(null)
 
-  const toggleInsurance = (routeId) => {
-    swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
-  }
+  const toggleInsurance = (routeId) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
   useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
 
   return (
