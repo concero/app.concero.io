@@ -66,5 +66,6 @@ export const swapInitialState: State = {
   status: 'pending', // success, failure, pending, awaiting
   settings: {
     slippage_percent: '5',
+    showDestinationAddress: false,
   },
 }
