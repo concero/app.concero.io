@@ -90,6 +90,7 @@ export type State = {
   status: 'pending' | 'success' | 'failure' | 'awaiting'
   settings: {
     slippage_percent: string
+    showDestinationAddress: boolean
   }
 }
 
