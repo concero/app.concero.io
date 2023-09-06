@@ -88,6 +88,9 @@ export type State = {
   stage: 'input' | 'progress'
   steps: Step[]
   status: 'pending' | 'success' | 'failure' | 'awaiting'
+  settings: {
+    slippage_percent: string
+  }
 }
 
 type Response = {

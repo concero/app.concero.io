@@ -10,6 +10,9 @@ import { useSwapCardEffects } from './SwapCardEffects'
 import { SwapInput } from './SwapInput/SwapInput'
 import { SwapProgress } from './SwapProgress/SwapProgress'
 import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
+import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
+import { Button } from '../../buttons/Button/Button'
+import { colors } from '../../../constants/colors'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { address } = useAccount()
@@ -23,7 +26,16 @@ export const SwapCard: FC<SwapCardProps> = () => {
   return (
     <InsuranceProvider toggleInsurance={toggleInsurance}>
       <div className={`card ${classNames.container}`}>
-        <CardHeader title={getCardTitleByStatus(swapState.status)} isLoading={swapState.isLoading} />
+        <CardHeader title={getCardTitleByStatus(swapState.status)} isLoading={swapState.isLoading}>
+          <div className="f1 row asb">
+            <Button
+              variant="black"
+              size="sq-sm"
+              onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+              leftIcon={{ name: 'Settings', iconProps: { size: 16, color: colors.grey.medium } }}
+            />
+          </div>
+        </CardHeader>
         <div className={classNames.swapContainer}>
           {swapState.stage === 'input' ? (
             <SwapInput swapState={swapState} swapDispatch={swapDispatch} />

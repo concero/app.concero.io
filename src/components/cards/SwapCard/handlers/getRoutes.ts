@@ -40,7 +40,10 @@ export const getRoutes = async (from, to, settings, swapDispatch) => {
   const routes = []
 
   try {
-    const [lifiRoutes, rangoRoutes] = await Promise.all([getLifiRoutes({ routes, from, to, swapDispatch }), getRangoRoutes({ routes, from, to, swapDispatch })])
+    const [lifiRoutes, rangoRoutes] = await Promise.all([
+      getLifiRoutes({ routes, from, to, settings, swapDispatch }),
+      getRangoRoutes({ routes, from, to, settings, swapDispatch }),
+    ])
     // swapDispatch({ type: 'SET_LOADING', payload: false })
 
     if (routes.length === 0) {

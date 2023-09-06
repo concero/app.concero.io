@@ -58,8 +58,6 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
     //     body: error.message ?? error.message ?? error ?? 'Something went wrong',
     //   },
     // })
-
-    swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
   } finally {
     swapDispatch({ type: 'SET_LOADING', payload: false })
   }

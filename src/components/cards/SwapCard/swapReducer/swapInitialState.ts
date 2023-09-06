@@ -2,11 +2,7 @@ import { chains } from '../../../../constants/chains'
 import { tokens } from '../../../../constants/tokens'
 import { State } from '../types'
 
-<<<<<<<< HEAD:src/components/cards/SwapCard/swapReducer/initialState.ts
-export const initialState = {
-========
 export const swapInitialState: State = {
->>>>>>>> origin/transaction-statuses#52:src/components/cards/SwapCard/swapReducer/swapInitialState.ts
   from: {
     chain: {
       name: chains[0].name,
@@ -64,16 +60,11 @@ export const swapInitialState: State = {
   isLoading: false,
   selectedRoute: null,
   typingTimeout: 0,
-<<<<<<<< HEAD:src/components/cards/SwapCard/swapReducer/initialState.ts
-  transactionResponse: null,
-  settingsModalOpen: false,
-  settings: {
-    slippage_percent: '5',
-  },
-========
   response: null,
   stage: 'input', // input, progress
   steps: [], // [ { status, title, body, txLink } ]
   status: 'pending', // success, failure, pending, awaiting
->>>>>>>> origin/transaction-statuses#52:src/components/cards/SwapCard/swapReducer/swapInitialState.ts
+  settings: {
+    slippage_percent: '5',
+  },
 }

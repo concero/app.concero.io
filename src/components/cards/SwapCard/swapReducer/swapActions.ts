@@ -50,6 +50,8 @@ export const swapActions = {
     }
     return { ...state, stage: action.payload }
   },
+  TOGGLE_SETTINGS_MODAL_OPEN: (state) => ({ ...state, settingsModalOpen: !state.settingsModalOpen }),
+  SET_SETTINGS: (state, action) => ({ ...state, settings: { ...state.settings, ...action.payload } }),
   SET_SWAP_STEPS: (state, action) => ({ ...state, steps: action.payload }),
   SET_SWAP_STATUS: (state, action) => {
     if (action.payload === 'success' || action.payload === 'failure') {
