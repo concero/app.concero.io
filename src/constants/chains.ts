@@ -4,7 +4,6 @@ export const chains = [
     name: 'Ethereum',
     symbol: 'ETH',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg',
-    destinationAddressRequired: true,
     providers: {
       lifi: {
         key: 'ETH',
@@ -262,6 +261,17 @@ export const chains = [
     providers: {
       rango: {
         key: 'POLYGONZK',
+      },
+    },
+  },
+  {
+    id: '59144',
+    name: 'LINEA',
+    symbol: 'LINEA',
+    logoURI: 'https://api.rango.exchange/blockchains/linea.svg',
+    providers: {
+      rango: {
+        key: 'LINEA',
       },
     },
   },
@@ -746,6 +756,17 @@ export const chains = [
     providers: {
       rango: {
         key: 'LUMNETWORK',
+      },
+    },
+  },
+  {
+    id: 'columbus-5',
+    name: 'TERRA_CLASSIC',
+    symbol: 'TERRA_CLASSIC',
+    logoURI: 'https://api.rango.exchange/blockchains/terraclassic.svg',
+    providers: {
+      rango: {
+        key: 'TERRA_CLASSIC',
       },
     },
   },
