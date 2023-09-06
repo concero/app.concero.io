@@ -12,14 +12,14 @@ const getStepStatus = (action) => {
 }
 
 const getActionTitle = (action) => {
-  if (action?.type === 'SWITCH_CHAIN') return 'Action Required'
+  if (action?.type === 'SWITCH_CHAIN') return action.status.toLowerCase() === 'action_required' ? 'Action Required' : 'Chain switched successfully'
   if (action?.message) return action.message
   if (action?.error?.message) return action.error.message
   return 'Transaction in progress'
 }
 
 const getActionBody = (action) => {
-  if (action?.type === 'SWITCH_CHAIN') return 'Please approve the chain switch in your wallet'
+  if (action?.type === 'SWITCH_CHAIN' && action?.status.toLowerCase() === 'action_required') return 'Please approve the chain switch in your wallet'
   return action.substatusMessage ?? null
 }
 
