@@ -8,9 +8,6 @@ export function PortfolioLink() {
         Portfolio
       </Link>
       <Link className={classNames.comingSoon} to="#">
-        Staking
-      </Link>
-      <Link className={classNames.comingSoon} to="#">
         My referrals
       </Link>
     </div>

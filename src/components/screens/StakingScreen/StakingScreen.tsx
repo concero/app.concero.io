@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
@@ -13,19 +12,9 @@ export const StakingScreen: React.FC = () => {
   const [{ selectedVault, vaults, protocols, filter }, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
-  useEffect(() => {
-    console.log('selectedVault', selectedVault)
-  }, [selectedVault])
-
   const desktopLayout = (
     <div className={classNames.container}>
-      <StakingOpportunitiesCard
-        vaults={vaults}
-        selectedVault={selectedVault}
-        protocols={protocols}
-        dispatch={dispatch}
-        filter={filter}
-      />
+      <StakingOpportunitiesCard vaults={vaults} selectedVault={selectedVault} protocols={protocols} dispatch={dispatch} filter={filter} />
       {selectedVault ? (
         <div className={classNames.stacksContainer}>
           <div className={classNames.mainCardStack}>
@@ -44,13 +33,7 @@ export const StakingScreen: React.FC = () => {
 
   const mobileLayout = (
     <div className={classNames.container}>
-      <StakingOpportunitiesCard
-        vaults={vaults}
-        selectedVault={selectedVault}
-        protocols={protocols}
-        dispatch={dispatch}
-        filter={filter}
-      />
+      <StakingOpportunitiesCard vaults={vaults} selectedVault={selectedVault} protocols={protocols} dispatch={dispatch} filter={filter} />
       {selectedVault ? (
         <div className={classNames.mainCardStack}>
           <StakingHeaderCard vault={selectedVault} protocols={protocols} />
