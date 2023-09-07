@@ -27,7 +27,6 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
         },
       ],
     })
-    await switchChainHook(from.chain.id)
   }
 
   try {

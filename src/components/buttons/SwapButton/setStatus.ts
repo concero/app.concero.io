@@ -57,6 +57,10 @@ export const setStatus = (
     return dispatch({ type: 'NO_AMOUNT' })
   }
 
+  if (to.chain.destinationAddressRequired) {
+    if (!to.address) return dispatch({ type: 'NO_DESTINATION_ADDRESS' })
+  }
+
   if (balance && from.amount > parseFloat(balance)) {
     return dispatch({ type: 'LOW_BALANCE' })
   }

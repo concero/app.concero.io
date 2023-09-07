@@ -28,9 +28,14 @@ const getRangoSwapOptions = (route, address, from, settings) => {
   }
 }
 
-export const executeRangoRoute = async (route, address, from, settings, swapDispatch) => {
-  const swapOptions = getRangoSwapOptions(route, address, from, settings)
+export const executeRangoRoute = async (route, address, from, settings, swapDispatch, switchChainHook) => {
+  try {
+    await switchChainHook(from.chain.id)
+  } catch (error) {
+    throw new Error('user rejected')
+  }
 
+  const swapOptions = getRangoSwapOptions(route, address, from, settings)
   const response = await rangoClient.swap(swapOptions)
 
   if (!!response.error || response.resultType !== 'OK') {
