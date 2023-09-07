@@ -4,6 +4,7 @@ export const chains = [
     name: 'Ethereum',
     symbol: 'ETH',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'ETH',
@@ -18,6 +19,7 @@ export const chains = [
     name: 'Matic',
     symbol: 'MATIC',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/polygon.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'MATIC',
@@ -32,6 +34,7 @@ export const chains = [
     name: 'BSC',
     symbol: 'BNB',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/bsc.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'BNB',
@@ -46,6 +49,7 @@ export const chains = [
     name: 'Gnosis',
     symbol: 'DAI',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/gnosis.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'DAI',
@@ -60,6 +64,7 @@ export const chains = [
     name: 'Fantom',
     symbol: 'FTM',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/fantom.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'FTM',
@@ -74,6 +79,7 @@ export const chains = [
     name: 'OKXChain',
     symbol: 'OKT',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/okx.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'OKT',
@@ -88,6 +94,7 @@ export const chains = [
     name: 'Avalanche',
     symbol: 'AVAX',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/avalanche.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'AVAX',
@@ -102,6 +109,7 @@ export const chains = [
     name: 'Arbitrum',
     symbol: 'ETH',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/arbitrum.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'ETH',
@@ -116,6 +124,7 @@ export const chains = [
     name: 'Optimism',
     symbol: 'ETH',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/optimism.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'ETH',
@@ -130,6 +139,7 @@ export const chains = [
     name: 'Moonriver',
     symbol: 'MOVR',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/moonriver.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'MOVR',
@@ -144,6 +154,7 @@ export const chains = [
     name: 'Moonbeam',
     symbol: 'GLMR',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/moonbeam.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'GLMR',
@@ -158,6 +169,7 @@ export const chains = [
     name: 'CELO',
     symbol: 'CELO',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/celo.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'CELO',
@@ -169,6 +181,7 @@ export const chains = [
     name: 'FUSE',
     symbol: 'FUSE',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/fuse.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'FUSE',
@@ -183,6 +196,7 @@ export const chains = [
     name: 'Cronos',
     symbol: 'CRO',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/cronos.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'CRO',
@@ -197,6 +211,7 @@ export const chains = [
     name: 'Boba',
     symbol: 'ETH',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/boba.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'ETH',
@@ -211,6 +226,7 @@ export const chains = [
     name: 'Velas',
     symbol: 'VLX',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/velas.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'VLX',
@@ -222,6 +238,7 @@ export const chains = [
     name: 'Aurora',
     symbol: 'ETH',
     logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/aurora.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       lifi: {
         key: 'ETH',
@@ -236,6 +253,7 @@ export const chains = [
     name: 'ZKSYNC',
     symbol: 'ZKSYNC',
     logoURI: 'https://api.rango.exchange/blockchains/zksync.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       rango: {
         key: 'ZKSYNC',
@@ -247,6 +265,7 @@ export const chains = [
     name: 'STARKNET',
     symbol: 'STARKNET',
     logoURI: 'https://api.rango.exchange/blockchains/starknet.svg',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{32,64}$'],
     providers: {
       rango: {
         key: 'STARKNET',
@@ -258,20 +277,10 @@ export const chains = [
     name: 'POLYGONZK',
     symbol: 'POLYGONZK',
     logoURI: 'https://api.rango.exchange/blockchains/zkevmpolygon.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       rango: {
         key: 'POLYGONZK',
-      },
-    },
-  },
-  {
-    id: '59144',
-    name: 'LINEA',
-    symbol: 'LINEA',
-    logoURI: 'https://api.rango.exchange/blockchains/linea.svg',
-    providers: {
-      rango: {
-        key: 'LINEA',
       },
     },
   },
@@ -280,54 +289,55 @@ export const chains = [
     name: 'TRON',
     symbol: 'TRON',
     logoURI: 'https://api.rango.exchange/blockchains/tron.svg',
+    addressPatterns: ['^T[1-9A-HJ-NP-Za-km-z]{33}$'],
     providers: {
       rango: {
         key: 'TRON',
       },
     },
-    destinationAddressRequired: true,
   },
   {
     id: '',
     name: 'BTC',
     symbol: 'BTC',
     logoURI: 'https://api.rango.exchange/blockchains/btc.svg',
+    addressPatterns: ['^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$|^(bc1)[0-9A-Za-z]{39,59}$'],
     providers: {
       rango: {
-        key: 'DOGE',
+        key: 'BTC',
       },
     },
-    destinationAddressRequired: true,
   },
   {
     id: 'cosmoshub-4',
     name: 'COSMOS',
     symbol: 'COSMOS',
     logoURI: 'https://api.rango.exchange/blockchains/cosmos.svg',
+    addressPatterns: ['^(cosmos1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'COSMOS',
       },
     },
-    destinationAddressRequired: true,
   },
   {
     id: 'osmosis-1',
     name: 'OSMOSIS',
     symbol: 'OSMOSIS',
     logoURI: 'https://api.rango.exchange/blockchains/osmosis.svg',
+    addressPatterns: ['^(osmo1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'OSMOSIS',
       },
     },
-    destinationAddressRequired: true,
   },
   {
     id: 'neutron-1',
     name: 'NEUTRON',
     symbol: 'NEUTRON',
     logoURI: 'https://api.rango.exchange/blockchains/neutron.svg',
+    addressPatterns: ['^(neutron1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'NEUTRON',
@@ -339,6 +349,7 @@ export const chains = [
     name: 'SOLANA',
     symbol: 'SOLANA',
     logoURI: 'https://api.rango.exchange/blockchains/solana.svg',
+    addressPatterns: ['^[1-9A-HJ-NP-Za-km-z]{32,44}$'],
     providers: {
       rango: {
         key: 'SOLANA',
@@ -350,6 +361,7 @@ export const chains = [
     name: 'THOR',
     symbol: 'THOR',
     logoURI: 'https://api.rango.exchange/blockchains/thorchain.svg',
+    addressPatterns: ['^(thor1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'THOR',
@@ -361,9 +373,34 @@ export const chains = [
     name: 'BOBA_BNB',
     symbol: 'BOBA_BNB',
     logoURI: 'https://api.rango.exchange/blockchains/boba.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       rango: {
         key: 'BOBA_BNB',
+      },
+    },
+  },
+  {
+    id: '43288',
+    name: 'BOBA_AVALANCHE',
+    symbol: 'BOBA_AVALANCHE',
+    logoURI: 'https://api.rango.exchange/blockchains/boba.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
+    providers: {
+      rango: {
+        key: 'BOBA_AVALANCHE',
+      },
+    },
+  },
+  {
+    id: '1666600000',
+    name: 'HARMONY',
+    symbol: 'HARMONY',
+    logoURI: 'https://api.rango.exchange/blockchains/harmony.svg',
+    addressPatterns: ['^(one1)[0-9a-z]{38}$', '^(0x)[0-9A-Fa-f]{40}$'],
+    providers: {
+      rango: {
+        key: 'HARMONY',
       },
     },
   },
@@ -372,6 +409,7 @@ export const chains = [
     name: 'EVMOS',
     symbol: 'EVMOS',
     logoURI: 'https://api.rango.exchange/blockchains/evmos.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       rango: {
         key: 'EVMOS',
@@ -383,9 +421,34 @@ export const chains = [
     name: 'HECO',
     symbol: 'HECO',
     logoURI: 'https://api.rango.exchange/blockchains/heco.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
     providers: {
       rango: {
         key: 'HECO',
+      },
+    },
+  },
+  {
+    id: 'sifchain-1',
+    name: 'SIF',
+    symbol: 'SIF',
+    logoURI: 'https://api.rango.exchange/blockchains/sif.png',
+    addressPatterns: ['^(sif1)[0-9a-z]{38}$'],
+    providers: {
+      rango: {
+        key: 'SIF',
+      },
+    },
+  },
+  {
+    id: '32520',
+    name: 'BRISE',
+    symbol: 'BRISE',
+    logoURI: 'https://api.rango.exchange/blockchains/bitgert.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
+    providers: {
+      rango: {
+        key: 'BRISE',
       },
     },
   },
@@ -394,6 +457,7 @@ export const chains = [
     name: 'STARGAZE',
     symbol: 'STARGAZE',
     logoURI: 'https://api.rango.exchange/blockchains/stargaze.png',
+    addressPatterns: ['^(stars1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'STARGAZE',
@@ -405,6 +469,7 @@ export const chains = [
     name: 'CRYPTO_ORG',
     symbol: 'CRYPTO_ORG',
     logoURI: 'https://api.rango.exchange/blockchains/crypto_org.png',
+    addressPatterns: ['^(cro1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'CRYPTO_ORG',
@@ -416,6 +481,7 @@ export const chains = [
     name: 'CHIHUAHUA',
     symbol: 'CHIHUAHUA',
     logoURI: 'https://api.rango.exchange/blockchains/chihuahua.png',
+    addressPatterns: ['^(chihuahua1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'CHIHUAHUA',
@@ -427,6 +493,7 @@ export const chains = [
     name: 'BANDCHAIN',
     symbol: 'BANDCHAIN',
     logoURI: 'https://api.rango.exchange/blockchains/bandchain.svg',
+    addressPatterns: ['^(band1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'BANDCHAIN',
@@ -438,6 +505,7 @@ export const chains = [
     name: 'COMDEX',
     symbol: 'COMDEX',
     logoURI: 'https://api.rango.exchange/blockchains/comdex.svg',
+    addressPatterns: ['^(comdex1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'COMDEX',
@@ -449,6 +517,7 @@ export const chains = [
     name: 'REGEN',
     symbol: 'REGEN',
     logoURI: 'https://api.rango.exchange/blockchains/regen.png',
+    addressPatterns: ['^(regen1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'REGEN',
@@ -460,6 +529,7 @@ export const chains = [
     name: 'IRIS',
     symbol: 'IRIS',
     logoURI: 'https://api.rango.exchange/blockchains/iris.png',
+    addressPatterns: ['^(iaa1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'IRIS',
@@ -471,21 +541,34 @@ export const chains = [
     name: 'EMONEY',
     symbol: 'EMONEY',
     logoURI: 'https://api.rango.exchange/blockchains/emoney.svg',
+    addressPatterns: ['^(emoney1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'EMONEY',
       },
     },
-    destinationAddressRequired: true,
   },
   {
     id: 'juno-1',
     name: 'JUNO',
     symbol: 'JUNO',
     logoURI: 'https://api.rango.exchange/blockchains/juno.svg',
+    addressPatterns: ['^(juno1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'JUNO',
+      },
+    },
+  },
+  {
+    id: 'axelar-dojo-1',
+    name: 'AXELAR',
+    symbol: 'AXELAR',
+    logoURI: 'https://api.rango.exchange/blockchains/axelar.png',
+    addressPatterns: ['^(axelar1)[0-9a-z]{38}$'],
+    providers: {
+      rango: {
+        key: 'AXELAR',
       },
     },
   },
@@ -494,9 +577,22 @@ export const chains = [
     name: 'STRIDE',
     symbol: 'STRIDE',
     logoURI: 'https://api.rango.exchange/blockchains/stride.svg',
+    addressPatterns: ['^(stride1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'STRIDE',
+      },
+    },
+  },
+  {
+    id: '321',
+    name: 'KCC',
+    symbol: 'KCC',
+    logoURI: 'https://api.rango.exchange/blockchains/kcc.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
+    providers: {
+      rango: {
+        key: 'KCC',
       },
     },
   },
@@ -505,6 +601,7 @@ export const chains = [
     name: 'MARS',
     symbol: 'MARS',
     logoURI: 'https://api.rango.exchange/blockchains/mars.svg',
+    addressPatterns: ['^(mars1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'MARS',
@@ -516,9 +613,22 @@ export const chains = [
     name: 'TERRA',
     symbol: 'TERRA',
     logoURI: 'https://api.rango.exchange/blockchains/terra.png',
+    addressPatterns: ['^(terra1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'TERRA',
+      },
+    },
+  },
+  {
+    id: '40',
+    name: 'TELOS',
+    symbol: 'TELOS',
+    logoURI: 'https://api.rango.exchange/blockchains/telos.png',
+    addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
+    providers: {
+      rango: {
+        key: 'TELOS',
       },
     },
   },
@@ -527,6 +637,7 @@ export const chains = [
     name: 'BITSONG',
     symbol: 'BITSONG',
     logoURI: 'https://api.rango.exchange/blockchains/bitsong.svg',
+    addressPatterns: ['^(bitsong1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'BITSONG',
@@ -538,6 +649,7 @@ export const chains = [
     name: 'AKASH',
     symbol: 'AKASH',
     logoURI: 'https://api.rango.exchange/blockchains/akash.svg',
+    addressPatterns: ['^(akash1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'AKASH',
@@ -549,6 +661,7 @@ export const chains = [
     name: 'KI',
     symbol: 'KI',
     logoURI: 'https://api.rango.exchange/blockchains/ki.png',
+    addressPatterns: ['^(ki1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'KI',
@@ -560,6 +673,7 @@ export const chains = [
     name: 'PERSISTENCE',
     symbol: 'PERSISTENCE',
     logoURI: 'https://api.rango.exchange/blockchains/persistence.png',
+    addressPatterns: ['^(persistence1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'PERSISTENCE',
@@ -571,6 +685,7 @@ export const chains = [
     name: 'MEDIBLOC',
     symbol: 'MEDIBLOC',
     logoURI: 'https://api.rango.exchange/blockchains/medibloc.png',
+    addressPatterns: ['^(panacea1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'MEDIBLOC',
@@ -582,6 +697,7 @@ export const chains = [
     name: 'KUJIRA',
     symbol: 'KUJIRA',
     logoURI: 'https://api.rango.exchange/blockchains/kuji.svg',
+    addressPatterns: ['^(kujira1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'KUJIRA',
@@ -593,6 +709,7 @@ export const chains = [
     name: 'SENTINEL',
     symbol: 'SENTINEL',
     logoURI: 'https://api.rango.exchange/blockchains/sentinel.png',
+    addressPatterns: ['^(sent1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'SENTINEL',
@@ -604,6 +721,7 @@ export const chains = [
     name: 'INJECTIVE',
     symbol: 'INJECTIVE',
     logoURI: 'https://api.rango.exchange/blockchains/injective.svg',
+    addressPatterns: ['^(inj1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'INJECTIVE',
@@ -615,6 +733,7 @@ export const chains = [
     name: 'SECRET',
     symbol: 'SECRET',
     logoURI: 'https://api.rango.exchange/blockchains/secret.svg',
+    addressPatterns: ['^(secret1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'SECRET',
@@ -626,6 +745,7 @@ export const chains = [
     name: 'KONSTELLATION',
     symbol: 'KONSTELLATION',
     logoURI: 'https://api.rango.exchange/blockchains/konstellation.svg',
+    addressPatterns: ['^(darc1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'KONSTELLATION',
@@ -637,6 +757,7 @@ export const chains = [
     name: 'STARNAME',
     symbol: 'STARNAME',
     logoURI: 'https://api.rango.exchange/blockchains/starname.png',
+    addressPatterns: ['^(star1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'STARNAME',
@@ -648,6 +769,7 @@ export const chains = [
     name: 'BITCANNA',
     symbol: 'BITCANNA',
     logoURI: 'https://api.rango.exchange/blockchains/bitcanna.svg',
+    addressPatterns: ['^(bcna1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'BITCANNA',
@@ -659,6 +781,7 @@ export const chains = [
     name: 'UMEE',
     symbol: 'UMEE',
     logoURI: 'https://api.rango.exchange/blockchains/umee.svg',
+    addressPatterns: ['^(umee1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'UMEE',
@@ -670,6 +793,7 @@ export const chains = [
     name: 'DESMOS',
     symbol: 'DESMOS',
     logoURI: 'https://api.rango.exchange/blockchains/desmos.svg',
+    addressPatterns: ['^(desmos1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'DESMOS',
@@ -681,9 +805,22 @@ export const chains = [
     name: 'LUMNETWORK',
     symbol: 'LUMNETWORK',
     logoURI: 'https://api.rango.exchange/blockchains/lumnetwork.png',
+    addressPatterns: ['^(lum1)[0-9a-z]{38}$'],
     providers: {
       rango: {
         key: 'LUMNETWORK',
+      },
+    },
+  },
+  {
+    id: 'columbus-5',
+    name: 'TERRA_CLASSIC',
+    symbol: 'TERRA_CLASSIC',
+    logoURI: 'https://api.rango.exchange/blockchains/terraclassic.svg',
+    addressPatterns: ['^(terra1)[0-9a-z]{38}$'],
+    providers: {
+      rango: {
+        key: 'TERRA_CLASSIC',
       },
     },
   },

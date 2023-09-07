@@ -11,6 +11,7 @@ const mergeChains = () => {
             name: lifiChain.name,
             symbol: lifiChain.symbol,
             logoURI: lifiChain.logoURI,
+            addressPatterns: ["^(0x)[0-9A-Fa-f]{40}$"],
             providers: {
                 lifi: {
                     key: lifiChain.symbol,
@@ -23,13 +24,16 @@ const mergeChains = () => {
     rangoChains.forEach(rangoChain => {
         const mergedChain = mergedChains.find(mergedChain => mergedChain.id?.toString() === rangoChain.chainId.toString());
         if (mergedChain) {
-            mergedChain.providers.rango = {key: rangoChain.name};
+            if (!mergedChain?.providers?.rango) {
+                mergedChain.providers.rango = {key: rangoChain.name};
+            }
         } else {
             const mergedChain = {
                 id: rangoChain.chainId,
                 name: rangoChain.name,
                 symbol: rangoChain.name,
                 logoURI: rangoChain.logo,
+                addressPatterns: rangoChain.addressPatterns,
                 providers: {
                     rango: {
                         key: rangoChain.name,
@@ -45,7 +49,7 @@ const mergeChains = () => {
 
 
 const mergedChains = mergeChains();
-const mergedChainsString = `export const mergedChains = ${JSON.stringify(mergedChains, null, 4)};\n`;
-fs.writeFileSync('mergedChains.js', mergedChainsString, 'utf-8');
+const mergedChainsString = `export const chains = ${JSON.stringify(mergedChains, null, 4)};\n`;
+fs.writeFileSync('chains.ts', mergedChainsString, 'utf-8');
 
-console.log('Merged chains data has been written to mergedChains.js');
+console.log('Merged chains data has been written to chains.ts');

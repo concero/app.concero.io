@@ -16,9 +16,7 @@ function mergeTokens(lifiTokens, rangoTokens) {
                 address: token.address,
                 decimals: token.decimals,
                 logoURI: token.logoURI,
-                providers: [
-                    "lifi"
-                ]
+                providers: ["lifi"]
             });
         }
 
@@ -33,7 +31,7 @@ function mergeTokens(lifiTokens, rangoTokens) {
         const mergedToken = {
             name: token.name,
             symbol: token.symbol,
-            address: token.address ? token.address : "0x0000000000000000000000000000000000000000",
+            address: token.address,
             decimals: token.decimals,
             logoURI: token.image,
             providers: ["rango"]
@@ -47,12 +45,12 @@ function mergeTokens(lifiTokens, rangoTokens) {
             mergedTokens[token.chainId].push(mergedToken);
         }
     });
-    
+
     return mergedTokens;
 }
 
 const mergedTokens = mergeTokens(lifiTokens, rangoTokens);
-const mergedTokensString = `export const mergedTokens = ${JSON.stringify(mergedTokens, null, 4)};\n`;
-fs.writeFileSync('mergedTokens.js', mergedTokensString, 'utf-8');
+const mergedTokensString = `export const tokens = ${JSON.stringify(mergedTokens, null, 4)}`;
+fs.writeFileSync('tokens.ts', mergedTokensString, 'utf-8');
 
-console.log('Merged tokens data has been written to mergedTokens.js');
+console.log('Merged tokens data has been written to tokens.js');
