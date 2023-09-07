@@ -16,11 +16,9 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
   const switchChainFunction = async (requiredChainId) => {
     if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
-
     const client0 = createWalletClient({
       transport: custom(window.ethereum),
     })
-
     const provider = new providers.Web3Provider(client0.transport, 'any')
     return provider.getSigner()
   }
@@ -31,18 +29,21 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   }
 
   const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
+  const destinationAddressRequired = swapState.to.chain.destinationAddressRequired
 
   return (
     <div className={classNames.container}>
       <TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
       <TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} />
-      <TextInput
-        placeholder={'Enter destination address'}
-        title={'Destination address'}
-        value={swapState.to.address}
-        onChangeText={handleChangeToAddress}
-        isDisabled={swapState.routes.length}
-      />
+      {destinationAddressRequired ? (
+        <TextInput
+          placeholder={'Enter destination address'}
+          title={'Destination address'}
+          value={swapState.to.address}
+          onChangeText={handleChangeToAddress}
+          isDisabled={swapState.routes.length}
+        />
+      ) : null}
       <SwapDetails swapState={swapState} setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })} />
       <SwapButton swapState={swapState} isConnected={isConnected} onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook })} />
     </div>

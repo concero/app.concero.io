@@ -74,6 +74,13 @@ const reducer = (state, action) => {
         icon: '',
         className: 'wrong',
       }
+    case 'NO_DESTINATION_ADDRESS':
+      return {
+        isDisabled: true,
+        text: 'Provide destination address',
+        icon: '',
+        className: 'wrong',
+      }
     default:
       return state
   }
