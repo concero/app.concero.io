@@ -1,4 +1,4 @@
-import { numberToFormatString } from '../../../../utils/formatting'
+import { numberToFormatString, roundNumberByDecimals } from '../../../../utils/formatting'
 
 const getUpdatedTokenAmountUsd = (route) => {
   return route.insurance.state === 'INSURED'
@@ -7,17 +7,17 @@ const getUpdatedTokenAmountUsd = (route) => {
 }
 
 const getUpdatedTokenAmount = (route) => {
-  return route.insurance.state === 'INSURED'
-    ? numberToFormatString(
-        parseFloat(route.to.token.amount) +
-          parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
-        2,
-      )
-    : numberToFormatString(
-        parseFloat(route.to.token.amount) -
-          parseFloat(route.insurance.fee_amount_usd) * parseFloat(route.to.token.price_usd),
-        2,
-      )
+  const priceUsd = parseFloat(route.to.token.price_usd)
+  const feeAmountUsd = parseFloat(route.insurance.fee_amount_usd)
+
+  const equivalentFeeInTokens = feeAmountUsd / priceUsd
+
+  const result =
+    route.insurance.state === 'INSURED' ? parseFloat(route.to.token.amount) + equivalentFeeInTokens : parseFloat(route.to.token.amount) - equivalentFeeInTokens
+
+  if (result <= 0) return '0'
+
+  return roundNumberByDecimals(result)
 }
 
 const getUpdatedGasUsd = (route) => {

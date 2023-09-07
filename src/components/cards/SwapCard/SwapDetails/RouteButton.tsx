@@ -12,7 +12,7 @@ const Avatars: FC<AvatarsProps> = ({ entities }) => (
     {entities?.map((entity, index) => (
       <div key={entity.id}>{index < 3 && <Avatar size="xs" src={entity?.tool.logo_uri} />}</div>
     ))}
-    {entities?.length > 3 && <p className={'body1'}>{`+${entities?.length - 3}`}</p>}
+    {entities?.length > 3 && <p className="body1">{`+${entities?.length - 3}`}</p>}
   </div>
 )
 
@@ -22,10 +22,7 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       variant="subtle"
       rightIcon={{
         name: 'ChevronRight',
-        iconProps: {
-          size: 16,
-          color: colors.grey.medium,
-        },
+        iconProps: { size: 16, color: colors.grey.medium },
       }}
       size="sm"
       onClick={onClick}
@@ -34,15 +31,13 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       <Avatars entities={selectedRoute?.steps} />
       {selectedRoute?.cost.total_gas_usd ? (
         <div className={classNames.routeInfoContainer}>
-          <Icon name="GasStation" size="0.85rem" color={colors.text.secondary} />
-          <p className={'body1'}>{`$${selectedRoute.cost.total_gas_usd}`}</p>
+          <Icon name="PigMoney" size="0.85rem" color={colors.text.secondary} />
+          <p className="body1">{`$${selectedRoute.cost.total_gas_usd}`}</p>
         </div>
       ) : null}
       <div className={classNames.routeInfoContainer}>
         <Icon name="ClockHour3" size="0.85rem" color={colors.text.secondary} />
-        <p className={'body1'}>{`${
-          selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''
-        }`}</p>
+        <p className="body1">{`${selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''}`}</p>
       </div>
     </Button>
   </div>

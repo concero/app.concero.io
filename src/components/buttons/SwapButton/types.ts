@@ -1,12 +1,7 @@
 export interface SwapButtonProps {
-  from: any
-  to: any
+  swapState: any
   isConnected: boolean
-  isLoading: boolean
-  routes: any[]
   onClick: () => void
-  balance: string
-  transactionResponse: any[]
 }
 
 export type From = {

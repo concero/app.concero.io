@@ -1,12 +1,7 @@
 import { RouteStepTag } from './RouteStepTag'
 import { Route, Step } from '../../../api/lifi/types'
 
-export const renderSteps = (
-  route: Route,
-  isRoutesCollapsed: boolean,
-  setIsRoutesCollapsed: () => void,
-  isSelected: boolean,
-) => (
+export const renderSteps = (route: Route, isRoutesCollapsed: boolean, setIsRoutesCollapsed: () => void, isSelected: boolean) => (
   <>
     {isRoutesCollapsed ? (
       <RouteStepTag
@@ -17,9 +12,7 @@ export const renderSteps = (
         isSelected={isSelected}
       />
     ) : (
-      route.steps.map((step: Step) => (
-        <RouteStepTag key={step.id} step={step} isRoutesCollapsed={isRoutesCollapsed} isSelected={isSelected} />
-      ))
+      route.steps.map((step: Step) => <RouteStepTag key={step.id} step={step} isRoutesCollapsed={isRoutesCollapsed} isSelected={isSelected} />)
     )}
   </>
 )

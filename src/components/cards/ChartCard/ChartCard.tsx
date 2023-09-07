@@ -1,120 +1,87 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
-import { Chart } from './Chart'
-import { Beacon } from '../../layout/Beacon'
+import { Chart } from '../../layout/Chart/Chart'
+import { Beacon } from '../../layout/Beacon/Beacon'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
-import { chains } from '../../../constants/chains'
 import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedControl'
 import { intervals } from './constants'
 import { columns } from './columns'
-import { tokens } from '../../../constants/tokens'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { ThemeContext } from '../../../hooks/themeContext'
+import { useChartReducer } from './chartReducer'
+import { tokens } from '../../../constants/tokens'
+import { getCoingeckoTokenIdBySymbol } from '../../../api/coinGecko/getCoingeckoTokenIdBySymbol'
+import { fetchChartData } from '../../../api/defilama/fetchChartData'
+import { NotificationsContext } from '../../../hooks/notificationsContext'
+import { Card } from '../Card/Card'
 
 export interface ChartCardProps {}
 
 export const ChartCard: FC<ChartCardProps> = () => {
-  const [chartType, setChartType] = useState<'coinGecko' | 'tradingView'>('coinGecko')
-  const [isSelectLeftTokenModalVisible, setIsSelectLeftTokenModalVisible] = useState<boolean>(false)
-  const [isSelectRightChainModalVisible, setIsSelectRightChainModalVisible] = useState<boolean>(false)
   const { selection } = useContext(SelectionContext)
   const { theme } = useContext(ThemeContext)
-
-  const [selectedLeftToken, setSelectedLeftToken] = useState<{
-    name: string
-    symbol: string
-    logoURI: string
-  }>(selection.swapCard.to.token)
-
-  const [selectedRightChain, setSelectedRightChain] = useState<{
-    name: string
-    symbol: string
-  }>(chains[1])
-  const [selectedInterval, setSelectedInterval] = useState<
-    | {
-        title: string
-        id: string
-      }
-    | undefined
-  >(intervals[0])
-  const [mappedTokens, setMappedTokens] = useState<
-    {
-      name: string
-      symbol: string
-      logoURI: string
-    }[]
-  >(tokens[1].slice(0, 20))
-
-  useEffect(() => {
-    if (!selection.swapCard.to.token) return
-    setSelectedLeftToken(selection.swapCard.to.token)
-  }, [selection.swapCard.to.token.symbol])
-
-  const handleSelectLeftToken = (chain: { name: string; symbol: string }): void => {
-    setSelectedLeftToken(chain)
-    setIsSelectLeftTokenModalVisible(false)
-  }
-
-  const handleSelectRightChain = (chain: { name: string; symbol: string }): void => {
-    setSelectedRightChain(chain)
-    setIsSelectRightChainModalVisible(false)
-  }
-
-  const toggleChartType = (): void => {
-    setChartType(chartType === 'coinGecko' ? 'tradingView' : 'coinGecko')
-  }
-
-  const handleEndReached = () => {
-    setMappedTokens([...mappedTokens, ...tokens['1'].slice(mappedTokens.length, mappedTokens.length + 20)])
-  }
-
+  const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
+  const { addNotification } = useContext(NotificationsContext)
   const isDesktop = useMediaQuery('mobile')
 
+  const setData = (data: any[]) => {
+    dispatch({
+      type: 'SET_CHART_DATA',
+      payload: data,
+    })
+  }
+
+  useEffect(() => {
+    const tokenId = getCoingeckoTokenIdBySymbol(token.base.symbol)
+    fetchChartData(setData, addNotification, tokenId, interval)
+
+    const intervalId = setInterval(() => {
+      fetchChartData(setData, addNotification, tokenId, interval)
+    }, 15000)
+
+    return () => clearInterval(intervalId)
+  }, [interval, token.base])
+
   return (
-    <div className={`card ${classNames.container}`}>
+    <Card className={classNames.container}>
       <div className={classNames.headerContainer}>
         <div className={classNames.selectChainContainer}>
-          <h5>Chart</h5>
+          <h5 className="cardHeaderTitle">Chart</h5>
           <Button
             variant="black"
             size="sm"
-            // rightIcon={{
-            //   name: 'ChevronDown',
-            //   iconProps: { size: 18, color: colors.text.secondary },
-            // }}
-            onClick={() => setIsSelectLeftTokenModalVisible(true)}
+            onClick={() => dispatch({
+                type: 'TOGGLE_MODAL_VISIBLE',
+                tokenType: 'base',
+              })}
           >
-            <CryptoSymbol src={selectedLeftToken.logoURI} symbol={selectedLeftToken.symbol} />
+            <CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
           </Button>
-          {/* <Button */}
-          {/*   variant="subtle" */}
-          {/*   size="sm" */}
-          {/*   rightIcon={{ */}
-          {/*     name: 'ChevronDown', */}
-          {/*     iconProps: { size: 18 }, */}
-          {/*   }} */}
-          {/*   onClick={() => setIsSelectRightChainModalVisible(true)} */}
-          {/* > */}
-          {/*   <CryptoSymbol name={selectedRightChain.symbol} symbol={selectedRightChain.symbol} /> */}
-          {/* </Button> */}
           {isDesktop ? (
-            <Button variant="black" size="sm" onClick={() => toggleChartType()}>
+            <Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
               <Beacon isOn={chartType === 'tradingView'} />
               <p className="body1">TradingView</p>
             </Button>
           ) : null}
         </div>
         {chartType === 'coinGecko' ? (
-          <SegmentedControl data={intervals} selectedItem={selectedInterval} setSelectedItem={setSelectedInterval} />
+          <SegmentedControl
+            data={intervals}
+            selectedItem={interval}
+            setSelectedItem={(item) => dispatch({
+                type: 'SET_INTERVAL',
+                payload: item,
+              })}
+          />
         ) : null}
       </div>
       <div className="f1">
         {chartType === 'coinGecko' ? (
-          <Chart selectedToken={selectedLeftToken} selectedInterval={selectedInterval} />
+          <Chart data={chartData} />
         ) : (
           <AdvancedRealTimeChart
             theme={theme}
@@ -132,22 +99,20 @@ export const ChartCard: FC<ChartCardProps> = () => {
       </div>
       <EntityListModal
         title="Select token"
-        show={isSelectLeftTokenModalVisible}
-        setShow={setIsSelectLeftTokenModalVisible}
-        data={tokens[1]}
-        visibleData={mappedTokens}
-        onEndReached={() => handleEndReached()}
+        show={token.base.modalVisible}
+        setShow={() => dispatch({
+            type: 'TOGGLE_MODAL_VISIBLE',
+            tokenType: 'base',
+          })}
+        data={tokens[selection.swapCard.to.chain.id]}
+        entitiesVisible={15}
         columns={columns}
-        onSelect={(token) => handleSelectLeftToken(token)}
+        onSelect={(token) => dispatch({
+            type: 'SET_TOKEN',
+            tokenType: 'base',
+            payload: token,
+          })}
       />
-      {/* <EntityListModal */}
-      {/*   title="Select chain" */}
-      {/*   show={isSelectRightChainModalVisible} */}
-      {/*   setShow={setIsSelectRightChainModalVisible} */}
-      {/*   data={chains} */}
-      {/*   columns={columns} */}
-      {/*   onSelect={(chain) => handleSelectRightChain(chain)} */}
-      {/* /> */}
-    </div>
+    </Card>
   )
 }

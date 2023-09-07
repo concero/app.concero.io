@@ -13,20 +13,25 @@ interface RateTagProps {
   isLoading: boolean
 }
 
-export const RateTag: FC<RateTagProps> = ({ from, to, rate, isLoading }) => (
-  <div className={classNames.swapTagContainer}>
-    {rate.from && rate.to && !isLoading ? (
-      <>
-        <div className={classNames.swapPriceTag}>
-          <p className={'body1'}>{rate.from}</p>
-          <CryptoIcon src={from.logoURI} />
-        </div>
-        <p className={`body1 ${classNames.equalSign}`}>=</p>
-        <div className={classNames.swapPriceTag}>
-          <p className={'body1'}>{rate.to}</p>
-          <CryptoIcon src={to.logoURI} />
-        </div>
-      </>
-    ) : null}
-  </div>
-)
+export const RateTag: FC<RateTagProps> = ({ from, to, rate, isLoading }) => {
+  const toTate = parseFloat(rate.to) === 0 ? '< 0.01' : rate.to
+  const fromRate = parseFloat(rate.from) === 0 ? '< 0.01' : rate.from
+
+  return (
+    <div className={classNames.swapTagContainer}>
+      {rate.from && rate.to && !isLoading ? (
+        <>
+          <div className={classNames.swapPriceTag}>
+            <p className={'body1'}>{fromRate}</p>
+            <CryptoIcon src={from.logoURI} />
+          </div>
+          <p className={`body1 ${classNames.equalSign}`}>=</p>
+          <div className={classNames.swapPriceTag}>
+            <p className={'body1'}>{toTate}</p>
+            <CryptoIcon src={to.logoURI} />
+          </div>
+        </>
+      ) : null}
+    </div>
+  )
+}

@@ -33,6 +33,8 @@ export const isNotEmpty = (str: string): boolean => str.length > 0
 // Numeric validation
 export const isNumeric = (num: string): boolean => !isNaN(parseFloat(num)) && isFinite(Number(num))
 
+export const isDigit = (num: string): boolean => /^\d+$/.test(num)
+
 // Float validation
 export const isFloat = (num: string): boolean => {
   const floatRegex = /^-?\d*(\.\d+)?$/

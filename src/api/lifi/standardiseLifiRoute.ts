@@ -34,10 +34,7 @@ export const standardiseLifiRoute = (route: types.Route): Route => ({
       id: route.toChainId,
     },
   },
-  steps: [
-    // ...route.steps.map((step) => getRouteStep(step)),
-    ...route.steps.flatMap((step) => step.includedSteps.map((includedStep) => getRouteStep(includedStep))),
-  ],
+  steps: [...route.steps.flatMap((step) => step.includedSteps.map((includedStep) => getRouteStep(includedStep)))],
   cost: {
     total_usd: Number(route.fromAmountUSD) - Number(route.toAmountUSD),
     total_gas_usd: route.gasCostUSD,
@@ -48,15 +45,13 @@ export const standardiseLifiRoute = (route: types.Route): Route => ({
     fee_amount_usd: route.insurance.feeAmountUsd,
   },
   slippage_percent: route.steps.reduce(
-    (acc, step) => acc
-      + (step.action.slippage
-        + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
+    (acc, step) => acc + (step.action.slippage + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
     0,
   ),
   transaction_time_seconds: route.steps.reduce(
-    (acc: number, step) => acc
-      + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
+    (acc: number, step) => acc + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
     0,
   ),
+  execution: route.steps.map((step) => step.execution),
   originalRoute: route,
 })

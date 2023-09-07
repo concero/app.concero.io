@@ -3,10 +3,10 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: var(--sp-md);
+}
 
-    div {
-        gap: var(--sp-md);
-    }
+.comingSoonContainer {
+    flex-direction: row;
 }
 
 ul {
@@ -22,13 +22,14 @@ ul {
     }
 
     .active {
-        border: 1px solid var(--color-primary-mainDark);
-        box-shadow: 0px 3px 12px rgba(90, 49, 176, 0.4);
+        background-color: var(--color-primary-darkest);
+        border: 1px solid var(--color-primary-darker);
         color: var(--color-text-primary);
+
     }
 
     .active:hover {
-        color: var(--color-text-primary);
+        background-color: var(--color-primary-darkest);
     }
 
     .comingSoon {
@@ -37,11 +38,11 @@ ul {
 }
 
 a {
-    transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 a:hover {
-    color: var(--color-grey-mediumLight);
+    transform: translateY(-2px);
 }
 
 .logoContainer {
@@ -49,5 +50,7 @@ a:hover {
 }
 
 .navigatorContainer {
+    flex-direction: row;
     align-items: center;
+    gap: var(--sp-md);
 }

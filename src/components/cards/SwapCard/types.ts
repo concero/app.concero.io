@@ -3,14 +3,8 @@ import { Route, Step } from '../../../api/lifi/types'
 export interface SwapCardProps {}
 
 export interface SwapDetailsProps {
-  selection: {
-    from: Selection
-    to: Selection
-  }
-  selectedRoute: Route
+  swapState: any
   setSelectedRoute: (route: Route) => void
-  routes: Route[]
-  isLoading: boolean
 }
 
 export interface Selection {
@@ -21,6 +15,7 @@ export interface Selection {
 export interface Token {
   name: string
   symbol: string
+  logoURI: string
 }
 
 export interface Chain {
@@ -47,8 +42,12 @@ export type State = {
       id: string
       logoURI: string
       providers: {
-        lifi?: { key: string }
-        rango?: { key: string }
+        lifi?: {
+          key: string
+        }
+        rango?: {
+          key: string
+        }
       }
     }
     token: {
@@ -69,8 +68,12 @@ export type State = {
       id: string
       logoURI: string
       providers: {
-        lifi?: { key: string }
-        rango?: { key: string }
+        lifi?: {
+          key: string
+        }
+        rango?: {
+          key: string
+        }
       }
     }
     token: {
@@ -89,7 +92,14 @@ export type State = {
   selectedRoute: any
   originalRoutes: any[]
   typingTimeout: number
-  transactionResponse: Response | null
+  response: Response | null
+  stage: 'input' | 'progress'
+  steps: Step[]
+  status: 'pending' | 'success' | 'failure' | 'awaiting'
+  settings: {
+    slippage_percent: string
+    showDestinationAddress: boolean
+  }
 }
 
 type Response = {
@@ -137,7 +147,10 @@ export type SetTypingTimeoutAction = {
 export type SetAmountAction = {
   type: 'SET_AMOUNT'
   direction: Direction
-  payload: { amount?: string; amount_usd?: number }
+  payload: {
+    amount?: string
+    amount_usd?: number
+  }
 }
 
 export type ResetAmountsAction = {
@@ -148,13 +161,20 @@ export type ResetAmountsAction = {
 export type SetChainAction = {
   type: 'SET_CHAIN'
   direction: Direction
-  payload: { name: string; symbol: string; id: number }
+  payload: {
+    name: string
+    symbol: string
+    id: number
+  }
 }
 
 export type SetTokenAction = {
   type: 'SET_TOKEN'
   direction: Direction
-  payload: { name: string; symbol: string }
+  payload: {
+    name: string
+    symbol: string
+  }
 }
 
 export type SetFromAmountAction = {
@@ -182,13 +202,18 @@ export type SetAddressAction = {
 }
 
 export type SetResponses = {
-  type: 'SET_RESPONSES'
+  type: 'SET_RESPONSE'
   payload: Response
 }
 
 export type ToggleInsurance = {
   type: 'TOGGLE_INSURANCE'
   payload: Response
+}
+
+export type SetBalanceAction = {
+  type: 'SET_BALANCE'
+  payload: string
 }
 
 export type Action =
@@ -209,3 +234,4 @@ export type Action =
   | SetAddressAction
   | SetResponses
   | ToggleInsurance
+  | SetBalanceAction

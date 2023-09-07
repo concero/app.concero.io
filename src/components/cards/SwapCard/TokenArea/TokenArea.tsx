@@ -1,4 +1,5 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef } from 'react'
+import { animated, useSpring } from 'react-spring'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
@@ -11,107 +12,57 @@ import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
-import { isFloatInput } from '../../../../utils/validation'
 import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
+import { handleAmountChange, handleAreaClick } from './handlers'
+import { useTokenAreaReducer } from './tokenAreaReducer'
+import { isFloatInput } from '../../../../utils/validation'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, balance = null }) => {
-  const [showChainsModal, setShowChainsModal] = useState<boolean>(false)
-  const [showTokensModal, setShowTokensModal] = useState<boolean>(false)
-  const [currentTokenPriceUSD, setCurrentTokenPriceUSD] = useState<number>(0)
-  const [mappedTokens, setMappedTokens] = useState<any[]>(tokens[selection.chain.id].slice(0, 50))
-  const [isFocused, setIsFocused] = useState<boolean>(false)
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
+  const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
   const inputRef = useRef()
 
-  const handleClick = () => {
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
-  }
-
-  const setChain = (chain) => {
-    dispatch({
-      type: 'SET_CHAIN',
-      direction,
-      payload: { chain },
-    })
-  }
-
-  const setToken = (token) => {
-    dispatch({
-      type: 'SET_TOKEN',
-      direction,
-      payload: { token },
-    })
-  }
-
-  const setAmountUsd = (input) => {
-    dispatch({
-      type: 'SET_AMOUNT',
-      direction,
-      payload: {
-        amount_usd: (currentTokenPriceUSD * parseFloat(input)).toFixed(2).toString(),
-      },
-    })
-  }
+  const shakeProps = useSpring({
+    from: { transform: 'translateX(0)' },
+    to: [{ transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0px)' }],
+    config: { duration: 50, mass: 1, tension: 500, friction: 10 },
+    reset: false,
+    onRest: () => state.shake && tokenAreaDispatch({ type: 'SET_SHAKE', payload: false }),
+  })
 
   const getCurrentPriceToken = async () => {
     const response = await fetchCurrentTokenPriceUSD(selection.token.symbol)
-    setCurrentTokenPriceUSD(response)
-  }
-
-  const handleAmountChange = (input) => {
-    if (input === '') {
-      return dispatch({
-        type: 'RESET_AMOUNTS',
-        direction,
-      })
-    }
-    if (!isFloatInput(input)) return
-
-    dispatch({
-      type: 'SET_AMOUNT',
-      direction,
-      payload: { amount: input },
-    })
-
-    setAmountUsd(input)
+    tokenAreaDispatch({ type: 'SET_CURRENT_TOKEN_PRICE_USD', payload: response })
   }
 
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken()
-    setMappedTokens(tokens[selection.chain.id].slice(0, 50))
   }, [selection.chain, selection.token])
 
   useEffect(() => {
-    if (selection.amount) setAmountUsd(selection.amount)
-  }, [currentTokenPriceUSD])
+    if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
+  }, [state.currentTokenPriceUSD])
 
-  const handleMappedTokens = () => {
-    setMappedTokens([
-      ...mappedTokens,
-      ...tokens[selection.chain.id].slice(mappedTokens.length, mappedTokens.length + 50),
-    ])
+  const onChangeText = (value) => {
+    if (value && !isFloatInput(value)) tokenAreaDispatch({ type: 'SET_SHAKE', payload: true })
+    if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
   }
-
   return (
     <>
-      <div
-        className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}
-        onClick={() => handleClick()}
+      <animated.div
+        className={`${classNames.tokenContainer} ${state.isFocused ? classNames.inputFocused : ''}`}
+        onClick={() => handleAreaClick({ inputRef })}
+        style={state.shake ? shakeProps : {}}
       >
         <div className={classNames.tokenRow}>
           <div className={classNames.tokenRowHeader}>
             <p>{capitalize(direction)}</p>
             <Button
-              onClick={() => setShowChainsModal(true)}
+              onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: true })}
               size="sm"
               variant="black"
               rightIcon={{
                 name: 'ChevronDown',
-                iconProps: {
-                  size: 18,
-                  color: colors.text.secondary,
-                },
+                iconProps: { size: 16, color: colors.text.secondary },
               }}
             >
               <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
@@ -123,50 +74,46 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
           <div>
             <TextInput
               ref={inputRef}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
+              onFocus={() => tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: true })}
+              onBlur={() => tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: false })}
               variant="inline"
               placeholder={`0.0 ${selection.token.symbol}`}
               value={selection.amount}
-              onChangeText={(value) => direction === 'from' && handleAmountChange(value)}
+              onChangeText={(value) => onChangeText(value)}
               isDisabled={direction === 'to'}
             />
-            <h5>${numberToFormatString(Number(selection.amount_usd), 2)}</h5>
+            <h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
           </div>
           <Button
-            onClick={() => setShowTokensModal(true)}
+            onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })}
             size="sm"
             variant="black"
             rightIcon={{
               name: 'ChevronDown',
-              iconProps: {
-                size: 18,
-                color: colors.text.secondary,
-              },
+              iconProps: { size: 16, color: colors.text.secondary },
             }}
           >
             <CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
           </Button>
         </div>
-      </div>
+      </animated.div>
       <EntityListModal
         title="Select chain"
         data={chains}
         columns={ChainColumns}
-        show={showChainsModal}
-        setShow={setShowChainsModal}
-        onSelect={(chain) => setChain(chain)}
+        show={state.showChainsModal}
+        entitiesVisible={15}
+        setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
+        onSelect={(chain) => swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain } })}
       />
       <EntityListModal
         title="Select token"
         data={tokens[selection.chain.id]}
-        visibleData={mappedTokens}
+        entitiesVisible={15}
         columns={TokenColumns}
-        show={showTokensModal}
-        setShow={setShowTokensModal}
-        onSelect={(token) => setToken(token)}
-        onEndReached={() => handleMappedTokens()}
-        animate={false}
+        show={state.showTokensModal}
+        setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: value })}
+        onSelect={(token) => swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })}
       />
     </>
   )

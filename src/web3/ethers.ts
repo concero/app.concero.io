@@ -28,9 +28,7 @@ export function publicClientToProvider(publicClient: PublicClient) {
   }
   if (transport.type === 'fallback') {
     return new providers.FallbackProvider(
-      (transport.transports as ReturnType<HttpTransport>[]).map(
-        ({ value }) => new providers.JsonRpcProvider(value?.url, network),
-      ),
+      (transport.transports as ReturnType<HttpTransport>[]).map(({ value }) => new providers.JsonRpcProvider(value?.url, network)),
     )
   }
   return new providers.JsonRpcProvider(transport.url, network)

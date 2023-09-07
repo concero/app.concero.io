@@ -3,12 +3,14 @@
     cursor: pointer;
     flex-direction: column;
     overflow-y: scroll;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 
     .cardHeader {
         align-items: center;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
+        padding-bottom: var(--sp-xs);
     }
 
     .cardHeaderLeftSide {
@@ -19,11 +21,21 @@
 
     .stepsContainer {
         gap: var(--sp-xs);
-        padding: var(--sp-md) 0;
+
     }
 }
 
+.container:hover {
+    background-color: var(--color-grey-darkest);
+    border: 1px solid var(--color-grey-dark);
+}
+
 .selectedCard {
+    background-color: var(--color-primary-darkest);
+    border: 1px solid var(--color-primary-main);
+}
+
+.selectedCard:hover {
     background-color: var(--color-primary-darkest);
     border: 1px solid var(--color-primary-main);
 }
@@ -43,6 +55,8 @@
         justify-content: space-between;
         flex-wrap: wrap;
         gap: var(--sp-xs);
+        padding: var(--sp-sm) var(--sp-sm);
+        border-radius: var(--st-br-md);
 
         .endPointContainer {
             align-items: center;
@@ -65,7 +79,6 @@
             flex-direction: row;
             gap: 10px;
         }
-
     }
 }
 
@@ -84,9 +97,10 @@
 }
 
 .tagStyle {
-    background-color: var(--color-grey-darker);
-    border-radius: 8px;
+    border-radius: var(--st-br-md);
+    background-color: transparent;
     padding: var(--sp-xs) var(--sp-md);
+    color: var(--color-base-white);
 }
 
 .showAllTag {
@@ -103,6 +117,7 @@
 .infoTagsContainer {
     flex-direction: row;
     gap: var(--sp-xs);
+    overflow-x: auto;
 
     .advantageTagColor {
         color: var(--color-base-white);

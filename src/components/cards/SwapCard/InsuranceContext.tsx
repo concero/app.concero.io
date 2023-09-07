@@ -2,7 +2,7 @@ import { createContext, FC, ReactNode } from 'react'
 
 interface SwapCardProviderProps {
   children: ReactNode
-  toggleInsurance: () => void
+  toggleInsurance: (id: string) => void
 }
 
 export const InsuranceContext = createContext(null)

@@ -1,33 +1,32 @@
 .container {
-    flex: 1;
-    flex-wrap: wrap;
-    gap: var(--sp-sm);
+  flex: 1;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
 }
 
 .mainCardStack {
-    flex: 1;
-    gap: var(--sp-sm);
-    min-width: 400px;
+  flex: 1;
+  gap: var(--sp-sm);
+  min-width: 400px;
 }
 
 .secondaryCardStack {
-    gap: var(--sp-sm);
-    min-width: 400px;
-    max-height: calc(100vh - 42px - (2* var(--sp-screen-v)) - var(--sp-sm));
+  gap: var(--sp-sm);
+  min-width: 400px;
+  max-height: calc(100vh - 42px - (2 * var(--sp-screen-v)) - var(--sp-sm));
 }
 
 @media (max-width: 700px) {
-    .container {
-        width: 100%;
-    }
+  .container {
+    width: 100%;
+  }
 
-    .secondaryCardStack {
-        width: 100%;
-        max-height: unset;
-    }
+  .secondaryCardStack {
+    width: 100%;
+  }
 
-    .mainCardStack {
-        width: 100%;
-        min-width: unset;
-    }
+  .mainCardStack {
+    width: 100%;
+    min-width: unset;
+  }
 }

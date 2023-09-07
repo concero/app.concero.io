@@ -5,22 +5,15 @@ import { RouteButton } from './RouteButton'
 import { RateTag } from './RateTag'
 import { RouteCard } from '../../RouteCard/RouteCard'
 import { SwapDetailsProps } from '../types'
+import { numberToFormatString } from '../../../../utils/formatting'
 
-export const SwapDetails: FC<SwapDetailsProps> = ({
-  selection,
-  selectedRoute,
-  setSelectedRoute,
-  routes,
-  isLoading,
-}) => {
+export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute }) => {
+  const { from, to, routes, isLoading, selectedRoute } = swapState
   const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
 
   const rate = {
-    from: selection.to.amount ? 1 : 0,
-    to:
-      selection.to.amount && selection.from.amount
-        ? parseFloat(selection.to.amount / selection.from.amount).toFixed(2)
-        : 0,
+    from: to.amount ? 1 : 0,
+    to: to.amount && from.amount ? numberToFormatString(parseFloat(to.amount / from.amount), 2, true) : 0,
   }
 
   const handleSelectRoute = (id: string) => {
@@ -29,15 +22,17 @@ export const SwapDetails: FC<SwapDetailsProps> = ({
 
   return (
     <div className={classNames.swapDetailsContainer}>
-      <RateTag from={selection.from.token} to={selection.to.token} rate={rate} isLoading={isLoading} />
+      <RateTag from={from.token} to={to.token} rate={rate} isLoading={isLoading} />
       <RouteButton selectedRoute={selectedRoute} onClick={() => setIsSelectRouteModalVisible(true)} />
       <Modal title="Select route" show={isSelectRouteModalVisible} setShow={setIsSelectRouteModalVisible}>
         <div className={classNames.routeCardsContainer}>
-          {routes?.map((route) => (
-            <div key={route.id}>
-              <RouteCard route={route} isSelected={selectedRoute.id === route.id} onClick={handleSelectRoute} />
-            </div>
-          ))}
+          {routes?.length
+            ? routes.map((route) => (
+              <div key={route.id}>
+                <RouteCard route={route} isSelected={selectedRoute.id === route.id} onClick={handleSelectRoute} />
+              </div>
+              ))
+            : null}
         </div>
       </Modal>
     </div>

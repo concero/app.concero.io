@@ -105,4 +105,7 @@ export interface FetchRoutesParams {
     }
     address: string
   }
+  settings: {
+    slippage_percent: number
+  }
 }

@@ -2,6 +2,7 @@ import { FC } from 'react'
 import classNames from './RouteCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { getChainLogoURIById } from '../../../utils/getChainLogoURIById'
+import { numberToFormatString } from '../../../utils/formatting'
 
 interface RouteEndPointProps {
   side: {
@@ -20,7 +21,7 @@ interface RouteEndPointProps {
 }
 
 export const RouteEndPoint: FC<RouteEndPointProps> = ({ side, amount }) => {
-  const chainLogoURI = getChainLogoURIById(side.chain.id)
+  const chainLogoURI = getChainLogoURIById(Number(side.chain.id))
 
   return (
     <div className={classNames.endPointContainer}>
@@ -28,7 +29,7 @@ export const RouteEndPoint: FC<RouteEndPointProps> = ({ side, amount }) => {
         <Avatar src={side.token.logo_uri} size="md" />
         <Avatar src={chainLogoURI} size="xs" className={classNames.chainAvatar} />
       </div>
-      <h4>{amount}</h4>
+      <h4>{numberToFormatString(parseFloat(amount), 2, true)}</h4>
     </div>
   )
 }

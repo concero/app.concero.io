@@ -121,6 +121,7 @@ body::-webkit-scrollbar {
     --color-text-primary: #131313;
     --color-button-text-primary: #FBFBFB;
     --color-text-secondary: #7E7B86;
+    --color-primary-to-lightest: #7335f7;
 
     /* gradients */
     --color-main-card-gradient: rgba(40, 40, 40, 0.06);
@@ -185,6 +186,7 @@ body::-webkit-scrollbar {
     --color-text-primary: #F7F7F7;
     --color-button-text-primary: #FBFBFB;
     --color-text-secondary: #7E7B86;
+    --color-primary-to-lightest: #e3d7fd;
 
     /* gradients */
     --color-main-card-gradient: rgba(40, 40, 40, 0.5);
@@ -225,7 +227,23 @@ h1, h2, h3, h4, h5, h6, p, a, button, input, label, span, li {
     -ms-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+}
 
+textarea {
+    box-sizing: border-box;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+    resize: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+textarea:focus {
+    outline: none;
 }
 
 ul, ol, li {
@@ -275,6 +293,11 @@ a {
     font-size: 0.85rem;
 }
 
+.tagBody {
+    color: var(--color-base-white);
+    font-size: 0.85rem;
+}
+
 button {
     border: none;
     cursor: pointer;
@@ -287,4 +310,8 @@ button {
     div:nth-child(2) {
         display: none;
     }
+}
+
+.cardHeaderTitle {
+    color: var(--color-grey-medium)
 }

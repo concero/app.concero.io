@@ -265,6 +265,17 @@ export const chains = [
     },
   },
   {
+    id: '59144',
+    name: 'LINEA',
+    symbol: 'LINEA',
+    logoURI: 'https://api.rango.exchange/blockchains/linea.svg',
+    providers: {
+      rango: {
+        key: 'LINEA',
+      },
+    },
+  },
+  {
     id: '728126428',
     name: 'TRON',
     symbol: 'TRON',
@@ -274,6 +285,7 @@ export const chains = [
         key: 'TRON',
       },
     },
+    destinationAddressRequired: true,
   },
   {
     id: '',
@@ -285,6 +297,7 @@ export const chains = [
         key: 'DOGE',
       },
     },
+    destinationAddressRequired: true,
   },
   {
     id: 'cosmoshub-4',
@@ -296,6 +309,7 @@ export const chains = [
         key: 'COSMOS',
       },
     },
+    destinationAddressRequired: true,
   },
   {
     id: 'osmosis-1',
@@ -307,6 +321,7 @@ export const chains = [
         key: 'OSMOSIS',
       },
     },
+    destinationAddressRequired: true,
   },
   {
     id: 'neutron-1',
@@ -353,28 +368,6 @@ export const chains = [
     },
   },
   {
-    id: '43288',
-    name: 'BOBA_AVALANCHE',
-    symbol: 'BOBA_AVALANCHE',
-    logoURI: 'https://api.rango.exchange/blockchains/boba.png',
-    providers: {
-      rango: {
-        key: 'BOBA_AVALANCHE',
-      },
-    },
-  },
-  {
-    id: '1666600000',
-    name: 'HARMONY',
-    symbol: 'HARMONY',
-    logoURI: 'https://api.rango.exchange/blockchains/harmony.svg',
-    providers: {
-      rango: {
-        key: 'HARMONY',
-      },
-    },
-  },
-  {
     id: '9001',
     name: 'EVMOS',
     symbol: 'EVMOS',
@@ -393,28 +386,6 @@ export const chains = [
     providers: {
       rango: {
         key: 'HECO',
-      },
-    },
-  },
-  {
-    id: 'sifchain-1',
-    name: 'SIF',
-    symbol: 'SIF',
-    logoURI: 'https://api.rango.exchange/blockchains/sif.png',
-    providers: {
-      rango: {
-        key: 'SIF',
-      },
-    },
-  },
-  {
-    id: '32520',
-    name: 'BRISE',
-    symbol: 'BRISE',
-    logoURI: 'https://api.rango.exchange/blockchains/bitgert.png',
-    providers: {
-      rango: {
-        key: 'BRISE',
       },
     },
   },
@@ -505,6 +476,7 @@ export const chains = [
         key: 'EMONEY',
       },
     },
+    destinationAddressRequired: true,
   },
   {
     id: 'juno-1',
@@ -518,17 +490,6 @@ export const chains = [
     },
   },
   {
-    id: 'axelar-dojo-1',
-    name: 'AXELAR',
-    symbol: 'AXELAR',
-    logoURI: 'https://api.rango.exchange/blockchains/axelar.png',
-    providers: {
-      rango: {
-        key: 'AXELAR',
-      },
-    },
-  },
-  {
     id: 'stride-1',
     name: 'STRIDE',
     symbol: 'STRIDE',
@@ -536,17 +497,6 @@ export const chains = [
     providers: {
       rango: {
         key: 'STRIDE',
-      },
-    },
-  },
-  {
-    id: '321',
-    name: 'KCC',
-    symbol: 'KCC',
-    logoURI: 'https://api.rango.exchange/blockchains/kcc.png',
-    providers: {
-      rango: {
-        key: 'KCC',
       },
     },
   },
@@ -569,17 +519,6 @@ export const chains = [
     providers: {
       rango: {
         key: 'TERRA',
-      },
-    },
-  },
-  {
-    id: '40',
-    name: 'TELOS',
-    symbol: 'TELOS',
-    logoURI: 'https://api.rango.exchange/blockchains/telos.png',
-    providers: {
-      rango: {
-        key: 'TELOS',
       },
     },
   },
@@ -745,17 +684,6 @@ export const chains = [
     providers: {
       rango: {
         key: 'LUMNETWORK',
-      },
-    },
-  },
-  {
-    id: 'columbus-5',
-    name: 'TERRA_CLASSIC',
-    symbol: 'TERRA_CLASSIC',
-    logoURI: 'https://api.rango.exchange/blockchains/terraclassic.svg',
-    providers: {
-      rango: {
-        key: 'TERRA_CLASSIC',
       },
     },
   },

@@ -10,6 +10,8 @@ import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
 
+// import { ModalProvider } from './hooks/ModalContext'
+
 function App() {
   if (!process.env.DEVELOPMENT) {
     posthog.init(process.env.REACT_APP_PUBLIC_POSTHOG_KEY, {
@@ -21,6 +23,7 @@ function App() {
     <PostHogProvider>
       <ThemeProvider>
         <SelectionProvider>
+          {/* <ModalProvider> */}
           <NotificationsProvider>
             <Notifications />
             <WagmiConfig config={wagmiConfig}>
@@ -28,6 +31,7 @@ function App() {
               <WalletConnectModal />
             </WagmiConfig>
           </NotificationsProvider>
+          {/* </ModalProvider> */}
         </SelectionProvider>
       </ThemeProvider>
     </PostHogProvider>

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { TxFromTo } from '../../tags/TxFromTo/TxFromTo'
 import { colors } from '../../../constants/colors'
 import { DotsIconButton } from './DotsIconButton'
-import { numberToFormatString, unixtimeFromNow } from '../../../utils/formatting'
+import { roundNumberByDecimals, unixtimeFromNow } from '../../../utils/formatting'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 
 export const columns = (setModalData, setIsModalOpen) => [
@@ -15,11 +15,11 @@ export const columns = (setModalData, setIsModalOpen) => [
       return (
         <TxFromTo
           from={{
-            amount: numberToFormatString(item.baseAmount, 3),
+            amount: roundNumberByDecimals(item.baseAmount, 3),
             symbol: item.baseCurrency?.symbol,
           }}
           to={{
-            amount: numberToFormatString(item.quoteAmount, 3),
+            amount: roundNumberByDecimals(item.quoteAmount, 3),
             symbol: item.quoteCurrency?.symbol,
           }}
           type={type}

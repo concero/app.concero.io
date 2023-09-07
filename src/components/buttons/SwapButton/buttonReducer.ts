@@ -38,7 +38,7 @@ const reducer = (state, action) => {
         icon: '',
         className: 'loading',
       }
-    case 'NO_ROUTE': {
+    case 'NO_ROUTES': {
       return {
         isDisabled: true,
         text: 'No routes found',
@@ -64,6 +64,20 @@ const reducer = (state, action) => {
       return {
         isDisabled: true,
         text: 'Cancelled by user',
+        icon: '',
+        className: 'wrong',
+      }
+    case 'SET_RESPONSE':
+      return {
+        isDisabled: true,
+        text: action.payload.message,
+        icon: '',
+        className: 'wrong',
+      }
+    case 'NO_DESTINATION_ADDRESS':
+      return {
+        isDisabled: true,
+        text: 'Provide destination address',
         icon: '',
         className: 'wrong',
       }

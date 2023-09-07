@@ -8,7 +8,9 @@ interface CardHeaderProps {
 
 export const CardHeader: FC<CardHeaderProps> = ({ title, children }) => (
   <div className={classNames.cardHeader}>
-    <h5>{title}</h5>
+    <div className={classNames.titleContainer}>
+      <h5>{title}</h5>
+    </div>
     {children}
   </div>
 )
