@@ -4,7 +4,7 @@ import { useAccount } from 'wagmi'
 import { BaseButton } from '../BaseButton/BaseButton'
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from '../WalletButton.module.pcss'
-import { FeedbackModal } from '../../../../../modals/FeedbackModal/FeedbackModal'
+import { FeedbackModal } from '../../../../modals/FeedbackModal/FeedbackModal'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface DesktopButtonProps {
@@ -24,8 +24,8 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover,
 
   return (
     <div className={classNames.container}>
-      <Button size="sm" className={classNames.helpButton} onClick={() => handleHelpButtonClick()}>
-        <p>Help us improve</p>
+      <Button variant="subtle" size="sm" className={classNames.helpButton} onClick={() => handleHelpButtonClick()}>
+        Help us improve
       </Button>
       {isConnected ? <ButtonWithPopover onClick={open} /> : <BaseButton onClick={open} />}
       <Button

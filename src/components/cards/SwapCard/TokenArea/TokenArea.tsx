@@ -17,7 +17,7 @@ import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, balance = null }) => {
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
   const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
   const inputRef = useRef()
 
@@ -39,14 +39,13 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
   }, [selection.chain, selection.token])
 
   useEffect(() => {
-    if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch, direction })
+    if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
   }, [state.currentTokenPriceUSD])
 
   const onChangeText = (value) => {
     if (value && !isFloatInput(value)) tokenAreaDispatch({ type: 'SET_SHAKE', payload: true })
-    if (direction === 'from') handleAmountChange({ value, state, dispatch, direction })
+    if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
   }
-
   return (
     <>
       <animated.div
@@ -105,7 +104,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
         show={state.showChainsModal}
         entitiesVisible={15}
         setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
-        onSelect={(chain) => dispatch({ type: 'SET_CHAIN', direction, payload: { chain } })}
+        onSelect={(chain) => swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain } })}
       />
       <EntityListModal
         title="Select token"
@@ -114,7 +113,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, dispatch, 
         columns={TokenColumns}
         show={state.showTokensModal}
         setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: value })}
-        onSelect={(token) => dispatch({ type: 'SET_TOKEN', direction, payload: { token } })}
+        onSelect={(token) => swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })}
       />
     </>
   )

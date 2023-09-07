@@ -6,7 +6,7 @@ export const handleAreaClick = ({ inputRef }) => {
   }
 }
 
-export const handleAmountChange = ({ value, dispatch, setAmountUsd, direction }) => {
+export const handleAmountChange = ({ value, state, dispatch, direction }) => {
   if (value === '') {
     return dispatch({
       type: 'RESET_AMOUNTS',
@@ -19,8 +19,6 @@ export const handleAmountChange = ({ value, dispatch, setAmountUsd, direction })
   dispatch({
     type: 'SET_AMOUNT',
     direction,
-    payload: { amount: value },
+    payload: { amount: value, amount_usd: (state.currentTokenPriceUSD * parseFloat(value)).toFixed(2).toString() },
   })
-
-  setAmountUsd(value)
 }

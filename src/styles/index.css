@@ -121,6 +121,7 @@ body::-webkit-scrollbar {
     --color-text-primary: #131313;
     --color-button-text-primary: #FBFBFB;
     --color-text-secondary: #7E7B86;
+    --color-primary-to-lightest: #7335f7;
 
     /* gradients */
     --color-main-card-gradient: rgba(40, 40, 40, 0.06);
@@ -185,6 +186,7 @@ body::-webkit-scrollbar {
     --color-text-primary: #F7F7F7;
     --color-button-text-primary: #FBFBFB;
     --color-text-secondary: #7E7B86;
+    --color-primary-to-lightest: #e3d7fd;
 
     /* gradients */
     --color-main-card-gradient: rgba(40, 40, 40, 0.5);

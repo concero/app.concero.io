@@ -15,7 +15,7 @@ import { ThemeContext } from '../../../hooks/themeContext'
 import { useChartReducer } from './chartReducer'
 import { tokens } from '../../../constants/tokens'
 import { getCoingeckoTokenIdBySymbol } from '../../../api/coinGecko/getCoingeckoTokenIdBySymbol'
-import { fetchChartData } from '../../../api/coinGecko/fetchChartData'
+import { fetchChartData } from '../../../api/defilama/fetchChartData'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { Card } from '../Card/Card'
 
@@ -54,12 +54,10 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <Button
             variant="black"
             size="sm"
-            onClick={() =>
-              dispatch({
+            onClick={() => dispatch({
                 type: 'TOGGLE_MODAL_VISIBLE',
                 tokenType: 'base',
-              })
-            }
+              })}
           >
             <CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
           </Button>
@@ -74,12 +72,10 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <SegmentedControl
             data={intervals}
             selectedItem={interval}
-            setSelectedItem={(item) =>
-              dispatch({
+            setSelectedItem={(item) => dispatch({
                 type: 'SET_INTERVAL',
                 payload: item,
-              })
-            }
+              })}
           />
         ) : null}
       </div>
@@ -104,22 +100,18 @@ export const ChartCard: FC<ChartCardProps> = () => {
       <EntityListModal
         title="Select token"
         show={token.base.modalVisible}
-        setShow={() =>
-          dispatch({
+        setShow={() => dispatch({
             type: 'TOGGLE_MODAL_VISIBLE',
             tokenType: 'base',
-          })
-        }
+          })}
         data={tokens[selection.swapCard.to.chain.id]}
         entitiesVisible={15}
         columns={columns}
-        onSelect={(token) =>
-          dispatch({
+        onSelect={(token) => dispatch({
             type: 'SET_TOKEN',
             tokenType: 'base',
             payload: token,
-          })
-        }
+          })}
       />
     </Card>
   )
