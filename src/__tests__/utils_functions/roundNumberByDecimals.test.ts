@@ -10,7 +10,7 @@ describe('roundNumberByDecimals', () => {
   })
 
   it('should round a number with custom decimals', () => {
-    expect(roundNumberByDecimals(3.00000005, 2)).toBe(3.00000005)
+    expect(roundNumberByDecimals(3.00000000000005, 2)).toBe(3.00000000000005)
   })
 
   it('should round a number without trailing zeros', () => {
