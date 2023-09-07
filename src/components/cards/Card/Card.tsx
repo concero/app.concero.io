@@ -1,18 +1,13 @@
-import { FC, ReactNode } from 'react'
-import { ErrorCard } from './ErrorCard'
+import React, { FC, ReactNode } from 'react'
 
 interface CardProps {
   children: ReactNode
   className?: string
   onClick?: () => void
-  isOk?: boolean
-  setIsOk?: (value: boolean) => void
 }
 
-export const Card: FC<CardProps> = ({ children, className = '', onClick = null, isOk = true, setIsOk }) => {
-  return (
-    <div className={`card ${className}`} onClick={onClick && onClick}>
-      {isOk ? children : <ErrorCard setIsOk={setIsOk} />}
-    </div>
-  )
-}
+export const Card: FC<CardProps> = ({ children, className, onClick }) => (
+  <div className={`card ${className}`} onClick={onClick && onClick}>
+    {children}
+  </div>
+)

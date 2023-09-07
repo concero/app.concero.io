@@ -1,7 +1,7 @@
 import { rangoClient } from './rangoClient'
 import { addingDecimals } from '../../utils/formatting'
 import { standardizeRangoRoutes } from './standardizeRangoRoutes'
-import { tokenNullAddress } from '../../constants/tokenNullAddress'
+import { config } from '../../constants/config'
 
 export const fetchRangoRoutes = async ({ from, to, settings }) => {
   // todo: how to control rango slippage?
@@ -9,12 +9,12 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
     from: {
       blockchain: from.chain.providers.rango.key,
       symbol: from.token.symbol,
-      address: from.token.address === tokenNullAddress ? null : from.token.address,
+      address: from.token.address === config.NULL_ADDRESS ? null : from.token.address,
     },
     to: {
       blockchain: to.chain.providers.rango.key,
       symbol: to.token.symbol,
-      address: to.token.address === tokenNullAddress ? null : to.token.address,
+      address: to.token.address === config.NULL_ADDRESS ? null : to.token.address,
     },
     slippage: settings.slippage_percent,
     amount: addingDecimals(Number(from.amount), from.token.decimals),

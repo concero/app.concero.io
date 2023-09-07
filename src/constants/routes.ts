@@ -6,6 +6,7 @@ export const routes = {
   login: '/login',
   signup: '/signup',
   profile: '/profile',
+  staking: '/staking',
   portfolio: '/portfolio',
   notFound: '/404',
   resetPassword: '/reset-password',

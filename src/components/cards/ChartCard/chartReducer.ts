@@ -18,7 +18,7 @@ const initialState = (selection) => ({
   },
   interval: {
     title: '1d',
-    value: '1',
+    value: '30',
   },
   chartData: [],
 })

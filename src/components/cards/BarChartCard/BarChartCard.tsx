@@ -6,40 +6,6 @@ import classNames from './BarChartCard.module.pcss'
 
 export interface BarChartCardProps {}
 
-// export function PlotlyChart() {
-//   const data = [
-//     {
-//       x: ['giraffes', 'orangutans', 'monkeys'],
-//       y: [20, 14, 23],
-//       type: 'bar',
-//       marker: {
-//         // styles for the bars
-//         color: 'primary', // change to your primary color code
-//         line: {
-//           width: 1,
-//         },
-//       },
-//     },
-//   ]
-//
-//   const layout = {
-//     autosize: false,
-//     margin: {
-//       l: 50,
-//       r: 50,
-//       b: 100,
-//       t: 100,
-//       pad: 4,
-//     },
-//     paper_bgcolor: 'colors.base.background', // change to your colors.base.background color code
-//     plot_bgcolor: 'colors.base.background', // change to your colors.base.background color code
-//   }
-//
-//   const config = { displayModeBar: false } // this is to remove the hover toolbar
-//
-//   return <Plot data={data} layout={layout} config={config} />
-// }
-
 export function RechartsBarChart() {
   const data = [
     {

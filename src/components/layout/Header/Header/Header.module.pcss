@@ -1,55 +1,56 @@
 .header {
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: var(--sp-md);
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: var(--sp-md);
 }
 
 .comingSoonContainer {
-  flex-direction: row;
+    flex-direction: row;
 }
 
 ul {
-  color: var(--color-text-secondary);
-  font-size: 0.875rem;
-  font-weight: 500;
-  gap: var(--sp-sm);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    gap: var(--sp-sm);
 
-  a {
-    border: 1px solid var(--color-base-black);
-    border-radius: 6px;
-    padding: var(--sp-sm) var(--sp-md);
-  }
+    a {
+        border: 1px solid var(--color-base-black);
+        border-radius: 6px;
+        padding: var(--sp-sm) var(--sp-md);
+    }
 
-  .active {
-    border: 1px solid var(--color-primary-mainDark);
-    box-shadow: 0px 3px 12px rgba(90, 49, 176, 0.4);
-    color: var(--color-text-primary);
-  }
+    .active {
+        background-color: var(--color-primary-darkest);
+        border: 1px solid var(--color-primary-darker);
+        color: var(--color-text-primary);
 
-  .active:hover {
-    color: var(--color-text-primary);
-  }
+    }
 
-  .comingSoon {
-    color: var(--color-grey-dark);
-  }
+    .active:hover {
+        background-color: var(--color-primary-darkest);
+    }
+
+    .comingSoon {
+        color: var(--color-grey-dark);
+    }
 }
 
 a {
-  transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 a:hover {
-  color: var(--color-grey-mediumLight);
+    transform: translateY(-2px);
 }
 
 .logoContainer {
-  margin-right: var(--sp-sm);
+    margin-right: var(--sp-sm);
 }
 
 .navigatorContainer {
-  flex-direction: row;
-  align-items: center;
-  gap: var(--sp-md);
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-md);
 }
