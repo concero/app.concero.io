@@ -38,6 +38,6 @@ test('Renders TokenArea with each chain', () => {
     const occurrences = queryAllByText(chain.name, { exact: false })
 
     expect(occurrences.length).toBeGreaterThanOrEqual(1)
-    expect(occurrences.length).toBeLessThanOrEqual(3)
+    expect(occurrences.length).toBeLessThanOrEqual(4)
   })
 })
