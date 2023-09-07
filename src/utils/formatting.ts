@@ -102,7 +102,10 @@ export const numberToFormatString = (number: number, decimals = 4, isTransformNe
 export const roundNumberByDecimals = (number: number, decimals = 4): number => {
   const decimalPart = number.toString().split('.')[1]
   let count = 0
-  if (decimalPart) while (decimalPart[count] === '0') count++
+  if (decimalPart) {
+    while (decimalPart[count] === '0') count++
+    count++
+  }
   const factor = Math.max(count, decimals)
   return parseFloat(number?.toFixed(factor))
 }
