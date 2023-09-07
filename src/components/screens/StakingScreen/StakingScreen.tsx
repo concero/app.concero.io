@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
@@ -8,7 +9,7 @@ import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
-export const StakingScreen: React.FC = () => {
+export const StakingScreen: FC = () => {
   const [{ selectedVault, vaults, protocols, filter }, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
