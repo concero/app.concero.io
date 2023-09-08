@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+}
+
+.innerContainer {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checked {
+  background-color: var(--color-green-darkest);
+  border: 1px solid var(--color-green-darker);
+
+  .sideContainer {
+    h5 {
+      color: var(--color-green-main);
+    }
+    h4 {
+      color: var(--color-green-main);
+    }
+  }
+}
+
+.unchecked {
+  background-color: var(--color-grey-darkest);
+
+  .sideContainer {
+    h5 {
+      color: var(--color-text-secondary);
+    }
+    h4 {
+      color: var(--color-text-secondary);
+    }
+  }
+}
+
+.sideContainer {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-md);
+}
