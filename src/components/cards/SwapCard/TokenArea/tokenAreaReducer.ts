@@ -7,7 +7,6 @@ export const initialState = (direction, selection) => ({
   isFocused: false,
   shake: false,
   tokens: [],
-  chains: [],
 })
 
 export function tokenAreaReducer(state, action) {
@@ -24,8 +23,6 @@ export function tokenAreaReducer(state, action) {
       return { ...state, shake: action.payload }
     case 'SET_TOKENS':
       return { ...state, tokens: action.payload }
-    case 'SET_CHAINS':
-      return { ...state, chains: action.payload }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }
