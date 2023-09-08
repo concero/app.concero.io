@@ -7,8 +7,6 @@ import { capitalize, numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
-import { chains } from '../../../../constants/chains'
-// import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
@@ -17,6 +15,7 @@ import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
 import { getTokens } from './getTokens'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
+import { getChains } from './getChains'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
   const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
@@ -36,12 +35,16 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
   }
 
   useEffect(() => {
-    if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
-  }, [selection.chain, selection.token])
-
-  useEffect(() => {
     getTokens(selection, tokenAreaDispatch)
   }, [selection.chain])
+
+  useEffect(() => {
+    getChains(tokenAreaDispatch)
+  }, [])
+
+  useEffect(() => {
+    if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
+  }, [selection.chain, selection.token])
 
   useEffect(() => {
     if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
@@ -100,7 +103,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
       </animated.div>
       <EntityListModal
         title="Select chain"
-        data={chains}
+        data={state.chains}
         columns={ChainColumns}
         show={state.showChainsModal}
         entitiesVisible={15}
