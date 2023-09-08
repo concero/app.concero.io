@@ -3,8 +3,8 @@ import { FC, useContext } from 'react'
 import { ThemeContext } from '../../../hooks/themeContext'
 
 interface ToggleButtonProps {
-  value: boolean
-  onChange: (value) => void
+  value: string
+  onChange: () => void
 }
 
 export const ToggleButton: FC<ToggleButtonProps> = ({ value, onChange }) => {
