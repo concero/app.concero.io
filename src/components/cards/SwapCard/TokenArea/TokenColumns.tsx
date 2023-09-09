@@ -5,7 +5,7 @@ import { colors } from '../../../../constants/colors'
 export const TokenColumns = [
   {
     columnTitle: 'Symbol',
-    cellComponent: (token: { name: string; symbol: string; logoURI: string }) => <CryptoSymbol src={token.logoURI} symbol={truncate(token.symbol, 7)} />,
+    cellComponent: (token: { name: string; symbol: string; logoURI: string }) => <CryptoSymbol src={token.logoURI} />,
   },
   {
     columnTitle: 'Name',
