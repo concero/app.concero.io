@@ -7,7 +7,7 @@ import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { WithTooltip } from '../../../wrappers/WithTooltip'
 import { TooltipContent } from './TooltipContent'
-import { PortfolioLink } from './PortfolioLink'
+import { ComingSoonLinks } from './ComingSoonLinks'
 
 interface HeaderProps {
   style?: CSSProperties
@@ -17,10 +17,10 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children }) => {
   const isDesktop = useMediaQuery('mobile')
   const matchExchange = useMatch(routes.exchange)
-  const matchStaking = useMatch(routes.staking)
+  // const matchStaking = useMatch(routes.staking)
 
-  const PortfolioSoon = WithTooltip({
-    WrappedComponent: PortfolioLink,
+  const ComingSoon = WithTooltip({
+    WrappedComponent: ComingSoonLinks,
     Tooltip: TooltipContent,
   })
 
@@ -36,10 +36,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
             <Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
               Exchange
             </Link>
-            <Link className={matchStaking ? classNames.active : classNames.link} to={routes.staking}>
-              Staking
-            </Link>
-            {PortfolioSoon}
+            {ComingSoon}
           </ul>
         ) : null}
       </div>
