@@ -1,4 +1,5 @@
 import { DetailsList } from '../../layout/DetailsList/DetailsList'
+import classNames from './DetailsCard.module.pcss'
 
 const items = [
   {
@@ -21,7 +22,7 @@ const items = [
 
 export const DetailsCard = () => {
   return (
-    <div className={'card'}>
+    <div className={`card ${classNames.container}`}>
       <h5 className={'headerContainer'}>Details</h5>
       <DetailsList items={items} />
     </div>
