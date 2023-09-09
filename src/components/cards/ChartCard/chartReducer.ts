@@ -18,7 +18,7 @@ const initialState = (selection) => ({
   },
   interval: {
     title: '1d',
-    value: '30',
+    value: '1',
   },
   chartData: [],
 })
@@ -63,7 +63,7 @@ const chartReducer = (state, action) => {
         chartData: action.payload,
       }
     default:
-      return state
+      throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 

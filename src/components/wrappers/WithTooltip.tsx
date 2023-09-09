@@ -29,7 +29,6 @@ export function WithTooltip({ WrappedComponent, Tooltip, tooltipProps = {} }) {
             position: 'fixed',
             zIndex: 100,
             pointerEvents: 'none',
-
             transform: springProps.xy.to((x, y) => `translateX(${x - 320}px) translateY(${y}px)`),
           }}
         >

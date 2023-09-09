@@ -6,6 +6,7 @@ export const initialState = (direction, selection) => ({
   currentTokenPriceUSD: 0,
   isFocused: false,
   shake: false,
+  tokens: [],
 })
 
 export function tokenAreaReducer(state, action) {
@@ -20,6 +21,8 @@ export function tokenAreaReducer(state, action) {
       return { ...state, isFocused: action.payload }
     case 'SET_SHAKE':
       return { ...state, shake: action.payload }
+    case 'SET_TOKENS':
+      return { ...state, tokens: action.payload }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
   }

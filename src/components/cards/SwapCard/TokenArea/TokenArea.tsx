@@ -8,14 +8,15 @@ import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
 import { chains } from '../../../../constants/chains'
-import { tokens } from '../../../../constants/tokens'
+// import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
-import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
 import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
+import { getTokens } from './getTokens'
+import { getCurrentPriceToken } from './getCurrentPriceToken'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
   const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
@@ -29,23 +30,23 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
     onRest: () => state.shake && tokenAreaDispatch({ type: 'SET_SHAKE', payload: false }),
   })
 
-  const getCurrentPriceToken = async () => {
-    const response = await fetchCurrentTokenPriceUSD(selection.token.symbol)
-    tokenAreaDispatch({ type: 'SET_CURRENT_TOKEN_PRICE_USD', payload: response })
+  const onChangeText = (value) => {
+    if (value && !isFloatInput(value)) tokenAreaDispatch({ type: 'SET_SHAKE', payload: true })
+    if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
   }
 
   useEffect(() => {
-    if (direction === 'from') getCurrentPriceToken()
+    if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
   }, [selection.chain, selection.token])
+
+  useEffect(() => {
+    getTokens(selection, tokenAreaDispatch)
+  }, [selection.chain])
 
   useEffect(() => {
     if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
   }, [state.currentTokenPriceUSD])
 
-  const onChangeText = (value) => {
-    if (value && !isFloatInput(value)) tokenAreaDispatch({ type: 'SET_SHAKE', payload: true })
-    if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
-  }
   return (
     <>
       <animated.div
@@ -108,7 +109,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
       />
       <EntityListModal
         title="Select token"
-        data={tokens[selection.chain.id]}
+        data={state.tokens}
         entitiesVisible={15}
         columns={TokenColumns}
         show={state.showTokensModal}

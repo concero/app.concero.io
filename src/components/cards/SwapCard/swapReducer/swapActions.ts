@@ -7,7 +7,7 @@ export const swapActions = {
   SET_ROUTES: (state, action) => ({ ...state, routes: action.payload }),
   POPULATE_ROUTES: (state, action) => {
     if (action.fromAmount !== state.from.amount) return state
-    return { ...state, isLoading: false, routes: action.payload, selectedRoute: action.payload[0] }
+    return { ...state, routes: action.payload, selectedRoute: action.payload[0] }
   },
   CLEAR_ROUTES: (state) => ({ ...state, isLoading: false, routes: [], selectedRoute: null }),
   SET_BALANCE: (state, action) => ({ ...state, balance: action.payload }),

@@ -44,7 +44,6 @@ export const getRoutes = async (from, to, settings, swapDispatch) => {
       getLifiRoutes({ routes, from, to, settings, swapDispatch }),
       getRangoRoutes({ routes, from, to, settings, swapDispatch }),
     ])
-    // swapDispatch({ type: 'SET_LOADING', payload: false })
 
     if (routes.length === 0) {
       swapDispatch({

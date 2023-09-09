@@ -46,6 +46,14 @@ export const ChartCard: FC<ChartCardProps> = () => {
     return () => clearInterval(intervalId)
   }, [interval, token.base])
 
+  useEffect(() => {
+    dispatch({
+      type: 'SET_TOKEN',
+      tokenType: 'base',
+      payload: selection.swapCard.to.token,
+    })
+  }, [selection.swapCard.to.token.symbol])
+
   return (
     <Card className={classNames.container}>
       <div className={classNames.headerContainer}>
@@ -54,10 +62,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <Button
             variant="black"
             size="sm"
-            onClick={() => dispatch({
+            onClick={() =>
+              dispatch({
                 type: 'TOGGLE_MODAL_VISIBLE',
                 tokenType: 'base',
-              })}
+              })
+            }
           >
             <CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
           </Button>
@@ -72,10 +82,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <SegmentedControl
             data={intervals}
             selectedItem={interval}
-            setSelectedItem={(item) => dispatch({
+            setSelectedItem={(item) =>
+              dispatch({
                 type: 'SET_INTERVAL',
                 payload: item,
-              })}
+              })
+            }
           />
         ) : null}
       </div>
@@ -100,18 +112,22 @@ export const ChartCard: FC<ChartCardProps> = () => {
       <EntityListModal
         title="Select token"
         show={token.base.modalVisible}
-        setShow={() => dispatch({
+        setShow={() =>
+          dispatch({
             type: 'TOGGLE_MODAL_VISIBLE',
             tokenType: 'base',
-          })}
+          })
+        }
         data={tokens[selection.swapCard.to.chain.id]}
         entitiesVisible={15}
         columns={columns}
-        onSelect={(token) => dispatch({
+        onSelect={(token) =>
+          dispatch({
             type: 'SET_TOKEN',
             tokenType: 'base',
             payload: token,
-          })}
+          })
+        }
       />
     </Card>
   )
