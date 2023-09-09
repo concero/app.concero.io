@@ -8,7 +8,7 @@ import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
 import { chains } from '../../../../constants/chains'
-// import { tokens } from '../../../../constants/tokens'
+import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
@@ -109,7 +109,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
       />
       <EntityListModal
         title="Select token"
-        data={state.tokens}
+        data={tokens[selection.chain.id]}
         entitiesVisible={15}
         columns={TokenColumns}
         show={state.showTokensModal}
