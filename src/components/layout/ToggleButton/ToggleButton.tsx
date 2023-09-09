@@ -3,7 +3,7 @@ import { FC, useContext } from 'react'
 import { ThemeContext } from '../../../hooks/themeContext'
 
 interface ToggleButtonProps {
-  value: string
+  value: boolean
   onChange: () => void
 }
 
