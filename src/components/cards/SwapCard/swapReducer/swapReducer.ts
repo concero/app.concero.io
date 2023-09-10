@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 import { Action, State } from '../types'
-import { swapInitialState } from './swapInitialState'
 import { swapActions } from './swapActions'
+import { swapInitialState } from './swapInitialState'
 
 function swapReducer(state: State, action: Action) {
   const actionHandler = swapActions[action.type]
@@ -9,8 +9,7 @@ function swapReducer(state: State, action: Action) {
   throw new Error(`Unknown action type: ${action.type}`)
 }
 
-export const useSwapReducer = () => {
-  const [state, dispatch] = useReducer(swapReducer, swapInitialState)
-
+export const useSwapReducer = (selection) => {
+  const [state, dispatch] = useReducer(swapReducer, swapInitialState(selection))
   return [state, dispatch]
 }

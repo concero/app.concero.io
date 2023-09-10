@@ -16,8 +16,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   const { address, isConnected } = useAccount()
   const { switchNetworkAsync } = useSwitchNetwork()
   const isInsuranceCardVisible = swapState.selectedRoute?.insurance
-
-  const { getChains } = useContext(DataContext)
+  const { getChains, getTokens } = useContext(DataContext)
 
   const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
 
@@ -39,7 +38,8 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
   const populateChains = async () => {
     const chains = await getChains()
-    swapDispatch({ type: 'SET_CHAINS', payload: chains })
+    const tokens = await getTokens(chains[0].id)
+    swapDispatch({ type: 'SET_CHAINS', payload: chains, tokens })
   }
 
   useEffect(() => {
