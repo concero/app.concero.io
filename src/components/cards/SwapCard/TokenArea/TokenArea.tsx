@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useContext, useEffect, useRef } from 'react'
 import { animated, useSpring } from 'react-spring'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -7,18 +7,18 @@ import { capitalize, numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
-import { chains } from '../../../../constants/chains'
-// import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
 import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
-import { getTokens } from './getTokens'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
+import { DataContext } from '../../../../hooks/DataContext/DataContext'
+import { populateTokens } from './populateTokens'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, chains }) => {
+  const { getTokens } = useContext(DataContext)
   const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
   const inputRef = useRef()
 
@@ -40,7 +40,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
   }, [selection.chain, selection.token])
 
   useEffect(() => {
-    getTokens(selection, tokenAreaDispatch)
+    populateTokens({ getTokens, selection, tokenAreaDispatch })
   }, [selection.chain])
 
   useEffect(() => {

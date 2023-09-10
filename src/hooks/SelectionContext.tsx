@@ -1,8 +1,5 @@
-import { createContext, ReactNode, useReducer } from 'react'
-import { tokens } from '../constants/tokens'
-import { chains } from '../constants/chains'
-
-export const SelectionContext = createContext(null)
+import { createContext, ReactNode, useContext, useEffect, useReducer } from 'react'
+import { DataContext } from './DataContext/DataContext'
 
 type SelectedTokens = {
   from: {
@@ -43,6 +40,7 @@ interface SelectionState {
 
 interface SelectionProviderProps {
   children: ReactNode
+  setIsLoading: (isLoading: boolean) => void
 }
 
 const reducer = (state, action) => {
@@ -57,12 +55,17 @@ const reducer = (state, action) => {
         ...state,
         swapCard: action.payload,
       }
+    case 'SET_SELECTION':
+      return {
+        ...state,
+        ...action.payload,
+      }
     default:
       return state
   }
 }
 
-const selectedTokens: SelectedTokens = {
+const selectedTokens = ({ fromTokens, toTokens, chains }) => ({
   from: {
     chain: {
       id: 1,
@@ -71,9 +74,9 @@ const selectedTokens: SelectedTokens = {
       logoURI: chains[0].logoURI,
     },
     token: {
-      symbol: tokens['1'][0].symbol,
-      address: tokens['1'][0].address,
-      logoURI: tokens['1'][0].logoURI,
+      symbol: fromTokens[0].symbol,
+      address: fromTokens[0].address,
+      logoURI: fromTokens[0].logoURI,
     },
   },
   to: {
@@ -84,21 +87,43 @@ const selectedTokens: SelectedTokens = {
       logoURI: chains[1].logoURI,
     },
     token: {
-      symbol: tokens['137'][0].symbol,
-      address: tokens['137'][0].address,
-      logoURI: tokens['137'][0].logoURI,
+      symbol: toTokens[0].symbol,
+      address: toTokens[0].address,
+      logoURI: toTokens[0].logoURI,
     },
   },
+})
+
+const initArgs = ({ fromTokens, toTokens, chains }) => {
+  return {
+    swapCard: selectedTokens({ fromTokens, toTokens, chains }),
+    historyCard: selectedTokens({ fromTokens, toTokens, chains }),
+    newsCard: selectedTokens({ fromTokens, toTokens, chains }),
+  }
 }
 
-const initArgs: SelectionState = {
-  swapCard: selectedTokens,
-  historyCard: selectedTokens,
-  newsCard: selectedTokens,
-}
+export const SelectionContext = createContext(null)
 
-export function SelectionProvider({ children }: SelectionProviderProps) {
-  const [selection, dispatch] = useReducer(reducer, initArgs)
+export function SelectionProvider({ children, setIsLoading }: SelectionProviderProps) {
+  const { getTokens, getChains } = useContext(DataContext)
+  const [selection, dispatch] = useReducer(reducer, null)
+
+  const fetchData = async () => {
+    setIsLoading(true)
+    try {
+      const [fromTokens, toTokens, chains] = await Promise.all([getTokens('1'), getTokens('137'), getChains()])
+      const selectionArgs = initArgs({ fromTokens, toTokens, chains })
+      dispatch({ type: 'SET_SELECTION', payload: selectionArgs })
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <SelectionContext.Provider

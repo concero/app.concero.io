@@ -68,4 +68,5 @@ export const swapInitialState: State = {
     slippage_percent: '5',
     showDestinationAddress: false,
   },
+  chains: [],
 }

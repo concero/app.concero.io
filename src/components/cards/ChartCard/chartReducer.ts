@@ -21,6 +21,7 @@ const initialState = (selection) => ({
     value: '1',
   },
   chartData: [],
+  tokens: [],
 })
 
 const chartReducer = (state, action) => {
@@ -61,6 +62,11 @@ const chartReducer = (state, action) => {
       return {
         ...state,
         chartData: action.payload,
+      }
+    case 'SET_TOKENS':
+      return {
+        ...state,
+        tokens: action.payload,
       }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
