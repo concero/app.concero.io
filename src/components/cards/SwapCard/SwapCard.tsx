@@ -15,41 +15,46 @@ import { Button } from '../../buttons/Button/Button'
 import { colors } from '../../../constants/colors'
 
 export const SwapCard: FC<SwapCardProps> = () => {
+  const { selection, dispatch } = useContext(SelectionContext)
+  const [swapState, swapDispatch] = useSwapReducer(selection)
   const { address } = useAccount()
-  const [swapState, swapDispatch] = useSwapReducer()
-  const { dispatch } = useContext(SelectionContext)
+
   const typingTimeoutRef = useRef(null)
 
   const toggleInsurance = (routeId) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
   useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
 
   return (
-    <InsuranceProvider toggleInsurance={toggleInsurance}>
-      <div className={`card ${classNames.container}`}>
-        <CardHeader title={getCardTitleByStatus(swapState.status)}>
-          <div className="f1 row asb">
-            <Button
-              variant="black"
-              size="sq-sm"
-              onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-              leftIcon={{ name: 'Settings', iconProps: { size: 16, color: colors.grey.medium } }}
-            />
+    <>
+      {swapState ? (
+        <InsuranceProvider toggleInsurance={toggleInsurance}>
+          <div className={`card ${classNames.container}`}>
+            <CardHeader title={getCardTitleByStatus(swapState.status)}>
+              <div className="f1 row asb">
+                <Button
+                  variant="black"
+                  size="sq-sm"
+                  onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+                  leftIcon={{ name: 'Settings', iconProps: { size: 16, color: colors.grey.medium } }}
+                />
+              </div>
+            </CardHeader>
+            <div className={classNames.swapContainer}>
+              {swapState.stage === 'input' ? (
+                <SwapInput swapState={swapState} swapDispatch={swapDispatch} />
+              ) : (
+                <SwapProgress swapState={swapState} swapDispatch={swapDispatch} />
+              )}
+            </div>
           </div>
-        </CardHeader>
-        <div className={classNames.swapContainer}>
-          {swapState.stage === 'input' ? (
-            <SwapInput swapState={swapState} swapDispatch={swapDispatch} />
-          ) : (
-            <SwapProgress swapState={swapState} swapDispatch={swapDispatch} />
-          )}
-        </div>
-      </div>
-      <SwapSettingsModal
-        show={swapState.settingsModalOpen}
-        setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-        swapDispatch={swapDispatch}
-        settings={swapState.settings}
-      />
-    </InsuranceProvider>
+          <SwapSettingsModal
+            show={swapState.settingsModalOpen}
+            setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+            swapDispatch={swapDispatch}
+            settings={swapState.settings}
+          />
+        </InsuranceProvider>
+      ) : null}
+    </>
   )
 }

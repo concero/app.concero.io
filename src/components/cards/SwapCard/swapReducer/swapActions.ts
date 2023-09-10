@@ -72,4 +72,5 @@ export const swapActions = {
     return { ...state, steps: newSteps }
   },
   SET_CHAINS: (state, action) => ({ ...state, chains: action.payload }),
+  POPULATE_INIT_DATA: (state, action) => action.payload,
 }
