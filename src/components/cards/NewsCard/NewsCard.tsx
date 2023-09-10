@@ -7,18 +7,20 @@ import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getMoreNews, getNews } from './getNews'
 import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { columns, modalColumns } from './columns'
-import { tokens } from '../../../constants/tokens'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { useNewsReducer } from './newsReducer'
 import { Card } from '../Card/Card'
+import { DataContext } from '../../../hooks/DataContext/DataContext'
+import { populateTokens } from './populateTokens'
 
 interface NewsCardProps {}
 
 export const NewsCard: FC<NewsCardProps> = () => {
   const { selection } = useContext(SelectionContext)
+  const { getTokens } = useContext(DataContext)
   const { addNotification } = useContext(NotificationsContext)
-  const [{ data, isLoading, timestamp, isModalVisible, selectedToken }, dispatch] = useNewsReducer(selection)
+  const [{ data, isLoading, timestamp, isModalVisible, selectedToken, tokens }, dispatch] = useNewsReducer(selection)
 
   useEffect(() => {
     if (!selectedToken) return
@@ -29,6 +31,10 @@ export const NewsCard: FC<NewsCardProps> = () => {
     if (!selection.swapCard.to.token) return
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: selection.swapCard.to.token })
   }, [selection.swapCard.to.token.symbol])
+
+  useEffect(() => {
+    populateTokens({ getTokens, dispatch, selection })
+  }, [])
 
   const handleSelectToken = (token) => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
@@ -56,7 +62,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
         title="Select token"
         show={isModalVisible}
         setShow={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
-        data={tokens['1']}
+        data={tokens}
         entitiesVisible={15}
         columns={modalColumns}
         onSelect={(token) => handleSelectToken(token)}

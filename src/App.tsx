@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './styles/App.css'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
@@ -14,6 +15,8 @@ import { DataProvider } from './hooks/DataContext/DataContext'
 // import { ModalProvider } from './hooks/ModalContext'
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
   if (!process.env.DEVELOPMENT) {
     posthog.init(process.env.REACT_APP_PUBLIC_POSTHOG_KEY, {
       api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
@@ -23,19 +26,21 @@ function App() {
   return (
     <PostHogProvider>
       <DataProvider>
-        <ThemeProvider>
-          <SelectionProvider>
-            {/* <ModalProvider> */}
-            <NotificationsProvider>
-              <Notifications />
-              <WagmiConfig config={wagmiConfig}>
-                <Navigator />
-                <WalletConnectModal />
-              </WagmiConfig>
-            </NotificationsProvider>
-            {/* </ModalProvider> */}
-          </SelectionProvider>
-        </ThemeProvider>
+        <SelectionProvider setIsLoading={setIsLoading}>
+          {!isLoading ? (
+            <ThemeProvider>
+              {/* <ModalProvider> */}
+              <NotificationsProvider>
+                <Notifications />
+                <WagmiConfig config={wagmiConfig}>
+                  <Navigator />
+                  <WalletConnectModal />
+                </WagmiConfig>
+              </NotificationsProvider>
+              {/* </ModalProvider> */}
+            </ThemeProvider>
+          ) : null}
+        </SelectionProvider>
       </DataProvider>
     </PostHogProvider>
   )
