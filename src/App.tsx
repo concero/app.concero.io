@@ -9,6 +9,7 @@ import { ThemeProvider } from './hooks/themeContext'
 import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
+import { DataProvider } from './hooks/DataContext/DataContext'
 
 // import { ModalProvider } from './hooks/ModalContext'
 
@@ -21,19 +22,21 @@ function App() {
 
   return (
     <PostHogProvider>
-      <ThemeProvider>
-        <SelectionProvider>
-          {/* <ModalProvider> */}
-          <NotificationsProvider>
-            <Notifications />
-            <WagmiConfig config={wagmiConfig}>
-              <Navigator />
-              <WalletConnectModal />
-            </WagmiConfig>
-          </NotificationsProvider>
-          {/* </ModalProvider> */}
-        </SelectionProvider>
-      </ThemeProvider>
+      <DataProvider>
+        <ThemeProvider>
+          <SelectionProvider>
+            {/* <ModalProvider> */}
+            <NotificationsProvider>
+              <Notifications />
+              <WagmiConfig config={wagmiConfig}>
+                <Navigator />
+                <WalletConnectModal />
+              </WagmiConfig>
+            </NotificationsProvider>
+            {/* </ModalProvider> */}
+          </SelectionProvider>
+        </ThemeProvider>
+      </DataProvider>
     </PostHogProvider>
   )
 }

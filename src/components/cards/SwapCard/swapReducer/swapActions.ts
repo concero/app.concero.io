@@ -71,4 +71,5 @@ export const swapActions = {
     newSteps[index] = { ...newSteps[index], ...rest }
     return { ...state, steps: newSteps }
   },
+  SET_CHAINS: (state, action) => ({ ...state, chains: action.payload }),
 }

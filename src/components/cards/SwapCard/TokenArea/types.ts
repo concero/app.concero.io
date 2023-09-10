@@ -3,6 +3,7 @@ export interface TokenAreaProps {
   selection: Selection
   balance?: number
   swapDispatch: any
+  chains: any[]
 }
 
 type Selection = {
