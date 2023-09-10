@@ -4,6 +4,7 @@ const vaults = [
   {
     id: '1',
     name: '',
+    symbol: 'B-60MKR-40WETH-stETH',
     type: '',
     protocol_id: 'uniswap',
     total_apy: '',

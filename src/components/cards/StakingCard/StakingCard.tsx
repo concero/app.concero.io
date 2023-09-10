@@ -23,9 +23,7 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols
     config: { mass: 1, tension: 500, friction: 50 },
   })
 
-  const handleChevronClick = (e) => {
-    e.stopPropagation()
-  }
+  const handleChevronClick = (e) => e.stopPropagation()
 
   return (
     <div className={`${classNames.container} ${isSelected ? classNames.selected : ''}`} onClick={() => onClick(vault)}>
@@ -49,6 +47,9 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols
         </div>
       </div>
       <animated.div style={animProps}>
+        {/* <div> */}
+        {/*   <h5>{vault.symbol}</h5> */}
+        {/* </div> */}
         <StakeButtons isSelected={isSelected} />
       </animated.div>
     </div>
