@@ -35,6 +35,11 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
     if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
   }
 
+  const handleSelectChain = async (chain) => {
+    const tokens = await getTokens(chain.id)
+    swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain }, tokens })
+  }
+
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
   }, [selection.chain, selection.token])
@@ -105,7 +110,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
         show={state.showChainsModal}
         entitiesVisible={15}
         setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
-        onSelect={(chain) => swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain } })}
+        onSelect={handleSelectChain}
       />
       <EntityListModal
         title="Select token"

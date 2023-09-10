@@ -1,4 +1,3 @@
-import { tokens } from '../../../../constants/tokens'
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 
@@ -18,7 +17,7 @@ export const swapActions = {
   /* INPUT_RELATED ACTIONS */
   SET_CHAIN: (state, action) => {
     const { chain } = action.payload
-    return { ...state, [action.direction]: { ...state[action.direction], chain, token: tokens[chain.id][0] } }
+    return { ...state, [action.direction]: { ...state[action.direction], chain, token: action.tokens[0] } }
   },
   SET_TOKEN: (state, action) => ({
     ...state,
