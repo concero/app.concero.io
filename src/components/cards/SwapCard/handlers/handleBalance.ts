@@ -5,10 +5,10 @@ interface HandleBalanceProps {
   swapDispatch: any
   from: {
     chain: {
-      providers: {
-        rango: {
-          key: string
-        }
+      id: string
+      provider_symbols: {
+        provider: string
+        symbol: string
       }
     }
     token: {
@@ -20,9 +20,17 @@ interface HandleBalanceProps {
   address: string
 }
 
+const handleError = (swapDispatch) => swapDispatch({ type: 'SET_BALANCE', payload: null })
+
 export const handleBalance = async ({ swapDispatch, from, address }: HandleBalanceProps) => {
-  if (!address) return swapDispatch({ type: 'SET_BALANCE', payload: null })
-  const response = await fetchTokenBalance(from.chain.providers.rango.key, from.token.address, address, from.token.symbol)
-  const result = response?.data ? `${addingTokenDecimals(Number(response.data), from.token.decimals)} ${from.token.symbol}` : null
+  if (!from || !address) return handleError(swapDispatch)
+
+  const rangoChainSymbol = from.chain.provider_symbols.find((item) => item.provider === 'rango').symbol
+  if (!rangoChainSymbol) return handleError(swapDispatch)
+
+  const response = await fetchTokenBalance(rangoChainSymbol, from.token.address, address, from.token.symbol)
+  if (response.status !== 200) return handleError(swapDispatch)
+
+  const result = `${addingTokenDecimals(Number(response.data), from.token.decimals)} ${from.token.symbol}`
   swapDispatch({ type: 'SET_BALANCE', payload: result })
 }

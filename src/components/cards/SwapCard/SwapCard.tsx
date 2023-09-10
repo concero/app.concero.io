@@ -25,36 +25,32 @@ export const SwapCard: FC<SwapCardProps> = () => {
   useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
 
   return (
-    <>
-      {swapState ? (
-        <InsuranceProvider toggleInsurance={toggleInsurance}>
-          <div className={`card ${classNames.container}`}>
-            <CardHeader title={getCardTitleByStatus(swapState.status)}>
-              <div className="f1 row asb">
-                <Button
-                  variant="black"
-                  size="sq-sm"
-                  onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-                  leftIcon={{ name: 'Settings', iconProps: { size: 16, color: colors.grey.medium } }}
-                />
-              </div>
-            </CardHeader>
-            <div className={classNames.swapContainer}>
-              {swapState.stage === 'input' ? (
-                <SwapInput swapState={swapState} swapDispatch={swapDispatch} />
-              ) : (
-                <SwapProgress swapState={swapState} swapDispatch={swapDispatch} />
-              )}
-            </div>
+    <InsuranceProvider toggleInsurance={toggleInsurance}>
+      <div className={`card ${classNames.container}`}>
+        <CardHeader title={getCardTitleByStatus(swapState.status)}>
+          <div className="f1 row asb">
+            <Button
+              variant="black"
+              size="sq-sm"
+              onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+              leftIcon={{ name: 'Settings', iconProps: { size: 16, color: colors.grey.medium } }}
+            />
           </div>
-          <SwapSettingsModal
-            show={swapState.settingsModalOpen}
-            setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-            swapDispatch={swapDispatch}
-            settings={swapState.settings}
-          />
-        </InsuranceProvider>
-      ) : null}
-    </>
+        </CardHeader>
+        <div className={classNames.swapContainer}>
+          {swapState.stage === 'input' ? (
+            <SwapInput swapState={swapState} swapDispatch={swapDispatch} />
+          ) : (
+            <SwapProgress swapState={swapState} swapDispatch={swapDispatch} />
+          )}
+        </div>
+      </div>
+      <SwapSettingsModal
+        show={swapState.settingsModalOpen}
+        setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+        swapDispatch={swapDispatch}
+        settings={swapState.settings}
+      />
+    </InsuranceProvider>
   )
 }
