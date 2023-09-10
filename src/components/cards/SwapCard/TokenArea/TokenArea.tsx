@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useContext, useEffect, useRef } from 'react'
 import { animated, useSpring } from 'react-spring'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -7,18 +7,18 @@ import { capitalize, numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
-import { chains } from '../../../../constants/chains'
-import { tokens } from '../../../../constants/tokens'
 import { TokenAreaProps } from './types'
 import { ChainColumns } from './ChainColumns'
 import { TokenColumns } from './TokenColumns'
 import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
-import { getTokens } from './getTokens'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
+import { DataContext } from '../../../../hooks/DataContext/DataContext'
+import { populateTokens } from './populateTokens'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, chains }) => {
+  const { getTokens } = useContext(DataContext)
   const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
   const inputRef = useRef()
 
@@ -35,12 +35,17 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
     if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
   }
 
+  const handleSelectChain = async (chain) => {
+    const tokens = await getTokens(chain.id)
+    swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain }, tokens })
+  }
+
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
   }, [selection.chain, selection.token])
 
   useEffect(() => {
-    getTokens(selection, tokenAreaDispatch)
+    populateTokens({ getTokens, selection, tokenAreaDispatch })
   }, [selection.chain])
 
   useEffect(() => {
@@ -105,11 +110,11 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
         show={state.showChainsModal}
         entitiesVisible={15}
         setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
-        onSelect={(chain) => swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain } })}
+        onSelect={handleSelectChain}
       />
       <EntityListModal
         title="Select token"
-        data={tokens[selection.chain.id]}
+        data={state.tokens}
         entitiesVisible={15}
         columns={TokenColumns}
         show={state.showTokensModal}

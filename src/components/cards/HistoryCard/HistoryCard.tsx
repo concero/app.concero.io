@@ -23,7 +23,7 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
   }
   useEffect(() => {
     fetchTransactions()
-    const intervalId = setInterval(fetchTransactions, 60 * 1000)
+    const intervalId = setInterval(fetchTransactions, 120 * 1000)
     return () => clearInterval(intervalId)
   }, [selection.historyCard.from.token.symbol, selection.historyCard.to.token.symbol])
 

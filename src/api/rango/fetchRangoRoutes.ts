@@ -5,14 +5,19 @@ import { config } from '../../constants/config'
 
 export const fetchRangoRoutes = async ({ from, to, settings }) => {
   // todo: how to control rango slippage?
+
+  const fromRangoChainSymbol = from.chain.provider_symbols?.find((item) => item.provider === 'rango').symbol
+  const toRangoChainSymbol = to.chain.provider_symbols?.find((item) => item.provider === 'rango').symbol
+  if (fromRangoChainSymbol === undefined || toRangoChainSymbol === undefined) return []
+
   const routesRequest = {
     from: {
-      blockchain: from.chain.providers.rango.key,
+      blockchain: fromRangoChainSymbol,
       symbol: from.token.symbol,
       address: from.token.address === config.NULL_ADDRESS ? null : from.token.address,
     },
     to: {
-      blockchain: to.chain.providers.rango.key,
+      blockchain: toRangoChainSymbol,
       symbol: to.token.symbol,
       address: to.token.address === config.NULL_ADDRESS ? null : to.token.address,
     },
