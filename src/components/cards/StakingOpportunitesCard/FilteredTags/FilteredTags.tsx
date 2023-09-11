@@ -4,7 +4,6 @@ import { colors } from '../../../../constants/colors'
 import { Button } from '../../../buttons/Button/Button'
 import { Filter } from '../../../screens/StakingScreen/stakingReducer/types'
 import { MultiselectModal } from '../../../modals/MultiselectModal/MultiselectModal'
-import { chains as Chains } from '../../../../constants/chains'
 import { ChainSelectionRow } from './ChainSelectionRow'
 
 interface FilteredTagsProps {
@@ -18,7 +17,8 @@ const getChainTitle = (chains) => {
   if (chains.length > 1) return chains.length
 }
 
-export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, filter }) => {
+export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) => {
+  const { filter, chains as Chains } = stakingState
   const [isChainsModalOpened, setIsChainsModalOpened] = useState(false)
   const [selectedItems, setSelectedItems] = useState<any[]>([])
   const { all, my_holdings, compound, chains } = filter
@@ -60,11 +60,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, filter }) => {
       <Button size={'sm'} variant={getSelectedStyle(all)} onClick={() => handleClick('all', !all)}>
         All
       </Button>
-      <Button
-        size={'sm'}
-        variant={getSelectedStyle(my_holdings)}
-        onClick={() => handleClick('my_holdings', !my_holdings)}
-      >
+      <Button size={'sm'} variant={getSelectedStyle(my_holdings)} onClick={() => handleClick('my_holdings', !my_holdings)}>
         My holdings
       </Button>
       <Button
