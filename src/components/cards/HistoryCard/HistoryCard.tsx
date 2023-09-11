@@ -9,17 +9,19 @@ import { useHistoryReducer } from './historyReducer'
 import { columns } from './columns'
 
 import classNames from './HistoryCard.module.pcss'
-import { tokens } from '../../../constants/tokens'
+
 import { FetchingFallback } from '../../wrappers/WithErrorBoundary'
+import { DataContext } from '../../../hooks/DataContext/DataContext'
 
 interface HistoryCardProps {}
 
 export const HistoryCard: FC<HistoryCardProps> = () => {
   const { selection } = useContext(SelectionContext)
+  const { getTokens } = useContext(DataContext)
   const [state, dispatch] = useHistoryReducer(selection)
   const fetchTransactions = () => {
     if (!selection.historyCard.from.token.symbol || !selection.historyCard.to.token.symbol) return
-    getTransactions(selection.swapCard, state, dispatch, tokens)
+    getTransactions(selection.swapCard, state, dispatch, getTokens)
   }
   useEffect(() => {
     fetchTransactions()
