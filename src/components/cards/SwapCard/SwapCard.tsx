@@ -15,9 +15,10 @@ import { Button } from '../../buttons/Button/Button'
 import { colors } from '../../../constants/colors'
 
 export const SwapCard: FC<SwapCardProps> = () => {
+  const { selection, dispatch } = useContext(SelectionContext)
+  const [swapState, swapDispatch] = useSwapReducer(selection)
   const { address } = useAccount()
-  const [swapState, swapDispatch] = useSwapReducer()
-  const { dispatch } = useContext(SelectionContext)
+
   const typingTimeoutRef = useRef(null)
 
   const toggleInsurance = (routeId) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })

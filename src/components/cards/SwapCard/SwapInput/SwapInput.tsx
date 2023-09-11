@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { createWalletClient, custom } from 'viem'
 import { providers } from 'ethers'
 import { useAccount, useSwitchNetwork } from 'wagmi'
@@ -8,11 +8,17 @@ import classNames from './SwapInput.module.pcss'
 import { SwapInputProps } from './types'
 import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
 import { handleSwap } from '../swapExecution/handleSwap'
-import { TextInput } from '../../../input/TextInput'
+import { InsuranceCard } from '../InsuranceCard/InsuranceCard'
+import { DataContext } from '../../../../hooks/DataContext/DataContext'
+// import { TextInput } from '../../../input/TextInput'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   const { address, isConnected } = useAccount()
   const { switchNetworkAsync } = useSwitchNetwork()
+  const isInsuranceCardVisible = swapState.selectedRoute?.insurance
+  const { getChains, getTokens } = useContext(DataContext)
+
+  const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
 
   const switchChainFunction = async (requiredChainId) => {
     if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
@@ -28,22 +34,32 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
     return await switchChainFunction(requiredChainId)
   }
 
-  const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
-  const destinationAddressRequired = swapState.to.chain.destinationAddressRequired
+  // const destinationAddressRequired = swapState.to.chain.destinationAddressRequired
+
+  const populateChains = async () => {
+    const chains = await getChains()
+    const tokens = await getTokens(chains[0].id)
+    swapDispatch({ type: 'SET_CHAINS', payload: chains, tokens })
+  }
+
+  useEffect(() => {
+    populateChains()
+  }, [])
 
   return (
     <div className={classNames.container}>
-      <TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
-      <TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} />
-      {destinationAddressRequired ? (
-        <TextInput
-          placeholder={'Enter destination address'}
-          title={'Destination address'}
-          value={swapState.to.address}
-          onChangeText={handleChangeToAddress}
-          isDisabled={swapState.routes.length}
-        />
-      ) : null}
+      <TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} chains={swapState.chains} />
+      <TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} chains={swapState.chains} />
+      {/* {destinationAddressRequired ? ( */}
+      {/*   <TextInput */}
+      {/*     placeholder={'Enter destination address'} */}
+      {/*     title={'Destination address'} */}
+      {/*     value={swapState.to.address} */}
+      {/*     onChangeText={handleChangeToAddress} */}
+      {/*     isDisabled={swapState.routes.length} */}
+      {/*   /> */}
+      {/* ) : null} */}
+      {isInsuranceCardVisible ? <InsuranceCard swapState={swapState} swapDispatch={swapDispatch} /> : null}
       <SwapDetails swapState={swapState} setSelectedRoute={(route) => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })} />
       <SwapButton swapState={swapState} isConnected={isConnected} onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook })} />
     </div>

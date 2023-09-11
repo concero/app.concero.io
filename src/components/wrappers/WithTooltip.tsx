@@ -11,7 +11,11 @@ export function WithTooltip({ WrappedComponent, Tooltip, tooltipProps = {} }) {
     setTooltipVisible(true)
     // sets timeout to hide tooltip after 1 second
     if (tooltipTimeout) clearTimeout(tooltipTimeout)
+  }
+
+  const handleMouseLeave = () => {
     setTooltipTimeout(setTimeout(() => setTooltipVisible(false), 300))
+    if (tooltipTimeout) clearTimeout(tooltipTimeout)
   }
 
   const handleMouseMove = ({ clientX: x, clientY: y }) => {
@@ -20,7 +24,7 @@ export function WithTooltip({ WrappedComponent, Tooltip, tooltipProps = {} }) {
 
   return (
     <div>
-      <div onMouseEnter={handleMouseEnter} onMouseMove={handleMouseMove}>
+      <div onMouseEnter={handleMouseEnter} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
         <WrappedComponent />
       </div>
       {tooltipVisible && (
@@ -29,7 +33,6 @@ export function WithTooltip({ WrappedComponent, Tooltip, tooltipProps = {} }) {
             position: 'fixed',
             zIndex: 100,
             pointerEvents: 'none',
-
             transform: springProps.xy.to((x, y) => `translateX(${x - 320}px) translateY(${y}px)`),
           }}
         >

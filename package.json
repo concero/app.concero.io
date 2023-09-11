@@ -40,6 +40,7 @@
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-spring": "^9.7.2",
+    "react-styled-toggle": "^1.1.0",
     "react-ts-tradingview-widgets": "^1.1.0",
     "recharts": "^2.8.0",
     "socket.io-client": "^4.7.2",

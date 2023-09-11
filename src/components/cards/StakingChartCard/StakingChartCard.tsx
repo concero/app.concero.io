@@ -9,7 +9,8 @@ import { useChartReducer } from './chartReducer/chartReducer'
 import { fetchData } from './fetchData'
 import { switchChartType } from './switchChartType'
 
-export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) => {
+export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) => {
+  const { selectedVault } = stakingState
   const [{ data, chartType, response }, dispatch] = useChartReducer()
 
   const setData = (data) => {
@@ -54,12 +55,7 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) =
         <h5 className={'cardHeaderTitle'}>Chart</h5>
         <div className={classNames.tagsContainer}>
           {buttonsData.map((button) => (
-            <Button
-              key={button.title}
-              size={'sm'}
-              variant={getSelectedStyle(chartType === button.type)}
-              onClick={() => setChartType(button.type)}
-            >
+            <Button key={button.title} size={'sm'} variant={getSelectedStyle(chartType === button.type)} onClick={() => setChartType(button.type)}>
               {button.title}
             </Button>
           ))}

@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import classNames from './RouteCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
-import { getChainLogoURIById } from '../../../utils/getChainLogoURIById'
 import { numberToFormatString } from '../../../utils/formatting'
+import { DataContext } from '../../../hooks/DataContext/DataContext'
+import { getChainLogoURIById } from './getChainLogoURIById'
 
 interface RouteEndPointProps {
   side: {
@@ -21,7 +22,12 @@ interface RouteEndPointProps {
 }
 
 export const RouteEndPoint: FC<RouteEndPointProps> = ({ side, amount }) => {
-  const chainLogoURI = getChainLogoURIById(Number(side.chain.id))
+  const { getChains } = useContext(DataContext)
+  const [chainLogoURI, setChainLogoURI] = useState('')
+
+  useEffect(() => {
+    getChainLogoURIById(Number(side.chain.id), getChains, setChainLogoURI)
+  }, [])
 
   return (
     <div className={classNames.endPointContainer}>

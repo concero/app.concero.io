@@ -6,11 +6,14 @@ import { Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/type
 import { capitalize } from '../../../utils/formatting'
 
 interface StakingHeaderCardProps {
-  vault: Vault
-  protocols: Protocol
+  stakingState: {
+    vault: Vault
+    protocols: Protocol
+  }
 }
 
-export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ vault, protocols }) => {
+export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
+  const { vault, protocols } = stakingState
   const pairSymbol = `${vault.underlying_assets.map((asset) => asset.symbol).join('/')}`
 
   return (

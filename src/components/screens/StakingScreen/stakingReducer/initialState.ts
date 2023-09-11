@@ -78,4 +78,5 @@ export const initialState: InitialState = {
   vaults,
   selectedVault: vaults[0],
   protocols,
+  chains: [],
 }

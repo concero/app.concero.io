@@ -15,13 +15,15 @@ const stakingReducer = (state, action) => {
       }
     case 'SET_SELECTED_VAULT':
       return { ...state, selectedVault: action.payload }
+    case 'SET_CHAINS':
+      return { ...state, chains: action.payload }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 
 export const useStakingReducer = () => {
-  const [state, dispatch] = useReducer(stakingReducer, initialState)
+  const [stakingState, dispatch] = useReducer(stakingReducer, initialState)
 
-  return [state, dispatch]
+  return [stakingState, dispatch]
 }
