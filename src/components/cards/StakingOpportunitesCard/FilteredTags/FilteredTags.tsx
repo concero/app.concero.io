@@ -8,7 +8,9 @@ import { ChainSelectionRow } from './ChainSelectionRow'
 
 interface FilteredTagsProps {
   dispatch: Dispatch<any>
-  filter: Filter
+  stakingState: {
+    filter: Filter
+  }
 }
 
 const getChainTitle = (chains) => {
@@ -18,7 +20,7 @@ const getChainTitle = (chains) => {
 }
 
 export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) => {
-  const { filter, chains as Chains } = stakingState
+  const { filter } = stakingState
   const [isChainsModalOpened, setIsChainsModalOpened] = useState(false)
   const [selectedItems, setSelectedItems] = useState<any[]>([])
   const { all, my_holdings, compound, chains } = filter
@@ -102,7 +104,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
       <MultiselectModal
         isOpen={isChainsModalOpened}
         setIsOpen={setIsChainsModalOpened}
-        items={Chains}
+        items={stakingState.chains}
         title="Select chain"
         RowComponent={ChainSelectionRow}
         selectedItems={chains}
