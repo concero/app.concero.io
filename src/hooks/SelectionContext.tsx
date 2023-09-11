@@ -14,6 +14,7 @@ type SelectedTokens = {
       symbol: string
       address: string
       logoURI: string
+      coinGeckoId: string
     }
   }
   to: {
@@ -28,6 +29,7 @@ type SelectedTokens = {
       symbol: string
       address: string
       logoURI: string
+      coinGeckoId: string
     }
   }
 }
@@ -79,6 +81,7 @@ const selectedTokens = ({ fromTokens, toTokens, chains }) => ({
       address: fromTokens[0].address,
       decimals: fromTokens[0].decimals,
       logoURI: fromTokens[0].logoURI,
+      coinGeckoId: fromTokens[0].coinGeckoId,
     },
   },
   to: {
@@ -94,6 +97,7 @@ const selectedTokens = ({ fromTokens, toTokens, chains }) => ({
       address: toTokens[0].address,
       decimals: toTokens[0].decimals,
       logoURI: toTokens[0].logoURI,
+      coinGeckoId: toTokens[0].coinGeckoId,
     },
   },
 })
