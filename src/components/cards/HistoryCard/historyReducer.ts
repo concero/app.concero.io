@@ -1,12 +1,10 @@
 import { useReducer } from 'react'
-import { tokens } from '../../../constants/tokens'
 
-export const initialState = (selection, tokens) => ({
+export const initialState = (selection) => ({
   data: [],
   timestamp: 0,
   isModalVisible: false,
   selectedToken: selection.swapCard.to.token,
-  mappedTokens: tokens['1'].slice(0, 50),
   isLoading: false,
   items: [],
   modalIsOpen: false,
@@ -26,8 +24,6 @@ export function historyReducer(state, action) {
       return { ...state, isModalVisible: action.payload }
     case 'SET_SELECTED_TOKEN':
       return { ...state, selectedToken: action.payload }
-    case 'ADD_MAPPED_TOKENS':
-      return { ...state, mappedTokens: [...state.mappedTokens, ...action.payload] }
     case 'SET_ITEMS':
       return { ...state, items: action.payload }
     case 'SET_MODAL_OPEN':
@@ -42,6 +38,6 @@ export function historyReducer(state, action) {
 }
 
 export const useHistoryReducer = (selection) => {
-  const [state, dispatch] = useReducer(historyReducer, initialState(selection, tokens))
+  const [state, dispatch] = useReducer(historyReducer, initialState(selection))
   return [state, dispatch]
 }
