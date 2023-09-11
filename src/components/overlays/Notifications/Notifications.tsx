@@ -27,8 +27,7 @@ export function Notifications() {
 
   useEffect(() => {
     const timers = notifications.map(
-      (notification) =>
-        setTimeout(() => {
+      (notification) => setTimeout(() => {
           removeNotification(notification.id)
         }, 3500), // Change this to your preferred delay time in milliseconds
     )
@@ -44,7 +43,7 @@ export function Notifications() {
             <div className="row ac">
               <Beacon isOn color={item.color} />
               {item.title}
-              <Button 'arian'="black" onClick={() => removeNotification(item.id)} leftIcon={<X size={18} />} />
+              <Button variant="black" onClick={() => removeNotification(item.id)} leftIcon={<X size={18} />} />
             </div>
             <p className="body1">{item.message}</p>
           </div>
