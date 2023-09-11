@@ -1,5 +1,6 @@
 import { FC, useContext } from 'react'
 import { useAccount } from 'wagmi'
+import { ChevronDown, Wallet } from 'tabler-icons-react'
 import { ThemeContext } from '../../../../../hooks/themeContext'
 import { truncateWallet } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
@@ -23,24 +24,8 @@ export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
   return (
     <Button
       variant={isConnected ? 'subtle' : 'primary'}
-      rightIcon={
-        isConnected
-          ? {
-              name: 'ChevronDown',
-              iconProps: {
-                color: colors.text.secondary,
-                size: 18,
-              },
-            }
-          : null
-      }
-      leftIcon={{
-        name: 'Wallet',
-        iconProps: {
-          color: isConnected ? colors.text.secondary : colors.white,
-          size: 18,
-        },
-      }}
+      rightIcon={isConnected ? <ChevronDown size={18} color={colors.text.secondary} /> : null}
+      leftIcon={<Wallet size={18} color={isConnected ? colors.text.secondary : colors.white} />}
       size="sm"
       onClick={() => onClick && onClick()}
     >

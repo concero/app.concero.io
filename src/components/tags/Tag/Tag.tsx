@@ -1,17 +1,16 @@
-import { FC, MouseEvent } from 'react'
-import * as Icons from 'tabler-icons-react'
+import { FC, MouseEvent, ReactNode } from 'react'
+
 import { IconProps } from 'tabler-icons-react'
 import className from './Tag.module.pcss'
-import Icon from '../../Icon'
 
 type IconComponentProps = {
-  name: keyof typeof Icons
+  name: string
   iconProps?: Omit<IconProps, 'name'>
 }
 
 export interface TagProps {
-  leftIcon?: IconComponentProps
-  rightIcon?: IconComponentProps
+  leftIcon?: ReactNode
+  rightIcon?: ReactNode
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
   color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker' | 'recommended' | 'cheapest' | 'fastest' | 'transparent' | 'secondary'
   isLoading?: boolean
@@ -24,12 +23,12 @@ export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color, 
   const sizeClass = size ? className[size] : className.xs
 
   return (
-    <div className={className.container} onClick={onClick ? onClick : null} style={onClick ? { cursor: 'pointer' } : null}>
+    <div className={className.container} onClick={onClick || null} style={onClick ? { cursor: 'pointer' } : null}>
       <div className={`${className.tag}  ${sizeClass} ${className[color]}`}>
-        {leftIcon && <Icon name={leftIcon.name} {...leftIcon.iconProps} />}
+        {leftIcon}
         {children}
         {title ? <p className={className.title}>{title}</p> : null}
-        {rightIcon && <Icon name={rightIcon.name} {...rightIcon.iconProps} />}
+        {rightIcon}
       </div>
     </div>
   )

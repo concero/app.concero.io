@@ -1,5 +1,6 @@
 import { FC, useContext, useEffect, useRef } from 'react'
 import { animated, useSpring } from 'react-spring'
+import { ChevronDown } from 'tabler-icons-react'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { EntityListModal } from '../../../modals/EntityListModal/EntityListModal'
@@ -66,10 +67,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
               onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: true })}
               size="sm"
               variant="black"
-              rightIcon={{
-                name: 'ChevronDown',
-                iconProps: { size: 16, color: colors.text.secondary },
-              }}
+              rightIcon={<ChevronDown size={16} color={colors.text.secondary} />}
             >
               <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
             </Button>
@@ -94,10 +92,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
             onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })}
             size="sm"
             variant="black"
-            rightIcon={{
-              name: 'ChevronDown',
-              iconProps: { size: 16, color: colors.text.secondary },
-            }}
+            rightIcon={<ChevronDown size={16} color={colors.text.secondary} />}
           >
             <CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
           </Button>

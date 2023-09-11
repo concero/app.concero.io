@@ -1,4 +1,5 @@
 import { FC, ReactNode, useContext } from 'react'
+import { ArrowDownRight, ArrowUpRight } from 'tabler-icons-react'
 import classNames from './Highlight.module.pcss'
 import { Tag } from '../Tag/Tag'
 import { ThemeContext } from '../../../hooks/themeContext'
@@ -38,38 +39,19 @@ export const Highlight: FC<HighlightProps> = ({ item: { title, value, valueSecon
 
   const textColor = last_24h.split('')[0] === '-' ? colors.red.dark : colors.green.dark
   const tagColor = last_24h.split('')[0] === '-' ? 'red' : 'green'
-  const tagArrow = last_24h.split('')[0] === '-' ? 'ArrowDownRight' : 'ArrowUpRight'
-
+  const tagArrow = last_24h.split('')[0] === '-' ? <ArrowDownRight size={18} /> : <ArrowUpRight size={18} />
   return (
     <div className={highlightClasses}>
       <div className={classNames.topRow}>
-        {title ? <h5 className={'cardHeaderTitle'}>{title}</h5> : null}
-        {valueSecondary ? (
-          <Tag
-            color={tagColor}
-            leftIcon={{
-              name: tagArrow,
-              iconProps: { size: 18 },
-            }}
-            size={size}
-            title={`${last_24h}%`}
-          />
-        ) : null}
+        {title ? <h5 className="cardHeaderTitle">{title}</h5> : null}
+        {valueSecondary ? <Tag color={tagColor} leftIcon={tagArrow} size={size} title={`${last_24h}%`} /> : null}
       </div>
       <div className={classNames.bottomRow}>
         <h2>{value}</h2>
         {valueSecondary ? (
           <div className={classNames.secondary}>{valueSecondary}</div>
         ) : (
-          <Tag
-            color={tagColor}
-            leftIcon={{
-              name: tagArrow,
-              iconProps: { size: 18 },
-            }}
-            size={size}
-            title={`${last_24h}%`}
-          />
+          <Tag color={tagColor} leftIcon={tagArrow} size={size} title={`${last_24h}%`} />
         )}
       </div>
     </div>

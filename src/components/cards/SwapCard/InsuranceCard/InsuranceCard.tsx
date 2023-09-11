@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { animated, useSpring } from 'react-spring'
+import { ChevronDown, ChevronUp } from 'tabler-icons-react'
 import { ToggleButton } from '../../../layout/ToggleButton/ToggleButton'
 import classNames from './InsuranceCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { colors } from '../../../../constants/colors'
 
-export const InsuranceCard = ({ swapState, swapDispatch }) => {
+export function InsuranceCard({ swapState, swapDispatch }) {
   const [isInfoVisible, setIsInfoVisible] = useState(false)
   const [springProps, setSpringProps] = useSpring(() => ({ height: 'auto' }))
   const infoContainerRef = useRef(null)
@@ -34,22 +35,28 @@ export const InsuranceCard = ({ swapState, swapDispatch }) => {
           <h5>Insurance</h5>
         </div>
         <div className={classNames.sideContainer}>
-          <h4>${swapState.selectedRoute.insurance.fee_amount_usd}</h4>
+          <h4>
+            $
+            {swapState.selectedRoute.insurance.fee_amount_usd}
+          </h4>
           <Button
-            leftIcon={{
-              name: isInfoVisible ? 'ChevronUp' : 'ChevronDown',
-              iconProps: { color: isChecked ? colors.green.main : colors.text.secondary, size: 16 },
-            }}
-            variant={'black'}
-            size={'sq-xs'}
+            leftIcon={
+              isInfoVisible ? (
+                <ChevronUp size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
+              ) : (
+                <ChevronDown size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
+              )
+            }
+            variant="black"
+            size="sq-xs"
             onClick={handleInfoClick}
           />
         </div>
       </div>
       <animated.div className={classNames.stepsContainer} style={springProps} ref={infoContainerRef}>
         <p className={`body1 ${classNames.infoText}`}>
-          {`Insure your assets with `}
-          <a href="https://www.insurace.io" target="_blank" style={{ textDecoration: 'underline' }}>
+          {'Insure your assets with '}
+          <a href="https://www.insurace.io" target="_blank" style={{ textDecoration: 'underline' }} rel="noreferrer">
             InsurAce
           </a>
           .

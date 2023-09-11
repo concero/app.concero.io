@@ -1,21 +1,18 @@
-import React, { FC, ForwardedRef, forwardRef, useRef, useState } from 'react'
-import * as Icons from 'tabler-icons-react'
-import Icon from '../Icon'
-import { colors } from '../../constants/colors'
+import React, { FC, ForwardedRef, forwardRef, ReactNode, useRef, useState } from 'react'
 import classNames from './TextInput.module.pcss'
 
 export interface TextInputProps {
   value?: string
   placeholder: string
   onChangeText?: (value: string) => void
-  iconName?: keyof typeof Icons
+  icon: ReactNode
   variant?: 'default' | 'inline'
   isDisabled?: boolean
   title?: string
 }
 
 export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ value, placeholder, onChangeText = null, iconName, variant, isDisabled = false, title = null, ...rest }, ref) => {
+  ({ value, placeholder, onChangeText = null, icon = null, variant, isDisabled = false, title = null, ...rest }, ref) => {
     const inputRef = useRef()
     const [isFocused, setIsFocused] = useState<boolean>(false)
     const inputClass = variant === 'inline' && !title ? '' : classNames.inputWrapper
@@ -32,7 +29,7 @@ export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElemen
 
     return (
       <div className={`${inputClass} ${isFocused ? classNames.focused : ''}`} onClick={handleAreaClick}>
-        {title ? <p className={'body1'}>{title}</p> : null}
+        {title ? <p className="body1">{title}</p> : null}
         <input
           ref={ref ?? inputRef}
           onFocus={handleFocus}
@@ -44,7 +41,7 @@ export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElemen
           disabled={isDisabled}
           {...rest}
         />
-        {iconName && <Icon name={iconName} className={classNames.inputIcon} size={18} color={colors.grey.dark} />}
+        {icon}
       </div>
     )
   },

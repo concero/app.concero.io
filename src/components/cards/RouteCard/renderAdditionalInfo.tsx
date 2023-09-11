@@ -1,13 +1,15 @@
+import { Clock, PigMoney } from 'tabler-icons-react'
 import classNames from './RouteCard.module.pcss'
-import Icon from '../../Icon'
 import { colors } from '../../../constants/colors'
 import { Step } from '../../../api/lifi/types'
 import { secondsConverter } from '../../../utils/formatting'
 
 function AdditionalInfoTag({ title, type, getColor, isBestRoute }: { title: string; type: string; getColor: () => string; isBestRoute: boolean }) {
+  const RenderedIcon = type === 'time' ? Clock : PigMoney
+
   return (
     <div className={classNames.additionalInfoTag}>
-      <Icon name={type === 'time' ? 'Clock' : 'PigMoney'} size="1rem" color={isBestRoute ? colors.primary.light : colors.grey.medium} />
+      <RenderedIcon size="1rem" color={isBestRoute ? colors.primary.light : colors.grey.medium} />
       <h5 className={`${classNames.textSubtitle} ${getColor('text')}`}>{`${type === 'gas' ? '$' : ''}${type === 'gas' ? title : secondsConverter(title)}`}</h5>
     </div>
   )

@@ -1,8 +1,8 @@
 import { FC } from 'react'
+import { ArrowRight, Transform } from 'tabler-icons-react'
 import classNames from './RouteCard.module.pcss'
 import { renderStepsCountTag } from './renderStepsCountTag'
 import { Avatar } from '../../tags/Avatar/Avatar'
-import Icon from '../../Icon'
 import { RouteEndPoint } from './RouteEndPoint'
 import { RouteStepTagProps } from './types'
 import { renderAdditionalInfo } from './renderAdditionalInfo'
@@ -20,16 +20,16 @@ export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesCollapsed, s
     }
   }
 
-  const amountFrom = (parseFloat(step.from.token.amount) / Math.pow(10, 18)).toFixed(2)
+  const amountFrom = (parseFloat(step.from.token.amount) / 10 ** 18).toFixed(2)
 
   return (
     <div className={`${fullWidthStyle} ${classNames.routeStepContainer}`}>
       <div className={`${classNames.routeStep} ${classNames.tagStyle} ${fullWidthStyle} ${getColor('tag')}`}>
         <div className={classNames.stepInfoContainer}>
           <Avatar src={step.tool.logo_uri} size="md" />
-          <Icon name="Transform" size={20} />
+          <Transform size={20} />
           <RouteEndPoint side={step.from} amount={amountFrom} />
-          <Icon name="ArrowRight" size={20} />
+          <ArrowRight size={20} />
           <RouteEndPoint side={step.to} amount={step.to.token.amount} />
         </div>
         {renderAdditionalInfo(isRoutesCollapsed, step, isSelected, getColor)}
