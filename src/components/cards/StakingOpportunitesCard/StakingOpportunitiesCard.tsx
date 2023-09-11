@@ -5,14 +5,17 @@ import { StakingCard } from '../StakingCard/StakingCard'
 import { Filter, Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 
 interface StakingOpportunitiesProps {
-  selectedVault: Vault
-  vaults: Vault[]
-  protocols: Protocol
+  stakingState: {
+    selectedVault: Vault
+    vaults: Vault[]
+    protocols: Protocol
+    filter: Filter
+  }
   dispatch: Dispatch<any>
-  filter: Filter
 }
 
-export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ selectedVault, vaults, protocols, dispatch, filter }) => {
+export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
+  const { selectedVault, vaults, protocols, filter } = stakingState
   const handleSelect = (vault) => {
     if (selectedVault?.id === vault.id) dispatch({ type: 'SET_SELECTED_VAULT', payload: null })
     else dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
