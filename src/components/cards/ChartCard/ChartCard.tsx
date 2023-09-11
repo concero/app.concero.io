@@ -35,7 +35,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
     fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
 
     const intervalId = setInterval(() => {
-      fetchChartData(setData, addNotification, tokenId, interval)
+      fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
     }, 15000)
 
     return () => clearInterval(intervalId)
