@@ -51,7 +51,6 @@ export const StakingScreen: FC = () => {
       <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
       {stakingState.selectedVault ? (
         <div className={classNames.mainCardStack}>
-          <StakingHeaderCard stakingState={stakingState} />
           <StakingChartCard stakingState={stakingState} />
           <StakingHighlightsCard />
           <RatioCard />
