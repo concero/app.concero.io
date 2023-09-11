@@ -46,10 +46,10 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols
           />
         </div>
       </div>
+      <div className={classNames.symbolContainer}>
+        <h5>{vault.symbol}</h5>
+      </div>
       <animated.div style={animProps}>
-        {/* <div> */}
-        {/*   <h5>{vault.symbol}</h5> */}
-        {/* </div> */}
         <StakeButtons isSelected={isSelected} />
       </animated.div>
     </div>
