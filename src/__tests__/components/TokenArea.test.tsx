@@ -1,7 +1,5 @@
 import { render } from '@testing-library/react'
 import { TokenArea } from '../../components/cards/SwapCard/TokenArea/TokenArea'
-import { chains } from '../../constants/chains'
-import { tokens } from '../../constants/tokens'
 
 test('Renders TokenArea with each chain', () => {
   chains.forEach((chain) => {
