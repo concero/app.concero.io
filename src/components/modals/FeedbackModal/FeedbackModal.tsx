@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { Send } from 'tabler-icons-react'
+import { IconSend } from '@tabler/icons-react'
 import classNames from './FeedbackModal.module.pcss'
 import { Modal } from '../Modal/Modal'
 import { TextArea } from '../../layout/TextArea/TextArea'
@@ -53,7 +53,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
         <div className={classNames.textareaContainer}>
           <TextArea onChange={(e) => setMessage(e.target.value)} />
         </div>
-        <Button variant="primary" isDisabled={!message} leftIcon={<Send size={16} />} onClick={handleSubmit}>
+        <Button variant="primary" isDisabled={!message} leftIcon={<IconSend size={16} />} onClick={handleSubmit}>
           Send
         </Button>
       </div>

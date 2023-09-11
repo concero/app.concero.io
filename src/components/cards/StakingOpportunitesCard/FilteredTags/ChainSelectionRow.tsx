@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Check } from 'tabler-icons-react'
+import { IconCheck } from '@tabler/icons-react'
 import classNames from './FilteredTags.module.pcss'
 import { CryptoIcon } from '../../../tags/CryptoSymbol/CryptoIcon'
 import { colors } from '../../../../constants/colors'
@@ -18,6 +18,6 @@ export const ChainSelectionRow: FC<ChainSelectionRowProps> = ({ item, isSelected
         {item.symbol}
       </h5>
     </div>
-    <div>{isSelected ? <Check size={16} /> : null}</div>
+    <div>{isSelected ? <IconCheck size={16} /> : null}</div>
   </div>
 )

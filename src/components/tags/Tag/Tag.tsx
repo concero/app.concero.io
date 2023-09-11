@@ -1,11 +1,9 @@
 import { FC, MouseEvent, ReactNode } from 'react'
 
-import { IconProps } from 'tabler-icons-react'
 import className from './Tag.module.pcss'
 
 type IconComponentProps = {
   name: string
-  iconProps?: Omit<IconProps, 'name'>
 }
 
 export interface TagProps {

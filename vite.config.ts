@@ -1,4 +1,4 @@
-import {defineConfig} from 'vite'
+import { defineConfig } from 'vite'
 import stylelint from 'vite-plugin-stylelint'
 import react from '@vitejs/plugin-react-swc'
 import postcssPresetEnv from 'postcss-preset-env'
@@ -6,7 +6,6 @@ import postcssSorting from 'postcss-sorting'
 import postcssImport from 'postcss-import'
 import precss from 'precss'
 import EnvironmentPlugin from 'vite-plugin-environment'
-// https://vitejs.dev/config/
 
 export default defineConfig({
   plugins: [
@@ -24,5 +23,9 @@ export default defineConfig({
     postcss: {
       plugins: [postcssImport(), postcssSorting(), postcssPresetEnv(), precss()],
     },
+  },
+  build: {
+    outDir: './dist',
+    emptyOutDir: true,
   },
 })

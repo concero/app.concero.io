@@ -23,16 +23,16 @@ export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ matchExchange, mat
         </label>
       </Button>
       <nav className={`${classNames.menu} ${isMenuOpen ? classNames.menuActive : ''}`}>
-        <Link to={routes.exchange}>
+        <Link to={routes.exchange} aria-label={routes.exchange}>
           <h4 className={matchExchange ? classNames.active : classNames.secondary}>Exchange</h4>
         </Link>
         {/* <Link to={routes.portfolio}> */}
         {/*   <h4 className={matchPortfolio ? classNames.active : classNames.secondary}>Portfolio</h4> */}
         {/* </Link> */}
-        <a onClick={toggleTheme}>
+        <a href="#" onClick={toggleTheme} aria-label="Toggle theme">
           <h4 className={classNames.secondary}>Toggle theme</h4>
         </a>
-        <a onClick={() => disconnect()}>
+        <a href="#" onClick={() => disconnect()} aria-label="Log out">
           <h4 className={classNames.logOutButton}>Log out</h4>
         </a>
       </nav>

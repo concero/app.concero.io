@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ArrowLeft, ArrowRight } from 'tabler-icons-react'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import className from './TxFromTo.module.pcss'
 import { colors } from '../../../constants/colors'
 
@@ -31,7 +31,7 @@ export const TxFromTo: FC<TxFromToProps> = ({ from, to, type }) => {
     <div className={className.container}>
       <p style={styles.text}>{from.amount}</p>
       <p style={styles.text}>{from.symbol}</p>
-      {type === 'sell' ? <ArrowRight size={18} color={color} /> : <ArrowLeft size={18} color={color} />}
+      {type === 'sell' ? <IconArrowRight size={18} color={color} /> : <IconArrowLeft size={18} color={color} />}
       <p style={styles.text}>{to.amount}</p>
       <p style={styles.text}>{to.symbol}</p>
     </div>

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ArrowWaveRightUp, Clock, PigMoney } from 'tabler-icons-react'
+import { IconArrowWaveRightUp, IconClock, IconPigMoney } from '@tabler/icons-react'
 import { Tag } from '../../tags/Tag/Tag'
 import classNames from './RouteCard.module.pcss'
 import { Route } from '../../../api/lifi/types'
@@ -29,11 +29,11 @@ export const renderTags = (route: Route, isSelected: boolean, getTextColor: () =
           <Beacon isOn={route.insurance?.state === 'INSURED'} color="green" />
         </Tag>
       ) : null}
-      <Tag color="transparent" leftIcon={<Clock size={20} color={getIconColor()} />}>
+      <Tag color="transparent" leftIcon={<IconClock size={20} color={getIconColor()} />}>
         <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
       </Tag>
       {route.slippage_percent ? (
-        <Tag color="transparent" leftIcon={<ArrowWaveRightUp size={20} color={getIconColor()} />}>
+        <Tag color="transparent" leftIcon={<IconArrowWaveRightUp size={20} color={getIconColor()} />}>
           <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
             {numberToFormatString(route.slippage_percent)}
             %
@@ -41,7 +41,7 @@ export const renderTags = (route: Route, isSelected: boolean, getTextColor: () =
         </Tag>
       ) : null}
       {route.cost.total_gas_usd ? (
-        <Tag color="transparent" leftIcon={<PigMoney size={20} color={getIconColor()} />}>
+        <Tag color="transparent" leftIcon={<IconPigMoney size={20} color={getIconColor()} />}>
           <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
             $
             {route.cost.total_gas_usd}

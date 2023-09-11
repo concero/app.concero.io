@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ChevronRight, ClockHour3, PigMoney } from 'tabler-icons-react'
+import { IconChevronRight, IconClockHour3, IconPigMoney } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
 import { colors } from '../../../../constants/colors'
 import classNames from '../SwapCard.module.pcss'
@@ -20,7 +20,7 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
   <div>
     <Button
       variant="subtle"
-      rightIcon={<ChevronRight size={16} color={colors.grey.medium} />}
+      rightIcon={<IconChevronRight size={16} color={colors.grey.medium} />}
       size="sm"
       onClick={onClick}
       className={selectedRoute ? '' : classNames.invisible}
@@ -28,12 +28,12 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
       <Avatars entities={selectedRoute?.steps} />
       {selectedRoute?.cost.total_gas_usd ? (
         <div className={classNames.routeInfoContainer}>
-          <PigMoney size="0.85rem" color={colors.text.secondary} />
+          <IconPigMoney size="0.85rem" color={colors.text.secondary} />
           <p className="body1">{`$${selectedRoute.cost.total_gas_usd}`}</p>
         </div>
       ) : null}
       <div className={classNames.routeInfoContainer}>
-        <ClockHour3 size="0.85rem" color={colors.text.secondary} />
+        <IconClockHour3 size="0.85rem" color={colors.text.secondary} />
         <p className="body1">{`${selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''}`}</p>
       </div>
     </Button>

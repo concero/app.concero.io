@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Percentage } from 'tabler-icons-react'
+import { IconPercentage } from '@tabler/icons-react'
 import { Modal } from '../../../modals/Modal/Modal'
 import { TextInput } from '../../../input/TextInput'
 import { isFloatInput } from '../../../../utils/validation'
@@ -23,7 +23,7 @@ export const SwapSettingsModal: FC<SwapSettingsModalProps> = ({ show, setShow, s
         placeholder="Enter slippage percent"
         onChangeText={(value) => handleAmountChange(value)}
         value={slippage_percent}
-        icon={<Percentage size={18} color="var(--color-text-secondary)" />}
+        icon={<IconPercentage size={18} color="var(--color-text-secondary)" />}
       />
     </Modal>
   )

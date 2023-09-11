@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { animated, useSpring } from 'react-spring'
-import { ChevronDown, ChevronUp } from 'tabler-icons-react'
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 import { ToggleButton } from '../../../layout/ToggleButton/ToggleButton'
 import classNames from './InsuranceCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -42,9 +42,9 @@ export function InsuranceCard({ swapState, swapDispatch }) {
           <Button
             leftIcon={
               isInfoVisible ? (
-                <ChevronUp size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
+                <IconChevronUp size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
               ) : (
-                <ChevronDown size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
+                <IconChevronDown size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
               )
             }
             variant="black"

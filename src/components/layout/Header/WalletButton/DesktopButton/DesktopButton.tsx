@@ -1,7 +1,7 @@
 import { JSX } from 'react/jsx-runtime'
 import { FC, ReactElement, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { Moon, Sun } from 'tabler-icons-react'
+import { IconMoon, IconSun } from '@tabler/icons-react'
 import { BaseButton } from '../BaseButton/BaseButton'
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from '../WalletButton.module.pcss'
@@ -29,7 +29,7 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover,
         Help us improve
       </Button>
       {isConnected ? <ButtonWithPopover onClick={open} /> : <BaseButton onClick={open} />}
-      <Button size="sq-md" onClick={toggleTheme} variant="black" leftIcon={theme === 'light' ? <Moon size={18} /> : <Sun size={18} />} />
+      <Button size="sq-md" onClick={toggleTheme} variant="black" leftIcon={theme === 'light' ? <IconMoon size={18} /> : <IconSun size={18} />} />
       <FeedbackModal show={isFeedbackModalOpened} setShow={setIsFeedbackModalOpened} />
     </div>
   )

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Search } from 'tabler-icons-react'
+import { IconSearch } from '@tabler/icons-react'
 import { Modal } from '../Modal/Modal'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './MultiselectModal.module.pcss'
@@ -10,7 +10,7 @@ export const MultiselectModal: FC<MultiSelectModalProps> = ({ isOpen, setIsOpen,
   <Modal show={isOpen} setShow={setIsOpen} title={title}>
     <div className={classNames.container}>
       <div className={classNames.inputContainer}>
-        <TextInput icon={<Search color="var(--color-text-secondary)" size={18} />} placeholder="Search..." />
+        <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." />
       </div>
       <div className={classNames.itemsContainer}>
         {items.map((item) => {

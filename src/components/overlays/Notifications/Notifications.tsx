@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { animated, useTransition } from 'react-spring'
-import { X } from 'tabler-icons-react'
+import { IconX } from '@tabler/icons-react'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import classNames from './Notifications.module.pcss'
 import { Button } from '../../buttons/Button/Button'
@@ -43,7 +43,7 @@ export function Notifications() {
             <div className="row ac">
               <Beacon isOn color={item.color} />
               {item.title}
-              <Button variant="black" onClick={() => removeNotification(item.id)} leftIcon={<X size={18} />} />
+              <Button variant="black" onClick={() => removeNotification(item.id)} leftIcon={<IconX size={18} />} />
             </div>
             <p className="body1">{item.message}</p>
           </div>

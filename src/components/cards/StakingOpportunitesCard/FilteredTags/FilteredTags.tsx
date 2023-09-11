@@ -5,7 +5,7 @@ import { Button } from '../../../buttons/Button/Button'
 import { Filter } from '../../../screens/StakingScreen/stakingReducer/types'
 import { MultiselectModal } from '../../../modals/MultiselectModal/MultiselectModal'
 import { ChainSelectionRow } from './ChainSelectionRow'
-import { ChevronDown } from 'tabler-icons-react'
+import { IconChevronDown } from '@tabler/icons-react'
 
 interface FilteredTagsProps {
   dispatch: Dispatch<any>
@@ -67,7 +67,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
       <Button
         size={'sm'}
         variant={getChainTitle(chains) === 'All' ? 'subtle' : 'primary'}
-        rightIcon={<ChevronDown size={13} color={colors.text.secondary} />}
+        rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
         onClick={() => setIsChainsModalOpened(true)}
       >
         {`Chains: ${getChainTitle(chains)}`}
@@ -84,7 +84,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
       <Button
         size={'sm'}
         variant={'subtle'}
-        rightIcon={<ChevronDown size={13} color={colors.text.secondary} />}
+        rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
       >
         Sort: Recommended
       </Button>

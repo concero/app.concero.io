@@ -1,5 +1,5 @@
 import { FC, ReactNode, useContext } from 'react'
-import { ArrowDownRight, ArrowUpRight } from 'tabler-icons-react'
+import { IconArrowDownRight, IconArrowUpRight } from '@tabler/icons-react'
 import classNames from './Highlight.module.pcss'
 import { Tag } from '../Tag/Tag'
 import { ThemeContext } from '../../../hooks/themeContext'
@@ -39,7 +39,7 @@ export const Highlight: FC<HighlightProps> = ({ item: { title, value, valueSecon
 
   const textColor = last_24h.split('')[0] === '-' ? colors.red.dark : colors.green.dark
   const tagColor = last_24h.split('')[0] === '-' ? 'red' : 'green'
-  const tagArrow = last_24h.split('')[0] === '-' ? <ArrowDownRight size={18} /> : <ArrowUpRight size={18} />
+  const tagArrow = last_24h.split('')[0] === '-' ? <IconArrowDownRight size={18} /> : <IconArrowUpRight size={18} />
   return (
     <div className={highlightClasses}>
       <div className={classNames.topRow}>

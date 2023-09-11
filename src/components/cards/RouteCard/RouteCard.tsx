@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { animated, useSpring } from 'react-spring'
-import { ChevronDown, ChevronUp } from 'tabler-icons-react'
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 import { Card } from '../Card/Card'
 import classNames from './RouteCard.module.pcss'
 import { colors } from '../../../constants/colors'
@@ -40,7 +40,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
         </div>
         <Button
           variant="black"
-          rightIcon={isRoutesCollapsed ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
+          rightIcon={isRoutesCollapsed ? <IconChevronDown size={20} /> : <IconChevronUp size={20} />}
           size="sm"
           onClick={(e) => handleButtonClick(e)}
           className={isSelected ? classNames.bestButton : ''}

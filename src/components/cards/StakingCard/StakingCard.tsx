@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { animated, useSpring } from 'react-spring'
-import { ChevronDown, ChevronUp } from 'tabler-icons-react'
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 import classNames from './StakingCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { colors } from '../../../constants/colors'
@@ -42,7 +42,7 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols
             onClick={(e) => handleChevronClick(e)}
             variant="black"
             size="sm"
-            rightIcon={!isSelected ? <ChevronDown size={18} color={colors.text.secondary} /> : <ChevronUp size={18} color={colors.text.secondary} />}
+            rightIcon={!isSelected ? <IconChevronDown size={18} color={colors.text.secondary} /> : <IconChevronUp size={18} color={colors.text.secondary} />}
           />
         </div>
       </div>

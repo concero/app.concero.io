@@ -1,11 +1,11 @@
-import { Clock, PigMoney } from 'tabler-icons-react'
+import { IconClock, IconPigMoney } from '@tabler/icons-react'
 import classNames from './RouteCard.module.pcss'
 import { colors } from '../../../constants/colors'
 import { Step } from '../../../api/lifi/types'
 import { secondsConverter } from '../../../utils/formatting'
 
 function AdditionalInfoTag({ title, type, getColor, isBestRoute }: { title: string; type: string; getColor: () => string; isBestRoute: boolean }) {
-  const RenderedIcon = type === 'time' ? Clock : PigMoney
+  const RenderedIcon = type === 'time' ? IconClock : IconPigMoney
 
   return (
     <div className={classNames.additionalInfoTag}>

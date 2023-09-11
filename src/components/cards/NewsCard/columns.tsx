@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Clock } from 'tabler-icons-react'
+import { IconClock } from '@tabler/icons-react'
 import { colors } from '../../../constants/colors'
 import { truncate, unixtimeFromNow } from '../../../utils/formatting'
 import classNames from './NewsCard.module.pcss'
@@ -15,7 +15,7 @@ export const columns = [
     cellComponent: (item) => (
       <div className={classNames.cellComponentContainer}>
         <div className="row ac gap-xs">
-          <Clock color={colors.text.secondary} size={18} />
+          <IconClock color={colors.text.secondary} size={18} />
           <p className={classNames.truncate}>{unixtimeFromNow(item.published_on)}</p>
         </div>
       </div>

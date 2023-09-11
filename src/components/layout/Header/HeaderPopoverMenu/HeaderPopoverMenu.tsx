@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi'
 import { disconnect } from '@wagmi/core'
-import { Copy, Logout } from 'tabler-icons-react'
+import { IconCopy, IconLogout } from '@tabler/icons-react'
 import { MenuPopover } from '../../../overlays/MenuPopover/MenuPopover'
 import classNames from './HeaderPopoverMenu.module.pcss'
 
@@ -10,12 +10,12 @@ export function HeaderPopoverMenu() {
   const items = [
     {
       title: 'Copy address',
-      icon: <Copy size={18} color="var(--color-text-secondary)" />,
+      icon: <IconCopy size={18} color="var(--color-text-secondary)" />,
       onClick: () => navigator.clipboard.writeText(address),
     },
     {
       title: 'Log out',
-      iconName: <Logout size={18} color="var(--color-text-secondary)" />,
+      iconName: <IconLogout size={18} color="var(--color-text-secondary)" />,
       onClick: async () => disconnect(),
     },
   ]

@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { ArrowsUpDown, Wallet } from 'tabler-icons-react'
+import { IconArrowsUpDown, IconWallet } from '@tabler/icons-react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { useButtonReducer } from './buttonReducer'
@@ -15,8 +15,8 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
   }, [from, to, isLoading, isConnected, routes, response])
 
   const iconComponents = {
-    Wallet: <Wallet size={18} color="white" />,
-    ArrowsUpDown: <ArrowsUpDown size={18} color="white" />,
+    Wallet: <IconWallet size={18} color="white" />,
+    ArrowsUpDown: <IconArrowsUpDown size={18} color="white" />,
   }
 
   const leftIconComponent = buttonState.icon ? iconComponents[buttonState.icon] : null
