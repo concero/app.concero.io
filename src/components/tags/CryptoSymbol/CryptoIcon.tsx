@@ -1,10 +1,5 @@
-import { CryptoSymbolType } from '../../../types/CryptoSymbol'
 import classNames from './CryptoSymbol.module.pcss'
 
-export function CryptoIcon({ symbol, src = null }: { symbol: CryptoSymbolType; src?: string | null }) {
-  return (
-    <div className={classNames.iconContainer}>
-      <img src={src} />
-    </div>
-  )
+export function CryptoIcon({ src = null }: { src?: string | null }) {
+  return <div className={classNames.iconContainer}>{src ? <img src={src} /> : null}</div>
 }

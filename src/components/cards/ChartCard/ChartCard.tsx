@@ -55,7 +55,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
         <div className={classNames.selectChainContainer}>
           <h5 className="cardHeaderTitle">Chart</h5>
           <Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
-            <CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
+            <CryptoSymbol src={token.base.logoURI} />
           </Button>
           {isDesktop ? (
             <Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
