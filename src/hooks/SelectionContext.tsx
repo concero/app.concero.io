@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useReducer } from 'react'
+import { createContext, ReactNode, useContext, useReducer } from 'react'
 import { DataContext } from './DataContext/DataContext'
 
 type SelectedTokens = {
@@ -112,26 +112,27 @@ const initArgs = ({ fromTokens, toTokens, chains }) => {
 
 export const SelectionContext = createContext(null)
 
-export function SelectionProvider({ children, setIsLoading }: SelectionProviderProps) {
-  const { getTokens, getChains } = useContext(DataContext)
-  const [selection, dispatch] = useReducer(reducer, null)
+export function SelectionProvider({ children }: SelectionProviderProps) {
+  const { tokens, chains, getTokens, getChains } = useContext(DataContext)
 
-  const fetchData = async () => {
-    setIsLoading(true)
-    try {
-      const [fromTokens, toTokens, chains] = await Promise.all([getTokens('1'), getTokens('137'), getChains()])
-      const selectionArgs = initArgs({ fromTokens, toTokens, chains })
-      dispatch({ type: 'SET_SELECTION', payload: selectionArgs })
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const [selection, dispatch] = useReducer(reducer, initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }))
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  // const fetchData = async () => {
+  //   console.log('selectionContext fetchData')
+  //   try {
+  //     const [fromTokens, toTokens, chains] = await Promise.all([getTokens('1'), getTokens('137'), getChains()])
+  //     const selectionArgs = initArgs({ fromTokens, toTokens, chains })
+  //     console.log('selectionArgs', selectionArgs)
+  //     dispatch({ type: 'SET_SELECTION', payload: selectionArgs })
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error)
+  //   } finally {
+  //   }
+  // }
+  //
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
 
   return (
     <SelectionContext.Provider

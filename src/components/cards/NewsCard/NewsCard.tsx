@@ -12,16 +12,16 @@ import { SelectionContext } from '../../../hooks/SelectionContext'
 import { useNewsReducer } from './newsReducer'
 import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
-import { populateTokens } from './populateTokens'
 
 interface NewsCardProps {}
 
 export const NewsCard: FC<NewsCardProps> = () => {
   const { selection } = useContext(SelectionContext)
-  const { getTokens } = useContext(DataContext)
+  const { getTokens, tokens: dataTokens } = useContext(DataContext)
   const { addNotification } = useContext(NotificationsContext)
   const [{ data, isLoading, timestamp, isModalVisible, selectedToken, tokens }, dispatch] = useNewsReducer(selection)
 
+  console.log('NewsCard selection', selection)
   useEffect(() => {
     if (!selectedToken) return
     getNews(data, dispatch, selectedToken, timestamp, addNotification)
@@ -32,9 +32,13 @@ export const NewsCard: FC<NewsCardProps> = () => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: selection.swapCard.to.token })
   }, [selection.swapCard.to.token.symbol])
 
+  // useEffect(() => {
+  //   populateTokens({ getTokens, dispatch, selection })
+  // }, [])
+
   useEffect(() => {
-    populateTokens({ getTokens, dispatch, selection })
-  }, [])
+    dispatch({ type: 'SET_TOKENS', payload: dataTokens[selection.swapCard.to.chain.id] })
+  }, [dataTokens])
 
   const handleSelectToken = (token) => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
@@ -42,11 +46,16 @@ export const NewsCard: FC<NewsCardProps> = () => {
     dispatch({ type: 'SET_TIMESTAMP', payload: 0 })
   }
 
+  const handleShowModal = async () => {
+    // let tokensData = await getTokens(selection.swapCard.to.chain.id)
+    // dispatch({ type: 'SET_TOKENS', payload: tokens })
+    dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })
+  }
   return (
     <div>
       <Card className={classNames.container}>
         <CardHeader title="News">
-          <Button variant="black" size="sm" onClick={() => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })}>
+          <Button variant="black" size="sm" onClick={handleShowModal}>
             <CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
           </Button>
         </CardHeader>
