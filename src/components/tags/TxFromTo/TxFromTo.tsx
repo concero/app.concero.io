@@ -1,7 +1,7 @@
-import {FC} from 'react'
-import Icon from '../../Icon'
+import { FC } from 'react'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import className from './TxFromTo.module.pcss'
-import {colors} from '../../../constants/colors'
+import { colors } from '../../../constants/colors'
 
 // todo: add chain icons component
 export interface TxFromToProps {
@@ -31,7 +31,7 @@ export const TxFromTo: FC<TxFromToProps> = ({ from, to, type }) => {
     <div className={className.container}>
       <p style={styles.text}>{from.amount}</p>
       <p style={styles.text}>{from.symbol}</p>
-      <Icon name={type === 'sell' ? 'ArrowRight' : 'ArrowLeft'} color={color} size={18} />
+      {type === 'sell' ? <IconArrowRight size={18} color={color} /> : <IconArrowLeft size={18} color={color} />}
       <p style={styles.text}>{to.amount}</p>
       <p style={styles.text}>{to.symbol}</p>
     </div>

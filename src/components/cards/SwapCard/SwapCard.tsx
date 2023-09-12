@@ -1,5 +1,6 @@
 import { FC, useContext, useRef } from 'react'
 import { useAccount } from 'wagmi'
+import { IconSettings } from '@tabler/icons-react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
 import { SwapCardProps } from './types'
@@ -33,7 +34,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
               variant="black"
               size="sq-sm"
               onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-              leftIcon={{ name: 'Settings', iconProps: { size: 16, color: colors.grey.medium } }}
+              leftIcon={<IconSettings size={16} color={colors.grey.medium} />}
             />
           </div>
         </CardHeader>

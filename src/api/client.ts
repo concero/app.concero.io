@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 const client = axios.create({
   headers: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 })
 

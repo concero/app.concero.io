@@ -1,38 +1,34 @@
 .container {
-  background-color: var(--color-grey-darkest);
-  border-radius: var(--st-br-sm);
-  gap: var(--sp-md);
-  box-sizing: content-box;
-  min-width: 180px;
-  padding: var(--sp-sm);
-  z-index: 10;
-  flex-direction: column;
+    background-color: var(--color-grey-darkest);
+    border-radius: var(--st-br-sm);
+    gap: var(--sp-md);
+    box-sizing: content-box;
+    min-width: 180px;
+    padding: var(--sp-sm);
+    z-index: 10;
+    flex-direction: column;
 
-  & > div {
-    flex-direction: row;
-  }
+    & > div {
+        flex-direction: row;
+    }
 }
 
 .menuItem {
-  align-items: flex-start;
-  justify-content: flex-start;
-  border-radius: var(--st-br-sm);
-  cursor: pointer;
-  display: flex;
-  gap: 10px;
-  overflow: hidden;
-  padding: 5px;
-  transition: background-color 0.2s ease-in-out;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: var(--st-br-sm);
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+    padding: 5px;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .menuItem:hover {
-  background-color: var(--color-grey-darker);
+    background-color: var(--color-grey-darker);
 }
 
 .title {
-  color: var(--color-text-secondary);
-}
-
-.icon {
-  color: var(--color-text-secondary);
+    color: var(--color-text-secondary);
 }

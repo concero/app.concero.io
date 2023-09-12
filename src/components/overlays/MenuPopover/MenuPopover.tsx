@@ -1,26 +1,22 @@
-import { CSSProperties, FC } from 'react'
-import * as Icons from 'tabler-icons-react'
-import Icon from '../../Icon'
+import { FC, ReactNode } from 'react'
 import styles from './MenuPopover.module.pcss'
 import { colors } from '../../../constants/colors'
 
 export interface MenuItem {
   title: string
-  iconName?: keyof typeof Icons
-  danger?: boolean
+  icon: ReactNode
   onClick?: () => void
 }
 
 export interface MenuPopoverProps {
   items: MenuItem[]
-  style?: CSSProperties
 }
 
-export const MenuPopover: FC<MenuPopoverProps> = ({ items, style }) => (
-  <div className={styles.container} style={style}>
+export const MenuPopover: FC<MenuPopoverProps> = ({ items }) => (
+  <div className={styles.container}>
     {items.map((item, index) => (
       <div key={index} className={styles.menuItem} onClick={() => item.onClick && item.onClick()}>
-        {item.iconName && <Icon className={styles.icon} name={item.iconName} color={item.danger ? colors.red.dark : colors.text.secondary} />}
+        {item.icon ? item.icon : null}
         <span className={styles.title} style={item.danger ? { color: colors.red.dark } : {}}>
           {item.title}
         </span>

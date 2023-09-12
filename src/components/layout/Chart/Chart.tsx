@@ -44,10 +44,11 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 
     tooltipRef.current = createTooltip()
     chartRef.current.appendChild(tooltipRef.current)
-
+    // chart.resize(chartRef.current.clientWidth, chartRef.current.clientHeight)
     const handleResize = () => {
-      const { offsetWidth, offsetHeight } = chartRef.current
-      chart.resize(offsetWidth, offsetHeight)
+      const { clientWidth, clientHeight } = chartRef.current
+      // console.log('resizing to ', clientWidth, clientHeight)
+      chart.resize(clientWidth, clientHeight)
     }
 
     window.addEventListener('resize', handleResize)
