@@ -18,6 +18,7 @@ export type Filter = {
 
 export type Vault = {
   id: string
+  _id: string
   name: string
   symbol: string
   type: 'staking' | 'lp' | 'alm' | 'dex' | 'lending' | ''

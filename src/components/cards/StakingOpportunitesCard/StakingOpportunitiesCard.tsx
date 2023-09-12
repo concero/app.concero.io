@@ -16,16 +16,17 @@ interface StakingOpportunitiesProps {
 }
 
 export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
-  const { selectedVault, vaults, protocols, filter } = stakingState
+  const { selectedVault, vaults, protocols } = stakingState
+
   const handleSelect = (vault) => {
-    if (selectedVault?.id === vault.id) dispatch({ type: 'SET_SELECTED_VAULT', payload: null })
-    else dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+    // if (selectedVault?.id_ === vault.id_) dispatch({ type: 'SET_SELECTED_VAULT', payload: null })
+    dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
   }
 
   async function populateVaults() {
     try {
       const pools = await fetchPools()
-      console.log('vaults', vaults)
+      console.log('vaults', pools)
       dispatch({ type: 'SET_VAULTS', payload: pools })
     } catch (error) {
       console.error(error)
@@ -41,8 +42,8 @@ export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakin
       <h5 className="cardHeaderTitle">Staking opportunities</h5>
       <FilteredTags dispatch={dispatch} stakingState={stakingState} />
       <div className={classNames.stakingCardsContainer}>
-        {vaults?.map((vault) => (
-          <StakingCard key={vault._id} isSelected={selectedVault?.id === vault.id} vault={vault} onClick={handleSelect} protocols={protocols} />
+        {vaults?.map((vault: Vault) => (
+          <StakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} protocols={protocols} />
         ))}
       </div>
     </div>

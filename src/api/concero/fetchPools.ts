@@ -1,8 +1,8 @@
-import { post } from '../client'
+import { get } from '../client'
 
 export const fetchPools = async () => {
-  const url = `${process.env.CONCERO_API_URL}/pools`
-  const response = await post(url)
-  if (response.status !== 200) throw new Error('no pools found')
+  const url = `${process.env.CONCERO_API_URL}/pools?offset=0&limit=10`
+  const response = await get(url)
+  if (response.status !== 200) throw new Error(response.error)
   return response.data.data
 }

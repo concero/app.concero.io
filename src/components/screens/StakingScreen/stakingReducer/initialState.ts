@@ -3,6 +3,7 @@ import { InitialState } from './types'
 const vaults = [
   {
     id: '1',
+    _id: '1',
     name: '',
     symbol: 'B-60MKR-40WETH-stETH',
     type: '',
