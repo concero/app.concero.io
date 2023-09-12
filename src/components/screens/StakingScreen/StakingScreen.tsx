@@ -34,7 +34,7 @@ export const StakingScreen: FC = () => {
             <StakingChartCard stakingState={stakingState} />
           </div>
           <div className={classNames.secondaryCardStack}>
-            <StakingHighlightsCard />
+            <StakingHighlightsCard stakingState={stakingState} />
             <RatioCard />
             <DetailsCard />
           </div>
@@ -49,7 +49,7 @@ export const StakingScreen: FC = () => {
       {stakingState.selectedVault ? (
         <div className={classNames.mainCardStack}>
           <StakingChartCard stakingState={stakingState} />
-          <StakingHighlightsCard />
+          <StakingHighlightsCard stakingState={stakingState} />
           <RatioCard />
           <DetailsCard />
         </div>

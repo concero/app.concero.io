@@ -1,35 +1,25 @@
 import classNames from './StakingHighlightsCard.module.pcss'
 import { Highlight } from '../../tags/Highlight/Highlight'
 
-const items = [
-  {
-    id: '1',
-    title: 'TVL',
-    value: '$432.3M',
-    last_24h: '2.55',
-  },
-  {
-    id: '2',
+export const StakingHighlightsCard = ({ stakingState }) => {
+  const apy = {
     title: 'APY',
-    value: '124%',
+    value: `${stakingState?.selectedVault?.apy}%`,
     last_24h: '0.55',
-  },
-  {
-    id: '3',
-    title: 'TVL',
-    value: '$432.3M',
-    last_24h: '5.54',
-  },
-]
+  }
 
-export const StakingHighlightsCard = () => {
+  const tvl = {
+    title: 'TVL',
+    value: `$${stakingState?.selectedVault?.tvlUsd}`,
+    last_24h: '5.54',
+  }
+
   return (
     <div className={`card ${classNames.container}`}>
       <h5 className={'cardHeaderTitle'}>Highlights</h5>
       <div className={classNames.higlitsContainer}>
-        {items.map((item) => {
-          return <Highlight key={item.id} size={'sm'} item={item} />
-        })}
+        <Highlight size={'sm'} item={apy} />
+        <Highlight size={'sm'} item={tvl} />
       </div>
     </div>
   )

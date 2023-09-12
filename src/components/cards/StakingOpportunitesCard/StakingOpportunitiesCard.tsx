@@ -18,16 +18,13 @@ interface StakingOpportunitiesProps {
 export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
   const { selectedVault, vaults, protocols } = stakingState
 
-  const handleSelect = (vault) => {
-    // if (selectedVault?.id_ === vault.id_) dispatch({ type: 'SET_SELECTED_VAULT', payload: null })
-    dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
-  }
+  const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
 
   async function populateVaults() {
     try {
       const pools = await fetchPools()
-      console.log('vaults', pools)
       dispatch({ type: 'SET_VAULTS', payload: pools })
+      dispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
     } catch (error) {
       console.error(error)
     }
