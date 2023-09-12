@@ -11,6 +11,7 @@ import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
 import { DataProvider } from './hooks/DataContext/DataContext'
+import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
 
 // import { ModalProvider } from './hooks/ModalContext'
 
@@ -27,19 +28,15 @@ function App() {
     <PostHogProvider>
       <DataProvider>
         <SelectionProvider setIsLoading={setIsLoading}>
-          {!isLoading ? (
-            <ThemeProvider>
-              {/* <ModalProvider> */}
-              <NotificationsProvider>
-                <Notifications />
-                <WagmiConfig config={wagmiConfig}>
-                  <Navigator />
-                  <WalletConnectModal />
-                </WagmiConfig>
-              </NotificationsProvider>
-              {/* </ModalProvider> */}
-            </ThemeProvider>
-          ) : null}
+          <ThemeProvider>
+            <NotificationsProvider>
+              <Notifications />
+              <WagmiConfig config={wagmiConfig}>
+                {isLoading ? <FullScreenLoader /> : <Navigator />}
+                <WalletConnectModal />
+              </WagmiConfig>
+            </NotificationsProvider>
+          </ThemeProvider>
         </SelectionProvider>
       </DataProvider>
     </PostHogProvider>

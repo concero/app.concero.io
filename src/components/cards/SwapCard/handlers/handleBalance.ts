@@ -25,7 +25,7 @@ const handleError = (swapDispatch) => swapDispatch({ type: 'SET_BALANCE', payloa
 export const handleBalance = async ({ swapDispatch, from, address }: HandleBalanceProps) => {
   if (!from || !address) return handleError(swapDispatch)
 
-  const rangoChainSymbol = from.chain.provider_symbols.find((item) => item.provider === 'rango').symbol
+  const rangoChainSymbol = from.chain.provider_symbols.find((item) => item.provider === 'rango')?.symbol
   if (!rangoChainSymbol) return handleError(swapDispatch)
 
   const response = await fetchTokenBalance(rangoChainSymbol, from.token.address, address, from.token.symbol)

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { animated, useTransition } from 'react-spring'
+import { IconX } from '@tabler/icons-react'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import classNames from './Notifications.module.pcss'
 import { Button } from '../../buttons/Button/Button'
@@ -26,8 +27,7 @@ export function Notifications() {
 
   useEffect(() => {
     const timers = notifications.map(
-      (notification) =>
-        setTimeout(() => {
+      (notification) => setTimeout(() => {
           removeNotification(notification.id)
         }, 3500), // Change this to your preferred delay time in milliseconds
     )
@@ -43,14 +43,7 @@ export function Notifications() {
             <div className="row ac">
               <Beacon isOn color={item.color} />
               {item.title}
-              <Button
-                variant="black"
-                onClick={() => removeNotification(item.id)}
-                leftIcon={{
-                  name: 'X',
-                  iconProps: { size: 18 },
-                }}
-              />
+              <Button variant="black" onClick={() => removeNotification(item.id)} leftIcon={<IconX size={18} />} />
             </div>
             <p className="body1">{item.message}</p>
           </div>

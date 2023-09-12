@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { IconArrowLeft } from '@tabler/icons-react'
 import classNames from './SwapProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
 import { TransactionStep } from './TransactionStep'
@@ -32,7 +33,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch })
         ))}
       </div>
       {status === 'failure' || status === 'success' ? (
-        <Button leftIcon={{ name: 'ArrowLeft', iconProps: { size: 20 } }} onClick={() => handleGoBack()} variant="secondary">
+        <Button leftIcon={<IconArrowLeft size={20} color="var(--color-text-secondary)" />} onClick={() => handleGoBack()} variant="secondary">
           Go back
         </Button>
       ) : null}

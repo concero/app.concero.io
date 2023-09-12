@@ -1,5 +1,6 @@
 // todo: remove when api connected
 import { FC, useEffect, useState } from 'react'
+import { IconSearch } from '@tabler/icons-react'
 import { TextInput } from '../../input/TextInput'
 import { Table } from '../../layout/Table/Table'
 import { Modal } from '../Modal/Modal'
@@ -55,7 +56,12 @@ export const EntityListModal: FC<EntityListModalProps> = ({
   return (
     <Modal title={title} show={show} setShow={setShow}>
       <div className={classNames.container}>
-        <TextInput iconName="Search" value={value} placeholder="Search..." onChangeText={(val) => setValue(val)} />
+        <TextInput
+          icon={<IconSearch color="var(--color-text-secondary)" size={18} />}
+          value={value}
+          placeholder="Search..."
+          onChangeText={(val) => setValue(val)}
+        />
         <Table columns={columns} items={filteredData} onClick={(item) => handleSelect(item)} onEndReached={handleEndReached} animate={animate} />
       </div>
     </Modal>

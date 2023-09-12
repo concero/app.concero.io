@@ -1,8 +1,7 @@
-import { FC, KeyboardEvent, MouseEventHandler, ReactNode, useEffect } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { FC, KeyboardEvent, ReactNode, useEffect } from 'react'
+import { animated, useSpring, useTransition } from 'react-spring'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
-import { fadeAnimation, fadeUpAnimation } from '../../../constants/animations'
 
 export interface ModalProps {
   title: string
@@ -16,7 +15,7 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
     if (event.keyCode === 27) setShow(false)
   }
 
-  const stopPropagation = (event: MouseEventHandler<HTMLDivElement>) => {
+  const stopPropagation = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation()
   }
 
@@ -31,16 +30,31 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [show])
 
+  // Fade animation for the overlay
+  const fadeAnimation = useSpring({
+    opacity: show ? 1 : 0,
+    pointerEvents: show ? 'auto' : 'none',
+  })
+
+  // Transition for the modal appearance/disappearance
+  const transitions = useTransition(show, {
+    from: { transform: 'translateY(20px)', opacity: 0 },
+    enter: { transform: 'translateY(0)', opacity: 1 },
+    leave: { transform: 'translateY(20px)', opacity: 0 },
+  })
+
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div {...fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
-          <motion.div {...fadeUpAnimation} className={classNames.container} onClick={stopPropagation}>
-            <ModalHeader title={title} onClick={() => setShow(false)} />
-            {children}
-          </motion.div>
-        </motion.div>
+    <>
+      {fadeAnimation.opacity.to((o) => o > 0) && (
+        <animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
+          {transitions((style, item) => (item ? (
+            <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
+              <ModalHeader title={title} onClick={() => setShow(false)} />
+              {children}
+            </animated.div>
+            ) : null))}
+        </animated.div>
       )}
-    </AnimatePresence>
+    </>
   )
 }

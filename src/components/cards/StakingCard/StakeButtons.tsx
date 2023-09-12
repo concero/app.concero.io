@@ -1,8 +1,8 @@
 import { animated, useSpring } from 'react-spring'
 import { FC } from 'react'
+import { IconArrowsDiff } from '@tabler/icons-react'
 import classNames from './StakingCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
-import Icon from '../../Icon'
 
 interface StakeButtonsProps {
   isCollapsed: boolean
@@ -20,13 +20,13 @@ export const StakeButtons: FC<StakeButtonsProps> = ({ isSelected }) => {
     <div className={classNames.buttonContainer}>
       <animated.div style={buttonProps} className={classNames.stakeButton}>
         <Button variant="primary">
-          <Icon name="ArrowsDiff" className={classNames.buttonIcon} />
+          <IconArrowsDiff className={classNames.buttonIcon} />
           Stake more
         </Button>
       </animated.div>
       <animated.div style={buttonProps} className={classNames.stakeButton}>
         <Button variant="primary">
-          <Icon name="ArrowsDiff" className={classNames.buttonIcon} />
+          <IconArrowsDiff className={classNames.buttonIcon} />
           Claim rewards
         </Button>
       </animated.div>

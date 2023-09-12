@@ -13,7 +13,6 @@ import { columns } from './columns'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { useChartReducer } from './chartReducer'
-import { getCoingeckoTokenIdBySymbol } from '../../../api/coinGecko/getCoingeckoTokenIdBySymbol'
 import { fetchChartData } from '../../../api/defilama/fetchChartData'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { Card } from '../Card/Card'
@@ -33,11 +32,10 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
 
   useEffect(() => {
-    const tokenId = getCoingeckoTokenIdBySymbol(token.base.symbol)
-    fetchChartData(setData, addNotification, tokenId, interval)
+    fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
 
     const intervalId = setInterval(() => {
-      fetchChartData(setData, addNotification, tokenId, interval)
+      fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
     }, 15000)
 
     return () => clearInterval(intervalId)
@@ -57,7 +55,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
         <div className={classNames.selectChainContainer}>
           <h5 className="cardHeaderTitle">Chart</h5>
           <Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
-            <CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
+            <CryptoSymbol src={token.base.logoURI} />
           </Button>
           {isDesktop ? (
             <Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>

@@ -29,16 +29,17 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
   }
 
   const routesRequest = {
-    fromChainId: from.chain.id,
+    fromChainId: parseInt(from.chain.id),
     fromAmount: addingDecimals(Number(from.amount), from.token.decimals),
     fromTokenAddress: from.token.address,
     fromAddress: from.address,
-    toChainId: to.chain.id,
+    toChainId: parseInt(to.chain.id),
     toTokenAddress: to.token.address,
     toAddress: to.address,
     options: routeOptions,
   }
 
+  console.log(routesRequest)
   const response = await lifi.getRoutes(routesRequest)
 
   if (response.routes.length > 0) {
