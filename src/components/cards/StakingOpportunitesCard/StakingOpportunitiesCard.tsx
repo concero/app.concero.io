@@ -3,7 +3,7 @@ import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
 import { Filter, Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
-import { fetchPools } from '../../../api/concero/fetchPools'
+import { populateVaults } from './populateVaults'
 
 interface StakingOpportunitiesProps {
   stakingState: {
@@ -17,22 +17,9 @@ interface StakingOpportunitiesProps {
 
 export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
   const { selectedVault, vaults, protocols } = stakingState
-
   const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
 
-  async function populateVaults() {
-    try {
-      const pools = await fetchPools()
-      dispatch({ type: 'SET_VAULTS', payload: pools })
-      dispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    populateVaults()
-  }, [])
+  useEffect(() => populateVaults(dispatch), [])
 
   return (
     <div className={`card ${classNames.container}`}>

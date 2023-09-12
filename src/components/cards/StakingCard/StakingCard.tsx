@@ -30,7 +30,7 @@ export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols
     <div className={`${classNames.container} ${isSelected ? classNames.selected : ''}`} onClick={() => onClick(vault)}>
       <div className={classNames.headerContainer}>
         <div className={classNames.headerSideContainer}>
-          <Avatar src={protocols[vault.protocol_id]?.logo_url} size="md" />
+          <Avatar src={vault.logoURI} size="md" />
           <h5>{`${vault.apy}%`}</h5>
           <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{pairSymbol}</h5>
         </div>

@@ -14,15 +14,14 @@ interface StakingHeaderCardProps {
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
   const { selectedVault, protocols } = stakingState
-  const pairSymbol = `${selectedVault.symbol}`
 
   return (
     <div className={`card ${classNames.container}`}>
       <div className={classNames.sideContainer}>
-        <Avatar src={protocols[selectedVault.project]?.logo_url} />
+        <Avatar src={selectedVault.logoURI} />
         <div>
-          <h5>{pairSymbol}</h5>
-          <p className={'body1'}>{capitalize(selectedVault.project ?? '')}</p>
+          <h5>{selectedVault.symbol}</h5>
+          <p className={'body1'}>{capitalize(selectedVault.protocol ?? '')}</p>
         </div>
       </div>
       <div className={classNames.sideContainer}>
