@@ -17,10 +17,7 @@ export const StakingScreen: FC = () => {
 
   const populateChains = async () => {
     const chains = await getChains()
-    dispatch({
-      type: 'SET_CHAINS',
-      payload: chains,
-    })
+    dispatch({ type: 'SET_CHAINS', payload: chains })
   }
 
   useEffect(() => {

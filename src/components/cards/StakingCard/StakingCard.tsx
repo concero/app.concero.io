@@ -17,7 +17,7 @@ interface StakingCardProps {
 }
 
 export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols, onClick }) => {
-  const pairSymbol = `${vault.underlying_assets.map((asset) => asset.symbol).join('/')}`
+  const pairSymbol = vault.symbol
   const animProps = useSpring({
     height: isSelected ? 54 : 0,
     from: { height: isSelected ? 0 : 54 },

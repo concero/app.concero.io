@@ -1,8 +1,9 @@
-import { Dispatch, FC } from 'react'
+import { Dispatch, FC, useEffect } from 'react'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
 import { Filter, Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
+import { fetchPools } from '../../../api/concero/fetchPools'
 
 interface StakingOpportunitiesProps {
   stakingState: {
@@ -21,13 +22,27 @@ export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakin
     else dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
   }
 
+  async function populateVaults() {
+    try {
+      const pools = await fetchPools()
+      console.log('vaults', vaults)
+      dispatch({ type: 'SET_VAULTS', payload: pools })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    populateVaults()
+  }, [])
+
   return (
     <div className={`card ${classNames.container}`}>
       <h5 className="cardHeaderTitle">Staking opportunities</h5>
       <FilteredTags dispatch={dispatch} stakingState={stakingState} />
       <div className={classNames.stakingCardsContainer}>
-        {vaults.map((vault) => (
-          <StakingCard key={vault.id} isSelected={selectedVault?.id === vault.id} vault={vault} onClick={handleSelect} protocols={protocols} />
+        {vaults?.map((vault) => (
+          <StakingCard key={vault._id} isSelected={selectedVault?.id === vault.id} vault={vault} onClick={handleSelect} protocols={protocols} />
         ))}
       </div>
     </div>
