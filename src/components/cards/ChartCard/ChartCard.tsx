@@ -5,11 +5,9 @@ import classNames from './ChartCard.module.pcss'
 import { Chart } from '../../layout/Chart/Chart'
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
-import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { SegmentedControl } from '../../buttons/SegmentedControl/SegmentedControl'
 import { intervals } from './constants'
-import { columns } from './columns'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { useChartReducer } from './chartReducer'
@@ -18,6 +16,8 @@ import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { populateTokens } from './populateTokens'
+import { ListModal } from '../../modals/MultiselectModal/ListModal'
+import { ListEntityButton } from '../StakingOpportunitesCard/FilteredTags/ListEntityButton'
 
 export interface ChartCardProps {}
 
@@ -95,25 +95,13 @@ export const ChartCard: FC<ChartCardProps> = () => {
           />
         )}
       </div>
-      <EntityListModal
+      <ListModal
         title="Select token"
-        show={token.base.modalVisible}
-        setShow={() =>
-          dispatch({
-            type: 'TOGGLE_MODAL_VISIBLE',
-            tokenType: 'base',
-          })
-        }
-        data={tokens}
-        entitiesVisible={15}
-        columns={columns}
-        onSelect={(token) =>
-          dispatch({
-            type: 'SET_TOKEN',
-            tokenType: 'base',
-            payload: token,
-          })
-        }
+        isOpen={token.base.modalVisible}
+        setIsOpen={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}
+        onSelect={(token) => dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: token })}
+        getItems={(offset, limit) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit })}
+        RenderItem={ListEntityButton}
       />
     </Card>
   )

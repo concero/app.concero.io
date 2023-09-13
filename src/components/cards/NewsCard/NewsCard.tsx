@@ -5,13 +5,14 @@ import classNames from './NewsCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getMoreNews, getNews } from './getNews'
-import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
-import { columns, modalColumns } from './columns'
+import { columns } from './columns'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { useNewsReducer } from './newsReducer'
 import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
+import { ListModal } from '../../modals/MultiselectModal/ListModal'
+import { ListEntityButton } from '../StakingOpportunitesCard/FilteredTags/ListEntityButton'
 
 interface NewsCardProps {}
 
@@ -21,7 +22,6 @@ export const NewsCard: FC<NewsCardProps> = () => {
   const { addNotification } = useContext(NotificationsContext)
   const [{ data, isLoading, timestamp, isModalVisible, selectedToken, tokens }, dispatch] = useNewsReducer(selection)
 
-  console.log('NewsCard selection', selection)
   useEffect(() => {
     if (!selectedToken) return
     getNews(data, dispatch, selectedToken, timestamp, addNotification)
@@ -67,14 +67,13 @@ export const NewsCard: FC<NewsCardProps> = () => {
           onEndReached={() => getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)}
         />
       </Card>
-      <EntityListModal
+      <ListModal
         title="Select token"
-        show={isModalVisible}
-        setShow={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
-        data={tokens}
-        entitiesVisible={15}
-        columns={modalColumns}
+        isOpen={isModalVisible}
+        setIsOpen={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
         onSelect={(token) => handleSelectToken(token)}
+        getItems={(offset, limit) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit })}
+        RenderItem={ListEntityButton}
       />
     </div>
   )

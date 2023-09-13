@@ -55,11 +55,21 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
   const [tokens, setTokens] = useState(initialState.tokens)
   const [chains, setChains] = useState(initialState.chains)
 
-  const getTokens = async (chainId) => {
-    if (tokens[chainId]) return tokens[chainId]
-    const response = await fetchTokensByChainId(chainId)
+  const getTokens = async ({ chainId, offset, limit }) => {
+    console.log('getTokens', chainId, offset, limit)
+    // if tokens of this chain until offset + limit exist, return them
+    if (tokens[chainId] && tokens[chainId].length >= offset + limit) {
+      console.log('returning tokens from cache')
+      console.log(tokens[chainId].slice(offset, offset + limit))
+      return tokens[chainId].slice(offset, offset + limit)
+    }
+
+    console.log('fetching tokens')
+    const response = await fetchTokensByChainId({ chainId, offset, limit })
+    // Append new tokens to existing ones for the particular chainId
     setTokens((prevTokens) => {
-      return { ...prevTokens, [chainId]: response }
+      const existingTokens = prevTokens[chainId] || []
+      return { ...prevTokens, [chainId]: [...existingTokens, ...response] }
     })
     return response
   }
@@ -73,7 +83,15 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
 
   const initialFetch = async () => {
     console.log('initialFetch')
-    const [ethTokens, polygonTokens, chains] = await Promise.all([fetchTokensByChainId('1'), fetchTokensByChainId('137'), fetchChains()])
+    const [ethTokens, polygonTokens, chains] = await Promise.all([
+      fetchTokensByChainId({
+        chainId: '1',
+        offset: 0,
+        limit: 15,
+      }),
+      fetchTokensByChainId({ chainId: '137', offset: 0, limit: 15 }),
+      fetchChains(),
+    ])
     setTokens({ '1': ethTokens, '137': polygonTokens })
     console.log('tokens', ethTokens)
     setChains(chains)
