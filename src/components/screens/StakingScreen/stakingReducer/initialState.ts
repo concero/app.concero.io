@@ -8,6 +8,7 @@ const vaults = [
     symbol: 'B-60MKR-40WETH-stETH',
     type: '',
     protocol_id: 'uniswap',
+    defiLlamaPoolId: '747c1d2a-c668-4682-b9f9-296708a3dd90',
     total_apy: '',
     total_fees_usd: '',
     yields: [

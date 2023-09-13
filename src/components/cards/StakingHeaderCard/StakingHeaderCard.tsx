@@ -21,7 +21,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
         <Avatar src={selectedVault.logoURI} />
         <div>
           <h5>{selectedVault.symbol}</h5>
-          <p className={'body1'}>{capitalize(selectedVault.protocol ?? '')}</p>
+          <p className={'body1'}>{capitalize(selectedVault?.protocolName ?? '')}</p>
         </div>
       </div>
       <div className={classNames.sideContainer}>
