@@ -15,7 +15,6 @@ import { fetchChartData } from '../../../api/defilama/fetchChartData'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
-import { populateTokens } from './populateTokens'
 import { ListModal } from '../../modals/MultiselectModal/ListModal'
 import { ListEntityButton } from '../StakingOpportunitesCard/FilteredTags/ListEntityButton'
 
@@ -45,10 +44,10 @@ export const ChartCard: FC<ChartCardProps> = () => {
     dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: selection.swapCard.to.token })
   }, [selection.swapCard.to.token.symbol])
 
-  useEffect(() => {
-    populateTokens({ getTokens, dispatch, selection })
-  }, [])
-
+  const handleSelect = (token) => {
+    dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: token })
+    dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
+  }
   return (
     <Card className={classNames.container}>
       <div className={classNames.headerContainer}>
@@ -68,12 +67,10 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <SegmentedControl
             data={intervals}
             selectedItem={interval}
-            setSelectedItem={(item) =>
-              dispatch({
+            setSelectedItem={(item) => dispatch({
                 type: 'SET_INTERVAL',
                 payload: item,
-              })
-            }
+              })}
           />
         ) : null}
       </div>
@@ -99,8 +96,8 @@ export const ChartCard: FC<ChartCardProps> = () => {
         title="Select token"
         isOpen={token.base.modalVisible}
         setIsOpen={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}
-        onSelect={(token) => dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: token })}
-        getItems={(offset, limit) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit })}
+        onSelect={(token) => handleSelect(token)}
+        getItems={({ offset, limit, search }) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
         RenderItem={ListEntityButton}
       />
     </Card>

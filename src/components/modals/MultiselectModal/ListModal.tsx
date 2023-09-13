@@ -9,13 +9,14 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
   const limit = 15
   const [offset, setOffset] = useState<number>(0)
   const [items, setItems] = useState<any[]>([])
+  const [search, setSearch] = useState<string>('')
   const itemsContainerRef = useRef(null)
 
   useEffect(() => {
     if (isOpen) {
       setOffset(0) // Reset offset
       ;(async () => {
-        const initialItems = await getItems(0, limit)
+        const initialItems = await getItems({ offset: 0, limit, search })
         setItems(initialItems)
       })()
     }
@@ -25,7 +26,7 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
     const newOffset = offset + limit
     setOffset(newOffset)
     try {
-      const newItems = await getItems(newOffset, limit)
+      const newItems = await getItems({ offset: newOffset, limit, search })
       setItems((prevItems) => [...prevItems, ...newItems])
     } catch (error) {
       // Handle error appropriately
@@ -39,11 +40,18 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
     }
   }
 
+  const handleSearch = async (value) => {
+    setSearch(value)
+    const foundItems = await getItems({ offset: 0, limit, search: value })
+    console.log('foundItems', foundItems)
+    setItems(foundItems)
+  }
+
   return (
     <Modal show={isOpen} setShow={setIsOpen} title={title}>
       <div className={classNames.container}>
         <div className={classNames.inputContainer}>
-          <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." />
+          <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} />
         </div>
         <div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
           {items.map((item) => {

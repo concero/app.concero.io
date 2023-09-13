@@ -32,14 +32,6 @@ export const NewsCard: FC<NewsCardProps> = () => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: selection.swapCard.to.token })
   }, [selection.swapCard.to.token.symbol])
 
-  // useEffect(() => {
-  //   populateTokens({ getTokens, dispatch, selection })
-  // }, [])
-
-  useEffect(() => {
-    dispatch({ type: 'SET_TOKENS', payload: dataTokens[selection.swapCard.to.chain.id] })
-  }, [dataTokens])
-
   const handleSelectToken = (token) => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
     dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false })
@@ -47,8 +39,6 @@ export const NewsCard: FC<NewsCardProps> = () => {
   }
 
   const handleShowModal = async () => {
-    // let tokensData = await getTokens(selection.swapCard.to.chain.id)
-    // dispatch({ type: 'SET_TOKENS', payload: tokens })
     dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })
   }
   return (
@@ -72,7 +62,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
         isOpen={isModalVisible}
         setIsOpen={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
         onSelect={(token) => handleSelectToken(token)}
-        getItems={(offset, limit) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit })}
+        getItems={({ offset, limit, search }) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
         RenderItem={ListEntityButton}
       />
     </div>

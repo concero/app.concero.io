@@ -17,7 +17,7 @@ export async function getTransactions(selection, state, dispatch, getTokens) {
     dispatch({ type: 'SET_ERROR', payload: err })
   }
 
-  const tokens = await getTokens(selection.from.chain.id)
+  const tokens = await getTokens({ chainId: selection.from.chain.id, offset: 0, limit: 15 })
 
   const network = selection.from.chain.name.toLowerCase()
   let baseCurrency = selection.from.token.address

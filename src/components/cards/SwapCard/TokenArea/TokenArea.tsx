@@ -13,7 +13,6 @@ import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
-import { populateTokens } from './populateTokens'
 import { ListModal } from '../../../modals/MultiselectModal/ListModal'
 import { ListEntityButton } from '../../StakingOpportunitesCard/FilteredTags/ListEntityButton'
 
@@ -44,10 +43,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
   useEffect(() => {
     if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
   }, [selection.chain, selection.token])
-
-  useEffect(() => {
-    populateTokens({ getTokens, selection, tokenAreaDispatch })
-  }, [selection.chain])
 
   useEffect(() => {
     if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
@@ -102,21 +97,21 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
           </Button>
         </div>
       </animated.div>
-      {/*<EntityListModal*/}
-      {/*  title="Select chain"*/}
-      {/*  data={chains}*/}
-      {/*  columns={ChainColumns}*/}
-      {/*  show={state.showChainsModal}*/}
-      {/*  entitiesVisible={15}*/}
-      {/*  setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}*/}
-      {/*  onSelect={handleSelectChain}*/}
-      {/*/>*/}
+      {/* <EntityListModal */}
+      {/*  title="Select chain" */}
+      {/*  data={chains} */}
+      {/*  columns={ChainColumns} */}
+      {/*  show={state.showChainsModal} */}
+      {/*  entitiesVisible={15} */}
+      {/*  setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })} */}
+      {/*  onSelect={handleSelectChain} */}
+      {/* /> */}
       <ListModal
         title="Select token"
         isOpen={state.showTokensModal}
         setIsOpen={(value) => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: value })}
         onSelect={(token) => handleSelectToken(token)}
-        getItems={(offset, limit) => getTokens({ chainId: selection.chain.id, offset, limit })}
+        getItems={({ offset, limit, search }) => getTokens({ chainId: selection.chain.id, offset, limit, search })}
         RenderItem={ListEntityButton}
       />
       <ListModal
@@ -124,7 +119,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
         isOpen={state.showChainsModal}
         setIsOpen={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
         onSelect={(chain) => handleSelectChain(chain)}
-        getItems={() => getChains()}
+        getItems={({ search }) => getChains({ search })}
         RenderItem={ListEntityButton}
       />
     </>

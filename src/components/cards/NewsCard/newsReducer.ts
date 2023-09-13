@@ -6,7 +6,6 @@ export const initialState = (selection) => ({
   timestamp: 0,
   isModalVisible: false,
   selectedToken: selection.swapCard.to.token,
-  tokens: [],
 })
 
 export function newsReducer(state, action) {
@@ -35,11 +34,6 @@ export function newsReducer(state, action) {
       return {
         ...state,
         selectedToken: action.payload,
-      }
-    case 'SET_TOKENS':
-      return {
-        ...state,
-        tokens: action.payload,
       }
     default:
       throw new Error(`Unknown action type: ${action.type}`)
