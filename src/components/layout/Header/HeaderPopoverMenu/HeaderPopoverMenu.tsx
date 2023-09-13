@@ -15,7 +15,7 @@ export function HeaderPopoverMenu() {
     },
     {
       title: 'Log out',
-      iconName: <IconLogout size={18} color="var(--color-text-secondary)" />,
+      icon: <IconLogout size={18} color="var(--color-text-secondary)" />,
       onClick: async () => disconnect(),
     },
   ]
