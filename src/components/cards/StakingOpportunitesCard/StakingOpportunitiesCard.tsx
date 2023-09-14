@@ -20,8 +20,8 @@ export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakin
   const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
 
   useEffect(() => {
-    populateVaults(dispatch)
-  }, [])
+    populateVaults(dispatch, stakingState.filter)
+  }, [stakingState.filter])
 
   return (
     <div className={`card ${classNames.container}`}>

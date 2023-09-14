@@ -24,6 +24,7 @@ export const SwapSettingsModal: FC<SwapSettingsModalProps> = ({ show, setShow, s
         onChangeText={(value) => handleAmountChange(value)}
         value={slippage_percent}
         icon={<IconPercentage size={18} color="var(--color-text-secondary)" />}
+        type="number"
       />
     </Modal>
   )

@@ -9,10 +9,11 @@ export interface TextInputProps {
   variant?: 'default' | 'inline'
   isDisabled?: boolean
   title?: string
+  type?: string
 }
 
 export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ value, placeholder, onChangeText = null, icon = null, variant, isDisabled = false, title = null, ...rest }, ref) => {
+  ({ value, placeholder, onChangeText = null, icon = null, variant, isDisabled = false, title = null, type = 'text', ...rest }, ref) => {
     const inputRef = useRef()
     const [isFocused, setIsFocused] = useState<boolean>(false)
     const inputClass = variant === 'inline' && !title ? '' : classNames.inputWrapper
@@ -34,7 +35,7 @@ export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElemen
           ref={ref ?? inputRef}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          type="text"
+          type={type}
           placeholder={placeholder}
           value={value}
           onChange={handleChange}
