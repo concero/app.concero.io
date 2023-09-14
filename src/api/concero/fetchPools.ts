@@ -30,7 +30,7 @@ function getunderlyingTokensQuery(stakingState: StakingState) {
   return `underlyingTokens=${userBalances.map((token: UserBalance) => token.address).join(',')}`
 }
 
-export const fetchPools = async (stakingState: StakingState) => {
+export const fetchPools = async (stakingState: StakingState, offset: number, limit: number) => {
   const { filter } = stakingState
   const urlParts = [
     `${process.env.CONCERO_API_URL}/pools`,
@@ -38,11 +38,12 @@ export const fetchPools = async (stakingState: StakingState) => {
     getCompoundQuery(filter),
     getApyQuery(filter),
     getunderlyingTokensQuery(stakingState),
-    'offset=0',
-    'limit=15',
+    `offset=${offset}`,
+    `limit=${limit}`,
   ]
   const filteredUrl = urlParts.filter((part) => part !== '')
   const url = `${filteredUrl.splice(0, 2).join('?')}&${filteredUrl.join('&')}`
+  console.log(url)
   const response = await get(url)
   if (response.status !== 200) throw new Error(response.error)
   return response.data.data

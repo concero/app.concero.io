@@ -1,3 +1,4 @@
+import { useAccount } from 'wagmi'
 import { FC, useContext, useEffect } from 'react'
 import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
@@ -9,7 +10,6 @@ import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
-import { useAccount } from 'wagmi'
 import { populateBalances, populateChains } from './populateFunctions'
 
 export const StakingScreen: FC = () => {

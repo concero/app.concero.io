@@ -31,6 +31,13 @@ export async function getTransactions(selection, state, dispatch, getTokens) {
   }
 
   dispatch({ type: 'SET_LOADING', payload: true })
+
+  console.log('getTransactions', {
+    network,
+    limit,
+    baseCurrency,
+    quoteCurrency,
+  })
   const { res, ok, err } = await getDexTrades({
     network,
     limit,

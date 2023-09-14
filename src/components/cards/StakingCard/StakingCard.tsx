@@ -7,16 +7,15 @@ import { colors } from '../../../constants/colors'
 import { Button } from '../../buttons/Button/Button'
 import { StakeButtons } from './StakeButtons'
 import { renderTags } from './renderTags'
-import { Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
+import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 
 interface StakingCardProps {
   isSelected: boolean
   vault: Vault
-  protocols: Protocol
   onClick: (id: string) => void
 }
 
-export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, protocols, onClick }) => {
+export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, onClick }) => {
   const pairSymbol = vault.symbol
   const animProps = useSpring({
     height: isSelected ? 54 : 0,

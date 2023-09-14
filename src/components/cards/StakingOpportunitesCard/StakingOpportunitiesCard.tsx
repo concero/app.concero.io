@@ -1,9 +1,9 @@
-import { Dispatch, FC, useEffect } from 'react'
+import { Dispatch, FC, UIEvent, useEffect, useState } from 'react'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
 import { StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
-import { populateVaults } from './populateVaults'
+import { pushVaults, setVaults } from './getVaults'
 
 interface StakingOpportunitiesProps {
   stakingState: StakingState
@@ -11,20 +11,41 @@ interface StakingOpportunitiesProps {
 }
 
 export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
-  const { selectedVault, vaults, protocols } = stakingState
+  const { selectedVault, vaults } = stakingState
+  const [offset, setOffset] = useState(0)
+  const limit = 15
+
   const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
 
+  const handleEndReached = () => {
+    const newOffset = offset + limit
+    setOffset(newOffset)
+    try {
+      pushVaults(dispatch, stakingState, newOffset, limit)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
+    if (scrollHeight - scrollTop === clientHeight) {
+      handleEndReached()
+    }
+  }
+
   useEffect(() => {
-    populateVaults(dispatch, stakingState)
+    setOffset(0)
+    setVaults(dispatch, stakingState, 0, limit)
   }, [stakingState.filter])
 
   return (
     <div className={`card ${classNames.container}`}>
       <h5 className="cardHeaderTitle">Staking opportunities</h5>
       <FilteredTags dispatch={dispatch} stakingState={stakingState} />
-      <div className={classNames.stakingCardsContainer}>
+      <div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
         {vaults?.map((vault: Vault) => (
-          <StakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} protocols={protocols} />
+          <StakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />
         ))}
       </div>
     </div>

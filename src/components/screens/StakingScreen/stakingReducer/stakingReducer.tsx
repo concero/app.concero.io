@@ -19,6 +19,8 @@ const stakingReducer = (state, action) => {
       return { ...state, chains: action.payload }
     case 'SET_VAULTS':
       return { ...state, vaults: action.payload }
+    case 'PUSH_VAULTS':
+      return { ...state, vaults: [...state.vaults, ...action.payload] }
     case 'SET_BALANCES':
       return { ...state, userBalances: action.payload }
     default:
