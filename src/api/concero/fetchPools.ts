@@ -43,7 +43,6 @@ export const fetchPools = async (stakingState: StakingState, offset: number, lim
   ]
   const filteredUrl = urlParts.filter((part) => part !== '')
   const url = `${filteredUrl.splice(0, 2).join('?')}&${filteredUrl.join('&')}`
-  console.log(url)
   const response = await get(url)
   if (response.status !== 200) throw new Error(response.error)
   return response.data.data
