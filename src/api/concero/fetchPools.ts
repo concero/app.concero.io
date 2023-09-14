@@ -1,5 +1,5 @@
 import { get } from '../client'
-import { Filter } from '../../components/screens/StakingScreen/stakingReducer/types'
+import { Filter, StakingState, UserBalance } from '../../components/screens/StakingScreen/stakingReducer/types'
 
 function getChainsQuery(filter: Filter) {
   if (!filter) return ''
@@ -22,8 +22,25 @@ function getApyQuery(filter: Filter) {
   return `apy=${apy}`
 }
 
-export const fetchPools = async (filter: Filter) => {
-  const urlParts = [`${process.env.CONCERO_API_URL}/pools`, getChainsQuery(filter), getCompoundQuery(filter), getApyQuery(filter), 'offset=0', 'limit=15']
+function getunderlyingTokensQuery(stakingState: StakingState) {
+  const { filter, userBalances } = stakingState
+  if (!filter) return ''
+  const { my_holdings } = filter
+  if (!my_holdings) return ''
+  return `underlyingTokens=${userBalances.map((token: UserBalance) => token.address).join(',')}`
+}
+
+export const fetchPools = async (stakingState: StakingState) => {
+  const { filter } = stakingState
+  const urlParts = [
+    `${process.env.CONCERO_API_URL}/pools`,
+    getChainsQuery(filter),
+    getCompoundQuery(filter),
+    getApyQuery(filter),
+    getunderlyingTokensQuery(stakingState),
+    'offset=0',
+    'limit=15',
+  ]
   const filteredUrl = urlParts.filter((part) => part !== '')
   const url = `${filteredUrl.splice(0, 2).join('?')}&${filteredUrl.join('&')}`
   const response = await get(url)

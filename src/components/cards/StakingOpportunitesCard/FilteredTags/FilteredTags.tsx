@@ -21,7 +21,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
   const [isChainsModalOpened, setIsChainsModalOpened] = useState(false)
   const [isApyModalVisible, setIsApyModalVisible] = useState(false)
   const [selectedItems, setSelectedItems] = useState<any[]>([])
-  const { filter } = stakingState
+  const { filter, userBalances } = stakingState
   const { all, my_holdings, compound, chains } = filter
 
   const handleClick = (filterKey, value) => {

@@ -1,4 +1,4 @@
-import { InitialState } from './types'
+import { StakingState } from './types'
 
 const vaults = [
   {
@@ -66,7 +66,7 @@ const protocols = {
   },
 }
 
-export const initialState: InitialState = {
+export const initialState: StakingState = {
   filter: {
     search: '',
     all: true,
@@ -79,4 +79,5 @@ export const initialState: InitialState = {
   selectedVault: vaults[0],
   protocols,
   chains: [],
+  userBalances: [],
 }

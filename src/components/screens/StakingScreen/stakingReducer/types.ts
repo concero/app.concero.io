@@ -1,8 +1,23 @@
-export interface InitialState {
+import { Chain } from '../../../cards/SwapCard/types'
+
+export interface StakingState {
   filter: Filter
   vaults: Vault[] | []
   selectedVault: Vaults | null
-  protocols: Protocol
+  chains: Chain[]
+  userBalances: UserBalance[]
+}
+
+export type UserBalance = {
+  chainId: number
+  address: string
+  symbol: string
+  name: string
+  decimals: number
+  logoURI: string
+  balance: string
+  balanceUsdValue: string
+  usdPrice: stirng
 }
 
 export type Filter = {
@@ -43,30 +58,13 @@ export type Vault = {
   }
   protocolId: string
   protocolName: string
-}
-
-type Yields = {
-  chain_id: string
-  name: string
+  rewardTokens: string[]
+  sigma: number
+  stablecoin: string
   symbol: string
-  address: string
-  decimals: number
-  logo: string
-  apy: number
-}
-
-type Fees = {
-  fee_bps: number
-  fee_type: string
-  fee_description: string
-}
-
-export type Protocol = {
-  [key: string]: {
-    id: string
-    name: string
-    description: string
-    logo_url: string
-    tvl_usd: string
-  }
+  tvlUsd: number
+  underlyingTokens: string[]
+  volumeUsd1d: number
+  volumeUsd7d: number
+  widoSupported: boolean
 }

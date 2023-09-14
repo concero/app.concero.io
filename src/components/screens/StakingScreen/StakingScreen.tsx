@@ -9,19 +9,18 @@ import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
+import { useAccount } from 'wagmi'
+import { populateBalances, populateChains } from './populateFunctions'
 
 export const StakingScreen: FC = () => {
   const { getChains } = useContext(DataContext)
+  const { address } = useAccount()
   const [stakingState, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
-  const populateChains = async () => {
-    const chains = await getChains()
-    dispatch({ type: 'SET_CHAINS', payload: chains })
-  }
-
   useEffect(() => {
-    populateChains()
+    populateChains(getChains, dispatch)
+    populateBalances(address, stakingState, dispatch)
   }, [])
 
   const desktopLayout = (

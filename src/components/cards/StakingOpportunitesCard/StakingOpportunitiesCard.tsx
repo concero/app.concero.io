@@ -2,16 +2,11 @@ import { Dispatch, FC, useEffect } from 'react'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
-import { Filter, Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
+import { StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { populateVaults } from './populateVaults'
 
 interface StakingOpportunitiesProps {
-  stakingState: {
-    selectedVault: Vault
-    vaults: Vault[]
-    protocols: Protocol
-    filter: Filter
-  }
+  stakingState: StakingState
   dispatch: Dispatch<any>
 }
 
@@ -20,7 +15,7 @@ export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakin
   const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
 
   useEffect(() => {
-    populateVaults(dispatch, stakingState.filter)
+    populateVaults(dispatch, stakingState)
   }, [stakingState.filter])
 
   return (
