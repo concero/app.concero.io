@@ -9,29 +9,40 @@ export type Filter = {
   search: string
   all: boolean
   my_holdings: boolean
-  types: string[]
-  insurable: boolean
   compound: boolean
-  sort: string
   chains: string[]
+  apy: string
 }
 
 export type Vault = {
-  id: string
   _id: string
+  contractAddress: string
+  apy: number
+  apyBase: number
+  apyBase7d: number
+  apyBaseInception: number
+  apyMean30d: number
+  apyPct1D: number
+  apyPct7D: number
+  apyReward: number
+  chain: string
+  count: number
+  defiLlamaPoolId: string
+  exposure: string
+  il7d: number
+  ilRisk: string
+  logoURI: string
+  mu: number
   name: string
-  symbol: string
-  type: 'staking' | 'lp' | 'alm' | 'dex' | 'lending' | ''
-  protocol_id: string
-  total_apy: string
-  total_fees_usd: string
-  yields: Yields[]
-  fees: Fees[]
-  underlying_assets: Yields[]
-  min_deposit: string
-  min_withdrawal: string
-  max_withdrawal: string
-  max_deposit: string
+  outlier: boolean
+  poolMeta: string
+  prediction: {
+    predictedClass: string
+    predictedProbability: number
+    binnedConfidence: number
+  }
+  protocolId: string
+  protocolName: string
 }
 
 type Yields = {
