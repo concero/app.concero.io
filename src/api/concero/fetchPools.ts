@@ -24,7 +24,7 @@ function getApyQuery(filter: Filter) {
 
 function getunderlyingTokensQuery(stakingState: StakingState) {
   const { filter, userBalances } = stakingState
-  if (!filter) return ''
+  if (!filter || !userBalances.length) return ''
   const { my_holdings } = filter
   if (!my_holdings) return ''
   return `underlyingTokens=${userBalances.map((token: UserBalance) => token.address).join(',')}`

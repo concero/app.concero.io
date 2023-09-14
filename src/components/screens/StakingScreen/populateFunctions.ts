@@ -6,6 +6,7 @@ export const populateBalances = async (address: string, stakingState, dispatch: 
     address,
     stakingState.chains.map((chain) => chain.id),
   )
+  console.log('balances', balances)
   dispatch({ type: 'SET_BALANCES', payload: balances })
 }
 
