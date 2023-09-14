@@ -119,7 +119,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
         isOpen={state.showChainsModal}
         setIsOpen={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
         onSelect={(chain) => handleSelectChain(chain)}
-        getItems={({ search }) => getChains({ search })}
+        getItems={({ offset, limit, search }) => getChains({ offset, limit, search })}
         RenderItem={ListEntityButton}
       />
     </>
