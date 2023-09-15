@@ -2,6 +2,7 @@ import { FC } from 'react'
 import classNames from './StakingHighlightsCard.module.pcss'
 import { Highlight } from '../../tags/Highlight/Highlight'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { numberToFormatString } from '../../../utils/formatting'
 
 interface StakingHighlightsCardProps {
   stakingState: StakingState
@@ -11,7 +12,7 @@ export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingS
   const tvl = {
     title: 'TVL',
     value: `$${stakingState?.selectedVault?.tvlUsd}`,
-    last_24h: stakingState.selectedVault?.apyPct30D?.toString() ?? null,
+    last_24h: numberToFormatString(stakingState.selectedVault?.apyPct30D, 2) ?? null,
   }
 
   return (

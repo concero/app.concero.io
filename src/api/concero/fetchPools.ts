@@ -1,5 +1,5 @@
 import { get } from '../client'
-import { Filter, StakingState, UserBalance } from '../../components/screens/StakingScreen/stakingReducer/types'
+import { Filter, StakingState } from '../../components/screens/StakingScreen/stakingReducer/types'
 
 function getChainsQuery(filter: Filter) {
   if (!filter) return ''
@@ -22,12 +22,12 @@ function getApyQuery(filter: Filter) {
   return `apy=${apy}`
 }
 
-function getunderlyingTokensQuery(stakingState: StakingState) {
-  const { filter, userBalances } = stakingState
-  if (!filter || !userBalances.length) return ''
+function getMyHoldingsQuery(stakingState: StakingState) {
+  if (!stakingState) return ''
+  const { filter, address } = stakingState
   const { my_holdings } = filter
-  if (!my_holdings) return ''
-  return `underlyingTokens=${userBalances.map((token: UserBalance) => token.address).join(',')}`
+  if (!my_holdings || !address) return ''
+  return `byHoldingsOfAddress=${address}`
 }
 
 export const fetchPools = async (stakingState: StakingState, offset: number, limit: number) => {
@@ -37,7 +37,9 @@ export const fetchPools = async (stakingState: StakingState, offset: number, lim
     getChainsQuery(filter),
     getCompoundQuery(filter),
     getApyQuery(filter),
-    getunderlyingTokensQuery(stakingState),
+    getMyHoldingsQuery(stakingState),
+    'widoSupported=true',
+    'outlier=false',
     `offset=${offset}`,
     `limit=${limit}`,
   ]

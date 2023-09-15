@@ -12,5 +12,5 @@ export const initialState: StakingState = {
   vaults: [],
   selectedVault: null,
   chains: [],
-  userBalances: [],
+  address: null,
 }

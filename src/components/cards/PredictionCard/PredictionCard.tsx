@@ -4,6 +4,7 @@ import { IconAlertTriangle, IconArrowDown, IconArrowUp } from '@tabler/icons-rea
 import { CardHeader } from '../CardHeader/CardHeader'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { colors } from '../../../constants/colors'
+import { numberToFormatString } from '../../../utils/formatting'
 
 interface PredictionCardProps {
   stakingState: StakingState
@@ -23,7 +24,7 @@ const PredictionItemCard: FC<PredictionItemCardProps> = ({ predictedClass, value
         {predictedClass === 'Down' ? <IconArrowDown size={16} color={colors.red.light} /> : <IconArrowUp size={16} color={colors.green.main} />}
         <p className={'body1'}>{predictedClass}</p>
       </div>
-      <p className={'body1'}>{value + '%'}</p>
+      <p className={'body1'}>{numberToFormatString(value, 2) + '%'}</p>
     </div>
   )
 }

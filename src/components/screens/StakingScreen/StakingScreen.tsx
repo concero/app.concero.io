@@ -10,7 +10,7 @@ import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
-import { populateBalances, populateChains } from './populateFunctions'
+import { populateChains } from './populateFunctions'
 import { TokensCard } from '../../cards/TokensCard/TokensCard'
 import { RewardsCard } from '../../cards/RewardsCard/RewardsCard'
 import { PredictionCard } from '../../cards/PredictionCard/PredictionCard'
@@ -23,7 +23,7 @@ export const StakingScreen: FC = () => {
 
   useEffect(() => {
     populateChains(getChains, dispatch)
-    populateBalances(address, stakingState, dispatch)
+    dispatch({ type: 'SET_ADDRESS', payload: address })
   }, [])
 
   const mobileLayout = (

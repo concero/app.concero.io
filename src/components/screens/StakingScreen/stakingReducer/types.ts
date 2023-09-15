@@ -5,19 +5,7 @@ export interface StakingState {
   vaults: Vault[] | []
   selectedVault: Vault | null
   chains: Chain[]
-  userBalances: UserBalance[]
-}
-
-export type UserBalance = {
-  chainId: number
-  address: string
-  symbol: string
-  name: string
-  decimals: number
-  logoURI: string
-  balance: string
-  balanceUsdValue: string
-  usdPrice: string
+  address: string | null
 }
 
 export type Filter = {
