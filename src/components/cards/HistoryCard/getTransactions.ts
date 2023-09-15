@@ -1,10 +1,11 @@
 import { getDexTrades } from '../../../api/bitquery/getDexTrades'
 import { config } from '../../../constants/config'
 
-const limit = 100
+const limit = 15
 
 export async function getTransactions(selection, state, dispatch, getTokens) {
   function on_ok(res) {
+    console.log('getTransactions', res.data.data)
     if (state.error) dispatch({ type: 'SET_ERROR', payload: null })
     const transactions = res.data.data.ethereum.dexTrades
     dispatch({ type: 'SET_ITEMS', payload: transactions })
@@ -17,20 +18,19 @@ export async function getTransactions(selection, state, dispatch, getTokens) {
     dispatch({ type: 'SET_ERROR', payload: err })
   }
 
-  const tokens = await getTokens({ chainId: selection.from.chain.id, offset: 0, limit: 15 })
+  const tokens = await getTokens({ chainId: selection.from.chain.id, offset: 0, limit: 150, search: selection.to.token.symbol })
 
   const network = selection.from.chain.name.toLowerCase()
   let baseCurrency = selection.from.token.address
   let quoteCurrency = tokens.find((token) => token.symbol === selection.to.token.symbol).address
 
-  if (baseCurrency === config.NULL_ADDRESS) {
-    baseCurrency = tokens[1].address
-  }
-  if (quoteCurrency === config.NULL_ADDRESS) {
-    quoteCurrency = tokens[1].address
-  }
+  if (baseCurrency === config.NULL_ADDRESS) baseCurrency = tokens[1].address
+  if (quoteCurrency === config.NULL_ADDRESS) quoteCurrency = tokens[1].address
 
   dispatch({ type: 'SET_LOADING', payload: true })
+
+  console.log('getTransactions', { network, limit, baseCurrency, quoteCurrency })
+  console.log('getTransactions', { selection, state, dispatch, getTokens })
   const { res, ok, err } = await getDexTrades({
     network,
     limit,

@@ -35,15 +35,12 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
-    if (scrollHeight - scrollTop === clientHeight) {
-      handleEndReached()
-    }
+    if (scrollHeight - scrollTop === clientHeight) handleEndReached()
   }
 
   const handleSearch = async (value) => {
     setSearch(value)
     const foundItems = await getItems({ offset: 0, limit, search: value })
-    console.log('foundItems', foundItems)
     setItems(foundItems)
   }
 
