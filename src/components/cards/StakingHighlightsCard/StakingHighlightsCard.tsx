@@ -1,24 +1,23 @@
+import { FC } from 'react'
 import classNames from './StakingHighlightsCard.module.pcss'
 import { Highlight } from '../../tags/Highlight/Highlight'
+import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 
-export const StakingHighlightsCard = ({ stakingState }) => {
-  const apy = {
-    title: 'APY',
-    value: `${stakingState?.selectedVault?.apy}%`,
-    last_24h: '0.55',
-  }
+interface StakingHighlightsCardProps {
+  stakingState: StakingState
+}
 
+export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingState }) => {
   const tvl = {
     title: 'TVL',
     value: `$${stakingState?.selectedVault?.tvlUsd}`,
-    last_24h: '5.54',
+    last_24h: stakingState.selectedVault?.apyPct30D?.toString() ?? null,
   }
 
   return (
-    <div className={`card ${classNames.container}`}>
-      <h5 className={'cardHeaderTitle'}>Highlights</h5>
-      <div className={classNames.higlitsContainer}>
-        <Highlight size={'sm'} item={apy} />
+    <div className={classNames.container}>
+      <h5 className={'cardHeaderTitle'}>Vault Details</h5>
+      <div className={`card ${classNames.innerContainer}`}>
         <Highlight size={'sm'} item={tvl} />
       </div>
     </div>

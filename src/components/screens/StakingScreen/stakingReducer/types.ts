@@ -3,7 +3,7 @@ import { Chain } from '../../../cards/SwapCard/types'
 export interface StakingState {
   filter: Filter
   vaults: Vault[] | []
-  selectedVault: Vaults | null
+  selectedVault: Vault | null
   chains: Chain[]
   userBalances: UserBalance[]
 }
@@ -17,7 +17,7 @@ export type UserBalance = {
   logoURI: string
   balance: string
   balanceUsdValue: string
-  usdPrice: stirng
+  usdPrice: string
 }
 
 export type Filter = {
@@ -39,6 +39,7 @@ export type Vault = {
   apyMean30d: number
   apyPct1D: number
   apyPct7D: number
+  apyPct30D: number
   apyReward: number
   chain: string
   count: number

@@ -22,7 +22,7 @@ const items = [
 
 export const DetailsCard = () => {
   return (
-    <div className={`card ${classNames.container}`}>
+    <div className={classNames.container}>
       <h5 className={'headerContainer'}>Details</h5>
       <DetailsList items={items} />
     </div>
