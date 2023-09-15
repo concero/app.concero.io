@@ -7,7 +7,7 @@ import { IconMoneybag } from '@tabler/icons-react'
 import { colors } from '../../../constants/colors'
 
 interface RewardsCardProps {
-  stakingCard: StakingState
+  stakingState: StakingState
 }
 
 interface RewardsItemCardProps {
@@ -32,7 +32,7 @@ const RewardsItemCard: FC<RewardsItemCardProps> = ({ item }) => {
   )
 }
 
-export const RewardsCard: FC<RewardsCardProps> = ({ stakingCard }) => {
+export const RewardsCard: FC<RewardsCardProps> = ({ stakingState }) => {
   const item = {
     name: 'Ethereum',
     logoURI: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png',

@@ -52,7 +52,7 @@ export type Vault = {
   name: string
   outlier: boolean
   poolMeta: string
-  prediction: {
+  predictions: {
     predictedClass: string
     predictedProbability: number
     binnedConfidence: number

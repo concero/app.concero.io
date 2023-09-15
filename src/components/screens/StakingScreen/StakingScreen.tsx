@@ -13,6 +13,7 @@ import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { populateBalances, populateChains } from './populateFunctions'
 import { TokensCard } from '../../cards/TokensCard/TokensCard'
 import { RewardsCard } from '../../cards/RewardsCard/RewardsCard'
+import { PredictionCard } from '../../cards/PredictionCard/PredictionCard'
 
 export const StakingScreen: FC = () => {
   const { getChains } = useContext(DataContext)
@@ -51,8 +52,8 @@ export const StakingScreen: FC = () => {
           <div className={`card ${classNames.secondaryCardStack}`}>
             <StakingHighlightsCard stakingState={stakingState} />
             <TokensCard stakingState={stakingState} />
-            <RewardsCard stakingCard={stakingState} />
-            {/* <PredictionCard /> */}
+            <RewardsCard stakingState={stakingState} />
+            <PredictionCard stakingState={stakingState} />
           </div>
         </div>
       ) : null}
