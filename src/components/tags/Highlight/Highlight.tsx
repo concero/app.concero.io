@@ -17,6 +17,7 @@ interface HighlightProps {
 const getHighlightClasses = (size: HighlightProps['size']) => {
   const baseClasses = [classNames.container]
   const sizeClass = size ? classNames[size] : ''
+
   return baseClasses.concat(sizeClass).join(' ')
 }
 

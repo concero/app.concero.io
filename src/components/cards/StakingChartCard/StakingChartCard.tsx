@@ -14,39 +14,23 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
   const [{ data, chartType, response }, dispatch] = useChartReducer()
 
   const setData = (data) => {
-    dispatch({
-      type: 'SET_DATA',
-      payload: data,
-    })
+    dispatch({ type: 'SET_DATA', payload: data })
   }
 
   const setChartType = (type) => {
-    dispatch({
-      type: 'SET_CHART_TYPE',
-      payload: type,
-    })
+    dispatch({ type: 'SET_CHART_TYPE', payload: type })
   }
 
   const setResponse = (r) => {
-    dispatch({
-      type: 'SET_RESPONSE',
-      payload: r,
-    })
+    dispatch({ type: 'SET_RESPONSE', payload: r })
   }
 
   useEffect(() => {
-    fetchData({
-      selectedVault,
-      setResponse,
-    })
+    fetchData({ selectedVault, setResponse })
   }, [selectedVault])
 
   useEffect(() => {
-    switchChartType({
-      chartType,
-      response,
-      setData,
-    })
+    switchChartType({ chartType, response, setData })
   }, [response, chartType])
 
   return (
