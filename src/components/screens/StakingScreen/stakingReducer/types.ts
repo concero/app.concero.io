@@ -1,59 +1,59 @@
-export interface InitialState {
+import { Chain } from '../../../cards/SwapCard/types'
+
+export interface StakingState {
   filter: Filter
   vaults: Vault[] | []
-  selectedVault: Vaults | null
-  protocols: Protocol
+  selectedVault: Vault | null
+  chains: Chain[]
+  address: string | null
 }
 
 export type Filter = {
   search: string
   all: boolean
   my_holdings: boolean
-  types: string[]
-  insurable: boolean
   compound: boolean
-  sort: string
   chains: string[]
+  apy: string
 }
 
 export type Vault = {
-  id: string
-  name: string
-  type: 'staking' | 'lp' | 'alm' | 'dex' | 'lending' | ''
-  protocol_id: string
-  total_apy: string
-  total_fees_usd: string
-  yields: Yields[]
-  fees: Fees[]
-  underlying_assets: Yields[]
-  min_deposit: string
-  min_withdrawal: string
-  max_withdrawal: string
-  max_deposit: string
-}
-
-type Yields = {
-  chain_id: string
-  name: string
-  symbol: string
-  address: string
-  decimals: number
-  logo: string
+  _id: string
+  contractAddress: string
   apy: number
-}
-
-type Fees = {
-  fee_bps: number
-  fee_type: string
-  fee_description: string
-}
-
-export type Protocol = {
-  [key: string]: {
-    id: string
-    name: string
-    description: string
-    logo_url: string
-    tvl_usd: string
+  apyBase: number
+  apyBase7d: number
+  apyBaseInception: number
+  apyMean30d: number
+  apyPct1D: number
+  apyPct7D: number
+  apyPct30D: number
+  apyReward: number
+  chain: string
+  count: number
+  defiLlamaPoolId: string
+  exposure: string
+  il7d: number
+  ilRisk: string
+  logoURI: string
+  mu: number
+  name: string
+  outlier: boolean
+  poolMeta: string
+  predictions: {
+    predictedClass: string
+    predictedProbability: number
+    binnedConfidence: number
   }
+  protocolId: string
+  protocolName: string
+  rewardTokens: string[]
+  sigma: number
+  stablecoin: string
+  symbol: string
+  tvlUsd: number
+  underlyingTokens: string[]
+  volumeUsd1d: number
+  volumeUsd7d: number
+  widoSupported: boolean
 }

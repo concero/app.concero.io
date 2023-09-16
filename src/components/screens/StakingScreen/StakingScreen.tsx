@@ -1,53 +1,36 @@
-import { FC, useContext } from 'react'
-import classNames from './StakingScreen.module.pcss'
-import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
-import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
-import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
-import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
-import { RatioCard } from '../../cards/RatioCard/RatioCard'
-import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
+import { FC, useContext, useEffect } from 'react'
+import { approve } from 'wido'
+import { useAccount } from 'wagmi'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
+import { DesktopLayout } from './DesktopLayout'
+import { MobileLayout } from './MobileLayout'
 
 export const StakingScreen: FC = () => {
-  const { getChains } = useContext(DataContext)
+  const { getChains, getTokens } = useContext(DataContext)
+  const { address } = useAccount()
   const [stakingState, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
-  const desktopLayout = (
-    <div className={classNames.container}>
-      <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
-      {stakingState.selectedVault ? (
-        <div className={classNames.stacksContainer}>
-          <div className={classNames.mainCardStack}>
-            <StakingHeaderCard stakingState={stakingState} />
-            <StakingChartCard stakingState={stakingState} />
-          </div>
-          <div className={classNames.secondaryCardStack}>
-            <StakingHighlightsCard />
-            <RatioCard />
-            <DetailsCard />
-          </div>
-        </div>
-      ) : null}
+  useEffect(() => {
+    // populateChains(getChains, dispatch)
+    if (address) dispatch({ type: 'SET_ADDRESS', payload: address })
+    // getApproveData()
+  }, [])
+
+  async function getApproveData() {
+    const { data, to } = await approve({
+      chainId: 1,
+      fromToken: '0x6b175474e89094c44da98b954eedeac495271d0f',
+      toToken: '0x6b175474e89094c44da98b954eedeac495271d0f',
+      amount: '1000000000000000000',
+    })
+  }
+
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      {isDesktop ? <DesktopLayout stakingState={stakingState} dispatch={dispatch} /> : <MobileLayout stakingState={stakingState} dispatch={dispatch} />}
     </div>
   )
-
-  const mobileLayout = (
-    <div className={classNames.container}>
-      <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
-      {stakingState.selectedVault ? (
-        <div className={classNames.mainCardStack}>
-          <StakingHeaderCard stakingState={stakingState} />
-          <StakingChartCard stakingState={stakingState} />
-          <StakingHighlightsCard />
-          <RatioCard />
-          <DetailsCard />
-        </div>
-      ) : null}
-    </div>
-  )
-
-  return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
 }

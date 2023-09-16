@@ -1,0 +1,47 @@
+.container {
+  width: 100%;
+}
+
+.innerContainer {
+  width: 100%;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.itemContainer {
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.down {
+  background-color: var(--color-red-darkest);
+  border: 1px solid var(--color-red-darker);
+
+  p {
+    color: var(--color-red-light);
+  }
+}
+
+.up {
+  background-color: var(--color-green-darkest);
+  border: 1px solid var(--color-green-darker);
+
+  p {
+    color: var(--color-green-main);
+  }
+}
+
+.sideContainer {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.riskContainer {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-sm);
+}

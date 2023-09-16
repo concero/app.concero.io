@@ -1,33 +1,51 @@
-import { Dispatch, FC } from 'react'
+import { Dispatch, FC, UIEvent, useEffect, useState } from 'react'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
-import { Filter, Protocol, Vault } from '../../screens/StakingScreen/stakingReducer/types'
+import { StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
+import { pushVaults, setVaults } from './getVaults'
 
 interface StakingOpportunitiesProps {
-  stakingState: {
-    selectedVault: Vault
-    vaults: Vault[]
-    protocols: Protocol
-    filter: Filter
-  }
+  stakingState: StakingState
   dispatch: Dispatch<any>
 }
 
 export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
-  const { selectedVault, vaults, protocols, filter } = stakingState
-  const handleSelect = (vault) => {
-    if (selectedVault?.id === vault.id) dispatch({ type: 'SET_SELECTED_VAULT', payload: null })
-    else dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+  const { selectedVault, vaults } = stakingState
+  const [offset, setOffset] = useState(0)
+  const limit = 15
+
+  const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+
+  const handleEndReached = () => {
+    const newOffset = offset + limit
+    setOffset(newOffset)
+    try {
+      pushVaults(dispatch, stakingState, newOffset, limit)
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
+    if (scrollHeight - scrollTop === clientHeight) {
+      handleEndReached()
+    }
+  }
+
+  useEffect(() => {
+    setOffset(0)
+    setVaults(dispatch, stakingState, 0, limit)
+  }, [stakingState.filter])
 
   return (
     <div className={`card ${classNames.container}`}>
       <h5 className="cardHeaderTitle">Staking opportunities</h5>
-      <FilteredTags dispatch={dispatch} filter={filter} />
-      <div className={classNames.stakingCardsContainer}>
-        {vaults.map((vault) => (
-          <StakingCard key={vault.id} isSelected={selectedVault?.id === vault.id} vault={vault} onClick={handleSelect} protocols={protocols} />
+      <FilteredTags dispatch={dispatch} stakingState={stakingState} />
+      <div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
+        {vaults?.map((vault: Vault) => (
+          <StakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />
         ))}
       </div>
     </div>

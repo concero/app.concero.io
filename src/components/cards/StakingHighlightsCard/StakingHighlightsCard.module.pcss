@@ -1,8 +1,10 @@
-.container {
-
+.innerContainer {
+  margin-top: var(--sp-sm);
+  background-color: var(--color-grey-darkest);
 }
 
-.higlitsContainer {
-    padding-top: var(--sp-md);
-    gap: var(--sp-md);
+@media (max-width: 1200px) {
+  .container {
+    flex: 1;
+  }
 }

@@ -1,35 +1,25 @@
+import { FC } from 'react'
 import classNames from './StakingHighlightsCard.module.pcss'
 import { Highlight } from '../../tags/Highlight/Highlight'
+import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { numberToFormatString } from '../../../utils/formatting'
 
-const items = [
-  {
-    id: '1',
-    title: 'TVL',
-    value: '$432.3M',
-    last_24h: '2.55',
-  },
-  {
-    id: '2',
-    title: 'APY',
-    value: '124%',
-    last_24h: '0.55',
-  },
-  {
-    id: '3',
-    title: 'TVL',
-    value: '$432.3M',
-    last_24h: '5.54',
-  },
-]
+interface StakingHighlightsCardProps {
+  stakingState: StakingState
+}
 
-export const StakingHighlightsCard = () => {
+export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingState }) => {
+  const tvl = {
+    title: 'TVL',
+    value: `$${stakingState?.selectedVault?.tvlUsd}`,
+    last_24h: numberToFormatString(stakingState.selectedVault?.apyPct30D, 2) ?? null,
+  }
+
   return (
-    <div className={`card ${classNames.container}`}>
-      <h5 className={'cardHeaderTitle'}>Highlights</h5>
-      <div className={classNames.higlitsContainer}>
-        {items.map((item) => {
-          return <Highlight key={item.id} size={'sm'} item={item} />
-        })}
+    <div className={classNames.container}>
+      <h5 className={'cardHeaderTitle'}>Vault Details</h5>
+      <div className={`card ${classNames.innerContainer}`}>
+        <Highlight size={'sm'} item={tvl} />
       </div>
     </div>
   )

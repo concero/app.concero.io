@@ -20,7 +20,7 @@ const data = {
 
 export const RatioCard = () => {
   return (
-    <div className={`card`}>
+    <div className={classNames.container}>
       <h5 className={'cardHeaderTitle'}>Ratio</h5>
       <div className={classNames.chartContainer}>
         <RatioChart data={data} />

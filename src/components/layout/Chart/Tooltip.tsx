@@ -11,7 +11,7 @@ function getShiftedCoordinate(coordinate, maxCoordinate) {
 }
 
 function getCoordinateY(coordinate, maxCoordinate, tooltipHeight) {
-  const tooltipOffset = 40
+  const tooltipOffset = 60
   if (coordinate + tooltipOffset + tooltipHeight > maxCoordinate) {
     return coordinate - tooltipOffset - tooltipHeight
   }
@@ -29,25 +29,42 @@ export function createTooltip() {
   return toolTip
 }
 
-export function updateTooltip(param, newSeries, toolTip, chartElement, symbol) {
+export function updateTooltip(param, mainSeries, secondarySeries, toolTip, chartElement) {
   if (!param.point || !param.time || isOutsideBounds(param.point, chartElement)) {
     toolTip.style.opacity = 0
     return
   }
 
-  const data = param.seriesData.get(newSeries)
-  const price = data?.value ?? data?.close
-  if (price === undefined || price === null) return
+  const mainData = param.seriesData.get(mainSeries)
+  const mainPrice = mainData?.value ?? mainData?.close
+  if (mainPrice === undefined || mainPrice === null) return
 
-  const value = `${symbol === '$' ? symbol : ''}${numberToFormatString(price, 4)}${symbol !== '$' ? symbol : ''}`
+  let content = `
+    <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
+      <span style="font-weight: 500; color: var(--color-grey-light);">$${numberToFormatString(mainPrice, 4)}</span>
+      <span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
+    </div>
+  `
+
+  if (secondarySeries) {
+    const secondaryData = param.seriesData.get(secondarySeries)
+    const secondaryPrice = secondaryData?.value ?? secondaryData?.close
+    if (secondaryPrice !== undefined && secondaryPrice !== null) {
+      content += `
+        <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
+          <span style="font-weight: 500; color: var(--color-grey-light);">${numberToFormatString(secondaryPrice, 4)}%</span>
+          </span>
+      <span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
+    </div>
+        </div>
+      `
+    }
+  }
+
   toolTip.style.opacity = 1
-  toolTip.innerHTML = `
-<div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
-<span style="font-weight: 500; color: var(--color-grey-light);">${value}</span>
-<span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
-</div>`
+  toolTip.innerHTML = content
 
-  const coordinate = newSeries.priceToCoordinate(price)
+  const coordinate = mainSeries.priceToCoordinate(mainPrice)
   if (coordinate === null) return
 
   const tooltipHeight = toolTip.clientHeight
