@@ -1,20 +1,17 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { approve } from 'wido'
 import { useAccount } from 'wagmi'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
-import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { DesktopLayout } from './DesktopLayout'
 import { MobileLayout } from './MobileLayout'
 
 export const StakingScreen: FC = () => {
-  const { getChains, getTokens } = useContext(DataContext)
   const { address } = useAccount()
   const [stakingState, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
   useEffect(() => {
-    // populateChains(getChains, dispatch)
     if (address) dispatch({ type: 'SET_ADDRESS', payload: address })
     // getApproveData()
   }, [])

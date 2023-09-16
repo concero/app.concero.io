@@ -15,6 +15,11 @@ export const reducer = (state, action) => {
         ...state,
         response: action.payload,
       }
+    case 'SET_IS_TYPE_MODAL_VISIBLE':
+      return {
+        ...state,
+        isTypeModalVisible: action.payload,
+      }
     default:
       throw new Error('Invalid action type')
   }

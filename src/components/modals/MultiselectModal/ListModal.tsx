@@ -1,11 +1,11 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
 import { Modal } from '../Modal/Modal'
 import classNames from './MultiselectModal.module.pcss'
 import { MultiSelectModalProps } from './types'
 import { TextInput } from '../../input/TextInput'
 
-export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOpen, title, RenderItem, selectedItems = [], onSelect }) => {
+export function ListModal({ getItems, isOpen, setIsOpen, title, RenderItem, selectedItems = [], onSelect }: MultiSelectModalProps) {
   const limit = 15
   const [offset, setOffset] = useState<number>(0)
   const [items, setItems] = useState<any[]>([])

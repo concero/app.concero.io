@@ -1,4 +1,4 @@
-import { Dispatch, FC, UIEvent, useEffect, useState } from 'react'
+import { Dispatch, UIEvent, useEffect, useState } from 'react'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
@@ -10,7 +10,7 @@ interface StakingOpportunitiesProps {
   dispatch: Dispatch<any>
 }
 
-export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
+export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOpportunitiesProps) {
   const { selectedVault, vaults } = stakingState
   const [offset, setOffset] = useState(0)
   const limit = 15

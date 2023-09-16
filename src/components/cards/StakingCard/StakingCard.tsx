@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classNames from './StakingCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { renderTags } from './renderTags'
@@ -11,7 +10,7 @@ interface StakingCardProps {
   onClick: (id: string) => void
 }
 
-export const StakingCard: FC<StakingCardProps> = ({ isSelected, vault, onClick }) => {
+export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
   return (
     <div className={`${classNames.container} ${isSelected ? classNames.selected : ''}`} onClick={() => onClick(vault)}>
       <div className={classNames.headerContainer}>
