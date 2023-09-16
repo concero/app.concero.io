@@ -6,11 +6,9 @@ import { config } from '../../constants/config'
 export const fetchRangoRoutes = async ({ from, to, settings }) => {
   // todo: how to control rango slippage?
 
-  console.log('from chain ', from.chain)
   const fromRangoChainSymbol = from.chain.providers?.find((item) => item.name === 'rango')?.symbol
   const toRangoChainSymbol = to.chain.providers?.find((item) => item.name === 'rango')?.symbol
-  console.log('fromRangoChainSymbol', fromRangoChainSymbol)
-  console.log('toRangoChainSymbol', toRangoChainSymbol)
+
   if (fromRangoChainSymbol === undefined || toRangoChainSymbol === undefined) return []
 
   const routesRequest = {
@@ -30,8 +28,6 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
     // slippage_percent: '0.1',
     // slippage_limit: '0.1',
   }
-
-  console.log('rango routesRequest', routesRequest)
 
   const quote = await rangoClient.quote(routesRequest)
   if (quote.route === null) return []

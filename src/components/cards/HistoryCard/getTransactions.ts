@@ -5,7 +5,6 @@ const limit = 15
 
 export async function getTransactions(selection, state, dispatch, getTokens) {
   function on_ok(res) {
-    console.log('getTransactions', res.data.data)
     if (state.error) dispatch({ type: 'SET_ERROR', payload: null })
     const transactions = res.data.data.ethereum.dexTrades
     dispatch({ type: 'SET_ITEMS', payload: transactions })
@@ -29,8 +28,6 @@ export async function getTransactions(selection, state, dispatch, getTokens) {
 
   dispatch({ type: 'SET_LOADING', payload: true })
 
-  console.log('getTransactions', { network, limit, baseCurrency, quoteCurrency })
-  console.log('getTransactions', { selection, state, dispatch, getTokens })
   const { res, ok, err } = await getDexTrades({
     network,
     limit,

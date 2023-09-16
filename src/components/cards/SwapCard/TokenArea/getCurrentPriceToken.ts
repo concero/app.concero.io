@@ -1,6 +1,13 @@
 import { fetchCurrentTokenPriceUSD } from '../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
 
 export const getCurrentPriceToken = async (selection, tokenAreaDispatch) => {
-  const response = await fetchCurrentTokenPriceUSD(selection.token.coinGeckoId)
-  tokenAreaDispatch({ type: 'SET_CURRENT_TOKEN_PRICE_USD', payload: response })
+  console.log('SELECTION: ', selection)
+
+  try {
+    const response = await fetchCurrentTokenPriceUSD(selection.token.coinGeckoId)
+    tokenAreaDispatch({ type: 'SET_CURRENT_TOKEN_PRICE_USD', payload: response })
+  } catch (error) {
+    console.log('ERROR: ', error)
+    tokenAreaDispatch({ type: 'SET_CURRENT_TOKEN_PRICE_USD', payload: null })
+  }
 }

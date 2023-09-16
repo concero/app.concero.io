@@ -77,23 +77,19 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
 
   const getTokens = async ({ chainId, offset, limit, search }) => {
     if (search) {
-      console.log('searching tokens')
       const response = await fetchTokens({ chainId, offset, limit, search })
       return response
     }
 
     if (tokens[chainId]) {
       if (tokens[chainId].length >= offset + limit) {
-        console.log(`returning tokens from state ${offset}`)
         return tokens[chainId].slice(offset, offset + limit)
       }
       if (tokens[chainId].length < limit) {
-        console.log(`returning tokens from state ${offset}`)
         return tokens[chainId]
       }
     }
 
-    console.log('fetching tokens with offset', offset)
     const response = await fetchTokens({ chainId, offset, limit, search })
     setTokens((prevTokens) => {
       const existingTokens = prevTokens[chainId] || []
@@ -103,17 +99,14 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
   }
 
   const getChains = async ({ chainId, offset, limit, search }) => {
-    console.log('getChains', chainId, offset, limit, search)
     if (search) {
       const response = await fetchChains({ search })
       return response
     }
     if (chains.length >= offset + limit) {
-      console.log(`returning chains from state ${offset}`)
       return chains.slice(offset, offset + limit)
     }
 
-    console.log('fetching chains with offset', offset)
     const response = await fetchChains({ chainId, offset, limit })
     setChains((prevChains) => [...prevChains, ...response])
     return response
@@ -126,7 +119,7 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
       fetchChains({ offset: 0, limit: 15 }),
     ])
     setTokens({ 1: ethTokens, 137: polygonTokens })
-    // console.log('tokens', ethTokens)
+
     setChains(fetchedChains)
   }
 
