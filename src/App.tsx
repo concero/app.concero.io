@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './styles/App.css'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
@@ -11,13 +10,10 @@ import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
 import { DataProvider } from './hooks/DataContext/DataContext'
-import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
 
 // import { ModalProvider } from './hooks/ModalContext'
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
-
   if (!process.env.DEVELOPMENT) {
     posthog.init(process.env.REACT_APP_PUBLIC_POSTHOG_KEY, {
       api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
@@ -27,12 +23,12 @@ function App() {
   return (
     <PostHogProvider>
       <DataProvider>
-        <SelectionProvider setIsLoading={setIsLoading}>
+        <SelectionProvider>
           <ThemeProvider>
             <NotificationsProvider>
               <Notifications />
               <WagmiConfig config={wagmiConfig}>
-                {isLoading ? <FullScreenLoader /> : <Navigator />}
+                <Navigator />
                 <WalletConnectModal />
               </WagmiConfig>
             </NotificationsProvider>

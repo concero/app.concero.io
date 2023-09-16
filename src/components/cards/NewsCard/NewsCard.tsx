@@ -5,20 +5,20 @@ import classNames from './NewsCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getMoreNews, getNews } from './getNews'
-import { EntityListModal } from '../../modals/EntityListModal/EntityListModal'
-import { columns, modalColumns } from './columns'
+import { columns } from './columns'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { useNewsReducer } from './newsReducer'
 import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
-import { populateTokens } from './populateTokens'
+import { ListModal } from '../../modals/MultiselectModal/ListModal'
+import { ListEntityButton } from '../StakingOpportunitesCard/FilteredTags/ListEntityButton'
 
 interface NewsCardProps {}
 
 export const NewsCard: FC<NewsCardProps> = () => {
   const { selection } = useContext(SelectionContext)
-  const { getTokens } = useContext(DataContext)
+  const { getTokens, tokens: dataTokens } = useContext(DataContext)
   const { addNotification } = useContext(NotificationsContext)
   const [{ data, isLoading, timestamp, isModalVisible, selectedToken, tokens }, dispatch] = useNewsReducer(selection)
 
@@ -32,21 +32,20 @@ export const NewsCard: FC<NewsCardProps> = () => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: selection.swapCard.to.token })
   }, [selection.swapCard.to.token.symbol])
 
-  useEffect(() => {
-    populateTokens({ getTokens, dispatch, selection })
-  }, [])
-
   const handleSelectToken = (token) => {
     dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
     dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false })
     dispatch({ type: 'SET_TIMESTAMP', payload: 0 })
   }
 
+  const handleShowModal = async () => {
+    dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })
+  }
   return (
     <div>
       <Card className={classNames.container}>
         <CardHeader title="News">
-          <Button variant="black" size="sm" onClick={() => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })}>
+          <Button variant="black" size="sm" onClick={handleShowModal}>
             <CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
           </Button>
         </CardHeader>
@@ -58,14 +57,13 @@ export const NewsCard: FC<NewsCardProps> = () => {
           onEndReached={() => getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)}
         />
       </Card>
-      <EntityListModal
+      <ListModal
         title="Select token"
-        show={isModalVisible}
-        setShow={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
-        data={tokens}
-        entitiesVisible={15}
-        columns={modalColumns}
+        isOpen={isModalVisible}
+        setIsOpen={(value) => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
         onSelect={(token) => handleSelectToken(token)}
+        getItems={({ offset, limit, search }) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
+        RenderItem={ListEntityButton}
       />
     </div>
   )

@@ -3,8 +3,8 @@ import classNames from './FilteredTags.module.pcss'
 import { colors } from '../../../../constants/colors'
 import { Button } from '../../../buttons/Button/Button'
 import { Filter } from '../../../screens/StakingScreen/stakingReducer/types'
-import { MultiselectModal } from '../../../modals/MultiselectModal/MultiselectModal'
-import { ChainSelectionRow } from './ChainSelectionRow'
+import { ListModal } from '../../../modals/MultiselectModal/ListModal'
+import { ListEntityButton } from './ListEntityButton'
 import { IconChevronDown } from '@tabler/icons-react'
 
 interface FilteredTagsProps {
@@ -88,12 +88,12 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
       >
         Sort: Recommended
       </Button>
-      <MultiselectModal
+      <ListModal
         isOpen={isChainsModalOpened}
         setIsOpen={setIsChainsModalOpened}
         items={Chains}
         title="Select chain"
-        RowComponent={ChainSelectionRow}
+        RowComponent={ListEntityButton}
         selectedItems={chains}
         onSelect={handleSelectChains}
         type="multiselect"

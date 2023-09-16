@@ -28,7 +28,7 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
     populateRoutes({ routes, from, swapDispatch })
     return rangoRoutes // Return the rangoRoutes for Promise.all
   } catch (error) {
-    console.log(error)
+    console.log('rangoRoutes', error)
     // throw error // Re-throw the error to be caught by Promise.all
   }
 }

@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useContext } from 'react'
 import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
@@ -14,18 +14,6 @@ export const StakingScreen: FC = () => {
   const { getChains } = useContext(DataContext)
   const [stakingState, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
-
-  const populateChains = async () => {
-    const chains = await getChains()
-    dispatch({
-      type: 'SET_CHAINS',
-      payload: chains,
-    })
-  }
-
-  useEffect(() => {
-    populateChains()
-  }, [])
 
   const desktopLayout = (
     <div className={classNames.container}>
