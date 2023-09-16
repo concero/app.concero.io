@@ -15,4 +15,5 @@ export interface MultiSelectModalProps {
   type: 'multiselect' | 'singleselect'
   getItems: (key: any) => void
   RenderItem: FC<RowsComponentProps>
+  isSearchable?: boolean
 }

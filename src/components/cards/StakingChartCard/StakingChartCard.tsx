@@ -40,9 +40,9 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
   const getItems = () => buttonsData
 
   function handleSelectType(item) {
-    setSelectedItems([item])
-    setChartType(item.type)
     setIsTypeModalVisible(false)
+    setChartType(item.type)
+    setSelectedItems([item])
   }
 
   useEffect(() => {
@@ -73,6 +73,8 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
         RenderItem={RowComponent}
         selectedItems={selectedItems}
         onSelect={handleSelectType}
+        isSearchable={false}
+        title={'Select chart type'}
       />
     </div>
   )
