@@ -8,15 +8,18 @@ export interface ModalProps {
   show: boolean
   setShow: (show: boolean) => void
   children?: ReactNode
+  onClose?: () => void
 }
 
-export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.keyCode === 27) setShow(false)
-  }
-
+export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children }) => {
   const stopPropagation = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation()
+  }
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setShow(false)
+    }
   }
 
   useEffect(() => {
@@ -27,9 +30,10 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
       document.body.style.removeProperty('overflow-y')
     }
 
-    return () => document.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
   }, [show])
-
   // Fade animation for the overlay
   const fadeAnimation = useSpring({
     opacity: show ? 1 : 0,
@@ -44,17 +48,15 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
   })
 
   return (
-    <>
-      {fadeAnimation.opacity.to((o) => o > 0) && (
-        <animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
-          {transitions((style, item) => (item ? (
-            <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
-              <ModalHeader title={title} onClick={() => setShow(false)} />
-              {children}
-            </animated.div>
-            ) : null))}
-        </animated.div>
-      )}
-    </>
+    fadeAnimation.opacity.to((o) => o > 0) && (
+      <animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
+        {transitions((style, item) => (item ? (
+          <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
+            <ModalHeader title={title} onClick={() => setShow(false)} />
+            {children}
+          </animated.div>
+          ) : null))}
+      </animated.div>
+    )
   )
 }

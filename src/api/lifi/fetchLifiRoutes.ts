@@ -39,7 +39,6 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
     options: routeOptions,
   }
 
-  console.log(routesRequest)
   const response = await lifi.getRoutes(routesRequest)
 
   if (response.routes.length > 0) {

@@ -6,8 +6,9 @@ import { config } from '../../constants/config'
 export const fetchRangoRoutes = async ({ from, to, settings }) => {
   // todo: how to control rango slippage?
 
-  const fromRangoChainSymbol = from.chain.provider_symbols?.find((item) => item.provider === 'rango')?.symbol
-  const toRangoChainSymbol = to.chain.provider_symbols?.find((item) => item.provider === 'rango')?.symbol
+  const fromRangoChainSymbol = from.chain.providers?.find((item) => item.name === 'rango')?.symbol
+  const toRangoChainSymbol = to.chain.providers?.find((item) => item.name === 'rango')?.symbol
+
   if (fromRangoChainSymbol === undefined || toRangoChainSymbol === undefined) return []
 
   const routesRequest = {

@@ -17,6 +17,7 @@ import { colors } from '../../../constants/colors'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { selection, dispatch } = useContext(SelectionContext)
+
   const [swapState, swapDispatch] = useSwapReducer(selection)
   const { address } = useAccount()
 

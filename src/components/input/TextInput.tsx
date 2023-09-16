@@ -1,4 +1,4 @@
-import React, { FC, ForwardedRef, forwardRef, ReactNode, useRef, useState } from 'react'
+import React, { FC, ForwardedRef, forwardRef, ReactNode, useEffect, useRef, useState } from 'react'
 import classNames from './TextInput.module.pcss'
 
 export interface TextInputProps {
@@ -27,6 +27,19 @@ export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElemen
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       onChangeText && onChangeText(event.target.value)
     }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (inputRef.current && !isFocused) {
+        inputRef.current.focus()
+      }
+    }
+    useEffect(() => {
+      document.addEventListener('keydown', handleKeyDown)
+
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown)
+      }
+    }, [isFocused])
 
     return (
       <div className={`${inputClass} ${isFocused ? classNames.focused : ''}`} onClick={handleAreaClick}>

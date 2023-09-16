@@ -1,7 +1,8 @@
 import { State } from '../types'
 
-export const swapInitialState: State = (selection) => {
-  return {
+export const swapInitialState: State = (selection) =>
+  // console.log('swapInitialState', selection)
+   ({
     from: {
       chain: selection.swapCard.from.chain,
       token: selection.swapCard.from.token,
@@ -30,5 +31,4 @@ export const swapInitialState: State = (selection) => {
       showDestinationAddress: false,
     },
     chains: [],
-  }
-}
+  })

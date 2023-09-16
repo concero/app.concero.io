@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useContext } from 'react'
 import { createWalletClient, custom } from 'viem'
 import { providers } from 'ethers'
 import { useAccount, useSwitchNetwork } from 'wagmi'
@@ -18,7 +18,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
   const isInsuranceCardVisible = swapState.selectedRoute?.insurance
   const { getChains, getTokens } = useContext(DataContext)
 
-  const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
+  // const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
 
   const switchChainFunction = async (requiredChainId) => {
     if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
@@ -31,20 +31,8 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
   const switchChainHook = async (requiredChainId): Promise<providers.JsonRpcSigner> => {
     if (!window.ethereum.chainId || !requiredChainId || parseInt(window.ethereum.chainId) === parseInt(requiredChainId)) return
-    return await switchChainFunction(requiredChainId)
+    return switchChainFunction(requiredChainId)
   }
-
-  // const destinationAddressRequired = swapState.to.chain.destinationAddressRequired
-
-  const populateChains = async () => {
-    const chains = await getChains()
-    const tokens = await getTokens(chains[0].id)
-    swapDispatch({ type: 'SET_CHAINS', payload: chains, tokens })
-  }
-
-  useEffect(() => {
-    populateChains()
-  }, [])
 
   return (
     <div className={classNames.container}>

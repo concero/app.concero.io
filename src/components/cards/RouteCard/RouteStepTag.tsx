@@ -20,17 +20,15 @@ export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesCollapsed, s
     }
   }
 
-  const amountFrom = (parseFloat(step.from.token.amount) / 10 ** 18).toFixed(2)
-
   return (
     <div className={`${fullWidthStyle} ${classNames.routeStepContainer}`}>
       <div className={`${classNames.routeStep} ${classNames.tagStyle} ${fullWidthStyle} ${getColor('tag')}`}>
         <div className={classNames.stepInfoContainer}>
           <Avatar src={step.tool.logo_uri} size="md" />
           <IconTransform size={20} />
-          <RouteEndPoint side={step.from} amount={amountFrom} />
+          <RouteEndPoint side={step.from} />
           <IconArrowRight size={20} />
-          <RouteEndPoint side={step.to} amount={step.to.token.amount} />
+          <RouteEndPoint side={step.to} />
         </div>
         {renderAdditionalInfo(isRoutesCollapsed, step, isSelected, getColor)}
       </div>

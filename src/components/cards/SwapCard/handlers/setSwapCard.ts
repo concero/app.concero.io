@@ -14,6 +14,7 @@ export const setSwapCard = (dispatch, from, to) => {
           symbol: from.token.symbol,
           address: from.token.address,
           logoURI: from.token.logoURI,
+          coinGeckoId: from.token.coinGeckoId,
         },
       },
       to: {
@@ -28,6 +29,7 @@ export const setSwapCard = (dispatch, from, to) => {
           symbol: to.token.symbol,
           address: to.token.address,
           logoURI: to.token.logoURI,
+          coinGeckoId: to.token.coinGeckoId,
         },
       },
     },
