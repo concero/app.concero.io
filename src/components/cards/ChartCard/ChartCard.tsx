@@ -24,7 +24,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const { selection } = useContext(SelectionContext)
   const { getTokens } = useContext(DataContext)
   const { theme } = useContext(ThemeContext)
-  const [{ chartType, token, interval, chartData, tokens }, dispatch] = useChartReducer(selection.swapCard)
+  const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
   const { addNotification } = useContext(NotificationsContext)
   const isDesktop = useMediaQuery('mobile')
 
@@ -38,7 +38,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
     }, 15000)
 
     return () => clearInterval(intervalId)
-  }, [interval, token.base])
+  }, [interval, token.base.symbol])
 
   useEffect(() => {
     dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: selection.swapCard.to.token })
@@ -67,10 +67,12 @@ export const ChartCard: FC<ChartCardProps> = () => {
           <SegmentedControl
             data={intervals}
             selectedItem={interval}
-            setSelectedItem={(item) => dispatch({
+            setSelectedItem={(item) =>
+              dispatch({
                 type: 'SET_INTERVAL',
                 payload: item,
-              })}
+              })
+            }
           />
         ) : null}
       </div>

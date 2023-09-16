@@ -52,6 +52,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
     swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
     tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
   }
+
   return (
     <>
       <animated.div
