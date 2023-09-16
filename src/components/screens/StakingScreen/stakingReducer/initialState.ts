@@ -8,6 +8,7 @@ export const initialState: StakingState = {
     compound: false,
     chains: [],
     apy: '',
+    category: [],
   },
   vaults: [],
   selectedVault: null,

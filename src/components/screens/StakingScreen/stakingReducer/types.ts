@@ -15,6 +15,7 @@ export type Filter = {
   compound: boolean
   chains: string[]
   apy: string
+  category: string[]
 }
 
 export type Vault = {

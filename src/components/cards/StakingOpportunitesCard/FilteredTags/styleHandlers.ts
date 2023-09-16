@@ -4,12 +4,19 @@ export const getChainTitle = (chains) => {
   if (chains.length > 1) return chains.length
 }
 
-export const getSelectedStyle = (isSelected: boolean) => {
+export function getSelectedStyle(isSelected: boolean) {
   return isSelected ? 'primary' : 'subtle'
 }
 
-export const getAllTagStyle = (filter) => {
+export function getAllTagStyle(filter) {
   const { all, my_holdings, chains, compound, apy } = filter
   if (my_holdings || chains.length > 0 || compound || apy) return 'subtle'
   return 'primary'
+}
+
+export function getCategoryTitle(filter) {
+  const { category } = filter
+  if (!category.length) return 'All'
+  if (category.length === 1) return category[0].title
+  return category.length
 }
