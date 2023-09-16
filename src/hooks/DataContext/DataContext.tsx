@@ -85,7 +85,7 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
       if (tokens[chainId].length >= offset + limit) {
         return tokens[chainId].slice(offset, offset + limit)
       }
-      if (tokens[chainId].length < limit) {
+      if (tokens[chainId].length < limit + offset) {
         return tokens[chainId]
       }
     }
@@ -103,6 +103,7 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
       const response = await fetchChains({ search })
       return response
     }
+
     if (chains.length >= offset + limit) {
       return chains.slice(offset, offset + limit)
     }

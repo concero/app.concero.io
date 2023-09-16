@@ -4,20 +4,19 @@ import { useAccount } from 'wagmi'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
-import { populateChains } from './populateFunctions'
 import { DesktopLayout } from './DesktopLayout'
 import { MobileLayout } from './MobileLayout'
 
 export const StakingScreen: FC = () => {
-  const { getChains } = useContext(DataContext)
+  const { getChains, getTokens } = useContext(DataContext)
   const { address } = useAccount()
   const [stakingState, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
   useEffect(() => {
-    populateChains(getChains, dispatch)
+    // populateChains(getChains, dispatch)
     if (address) dispatch({ type: 'SET_ADDRESS', payload: address })
-    getApproveData()
+    // getApproveData()
   }, [])
 
   async function getApproveData() {
