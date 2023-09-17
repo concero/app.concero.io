@@ -1,6 +1,5 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { approve } from 'wido'
-import { useAccount } from 'wagmi'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import classNames from './StakingScreen.module.pcss'
@@ -14,16 +13,22 @@ import { PredictionCard } from '../../cards/PredictionCard/PredictionCard'
 import { RatioCard } from '../../cards/RatioCard/RatioCard'
 import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { ProtocolCard } from '../../cards/ProtocolCard/ProtocolCard'
+import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 
 export const StakingScreen: FC = () => {
-  const { address } = useAccount()
   const [stakingState, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
 
-  useEffect(() => {
-    if (address) dispatch({ type: 'SET_ADDRESS', payload: address })
-    // getApproveData()
-  }, [])
+  // const StakingOpportunities = withErrorBoundary(StakingOpportunitiesCard)
+  const StakingHeader = withErrorBoundary(StakingHeaderCard)
+  const StakingChart = withErrorBoundary(StakingChartCard)
+  const StakingHighlights = withErrorBoundary(StakingHighlightsCard)
+  const Tokens = withErrorBoundary(TokensCard)
+  const Rewards = withErrorBoundary(RewardsCard)
+  const Prediction = withErrorBoundary(PredictionCard)
+  const Ratio = withErrorBoundary(RatioCard)
+  const Details = withErrorBoundary(DetailsCard)
+  const Protocol = withErrorBoundary(ProtocolCard)
 
   async function getApproveData() {
     const { data, to } = await approve({
@@ -39,10 +44,10 @@ export const StakingScreen: FC = () => {
       <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
       {stakingState.selectedVault ? (
         <div className={classNames.mainCardStack}>
-          <StakingChartCard stakingState={stakingState} />
-          <StakingHighlightsCard stakingState={stakingState} />
-          <RatioCard />
-          <DetailsCard />
+          <StakingChart stakingState={stakingState} />
+          <StakingHighlights stakingState={stakingState} />
+          <Ratio />
+          <Details />
         </div>
       ) : null}
     </div>
@@ -54,15 +59,15 @@ export const StakingScreen: FC = () => {
       {stakingState.selectedVault ? (
         <div className={classNames.stacksContainer}>
           <div className={classNames.mainCardStack}>
-            <StakingHeaderCard stakingState={stakingState} />
-            <StakingChartCard stakingState={stakingState} />
+            <StakingHeader stakingState={stakingState} />
+            <StakingChart stakingState={stakingState} />
           </div>
           <div className={`card ${classNames.secondaryCardStack}`}>
-            <ProtocolCard stakingState={stakingState} />
-            <StakingHighlightsCard stakingState={stakingState} />
-            <TokensCard stakingState={stakingState} />
-            <RewardsCard stakingState={stakingState} />
-            <PredictionCard stakingState={stakingState} />
+            <Protocol stakingState={stakingState} />
+            <StakingHighlights stakingState={stakingState} />
+            <Tokens stakingState={stakingState} />
+            <Rewards stakingState={stakingState} />
+            <Prediction stakingState={stakingState} />
           </div>
         </div>
       ) : null}

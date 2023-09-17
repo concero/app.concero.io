@@ -1,4 +1,5 @@
 import { Dispatch, UIEvent, useEffect, useState } from 'react'
+import { useAccount } from 'wagmi'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
@@ -12,6 +13,7 @@ interface StakingOpportunitiesProps {
 
 export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOpportunitiesProps) {
   const { selectedVault, vaults } = stakingState
+  const { address } = useAccount()
   const [offset, setOffset] = useState(0)
   const limit = 15
 
@@ -21,7 +23,7 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
     const newOffset = offset + limit
     setOffset(newOffset)
     try {
-      pushVaults(dispatch, stakingState, newOffset, limit)
+      pushVaults(dispatch, address, stakingState, newOffset, limit)
     } catch (error) {
       console.error(error)
     }
@@ -36,7 +38,7 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
 
   useEffect(() => {
     setOffset(0)
-    setVaults(dispatch, stakingState, 0, limit)
+    setVaults(dispatch, address, stakingState, 0, limit)
   }, [stakingState.filter])
 
   return (

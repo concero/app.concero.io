@@ -4,7 +4,7 @@ import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { numberToFormatString } from '../../../utils/formatting'
 import { Tag } from '../../tags/Tag/Tag'
 import { getCategoryIconByTitle } from './getCategoryIconByTitle'
-import { UnderlingTokens } from './UnderlingTokens/UnderlingTokens'
+import { UnderlyingTokens } from './UnderlingTokens/UnderlyingTokens'
 
 interface StakingCardProps {
   isSelected: boolean
@@ -20,15 +20,15 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
           <div className={classNames.headerSideContainer}>
             <Avatar src={vault.logoURI} size="md" />
             <h5>{`${numberToFormatString(vault.apy, 2)}%`}</h5>
-            <Tag leftIcon={getCategoryIconByTitle('Liquid Staking')} color={'secondary'}>
-              <p className={'body1'}>Liquid Staking</p>
+            <Tag leftIcon={getCategoryIconByTitle('Liquid Staking')} color="secondary">
+              <p className="body1">Liquid Staking</p>
             </Tag>
           </div>
           {/* <div className={classNames.headerSideContainer}>{renderTags({ vault, isSelected })}</div> */}
         </div>
         <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.symbol}</h5>
       </div>
-      <UnderlingTokens underlingTokens={vault.inputTokens} />
+      <UnderlyingTokens underlyingTokens={vault.inputTokens} />
     </div>
   )
 }
