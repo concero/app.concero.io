@@ -6,6 +6,7 @@ export interface StakingState {
   selectedVault: Vault | null
   chains: Chain[]
   address: string | null
+  loading: boolean
 }
 
 export type Filter = {

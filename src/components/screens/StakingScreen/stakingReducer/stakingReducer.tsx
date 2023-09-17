@@ -19,6 +19,8 @@ const stakingReducer = (state, action) => {
       return { ...state, vaults: action.payload }
     case 'PUSH_VAULTS':
       return { ...state, vaults: [...state.vaults, ...action.payload] }
+    case 'SET_LOADING':
+      return { ...state, loading: action.payload }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }

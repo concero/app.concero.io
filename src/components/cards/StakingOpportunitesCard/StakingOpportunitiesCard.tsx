@@ -5,6 +5,7 @@ import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
 import { StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { pushVaults, setVaults } from './getVaults'
+import { CardHeader } from '../CardHeader/CardHeader'
 
 interface StakingOpportunitiesProps {
   stakingState: StakingState
@@ -17,9 +18,11 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
   const [offset, setOffset] = useState(0)
   const limit = 15
 
-  const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+  function handleSelect(vault) {
+    dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+  }
 
-  const handleEndReached = () => {
+  function handleEndReached() {
     const newOffset = offset + limit
     setOffset(newOffset)
     try {
@@ -29,7 +32,7 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
     }
   }
 
-  const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+  function handleScroll(e: UIEvent<HTMLDivElement>) {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
     if (scrollHeight - scrollTop === clientHeight) {
       handleEndReached()
@@ -43,7 +46,7 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
 
   return (
     <div className={`card ${classNames.container}`}>
-      <h5 className="cardHeaderTitle">Staking opportunities</h5>
+      <CardHeader title={'Staking opportunities'} isLoading={stakingState.loading} />
       <FilteredTags dispatch={dispatch} stakingState={stakingState} />
       <div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
         {vaults?.map((vault: Vault) => (

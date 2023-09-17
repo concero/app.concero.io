@@ -30,7 +30,7 @@ function getMyHoldingsQuery(stakingState: StakingState, address) {
   return `byHoldingsOfAddress=${address}`
 }
 
-export const fetchPools = async (stakingState: StakingState, address, offset: number, limit: number) => {
+export async function fetchPools(stakingState: StakingState, address: string, offset: number, limit: number) {
   const { filter } = stakingState
   const urlParts = [
     `${process.env.CONCERO_API_URL}/pools`,
