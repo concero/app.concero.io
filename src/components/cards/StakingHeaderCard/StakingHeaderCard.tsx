@@ -32,6 +32,8 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
     last_24h: '0.94%',
   }
 
+  console.log(selectedVault)
+
   return (
     <div className={`card ${classNames.container}`}>
       <div className={classNames.headerContainer}>

@@ -13,6 +13,7 @@ import { RewardsCard } from '../../cards/RewardsCard/RewardsCard'
 import { PredictionCard } from '../../cards/PredictionCard/PredictionCard'
 import { RatioCard } from '../../cards/RatioCard/RatioCard'
 import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
+import { ProtocolCard } from '../../cards/ProtocolCard/ProtocolCard'
 
 export const StakingScreen: FC = () => {
   const { address } = useAccount()
@@ -57,6 +58,7 @@ export const StakingScreen: FC = () => {
             <StakingChartCard stakingState={stakingState} />
           </div>
           <div className={`card ${classNames.secondaryCardStack}`}>
+            <ProtocolCard stakingState={stakingState} />
             <StakingHighlightsCard stakingState={stakingState} />
             <TokensCard stakingState={stakingState} />
             <RewardsCard stakingState={stakingState} />

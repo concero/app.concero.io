@@ -53,8 +53,15 @@ export type Vault = {
   stablecoin: string
   symbol: string
   tvlUsd: number
-  underlyingTokens: string[]
+  inputTokens: InputTokens[]
   volumeUsd1d: number
   volumeUsd7d: number
   widoSupported: boolean
+}
+
+export type InputTokens = {
+  _id: string
+  name: string
+  symbol: string
+  logoURI: string
 }

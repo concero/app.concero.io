@@ -12,21 +12,7 @@ interface StakingCardProps {
   onClick: (id: string) => void
 }
 
-const undelingTokens = [
-  {
-    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-    logoURI: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png',
-    symbol: 'MATIC',
-  },
-  {
-    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-    logoURI: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png',
-    symbol: 'ETH',
-  },
-]
-
 export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
-  console.log('vault', vault)
   return (
     <div className={`${classNames.container} ${isSelected ? classNames.selected : ''}`} onClick={() => onClick(vault)}>
       <div>
@@ -42,7 +28,7 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
         </div>
         <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.symbol}</h5>
       </div>
-      <UnderlingTokens underlingTokens={undelingTokens} />
+      <UnderlingTokens underlingTokens={vault.inputTokens} />
     </div>
   )
 }

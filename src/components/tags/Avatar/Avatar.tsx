@@ -16,11 +16,11 @@ const getClasses = (size: AvatarProps['size'], className: AvatarProps['className
 }
 
 export const Avatar: FC<AvatarProps> = ({ size, src, className }) => {
-  const [imgSrc, setImgSrc] = useState(src)
+  const [isError, setIsError] = useState(false)
 
   function handleError() {
-    setImgSrc(null)
+    setIsError(true)
   }
 
-  return <div className={getClasses(size, className)}>{imgSrc ? <img src={src} className={classNames.avatar} onError={handleError} /> : null}</div>
+  return <div className={getClasses(size, className)}>{!isError ? <img src={src} className={classNames.avatar} onError={handleError} /> : null}</div>
 }
