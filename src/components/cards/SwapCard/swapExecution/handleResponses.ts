@@ -12,7 +12,7 @@ export const handleLifiResponse = (executedRoute, swapDispatch, provider) => {
   const stdRoute = standardiseLifiRoute(executedRoute)
   const lastExecutionStep = stdRoute.execution[stdRoute.execution.length - 1]
 
-  if (lastExecutionStep?.status.toLowerCase() === 'success') {
+  if (lastExecutionStep?.status.toLowerCase() === 'done') {
     swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: true, message: 'Success' } })
     swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'success' })
     return

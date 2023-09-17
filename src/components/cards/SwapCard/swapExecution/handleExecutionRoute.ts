@@ -14,7 +14,10 @@ export const handleExecuteRoute = async ({ route, provider, address, from, setti
         selectedRoute: stdRoute,
       })
     }
-    return executeLifiRoute(viemSigner, route, { updateRouteHook, switchChainHook })
+
+    const acceptExchangeRateUpdateHook = () => true
+
+    return executeLifiRoute(viemSigner, route, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
   }
   if (provider === 'rango') return executeRangoRoute(route, address, from, settings, swapDispatch, switchChainHook)
 }
