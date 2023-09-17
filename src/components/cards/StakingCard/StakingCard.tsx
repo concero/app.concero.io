@@ -26,6 +26,7 @@ const undelingTokens = [
 ]
 
 export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
+  console.log('vault', vault)
   return (
     <div className={`${classNames.container} ${isSelected ? classNames.selected : ''}`} onClick={() => onClick(vault)}>
       <div>
