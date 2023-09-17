@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
 import { Modal } from '../Modal/Modal'
 import classNames from './MultiselectModal.module.pcss'
 import { MultiSelectModalProps } from './types'
 import { TextInput } from '../../input/TextInput'
 
-export function ListModal({ getItems, isOpen, setIsOpen, title, RenderItem, selectedItems = [], onSelect, isSearchable = true }: MultiSelectModalProps) {
+export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOpen, title, RenderItem, selectedItems = [], onSelect, isSearchable = true }) => {
   const limit = 15
   const [offset, setOffset] = useState<number>(0)
   const [items, setItems] = useState<any[]>([])
@@ -51,6 +51,7 @@ export function ListModal({ getItems, isOpen, setIsOpen, title, RenderItem, sele
           {isSearchable ? (
             <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} />
           ) : null}
+          {' '}
         </div>
         <div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
           {items.map((item) => {
