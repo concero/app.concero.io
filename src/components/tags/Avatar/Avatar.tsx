@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import classNames from './Avatar.module.pcss'
 
 interface AvatarProps {
@@ -21,6 +21,10 @@ export const Avatar: FC<AvatarProps> = ({ size, src, className }) => {
   function handleError() {
     setIsError(true)
   }
+
+  useEffect(() => {
+    setIsError(false)
+  }, [src])
 
   return <div className={getClasses(size, className)}>{!isError ? <img src={src} className={classNames.avatar} onError={handleError} /> : null}</div>
 }

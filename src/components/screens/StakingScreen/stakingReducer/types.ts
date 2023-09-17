@@ -32,6 +32,7 @@ export type Vault = {
   apyReward: number
   chain: string
   count: number
+  category: string
   defiLlamaPoolId: string
   exposure: string
   il7d: number

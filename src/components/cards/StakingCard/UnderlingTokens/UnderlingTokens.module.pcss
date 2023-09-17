@@ -7,15 +7,25 @@
   flex: 1;
   gap: var(--sp-xs);
   padding: var(--sp-sm);
+  background-color: var(--color-grey-darkest);
   align-items: center;
   border-radius: var(--st-br-sm);
   opacity: 60%;
 }
 
-.selected {
+.exist {
   background-color: var(--color-grey-darker);
   opacity: 100%;
+
   p {
     color: var(--color-grey-lighter);
   }
+
+  .selected {
+    background-color: none;
+  }
+}
+
+.selected {
+  background-color: var(--color-primary-dark);
 }

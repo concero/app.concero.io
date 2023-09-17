@@ -20,15 +20,17 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
           <div className={classNames.headerSideContainer}>
             <Avatar src={vault.logoURI} size="md" />
             <h5>{`${numberToFormatString(vault.apy, 2)}%`}</h5>
-            <Tag leftIcon={getCategoryIconByTitle('Liquid Staking')} color={'secondary'}>
-              <p className={'body1'}>Liquid Staking</p>
-            </Tag>
+            {vault.category ? (
+              <Tag leftIcon={getCategoryIconByTitle(vault.category, isSelected)} color={isSelected ? 'mainDarker' : 'grey'}>
+                <p className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.category}</p>
+              </Tag>
+            ) : null}
           </div>
           {/* <div className={classNames.headerSideContainer}>{renderTags({ vault, isSelected })}</div> */}
         </div>
         <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.symbol}</h5>
       </div>
-      <UnderlingTokens underlingTokens={vault.inputTokens} />
+      <UnderlingTokens underlingTokens={vault.inputTokens} isSelected={isSelected} />
     </div>
   )
 }
