@@ -1,16 +1,16 @@
-import classNames from './UnderlingTokens.module.pcss'
+import classNames from './UnderlyingTokens.module.pcss'
 import { Avatar } from '../../../tags/Avatar/Avatar'
 import { InputTokens } from '../../../screens/StakingScreen/stakingReducer/types'
 
-interface UnderlingTokensProps {
-  underlingTokens: InputTokens[]
+interface UnderlyingTokensProps {
+  underlyingTokens: InputTokens[]
   isSelected: boolean
 }
 
-export function UnderlingTokens({ underlingTokens, isSelected }: UnderlingTokensProps) {
+export function UnderlyingTokens({ underlyingTokens, isSelected }: UnderlyingTokensProps) {
   return (
     <div className={classNames.container}>
-      {underlingTokens.map((token, index) => {
+      {underlyingTokens.map((token, index) => {
         if (!token) return null
         return (
           <div className={`${classNames.tokenContainer} ${index === 1 ? classNames.exist : ''} ${isSelected ? classNames.selected : ''}`}>

@@ -4,7 +4,7 @@ import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { numberToFormatString } from '../../../utils/formatting'
 import { Tag } from '../../tags/Tag/Tag'
 import { getCategoryIconByTitle } from './getCategoryIconByTitle'
-import { UnderlingTokens } from './UnderlingTokens/UnderlingTokens'
+import { UnderlyingTokens } from './UnderlyingTokens/UnderlyingTokens'
 
 interface StakingCardProps {
   isSelected: boolean
@@ -30,7 +30,7 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
         </div>
         <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.symbol}</h5>
       </div>
-      <UnderlingTokens underlingTokens={vault.inputTokens} isSelected={isSelected} />
+      <UnderlyingTokens underlyingTokens={vault.inputTokens} isSelected={isSelected} />
     </div>
   )
 }
