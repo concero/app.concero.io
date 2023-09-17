@@ -22,22 +22,22 @@ function getApyQuery(filter: Filter) {
   return `apy=${apy}`
 }
 
-function getMyHoldingsQuery(stakingState: StakingState) {
+function getMyHoldingsQuery(stakingState: StakingState, address) {
   if (!stakingState) return ''
-  const { filter, address } = stakingState
+  const { filter } = stakingState
   const { my_holdings } = filter
   if (!my_holdings || !address) return ''
   return `byHoldingsOfAddress=${address}`
 }
 
-export const fetchPools = async (stakingState: StakingState, offset: number, limit: number) => {
+export const fetchPools = async (stakingState: StakingState, address, offset: number, limit: number) => {
   const { filter } = stakingState
   const urlParts = [
     `${process.env.CONCERO_API_URL}/pools`,
     getChainsQuery(filter),
     getCompoundQuery(filter),
     getApyQuery(filter),
-    getMyHoldingsQuery(stakingState),
+    getMyHoldingsQuery(stakingState, address),
     'widoSupported=true',
     'outlier=false',
     `offset=${offset}`,

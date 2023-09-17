@@ -2,9 +2,9 @@ import { Dispatch } from 'react'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { fetchPools } from '../../../api/concero/fetchPools'
 
-export async function setVaults(dispatch: Dispatch<any>, stakingState: StakingState, offset: number, limit: number) {
+export async function setVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
   try {
-    const pools = await fetchPools(stakingState, offset, limit)
+    const pools = await fetchPools(stakingState, address, offset, limit)
     dispatch({ type: 'SET_VAULTS', payload: pools })
   } catch (error) {
     console.error(error)
@@ -13,9 +13,9 @@ export async function setVaults(dispatch: Dispatch<any>, stakingState: StakingSt
   }
 }
 
-export async function pushVaults(dispatch: Dispatch<any>, stakingState: StakingState, offset: number, limit: number) {
+export async function pushVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
   try {
-    const pools = await fetchPools(stakingState, offset, limit)
+    const pools = await fetchPools(stakingState, address, offset, limit)
     dispatch({ type: 'PUSH_VAULTS', payload: pools })
   } catch (error) {
     console.error(error)
