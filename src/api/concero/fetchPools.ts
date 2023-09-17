@@ -5,7 +5,7 @@ function getChainsQuery(filter: Filter) {
   if (!filter) return ''
   const { chains } = filter
   if (!chains || chains.length === 0) return ''
-  return `chain=${chains.map((chain) => chain.name).join(',')}`
+  return `chainId=${chains.map((chain) => chain.id).join(',')}`
 }
 
 function getCompoundQuery(filter: Filter) {
