@@ -31,6 +31,6 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
 
   const quote = await rangoClient.quote(routesRequest)
   if (quote.route === null) return []
-
+  console.log('quote', quote)
   return [standardizeRangoRoutes(quote)]
 }

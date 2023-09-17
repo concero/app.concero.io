@@ -32,6 +32,7 @@ export const fetchChartData = async (
   interval: {
     value: string
   },
+  setLoading = null,
 ) => {
   // const url = `https://api.coingecko.com/api/v3/coins/${tokenId}/market_chart?vs_currency=${'usd'}&days=${
   //   interval.value
@@ -58,6 +59,8 @@ export const fetchChartData = async (
   //   })
   // }
 
+  setLoading ? setLoading(true) : null
+
   const url = `https://coins.llama.fi/chart/coingecko:${tokenId}?${getPointQuery(interval)}&span=289&period=${getPeriod(interval)}&searchWidth=${getSearchWidth(
     interval,
   )}`
@@ -75,4 +78,6 @@ export const fetchChartData = async (
   }, [])
 
   setData(result)
+
+  setLoading ? setLoading(false) : null
 }

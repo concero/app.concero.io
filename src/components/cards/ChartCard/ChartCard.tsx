@@ -17,6 +17,8 @@ import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/MultiselectModal/ListModal'
 import { ListEntityButton } from '../StakingOpportunitesCard/FilteredTags/ListEntityButton'
+import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
+import { colors } from '../../../constants/colors'
 
 export interface ChartCardProps {}
 
@@ -24,14 +26,18 @@ export const ChartCard: FC<ChartCardProps> = () => {
   const { selection } = useContext(SelectionContext)
   const { getTokens } = useContext(DataContext)
   const { theme } = useContext(ThemeContext)
-  const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
+  const [{ chartType, token, interval, chartData, isLoading }, dispatch] = useChartReducer(selection.swapCard)
   const { addNotification } = useContext(NotificationsContext)
   const isDesktop = useMediaQuery('mobile')
 
   const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
 
+  function setLoading(value) {
+    dispatch({ type: 'SET_LOADING', payload: value })
+  }
+
   useEffect(() => {
-    fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
+    fetchChartData(setData, addNotification, token.base.coinGeckoId, interval, setLoading)
 
     const intervalId = setInterval(() => {
       fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
@@ -62,6 +68,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
               <p className="body1">TradingView</p>
             </Button>
           ) : null}
+          {isLoading ? <LoadingAnimation color={colors.text.secondary} size={16} /> : null}
         </div>
         {chartType === 'coinGecko' ? (
           <SegmentedControl

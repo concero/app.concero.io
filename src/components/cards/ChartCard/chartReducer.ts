@@ -23,6 +23,7 @@ const initialState = (selection) => ({
     value: '1',
   },
   chartData: [],
+  isLoading: false,
 })
 
 const chartReducer = (state, action) => {
@@ -63,6 +64,11 @@ const chartReducer = (state, action) => {
       return {
         ...state,
         chartData: action.payload,
+      }
+    case 'SET_LOADING':
+      return {
+        ...state,
+        isLoading: action.payload,
       }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
