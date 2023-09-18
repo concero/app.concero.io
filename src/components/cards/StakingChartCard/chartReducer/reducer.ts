@@ -20,6 +20,11 @@ export const reducer = (state, action) => {
         ...state,
         isTypeModalVisible: action.payload,
       }
+    case 'SET_LOADING':
+      return {
+        ...state,
+        isLoading: action.payload,
+      }
     default:
       throw new Error('Invalid action type')
   }

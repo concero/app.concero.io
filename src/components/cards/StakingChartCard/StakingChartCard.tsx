@@ -1,15 +1,16 @@
 import { FC, useEffect, useState } from 'react'
+import { IconChevronDown } from '@tabler/icons-react'
 import { Chart } from '../../layout/Chart/Chart'
 import classNames from './StakingChartCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { StakingChartCardProps } from './types'
 import { useChartReducer } from './chartReducer/chartReducer'
-import { fetchData } from './fetchData'
+import { getData } from './getData'
 import { switchChartType } from './switchChartType'
 import { buttonsData } from './constants'
-import { IconChevronDown } from '@tabler/icons-react'
 import { ListModal } from '../../modals/MultiselectModal/ListModal'
 import { RowComponent } from './RowComponent/RowConponent'
+import { CardHeader } from '../CardHeader/CardHeader'
 
 export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) => {
   const { selectedVault } = stakingState
@@ -23,10 +24,6 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
 
   const setChartType = (type) => {
     dispatch({ type: 'SET_CHART_TYPE', payload: type })
-  }
-
-  const setResponse = (r) => {
-    dispatch({ type: 'SET_RESPONSE', payload: r })
   }
 
   function setIsTypeModalVisible(isVisible: boolean) {
@@ -46,7 +43,7 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
   }
 
   useEffect(() => {
-    fetchData({ selectedVault, setResponse })
+    getData({ selectedVault, dispatch })
   }, [selectedVault])
 
   useEffect(() => {
@@ -56,7 +53,7 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
   return (
     <div className={`card ${classNames.container}`}>
       <div className={classNames.headerContainer}>
-        <h5 className={'cardHeaderTitle'}>Chart</h5>
+        <CardHeader title={'Chart'} isLoading={chartState.isLoading} />
         <div className={classNames.tagsContainer}>
           <Button variant={'subtle'} size={'sm'} rightIcon={<IconChevronDown size={16} />} onClick={handleTypeButtonClick}>
             {buttonsData[chartType].title}
