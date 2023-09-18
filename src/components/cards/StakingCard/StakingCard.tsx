@@ -2,9 +2,8 @@ import classNames from './StakingCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { numberToFormatString } from '../../../utils/formatting'
-import { Tag } from '../../tags/Tag/Tag'
-import { getCategoryIconByTitle } from './getCategoryIconByTitle'
 import { UnderlyingTokens } from './UnderlyingTokens/UnderlyingTokens'
+import { CategoryTag } from '../../tags/CategoryTag/CategoryTag'
 
 interface StakingCardProps {
   isSelected: boolean
@@ -20,11 +19,7 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
           <div className={classNames.headerSideContainer}>
             <Avatar src={vault.logoURI} size="md" />
             <h5>{`${numberToFormatString(vault.apy, 2)}%`}</h5>
-            {vault.category ? (
-              <Tag leftIcon={getCategoryIconByTitle(vault.category, isSelected)} color={isSelected ? 'mainDarker' : 'grey'}>
-                <p className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.category}</p>
-              </Tag>
-            ) : null}
+            {vault.category ? <CategoryTag category={vault.category} isSelected={isSelected} /> : null}
           </div>
           {/* <div className={classNames.headerSideContainer}>{renderTags({ vault, isSelected })}</div> */}
         </div>
