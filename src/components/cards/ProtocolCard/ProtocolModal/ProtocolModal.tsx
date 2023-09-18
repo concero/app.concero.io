@@ -47,9 +47,11 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
           </div>
           <div className={classNames.tagsContainer}>
             {protocol.category ? <CategoryTag category={protocol.category} /> : null}
-            <Tag color={'grey'} leftIcon={<IconCopy color={colors.text.secondary} size={16} />} onClick={() => copyInBuffer(protocol.address)}>
-              <p className="body1">Contract address</p>
-            </Tag>
+            {protocol.address ? (
+              <Tag color={'grey'} leftIcon={<IconCopy color={colors.text.secondary} size={16} />} onClick={() => copyInBuffer(protocol.address)}>
+                <p className="body1">Contract address</p>
+              </Tag>
+            ) : null}
             {protocol.url ? (
               <Tag color={'grey'} onClick={() => window.open(protocol.url, '_blank')} leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />}>
                 <p className="body1">Website</p>
