@@ -1,5 +1,8 @@
 import { FC, useEffect } from 'react'
 import { approve, quote } from 'wido'
+import { useSwitchNetwork } from 'wagmi'
+import { createWalletClient, custom } from 'viem'
+import { providers } from 'ethers'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import classNames from './StakingScreen.module.pcss'
@@ -18,7 +21,7 @@ import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 export const StakingScreen: FC = () => {
   const [stakingState, dispatch] = useStakingReducer()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
-
+  const { switchNetworkAsync } = useSwitchNetwork()
   // const StakingOpportunities = withErrorBoundary(StakingOpportunitiesCard)
   const StakingHeader = withErrorBoundary(StakingHeaderCard)
   const StakingChart = withErrorBoundary(StakingChartCard)
@@ -30,44 +33,66 @@ export const StakingScreen: FC = () => {
   const Details = withErrorBoundary(DetailsCard)
   const Protocol = withErrorBoundary(ProtocolCard)
 
-  async function getApproveData() {
-    const { data, to } = await approve({
-      chainId: 1,
-      fromToken: '0x6b175474e89094c44da98b954eedeac495271d0f',
-      toToken: '0x6b175474e89094c44da98b954eedeac495271d0f',
-      amount: '1000000000000000000',
+  const getSigner = async (requiredChainId) => {
+    if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
+    const client0 = createWalletClient({
+      transport: custom(window.ethereum),
     })
+
+    const provider = new providers.Web3Provider(client0.transport, 'any')
+    return provider.getSigner()
   }
 
-  const getQuote = async () => {
+  const executeTokenSwap = async (fromChainId, fromToken, toChainId, toToken, amount, slippagePercentage, user) => {
     try {
-      console.log('getSupportedTokens')
-      const fromChainId = 1 // Chain Id of from token
-      const fromToken = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
-      const toChainId = 1 // Chain Id of to token
-      const toToken = '0x21E27a5E5513D6e65C4f830167390997aA84843a'
-      const amount = '1000000000' // Token amount of from token
-      const slippagePercentage = 0.5 // Acceptable max slippage for the swap
-      const user = '0x70E73f067a1fC9FE6D53151bd271715811746d3a'
+      // Step 1: Get a Quote
+      const quoteParams = {
+        fromChainId,
+        fromToken,
+        toChainId,
+        toToken,
+        amount,
+        slippagePercentage,
+        user,
+      }
 
-      console.log('quoting...')
-      const quoteResult = await quote({
-        fromChainId, // Chain Id of from token
-        fromToken, // Token address of from token
-        toChainId, // Chain Id of to token
-        toToken, // Token address of to token
-        amount, // Token amount of from token
-        slippagePercentage, // Acceptable max slippage for the swap
-        user, // Address of user placing the order.
+      const quoteResult = await quote(quoteParams)
+      console.log(quoteResult)
+      if (!quoteResult.isSupported) { throw new Error('Route not supported' }
+
+      // Step 2: Approve Wido for the Swap
+      const { data: approveData, to: approveTo } = await approve({
+        fromChainId,
+        toChainId,
+        fromToken,
+        toToken,
+        amount,
       })
 
-      console.log('quoteResult', quoteResult)
+      const signer = await getSigner(fromChainId)
+      console.log('signer ', signer)
+
+      const approveTx = await signer.sendTransaction({ data: approveData, to: approveTo })
+      console.log(`Approve transaction sent: ${approveTx}`)
+      await approveTx.wait()
+
+      console.log(`Transaction executed: ${executeTx.hash}`)
     } catch (error) {
-      console.error('error ', error)
+      console.error(`Error executing token swap: ${error.message}`)
     }
   }
+
+  // Usage
+  const fromChainId = 1
+  const fromToken = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+  const toChainId = 1
+  const toToken = '0x21E27a5E5513D6e65C4f830167390997aA84843a'
+  const amount = '1000000000'
+  const slippagePercentage = 0.5
+  const user = '0x70E73f067a1fC9FE6D53151bd271715811746d3a'
+
   useEffect(() => {
-    getQuote()
+    executeTokenSwap(fromChainId, fromToken, toChainId, toToken, amount, slippagePercentage, user)
   }, [])
 
   const mobileLayout = (
