@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { approve } from 'wido'
+import { FC, useEffect } from 'react'
+import { approve, quote } from 'wido'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import classNames from './StakingScreen.module.pcss'
@@ -37,7 +37,41 @@ export const StakingScreen: FC = () => {
       toToken: '0x6b175474e89094c44da98b954eedeac495271d0f',
       amount: '1000000000000000000',
     })
+
+    console.log('data', data)
+    console.log('to', to)
   }
+
+  const getQuote = async () => {
+    try {
+      console.log('getSupportedTokens')
+      const fromChainId = 1 // Chain Id of from token
+      const fromToken = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+      const toChainId = 1 // Chain Id of to token
+      const toToken = '0x21E27a5E5513D6e65C4f830167390997aA84843a'
+      const amount = '1000000000' // Token amount of from token
+      const slippagePercentage = 0.5 // Acceptable max slippage for the swap
+      const user = '0x70E73f067a1fC9FE6D53151bd271715811746d3a'
+
+      console.log('quoting...')
+      const quoteResult = await quote({
+        fromChainId, // Chain Id of from token
+        fromToken, // Token address of from token
+        toChainId, // Chain Id of to token
+        toToken, // Token address of to token
+        amount, // Token amount of from token
+        slippagePercentage, // Acceptable max slippage for the swap
+        user, // Address of user placing the order.
+      })
+
+      console.log('quoteResult', quoteResult)
+    } catch (error) {
+      console.error('error ', error)
+    }
+  }
+  useEffect(() => {
+    getQuote()
+  }, [])
 
   const mobileLayout = (
     <div className={classNames.container}>
