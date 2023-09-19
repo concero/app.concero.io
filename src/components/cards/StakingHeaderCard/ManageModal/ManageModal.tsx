@@ -58,7 +58,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
           <div className={classNames.areaContainer}>
             <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} />
             <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} swapType={swapType} />
-            <Details manageState={manageState} />
+            {manageState.route ? <Details manageState={manageState} /> : null}
             <Button leftIcon={<IconCornerDownRight size={18} />} size={'lg'}>
               Stake
             </Button>

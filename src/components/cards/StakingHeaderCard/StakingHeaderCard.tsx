@@ -1,10 +1,10 @@
 import { FC, useState } from 'react'
+import { IconArrowsUpDown } from '@tabler/icons-react'
 import classNames from './StakingHeaderCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { capitalize } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
-import { IconArrowsUpDown } from '@tabler/icons-react'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
 
@@ -13,7 +13,7 @@ interface StakingHeaderCardProps {
 }
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
-  const [isManageModalOpen, setIsManageModalOpen] = useState(false)
+  const [isManageModalOpen, setIsManageModalOpen] = useState(true)
   const { selectedVault } = stakingState
 
   const stake = {
