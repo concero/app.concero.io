@@ -21,7 +21,6 @@ export function SelectArea({ selection, direction, dispatch, balance = null }) {
 
   function handleChainButtonClick() {
     dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.chains })
-    dispatch({ type: 'SET_DIRECTION', payload: direction })
   }
 
   return (
@@ -29,7 +28,13 @@ export function SelectArea({ selection, direction, dispatch, balance = null }) {
       <div className={classNames.tokenRow}>
         <div className={classNames.tokenRowHeader}>
           <p>{capitalize(direction)}</p>
-          <Button onClick={handleChainButtonClick} size="sm" variant="black" rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}>
+          <Button
+            onClick={handleChainButtonClick}
+            size="sm"
+            variant="black"
+            rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
+            isDisabled={direction === 'to'}
+          >
             <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
           </Button>
         </div>
@@ -54,6 +59,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null }) {
           size="sm"
           variant="black"
           rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
+          isDisabled={direction === 'to'}
         >
           <CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
         </Button>

@@ -13,7 +13,7 @@ interface StakingHeaderCardProps {
 }
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
-  const [isManageModalOpen, setIsManageModalOpen] = useState(true)
+  const [isManageModalOpen, setIsManageModalOpen] = useState(false)
   const { selectedVault } = stakingState
 
   const stake = {

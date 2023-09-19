@@ -11,7 +11,7 @@ function manageReducer(state: any, action: any) {
     case 'SET_CHAIN': {
       return {
         ...state,
-        [action.direction]: { ...state[action.direction], chain: action.payload },
+        [action.direction]: { ...state[action.direction], chain: action.payload, token: action.tokens[0] },
       }
     }
     case 'SET_AMOUNT': {

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { IconCornerDownRight } from '@tabler/icons-react'
 import { Modal } from '../../../modals/Modal/Modal'
 import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
@@ -20,16 +20,16 @@ interface ManageModalProps {
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
   const { getChains, getTokens } = useContext(DataContext)
   const [manageState, manageDispatch] = useManageReducer()
+  const { modalType, route } = manageState
 
-  const { modalType } = manageState
-
-  function handleSelectChain(item: any) {
-    manageDispatch({ type: 'SET_CHAIN', payload: item, direction: manageState.direction })
+  async function handleSelectChain(item: any) {
+    const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
+    manageDispatch({ type: 'SET_CHAIN', payload: item, tokens, direction: 'from' })
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
   function handleSelectToken(item: any) {
-    manageDispatch({ type: 'SET_TOKEN', payload: item, direction: manageState.direction })
+    manageDispatch({ type: 'SET_TOKEN', payload: item, direction: 'from' })
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
@@ -47,7 +47,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
         ) : modalType === ModalType.chains ? (
           <InnerSelectModal RenderItem={ListEntityButton} getItems={getChains} onSelect={handleSelectChain} />
         ) : (
-          <InnerSelectModal RenderItem={ListEntityButton} getItems={getTokens} onSelect={handleSelectToken} />
+          <InnerSelectModal RenderItem={ListEntityButton} getItems={getTokens} onSelect={handleSelectToken} chainId={manageState.from.chain.id} />
         )}
       </div>
     </Modal>

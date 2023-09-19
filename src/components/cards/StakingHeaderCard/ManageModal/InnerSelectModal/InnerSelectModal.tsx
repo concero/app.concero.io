@@ -8,9 +8,10 @@ interface InnerSelectModalProps {
   RenderItem: FC<any>
   selectedItems?: any[]
   onSelect: (item: any) => void
+  chainId?: string
 }
 
-export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderItem, selectedItems = [], onSelect }) => {
+export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderItem, selectedItems = [], onSelect, chainId = null }) => {
   const limit = 15
   const [offset, setOffset] = useState<number>(0)
   const [items, setItems] = useState<any[]>([])
@@ -20,21 +21,21 @@ export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderIt
   useEffect(() => {
     setOffset(0)
     ;(async () => {
-      const initialItems = await getItems({ offset: 0, limit, search })
+      const initialItems = await getItems({ offset: 0, limit, search, ...(chainId && { chainId: chainId }) })
       setItems(initialItems)
     })()
   }, [])
 
   const handleSearch = async (value) => {
     setSearch(value)
-    const foundItems = await getItems({ offset: 0, limit, search: value })
+    const foundItems = await getItems({ offset: 0, limit, search: value, ...(chainId && { chainId: chainId }) })
     setItems(foundItems)
   }
   const handleEndReached = async () => {
     const newOffset = offset + limit
     setOffset(newOffset)
     try {
-      const newItems = await getItems({ offset: newOffset, limit, search })
+      const newItems = await getItems({ offset: newOffset, limit, search, ...(chainId && { chainId: chainId }) })
       setItems((prevItems) => [...prevItems, ...newItems])
     } catch (error) {}
   }
