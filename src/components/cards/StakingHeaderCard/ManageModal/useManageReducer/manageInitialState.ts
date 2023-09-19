@@ -1,4 +1,4 @@
-import { ModalType } from '../constants'
+import { ModalType, SwapType } from '../constants'
 import { ManageState } from './types'
 
 export const manageInitialState: ManageState = {
@@ -39,11 +39,14 @@ export const manageInitialState: ManageState = {
   snake: false,
   modalType: ModalType.input,
   direction: 'from',
+  swapType: SwapType.stake,
   route: {
     fee_bps: 0,
     fee_in_from_token: 0,
     from_token_amount: '',
     is_supported: false,
+    price: 34,
+    expectedSlippage: 0.5,
     steps: [
       {
         chainId: 56,

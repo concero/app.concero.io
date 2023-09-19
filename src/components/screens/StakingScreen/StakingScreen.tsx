@@ -37,9 +37,6 @@ export const StakingScreen: FC = () => {
       toToken: '0x6b175474e89094c44da98b954eedeac495271d0f',
       amount: '1000000000000000000',
     })
-
-    console.log('data', data)
-    console.log('to', to)
   }
 
   const getQuote = async () => {

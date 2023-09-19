@@ -3,3 +3,8 @@ export enum ModalType {
   tokens = 1,
   chains = 2,
 }
+
+export enum SwapType {
+  stake = 0,
+  withdraw = 1,
+}

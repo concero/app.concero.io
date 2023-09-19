@@ -5,11 +5,13 @@ import { StakingState } from '../../../screens/StakingScreen/stakingReducer/type
 import classNames from './ManageModal.module.pcss'
 import { SelectArea } from './SelectArea/SelectArea'
 import { useManageReducer } from './useManageReducer/useManageReducer'
-import { ModalType } from './constants'
+import { ModalType, SwapType } from './constants'
 import { InnerSelectModal } from './InnerSelectModal/InnerSelectModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
+import { Details } from './Details/Details'
+import { CardHeader } from '../../CardHeader/CardHeader'
 
 interface ManageModalProps {
   isOpen: boolean
@@ -20,7 +22,7 @@ interface ManageModalProps {
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
   const { getChains, getTokens } = useContext(DataContext)
   const [manageState, manageDispatch] = useManageReducer()
-  const { modalType, route } = manageState
+  const { modalType, route, swapType } = manageState
 
   async function handleSelectChain(item: any) {
     const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
@@ -35,11 +37,28 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 
   return (
     <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen}>
+      <CardHeader>
+        <Button
+          size={'sm'}
+          variant={swapType === SwapType.stake ? 'primary' : 'subtle'}
+          onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.stake })}
+        >
+          Stake
+        </Button>
+        <Button
+          size={'sm'}
+          variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'}
+          onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.withdraw })}
+        >
+          Withdraw
+        </Button>
+      </CardHeader>
       <div className={classNames.container}>
         {modalType === ModalType.input ? (
           <div className={classNames.areaContainer}>
-            <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} />
-            <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} />
+            <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} />
+            <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} swapType={swapType} />
+            <Details manageState={manageState} />
             <Button leftIcon={<IconCornerDownRight size={18} />} size={'lg'}>
               Stake
             </Button>

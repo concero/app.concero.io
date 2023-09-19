@@ -20,6 +20,8 @@ interface Route {
   fee_in_from_token: number
   from_token_amount: string
   is_supported: boolean
+  price: number
+  expectedSlippage: number
   steps: {
     chainId: number
     fromToken: string
@@ -50,4 +52,5 @@ export interface ManageState {
   modalType: ModalType
   direction: string
   route: Route
+  swapType: number
 }

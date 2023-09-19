@@ -4,17 +4,19 @@ import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation
 import { colors } from '../../../constants/colors'
 
 interface CardHeaderProps {
-  title: string
+  title?: string
   children?: ReactNode
   isLoading?: boolean
 }
 
-export const CardHeader: FC<CardHeaderProps> = ({ title, children, isLoading = false }) => (
+export const CardHeader: FC<CardHeaderProps> = ({ title = null, children, isLoading = false }) => (
   <div className={classNames.cardHeader}>
-    <div className={classNames.titleContainer}>
-      <h5>{title}</h5>
-      <div>{isLoading ? <LoadingAnimation size={13} color={colors.text.secondary} /> : null}</div>
-    </div>
+    {title ? (
+      <div className={classNames.titleContainer}>
+        <h5>{title}</h5>
+        <div>{isLoading ? <LoadingAnimation size={13} color={colors.text.secondary} /> : null}</div>
+      </div>
+    ) : null}
     {children}
   </div>
 )

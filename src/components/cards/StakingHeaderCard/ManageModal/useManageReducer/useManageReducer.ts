@@ -28,6 +28,11 @@ function manageReducer(state: any, action: any) {
         [action.direction]: { ...state[action.direction], token: action.payload },
       }
     }
+    case 'SET_SWAP_TYPE':
+      return {
+        ...state,
+        swapType: action.payload,
+      }
     default:
       return new Error(`Unhandled action type: ${action.type}`)
   }
