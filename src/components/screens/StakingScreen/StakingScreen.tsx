@@ -58,7 +58,9 @@ export const StakingScreen: FC = () => {
 
       const quoteResult = await quote(quoteParams)
       console.log(quoteResult)
-      if (!quoteResult.isSupported) { throw new Error('Route not supported' }
+      if (!quoteResult.isSupported) {
+        throw new Error('Route not supported')
+      }
 
       // Step 2: Approve Wido for the Swap
       const { data: approveData, to: approveTo } = await approve({
