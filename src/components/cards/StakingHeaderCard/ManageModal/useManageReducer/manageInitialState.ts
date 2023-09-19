@@ -37,4 +37,5 @@ export const manageInitialState = {
   },
   snake: false,
   modalType: ModalType.input,
+  direction: 'from',
 }

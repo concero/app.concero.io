@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
@@ -8,23 +8,28 @@ import { CryptoSymbol } from '../../../../tags/CryptoSymbol/CryptoSymbol'
 import { TextInput } from '../../../../input/TextInput'
 import classNames from './SelectArea.module.pcss'
 import { ModalType } from '../constants'
+import { isFloatInput } from '../../../../../utils/validation'
 
 export function SelectArea({ selection, direction, dispatch, balance = null }) {
   const inputRef = useRef()
+  const [isFocused, setIsFocused] = useState(false)
 
-  function handleChangeText(value) {}
+  function handleChangeText(value) {
+    if (value && !isFloatInput(value)) return
+    dispatch({ type: 'SET_AMOUNT', payload: value, direction })
+  }
+
+  function handleChainButtonClick() {
+    dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.chains })
+    dispatch({ type: 'SET_DIRECTION', payload: direction })
+  }
 
   return (
-    <div className={`${classNames.tokenContainer}`}>
+    <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}>
       <div className={classNames.tokenRow}>
         <div className={classNames.tokenRowHeader}>
           <p>{capitalize(direction)}</p>
-          <Button
-            onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.chains })}
-            size="sm"
-            variant="black"
-            rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
-          >
+          <Button onClick={handleChainButtonClick} size="sm" variant="black" rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}>
             <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
           </Button>
         </div>
@@ -34,8 +39,8 @@ export function SelectArea({ selection, direction, dispatch, balance = null }) {
         <div>
           <TextInput
             ref={inputRef}
-            onFocus={() => dispatch({ type: 'SET_IS_FOCUSED', payload: true })}
-            onBlur={() => dispatch({ type: 'SET_IS_FOCUSED', payload: false })}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             variant="inline"
             placeholder={`0.0 ${selection.token.symbol}`}
             value={selection.amount}

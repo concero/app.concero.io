@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
-import classNames from '../../../modals/MultiselectModal/MultiselectModal.module.pcss'
-import { TextInput } from '../../../input/TextInput'
+import { TextInput } from '../../../../input/TextInput'
+import classNames from './InnerSelectModal.module.pcss'
 
 interface InnerSelectModalProps {
   getItems: (params: { offset: number; limit: number; search: string }) => Promise<any[]>
@@ -18,7 +18,7 @@ export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderIt
   const itemsContainerRef = useRef(null)
 
   useEffect(() => {
-    setOffset(0) // Reset offset
+    setOffset(0)
     ;(async () => {
       const initialItems = await getItems({ offset: 0, limit, search })
       setItems(initialItems)
@@ -36,9 +36,7 @@ export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderIt
     try {
       const newItems = await getItems({ offset: newOffset, limit, search })
       setItems((prevItems) => [...prevItems, ...newItems])
-    } catch (error) {
-      // Handle error appropriately
-    }
+    } catch (error) {}
   }
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {

@@ -7,6 +7,7 @@ export async function setVaults(dispatch: Dispatch<any>, address, stakingState: 
   try {
     const pools = await fetchPools(stakingState, address, offset, limit)
     dispatch({ type: 'SET_VAULTS', payload: pools })
+    dispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
   } catch (error) {
     console.error(error)
     dispatch({ type: 'SET_VAULTS', payload: [] })

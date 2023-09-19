@@ -34,9 +34,7 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
 
   function handleScroll(e: UIEvent<HTMLDivElement>) {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
-    if (scrollHeight - scrollTop === clientHeight) {
-      handleEndReached()
-    }
+    if (scrollHeight - scrollTop === clientHeight) handleEndReached()
   }
 
   useEffect(() => {
