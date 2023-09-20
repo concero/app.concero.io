@@ -16,10 +16,9 @@ interface Chain {
 }
 
 interface Route {
-  fee_bps: number
-  fee_in_from_token: number
-  from_token_amount: string
-  is_supported: boolean
+  feeBps: number
+  feeUsdValue: string
+  isSupported: boolean
   price: number
   expectedSlippage: number
   steps: {
@@ -31,7 +30,7 @@ interface Route {
     toChainId: number
     toToken: string
   }[]
-  to_token_amount: string
+  toTokenAmount: string
   steps_count: number
 }
 

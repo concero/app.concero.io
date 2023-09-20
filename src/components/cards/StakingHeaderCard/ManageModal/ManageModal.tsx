@@ -1,7 +1,8 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { IconCornerDownRight } from '@tabler/icons-react'
 import { Modal } from '../../../modals/Modal/Modal'
 import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
+import { useNetwork } from 'wagmi'
 import classNames from './ManageModal.module.pcss'
 import { SelectArea } from './SelectArea/SelectArea'
 import { useManageReducer } from './useManageReducer/useManageReducer'
@@ -12,6 +13,8 @@ import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
 import { CardHeader } from '../../CardHeader/CardHeader'
 import { getQuote } from './getQuote'
+import { Details } from './Details/Details'
+import { handleExecuteSwap } from './handleExecuteSwap'
 
 interface ManageModalProps {
   isOpen: boolean
@@ -22,7 +25,9 @@ interface ManageModalProps {
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
   const { getChains, getTokens } = useContext(DataContext)
   const [manageState, manageDispatch] = useManageReducer(stakingState)
-  const { modalType, swapType } = manageState
+  const { modalType, swapType, isLoading } = manageState
+  const typingTimeoutRef = useRef(null)
+  const { switchNetworkAsync } = useNetwork()
 
   async function handleSelectChain(item: any) {
     const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
@@ -36,11 +41,12 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   }
 
   useEffect(() => {
-    getQuote(manageState, manageDispatch)
+    getQuote({ manageState, manageDispatch, typingTimeoutRef })
+    // return () => clearRoute(manageDispatch, typingTimeoutRef)
   }, [manageState.from.amount])
 
   return (
-    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen}>
+    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen} isLoading={isLoading}>
       <CardHeader>
         <Button
           size={'sm'}
@@ -62,8 +68,13 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
           <div className={classNames.areaContainer}>
             <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} />
             <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} swapType={swapType} />
-            {/* {manageState.route ? <Details manageState={manageState} /> : null} */}
-            <Button leftIcon={<IconCornerDownRight size={18} />} size={'lg'}>
+            <Details manageState={manageState} />
+            <Button
+              leftIcon={<IconCornerDownRight size={18} />}
+              size={'lg'}
+              isLoading={isLoading}
+              onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync)}
+            >
               Stake
             </Button>
           </div>

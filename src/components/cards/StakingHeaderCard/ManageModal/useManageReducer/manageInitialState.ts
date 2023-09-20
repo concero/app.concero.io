@@ -30,7 +30,7 @@ export const manageInitialState = (stakingState: StakingState) => {
         name: selectedVault.name,
         symbol: selectedVault.symbol,
         logoURI: selectedVault.logoURI,
-        address: selectedVault.address,
+        address: selectedVault.widoAddress,
         decimals: null,
       },
       chain: {
@@ -46,5 +46,6 @@ export const manageInitialState = (stakingState: StakingState) => {
     direction: 'from',
     swapType: SwapType.stake,
     route: null,
+    isLoading: false,
   }
 }

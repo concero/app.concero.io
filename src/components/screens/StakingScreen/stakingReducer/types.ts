@@ -22,6 +22,7 @@ export type Filter = {
 export type Vault = {
   _id: string
   address: string
+  widoAddress: string
   apy: number
   apyBase: number
   apyBase7d: number

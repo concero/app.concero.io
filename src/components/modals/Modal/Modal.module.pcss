@@ -1,48 +1,54 @@
 .overlay {
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    top: 0;
-    left: 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    -moz-backdrop-filter: blur(8px);
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  -moz-backdrop-filter: blur(8px);
 }
 
 .container {
-    background-color: var(--color-base-background);
-    border: 1px solid var(--color-grey-darker);
-    border-radius: var(--st-br-md);
-    overflow-y: hidden;
-    padding: var(--sp-md);
-    z-index: 11;
-    max-width: 700px;
-    max-height: 600px;
+  background-color: var(--color-base-background);
+  border: 1px solid var(--color-grey-darker);
+  border-radius: var(--st-br-md);
+  overflow-y: hidden;
+  padding: var(--sp-md);
+  z-index: 11;
+  max-width: 700px;
+  max-height: 600px;
 }
 
 .header {
-    align-items: center;
-    flex-direction: row;
-    gap: var(--sp-sm);
-    justify-content: space-between;
-    padding-bottom: var(--sp-sm);
+  align-items: center;
+  flex-direction: row;
+  gap: var(--sp-sm);
+  justify-content: space-between;
+  padding-bottom: var(--sp-sm);
+}
+
+.titleContainer {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-md);
 }
 
 @media (max-width: 768px) {
-    .overlay {
-        justify-content: flex-end;
-    }
+  .overlay {
+    justify-content: flex-end;
+  }
 
-    .container {
-        width: 100%;
-        border-radius: unset;
-        border-top-left-radius: var(--st-br-md);
-        border-top-right-radius: var(--st-br-md);
-    }
+  .container {
+    width: 100%;
+    border-radius: unset;
+    border-top-left-radius: var(--st-br-md);
+    border-top-right-radius: var(--st-br-md);
+  }
 }
