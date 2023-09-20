@@ -32,7 +32,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
   const [isLisModalOpened, setIsListModalOpened] = useState(false)
   const [listModalType, setListModalType] = useState<ListModalTypeInterface>(ListModalType.chains)
   const [isApyModalVisible, setIsApyModalVisible] = useState(false)
-  const { filter } = stakingState
+  const { filter, address } = stakingState
   const { all, my_holdings, compound, chains } = filter
 
   function handleSelectChains(item) {
@@ -77,7 +77,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
       <Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick('all', !all)}>
         All
       </Button>
-      <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick('my_holdings', !my_holdings)}>
+      <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick('my_holdings', !my_holdings)} isDisabled={!address}>
         My holdings
       </Button>
       <Button
@@ -97,7 +97,9 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
         rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
         onClick={() => setIsApyModalVisible(true)}
       >
-        APY: {filter.apy ? `${filter.apy}%` : 'All'}
+        APY:
+        {' '}
+        {filter.apy ? `${filter.apy}%` : 'All'}
       </Button>
       <Button
         size="sm"

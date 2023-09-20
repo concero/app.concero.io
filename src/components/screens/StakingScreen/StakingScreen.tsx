@@ -32,7 +32,7 @@ export const StakingScreen: FC = () => {
 
   useEffect(() => {
     dispatch({ type: 'SET_ADDRESS', payload: address })
-  }, [])
+  }, [address])
 
   const mobileLayout = (
     <div className={classNames.container}>
