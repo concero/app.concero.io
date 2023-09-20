@@ -11,7 +11,7 @@ import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityBu
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
 import { CardHeader } from '../../CardHeader/CardHeader'
-import { getQuote } from '../../../../api/wido/getQuote'
+import { getQuote } from './getQuote'
 
 interface ManageModalProps {
   isOpen: boolean
@@ -36,11 +36,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   }
 
   useEffect(() => {
-    try {
-      const quote = getQuote(manageState)
-    } catch (error) {
-      console.log(error)
-    }
+    getQuote(manageState, manageDispatch)
   }, [manageState.from.amount])
 
   return (
