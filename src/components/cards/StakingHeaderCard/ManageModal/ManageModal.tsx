@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef } from 'react'
 import { IconCornerDownRight } from '@tabler/icons-react'
+import { useSwitchNetwork } from 'wagmi'
 import { Modal } from '../../../modals/Modal/Modal'
 import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
-import { useNetwork } from 'wagmi'
 import classNames from './ManageModal.module.pcss'
 import { SelectArea } from './SelectArea/SelectArea'
 import { useManageReducer } from './useManageReducer/useManageReducer'
@@ -27,7 +27,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   const [manageState, manageDispatch] = useManageReducer(stakingState)
   const { modalType, swapType, isLoading } = manageState
   const typingTimeoutRef = useRef(null)
-  const { switchNetworkAsync } = useNetwork()
+  const { switchNetworkAsync } = useSwitchNetwork()
 
   async function handleSelectChain(item: any) {
     const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
@@ -46,7 +46,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   }, [manageState.from.amount])
 
   return (
-    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen} isLoading={isLoading}>
+    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen}>
       <CardHeader>
         <Button
           size={'sm'}

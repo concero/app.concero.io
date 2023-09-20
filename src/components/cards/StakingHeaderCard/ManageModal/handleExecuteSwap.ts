@@ -5,7 +5,7 @@ import { providers } from 'ethers'
 import { ManageState } from './useManageReducer/types'
 
 async function getSigner(requiredChainId: number, switchNetworkAsync: any) {
-  if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
+  await switchNetworkAsync(requiredChainId)
   const client0 = createWalletClient({
     transport: custom(window.ethereum),
   })
@@ -27,12 +27,12 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
       toToken: manageState.to.token.address,
       amount,
     })
-    console.log('approved', data, to)
     const signer = await getSigner(from.chain.id, switchNetworkAsync)
+    console.log('approved', data, to)
     const approveTx = await signer.sendTransaction({ data, to })
     console.log(`Approve transaction sent: ${approveTx}`)
     const res = await approveTx.wait()
-    console.log(`Transaction executed: ${res}`)
+    console.log(res)
   } catch (error) {
     console.error(error)
   } finally {
