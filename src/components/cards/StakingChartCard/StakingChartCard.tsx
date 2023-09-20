@@ -12,8 +12,7 @@ import { ListModal } from '../../modals/MultiselectModal/ListModal'
 import { RowComponent } from './RowComponent/RowConponent'
 import { CardHeader } from '../CardHeader/CardHeader'
 
-export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) => {
-  const { selectedVault } = stakingState
+export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) => {
   const [chartState, dispatch] = useChartReducer()
   const { data, chartType, response, isTypeModalVisible } = chartState
   const [selectedItems, setSelectedItems] = useState([buttonsData[chartType]])
@@ -44,7 +43,7 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
 
   useEffect(() => {
     getData({ selectedVault, dispatch })
-  }, [selectedVault])
+  }, [selectedVault.address])
 
   useEffect(() => {
     switchChartType({ chartType, response, setData })

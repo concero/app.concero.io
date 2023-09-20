@@ -1,5 +1,5 @@
-import { ManageState } from './useManageReducer/types'
 import { Dispatch } from 'react'
+import { ManageState } from './useManageReducer/types'
 import { fetchQuote } from '../../../../api/wido/fetchQuote'
 
 export async function getQuote(manageState: ManageState, manageDispatch: Dispatch<any>) {

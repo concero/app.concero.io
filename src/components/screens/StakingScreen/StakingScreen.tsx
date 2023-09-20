@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import { useStakingReducer } from './stakingReducer/stakingReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
@@ -48,14 +48,13 @@ export const StakingScreen: FC = () => {
     </div>
   )
 
-  const desktopLayout = (
-    <div className={classNames.container}>
-      <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
-      {stakingState.selectedVault ? (
+  const vaultInfo = useMemo(() => {
+    if (stakingState.selectedVault) {
+      return (
         <div className={classNames.stacksContainer}>
           <div className={classNames.mainCardStack}>
             <StakingHeader stakingState={stakingState} />
-            <StakingChart stakingState={stakingState} />
+            <StakingChart selectedVault={stakingState.selectedVault} />
           </div>
           <div className={`card ${classNames.secondaryCardStack}`}>
             <Protocol stakingState={stakingState} />
@@ -65,7 +64,15 @@ export const StakingScreen: FC = () => {
             <Prediction stakingState={stakingState} />
           </div>
         </div>
-      ) : null}
+      )
+    }
+    return null
+  }, [stakingState.selectedVault])
+
+  const desktopLayout = (
+    <div className={classNames.container}>
+      <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
+      {vaultInfo}
     </div>
   )
 
