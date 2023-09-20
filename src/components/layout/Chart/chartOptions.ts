@@ -43,17 +43,26 @@ export const chartOptions = (colors) => ({
 })
 
 export const areaSeriesOptions = (colors, theme, lineNumber = null) => {
-  const lineColor = lineNumber === 'secondLine' ? '#1B7BEA' : colors.primary.main
+  const lineColor = lineNumber === 2 ? '#1B7BEA' : colors.primary.main
   // const topColor = lineNumber === 'secondLine' ? colors.primary.darker : colors.primary.darker
   const dark = theme === 'dark'
+
+  const getTopColor = () => {
+    if (lineNumber === 2) return '#1B7BEA'
+    return colors.primary.darker
+  }
+  const getBottomColor = () => {
+    if (dark) return 'rgba(0, 0, 0, 0)'
+    return 'rgba(255, 255, 255, 0)'
+  }
 
   return {
     baseLineVisible: false,
     lineType: 2,
     lineWidth: 1.8,
     strokeLinecap: 'round',
-    topColor: colors.primary.darker,
-    bottomColor: dark ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)',
+    topColor: getTopColor(),
+    bottomColor: getBottomColor(),
     baseLineStyle: 1,
     lineColor,
     priceFormat: {

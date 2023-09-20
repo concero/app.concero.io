@@ -43,7 +43,7 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
     if (secondData) {
       secondSeries = chart.addAreaSeries({
         priceScaleId: 'secondPriceScale',
-        ...areaSeriesOptions(colors, theme, 'secondLine'),
+        ...areaSeriesOptions(colors, theme, 2),
       })
       secondSeries.setData(secondData)
     }
