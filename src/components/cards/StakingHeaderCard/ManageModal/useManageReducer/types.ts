@@ -53,4 +53,6 @@ export interface ManageState {
   route: Route
   swapType: number
   address: string
+  isLoading: boolean
+  status: number
 }

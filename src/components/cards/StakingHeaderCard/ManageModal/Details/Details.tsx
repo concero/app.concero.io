@@ -24,10 +24,10 @@ export function Details({ manageState }: DetailsProps) {
       </Tag>
       <Tag color={'grey'}>
         <div className={classNames.tagContainer}>
-          {manageState?.route?. ? (
+          {manageState?.route?.feeUsdValue ? (
             <div className={classNames.tagInnerContainer}>
               <IconGasStation color={colors.text.secondary} size={16} />
-              <p className={'body1'}>${numberToFormatString(parseFloat(manageState?.route?.), 4)}</p>
+              <p className={'body1'}>${numberToFormatString(parseFloat(manageState?.route?.feeUsdValue), 4)}</p>
             </div>
           ) : null}
           {manageState?.route?.expectedSlippage ? (

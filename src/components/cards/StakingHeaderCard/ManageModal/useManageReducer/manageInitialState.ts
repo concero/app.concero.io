@@ -1,4 +1,4 @@
-import { ModalType, SwapType } from '../constants'
+import { ModalType, Status, SwapType } from '../constants'
 import { config } from '../../../../../constants/config'
 import { StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
 
@@ -47,5 +47,6 @@ export const manageInitialState = (stakingState: StakingState) => {
     swapType: SwapType.stake,
     route: null,
     isLoading: false,
+    status: Status.input,
   }
 }
