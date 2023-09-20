@@ -1,5 +1,6 @@
 import { useReducer } from 'react'
 import { manageInitialState } from './manageInitialState'
+import { StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
 
 function manageReducer(state: any, action: any) {
   switch (action.type) {
@@ -12,12 +13,6 @@ function manageReducer(state: any, action: any) {
       return {
         ...state,
         [action.direction]: { ...state[action.direction], chain: action.payload, token: action.tokens[0] },
-      }
-    }
-    case 'SET_AMOUNT': {
-      return {
-        ...state,
-        [action.direction]: { ...state[action.direction], amount: action.payload },
       }
     }
     case 'SET_DIRECTION':
@@ -33,12 +28,29 @@ function manageReducer(state: any, action: any) {
         ...state,
         swapType: action.payload,
       }
+    case 'SET_AMOUNT':
+      return {
+        ...state,
+        [action.direction]: { ...state[action.direction], amount: action.payload },
+      }
+    case 'SET_ADDRESS':
+      return {
+        ...state,
+        address: action.payload,
+      }
+    case 'SET_CHAIN_BY_VAULT':
+      const { chain, chainId, symbol, logoURI } = action.payload
+      return {
+        ...state,
+        [action.direction]: { ...state.to, chain: { id: chainId, symbol: symbol, name: chain, logoURI } },
+      }
     default:
       return new Error(`Unhandled action type: ${action.type}`)
   }
 }
 
-export function useManageReducer() {
-  const [manageState, manageDispatch] = useReducer(manageReducer, manageInitialState)
+export function useManageReducer(stakingState: StakingState) {
+  const initState = manageInitialState(stakingState)
+  const [manageState, manageDispatch] = useReducer(manageReducer, initState)
   return [manageState, manageDispatch]
 }

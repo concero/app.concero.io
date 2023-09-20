@@ -53,4 +53,5 @@ export interface ManageState {
   direction: string
   route: Route
   swapType: number
+  address: string
 }

@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
-
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import { colors } from '../../../../../constants/colors'

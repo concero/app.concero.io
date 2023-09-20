@@ -21,7 +21,7 @@ export type Filter = {
 
 export type Vault = {
   _id: string
-  contractAddress: string
+  address: string
   apy: number
   apyBase: number
   apyBase7d: number
@@ -32,6 +32,7 @@ export type Vault = {
   apyPct30D: number
   apyReward: number
   chain: string
+  chainId: string
   count: number
   category: string
   defiLlamaPoolId: string

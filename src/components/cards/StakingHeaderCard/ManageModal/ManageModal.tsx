@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { IconCornerDownRight } from '@tabler/icons-react'
 import { Modal } from '../../../modals/Modal/Modal'
 import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
@@ -10,8 +10,8 @@ import { InnerSelectModal } from './InnerSelectModal/InnerSelectModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
-import { Details } from './Details/Details'
 import { CardHeader } from '../../CardHeader/CardHeader'
+import { getQuote } from '../../../../api/wido/getQuote'
 
 interface ManageModalProps {
   isOpen: boolean
@@ -21,8 +21,8 @@ interface ManageModalProps {
 
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
   const { getChains, getTokens } = useContext(DataContext)
-  const [manageState, manageDispatch] = useManageReducer()
-  const { modalType, route, swapType } = manageState
+  const [manageState, manageDispatch] = useManageReducer(stakingState)
+  const { modalType, swapType } = manageState
 
   async function handleSelectChain(item: any) {
     const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
@@ -34,6 +34,14 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
     manageDispatch({ type: 'SET_TOKEN', payload: item, direction: 'from' })
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
+
+  useEffect(() => {
+    try {
+      const quote = getQuote(manageState)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [manageState.from.amount])
 
   return (
     <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen}>
@@ -58,7 +66,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
           <div className={classNames.areaContainer}>
             <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} />
             <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} swapType={swapType} />
-            {manageState.route ? <Details manageState={manageState} /> : null}
+            {/* {manageState.route ? <Details manageState={manageState} /> : null} */}
             <Button leftIcon={<IconCornerDownRight size={18} />} size={'lg'}>
               Stake
             </Button>
