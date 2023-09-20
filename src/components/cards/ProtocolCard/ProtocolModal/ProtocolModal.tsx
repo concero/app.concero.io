@@ -22,9 +22,12 @@ function ChangeTag({ change, period }: { change: number; period: string }) {
       <div className={isDown ? classNames.red : classNames.green}>
         <div style={{ flexDirection: 'row', alignItems: 'center' }}>
           {isDown ? <IconArrowDown size={16} color={colors.red.dark} /> : <IconArrowUp size={16} color={colors.green.main} />}
-          <h4>{Math.abs(change)}%</h4>
+          <h4>
+            {Math.abs(change)}
+            %
+          </h4>
         </div>
-        <p className={'body1'}>{period}</p>
+        <p className="body1">{period}</p>
       </div>
     </Tag>
   )
@@ -32,27 +35,27 @@ function ChangeTag({ change, period }: { change: number; period: string }) {
 
 export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
   return protocol ? (
-    <Modal show={show} setShow={setShow} title={'Protocol'}>
+    <Modal show={show} setShow={setShow} title="Protocol">
       <div className={classNames.container}>
         <div className={classNames.headerContainer}>
-          <Avatar src={protocol.logoURI ?? null} size={'lg'} />
+          <Avatar src={protocol.logoURI ?? null} size="lg" />
           <div>
             <div className={classNames.titleContainer}>
               {protocol.displayName ? <h4>{protocol.displayName}</h4> : null}
-              <p className={'body1'}>{protocol.symbol}</p>
+              <p className="body1">{protocol.symbol}</p>
             </div>
-            <p className={'body1'}>{protocol.description}</p>
+            <p className="body1">{protocol.description}</p>
           </div>
         </div>
         <div className={classNames.tagsContainer}>
           {protocol.category ? <CategoryTag category={protocol.category} /> : null}
           {protocol.address ? (
-            <Tag color={'grey'} leftIcon={<IconCopy color={colors.text.secondary} size={16} />} onClick={() => copyInBuffer(protocol.address)}>
+            <Tag color="grey" leftIcon={<IconCopy color={colors.text.secondary} size={16} />} onClick={() => copyInBuffer(protocol.address)}>
               <p className="body1">Contract address</p>
             </Tag>
           ) : null}
           {protocol.url ? (
-            <Tag color={'grey'} onClick={() => window.open(protocol.url, '_blank')} leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />}>
+            <Tag color="grey" onClick={() => window.open(protocol.url, '_blank')} leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />}>
               <p className="body1">Website</p>
             </Tag>
           ) : null}
@@ -60,12 +63,15 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
         {protocol.totalAllTime ? (
           <div className={`card ${classNames.totalContainer} ${classNames.cardContainer}`}>
             <div className={classNames.priceContainer}>
-              <h4 className={'body1'}>Transactions total</h4>
-              <h3>${numberToFormatString(protocol.totalAllTime, 2)}</h3>
+              <h4 className="body1">Transactions total</h4>
+              <h3>
+                $
+                {numberToFormatString(protocol.totalAllTime, 2)}
+              </h3>
             </div>
             <div className={classNames.rowContainer}>
-              <ChangeTag change={protocol.change_7d} period={'This week'} />
-              <ChangeTag change={protocol.change_1m} period={'This month'} />
+              <ChangeTag change={protocol.change_7d} period="This week" />
+              <ChangeTag change={protocol.change_1m} period="This month" />
             </div>
           </div>
         ) : null}
@@ -73,28 +79,32 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
           <div className={classNames.dailyContainer}>
             {protocol.dailyFees ? (
               <div className={`card ${classNames.priceContainer} ${classNames.cardContainer}`}>
-                <p className={'body1'}>Daily fees</p>
-                <h3>${numberToFormatString(protocol.dailyFees, 2)}</h3>
+                <p className="body1">Daily fees</p>
+                <h3>
+                  $
+                  {numberToFormatString(protocol.dailyFees, 2)}
+                </h3>
               </div>
             ) : null}
             {protocol.dailySupplySideRevenue ? (
               <div className={`card ${classNames.priceContainer} ${classNames.cardContainer}`}>
-                <p className={'body1'}>Daily supply revenue</p>
-                <h3>${numberToFormatString(protocol.dailySupplySideRevenue, 2)}</h3>
+                <p className="body1">Daily supply revenue</p>
+                <h3>
+                  $
+                  {numberToFormatString(protocol.dailySupplySideRevenue, 2)}
+                </h3>
               </div>
             ) : null}
           </div>
         ) : null}
         {protocol.audit_links.length ? (
           <div className={`card ${classNames.cardContainer}`}>
-            <p className={'body1'}>Audits</p>
-            {protocol.audit_links.map((link) => {
-              return (
-                <Tag color={'grey'} onClick={() => window.open(link, '_blank')} leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />}>
-                  <p className={'body1'}>Github</p>
-                </Tag>
-              )
-            })}
+            <p className="body1">Audits</p>
+            {protocol.audit_links.map((link) => (
+              <Tag color="grey" onClick={() => window.open(link, '_blank')} leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />}>
+                <p className="body1">Github</p>
+              </Tag>
+              ))}
           </div>
         ) : null}
       </div>

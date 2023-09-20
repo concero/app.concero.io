@@ -9,7 +9,9 @@ import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
 
 interface StakingHeaderCardProps {
-  stakingState: { selectedVault: Vault }
+  stakingState: {
+    selectedVault: Vault
+  }
 }
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
@@ -49,7 +51,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
           </div>
         </div>
         <div className={classNames.sideContainer}>
-          <Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant={'primary'} onClick={handleManageButtonClick}>
+          <Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick}>
             Manage
           </Button>
         </div>

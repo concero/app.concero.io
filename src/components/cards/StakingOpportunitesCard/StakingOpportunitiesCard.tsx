@@ -1,4 +1,4 @@
-import { Dispatch, UIEvent, useEffect, useState } from 'react'
+import { Dispatch, memo, UIEvent, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
@@ -11,6 +11,8 @@ interface StakingOpportunitiesProps {
   stakingState: StakingState
   dispatch: Dispatch<any>
 }
+
+const MemoizedStakingCard = memo(StakingCard)
 
 export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOpportunitiesProps) {
   const { selectedVault, vaults } = stakingState
@@ -44,11 +46,11 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
 
   return (
     <div className={`card ${classNames.container}`}>
-      <CardHeader title={'Staking opportunities'} isLoading={stakingState.loading} />
+      <CardHeader title="Staking opportunities" isLoading={stakingState.loading} />
       <FilteredTags dispatch={dispatch} stakingState={stakingState} />
       <div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
         {vaults?.map((vault: Vault) => (
-          <StakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />
+          <MemoizedStakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />
         ))}
       </div>
     </div>

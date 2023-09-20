@@ -123,7 +123,7 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
     const [ethTokens, polygonTokens, fetchedChains] = await Promise.all([
       fetchTokens({ chainId: '1', offset: 0, limit: 15 }),
       fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
-      fetchChains({ offset: 0, limit: 15 }),
+      fetchChains({ offset: 0, limit: 100 }),
     ])
     setTokens({ 1: ethTokens, 137: polygonTokens })
     // console.log('tokens', ethTokens)

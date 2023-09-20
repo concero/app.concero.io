@@ -2,10 +2,6 @@ import { FC, MouseEvent, ReactNode } from 'react'
 
 import className from './Tag.module.pcss'
 
-type IconComponentProps = {
-  name: string
-}
-
 export interface TagProps {
   leftIcon?: ReactNode
   rightIcon?: ReactNode
@@ -25,47 +21,9 @@ export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color, 
       <div className={`${className.tag}  ${sizeClass} ${className[color]}`}>
         {leftIcon}
         {children}
-        {title ? <p className={className.title}>{title}</p> : null}
+        {title || null}
         {rightIcon}
       </div>
     </div>
   )
-}
-
-export function getSentimentColorByText(text: string): string | null {
-  switch (text) {
-    case 'bullish':
-      return 'green'
-    case 'bearish':
-      return 'red'
-    case 'neutral':
-      return 'grey'
-    default:
-      return 'grey'
-  }
-}
-
-export function getSentimentIconByText(text: string): IconComponentProps | null {
-  switch (text) {
-    case 'bullish':
-      return {
-        name: 'ArrowUpRight',
-        iconProps: { size: 18 },
-      }
-    case 'bearish':
-      return {
-        name: 'ArrowDownRight',
-        iconProps: { size: 18 },
-      }
-    case 'neutral':
-      return {
-        name: 'Minus',
-        iconProps: { size: 18 },
-      }
-    default:
-      return {
-        name: 'Minus',
-        iconProps: { size: 18 },
-      }
-  }
 }
