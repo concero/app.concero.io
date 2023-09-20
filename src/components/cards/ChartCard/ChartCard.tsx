@@ -64,16 +64,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
           ) : null}
         </div>
         {chartType === 'coinGecko' ? (
-          <SegmentedControl
-            data={intervals}
-            selectedItem={interval}
-            setSelectedItem={(item) =>
-              dispatch({
-                type: 'SET_INTERVAL',
-                payload: item,
-              })
-            }
-          />
+          <SegmentedControl data={intervals} selectedItem={interval} setSelectedItem={(item) => dispatch({ type: 'SET_INTERVAL', payload: item })} />
         ) : null}
       </div>
       <div className="f1">

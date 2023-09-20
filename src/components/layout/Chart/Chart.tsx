@@ -1,5 +1,6 @@
 import { FC, useContext, useEffect, useRef } from 'react'
 import { createChart } from 'lightweight-charts'
+import { animated, useSpring } from 'react-spring'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
@@ -14,6 +15,14 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const seriesRef = useRef<any>(null)
   const { colors, theme } = useContext(ThemeContext)
+
+  // React Spring animation for fading in the chart
+  const fadeProps = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 300 },
+    reset: true,
+  })
 
   useEffect(() => {
     if (!chartRef.current) return
@@ -41,10 +50,9 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 
     tooltipRef.current = createTooltip()
     chartRef.current.appendChild(tooltipRef.current)
-    // chart.resize(chartRef.current.clientWidth, chartRef.current.clientHeight)
+
     const handleResize = () => {
       const { clientWidth, clientHeight } = chartRef.current
-      // console.log('resizing to ', clientWidth, clientHeight)
       chart.resize(clientWidth, clientHeight)
     }
 
@@ -64,5 +72,5 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
     }
   }, [colors, data, chartRef])
 
-  return <div className="f1" ref={chartRef} />
+  return <animated.div className="f1" ref={chartRef} style={fadeProps} />
 }
