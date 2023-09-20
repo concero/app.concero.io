@@ -11,12 +11,12 @@ export const chartOptions = (colors) => ({
   },
   grid: {
     vertLines: {
-      color: colors.grey.darker,
+      color: colors.background,
       style: 1,
       visible: false,
     },
     horzLines: {
-      color: colors.grey.darker,
+      color: colors.background,
       style: 1,
       visible: false,
     },
