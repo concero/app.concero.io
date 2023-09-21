@@ -28,7 +28,7 @@ export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingS
           key="apy"
           title="APY"
           value={`${formatNumber(vault.apy, { decimalPlaces: 2 })}%`}
-          tag={vault.apyPct30D ? formatNumber(vault.apyPct30D) : null}
+          tag={vault.apyPct30D ? formatNumber(vault.apyPct30D, { decimalPlaces: 2 }) : null}
         />,
       )
     }
@@ -38,7 +38,7 @@ export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingS
         <Highlight
           key="apyMean30d"
           title="Mean APY (30d)"
-          value={`${formatNumber(vault.apyMean30d)}%`}
+          value={`${formatNumber(vault.apyMean30d, { decimalPlaces: 2 })}%`}
           tag={vault.apyMean30dPct30D ? formatNumber(vault.apyMean30dPct30D) : null}
         />,
       )

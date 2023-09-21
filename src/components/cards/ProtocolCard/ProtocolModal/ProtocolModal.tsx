@@ -6,7 +6,7 @@ import { Avatar } from '../../../tags/Avatar/Avatar'
 import { CategoryTag } from '../../../tags/CategoryTag/CategoryTag'
 import { Tag } from '../../../tags/Tag/Tag'
 import { colors } from '../../../../constants/colors'
-import { numberToFormatString } from '../../../../utils/formatting'
+import { formatNumber } from '../../../../utils/formatting'
 import { copyInBuffer } from '../../../../utils/copyInBuffer'
 
 interface ProtocolModalProps {
@@ -66,7 +66,7 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
               <h4 className="body1">Transactions total</h4>
               <h3>
                 $
-                {numberToFormatString(protocol.totalAllTime, 2)}
+                {formatNumber(protocol.totalAllTime)}
               </h3>
             </div>
             <div className={classNames.rowContainer}>
@@ -82,7 +82,7 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
                 <p className="body1">Daily fees</p>
                 <h3>
                   $
-                  {numberToFormatString(protocol.dailyFees, 2)}
+                  {formatNumber(protocol.dailyFees)}
                 </h3>
               </div>
             ) : null}
@@ -91,7 +91,7 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
                 <p className="body1">Daily supply revenue</p>
                 <h3>
                   $
-                  {numberToFormatString(protocol.dailySupplySideRevenue, 2)}
+                  {formatNumber(protocol.dailySupplySideRevenue)}
                 </h3>
               </div>
             ) : null}
@@ -104,7 +104,7 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
               <Tag color="grey" onClick={() => window.open(link, '_blank')} leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />}>
                 <p className="body1">Github</p>
               </Tag>
-              ))}
+            ))}
           </div>
         ) : null}
       </div>

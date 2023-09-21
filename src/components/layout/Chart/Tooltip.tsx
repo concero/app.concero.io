@@ -39,12 +39,7 @@ export function updateTooltip(param, mainSeries, secondarySeries, toolTip, chart
   const mainPrice = mainData?.value ?? mainData?.close
   if (mainPrice === undefined || mainPrice === null) return
 
-  let content = `
-    <div style='font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);'>
-      <span style='font-weight: 500; color: var(--color-grey-light);'>$${formatNumber(mainPrice)}</span>
-      <span style='font-weight: 400; color: var(--color-grey-medium);'>${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
-    </div>
-  `
+  let content = ''
 
   if (secondarySeries) {
     const secondaryData = param.seriesData.get(secondarySeries)
@@ -53,13 +48,20 @@ export function updateTooltip(param, mainSeries, secondarySeries, toolTip, chart
       content += `
         <div style='font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);'>
           <span style='font-weight: 500; color: var(--color-grey-light);'>${formatNumber(secondaryPrice)}%</span>
-          </span>
-      <span style='font-weight: 400; color: var(--color-grey-medium);'>${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
     </div>
-        </div>
       `
     }
   }
+
+  content += `
+    <div style='font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);'>
+      <span style='font-weight: 500; color: var(--color-grey-light);'>$${formatNumber(mainPrice)}</span>
+    </div>
+  `
+
+  content += `
+  <span style='font-size: 0.875rem; font-weight: 400; color: var(--color-grey-medium);'>${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
+  `
 
   toolTip.style.opacity = 1
   toolTip.innerHTML = content
