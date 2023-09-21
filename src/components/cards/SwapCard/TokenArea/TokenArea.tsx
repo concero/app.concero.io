@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useRef } from 'react'
-import { animated, useSpring } from 'react-spring'
+import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'

@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react'
-import { animated, useSpring } from 'react-spring'
+import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 import { Card } from '../Card/Card'
 import classNames from './RouteCard.module.pcss'

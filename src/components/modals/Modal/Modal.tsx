@@ -1,5 +1,5 @@
-import { FC, KeyboardEvent, ReactNode, useEffect } from 'react'
-import { animated, useSpring, useTransition } from 'react-spring'
+import React, { FC, KeyboardEvent, ReactNode, useCallback, useEffect } from 'react'
+import { animated, useSpring, useTransition } from '@react-spring/web'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
 
@@ -13,15 +13,18 @@ export interface ModalProps {
 }
 
 export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children, isLoading = false }) => {
-  const stopPropagation = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const stopPropagation = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation()
-  }
+  }, [])
 
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
-      setShow(false)
-    }
-  }
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShow(false)
+      }
+    },
+    [setShow],
+  )
 
   useEffect(() => {
     if (show) {
@@ -30,18 +33,15 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children,
     } else {
       document.body.style.removeProperty('overflow-y')
     }
-
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [show])
-  // Fade animation for the overlay
+  }, [show, handleKeyDown])
+
   const fadeAnimation = useSpring({
     opacity: show ? 1 : 0,
-    pointerEvents: show ? 'auto' : 'none',
   })
 
-  // Transition for the modal appearance/disappearance
   const transitions = useTransition(show, {
     from: { transform: 'translateY(20px)', opacity: 0 },
     enter: { transform: 'translateY(0)', opacity: 1 },
@@ -49,16 +49,14 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children,
   })
 
   return (
-    fadeAnimation.opacity.to((o) => o > 0) && (
+    show && (
       <animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
-        {transitions((style, item) =>
-          item ? (
-            <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
-              <ModalHeader title={title} onClick={() => setShow(false)} isLoading={isLoading} />
-              {children}
-            </animated.div>
-          ) : null,
-        )}
+        {transitions((style, item) => (item ? (
+          <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
+            <ModalHeader title={title} onClick={() => setShow(false)} isLoading={isLoading} />
+            {children}
+          </animated.div>
+          ) : null))}
       </animated.div>
     )
   )

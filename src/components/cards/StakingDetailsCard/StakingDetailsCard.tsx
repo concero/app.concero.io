@@ -1,4 +1,4 @@
-import { animated, useTrail } from 'react-spring'
+import { animated, useTrail } from '@react-spring/web'
 import { memo } from 'react'
 import classNames from '../../screens/StakingScreen/StakingScreen.module.pcss'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
