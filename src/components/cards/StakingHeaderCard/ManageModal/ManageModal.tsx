@@ -9,7 +9,6 @@ import { InnerSelectModal } from './InnerSelectModal/InnerSelectModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
-import { CardHeader } from '../../CardHeader/CardHeader'
 import { Details } from './Details/Details'
 import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
@@ -51,7 +50,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
       <div className={classNames.container}>
         {modalType === ModalType.input ? (
           <div className={classNames.areaContainer}>
-            <CardHeader>
+            <div className={classNames.row}>
               <Button
                 size={'sm'}
                 variant={swapType === SwapType.stake ? 'primary' : 'subtle'}
@@ -66,7 +65,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
               >
                 Withdraw
               </Button>
-            </CardHeader>
+            </div>
             <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} balance={manageState.balance} />
             <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} swapType={swapType} />
             <Details manageState={manageState} />
