@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { animated, useTransition } from 'react-spring'
+import { animated, useTransition } from '@react-spring/web'
 import { IconX } from '@tabler/icons-react'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import classNames from './Notifications.module.pcss'

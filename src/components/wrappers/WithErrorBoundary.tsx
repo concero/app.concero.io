@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 import { Button } from '../buttons/Button/Button'
 
-export function FallbackComponent({ resetError }) {
+export function FallbackComponent({ error }) {
   return (
     <div className="card f1 ac jc">
       <h5 style={{ color: 'var(--color-text-secondary)' }}>Something went wrong.</h5>
+    </div>
+  )
+}
+
+export function NotFoundFallback() {
+  return (
+    <div className="f1 ac jc">
+      <h5 style={{ color: 'var(--color-text-secondary)' }}>No items found</h5>
     </div>
   )
 }

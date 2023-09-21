@@ -1,4 +1,4 @@
-import { animated } from 'react-spring'
+import { animated } from '@react-spring/web'
 import { TableCell } from './TableCell'
 
 export function TableRow({ style, item, columns, onClick }) {
