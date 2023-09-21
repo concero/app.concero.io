@@ -1,4 +1,4 @@
-import { animated, useSpring } from 'react-spring'
+import { animated, useSpring } from '@react-spring/web'
 import { FC } from 'react'
 import { IconArrowsDiff } from '@tabler/icons-react'
 import classNames from './StakingCard.module.pcss'

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
@@ -9,12 +9,13 @@ import classNames from './ExchangeScreen.module.pcss'
 
 export interface ExchangeScreenProps {}
 
+const History = memo(withErrorBoundary(HistoryCard))
+const Swap = memo(withErrorBoundary(SwapCard))
+const News = memo(withErrorBoundary(NewsCard))
+const Chart = memo(withErrorBoundary(ChartCard))
+
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
   const isDesktop = useMediaQuery('mobile')
-  const History = withErrorBoundary(HistoryCard)
-  const Swap = withErrorBoundary(SwapCard)
-  const News = withErrorBoundary(NewsCard)
-  const Chart = withErrorBoundary(ChartCard)
 
   const desktopLayout = (
     <div className={`row ${classNames.container}`}>

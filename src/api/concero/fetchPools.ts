@@ -5,14 +5,7 @@ function getChainsQuery(filter: Filter) {
   if (!filter) return ''
   const { chains } = filter
   if (!chains || chains.length === 0) return ''
-  return `chain=${chains.map((chain) => chain.name).join(',')}`
-}
-
-function getCompoundQuery(filter: Filter) {
-  if (!filter) return ''
-  const { compound } = filter
-  if (!compound) return ''
-  return 'exposure=multi'
+  return `chainId=${chains.map((chain) => chain.id).join(',')}`
 }
 
 function getApyQuery(filter: Filter) {
@@ -22,22 +15,29 @@ function getApyQuery(filter: Filter) {
   return `apy=${apy}`
 }
 
-function getMyHoldingsQuery(stakingState: StakingState) {
+function getMyHoldingsQuery(stakingState: StakingState, address) {
   if (!stakingState) return ''
-  const { filter, address } = stakingState
+  const { filter } = stakingState
   const { my_holdings } = filter
   if (!my_holdings || !address) return ''
   return `byHoldingsOfAddress=${address}`
 }
 
-export const fetchPools = async (stakingState: StakingState, offset: number, limit: number) => {
+function getCategoryQuery(filter: Filter) {
+  if (!filter) return ''
+  const { category } = filter
+  if (!category.length) return ''
+  return `category=${category.join(',')}`
+}
+
+export async function fetchPools(stakingState: StakingState, address: string, offset: number, limit: number) {
   const { filter } = stakingState
   const urlParts = [
     `${process.env.CONCERO_API_URL}/pools`,
     getChainsQuery(filter),
-    getCompoundQuery(filter),
     getApyQuery(filter),
-    getMyHoldingsQuery(stakingState),
+    getMyHoldingsQuery(stakingState, address),
+    getCategoryQuery(filter),
     'widoSupported=true',
     'outlier=false',
     `offset=${offset}`,

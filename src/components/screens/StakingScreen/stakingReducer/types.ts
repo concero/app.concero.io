@@ -6,6 +6,7 @@ export interface StakingState {
   selectedVault: Vault | null
   chains: Chain[]
   address: string | null
+  loading: boolean
 }
 
 export type Filter = {
@@ -15,11 +16,13 @@ export type Filter = {
   compound: boolean
   chains: string[]
   apy: string
+  category: string[]
 }
 
 export type Vault = {
   _id: string
-  contractAddress: string
+  address: string
+  widoAddress: string
   apy: number
   apyBase: number
   apyBase7d: number
@@ -30,7 +33,9 @@ export type Vault = {
   apyPct30D: number
   apyReward: number
   chain: string
+  chainId: string
   count: number
+  category: string
   defiLlamaPoolId: string
   exposure: string
   il7d: number
@@ -52,8 +57,15 @@ export type Vault = {
   stablecoin: string
   symbol: string
   tvlUsd: number
-  underlyingTokens: string[]
+  inputTokens: InputTokens[]
   volumeUsd1d: number
   volumeUsd7d: number
   widoSupported: boolean
+}
+
+export type InputTokens = {
+  _id: string
+  name: string
+  symbol: string
+  logoURI: string
 }

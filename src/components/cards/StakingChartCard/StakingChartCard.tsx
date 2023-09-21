@@ -1,17 +1,21 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { IconChevronDown } from '@tabler/icons-react'
 import { Chart } from '../../layout/Chart/Chart'
 import classNames from './StakingChartCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { StakingChartCardProps } from './types'
-import { getSelectedStyle } from './handlers'
-import { buttonsData } from './constants'
 import { useChartReducer } from './chartReducer/chartReducer'
-import { fetchData } from './fetchData'
+import { getData } from './getData'
 import { switchChartType } from './switchChartType'
+import { buttonsData } from './constants'
+import { ListModal } from '../../modals/MultiselectModal/ListModal'
+import { RowComponent } from './RowComponent/RowConponent'
+import { CardHeader } from '../CardHeader/CardHeader'
 
-export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) => {
-  const { selectedVault } = stakingState
-  const [{ data, chartType, response }, dispatch] = useChartReducer()
+export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) => {
+  const [chartState, dispatch] = useChartReducer()
+  const { data, chartType, response, isTypeModalVisible } = chartState
+  const [selectedItems, setSelectedItems] = useState([buttonsData[chartType]])
 
   const setData = (data) => {
     dispatch({ type: 'SET_DATA', payload: data })
@@ -21,13 +25,25 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
     dispatch({ type: 'SET_CHART_TYPE', payload: type })
   }
 
-  const setResponse = (r) => {
-    dispatch({ type: 'SET_RESPONSE', payload: r })
+  function setIsTypeModalVisible(isVisible: boolean) {
+    dispatch({ type: 'SET_IS_TYPE_MODAL_VISIBLE', payload: isVisible })
+  }
+
+  function handleTypeButtonClick() {
+    setIsTypeModalVisible(true)
+  }
+
+  const getItems = () => buttonsData
+
+  function handleSelectType(item) {
+    setIsTypeModalVisible(false)
+    setChartType(item.type)
+    setSelectedItems([item])
   }
 
   useEffect(() => {
-    fetchData({ selectedVault, setResponse })
-  }, [selectedVault])
+    getData({ selectedVault, dispatch })
+  }, [selectedVault.address])
 
   useEffect(() => {
     switchChartType({ chartType, response, setData })
@@ -36,18 +52,26 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ stakingState }) =>
   return (
     <div className={`card ${classNames.container}`}>
       <div className={classNames.headerContainer}>
-        <h5 className={'cardHeaderTitle'}>Chart</h5>
+        <CardHeader title={'Chart'} isLoading={chartState.isLoading} />
         <div className={classNames.tagsContainer}>
-          {buttonsData.map((button) => (
-            <Button key={button.title} size={'sm'} variant={getSelectedStyle(chartType === button.type)} onClick={() => setChartType(button.type)}>
-              {button.title}
-            </Button>
-          ))}
+          <Button variant={'subtle'} size={'sm'} rightIcon={<IconChevronDown size={16} />} onClick={handleTypeButtonClick}>
+            {buttonsData[chartType].title}
+          </Button>
         </div>
       </div>
       <div className={classNames.chartContainer}>
         <Chart data={data.main} secondData={data.secondary} />
       </div>
+      <ListModal
+        isOpen={isTypeModalVisible}
+        setIsOpen={setIsTypeModalVisible}
+        getItems={getItems}
+        RenderItem={RowComponent}
+        selectedItems={selectedItems}
+        onSelect={handleSelectType}
+        isSearchable={false}
+        title={'Select chart type'}
+      />
     </div>
   )
 }

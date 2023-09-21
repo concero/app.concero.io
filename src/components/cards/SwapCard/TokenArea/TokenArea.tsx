@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useRef } from 'react'
-import { animated, useSpring } from 'react-spring'
+import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -14,7 +14,7 @@ import { isFloatInput } from '../../../../utils/validation'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../../modals/MultiselectModal/ListModal'
-import { ListEntityButton } from '../../StakingOpportunitesCard/FilteredTags/ListEntityButton'
+import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, chains }) => {
   const { getTokens, getChains } = useContext(DataContext)

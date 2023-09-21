@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import classNames from './Avatar.module.pcss'
 
 interface AvatarProps {
@@ -15,12 +15,18 @@ const getClasses = (size: AvatarProps['size'], className: AvatarProps['className
   return baseClasses.concat(sizeClass, additionalClasses).join(' ')
 }
 
-export const Avatar: FC<AvatarProps> = ({ size, src, className }) => {
-  const [imgSrc, setImgSrc] = useState(src)
-
-  function handleError() {
-    setImgSrc(null)
-  }
-
-  return <div className={getClasses(size, className)}>{imgSrc ? <img src={src} className={classNames.avatar} onError={handleError} /> : null}</div>
-}
+export const Avatar: FC<AvatarProps> = ({ size, src, className }) => (
+  <div className={getClasses(size, className)}>
+    <img
+      src={src || ''}
+      className={`${classNames.avatar} ${src ? '' : 'grey-circle'}`}
+      onError={(e) => {
+        e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="gray"%3E%3Crect width="100%" height="100%"%3E%3C/rect%3E%3C/svg%3E'
+      }}
+    />
+  </div>
+)
+//
+// export function Avatar({ size, src, className }: AvatarProps) {
+//   return null
+// }

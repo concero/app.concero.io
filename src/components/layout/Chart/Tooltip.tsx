@@ -1,4 +1,4 @@
-import { numberToFormatString, unixTimeFormat } from '../../../utils/formatting'
+import { formatNumber, unixTimeFormat } from '../../../utils/formatting'
 import classNames from '../../cards/ChartCard/ChartCard.module.pcss'
 
 function isOutsideBounds(point, chartElement) {
@@ -39,27 +39,29 @@ export function updateTooltip(param, mainSeries, secondarySeries, toolTip, chart
   const mainPrice = mainData?.value ?? mainData?.close
   if (mainPrice === undefined || mainPrice === null) return
 
-  let content = `
-    <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
-      <span style="font-weight: 500; color: var(--color-grey-light);">$${numberToFormatString(mainPrice, 4)}</span>
-      <span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
-    </div>
-  `
+  let content = ''
 
   if (secondarySeries) {
     const secondaryData = param.seriesData.get(secondarySeries)
     const secondaryPrice = secondaryData?.value ?? secondaryData?.close
     if (secondaryPrice !== undefined && secondaryPrice !== null) {
       content += `
-        <div style="font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);">
-          <span style="font-weight: 500; color: var(--color-grey-light);">${numberToFormatString(secondaryPrice, 4)}%</span>
-          </span>
-      <span style="font-weight: 400; color: var(--color-grey-medium);">${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
+        <div style='font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);'>
+          <span style='font-weight: 500; color: var(--color-grey-light);'>${formatNumber(secondaryPrice)}%</span>
     </div>
-        </div>
       `
     }
   }
+
+  content += `
+    <div style='font-size: 0.875rem; font-weight: 400; color: var(--color-text-primary);'>
+      <span style='font-weight: 500; color: var(--color-grey-light);'>$${formatNumber(mainPrice)}</span>
+    </div>
+  `
+
+  content += `
+  <span style='font-size: 0.875rem; font-weight: 400; color: var(--color-grey-medium);'>${unixTimeFormat(param.time, 'MMM DD, hh:mm')}</span>
+  `
 
   toolTip.style.opacity = 1
   toolTip.innerHTML = content

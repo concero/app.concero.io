@@ -12,7 +12,7 @@ import { useNewsReducer } from './newsReducer'
 import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/MultiselectModal/ListModal'
-import { ListEntityButton } from '../StakingOpportunitesCard/FilteredTags/ListEntityButton'
+import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
 
 interface NewsCardProps {}
 

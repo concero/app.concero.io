@@ -1,17 +1,21 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
+import { IconArrowsUpDown } from '@tabler/icons-react'
 import classNames from './StakingHeaderCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { capitalize } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
-import { IconArrowsUpDown } from '@tabler/icons-react'
 import { InfoCard } from './InfoCard/InfoCard'
+import { ManageModal } from './ManageModal/ManageModal'
 
 interface StakingHeaderCardProps {
-  stakingState: { selectedVault: Vault }
+  stakingState: {
+    selectedVault: Vault
+  }
 }
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
+  const [isManageModalOpen, setIsManageModalOpen] = useState(false)
   const { selectedVault } = stakingState
 
   const stake = {
@@ -32,6 +36,10 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
     last_24h: '0.94%',
   }
 
+  function handleManageButtonClick() {
+    setIsManageModalOpen(true)
+  }
+
   return (
     <div className={`card ${classNames.container}`}>
       <div className={classNames.headerContainer}>
@@ -43,7 +51,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
           </div>
         </div>
         <div className={classNames.sideContainer}>
-          <Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant={'primary'}>
+          <Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick}>
             Manage
           </Button>
         </div>
@@ -53,6 +61,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
         <InfoCard item={earned} />
         <InfoCard item={poolShare} />
       </div>
+      <ManageModal isOpen={isManageModalOpen} setIsOpen={setIsManageModalOpen} stakingState={stakingState} />
     </div>
   )
 }

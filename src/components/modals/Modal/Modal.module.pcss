@@ -17,7 +17,7 @@
 
 .container {
     background-color: var(--color-base-background);
-    border: 1px solid var(--color-grey-darker);
+    border: 1px solid var(-color-grey-darker);
     border-radius: var(--st-br-md);
     overflow-y: hidden;
     padding: var(--sp-md);
@@ -32,6 +32,12 @@
     gap: var(--sp-sm);
     justify-content: space-between;
     padding-bottom: var(--sp-sm);
+}
+
+.titleContainer {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-md);
 }
 
 @media (max-width: 768px) {

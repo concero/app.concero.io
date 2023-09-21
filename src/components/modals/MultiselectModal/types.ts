@@ -10,8 +10,10 @@ export interface MultiSelectModalProps {
   setIsOpen: (isOpen: boolean) => void
   items: any[]
   title: string
-  RowComponent: FC<RowsComponentProps>
   selectedItems: any[]
   onSelect: (item: any) => void
   type: 'multiselect' | 'singleselect'
+  getItems: (key: any) => void
+  RenderItem: FC<RowsComponentProps>
+  isSearchable?: boolean
 }

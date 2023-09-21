@@ -1,5 +1,5 @@
 import { FC, KeyboardEvent, ReactNode, useEffect } from 'react'
-import { animated, useSpring, useTransition } from 'react-spring'
+import { animated, useSpring, useTransition } from '@react-spring/web'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
 

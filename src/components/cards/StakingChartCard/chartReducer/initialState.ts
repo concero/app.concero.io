@@ -7,4 +7,6 @@ export const initialState = {
   },
   chartType: ChartType.TVLAPY,
   response: null,
+  isTypeModalVisible: false,
+  isLoading: false,
 }

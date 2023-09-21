@@ -1,51 +1,56 @@
-import { Dispatch, FC, UIEvent, useEffect, useState } from 'react'
+import { Dispatch, memo, UIEvent, useEffect, useState } from 'react'
+import { useAccount } from 'wagmi'
 import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
 import { StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { pushVaults, setVaults } from './getVaults'
+import { CardHeader } from '../CardHeader/CardHeader'
 
 interface StakingOpportunitiesProps {
   stakingState: StakingState
   dispatch: Dispatch<any>
 }
 
-export const StakingOpportunitiesCard: FC<StakingOpportunitiesProps> = ({ stakingState, dispatch }) => {
+const MemoizedStakingCard = memo(StakingCard)
+
+export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOpportunitiesProps) {
   const { selectedVault, vaults } = stakingState
+  const { address } = useAccount()
   const [offset, setOffset] = useState(0)
   const limit = 15
 
-  const handleSelect = (vault) => dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+  function handleSelect(vault) {
+    dispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+  }
 
-  const handleEndReached = () => {
+  function handleEndReached() {
     const newOffset = offset + limit
     setOffset(newOffset)
     try {
-      pushVaults(dispatch, stakingState, newOffset, limit)
+      pushVaults(dispatch, address, stakingState, newOffset, limit)
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+  function handleScroll(e: UIEvent<HTMLDivElement>) {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
-    if (scrollHeight - scrollTop === clientHeight) {
-      handleEndReached()
-    }
+    if (scrollHeight - scrollTop === clientHeight) handleEndReached()
   }
 
   useEffect(() => {
     setOffset(0)
-    setVaults(dispatch, stakingState, 0, limit)
+    setVaults(dispatch, address, stakingState, 0, limit)
   }, [stakingState.filter])
 
   return (
     <div className={`card ${classNames.container}`}>
-      <h5 className="cardHeaderTitle">Staking opportunities</h5>
+      <CardHeader title="Staking opportunities" isLoading={stakingState.loading} />
       <FilteredTags dispatch={dispatch} stakingState={stakingState} />
       <div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
         {vaults?.map((vault: Vault) => (
-          <StakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />
+          <MemoizedStakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />
         ))}
       </div>
     </div>

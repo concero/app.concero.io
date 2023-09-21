@@ -1,46 +1,51 @@
 .container {
-  flex: 1;
-  gap: var(--sp-sm);
-  flex-direction: row;
+    flex: 1;
+    gap: var(--sp-sm);
+    flex-direction: row;
 }
 
 .mainCardStack {
-  flex: 1;
-  min-height: 50%;
-  gap: var(--sp-sm);
+    flex: 1;
+    min-height: 50%;
+    gap: var(--sp-sm);
 }
 
 .secondaryCardStack {
-  width: 300px;
-  gap: var(--sp-lg);
+    width: 300px;
+    gap: var(--sp-lg);
+    overflow-y: scroll;
+    max-height: calc(100vh - 42px - (2 * var(--sp-screen-v)) - var(--sp-sm));
 }
 
 .stacksContainer {
-  flex: 1;
-  gap: var(--sp-sm);
-  flex-direction: row;
+    flex: 1;
+    gap: var(--sp-sm);
+    flex-direction: row;
 }
 
 @media (max-width: 1200px) {
-  .secondaryCardStack {
-    flex-direction: row;
-    width: 100%;
-  }
-  .card {
-    flex: 1;
-  }
-  .stacksContainer {
-    flex-wrap: wrap;
-  }
+    .secondaryCardStack {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .card {
+        flex: 1;
+    }
+
+    .stacksContainer {
+        flex-wrap: wrap;
+    }
 }
 
 @media (max-width: 768px) {
-  .container {
-    width: 100%;
-    flex: none;
-    flex-direction: column;
-  }
-  .mainCardStack {
-    flex-direction: column;
-  }
+    .container {
+        width: 100%;
+        flex: none;
+        flex-direction: column;
+    }
+
+    .mainCardStack {
+        flex-direction: column;
+    }
 }
