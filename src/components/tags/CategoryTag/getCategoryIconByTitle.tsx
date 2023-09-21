@@ -1,4 +1,4 @@
-import { IconChartPie, IconDroplet, IconLayoutGrid, IconRipple, IconSeeding } from '@tabler/icons-react'
+import { IconChartPie, IconLayoutGrid, IconRipple, IconSeeding } from '@tabler/icons-react'
 import { colors } from '../../../constants/colors'
 
 export function getCategoryIconByTitle(title: string, isSelected) {
@@ -12,8 +12,6 @@ export function getCategoryIconByTitle(title: string, isSelected) {
       return <IconSeeding size={size} color={color} />
     case 'Yield':
       return <IconSeeding size={size} color={color} />
-    case 'LP':
-      return <IconDroplet size={size} color={color} />
     case 'Dexes':
       return <IconLayoutGrid size={size} color={color} />
     case 'Lending':

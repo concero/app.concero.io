@@ -1,36 +1,15 @@
 import { Dispatch } from 'react'
 import { useSwitchNetwork } from 'wagmi'
-import { IconCornerDownRight, IconWallet } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
 import classNames from './StakeButton.module.pcss'
 import { handleExecuteSwap } from '../ManageModal/handleExecuteSwap'
 import { ManageState } from '../ManageModal/useManageReducer/types'
 import { buttonMessages, Status } from '../ManageModal/constants'
+import { buttonClassNames, buttonIcons } from './styleHandlers'
 
 interface StakeButtonProps {
   manageState: ManageState
   manageDispatch: Dispatch<any>
-}
-
-const buttonIcons = {
-  [Status.swap]: <IconCornerDownRight size={18} />,
-  [Status.input]: '',
-  [Status.balanceError]: <IconWallet size={18} />,
-}
-
-function buttonClassNames(status) {
-  switch (status) {
-    case Status.input || Status.loading || Status.noRoute:
-      return 'disabled'
-    case Status.swap:
-      return ''
-    case Status.balanceError || Status.unknownError:
-      return 'wrong'
-    case Status.success:
-      return 'success'
-    default:
-      return 'disabled'
-  }
 }
 
 export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {

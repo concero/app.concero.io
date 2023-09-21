@@ -3,6 +3,7 @@ import { approve } from 'wido'
 import { createWalletClient, custom } from 'viem'
 import { providers } from 'ethers'
 import { ManageState } from './useManageReducer/types'
+import { Status } from './constants'
 
 async function getSigner(requiredChainId: number, switchNetworkAsync: any) {
   await switchNetworkAsync(requiredChainId)
@@ -16,6 +17,8 @@ async function getSigner(requiredChainId: number, switchNetworkAsync: any) {
 
 export async function handleExecuteSwap(manageState: ManageState, manageDispatch: Dispatch<any>, switchNetworkAsync: any) {
   manageDispatch({ type: 'SET_LOADING', payload: true })
+  manageDispatch({ type: 'SET_STATUS', payload: Status.loading })
+
   const { from, route } = manageState
   const amount = route.toTokenAmount
 
@@ -33,8 +36,10 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
     console.log(`Approve transaction sent: ${approveTx}`)
     const res = await approveTx.wait()
     console.log(res)
+    manageDispatch({ type: 'SET_STATUS', payload: Status.success })
   } catch (error) {
     console.error(error)
+    manageDispatch({ type: 'SET_STATUS', payload: Status.unknownError })
   } finally {
     manageDispatch({ type: 'SET_LOADING', payload: false })
   }

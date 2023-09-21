@@ -12,7 +12,7 @@ export function ListCategoryButton({ item, isSelected, onSelect }: ListCategoryB
   return (
     <Button variant={isSelected ? 'primary' : 'black'} onClick={() => onSelect(item)}>
       <div className={classNames.container}>
-        <h4>{item.title}</h4>
+        <h4>{item}</h4>
         <IconCheck size={16} color={isSelected ? 'white' : 'transparent'} />
       </div>
     </Button>

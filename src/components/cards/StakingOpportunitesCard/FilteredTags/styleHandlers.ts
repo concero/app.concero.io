@@ -17,6 +17,6 @@ export function getAllTagStyle(filter) {
 export function getCategoryTitle(filter) {
   const { category } = filter
   if (!category.length) return 'All'
-  if (category.length === 1) return category[0].title
+  if (category.length === 1) return category[0]
   return category.length
 }

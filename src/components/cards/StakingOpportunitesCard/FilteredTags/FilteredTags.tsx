@@ -88,18 +88,13 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
       >
         {`Chains: ${getChainTitle(chains)}`}
       </Button>
-      <Button size="sm" variant={getSelectedStyle(compound)} onClick={() => handleTagClick('compound', !compound)}>
-        Compound
-      </Button>
       <Button
         variant={getSelectedStyle(filter.apy)}
         size="sm"
         rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
         onClick={() => setIsApyModalVisible(true)}
       >
-        APY:
-        {' '}
-        {filter.apy ? `${filter.apy}%` : 'All'}
+        APY: {filter.apy ? `${filter.apy}%` : 'All'}
       </Button>
       <Button
         size="sm"
