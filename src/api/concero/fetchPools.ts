@@ -27,7 +27,6 @@ function getCategoryQuery(filter: Filter) {
   if (!filter) return ''
   const { category } = filter
   if (!category.length) return ''
-  console.log(category)
   return `category=${category.join(',')}`
 }
 
@@ -46,7 +45,6 @@ export async function fetchPools(stakingState: StakingState, address: string, of
   ]
   const filteredUrl = urlParts.filter((part) => part !== '')
   const url = `${filteredUrl.splice(0, 2).join('?')}&${filteredUrl.join('&')}`
-  console.log(url)
   const response = await get(url)
   if (response.status !== 200) throw new Error(response.error)
   return response.data.data
