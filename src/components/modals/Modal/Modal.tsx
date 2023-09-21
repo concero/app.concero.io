@@ -1,4 +1,4 @@
-import React, { FC, KeyboardEvent, ReactNode, useCallback, useEffect } from 'react'
+import { FC, KeyboardEvent, ReactNode, useEffect } from 'react'
 import { animated, useSpring, useTransition } from '@react-spring/web'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
@@ -9,22 +9,18 @@ export interface ModalProps {
   setShow: (show: boolean) => void
   children?: ReactNode
   onClose?: () => void
-  isLoading?: boolean
 }
 
-export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children, isLoading = false }) => {
-  const stopPropagation = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children }) => {
+  const stopPropagation = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation()
-  }, [])
+  }
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setShow(false)
-      }
-    },
-    [setShow],
-  )
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setShow(false)
+    }
+  }
 
   useEffect(() => {
     if (show) {
@@ -33,15 +29,18 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children,
     } else {
       document.body.style.removeProperty('overflow-y')
     }
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [show, handleKeyDown])
-
+  }, [show])
+  // Fade animation for the overlay
   const fadeAnimation = useSpring({
     opacity: show ? 1 : 0,
+    pointerEvents: show ? 'auto' : 'none',
   })
 
+  // Transition for the modal appearance/disappearance
   const transitions = useTransition(show, {
     from: { transform: 'translateY(20px)', opacity: 0 },
     enter: { transform: 'translateY(0)', opacity: 1 },
@@ -49,11 +48,11 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children,
   })
 
   return (
-    show && (
+    fadeAnimation.opacity.to((o) => o > 0) && (
       <animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
         {transitions((style, item) => (item ? (
           <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
-            <ModalHeader title={title} onClick={() => setShow(false)} isLoading={isLoading} />
+            <ModalHeader title={title} onClick={() => setShow(false)} />
             {children}
           </animated.div>
           ) : null))}

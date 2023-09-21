@@ -1,6 +1,6 @@
 import { FC, useContext, useRef } from 'react'
 import { useAccount } from 'wagmi'
-import { IconSettings } from '@tabler/icons-react'
+import { IconSettings2 } from '@tabler/icons-react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
 import { SwapCardProps } from './types'
@@ -17,10 +17,8 @@ import { colors } from '../../../constants/colors'
 
 export const SwapCard: FC<SwapCardProps> = () => {
   const { selection, dispatch } = useContext(SelectionContext)
-
   const [swapState, swapDispatch] = useSwapReducer(selection)
   const { address } = useAccount()
-
   const typingTimeoutRef = useRef(null)
 
   const toggleInsurance = (routeId) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
@@ -30,12 +28,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
     <InsuranceProvider toggleInsurance={toggleInsurance}>
       <div className={`card ${classNames.container}`}>
         <CardHeader title={getCardTitleByStatus(swapState.status)}>
-          <div className="f1 row asb">
+          <div className={classNames.cardHeader}>
             <Button
               variant="black"
               size="sq-sm"
               onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-              leftIcon={<IconSettings size={16} color={colors.grey.medium} />}
+              leftIcon={<IconSettings2 size={16} color={colors.grey.dark} />}
             />
           </div>
         </CardHeader>

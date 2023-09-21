@@ -60,7 +60,7 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
     const secondSeries = addSecondSeries(chart, secondData, colors, theme)
     tooltipRef.current = createTooltip()
     chartRef.current.appendChild(tooltipRef.current)
-
+    chart.timeScale().fitContent()
     const handleResize = () => {
       const { clientWidth, clientHeight } = chartRef.current!
       chart.resize(clientWidth, clientHeight)
