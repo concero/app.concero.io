@@ -21,6 +21,16 @@ export const manageInitialState = (stakingState: StakingState) => {
         symbol: 'ETH',
         logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg',
         id: 1,
+        providers: [
+          {
+            name: 'lifi',
+            symbol: 'ETH',
+          },
+          {
+            name: 'rango',
+            symbol: 'ETH',
+          },
+        ],
       },
     },
     to: {
@@ -48,5 +58,6 @@ export const manageInitialState = (stakingState: StakingState) => {
     route: null,
     isLoading: false,
     status: Status.input,
+    balance: null,
   }
 }

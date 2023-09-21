@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
-import { handleBalance } from './handlers/handleBalance'
+import { getBalance } from '../../../utils/getBalance'
 import { clearRoutes } from './handlers/handleRoutes'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 
@@ -13,7 +13,7 @@ export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch,
   }, [from.token.symbol, to.token.symbol])
 
   useEffect(() => {
-    handleBalance({ swapDispatch, from, address })
+    getBalance({ dispatch: swapDispatch, from, address })
   }, [from.token.symbol, from.chain.id, address])
 
   useEffect(() => {

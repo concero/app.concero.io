@@ -43,6 +43,8 @@ function manageReducer(state: any, action: any) {
       return { ...state, isLoading: action.payload }
     case 'SET_STATUS':
       return { ...state, status: action.payload }
+    case 'SET_BALANCE':
+      return { ...state, balance: action.payload }
     default:
       return new Error(`Unhandled action type: ${action.type}`)
   }

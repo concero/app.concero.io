@@ -55,4 +55,5 @@ export interface ManageState {
   address: string
   isLoading: boolean
   status: number
+  balance: string | null
 }

@@ -10,10 +10,10 @@ import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityBu
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
 import { CardHeader } from '../../CardHeader/CardHeader'
-import { getQuote } from './getQuote'
 import { Details } from './Details/Details'
 import { StakeButton } from '../StakeButton/StakeButton'
-import { clearRoute } from './clearRoute'
+import { getQuote } from './getQuote'
+import { getBalance } from '../../../../utils/getBalance'
 
 interface ManageModalProps {
   isOpen: boolean
@@ -38,37 +38,36 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
-  function handleClose() {
-    clearRoute(manageDispatch, typingTimeoutRef)
-  }
-
   useEffect(() => {
     getQuote({ manageState, manageDispatch, typingTimeoutRef })
-    // return () => clearRoute(manageDispatch, typingTimeoutRef)
-  }, [manageState.from.amount])
+  }, [manageState.from.amount, manageState.from.chain.id, manageState.from.token.address, manageState.to.token.address])
+
+  useEffect(() => {
+    getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
+  }, [manageState.from.chain.id, manageState.from.token.address, manageState.to.token.address])
 
   return (
-    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen} onClose={handleClose}>
-      <CardHeader>
-        <Button
-          size={'sm'}
-          variant={swapType === SwapType.stake ? 'primary' : 'subtle'}
-          onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.stake })}
-        >
-          Stake
-        </Button>
-        <Button
-          size={'sm'}
-          variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'}
-          onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.withdraw })}
-        >
-          Withdraw
-        </Button>
-      </CardHeader>
+    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen}>
       <div className={classNames.container}>
         {modalType === ModalType.input ? (
           <div className={classNames.areaContainer}>
-            <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} />
+            <CardHeader>
+              <Button
+                size={'sm'}
+                variant={swapType === SwapType.stake ? 'primary' : 'subtle'}
+                onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.stake })}
+              >
+                Stake
+              </Button>
+              <Button
+                size={'sm'}
+                variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'}
+                onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.withdraw })}
+              >
+                Withdraw
+              </Button>
+            </CardHeader>
+            <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} balance={manageState.balance} />
             <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} swapType={swapType} />
             <Details manageState={manageState} />
             <StakeButton manageState={manageState} manageDispatch={manageDispatch} />
