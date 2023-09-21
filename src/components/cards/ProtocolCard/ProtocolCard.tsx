@@ -26,12 +26,12 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 
   return (
     <div>
-      <CardHeader title={'Protocol'} />
-      <Button variant={'subtle'} onClick={() => setIsOpened(true)}>
+      <CardHeader title="Protocol" />
+      <Button variant="subtle" onClick={() => setIsOpened(true)}>
         <div className={classNames.cardContainer}>
           <div className={classNames.avatarContainer}>
             <Avatar src={selectedVault?.logoURI ?? null} />
-            <h5>{capitalize(selectedVault.protocolName)}</h5>
+            <h5>{capitalize(selectedVault.name)}</h5>
           </div>
           <IconChevronRight size={18} color={colors.text.secondary} />
         </div>

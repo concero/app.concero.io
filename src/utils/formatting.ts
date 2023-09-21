@@ -124,9 +124,13 @@ type FormatNumberOptions = {
 }
 
 export function formatNumber(num: number, options: FormatNumberOptions = {}): string {
-  // console.log('formatNumber', num, options)
+  console.log('formatNumber', num, options)
   let { decimals = 10, decimalPlaces = 4, separator, minDigits = 1, disableUnit = false } = options
   if (num === undefined || num === null) return ''
+
+  const op = num < 0 ? '-' : ''
+  num = Math.abs(num)
+
   if (num > 1) decimalPlaces = 2
 
   if (num < 0.001 && num > 0) {
@@ -170,7 +174,7 @@ export function formatNumber(num: number, options: FormatNumberOptions = {}): st
     }
   }
 
-  let result = `${intPart}${decPart ? '.' : ''}${decPart || ''}`
+  let result = `${op}${intPart}${decPart ? '.' : ''}${decPart || ''}`
 
   if (unit) {
     result += ` ${unit}`
