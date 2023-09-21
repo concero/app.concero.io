@@ -6,13 +6,7 @@ const stakingReducer = (state, action) => {
     case 'SET_ROUTE':
       return { ...state, route: action.payload }
     case 'SET_FILTER':
-      return {
-        ...state,
-        filter: {
-          ...state.filter,
-          [action.payload.filter]: action.payload.value,
-        },
-      }
+      return { ...state, filter: { ...state.filter, [action.payload.filter]: action.payload.value } }
     case 'SET_SELECTED_VAULT':
       return { ...state, selectedVault: action.payload }
     case 'SET_VAULTS':

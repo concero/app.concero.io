@@ -5,7 +5,6 @@ export const initialState: StakingState = {
     search: '',
     all: true,
     my_holdings: false,
-    compound: false,
     chains: [],
     apy: '',
     category: [],
