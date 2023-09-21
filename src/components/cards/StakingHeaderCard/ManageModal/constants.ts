@@ -18,6 +18,7 @@ export enum Status {
   canceled = 5,
   balanceError = 6,
   unknownError = 7,
+  noRoute = 8,
 }
 
 export const buttonMessages = {
@@ -29,4 +30,5 @@ export const buttonMessages = {
   [Status.canceled]: 'Canceled by user',
   [Status.balanceError]: 'Insufficient balance',
   [Status.unknownError]: 'Something went wrong.',
+  [Status.noRoute]: 'No route found',
 }

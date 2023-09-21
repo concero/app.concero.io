@@ -1,14 +1,12 @@
 import { useReducer } from 'react'
 import { manageInitialState } from './manageInitialState'
 import { StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
+import { Status } from '../constants'
 
 function manageReducer(state: any, action: any) {
   switch (action.type) {
     case 'SET_MODAL_TYPE':
-      return {
-        ...state,
-        modalType: action.payload,
-      }
+      return { ...state, modalType: action.payload }
     case 'SET_CHAIN': {
       return {
         ...state,
@@ -40,11 +38,11 @@ function manageReducer(state: any, action: any) {
       }
     case 'SET_ROUTE':
       if (action.fromAmount !== state.from.amount) return state
-      return { ...state, route: action.payload }
+      return { ...state, route: action.payload, status: Status.swap }
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload }
-    case 'SET_RESPONSE':
-      return { ...state, response: action.payload }
+    case 'SET_STATUS':
+      return { ...state, status: action.payload }
     default:
       return new Error(`Unhandled action type: ${action.type}`)
   }

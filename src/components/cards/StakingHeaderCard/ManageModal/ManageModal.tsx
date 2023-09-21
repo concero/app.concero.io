@@ -13,6 +13,7 @@ import { CardHeader } from '../../CardHeader/CardHeader'
 import { getQuote } from './getQuote'
 import { Details } from './Details/Details'
 import { StakeButton } from '../StakeButton/StakeButton'
+import { clearRoute } from './clearRoute'
 
 interface ManageModalProps {
   isOpen: boolean
@@ -37,13 +38,17 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
+  function handleClose() {
+    clearRoute(manageDispatch, typingTimeoutRef)
+  }
+
   useEffect(() => {
     getQuote({ manageState, manageDispatch, typingTimeoutRef })
     // return () => clearRoute(manageDispatch, typingTimeoutRef)
   }, [manageState.from.amount])
 
   return (
-    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen}>
+    <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen} onClose={handleClose}>
       <CardHeader>
         <Button
           size={'sm'}
