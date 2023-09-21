@@ -50,7 +50,7 @@ export function TokenRatioCard({ item }) {
 }
 
 export const TokensCard: FC<TokensCardProps> = ({ stakingState }) => {
-  console.log('TokensCard', stakingState)
+  // console.log('TokensCard', stakingState)
 
   const renderTokens = (vault) => {
     // loops through the tokens array and renders a TokenCard for each token.

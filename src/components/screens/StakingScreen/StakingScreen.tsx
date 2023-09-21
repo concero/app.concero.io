@@ -8,20 +8,21 @@ import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCa
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
 import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
 import { RatioCard } from '../../cards/RatioCard/RatioCard'
-import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
+// import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
+
+const Header = memo(withErrorBoundary(StakingHeaderCard))
+
+const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
+const Ratio = memo(withErrorBoundary(RatioCard))
+const Details = memo(withErrorBoundary(StakingDetailsCard))
 
 export const StakingScreen: FC = () => {
   const [stakingState, dispatch] = useStakingReducer()
   const { address } = useAccount()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
-  // const StakingOpportunities = withErrorBoundary(StakingOpportunitiesCard)
-  const StakingHeader = memo(withErrorBoundary(StakingHeaderCard))
-  const StakingChart = memo(withErrorBoundary(StakingChartCard))
-  const StakingHighlights = memo(withErrorBoundary(StakingHighlightsCard))
-  const Ratio = memo(withErrorBoundary(RatioCard))
-  const Details = memo(withErrorBoundary(DetailsCard))
+  const Chart = memo(withErrorBoundary(StakingChartCard))
 
   useEffect(() => {
     dispatch({ type: 'SET_ADDRESS', payload: address })
@@ -32,8 +33,8 @@ export const StakingScreen: FC = () => {
       <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
       {stakingState.selectedVault ? (
         <div className={classNames.mainCardStack}>
-          <StakingChart stakingState={stakingState} />
-          <StakingHighlights stakingState={stakingState} />
+          <Chart stakingState={stakingState} />
+          <Highlights stakingState={stakingState} />
           <Ratio />
           <Details />
         </div>
@@ -46,10 +47,10 @@ export const StakingScreen: FC = () => {
     return (
       <div className={classNames.stacksContainer}>
         <div className={classNames.mainCardStack}>
-          <StakingHeader stakingState={stakingState} />
-          <StakingChart selectedVault={stakingState.selectedVault} />
+          <Header stakingState={stakingState} />
+          <Chart selectedVault={stakingState.selectedVault} />
         </div>
-        <StakingDetailsCard stakingState={stakingState} />
+        <Details stakingState={stakingState} />
       </div>
     )
   }, [stakingState.selectedVault])

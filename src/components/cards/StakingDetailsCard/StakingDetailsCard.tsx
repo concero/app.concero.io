@@ -19,10 +19,11 @@ export function StakingDetailsCard({ stakingState }) {
     <Protocol stakingState={stakingState} />,
     <Highlights stakingState={stakingState} />,
     <Tokens stakingState={stakingState} />,
-    <Rewards stakingState={stakingState} />,
+    stakingState.rewardTokens && <Rewards stakingState={stakingState} />,
     <Prediction stakingState={stakingState} />,
   ]
 
+  // console.log('secondaryCards', secondaryCards)
   const trail = useTrail(secondaryCards.length, {
     from: { opacity: 0, marginTop: '20px' },
     to: { opacity: 1, marginTop: '0px' },
@@ -32,11 +33,13 @@ export function StakingDetailsCard({ stakingState }) {
 
   return (
     <div className={`card ${classNames.secondaryCardStack}`}>
-      {trail.map((style, index) => (
+      {trail.map(
+        (style, index) => secondaryCards[index] && (
         <animated.div key={`StakingHighlights-${index}`} style={style}>
           {secondaryCards[index]}
         </animated.div>
-      ))}
+          ),
+      )}
     </div>
   )
 }
