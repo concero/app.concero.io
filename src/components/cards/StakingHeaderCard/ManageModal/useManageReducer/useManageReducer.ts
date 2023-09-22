@@ -10,8 +10,6 @@ function manageReducer(state: any, action: any) {
     case 'SET_CHAIN': {
       return { ...state, [action.direction]: { ...state[action.direction], chain: action.payload, token: action.tokens[0] } }
     }
-    case 'SET_DIRECTION':
-      return { ...state, direction: action.payload }
     case 'SET_TOKEN': {
       return { ...state, [action.direction]: { ...state[action.direction], token: action.payload } }
     }
@@ -36,6 +34,28 @@ function manageReducer(state: any, action: any) {
     case 'SWITCH_SWAP_TYPE':
       const type = state.swapType === SwapType.stake ? SwapType.withdraw : SwapType.stake
       return { ...state, swapType: type, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
+    case 'SET_TO_SELECTION':
+      return {
+        ...state,
+        to: {
+          ...state.to,
+          token: {
+            name: action.payload.name,
+            symbol: action.payload.symbol,
+            logoURI: action.payload.logoURI,
+            address: action.payload.widoAddress,
+            decimals: null,
+          },
+          chain: {
+            name: action.payload.chain,
+            symbol: action.payload.symbol,
+            logoURI: action.payload.logoURI,
+            id: action.payload.chainId,
+          },
+        },
+      }
+    case 'RESET':
+      return manageInitialState(action.payload)
     default:
       return new Error(`Unhandled action type: ${action.type}`)
   }

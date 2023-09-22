@@ -53,7 +53,6 @@ export const manageInitialState = (stakingState: StakingState) => {
     address: address,
     snake: false,
     modalType: ModalType.input,
-    direction: 'from',
     swapType: SwapType.stake,
     route: null,
     isLoading: false,
