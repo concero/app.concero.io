@@ -27,13 +27,15 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   const typingTimeoutRef = useRef(null)
 
   async function handleSelectChain(item: any) {
+    const direction = swapType === SwapType.stake ? 'from' : 'to'
     const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
-    manageDispatch({ type: 'SET_CHAIN', payload: item, tokens, direction: 'from' })
+    manageDispatch({ type: 'SET_CHAIN', payload: item, tokens, direction: direction })
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
   function handleSelectToken(item: any) {
-    manageDispatch({ type: 'SET_TOKEN', payload: item, direction: 'from' })
+    const direction = swapType === SwapType.stake ? 'from' : 'to'
+    manageDispatch({ type: 'SET_TOKEN', payload: item, direction: direction })
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
