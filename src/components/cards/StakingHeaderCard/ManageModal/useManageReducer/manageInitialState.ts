@@ -38,14 +38,14 @@ export const manageInitialState = (stakingState: StakingState) => {
       amount_usd: '',
       token: {
         name: selectedVault.name,
-        symbol: selectedVault.symbol,
+        symbol: selectedVault.widoSymbol,
         logoURI: selectedVault.logoURI,
         address: selectedVault.widoAddress,
         decimals: null,
       },
       chain: {
         name: selectedVault.chain,
-        symbol: selectedVault.symbol,
+        symbol: selectedVault.widoSymbol,
         logoURI: selectedVault.logoURI,
         id: selectedVault.chainId,
       },

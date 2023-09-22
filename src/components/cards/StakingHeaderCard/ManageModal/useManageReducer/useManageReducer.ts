@@ -28,6 +28,7 @@ function manageReducer(state: any, action: any) {
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload }
     case 'SET_STATUS':
+      if (!state.from.amount) return { ...state, status: Status.input }
       return { ...state, status: action.payload }
     case 'SET_BALANCE':
       return { ...state, balance: action.payload }
@@ -41,14 +42,14 @@ function manageReducer(state: any, action: any) {
           ...state.to,
           token: {
             name: action.payload.name,
-            symbol: action.payload.symbol,
+            symbol: action.payload.widoSymbol,
             logoURI: action.payload.logoURI,
             address: action.payload.widoAddress,
             decimals: null,
           },
           chain: {
             name: action.payload.chain,
-            symbol: action.payload.symbol,
+            symbol: action.payload.widoSymbol,
             logoURI: action.payload.logoURI,
             id: action.payload.chainId,
           },

@@ -46,7 +46,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
         <div className={classNames.sideContainer}>
           <Avatar src={selectedVault.logoURI} />
           <div>
-            <h5 className={classNames.symbolTitle}>{selectedVault.symbol}</h5>
+            <h5 className={classNames.symbolTitle}>{selectedVault.widoSymbol}</h5>
             <p className={`body1 ${classNames.protocolTitle}`}>{capitalize(selectedVault?.protocolName ?? '')}</p>
           </div>
         </div>

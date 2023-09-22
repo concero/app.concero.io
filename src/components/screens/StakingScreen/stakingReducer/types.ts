@@ -56,6 +56,7 @@ export type Vault = {
   sigma: number
   stablecoin: string
   symbol: string
+  widoSymbol: string
   tvlUsd: number
   inputTokens: InputTokens[]
   volumeUsd1d: number

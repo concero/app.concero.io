@@ -23,7 +23,7 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
           </div>
           {/* <div className={classNames.headerSideContainer}>{renderTags({ vault, isSelected })}</div> */}
         </div>
-        <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.symbol}</h5>
+        <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.widoSymbol}</h5>
       </div>
       <UnderlyingTokens underlyingTokens={vault.inputTokens} isSelected={isSelected} />
     </div>
