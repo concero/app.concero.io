@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 import { manageInitialState } from './manageInitialState'
 import { StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
-import { Status } from '../constants'
+import { Status, SwapType } from '../constants'
 
 function manageReducer(state: any, action: any) {
   switch (action.type) {
@@ -33,6 +33,9 @@ function manageReducer(state: any, action: any) {
       return { ...state, status: action.payload }
     case 'SET_BALANCE':
       return { ...state, balance: action.payload }
+    case 'SWITCH_SWAP_TYPE':
+      const type = state.swapType === SwapType.stake ? SwapType.withdraw : SwapType.stake
+      return { ...state, swapType: type, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
     default:
       return new Error(`Unhandled action type: ${action.type}`)
   }

@@ -45,24 +45,20 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
     getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
   }, [manageState.from.chain.id, manageState.from.token.address, manageState.to.token.address])
 
+  function handleSwitchSwapType() {
+    manageDispatch({ type: 'SWITCH_SWAP_TYPE' })
+  }
+
   return (
     <Modal title={'Manage position'} show={isOpen} setShow={setIsOpen}>
       <div className={classNames.container}>
         {modalType === ModalType.input ? (
           <div className={classNames.areaContainer}>
             <div className={classNames.row}>
-              <Button
-                size={'sm'}
-                variant={swapType === SwapType.stake ? 'primary' : 'subtle'}
-                onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.stake })}
-              >
+              <Button size={'sm'} variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
                 Stake
               </Button>
-              <Button
-                size={'sm'}
-                variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'}
-                onClick={() => manageDispatch({ type: 'SET_SWAP_TYPE', payload: SwapType.withdraw })}
-              >
+              <Button size={'sm'} variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
                 Withdraw
               </Button>
             </div>

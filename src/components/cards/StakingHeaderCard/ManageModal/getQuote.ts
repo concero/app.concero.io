@@ -10,7 +10,8 @@ interface IGetQuote {
   typingTimeoutRef: MutableRefObject<any>
 }
 
-function handleError(error: Error, manageDispatch: Dispatch<any>) {
+function handleError(error: Error, manageDispatch: Dispatch<any>, manageState: ManageState) {
+  if (!manageState.from.amount) return manageDispatch({ type: 'SET_STATUS', payload: Status.input })
   if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
     manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
   } else {
@@ -27,7 +28,8 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
     manageDispatch({ type: 'SET_ROUTE', payload: route, fromAmount: manageState.from.amount })
     manageDispatch({ type: 'SET_AMOUNT', payload: route.toTokenAmountUsdValue, direction: 'to' })
   } catch (error) {
-    handleError(error, manageDispatch)
+    console.log(error)
+    handleError(error, manageDispatch, manageState)
   } finally {
     manageDispatch({ type: 'SET_LOADING', payload: false })
   }

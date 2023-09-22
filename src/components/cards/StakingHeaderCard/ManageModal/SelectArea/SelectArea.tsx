@@ -20,7 +20,7 @@ interface SelectAreaProps {
 export function SelectArea({ selection, direction, dispatch, balance = null, swapType }: SelectAreaProps) {
   const inputRef = useRef()
   const [isFocused, setIsFocused] = useState(false)
-  const isDisabled = (direction === 'to' && swapType === SwapType.stake) || (direction === 'from' && swapType === SwapType.withdraw)
+  const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 
   function handleChangeText(value) {
     if (value && !isFloatInput(value)) return
@@ -41,7 +41,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             size="sm"
             variant="black"
             rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
-            isDisabled={isDisabled}
+            isDisabled={isSelectDisabled}
           >
             <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
           </Button>
@@ -58,7 +58,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             placeholder={`0.0 ${selection.token.symbol}`}
             value={selection.amount}
             onChangeText={handleChangeText}
-            isDisabled={isDisabled}
+            isDisabled={direction === 'to'}
           />
           <h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
         </div>
@@ -67,7 +67,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
           size="sm"
           variant="black"
           rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
-          isDisabled={isDisabled}
+          isDisabled={isSelectDisabled}
         >
           <CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
         </Button>
