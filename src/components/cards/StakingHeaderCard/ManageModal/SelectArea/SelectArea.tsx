@@ -31,8 +31,12 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
     dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.chains })
   }
 
+  function handleAreaClick(inputRef) {
+    if (inputRef.current) inputRef.current.focus()
+  }
+
   return (
-    <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}>
+    <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
       <div className={classNames.tokenRow}>
         <div className={classNames.tokenRowHeader}>
           <p>{capitalize(direction)}</p>
@@ -40,7 +44,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             onClick={handleChainButtonClick}
             size="sm"
             variant="black"
-            rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
+            rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={colors.text.secondary} />}
             isDisabled={isSelectDisabled}
           >
             <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
@@ -66,7 +70,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
           onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
           size="sm"
           variant="black"
-          rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
+          rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={colors.text.secondary} />}
           isDisabled={isSelectDisabled}
         >
           <CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
