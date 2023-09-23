@@ -34,7 +34,7 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
 }
 
 export async function getQuote({ manageState, manageDispatch, typingTimeoutRef }: IGetQuote) {
-  if (!parseFloat(manageState.from.amount)) return clearRoute(manageDispatch, typingTimeoutRef)
+  if (!manageState.from.amount) return clearRoute(manageDispatch, typingTimeoutRef)
   try {
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
     const typingTimeoutId = setTimeout(() => handleFetchQuote(manageState, manageDispatch), 700)
