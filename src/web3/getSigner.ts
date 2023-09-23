@@ -4,7 +4,7 @@ import { SwitchNetworkResult } from '@wagmi/core'
 
 export async function getSigner(requiredChainId: number, switchNetworkAsync: Promise<SwitchNetworkResult>) {
   if (parseInt(window.ethereum.chainId) !== parseInt(requiredChainId) && switchNetworkAsync) {
-    switchNetworkAsync(Number(requiredChainId))
+    await switchNetworkAsync(Number(requiredChainId))
   }
   const client0 = createWalletClient({
     transport: custom(window.ethereum),
