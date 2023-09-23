@@ -1,27 +1,16 @@
 import { Dispatch } from 'react'
-import { createWalletClient, custom } from 'viem'
-import { providers } from 'ethers'
 import { ManageState } from './useManageReducer/types'
 import { Status } from './constants'
-
-async function getSigner(requiredChainId: number, switchNetworkAsync: any) {
-  if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
-  const client0 = createWalletClient({
-    transport: custom(window.ethereum),
-  })
-
-  const provider = new providers.Web3Provider(client0.transport, 'any')
-  return provider.getSigner()
-}
+import { getSigner } from '../../../../web3/getSigner'
 
 export async function handleExecuteSwap(manageState: ManageState, manageDispatch: Dispatch<any>, switchNetworkAsync: any) {
   manageDispatch({ type: 'SET_LOADING', payload: true })
   manageDispatch({ type: 'SET_STATUS', payload: Status.loading })
 
-  const { from, route } = manageState
-  const amount = route.toTokenAmount
-
   try {
+    const { from, route } = manageState
+    const amount = route.toTokenAmount
+
     // const { data, to } = await approve({
     //   fromChainId: from.chain.id,
     //   toChainId: manageState.to.chain.id,
