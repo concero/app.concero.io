@@ -20,6 +20,8 @@ export function buttonClassNames(status) {
       return 'wrong'
     case Status.success:
       return 'success'
+    case Status.canceled:
+      return 'wrong'
     default:
       return 'disabled'
   }

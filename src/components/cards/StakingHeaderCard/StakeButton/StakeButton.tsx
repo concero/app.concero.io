@@ -16,7 +16,13 @@ export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
   const { switchNetworkAsync } = useSwitchNetwork()
   const { status } = manageState
   const isDisabled =
-    status === Status.input || status === Status.loading || status === Status.noRoute || status === Status.unknownError || status === Status.balanceError
+    status === Status.input ||
+    status === Status.loading ||
+    status === Status.noRoute ||
+    status === Status.unknownError ||
+    status === Status.balanceError ||
+    status === Status.canceled ||
+    status === Status.success
 
   return (
     <Button
