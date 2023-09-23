@@ -30,6 +30,7 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
       toToken: manageState.to.token.address,
       amount,
     })
+
     const signer = await getSigner(from.chain.id, switchNetworkAsync)
     console.log('approved', data, to)
     const approveTx = await signer.sendTransaction({ data, to })
@@ -38,7 +39,7 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
     console.log(res)
     manageDispatch({ type: 'SET_STATUS', payload: Status.success })
   } catch (error) {
-    console.error(error)
+    console.log(error)
     manageDispatch({ type: 'SET_STATUS', payload: Status.unknownError })
   } finally {
     manageDispatch({ type: 'SET_LOADING', payload: false })

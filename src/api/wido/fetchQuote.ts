@@ -19,6 +19,7 @@ export async function fetchQuote(manageState: ManageState) {
   console.log('quoteParams', quoteParams)
 
   const quoteResult = await quote(quoteParams)
+  console.log('quoteResult', quoteResult)
   if (!quoteResult.isSupported) throw new Error('Route not supported')
   return quoteResult
 }

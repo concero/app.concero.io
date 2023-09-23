@@ -50,7 +50,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 
   useEffect(() => {
     getQuote({ manageState, manageDispatch, typingTimeoutRef })
-  }, [manageState.from.amount, manageState.from.chain.id, manageState.from.token.address, manageState.to.token.address])
+  }, [manageState.from.amount, manageState.from.chain.id, manageState.to.chain.id, manageState.from.token.address, manageState.to.token.address])
 
   useEffect(() => {
     getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })

@@ -24,7 +24,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 
   function handleChangeText(value) {
     if (value && !isFloatInput(value)) return
-    dispatch({ type: 'SET_AMOUNT', payload: value, direction })
+    dispatch({ type: 'SET_AMOUNT', amount: value, direction })
   }
 
   function handleChainButtonClick() {

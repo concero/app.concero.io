@@ -25,7 +25,6 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
     const route = await fetchQuote(manageState)
     if (!route) return manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
     manageDispatch({ type: 'SET_ROUTE', payload: route, fromAmount: manageState.from.amount })
-    manageDispatch({ type: 'SET_AMOUNT', payload: route.toTokenAmountUsdValue, direction: 'to' })
   } catch (error) {
     console.log(error)
     handleError(error, manageDispatch)
@@ -36,7 +35,6 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
 
 export async function getQuote({ manageState, manageDispatch, typingTimeoutRef }: IGetQuote) {
   if (!parseFloat(manageState.from.amount)) return clearRoute(manageDispatch, typingTimeoutRef)
-
   try {
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
     const typingTimeoutId = setTimeout(() => handleFetchQuote(manageState, manageDispatch), 700)

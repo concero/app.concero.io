@@ -2,6 +2,7 @@ import { useReducer } from 'react'
 import { manageInitialState } from './manageInitialState'
 import { StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
 import { Status, SwapType } from '../constants'
+import { addingTokenDecimals } from '../../../../../utils/formatting'
 
 function manageReducer(state: any, action: any) {
   switch (action.type) {
@@ -16,7 +17,9 @@ function manageReducer(state: any, action: any) {
     case 'SET_SWAP_TYPE':
       return { ...state, swapType: action.payload }
     case 'SET_AMOUNT':
-      return { ...state, [action.direction]: { ...state[action.direction], amount: action.payload } }
+      return { ...state, [action.direction]: { ...state[action.direction], amount: action.amount } }
+    case 'SET_AMOUNT_USD':
+      return { ...state, [action.direction]: { ...state[action.direction], amount_usd: action.amount } }
     case 'SET_ADDRESS':
       return { ...state, address: action.payload }
     case 'SET_CHAIN_BY_VAULT':
@@ -24,7 +27,18 @@ function manageReducer(state: any, action: any) {
       return { ...state, [action.direction]: { ...state.to, chain: { id: chainId, symbol: symbol, name: chain, logoURI } } }
     case 'SET_ROUTE':
       if (action.fromAmount !== state.from.amount) return state
-      return { ...state, route: action.payload, status: Status.swap }
+      return {
+        ...state,
+        route: action.payload,
+        status: Status.swap,
+        to: {
+          ...state.to,
+          amount: addingTokenDecimals(parseFloat(action.payload.toTokenAmount), parseFloat(state.to.token.decimals)),
+          amount_usd: action.payload.toTokenAmountUsdValue,
+        },
+      }
+    case 'CLEAR_ROUTE':
+      return { ...state, route: null }
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload }
     case 'SET_STATUS':
@@ -45,7 +59,7 @@ function manageReducer(state: any, action: any) {
             symbol: action.payload.widoSymbol,
             logoURI: action.payload.logoURI,
             address: action.payload.widoAddress,
-            decimals: null,
+            decimals: action.payload.decimals,
           },
           chain: {
             name: action.payload.chain,
