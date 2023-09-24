@@ -34,7 +34,7 @@ const RiskCard: FC = () => (
     <IconAlertTriangle size={16} color={colors.red.dark} />
     <p className="body1">Impermanent loss risk</p>
   </div>
-  )
+)
 
 export const PredictionCard: FC<PredictionCardProps> = ({ stakingState }) => {
   const predictions = stakingState.selectedVault?.predictions

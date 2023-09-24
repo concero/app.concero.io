@@ -14,10 +14,14 @@ export function buttonClassNames(status) {
       return 'disabled'
     case Status.swap:
       return ''
-    case Status.balanceError || Status.unknownError:
+    case Status.balanceError:
+      return 'wrong'
+    case Status.unknownError:
       return 'wrong'
     case Status.success:
       return 'success'
+    case Status.canceled:
+      return 'wrong'
     default:
       return 'disabled'
   }

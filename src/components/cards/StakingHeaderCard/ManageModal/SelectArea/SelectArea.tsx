@@ -20,19 +20,23 @@ interface SelectAreaProps {
 export function SelectArea({ selection, direction, dispatch, balance = null, swapType }: SelectAreaProps) {
   const inputRef = useRef()
   const [isFocused, setIsFocused] = useState(false)
-  const isDisabled = (direction === 'to' && swapType === SwapType.stake) || (direction === 'from' && swapType === SwapType.withdraw)
+  const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 
   function handleChangeText(value) {
     if (value && !isFloatInput(value)) return
-    dispatch({ type: 'SET_AMOUNT', payload: value, direction })
+    dispatch({ type: 'SET_AMOUNT', amount: value, direction })
   }
 
   function handleChainButtonClick() {
     dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.chains })
   }
 
+  function handleAreaClick(inputRef) {
+    if (inputRef.current) inputRef.current.focus()
+  }
+
   return (
-    <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}>
+    <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
       <div className={classNames.tokenRow}>
         <div className={classNames.tokenRowHeader}>
           <p>{capitalize(direction)}</p>
@@ -40,8 +44,8 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             onClick={handleChainButtonClick}
             size="sm"
             variant="black"
-            rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
-            isDisabled={isDisabled}
+            rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={colors.text.secondary} />}
+            isDisabled={isSelectDisabled}
           >
             <CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
           </Button>
@@ -58,7 +62,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             placeholder={`0.0 ${selection.token.symbol}`}
             value={selection.amount}
             onChangeText={handleChangeText}
-            isDisabled={isDisabled}
+            isDisabled={direction === 'to'}
           />
           <h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
         </div>
@@ -66,8 +70,8 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
           onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
           size="sm"
           variant="black"
-          rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
-          isDisabled={isDisabled}
+          rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={colors.text.secondary} />}
+          isDisabled={isSelectDisabled}
         >
           <CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
         </Button>

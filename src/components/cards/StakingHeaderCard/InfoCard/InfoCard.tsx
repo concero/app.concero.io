@@ -24,7 +24,7 @@ export const InfoCard: FC<InfoCardProps> = ({ item }) => {
         {secondaryValue ? (
           <h4>{secondaryValue}</h4>
         ) : (
-          <Tag color={'main'} size={'sm'}>
+          <Tag color="main" size="sm">
             <h5 className={classNames.tagText}>{last_24h}</h5>
           </Tag>
         )}

@@ -32,6 +32,9 @@ interface Route {
   }[]
   toTokenAmount: string
   steps_count: number
+  data: string
+  to: string
+  value: string
 }
 
 export interface ManageState {

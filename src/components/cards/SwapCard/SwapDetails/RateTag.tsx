@@ -22,12 +22,12 @@ export const RateTag: FC<RateTagProps> = ({ from, to, rate, isLoading }) => {
       {rate.from && rate.to && !isLoading ? (
         <>
           <div className={classNames.swapPriceTag}>
-            <p className={'body1'}>{fromRate}</p>
+            <p className="body1">{fromRate}</p>
             <CryptoIcon src={from.logoURI} />
           </div>
           <p className={`body1 ${classNames.equalSign}`}>=</p>
           <div className={classNames.swapPriceTag}>
-            <p className={'body1'}>{toTate}</p>
+            <p className="body1">{toTate}</p>
             <CryptoIcon src={to.logoURI} />
           </div>
         </>

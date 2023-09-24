@@ -10,15 +10,13 @@ export function StakingRoute({ manageState }: StakingRouteProps) {
   const { route } = manageState
   return (
     <div className={`card ${classNames.container}`}>
-      <CardHeader title={'Route'} />
+      <CardHeader title="Route" />
       <div className={classNames.stepContainer}>
-        {route.steps.map((step, index) => {
-          return (
-            <div key={index} className={classNames.step}>
-              <p>{step.fromToken}</p>
-            </div>
-          )
-        })}
+        {route.steps.map((step, index) => (
+          <div key={index} className={classNames.step}>
+            <p>{step.fromToken}</p>
+          </div>
+        ))}
       </div>
     </div>
   )

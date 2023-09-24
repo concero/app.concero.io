@@ -30,7 +30,7 @@ export const standardizeRangoRoutes = (rangoResponse): Route => {
         decimals: route.to.decimals,
         price_usd: route.to.usdPrice,
         amount_usd: route.outputAmountUsd,
-        amount: numberToFormatString(route.outputAmount / Math.pow(10, route.to.decimals), 4),
+        amount: numberToFormatString(route.outputAmount / 10 ** route.to.decimals, 4),
       },
       chain: {
         id: route.to.chainId,

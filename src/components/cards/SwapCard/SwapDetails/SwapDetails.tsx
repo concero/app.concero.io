@@ -28,9 +28,9 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute 
         <div className={classNames.routeCardsContainer}>
           {routes?.length
             ? routes.map((route) => (
-              <div key={route.id}>
-                <RouteCard route={route} isSelected={selectedRoute.id === route.id} onClick={handleSelectRoute} />
-              </div>
+                <div key={route.id}>
+                  <RouteCard route={route} isSelected={selectedRoute.id === route.id} onClick={handleSelectRoute} />
+                </div>
               ))
             : null}
         </div>

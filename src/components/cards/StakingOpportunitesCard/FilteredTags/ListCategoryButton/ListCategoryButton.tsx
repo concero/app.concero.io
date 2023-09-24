@@ -1,6 +1,6 @@
+import { IconCheck } from '@tabler/icons-react'
 import classNames from './ListCategoryButton.module.pcss'
 import { Button } from '../../../../buttons/Button/Button'
-import { IconCheck } from '@tabler/icons-react'
 
 interface ListCategoryButtonProps {
   item: any

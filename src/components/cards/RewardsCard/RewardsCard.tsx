@@ -31,12 +31,13 @@ const RewardsItemCard: FC<RewardsItemCardProps> = ({ name, logoURI, value }) => 
 export const RewardsCard: FC<RewardsCardProps> = ({ stakingState }) => {
   if (!stakingState.selectedVault.rewardTokens || !stakingState.selectedVault.rewardTokens.length) {
     return null
-  } return (
+  }
+  return (
     <div className={classNames.container}>
       <CardHeader title="Rewards" />
       {stakingState.selectedVault.rewardTokens?.map((item) => (
         <RewardsItemCard key={item.name} name={item.name} logoURI={item.logoURI} value={item.value} />
-        ))}
+      ))}
     </div>
-    )
+  )
 }

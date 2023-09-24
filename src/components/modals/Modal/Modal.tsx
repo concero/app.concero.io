@@ -8,10 +8,9 @@ export interface ModalProps {
   show: boolean
   setShow: (show: boolean) => void
   children?: ReactNode
-  onClose?: () => void
 }
 
-export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children }) => {
+export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
   const stopPropagation = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation()
   }
@@ -50,12 +49,14 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, onClose, children 
   return (
     fadeAnimation.opacity.to((o) => o > 0) && (
       <animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
-        {transitions((style, item) => (item ? (
-          <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
-            <ModalHeader title={title} onClick={() => setShow(false)} />
-            {children}
-          </animated.div>
-          ) : null))}
+        {transitions((style, item) =>
+          item ? (
+            <animated.div style={style} className={classNames.container} onClick={stopPropagation}>
+              <ModalHeader title={title} onClick={() => setShow(false)} />
+              {children}
+            </animated.div>
+          ) : null,
+        )}
       </animated.div>
     )
   )

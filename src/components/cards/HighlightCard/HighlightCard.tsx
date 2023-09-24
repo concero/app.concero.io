@@ -7,10 +7,10 @@ interface HighlightCardProps {
   last_24h: string
 }
 
-export const HighlightCard = ({ item }) => {
+export function HighlightCard({ item }) {
   return (
     <div className={`card ${classNames.container}`}>
-      <Highlight size={'md'} item={item} />
+      <Highlight size="md" item={item} />
     </div>
   )
 }

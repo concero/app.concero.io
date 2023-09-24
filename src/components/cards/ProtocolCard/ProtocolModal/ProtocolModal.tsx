@@ -22,10 +22,7 @@ function ChangeTag({ change, period }: { change: number; period: string }) {
       <div className={isDown ? classNames.red : classNames.green}>
         <div style={{ flexDirection: 'row', alignItems: 'center' }}>
           {isDown ? <IconArrowDown size={16} color={colors.red.dark} /> : <IconArrowUp size={16} color={colors.green.main} />}
-          <h4>
-            {Math.abs(change)}
-            %
-          </h4>
+          <h4>{Math.abs(change)}%</h4>
         </div>
         <p className="body1">{period}</p>
       </div>
@@ -75,10 +72,7 @@ function TransactionTotal({ protocol }: { protocol: Protocol }) {
     <div className={`card ${classNames.totalContainer} ${classNames.cardContainer}`}>
       <div className={classNames.priceContainer}>
         <h4 className="body1">Transactions total</h4>
-        <h3>
-          $
-          {formatNumber(protocol.totalAllTime)}
-        </h3>
+        <h3>${formatNumber(protocol.totalAllTime)}</h3>
       </div>
       <div className={classNames.rowContainer}>
         <ChangeTag change={protocol.change_7d} period="This week" />
@@ -101,10 +95,7 @@ function InfoCard({ title, value }: { title: string; value: string }) {
   return (
     <div className={`card ${classNames.priceContainer} ${classNames.cardContainer}`}>
       <p className="body1">{title}</p>
-      <h3>
-        $
-        {value}
-      </h3>
+      <h3>${value}</h3>
     </div>
   )
 }

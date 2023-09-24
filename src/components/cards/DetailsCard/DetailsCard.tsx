@@ -20,10 +20,10 @@ const items = [
   },
 ]
 
-export const DetailsCard = () => {
+export function DetailsCard() {
   return (
     <div className={classNames.container}>
-      <h5 className={'headerContainer'}>Details</h5>
+      <h5 className="headerContainer">Details</h5>
       <DetailsList items={items} />
     </div>
   )

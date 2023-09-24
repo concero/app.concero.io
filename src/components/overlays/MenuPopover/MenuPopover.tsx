@@ -12,17 +12,15 @@ export interface MenuPopoverProps {
   items: MenuItem[]
 }
 
-export const MenuPopover: FC<MenuPopoverProps> = ({ items }) => {
-  return (
-    <div className={styles.container}>
-      {items.map((item, index) => (
-        <div key={index} className={styles.menuItem} onClick={() => item.onClick && item.onClick()}>
-          {item.icon ? item.icon : null}
-          <span className={styles.title} style={item.danger ? { color: colors.red.dark } : {}}>
-            {item.title}
-          </span>
-        </div>
-      ))}
-    </div>
-  )
-}
+export const MenuPopover: FC<MenuPopoverProps> = ({ items }) => (
+  <div className={styles.container}>
+    {items.map((item, index) => (
+      <div key={index} className={styles.menuItem} onClick={() => item.onClick && item.onClick()}>
+        {item.icon ? item.icon : null}
+        <span className={styles.title} style={item.danger ? { color: colors.red.dark } : {}}>
+          {item.title}
+        </span>
+      </div>
+    ))}
+  </div>
+)

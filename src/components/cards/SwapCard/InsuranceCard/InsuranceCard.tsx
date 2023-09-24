@@ -35,10 +35,7 @@ export function InsuranceCard({ swapState, swapDispatch }) {
           <h5>Insurance</h5>
         </div>
         <div className={classNames.sideContainer}>
-          <h4>
-            $
-            {swapState.selectedRoute.insurance.fee_amount_usd}
-          </h4>
+          <h4>${swapState.selectedRoute.insurance.fee_amount_usd}</h4>
           <Button
             leftIcon={
               isInfoVisible ? (

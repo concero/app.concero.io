@@ -15,13 +15,12 @@ interface StakeButtonProps {
 export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
   const { switchNetworkAsync } = useSwitchNetwork()
   const { status } = manageState
-  const isDisabled =
-    status === Status.input || status === Status.loading || status === Status.noRoute || status === Status.unknownError || status === Status.balanceError
+  const isDisabled = status !== Status.swap
 
   return (
     <Button
       leftIcon={buttonIcons[status]}
-      size={'lg'}
+      size="lg"
       isLoading={manageState.isLoading}
       className={classNames[buttonClassNames(status)]}
       onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync)}
