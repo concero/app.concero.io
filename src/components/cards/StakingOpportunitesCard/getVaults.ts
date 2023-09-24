@@ -5,8 +5,11 @@ import { fetchPools } from '../../../api/concero/fetchPools'
 export function populatePoolsBalances(pools, stakingState) {
   const { balances } = stakingState
   return pools.map((pool) => {
-    const stakedAmount = balances[pool.chainId]?.find((b) => b.address === pool.address)?.balance
-    if (stakedAmount) pool.stakedAmount = stakedAmount
+    const stakedAmount = balances[pool.chainId]?.find((b) => b.address === pool.widoAddress)?.balance
+    if (stakedAmount) {
+      console.log('found stakedAmount', stakedAmount)
+      pool.stakedAmount = stakedAmount
+    }
     return pool
   })
 }
