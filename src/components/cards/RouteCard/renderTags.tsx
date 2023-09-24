@@ -34,18 +34,12 @@ export const renderTags = (route: Route, isSelected: boolean, getTextColor: () =
       </Tag>
       {route.slippage_percent ? (
         <Tag color="transparent" leftIcon={<IconArrowWaveRightUp size={20} color={getIconColor()} />}>
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
-            {numberToFormatString(route.slippage_percent)}
-            %
-          </h5>
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>
         </Tag>
       ) : null}
       {route.cost.total_gas_usd ? (
         <Tag color="transparent" leftIcon={<IconPigMoney size={20} color={getIconColor()} />}>
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
-            $
-            {route.cost.total_gas_usd}
-          </h5>
+          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
         </Tag>
       ) : null}
     </div>

@@ -21,21 +21,21 @@ export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderIt
   useEffect(() => {
     setOffset(0)
     ;(async () => {
-      const initialItems = await getItems({ offset: 0, limit, search, ...(chainId && { chainId: chainId }) })
+      const initialItems = await getItems({ offset: 0, limit, search, ...(chainId && { chainId }) })
       setItems(initialItems)
     })()
   }, [])
 
   const handleSearch = async (value) => {
     setSearch(value)
-    const foundItems = await getItems({ offset: 0, limit, search: value, ...(chainId && { chainId: chainId }) })
+    const foundItems = await getItems({ offset: 0, limit, search: value, ...(chainId && { chainId }) })
     setItems(foundItems)
   }
   const handleEndReached = async () => {
     const newOffset = offset + limit
     setOffset(newOffset)
     try {
-      const newItems = await getItems({ offset: newOffset, limit, search, ...(chainId && { chainId: chainId }) })
+      const newItems = await getItems({ offset: newOffset, limit, search, ...(chainId && { chainId }) })
       setItems((prevItems) => [...prevItems, ...newItems])
     } catch (error) {}
   }

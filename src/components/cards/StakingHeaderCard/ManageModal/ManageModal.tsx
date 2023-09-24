@@ -29,13 +29,13 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   async function handleSelectChain(item: any) {
     const direction = swapType === SwapType.stake ? 'from' : 'to'
     const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
-    manageDispatch({ type: 'SET_CHAIN', payload: item, tokens, direction: direction })
+    manageDispatch({ type: 'SET_CHAIN', payload: item, tokens, direction })
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
   function handleSelectToken(item: any) {
     const direction = swapType === SwapType.stake ? 'from' : 'to'
-    manageDispatch({ type: 'SET_TOKEN', payload: item, direction: direction })
+    manageDispatch({ type: 'SET_TOKEN', payload: item, direction })
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
@@ -61,20 +61,20 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   }, [stakingState.selectedVault])
 
   return (
-    <Modal title={'Manage position'} show={isOpen} setShow={close}>
+    <Modal title="Manage position" show={isOpen} setShow={close}>
       <div className={classNames.container}>
         {modalType === ModalType.input ? (
           <div className={classNames.areaContainer}>
             <div className={classNames.row}>
-              <Button size={'sm'} variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
+              <Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
                 Stake
               </Button>
-              <Button size={'sm'} variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
+              <Button size="sm" variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
                 Withdraw
               </Button>
             </div>
-            <SelectArea selection={manageState.from} direction={'from'} dispatch={manageDispatch} swapType={swapType} balance={manageState.balance} />
-            <SelectArea selection={manageState.to} direction={'to'} dispatch={manageDispatch} swapType={swapType} />
+            <SelectArea selection={manageState.from} direction="from" dispatch={manageDispatch} swapType={swapType} balance={manageState.balance} />
+            <SelectArea selection={manageState.to} direction="to" dispatch={manageDispatch} swapType={swapType} />
             <Details manageState={manageState} />
             <StakeButton manageState={manageState} manageDispatch={manageDispatch} />
           </div>

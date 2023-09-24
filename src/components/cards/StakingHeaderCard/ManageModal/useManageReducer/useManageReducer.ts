@@ -24,7 +24,7 @@ function manageReducer(state: any, action: any) {
       return { ...state, address: action.payload }
     case 'SET_CHAIN_BY_VAULT':
       const { chain, chainId, symbol, logoURI } = action.payload
-      return { ...state, [action.direction]: { ...state.to, chain: { id: chainId, symbol: symbol, name: chain, logoURI } } }
+      return { ...state, [action.direction]: { ...state.to, chain: { id: chainId, symbol, name: chain, logoURI } } }
     case 'SET_ROUTE':
       if (action.fromAmount !== state.from.amount) return state
       return {

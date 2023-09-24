@@ -34,10 +34,11 @@ export function StakingDetailsCard({ stakingState }) {
   return (
     <div className={`card ${classNames.secondaryCardStack}`}>
       {trail.map(
-        (style, index) => secondaryCards[index] && (
-        <animated.div key={`StakingHighlights-${index}`} style={style}>
-          {secondaryCards[index]}
-        </animated.div>
+        (style, index) =>
+          secondaryCards[index] && (
+            <animated.div key={`StakingHighlights-${index}`} style={style}>
+              {secondaryCards[index]}
+            </animated.div>
           ),
       )}
     </div>

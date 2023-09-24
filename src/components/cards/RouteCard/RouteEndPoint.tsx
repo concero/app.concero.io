@@ -22,9 +22,8 @@ interface RouteEndPointProps {
 function getFormatAmount(amount: string, decimals: number) {
   if (amount.includes('.')) {
     return parseFloat(amount).toFixed(2)
-  } else {
-    return (parseFloat(amount) / Math.pow(10, decimals)).toFixed(2)
   }
+  return (parseFloat(amount) / 10 ** decimals).toFixed(2)
 }
 
 export const RouteEndPoint: FC<RouteEndPointProps> = ({ side }) => {

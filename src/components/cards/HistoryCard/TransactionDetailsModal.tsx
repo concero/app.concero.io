@@ -30,4 +30,4 @@ export const TransactionDetailsModal: FC<TransactionDetailsModalProps> = ({ isOp
       </div>
     </div>
   </Modal>
-  )
+)

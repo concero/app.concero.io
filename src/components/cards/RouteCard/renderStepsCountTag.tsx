@@ -8,11 +8,12 @@ export const renderStepsCountTag = (
   isBestRoute: boolean,
   length: number | undefined,
   getColor: () => string | undefined,
-) => (isRoutesCollapsed && length > 1 ? (
-  <div className={`${classNames.tagStyle} ${classNames.showAllTag} ${getColor('tag')}`} onClick={() => setIsRoutesCollapsed(false)}>
-    <IconRefresh size={20} color={isBestRoute ? colors.primary.light : colors.text.secondary} />
-    <div>
-      <h5 className={`${classNames.bodyColor} ${getColor('text')}`}>{`+${length} routes`}</h5>
+) =>
+  isRoutesCollapsed && length > 1 ? (
+    <div className={`${classNames.tagStyle} ${classNames.showAllTag} ${getColor('tag')}`} onClick={() => setIsRoutesCollapsed(false)}>
+      <IconRefresh size={20} color={isBestRoute ? colors.primary.light : colors.text.secondary} />
+      <div>
+        <h5 className={`${classNames.bodyColor} ${getColor('text')}`}>{`+${length} routes`}</h5>
+      </div>
     </div>
-  </div>
-  ) : null)
+  ) : null

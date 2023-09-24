@@ -13,12 +13,10 @@ interface RatioChartProps {
   }
 }
 
-export const RatioChart: FC<RatioChartProps> = ({ data }) => {
-  return (
-    <div className={classNames.container}>
-      {data.items.map((item, index) => {
-        return <RatioItem key={index.toString()} item={item} total={data.total} />
-      })}
-    </div>
-  )
-}
+export const RatioChart: FC<RatioChartProps> = ({ data }) => (
+  <div className={classNames.container}>
+    {data.items.map((item, index) => (
+      <RatioItem key={index.toString()} item={item} total={data.total} />
+    ))}
+  </div>
+)

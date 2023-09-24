@@ -20,7 +20,7 @@ export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
   return (
     <Button
       leftIcon={buttonIcons[status]}
-      size={'lg'}
+      size="lg"
       isLoading={manageState.isLoading}
       className={classNames[buttonClassNames(status)]}
       onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync)}

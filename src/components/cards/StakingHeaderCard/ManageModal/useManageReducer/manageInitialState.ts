@@ -50,7 +50,7 @@ export const manageInitialState = (stakingState: StakingState) => {
         id: selectedVault.chainId,
       },
     },
-    address: address,
+    address,
     snake: false,
     modalType: ModalType.input,
     swapType: SwapType.stake,

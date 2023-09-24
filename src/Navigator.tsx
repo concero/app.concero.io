@@ -18,27 +18,27 @@ export const Navigator: FC<NavigatorProps> = () => (
       <Routes>
         <Route
           path={routes.exchange}
-          element={(
+          element={
             <Suspense fallback={<FullScreenLoader />}>
               <ExchangeScreen />
             </Suspense>
-          )}
+          }
         />
         <Route
           path={routes.portfolio}
-          element={(
+          element={
             <Suspense fallback={<FullScreenLoader />}>
               <PortfolioScreen />
             </Suspense>
-          )}
+          }
         />
         <Route
           path={routes.staking}
-          element={(
+          element={
             <Suspense fallback={<FullScreenLoader />}>
               <StakingScreen />
             </Suspense>
-          )}
+          }
         />
         <Route path={routes.root} element={<Navigate to={routes.exchange} />} />
       </Routes>

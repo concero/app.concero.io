@@ -23,7 +23,7 @@ export const ApyModal: FC<ApyModalProps> = ({ isOpen, onClose, stakingState, dis
   }
 
   return (
-    <Modal show={isOpen} setShow={onClose} title={'APY'}>
+    <Modal show={isOpen} setShow={onClose} title="APY">
       <div className={classNames.container}>
         <TextInput
           placeholder="Enter APY"

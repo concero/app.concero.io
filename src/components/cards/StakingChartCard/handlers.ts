@@ -1,3 +1,1 @@
-export const getSelectedStyle = (isSelected: boolean) => {
-  return isSelected ? 'primary' : 'subtle'
-}
+export const getSelectedStyle = (isSelected: boolean) => (isSelected ? 'primary' : 'subtle')

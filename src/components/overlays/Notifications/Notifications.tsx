@@ -27,7 +27,8 @@ export function Notifications() {
 
   useEffect(() => {
     const timers = notifications.map(
-      (notification) => setTimeout(() => {
+      (notification) =>
+        setTimeout(() => {
           removeNotification(notification.id)
         }, 3500), // Change this to your preferred delay time in milliseconds
     )

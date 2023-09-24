@@ -7,14 +7,12 @@ interface SwapCardProviderProps {
 
 export const InsuranceContext = createContext(null)
 
-export const InsuranceProvider: FC<SwapCardProviderProps> = ({ children, toggleInsurance }) => {
-  return (
-    <InsuranceContext.Provider
-      value={{
-        toggleInsurance,
-      }}
-    >
-      {children}
-    </InsuranceContext.Provider>
-  )
-}
+export const InsuranceProvider: FC<SwapCardProviderProps> = ({ children, toggleInsurance }) => (
+  <InsuranceContext.Provider
+    value={{
+      toggleInsurance,
+    }}
+  >
+    {children}
+  </InsuranceContext.Provider>
+)

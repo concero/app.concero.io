@@ -39,7 +39,8 @@ export const unixTimeFormat = (unixtime: number, format = 'YYYY-MM-DD HH:mm'): s
 // Number and currency formatting
 // export const formatNumber = (num: number, decimalPlaces = 2): string => num.toFixed(decimalPlaces)
 
-export const formatCurrency = (amount: number, currency = 'USD'): string => new Intl.NumberFormat('en-US', {
+export const formatCurrency = (amount: number, currency = 'USD'): string =>
+  new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
   }).format(amount)
@@ -52,7 +53,8 @@ export const toCamelCase = (str: string): string => str.replace(/([-_][a-z])/g, 
 export const toSnakeCase = (str: string): string => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`).replace(/^-/, '')
 
 // URL formatting
-export const slugify = (str: string): string => str
+export const slugify = (str: string): string =>
+  str
     .toLowerCase()
     .replace(/ /g, '-')
     .replace(/[^\w-]+/g, '')

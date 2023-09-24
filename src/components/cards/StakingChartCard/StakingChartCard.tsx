@@ -52,9 +52,9 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) =
   return (
     <div className={`card ${classNames.container}`}>
       <div className={classNames.headerContainer}>
-        <CardHeader title={'Chart'} isLoading={chartState.isLoading} />
+        <CardHeader title="Chart" isLoading={chartState.isLoading} />
         <div className={classNames.tagsContainer}>
-          <Button variant={'subtle'} size={'sm'} rightIcon={<IconChevronDown size={16} />} onClick={handleTypeButtonClick}>
+          <Button variant="subtle" size="sm" rightIcon={<IconChevronDown size={16} />} onClick={handleTypeButtonClick}>
             {buttonsData[chartType].title}
           </Button>
         </div>
@@ -70,7 +70,7 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) =
         selectedItems={selectedItems}
         onSelect={handleSelectType}
         isSearchable={false}
-        title={'Select chart type'}
+        title="Select chart type"
       />
     </div>
   )
