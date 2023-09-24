@@ -43,10 +43,14 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
     manageDispatch({ type: 'SWITCH_SWAP_TYPE' })
   }
 
-  function close() {
+  function handleOnClose() {
     manageDispatch({ type: 'RESET', payload: stakingState })
     setIsOpen(false)
   }
+
+  useEffect(() => {
+    console.log(manageState.status)
+  }, [manageState.status])
 
   useEffect(() => {
     getQuote({ manageState, manageDispatch, typingTimeoutRef })
@@ -61,7 +65,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   }, [stakingState.selectedVault])
 
   return (
-    <Modal title="Manage position" show={isOpen} setShow={close}>
+    <Modal title="Manage position" show={isOpen} setShow={handleOnClose}>
       <div className={classNames.container}>
         {modalType === ModalType.input ? (
           <div className={classNames.areaContainer}>
