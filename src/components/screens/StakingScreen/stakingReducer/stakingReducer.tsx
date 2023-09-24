@@ -15,6 +15,8 @@ const stakingReducer = (state, action) => {
       return { ...state, vaults: [...state.vaults, ...action.payload] }
     case 'SET_LOADING':
       return { ...state, loading: action.payload }
+    case 'SET_BALANCES':
+      return { ...state, balances: action.payload }
     case 'SET_ADDRESS':
       return { ...state, address: action.payload }
     default:

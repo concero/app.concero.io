@@ -2,11 +2,21 @@ import { Dispatch } from 'react'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { fetchPools } from '../../../api/concero/fetchPools'
 
-export async function setVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
+export function populatePoolsBalances(pools, stakingState) {
+  const { balances } = stakingState
+  return pools.map((pool) => {
+    const stakedAmount = balances[pool.chainId]?.find((b) => b.address === pool.address)?.balance
+    if (stakedAmount) pool.stakedAmount = stakedAmount
+    return pool
+  })
+}
+
+export async function getVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
   dispatch({ type: 'SET_LOADING', payload: true })
   try {
     const pools = await fetchPools(stakingState, address, offset, limit)
-    dispatch({ type: 'SET_VAULTS', payload: pools })
+    const poolsWithBalances = populatePoolsBalances(pools, stakingState)
+    dispatch({ type: 'SET_VAULTS', payload: poolsWithBalances })
     dispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
   } catch (error) {
     console.error(error)
@@ -17,7 +27,7 @@ export async function setVaults(dispatch: Dispatch<any>, address, stakingState: 
   }
 }
 
-export async function pushVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
+export async function getMoreVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
   dispatch({ type: 'SET_LOADING', payload: true })
   try {
     const pools = await fetchPools(stakingState, address, offset, limit)

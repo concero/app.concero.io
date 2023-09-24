@@ -4,7 +4,7 @@ import classNames from './StakingOpportunitiesCard.module.pcss'
 import { FilteredTags } from './FilteredTags/FilteredTags'
 import { StakingCard } from '../StakingCard/StakingCard'
 import { StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
-import { pushVaults, setVaults } from './getVaults'
+import { getMoreVaults, getVaults } from './getVaults'
 import { CardHeader } from '../CardHeader/CardHeader'
 
 interface StakingOpportunitiesProps {
@@ -27,11 +27,7 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
   function handleEndReached() {
     const newOffset = offset + limit
     setOffset(newOffset)
-    try {
-      pushVaults(dispatch, address, stakingState, newOffset, limit)
-    } catch (error) {
-      console.error(error)
-    }
+    getMoreVaults(dispatch, address, stakingState, newOffset, limit)
   }
 
   function handleScroll(e: UIEvent<HTMLDivElement>) {
@@ -41,7 +37,7 @@ export function StakingOpportunitiesCard({ stakingState, dispatch }: StakingOppo
 
   useEffect(() => {
     setOffset(0)
-    setVaults(dispatch, address, stakingState, 0, limit)
+    getVaults(dispatch, address, stakingState, 0, limit)
   }, [stakingState.filter])
 
   return (

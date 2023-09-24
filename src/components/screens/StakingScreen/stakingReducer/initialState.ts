@@ -14,4 +14,5 @@ export const initialState: StakingState = {
   chains: [],
   address: null,
   loading: false,
+  balances: {},
 }

@@ -11,9 +11,9 @@ import { RatioCard } from '../../cards/RatioCard/RatioCard'
 // import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
+import { getUserBalancesSortedByChain } from '../../../api/wido/getUserBalancesSortedByChain'
 
 const Header = memo(withErrorBoundary(StakingHeaderCard))
-
 const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
 const Ratio = memo(withErrorBoundary(RatioCard))
 const Details = memo(withErrorBoundary(StakingDetailsCard))
@@ -26,6 +26,10 @@ export const StakingScreen: FC = () => {
 
   useEffect(() => {
     dispatch({ type: 'SET_ADDRESS', payload: address })
+    getUserBalancesSortedByChain(address).then((balances) => {
+      console.log('balances', balances)
+      dispatch({ type: 'SET_BALANCES', payload: balances })
+    })
   }, [address])
 
   const mobileLayout = (
