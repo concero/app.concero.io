@@ -1,8 +1,6 @@
 .container {
   min-width: 400px;
   gap: var(--sp-md);
-  background-color: var(--color-primary-darkest);
-  border: solid 1px var(--color-primary-darker);
   flex-direction: column;
   align-items: center;
 }
@@ -26,10 +24,19 @@
   gap: var(--sp-sm);
 }
 
-.protocolTitle {
-  color: var(--color-primary-light);
+.stakeButton {
+  padding: var(--sp-xs) var(--sp-xl) var(--sp-xs);
 }
 
-.symbolTitle {
-  color: var(--color-primary-lightest);
+.staked {
+  background-color: var(--color-primary-darkest);
+  border: solid 1px var(--color-primary-darker);
+
+  .protocolTitle {
+    color: var(--color-primary-light);
+  }
+
+  .symbolTitle {
+    color: var(--color-primary-lightest);
+  }
 }

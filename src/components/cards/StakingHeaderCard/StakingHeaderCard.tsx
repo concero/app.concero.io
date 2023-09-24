@@ -17,6 +17,7 @@ interface StakingHeaderCardProps {
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
   const [isManageModalOpen, setIsManageModalOpen] = useState(false)
   const { selectedVault } = stakingState
+  const isStacked = false // stakedAmount
 
   const stake = {
     title: 'Staked',
@@ -41,7 +42,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
   }
 
   return (
-    <div className={`card ${classNames.container}`}>
+    <div className={`card ${classNames.container} ${isStacked ? classNames.staked : ''}`}>
       <div className={classNames.headerContainer}>
         <div className={classNames.sideContainer}>
           <Avatar src={selectedVault.logoURI} />
@@ -51,16 +52,23 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
           </div>
         </div>
         <div className={classNames.sideContainer}>
-          <Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick}>
-            Manage
+          <Button
+            leftIcon={<IconArrowsUpDown size={16} color="white" />}
+            variant="primary"
+            onClick={handleManageButtonClick}
+            className={classNames.stakeButton}
+          >
+            {isStacked ? 'Manage' : 'Stake'}
           </Button>
         </div>
       </div>
-      <div className={classNames.cardsContainer}>
-        <InfoCard item={stake} />
-        <InfoCard item={earned} />
-        <InfoCard item={poolShare} />
-      </div>
+      {isStacked ? (
+        <div className={classNames.cardsContainer}>
+          <InfoCard item={stake} />
+          <InfoCard item={earned} />
+          <InfoCard item={poolShare} />
+        </div>
+      ) : null}
       <ManageModal isOpen={isManageModalOpen} setIsOpen={setIsManageModalOpen} stakingState={stakingState} />
     </div>
   )
