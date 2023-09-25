@@ -50,12 +50,12 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
         <div className={classNames.inputContainer}>
           {isSearchable ? (
             <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} />
-          ) : null}{' '}
+          ) : null}
         </div>
         <div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
-          {items.map((item) => {
+          {items.map((item, index) => {
             const isSelected = selectedItems.includes(item)
-            return <RenderItem key={item._id} item={item} isSelected={isSelected} onSelect={onSelect} />
+            return <RenderItem key={item._id ?? index} item={item} isSelected={isSelected} onSelect={onSelect} />
           })}
         </div>
       </div>

@@ -14,32 +14,32 @@ export function populatePoolsBalances(pools, stakingState) {
   })
 }
 
-export async function getVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
-  dispatch({ type: 'SET_LOADING', payload: true })
+export async function getVaults(stakingDispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
+  stakingDispatch({ type: 'SET_LOADING', payload: true })
   try {
     const pools = await fetchPools(stakingState, address, offset, limit)
     const poolsWithBalances = populatePoolsBalances(pools, stakingState)
-    dispatch({ type: 'SET_VAULTS', payload: poolsWithBalances })
-    dispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
+    stakingDispatch({ type: 'SET_VAULTS', payload: poolsWithBalances })
+    stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
   } catch (error) {
     console.error(error)
-    dispatch({ type: 'SET_VAULTS', payload: [] })
-    dispatch({ type: 'SET_SELECTED_VAULT', payload: null })
+    stakingDispatch({ type: 'SET_VAULTS', payload: [] })
+    stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: null })
   } finally {
-    dispatch({ type: 'SET_LOADING', payload: false })
+    stakingDispatch({ type: 'SET_LOADING', payload: false })
   }
 }
 
-export async function getMoreVaults(dispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
-  dispatch({ type: 'SET_LOADING', payload: true })
+export async function getMoreVaults(stakingDispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
+  stakingDispatch({ type: 'SET_LOADING', payload: true })
   try {
     const pools = await fetchPools(stakingState, address, offset, limit)
-    dispatch({ type: 'PUSH_VAULTS', payload: pools })
+    stakingDispatch({ type: 'PUSH_VAULTS', payload: pools })
   } catch (error) {
     console.error(error)
-    dispatch({ type: 'PUSH_VAULTS', payload: [] })
-    dispatch({ type: 'SET_SELECTED_VAULT', payload: null })
+    stakingDispatch({ type: 'PUSH_VAULTS', payload: [] })
+    stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: null })
   } finally {
-    dispatch({ type: 'SET_LOADING', payload: false })
+    stakingDispatch({ type: 'SET_LOADING', payload: false })
   }
 }

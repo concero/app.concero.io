@@ -1,25 +1,22 @@
-import { Dispatch } from 'react'
+import { Dispatch, FC } from 'react'
 import { IconPercentage } from '@tabler/icons-react'
 import { Modal } from '../../../../modals/Modal/Modal'
 import classNames from './ApyModal.module.pcss'
 import { TextInput } from '../../../../input/TextInput'
 import { isFloatInput } from '../../../../../utils/validation'
+import { FilterCategory, StakingAction, StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
 
 interface ApyModalProps {
   isOpen: boolean
   onClose: () => void
-  stakingState: {
-    filter: {
-      apy: string
-    }
-  }
-  dispatch: Dispatch<any>
+  stakingState: StakingState
+  stakingDispatch: Dispatch<StakingAction>
 }
 
-export const ApyModal: FC<ApyModalProps> = ({ isOpen, onClose, stakingState, dispatch }) => {
+export const ApyModal: FC<ApyModalProps> = ({ isOpen, onClose, stakingState, stakingDispatch }) => {
   const handleChangeText = (value) => {
     if (value && !isFloatInput(value)) return
-    dispatch({ type: 'SET_FILTER', payload: { filter: 'apy', value } })
+    stakingDispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.apy, value } })
   }
 
   return (

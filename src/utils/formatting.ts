@@ -200,5 +200,4 @@ const tests = [
 
 for (const test of tests) {
   const result = formatNumber(test.num, test.options)
-  console.log(`Expected: ${test.expected}, Got: ${result}`)
 }
