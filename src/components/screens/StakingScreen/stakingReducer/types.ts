@@ -4,7 +4,6 @@ export type Filter = {
   search: string
   all: boolean
   my_holdings: boolean
-  compound: boolean
   chains: string[]
   apy: string
   category: string[]
@@ -77,6 +76,7 @@ export interface StakingState {
   chains: Chain[]
   address: string | null
   loading: boolean
+  balances: { [key: string]: string | null }
 }
 
 export type StakingAction =
