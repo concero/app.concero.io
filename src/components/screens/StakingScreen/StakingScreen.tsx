@@ -8,7 +8,6 @@ import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCa
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
 import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
 import { RatioCard } from '../../cards/RatioCard/RatioCard'
-// import { DetailsCard } from '../../cards/DetailsCard/DetailsCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
 import { getUserBalancesSortedByChain } from '../../../api/wido/getUserBalancesSortedByChain'
@@ -19,21 +18,21 @@ const Ratio = memo(withErrorBoundary(RatioCard))
 const Details = memo(withErrorBoundary(StakingDetailsCard))
 
 export const StakingScreen: FC = () => {
-  const [stakingState, dispatch] = useStakingReducer()
+  const [stakingState, stakingDispatch] = useStakingReducer()
   const { address } = useAccount()
   const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
   const Chart = memo(withErrorBoundary(StakingChartCard))
 
   useEffect(() => {
-    dispatch({ type: 'SET_ADDRESS', payload: address })
+    stakingDispatch({ type: 'SET_ADDRESS', payload: address })
     getUserBalancesSortedByChain(address).then((balances) => {
-      dispatch({ type: 'SET_BALANCES', payload: balances })
+      stakingDispatch({ type: 'SET_BALANCES', payload: balances })
     })
   }, [address])
 
   const mobileLayout = (
     <div className={classNames.container}>
-      <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
+      <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
       {stakingState.selectedVault ? (
         <div className={classNames.mainCardStack}>
           <Chart stakingState={stakingState} />
@@ -60,7 +59,7 @@ export const StakingScreen: FC = () => {
 
   const desktopLayout = (
     <div className={classNames.container}>
-      <StakingOpportunitiesCard stakingState={stakingState} dispatch={dispatch} />
+      <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
       {vaultDetails}
     </div>
   )

@@ -1,14 +1,5 @@
 import { Chain } from '../../../cards/SwapCard/types'
 
-export interface StakingState {
-  filter: Filter
-  vaults: Vault[] | []
-  selectedVault: Vault | null
-  chains: Chain[]
-  address: string | null
-  loading: boolean
-}
-
 export type Filter = {
   search: string
   all: boolean
@@ -70,3 +61,30 @@ export type InputTokens = {
   symbol: string
   logoURI: string
 }
+
+export enum FilterCategory {
+  all = 'all',
+  my_holdings = 'my_holdings',
+  chains = 'chains',
+  apy = 'apy',
+  category = 'category',
+}
+
+export interface StakingState {
+  filter: Filter
+  vaults: Vault[] | []
+  selectedVault: Vault | null
+  chains: Chain[]
+  address: string | null
+  loading: boolean
+}
+
+export type StakingAction =
+  | { type: 'SET_ROUTE'; payload: string }
+  | { type: 'SET_FILTER'; payload: { filter: FilterCategory; value: boolean | string | [] | string[] } }
+  | { type: 'SET_SELECTED_VAULT'; payload: any }
+  | { type: 'SET_VAULTS'; payload: Vault[] }
+  | { type: 'PUSH_VAULTS'; payload: Vault[] }
+  | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'SET_BALANCES'; payload: string | null }
+  | { type: 'SET_ADDRESS'; payload: string | `0x${string}` | undefined }

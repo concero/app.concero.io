@@ -3,7 +3,7 @@ import { IconChevronDown } from '@tabler/icons-react'
 import classNames from './FilteredTags.module.pcss'
 import { colors } from '../../../../constants/colors'
 import { Button } from '../../../buttons/Button/Button'
-import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
+import { FilterCategory, StakingAction, StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
 import { ListModal } from '../../../modals/MultiselectModal/ListModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { getAllTagStyle, getCategoryTitle, getChainTitle, getSelectedStyle } from './styleHandlers'
@@ -16,11 +16,11 @@ import { useFilteredTagsReducer } from './useFilteredTagsReducer/useFilteredTags
 import { categories } from './constants'
 
 interface FilteredTagsProps {
-  dispatch: Dispatch<any>
+  stakingDispatch: Dispatch<StakingAction>
   stakingState: StakingState
 }
 
-export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) => {
+export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingState }) => {
   const { getChains } = useContext(DataContext)
   const [filterState, filterDispatch] = useFilteredTagsReducer()
 
@@ -35,22 +35,22 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
     } else {
       value = [...chains, ...[item]]
     }
-    dispatch({ type: 'SET_FILTER', payload: { filter: 'chains', value } })
+    stakingDispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.chains, value } })
   }
 
-  function handleSelectCategory(item) {
+  function handleSelectCategory(item: string) {
     let value = []
     if (filter.category.includes(item)) {
       value = filter.category.filter((category) => category !== item)
     } else {
       value = [...filter.category, ...[item]]
     }
-    dispatch({ type: 'SET_FILTER', payload: { filter: 'category', value } })
+    stakingDispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.category, value } })
   }
 
-  function handleTagClick(filterKey, value) {
-    if (filterKey === 'all') return resetFilter(dispatch)
-    dispatch({ type: 'SET_FILTER', payload: { filter: filterKey, value } })
+  function handleTagClick(filterKey: FilterCategory, value: boolean) {
+    if (filterKey === FilterCategory.all) return resetFilter(stakingDispatch)
+    stakingDispatch({ type: 'SET_FILTER', payload: { filter: filterKey, value } })
   }
 
   function setIsChainsModalOpened(value: boolean) {
@@ -69,10 +69,10 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
 
   return (
     <div className={classNames.container}>
-      <Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick('all', !all)}>
+      <Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick(FilterCategory.all, !all)}>
         All
       </Button>
-      <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick('my_holdings', !my_holdings)} isDisabled={!address}>
+      <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}>
         My holdings
       </Button>
       <Button
@@ -118,7 +118,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
         selectedItems={filter.category}
         onSelect={handleSelectCategory}
       />
-      <ApyModal isOpen={isApyModalOpened} onClose={() => setIsApyModalVisible(false)} stakingState={stakingState} dispatch={dispatch} />
+      <ApyModal isOpen={isApyModalOpened} onClose={() => setIsApyModalVisible(false)} stakingState={stakingState} stakingDispatch={stakingDispatch} />
     </div>
   )
 }

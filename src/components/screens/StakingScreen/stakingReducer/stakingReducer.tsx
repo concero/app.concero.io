@@ -1,7 +1,8 @@
-import { useReducer } from 'react'
+import { Dispatch, useReducer } from 'react'
 import { initialState } from './initialState'
+import { StakingAction, StakingState } from './types'
 
-const stakingReducer = (state, action) => {
+const stakingReducer = (state: StakingState, action: StakingAction) => {
   switch (action.type) {
     case 'SET_ROUTE':
       return { ...state, route: action.payload }
@@ -24,7 +25,7 @@ const stakingReducer = (state, action) => {
   }
 }
 
-export const useStakingReducer = () => {
+export function useStakingReducer(): [StakingState, Dispatch<StakingAction>] {
   const [stakingState, dispatch] = useReducer(stakingReducer, initialState)
   return [stakingState, dispatch]
 }
