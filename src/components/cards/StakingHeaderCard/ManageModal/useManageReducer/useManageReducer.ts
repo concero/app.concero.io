@@ -47,9 +47,19 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
       return { ...state, status: action.payload }
     case 'SET_BALANCE':
       return { ...state, balance: action.payload }
-    case 'SWITCH_SWAP_TYPE':
-      const type = state.swapType === SwapType.stake ? SwapType.withdraw : SwapType.stake
-      return { ...state, swapType: type, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
+    // case 'SWITCH_SWAP_TYPE':
+    //   const type = state.swapType === SwapType.stake ? SwapType.withdraw : SwapType.stake
+    //   return { ...state, swapType: type, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
+    case 'SET_WITHDRAW_TYPE':
+      return {
+        ...state,
+        swapType: SwapType.withdraw,
+        from: { ...state.to, amount: '', amount_usd: '' },
+        to: { token: action.token, chain: { ...state.to.chain, logoURI: '' }, amount: '', amount_usd: '' },
+        route: null,
+      }
+    case 'SET_STAKE_TYPE':
+      return { ...state, swapType: SwapType.stake, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
     case 'SET_TO_SELECTION':
       return {
         ...state,

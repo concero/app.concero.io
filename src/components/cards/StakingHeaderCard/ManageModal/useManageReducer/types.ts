@@ -53,7 +53,7 @@ export interface ManageState {
   snake: boolean
   modalType: ModalType
   direction: string
-  route: Route
+  route: Route | null
   swapType: number
   address: string
   isLoading: boolean
@@ -75,6 +75,7 @@ export type ManageAction =
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_STATUS'; payload: string }
   | { type: 'SET_BALANCE'; payload: number }
-  | { type: 'SWITCH_SWAP_TYPE' }
   | { type: 'SET_TO_SELECTION'; payload: any }
   | { type: 'RESET'; payload: any }
+  | { type: 'SET_WITHDRAW_TYPE'; token: Token }
+  | { type: 'SET_STAKE_TYPE' }
