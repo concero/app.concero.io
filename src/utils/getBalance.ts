@@ -10,7 +10,7 @@ interface HandleBalanceProps {
       providers: {
         name: string
         symbol: string
-      }
+      }[]
     }
     token: {
       address: string

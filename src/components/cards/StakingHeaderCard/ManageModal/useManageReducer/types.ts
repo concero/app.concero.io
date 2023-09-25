@@ -62,7 +62,7 @@ export interface ManageState {
 }
 
 export type ManageAction =
-  | { type: 'SET_MODAL_TYPE'; payload: string }
+  | { type: 'SET_MODAL_TYPE'; payload: ModalType }
   | { type: 'SET_CHAIN'; direction: string; payload: any; tokens: any[] }
   | { type: 'SET_TOKEN'; direction: string; payload: any }
   | { type: 'SET_SWAP_TYPE'; payload: string }

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { Dispatch, useRef, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
@@ -8,11 +8,12 @@ import { TextInput } from '../../../../input/TextInput'
 import classNames from './SelectArea.module.pcss'
 import { ModalType, SwapType } from '../constants'
 import { isFloatInput } from '../../../../../utils/validation'
+import { ManageAction } from '../useManageReducer/types'
 
 interface SelectAreaProps {
   selection: any
   direction: string
-  dispatch: any
+  dispatch: Dispatch<ManageAction>
   balance?: string | null
   swapType: SwapType
 }
