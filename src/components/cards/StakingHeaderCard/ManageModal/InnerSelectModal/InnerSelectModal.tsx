@@ -8,7 +8,7 @@ interface InnerSelectModalProps {
   RenderItem: FC<any>
   selectedItems?: any[]
   onSelect: (item: any) => void
-  chainId?: string
+  chainId?: number
 }
 
 export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderItem, selectedItems = [], onSelect, chainId = null }) => {

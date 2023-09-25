@@ -39,13 +39,20 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
     manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
   }
 
-  function handleSwitchSwapType() {
-    manageDispatch({ type: 'SWITCH_SWAP_TYPE' })
-  }
-
   function handleOnClose() {
     manageDispatch({ type: 'RESET', payload: stakingState })
     setIsOpen(false)
+  }
+
+  async function setWithdrawType() {
+    if (manageState.swapType === SwapType.withdraw) return
+    const tokens = await getTokens({ chainId: manageState.to.chain.id, offset: 0, limit: 15 })
+    manageDispatch({ type: 'SET_WITHDRAW_TYPE', token: tokens[0] })
+  }
+
+  function setStakeType() {
+    if (manageState.swapType === SwapType.stake) return
+    manageDispatch({ type: 'SET_STAKE_TYPE' })
   }
 
   useEffect(() => {
@@ -66,10 +73,10 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
         {modalType === ModalType.input ? (
           <div className={classNames.areaContainer}>
             <div className={classNames.row}>
-              <Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
+              <Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={setStakeType}>
                 Stake
               </Button>
-              <Button size="sm" variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={handleSwitchSwapType}>
+              <Button size="sm" variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={setWithdrawType}>
                 Withdraw
               </Button>
             </div>
