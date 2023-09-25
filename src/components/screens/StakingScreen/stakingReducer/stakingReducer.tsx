@@ -4,8 +4,6 @@ import { StakingAction, StakingState } from './types'
 
 const stakingReducer = (state: StakingState, action: StakingAction): StakingState => {
   switch (action.type) {
-    case 'SET_ROUTE':
-      return { ...state, route: action.payload }
     case 'SET_FILTER':
       return { ...state, filter: { ...state.filter, [action.payload.filter]: action.payload.value } }
     case 'SET_SELECTED_VAULT':
@@ -21,7 +19,7 @@ const stakingReducer = (state: StakingState, action: StakingAction): StakingStat
     case 'SET_ADDRESS':
       return { ...state, address: action.payload }
     default:
-      throw new Error(`Unhandled action type: ${action.type}`)
+      throw new Error(`Unhandled action type`)
   }
 }
 
