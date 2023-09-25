@@ -3,6 +3,7 @@ import { fetchQuote } from '../../../../api/wido/fetchQuote'
 import { ManageState } from './useManageReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status } from './constants'
+import { retryRequest } from '../../../../utils/retryRequest'
 
 interface IGetQuote {
   manageState: ManageState
@@ -13,6 +14,8 @@ interface IGetQuote {
 function handleError(error: Error, manageDispatch: Dispatch<any>) {
   if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
     manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
+  } else if (error.message.includes('FAILED_DEPENDENCY')) {
+    manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
   } else {
     manageDispatch({ type: 'SET_STATUS', payload: Status.unknownError })
   }
@@ -21,8 +24,9 @@ function handleError(error: Error, manageDispatch: Dispatch<any>) {
 async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispatch<any>) {
   manageDispatch({ type: 'SET_LOADING', payload: true })
   manageDispatch({ type: 'SET_STATUS', payload: Status.loading })
+
   try {
-    const route = await fetchQuote(manageState)
+    const route = await retryRequest(async () => await fetchQuote(manageState), 3)
     if (!route) return manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
     manageDispatch({ type: 'SET_ROUTE', payload: route, fromAmount: manageState.from.amount })
   } catch (error) {

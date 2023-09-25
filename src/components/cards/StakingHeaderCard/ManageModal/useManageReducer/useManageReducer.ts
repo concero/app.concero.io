@@ -1,10 +1,11 @@
-import { useReducer } from 'react'
+import { Dispatch, useReducer } from 'react'
 import { manageInitialState } from './manageInitialState'
 import { StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
 import { Status, SwapType } from '../constants'
 import { addingTokenDecimals } from '../../../../../utils/formatting'
+import { ManageAction, ManageState } from './types'
 
-function manageReducer(state: any, action: any) {
+function manageReducer(state: ManageState, action: ManageAction): ManageState {
   switch (action.type) {
     case 'SET_MODAL_TYPE':
       return { ...state, modalType: action.payload }
@@ -72,11 +73,11 @@ function manageReducer(state: any, action: any) {
     case 'RESET':
       return manageInitialState(action.payload)
     default:
-      return new Error(`Unhandled action type: ${action.type}`)
+      return new Error(`Unhandled action type`)
   }
 }
 
-export function useManageReducer(stakingState: StakingState) {
+export function useManageReducer(stakingState: StakingState): [ManageState, Dispatch<ManageAction>] {
   const initState = manageInitialState(stakingState)
   const [manageState, manageDispatch] = useReducer(manageReducer, initState)
   return [manageState, manageDispatch]
