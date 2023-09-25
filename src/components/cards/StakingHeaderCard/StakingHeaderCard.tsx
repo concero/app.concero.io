@@ -3,7 +3,7 @@ import { IconArrowsUpDown } from '@tabler/icons-react'
 import classNames from './StakingHeaderCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
-import { capitalize } from '../../../utils/formatting'
+import { capitalize, formatNumber } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
@@ -17,32 +17,15 @@ interface StakingHeaderCardProps {
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) => {
   const [isManageModalOpen, setIsManageModalOpen] = useState(false)
   const { selectedVault } = stakingState
-  const isStacked = false // stakedAmount
 
-  const stake = {
-    title: 'Staked',
-    value: '$1500',
-    secondaryValue: '0.94',
-  }
-
-  const earned = {
-    title: 'Earned',
-    value: '$1500',
-    last_24h: '0.94%',
-  }
-
-  const poolShare = {
-    title: 'Pool share',
-    value: '0.94%',
-    last_24h: '0.94%',
-  }
+  const stakedAmount = formatNumber(selectedVault.stakedAmount, { decimals: selectedVault.decimals, decimalPlaces: 5, disableUnit: true })
 
   function handleManageButtonClick() {
     setIsManageModalOpen(true)
   }
 
   return (
-    <div className={`card ${classNames.container} ${isStacked ? classNames.staked : ''}`}>
+    <div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
       <div className={classNames.headerContainer}>
         <div className={classNames.sideContainer}>
           <Avatar src={selectedVault.logoURI} />
@@ -58,15 +41,15 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
             onClick={handleManageButtonClick}
             className={classNames.stakeButton}
           >
-            {isStacked ? 'Manage' : 'Stake'}
+            {stakedAmount ? 'Manage' : 'Stake'}
           </Button>
         </div>
       </div>
-      {isStacked ? (
+      {stakedAmount ? (
         <div className={classNames.cardsContainer}>
-          <InfoCard item={stake} />
-          <InfoCard item={earned} />
-          <InfoCard item={poolShare} />
+          <InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} />
+          <InfoCard title={'Earned'} value={stakedAmount} />
+          <InfoCard title={'Pool share'} value={stakedAmount} />
         </div>
       ) : null}
       <ManageModal isOpen={isManageModalOpen} setIsOpen={setIsManageModalOpen} stakingState={stakingState} />
