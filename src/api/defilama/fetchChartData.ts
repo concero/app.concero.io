@@ -21,9 +21,7 @@ export const fetchChartData = async (
       time: item[0] / 1000, // Divide by 1000 to convert to milliseconds
       value: item[1],
     }))
-
-    console.log(' first timestamp', data[0].time)
-    console.log(' last timestamp', data[data.length - 1].time)
+    
     setData(data)
   } catch (error) {
     addNotification({
