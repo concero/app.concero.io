@@ -24,7 +24,7 @@ const renderTag = (status: string) => {
       case 'pending':
         return <LoadingAnimation size={iconSize} color="var(--color-text-secondary)" />
       case 'await':
-        return <Ping size={iconSize} color="var(--color-primary-main)" />
+        return <Ping size={iconSize} color="var(--color-primary-500)" />
       case 'success':
         return <IconCheck size={iconSize} color={colors.green.darker} />
       case 'error':

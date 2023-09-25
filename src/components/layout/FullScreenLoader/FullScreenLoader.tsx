@@ -15,7 +15,7 @@ export const FullScreenLoader: FC<FullScreenLoaderProps> = () => {
 
   return (
     <div className={classNames.container} style={{ backgroundColor: getSystemTheme() === 'dark' ? '#000' : '#fff' }}>
-      <RaceBy color="var(--color-primary-main)" />
+      <RaceBy color="var(--color-primary-500)" />
     </div>
   )
 }

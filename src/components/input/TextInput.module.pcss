@@ -8,16 +8,16 @@ input {
 }
 
 input::placeholder {
-    color: var(--color-grey-medium);
+    color: var(--color-grey-500);
 }
 
 .inputWrapper {
     position: relative;
     padding: var(--sp-md) var(--sp-md);
     gap: var(--sp-sm);
-    background-color: var(--color-grey-darkest);
+    background-color: var(--color-grey-650);
     border-radius: var(--st-br-md);
-    border: 1px solid var(--color-grey-darker);
+    border: 1px solid var(--color-grey-600);
     transition: border 0.2s ease-out, background-color 0.2s ease-out;
 
     svg {
@@ -33,13 +33,13 @@ input::placeholder {
 }
 
 .inputWrapper:hover {
-    border: 1px solid var(--color-grey-dark);
+    border: 1px solid var(--color-grey-550);
 }
 
 .focused {
     &.inputWrapper:hover {
-        border: 1px solid var(--color-primary-main);
+        border: 1px solid var(--color-primary-500);
     }
 
-    border: 1px solid var(--color-primary-main);
+    border: 1px solid var(--color-primary-500);
 }

@@ -16,7 +16,7 @@ export const StakedAmountTag = ({ value }) => {
   return (
     <div className={classNames.stakedAmountInnerContainer}>
       <div>
-        <IconCurrencyDollar size={16} color={'var(--color-primary-light'} />
+        <IconCurrencyDollar size={16} color={'var(--color-primary-400'} />
       </div>
       <h5>{value}</h5>
     </div>

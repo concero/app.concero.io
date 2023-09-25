@@ -1,130 +1,130 @@
 .container {
-  flex-direction: column;
-  z-index: 12;
+    flex-direction: column;
+    z-index: 12;
 }
 
 #menuBtn {
-  position: absolute;
-  top: -100%;
-  left: -100%;
+    position: absolute;
+    top: -100%;
+    left: -100%;
 }
 
 .menuIcon {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .menu {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 2rem;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 2rem;
 }
 
 .menuBtn {
-  display: none;
+    display: none;
 }
 
 .menuIcon {
-  grid-area: hamburger;
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-end;
-  align-items: baseline;
-  position: relative;
-  user-select: none;
-  visibility: visible;
+    grid-area: hamburger;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    position: relative;
+    user-select: none;
+    visibility: visible;
 }
 
 .navIcon {
-  background: #333333;
-  display: block;
-  height: 2px;
-  width: 18px;
-  position: relative;
+    background: #333333;
+    display: block;
+    height: 2px;
+    width: 18px;
+    position: relative;
 }
 
 .navIcon:before {
-  top: 5px;
+    top: 5px;
 }
 
 .navIcon:after {
-  top: -5px;
+    top: -5px;
 }
 
 .navIcon:before,
 .navIcon:after {
-  background: #333333;
-  display: block;
-  width: 100%;
-  height: 100%;
-  content: '';
-  position: absolute;
-  transition: all 0.2s ease-out;
+    background: #333333;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    position: absolute;
+    transition: all 0.2s ease-out;
 }
 
 .menu {
-  grid-area: nav;
-  max-width: unset;
-  max-height: 0;
-  transition: max-height 0.2s ease-out;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-base-background);
-  display: flex;
-  flex-direction: column;
+    grid-area: nav;
+    max-width: unset;
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-base-background);
+    display: flex;
+    flex-direction: column;
 }
 
 .menu a {
-  padding: 0 23px;
-  width: 100%;
-  text-align: start;
+    padding: 0 23px;
+    width: 100%;
+    text-align: start;
 }
 
 .menu a h4 {
-  padding: 18px 0;
-  border-bottom: 1px solid var(--color-grey-dark);
+    padding: 18px 0;
+    border-bottom: 1px solid var(--color-grey-550);
 }
 
 .menu a:last-child {
-  h4 {
-    border-bottom: none;
-  }
+    h4 {
+        border-bottom: none;
+    }
 }
 
 .menuActive {
-  max-height: 287px;
+    max-height: 287px;
 }
 
 .menuBtn:checked ~ .menuIcon .navIcon {
-  background: transparent;
+    background: transparent;
 }
 
 .menuBtn:checked ~ .menuIcon .navIcon:before {
-  transform: rotate(-45deg);
+    transform: rotate(-45deg);
 }
 
 .menuBtn:checked ~ .menuIcon .navIcon:after {
-  transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .menuBtn:checked ~ .menuIcon .navIcon:before,
 .menuBtn:checked ~ .menuIcon .navIcon:after {
-  top: 0;
+    top: 0;
 }
 
 .active {
-  color: var(--color-text-primary);
+    color: var(--color-text-primary);
 }
 
 .secondary {
-  color: var(--color-text-secondary);
+    color: var(--color-text-secondary);
 }
 
 .logOutButton {
-  color: var(--color-red-dark);
+    color: var(--color-red-500);
 }
