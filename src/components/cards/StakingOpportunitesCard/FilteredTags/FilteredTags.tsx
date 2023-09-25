@@ -1,9 +1,9 @@
-import { Dispatch, FC, useContext, useState } from 'react'
+import { Dispatch, FC, useContext } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from './FilteredTags.module.pcss'
 import { colors } from '../../../../constants/colors'
 import { Button } from '../../../buttons/Button/Button'
-import { Filter } from '../../../screens/StakingScreen/stakingReducer/types'
+import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
 import { ListModal } from '../../../modals/MultiselectModal/ListModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { getAllTagStyle, getCategoryTitle, getChainTitle, getSelectedStyle } from './styleHandlers'
@@ -11,29 +11,22 @@ import { resetFilter } from './resetFilter'
 import { ApyModal } from './ApyModal/ApyModal'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { ListCategoryButton } from './ListCategoryButton/ListCategoryButton'
-import { categores } from './constants'
+import { FilterDispatchType } from './contants'
+import { useFilteredTagsReducer } from './useFilteredTagsReducer/useFilteredTagsReducer'
+import { categories } from './constants'
 
 interface FilteredTagsProps {
   dispatch: Dispatch<any>
-  stakingState: {
-    filter: Filter
-  }
+  stakingState: StakingState
 }
-
-enum ListModalType {
-  chains = 0,
-  category = 1,
-}
-
-type ListModalTypeInterface = keyof typeof ListModalType
 
 export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) => {
   const { getChains } = useContext(DataContext)
-  const [isLisModalOpened, setIsListModalOpened] = useState(false)
-  const [listModalType, setListModalType] = useState<ListModalTypeInterface>(ListModalType.chains)
-  const [isApyModalVisible, setIsApyModalVisible] = useState(false)
+  const [filterState, filterDispatch] = useFilteredTagsReducer()
+
+  const { isChainsModalOpened, isCategoriesModalOpened, isApyModalOpened } = filterState
   const { filter, address } = stakingState
-  const { all, my_holdings, compound, chains } = filter
+  const { all, my_holdings, chains } = filter
 
   function handleSelectChains(item) {
     let value = []
@@ -60,17 +53,19 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
     dispatch({ type: 'SET_FILTER', payload: { filter: filterKey, value } })
   }
 
-  function handleChainsTagClick() {
-    setListModalType(ListModalType.chains)
-    setIsListModalOpened(true)
+  function setIsChainsModalOpened(value: boolean) {
+    filterDispatch({ type: FilterDispatchType.setIsChainsModalOpened, payload: value })
   }
 
-  function handleCategoryTagClick() {
-    setListModalType(ListModalType.category)
-    setIsListModalOpened(true)
+  function setIsCategoryModalOpened(value: boolean) {
+    filterDispatch({ type: FilterDispatchType.setIsCategoryModalOpened, payload: value })
   }
 
-  const getCategores = () => categores
+  function setIsApyModalVisible(value: boolean) {
+    filterDispatch({ type: FilterDispatchType.setIsApyModalOpened, payload: value })
+  }
+
+  const getCategories = () => categories
 
   return (
     <div className={classNames.container}>
@@ -84,7 +79,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
         size="sm"
         variant={getChainTitle(chains) === 'All' ? 'subtle' : 'primary'}
         rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
-        onClick={handleChainsTagClick}
+        onClick={() => setIsChainsModalOpened(true)}
       >
         {`Chains: ${getChainTitle(chains)}`}
       </Button>
@@ -100,21 +95,30 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ dispatch, stakingState }) 
         size="sm"
         variant={getCategoryTitle(filter) === 'All' ? 'subtle' : 'primary'}
         rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
-        onClick={handleCategoryTagClick}
+        onClick={() => setIsCategoryModalOpened(true)}
       >
         {`Category: ${getCategoryTitle(filter)}`}
       </Button>
       <ListModal
-        isOpen={isLisModalOpened}
-        setIsOpen={setIsListModalOpened}
-        getItems={listModalType === ListModalType.chains ? ({ offset, limit, search }) => getChains({ offset, limit, search }) : getCategores}
-        title={listModalType === ListModalType.chains ? 'Select chain' : 'Select category'}
-        RenderItem={listModalType === ListModalType.chains ? ListEntityButton : ListCategoryButton}
-        selectedItems={listModalType === ListModalType.chains ? chains : filter.category}
-        onSelect={listModalType === ListModalType.chains ? handleSelectChains : handleSelectCategory}
-        isSearchable={listModalType === ListModalType.chains}
+        isOpen={isChainsModalOpened}
+        setIsOpen={setIsChainsModalOpened}
+        getItems={getChains}
+        title={'Select chain'}
+        RenderItem={ListEntityButton}
+        selectedItems={chains}
+        onSelect={handleSelectChains}
+        isSearchable={true}
       />
-      <ApyModal isOpen={isApyModalVisible} onClose={() => setIsApyModalVisible(false)} stakingState={stakingState} dispatch={dispatch} />
+      <ListModal
+        isOpen={isCategoriesModalOpened}
+        setIsOpen={setIsCategoryModalOpened}
+        getItems={getCategories}
+        title={'Select category'}
+        RenderItem={ListCategoryButton}
+        selectedItems={filter.category}
+        onSelect={handleSelectCategory}
+      />
+      <ApyModal isOpen={isApyModalOpened} onClose={() => setIsApyModalVisible(false)} stakingState={stakingState} dispatch={dispatch} />
     </div>
   )
 }

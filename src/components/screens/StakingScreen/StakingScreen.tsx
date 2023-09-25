@@ -27,7 +27,6 @@ export const StakingScreen: FC = () => {
   useEffect(() => {
     dispatch({ type: 'SET_ADDRESS', payload: address })
     getUserBalancesSortedByChain(address).then((balances) => {
-      console.log('balances', balances)
       dispatch({ type: 'SET_BALANCES', payload: balances })
     })
   }, [address])
