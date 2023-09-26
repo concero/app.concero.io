@@ -80,6 +80,8 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
           },
         },
       }
+    case 'SET_TOKEN_USD_PRICE':
+      return { ...state, [action.direction]: { ...state.to, amount_usd: action.payload } }
     case 'RESET':
       return manageInitialState(action.payload)
     default:

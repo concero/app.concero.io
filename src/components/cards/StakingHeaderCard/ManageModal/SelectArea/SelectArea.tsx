@@ -1,4 +1,4 @@
-import { Dispatch, useRef, useState } from 'react'
+import { Dispatch, useEffect, useRef, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
@@ -9,6 +9,7 @@ import classNames from './SelectArea.module.pcss'
 import { ModalType, SwapType } from '../constants'
 import { isFloatInput } from '../../../../../utils/validation'
 import { ManageAction } from '../useManageReducer/types'
+import { getCurrentPriceToken } from './getCurrentPriceToken'
 
 interface SelectAreaProps {
   selection: any
@@ -35,6 +36,10 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
   function handleAreaClick(inputRef) {
     if (inputRef.current) inputRef.current.focus()
   }
+
+  useEffect(() => {
+    if (direction === 'from' && swapType === SwapType.stake) getCurrentPriceToken(selection, dispatch)
+  }, [selection.chain, selection.token])
 
   return (
     <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>

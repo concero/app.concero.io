@@ -4,14 +4,14 @@ import { PostHogProvider } from 'posthog-js/react'
 import { WagmiConfig } from 'wagmi'
 import { Navigator } from './Navigator'
 import { wagmiConfig } from './web3/wagmi'
-import { WalletConnectModal } from './web3/WalletConnectModal'
 import { ThemeProvider } from './hooks/themeContext'
 import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
 import { DataProvider } from './hooks/DataContext/DataContext'
+import { lazy } from 'react'
 
-// import { ModalProvider } from './hooks/ModalContext'
+const WalletConnectModal = lazy(() => import('./web3/WalletConnectModal').then((module) => ({ default: module.WalletConnectModal })))
 
 function App() {
   if (!process.env.DEVELOPMENT) {
