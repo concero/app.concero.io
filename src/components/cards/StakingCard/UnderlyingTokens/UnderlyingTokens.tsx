@@ -13,7 +13,7 @@ export function UnderlyingTokens({ underlyingTokens, isSelected }: UnderlyingTok
       {underlyingTokens.map((token, index) => {
         if (!token) return null
         return (
-          <div key={index} className={`${classNames.tokenContainer} ${isSelected ? classNames.selected : ''}`}>
+          <div key={index} className={`${classNames.tokenContainer}`}>
             <Avatar src={token.logoURI} size="sm" />
             <p className="body1">{token.symbol}</p>
           </div>

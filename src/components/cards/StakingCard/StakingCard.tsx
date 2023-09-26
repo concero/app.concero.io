@@ -1,7 +1,7 @@
 import classNames from './StakingCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
-import { formatNumber, numberToFormatString } from '../../../utils/formatting'
+import { formatNumber, numberToFormatString, truncate } from '../../../utils/formatting'
 import { UnderlyingTokens } from './UnderlyingTokens/UnderlyingTokens'
 import { CategoryTag } from '../../tags/CategoryTag/CategoryTag'
 import { IconCurrencyDollar } from '@tabler/icons-react'
@@ -35,7 +35,7 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
           </div>
           {/* <div className={classNames.headerSideContainer}>{renderTags({ vault, isSelected })}</div> */}
         </div>
-        <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{vault.widoSymbol}</h5>
+        <h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{truncate(vault.widoSymbol, 25)}</h5>
       </div>
       {vault.stakedAmount ? (
         <StakedAmountTag value={formatNumber(vault.stakedAmount, { decimals: vault.decimals, disableUnit: true })} />
