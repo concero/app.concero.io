@@ -1,31 +1,24 @@
 .container {
-    flex-direction: row;
-    gap: var(--sp-sm);
+  flex-direction: row;
+  overflow-x: scroll;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-left: var(--sp-sm);
 }
 
 .tokenContainer {
-    flex: 1;
-    gap: var(--sp-xs);
-    padding: var(--sp-sm);
-    background-color: var(--color-grey-650);
-    align-items: center;
-    border-radius: var(--st-br-sm);
-    opacity: 60%;
-}
+  flex: 1;
+  gap: var(--sp-xs);
+  padding: var(--sp-sm);
+  align-items: center;
+  border-radius: var(--st-br-sm);
+  background-color: var(--color-grey-600);
 
-.exist {
-    background-color: var(--color-grey-600);
-    opacity: 100%;
-
-    p {
-        color: var(--color-grey-350);
-    }
-
-    .selected {
-        background-color: none;
-    }
+  p {
+    color: var(--color-grey-350);
+  }
 }
 
 .selected {
-    background-color: var(--color-primary-600);
+  background-color: var(--color-primary-600);
 }
