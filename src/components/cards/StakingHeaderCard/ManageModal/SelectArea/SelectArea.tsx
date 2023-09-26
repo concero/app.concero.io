@@ -1,4 +1,4 @@
-import { Dispatch, useRef, useState } from 'react'
+import { Dispatch, useEffect, useRef, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
@@ -9,6 +9,7 @@ import classNames from './SelectArea.module.pcss'
 import { ModalType, SwapType } from '../constants'
 import { isFloatInput } from '../../../../../utils/validation'
 import { ManageAction } from '../useManageReducer/types'
+import { getCurrentPriceToken } from './getCurrentPriceToken'
 
 interface SelectAreaProps {
   selection: any
@@ -21,11 +22,14 @@ interface SelectAreaProps {
 export function SelectArea({ selection, direction, dispatch, balance = null, swapType }: SelectAreaProps) {
   const inputRef = useRef()
   const [isFocused, setIsFocused] = useState(false)
+  const [currentUsdPrice, setCurrentUsdPrice] = useState<number | null>(null)
   const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 
-  function handleChangeText(value) {
+  function handleChangeText(value: string) {
     if (value && !isFloatInput(value)) return
     dispatch({ type: 'SET_AMOUNT', amount: value, direction })
+    if (swapType === SwapType.withdraw) return
+    dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
   }
 
   function handleChainButtonClick() {
@@ -35,6 +39,10 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
   function handleAreaClick(inputRef) {
     if (inputRef.current) inputRef.current.focus()
   }
+
+  useEffect(() => {
+    if (direction === 'from' && swapType === SwapType.stake) getCurrentPriceToken(selection, setCurrentUsdPrice)
+  }, [selection.chain.id, selection.token.address])
 
   return (
     <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
@@ -65,7 +73,10 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             onChangeText={handleChangeText}
             isDisabled={direction === 'to'}
           />
-          <h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
+          <h5 className={selection.amount_usd === null || selection.amount_usd === undefined ? classNames.invisible : ''}>{`$${numberToFormatString(
+            Number(selection.amount_usd),
+            2,
+          )}`}</h5>
         </div>
         <Button
           onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}

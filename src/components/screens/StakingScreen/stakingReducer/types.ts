@@ -28,6 +28,7 @@ export type Vault = {
   count: number
   category: string
   defiLlamaPoolId: string
+  decimals: number
   exposure: string
   il7d: number
   ilRisk: string
@@ -53,6 +54,7 @@ export type Vault = {
   volumeUsd1d: number
   volumeUsd7d: number
   widoSupported: boolean
+  stakedAmount?: string
 }
 
 export type InputTokens = {

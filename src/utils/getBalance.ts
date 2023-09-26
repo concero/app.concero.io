@@ -26,7 +26,7 @@ const handleError = (dispatch) => dispatch({ type: 'SET_BALANCE', payload: null 
 export async function getBalance({ dispatch, from, address }: HandleBalanceProps) {
   if (!from || !address) return handleError(dispatch)
 
-  const rangoChainSymbol = from.chain.providers.find((item) => item.name === 'rango')?.symbol
+  const rangoChainSymbol = from.chain?.providers?.find((item) => item.name === 'rango')?.symbol
   if (!rangoChainSymbol) return handleError(dispatch)
 
   const response = await fetchTokenBalance(rangoChainSymbol, from.token.address, address, from.token.symbol)
