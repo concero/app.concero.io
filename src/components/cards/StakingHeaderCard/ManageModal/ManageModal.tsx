@@ -84,7 +84,12 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
               <Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={setStakeType}>
                 Stake
               </Button>
-              <Button size="sm" variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={setWithdrawType}>
+              <Button
+                size="sm"
+                variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'}
+                onClick={setWithdrawType}
+                isDisabled={!stakingState.selectedVault?.stakedAmount}
+              >
                 Withdraw
               </Button>
             </div>
