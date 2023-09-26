@@ -104,11 +104,13 @@ function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
   return (
     <div className={`card ${classNames.cardContainer}`}>
       <p className="body1">Audits</p>
-      {auditLinks.map((link, index) => (
-        <Tag key={index} color="grey" leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />} onClick={() => window.open(link, '_blank')}>
-          <p className="body1">Github</p>
-        </Tag>
-      ))}
+      <div className={classNames.tagsContainer}>
+        {auditLinks.map((link, index) => (
+          <Tag key={index} color="grey" leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />} onClick={() => window.open(link, '_blank')}>
+            <p className="body1">Github</p>
+          </Tag>
+        ))}
+      </div>
     </div>
   )
 }
