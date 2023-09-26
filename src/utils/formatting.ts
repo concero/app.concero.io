@@ -110,7 +110,7 @@ export const roundNumberByDecimals = (number: number, decimals = 4): number => {
   return parseFloat(number?.toFixed(factor))
 }
 
-export const addingTokenDecimals = (amount: number, decimals: number): string => numberToFormatString(amount / 10 ** decimals, 4)
+export const addingTokenDecimals = (amount: number | string, decimals: number): string => numberToFormatString(Number(amount) / 10 ** decimals, 4)
 
 export const timestampToLocalTime = (timestamp: number): number => {
   const currentTime = new Date()

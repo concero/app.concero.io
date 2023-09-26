@@ -13,6 +13,7 @@ import { Details } from './Details/Details'
 import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
+import { addingTokenDecimals } from '../../../../utils/formatting'
 
 interface ManageModalProps {
   isOpen: boolean
@@ -60,8 +61,15 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
   }, [manageState.from.amount, manageState.from.chain.id, manageState.to.chain.id, manageState.from.token.address, manageState.to.token.address])
 
   useEffect(() => {
-    getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
-  }, [manageState.from.chain.id, manageState.from.token.address, manageState.to.token.address])
+    if (swapType == SwapType.stake) {
+      getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
+    } else {
+      const balanceAmount = stakingState?.selectedVault?.stakedAmount
+        ? addingTokenDecimals(stakingState.selectedVault.stakedAmount, stakingState.selectedVault.decimals)
+        : null
+      manageDispatch({ type: 'SET_BALANCE', payload: balanceAmount })
+    }
+  }, [manageState.from.chain.id, manageState.from.token.address, manageState.from.token.symbol])
 
   useEffect(() => {
     manageDispatch({ type: 'SET_TO_SELECTION', payload: stakingState.selectedVault })

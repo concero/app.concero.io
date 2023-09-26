@@ -27,8 +27,7 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
       const { chain, chainId, symbol, logoURI } = action.payload
       return { ...state, [action.direction]: { ...state.to, chain: { id: chainId, symbol, name: chain, logoURI } } }
     case 'SET_ROUTE':
-      if (action.fromAmount !== state.from.amount) return state
-      console.log(action.payload)
+      if (action.fromAmount.toString() !== state.from.amount.toString()) return state
       return {
         ...state,
         route: action.payload,
