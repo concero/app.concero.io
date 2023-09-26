@@ -1,4 +1,4 @@
-import { ModalType } from '../constants'
+import { ModalType, Status } from '../constants'
 
 interface Token {
   name: string
@@ -73,7 +73,7 @@ export type ManageAction =
   | { type: 'SET_ROUTE'; fromAmount: number; payload: any }
   | { type: 'CLEAR_ROUTE' }
   | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'SET_STATUS'; payload: string }
+  | { type: 'SET_STATUS'; payload: Status }
   | { type: 'SET_BALANCE'; payload: number }
   | { type: 'SET_TO_SELECTION'; payload: any }
   | { type: 'RESET'; payload: any }

@@ -1,17 +1,17 @@
 import { Dispatch, MutableRefObject } from 'react'
 import { fetchQuote } from '../../../../api/wido/fetchQuote'
-import { ManageState } from './useManageReducer/types'
+import { ManageAction, ManageState } from './useManageReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status } from './constants'
 import { retryRequest } from '../../../../utils/retryRequest'
 
 interface IGetQuote {
   manageState: ManageState
-  manageDispatch: Dispatch<any>
+  manageDispatch: Dispatch<ManageAction>
   typingTimeoutRef: MutableRefObject<any>
 }
 
-function handleError(error: Error, manageDispatch: Dispatch<any>) {
+function handleError(error: Error, manageDispatch: Dispatch<ManageAction>) {
   if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
     manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
   } else if (error.message.includes('FAILED_DEPENDENCY')) {
@@ -21,7 +21,7 @@ function handleError(error: Error, manageDispatch: Dispatch<any>) {
   }
 }
 
-async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispatch<any>) {
+async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispatch<ManageAction>) {
   manageDispatch({ type: 'SET_LOADING', payload: true })
   manageDispatch({ type: 'SET_STATUS', payload: Status.loading })
 
@@ -32,6 +32,7 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
       3,
     )
     if (!route) return manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
+
     manageDispatch({ type: 'SET_ROUTE', payload: route, fromAmount: manageState.from.amount })
   } catch (error) {
     console.log(error)

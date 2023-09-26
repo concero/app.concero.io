@@ -28,10 +28,15 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
       return { ...state, [action.direction]: { ...state.to, chain: { id: chainId, symbol, name: chain, logoURI } } }
     case 'SET_ROUTE':
       if (action.fromAmount !== state.from.amount) return state
+      console.log(action.payload)
       return {
         ...state,
         route: action.payload,
         status: Status.swap,
+        from: {
+          ...state.from,
+          amount_usd: action.payload.fromTokenAmountUsdValue,
+        },
         to: {
           ...state.to,
           amount: addingTokenDecimals(parseFloat(action.payload.toTokenAmount), parseFloat(state.to.token.decimals)),

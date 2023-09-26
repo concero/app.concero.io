@@ -73,7 +73,10 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             onChangeText={handleChangeText}
             isDisabled={direction === 'to'}
           />
-          {selection.amount_usd !== null && selection.amount_usd !== undefined ? <h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5> : null}
+          <h5 className={selection.amount_usd === null || selection.amount_usd === undefined ? classNames.invisible : ''}>{`$${numberToFormatString(
+            Number(selection.amount_usd),
+            2,
+          )}`}</h5>
         </div>
         <Button
           onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
