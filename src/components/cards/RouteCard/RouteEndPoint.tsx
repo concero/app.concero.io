@@ -32,7 +32,7 @@ export const RouteEndPoint: FC<RouteEndPointProps> = ({ side }) => {
   const { getChains } = useContext(DataContext)
 
   useEffect(() => {
-    getChainLogoURIById(Number(side.chain.id), getChains, setChainLogoURI)
+    getChainLogoURIById(side.chain.id, getChains, setChainLogoURI)
   }, [])
 
   return (
