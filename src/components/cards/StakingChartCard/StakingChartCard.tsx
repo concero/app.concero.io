@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import { Chart } from '../../layout/Chart/Chart'
 import classNames from './StakingChartCard.module.pcss'
@@ -12,34 +12,48 @@ import { ListModal } from '../../modals/MultiselectModal/ListModal'
 import { RowComponent } from './RowComponent/RowConponent'
 import { CardHeader } from '../CardHeader/CardHeader'
 
+const MemoizedChart = memo(Chart)
+
 export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) => {
   const [chartState, dispatch] = useChartReducer()
   const { data, chartType, response, isTypeModalVisible } = chartState
   const [selectedItems, setSelectedItems] = useState([buttonsData[chartType]])
 
-  const setData = (data) => {
-    dispatch({ type: 'SET_DATA', payload: data })
-  }
+  const setData = useCallback(
+    (data) => {
+      dispatch({ type: 'SET_DATA', payload: data })
+    },
+    [dispatch],
+  )
 
-  const setChartType = (type) => {
-    dispatch({ type: 'SET_CHART_TYPE', payload: type })
-  }
+  const setChartType = useCallback(
+    (type) => {
+      dispatch({ type: 'SET_CHART_TYPE', payload: type })
+    },
+    [dispatch],
+  )
 
-  function setIsTypeModalVisible(isVisible: boolean) {
-    dispatch({ type: 'SET_IS_TYPE_MODAL_VISIBLE', payload: isVisible })
-  }
+  const setIsTypeModalVisible = useCallback(
+    (isVisible) => {
+      dispatch({ type: 'SET_IS_TYPE_MODAL_VISIBLE', payload: isVisible })
+    },
+    [dispatch],
+  )
 
-  function handleTypeButtonClick() {
+  const handleTypeButtonClick = useCallback(() => {
     setIsTypeModalVisible(true)
-  }
+  }, [setIsTypeModalVisible])
 
-  const getItems = () => buttonsData
+  const getItems = useCallback(() => buttonsData, [])
 
-  function handleSelectType(item) {
-    setIsTypeModalVisible(false)
-    setChartType(item.type)
-    setSelectedItems([item])
-  }
+  const handleSelectType = useCallback(
+    (item) => {
+      setIsTypeModalVisible(false)
+      setChartType(item.type)
+      setSelectedItems([item])
+    },
+    [setIsTypeModalVisible, setChartType],
+  )
 
   useEffect(() => {
     getData({ selectedVault, dispatch })
@@ -60,7 +74,7 @@ export const StakingChartCard: FC<StakingChartCardProps> = ({ selectedVault }) =
         </div>
       </div>
       <div className={classNames.chartContainer}>
-        <Chart data={data.main} secondData={data.secondary} />
+        <MemoizedChart data={data.main} secondData={data.secondary} />
       </div>
       <ListModal
         isOpen={isTypeModalVisible}
