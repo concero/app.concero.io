@@ -21,7 +21,7 @@ const PredictionItemCard: FC<PredictionItemCardProps> = ({ predictedClass, value
   return (
     <div className={`card ${containerClasses}`}>
       <div className={classNames.sideContainer}>
-        {predictedClass === 'Down' ? <IconArrowDown size={16} color={colors.red.light} /> : <IconArrowUp size={16} color={colors.green.main} />}
+        {predictedClass === 'Down' ? <IconArrowDown size={16} color={'var(--color-red-450)'} /> : <IconArrowUp size={16} color={colors.green.main} />}
         <p className="body1">{predictedClass}</p>
       </div>
       <p className="body1">{`${numberToFormatString(value, 2)}%`}</p>
@@ -31,7 +31,7 @@ const PredictionItemCard: FC<PredictionItemCardProps> = ({ predictedClass, value
 
 const RiskCard: FC = () => (
   <div className={`card ${classNames.riskContainer} ${classNames.down}`}>
-    <IconAlertTriangle size={16} color={colors.red.dark} />
+    <IconAlertTriangle size={16} color={'var(--color-red-450)'} />
     <p className="body1">Impermanent loss risk</p>
   </div>
 )
