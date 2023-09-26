@@ -25,11 +25,11 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
   const [currentUsdPrice, setCurrentUsdPrice] = useState<number | null>(null)
   const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 
-  function handleChangeText(value) {
+  function handleChangeText(value: string) {
     if (value && !isFloatInput(value)) return
     dispatch({ type: 'SET_AMOUNT', amount: value, direction })
     if (swapType === SwapType.withdraw) return
-    dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? Number(value) * currentUsdPrice : null, direction })
+    dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
   }
 
   function handleChainButtonClick() {
