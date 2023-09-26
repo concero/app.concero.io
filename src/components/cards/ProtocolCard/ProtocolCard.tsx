@@ -30,7 +30,7 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
       <Button variant="subtle" onClick={() => setIsOpened(true)}>
         <div className={classNames.cardContainer}>
           <div className={classNames.avatarContainer}>
-            <Avatar src={selectedVault?.logoURI ?? null} />
+            <Avatar src={selectedVault?.protocol?.logoURI ?? null} />
             <h5>{capitalize(selectedVault.name)}</h5>
           </div>
           <IconChevronRight size={18} color={colors.text.secondary} />

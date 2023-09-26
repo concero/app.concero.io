@@ -29,7 +29,7 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
       <div>
         <div className={classNames.headerContainer}>
           <div className={classNames.headerSideContainer}>
-            <Avatar src={vault.logoURI} size="md" />
+            <Avatar src={vault.protocol?.logoURI} size="md" />
             <h5>{`${numberToFormatString(vault.apy, 2)}%`}</h5>
             {vault.category ? <CategoryTag category={vault.category} isSelected={isSelected} /> : null}
           </div>

@@ -18,7 +18,11 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
   const [isManageModalOpen, setIsManageModalOpen] = useState(false)
   const { selectedVault } = stakingState
 
-  const stakedAmount = formatNumber(selectedVault.stakedAmount, { decimals: selectedVault.decimals, decimalPlaces: 5, disableUnit: true })
+  const stakedAmount = formatNumber(selectedVault.stakedAmount, {
+    decimals: selectedVault.decimals,
+    decimalPlaces: 5,
+    disableUnit: true,
+  })
 
   function handleManageButtonClick() {
     setIsManageModalOpen(true)
@@ -28,10 +32,10 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState }) 
     <div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
       <div className={classNames.headerContainer}>
         <div className={classNames.sideContainer}>
-          <Avatar src={selectedVault.logoURI} />
+          <Avatar src={selectedVault.protocol?.logoURI} />
           <div>
             <h5 className={classNames.symbolTitle}>{selectedVault.widoSymbol}</h5>
-            <p className={`body1 ${classNames.protocolTitle}`}>{capitalize(selectedVault?.protocolName ?? '')}</p>
+            <p className={`body1 ${classNames.protocolTitle}`}>{capitalize(selectedVault?.protocol?.name ?? '')}</p>
           </div>
         </div>
         <div className={classNames.sideContainer}>
