@@ -5,54 +5,54 @@ import { viemSigner } from '../../../../web3/ethers'
 import { addingDecimals } from '../../../../utils/formatting'
 
 const getRangoSwapOptions = (route, address, from, settings) => {
-  const amount = addingDecimals(from.amount, from.token.decimals)
+	const amount = addingDecimals(from.amount, from.token.decimals)
 
-  return {
-    from: {
-      blockchain: route.from.blockchain,
-      symbol: route.from.symbol,
-      address: route.from.address,
-    },
-    to: {
-      blockchain: route.to.blockchain,
-      symbol: route.to.symbol,
-      address: route.to.address,
-    },
-    amount,
-    disableEstimate: false,
-    slippage: settings.slippage_percent,
-    fromAddress: address,
-    toAddress: address,
-    referrerAddress: null,
-    referrerFee: null,
-  }
+	return {
+		from: {
+			blockchain: route.from.blockchain,
+			symbol: route.from.symbol,
+			address: route.from.address,
+		},
+		to: {
+			blockchain: route.to.blockchain,
+			symbol: route.to.symbol,
+			address: route.to.address,
+		},
+		amount,
+		disableEstimate: false,
+		slippage: settings.slippage_percent,
+		fromAddress: address,
+		toAddress: address,
+		referrerAddress: null,
+		referrerFee: null,
+	}
 }
 
 export const executeRangoRoute = async (route, address, from, settings, swapDispatch, switchChainHook) => {
-  try {
-    await switchChainHook(from.chain.id)
-  } catch (error) {
-    throw new Error('user rejected')
-  }
+	try {
+		await switchChainHook(from.chain.id)
+	} catch (error) {
+		throw new Error('user rejected')
+	}
 
-  const swapOptions = getRangoSwapOptions(route, address, from, settings)
-  const response = await rangoClient.swap(swapOptions)
+	const swapOptions = getRangoSwapOptions(route, address, from, settings)
+	const response = await rangoClient.swap(swapOptions)
 
-  if (!!response.error || response.resultType !== 'OK') {
-    const msg = `Error swapping, message: ${response.error}, status: ${response.resultType}`
-    throw new Error(msg)
-  }
+	if (!!response.error || response.resultType !== 'OK') {
+		const msg = `Error swapping, message: ${response.error}, status: ${response.resultType}`
+		throw new Error(msg)
+	}
 
-  const evmTransaction = response.tx as EvmTransaction
+	const evmTransaction = response.tx as EvmTransaction
 
-  if (response.approveTo && response.approveData) {
-    const approveTx = prepareEvmTransaction(evmTransaction, true)
-    const approveTxHash = (await viemSigner.sendTransaction(approveTx)).hash
-    await checkApprovalSync(response.requestId, approveTxHash, rangoClient)
-  }
+	if (response.approveTo && response.approveData) {
+		const approveTx = prepareEvmTransaction(evmTransaction, true)
+		const approveTxHash = (await viemSigner.sendTransaction(approveTx)).hash
+		await checkApprovalSync(response.requestId, approveTxHash, rangoClient)
+	}
 
-  const mainTx = prepareEvmTransaction(evmTransaction, false)
-  const mainTxHash = (await viemSigner.sendTransaction(mainTx)).hash
+	const mainTx = prepareEvmTransaction(evmTransaction, false)
+	const mainTxHash = (await viemSigner.sendTransaction(mainTx)).hash
 
-  return checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient, swapDispatch)
+	return checkTransactionStatusSync(response.requestId, mainTxHash, rangoClient, swapDispatch)
 }

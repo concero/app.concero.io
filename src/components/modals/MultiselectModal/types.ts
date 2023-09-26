@@ -1,18 +1,18 @@
 import { FC } from 'react'
 
 interface RowsComponentProps {
-  item: any
-  isSelected: boolean
-  onSelect: (item: any) => void
+	item: any
+	isSelected: boolean
+	onSelect: (item: any) => void
 }
 
 export interface MultiSelectModalProps {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-  title: string
-  selectedItems: any[]
-  onSelect: (item: any) => void
-  getItems: (key: any) => void
-  RenderItem: FC<RowsComponentProps>
-  isSearchable?: boolean
+	isOpen: boolean
+	setIsOpen: (isOpen: boolean) => void
+	title: string
+	selectedItems: any[]
+	onSelect: (item: any) => void
+	getItems: (key: any) => void
+	RenderItem: FC<RowsComponentProps>
+	isSearchable?: boolean
 }

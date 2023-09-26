@@ -7,18 +7,18 @@ import './Button.module.pcss'
 
 type Story = StoryObj<typeof Button>
 const meta: Meta<typeof Button> = {
-  component: Button,
-  title: 'Components/Buttons/Button',
-  tags: ['Button', 'autodocs'],
+	component: Button,
+	title: 'Components/Buttons/Button',
+	tags: ['Button', 'autodocs'],
 }
 
 export const Default: Story = {
-  render: (args) => (
-    <div className="row dark">
-      <Button variant="primary" {...args}>
-        Button
-      </Button>
-    </div>
-  ),
+	render: args => (
+		<div className="row dark">
+			<Button variant="primary" {...args}>
+				Button
+			</Button>
+		</div>
+	),
 }
 export default meta

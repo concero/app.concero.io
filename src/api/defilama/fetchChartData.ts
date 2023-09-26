@@ -1,35 +1,35 @@
 import axios from 'axios'
 
 interface Item {
-  time: number
-  value: number
+	time: number
+	value: number
 }
 
 export const fetchChartData = async (
-  setData: (data: Item[]) => void,
-  addNotification,
-  tokenId: string,
-  interval: {
-    value: string
-  },
+	setData: (data: Item[]) => void,
+	addNotification,
+	tokenId: string,
+	interval: {
+		value: string
+	},
 ) => {
-  const url = `https://api.coingecko.com/api/v3/coins/${tokenId}/market_chart?vs_currency=usd&days=${interval.value}`
+	const url = `https://api.coingecko.com/api/v3/coins/${tokenId}/market_chart?vs_currency=usd&days=${interval.value}`
 
-  try {
-    const response = await axios.get(url)
-    const data = response.data.prices.map((item: [number, number]) => ({
-      time: item[0] / 1000, // Divide by 1000 to convert to milliseconds
-      value: item[1],
-    }))
+	try {
+		const response = await axios.get(url)
+		const data = response.data.prices.map((item: [number, number]) => ({
+			time: item[0] / 1000, // Divide by 1000 to convert to milliseconds
+			value: item[1],
+		}))
 
-    console.log(' first timestamp', data[0].time)
-    console.log(' last timestamp', data[data.length - 1].time)
-    setData(data)
-  } catch (error) {
-    addNotification({
-      title: "Couldn't fetch CoinGecko data",
-      message: error.message,
-      color: 'red',
-    })
-  }
+		console.log(' first timestamp', data[0].time)
+		console.log(' last timestamp', data[data.length - 1].time)
+		setData(data)
+	} catch (error) {
+		addNotification({
+			title: "Couldn't fetch CoinGecko data",
+			message: error.message,
+			color: 'red',
+		})
+	}
 }

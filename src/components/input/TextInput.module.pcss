@@ -1,45 +1,45 @@
 input {
-    background-color: transparent;
-    color: var(--color-text-primary);
-    border: none;
-    font-size: 16px;
-    font-weight: 400;
-    outline: none;
+	background-color: transparent;
+	color: var(--color-text-primary);
+	border: none;
+	font-size: 16px;
+	font-weight: 400;
+	outline: none;
 }
 
 input::placeholder {
-    color: var(--color-grey-500);
+	color: var(--color-grey-500);
 }
 
 .inputWrapper {
-    position: relative;
-    padding: var(--sp-md) var(--sp-md);
-    gap: var(--sp-sm);
-    background-color: var(--color-grey-650);
-    border-radius: var(--st-br-md);
-    border: 1px solid var(--color-grey-600);
-    transition: border 0.2s ease-out, background-color 0.2s ease-out;
+	position: relative;
+	padding: var(--sp-md) var(--sp-md);
+	gap: var(--sp-sm);
+	background-color: var(--color-grey-650);
+	border-radius: var(--st-br-md);
+	border: 1px solid var(--color-grey-600);
+	transition: border 0.2s ease-out, background-color 0.2s ease-out;
 
-    svg {
-        position: absolute;
-        right: var(--sp-md);
-        top: 50%;
-        transform: translateY(-50%);
-    }
+	svg {
+		position: absolute;
+		right: var(--sp-md);
+		top: 50%;
+		transform: translateY(-50%);
+	}
 
-    input {
-        padding-right: var(--sp-xl);
-    }
+	input {
+		padding-right: var(--sp-xl);
+	}
 }
 
 .inputWrapper:hover {
-    border: 1px solid var(--color-grey-550);
+	border: 1px solid var(--color-grey-550);
 }
 
 .focused {
-    &.inputWrapper:hover {
-        border: 1px solid var(--color-primary-500);
-    }
+	&.inputWrapper:hover {
+		border: 1px solid var(--color-primary-500);
+	}
 
-    border: 1px solid var(--color-primary-500);
+	border: 1px solid var(--color-primary-500);
 }

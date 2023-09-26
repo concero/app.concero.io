@@ -24,102 +24,100 @@ const MainChart = memo(Chart)
 const TradingViewChart = memo(AdvancedRealTimeChart)
 
 export const ChartCard: FC<ChartCardProps> = () => {
-  const { selection } = useContext(SelectionContext)
-  const { getTokens } = useContext(DataContext)
-  const { theme } = useContext(ThemeContext)
-  const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
-  const { addNotification } = useContext(NotificationsContext)
-  const isDesktop = useMediaQuery('mobile')
+	const { selection } = useContext(SelectionContext)
+	const { getTokens } = useContext(DataContext)
+	const { theme } = useContext(ThemeContext)
+	const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
+	const { addNotification } = useContext(NotificationsContext)
+	const isDesktop = useMediaQuery('mobile')
 
-  const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
+	const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
 
-  useEffect(() => {
-    fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
+	useEffect(() => {
+		fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
 
-    const intervalId = setInterval(() => {
-      fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
-    }, 15000)
+		const intervalId = setInterval(() => {
+			fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
+		}, 15000)
 
-    return () => clearInterval(intervalId)
-  }, [interval, token.base.symbol])
+		return () => clearInterval(intervalId)
+	}, [interval, token.base.symbol])
 
-  useEffect(() => {
-    dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: selection.swapCard.to.token })
-  }, [selection.swapCard.to.token.symbol])
+	useEffect(() => {
+		dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: selection.swapCard.to.token })
+	}, [selection.swapCard.to.token.symbol])
 
-  const handleSelect = (token) => {
-    dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: token })
-    dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
-  }
+	const handleSelect = token => {
+		dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: token })
+		dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
+	}
 
-  const setIsOpenCallback = useCallback(() => {
-    dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
-  }, [dispatch])
+	const setIsOpenCallback = useCallback(() => {
+		dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
+	}, [dispatch])
 
-  const handleSelectCallback = useCallback(
-    (token) => {
-      handleSelect(token)
-    },
-    [handleSelect],
-  )
+	const handleSelectCallback = useCallback(
+		token => {
+			handleSelect(token)
+		},
+		[handleSelect],
+	)
 
-  const getItemsCallback = useCallback(
-    ({ offset, limit, search }) => {
-      return getTokens({
-        chainId: selection.swapCard.to.chain.id,
-        offset,
-        limit,
-        search,
-      })
-    },
-    [getTokens, selection.swapCard.to.chain.id],
-  )
+	const getItemsCallback = useCallback(
+		({ offset, limit, search }) => {
+			return getTokens({
+				chainId: selection.swapCard.to.chain.id,
+				offset,
+				limit,
+				search,
+			})
+		},
+		[getTokens, selection.swapCard.to.chain.id],
+	)
 
-  return (
-    <Card className={classNames.container}>
-      <div className={classNames.headerContainer}>
-        <div className={classNames.selectChainContainer}>
-          <h5 className="cardHeaderTitle">Chart</h5>
-          <Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
-            <CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
-          </Button>
-          {isDesktop ? (
-            <Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
-              <Beacon isOn={chartType === 'tradingView'} />
-              <p className="body1">TradingView</p>
-            </Button>
-          ) : null}
-        </div>
-        {chartType === 'coinGecko' ? (
-          <SegmentedControl data={intervals} selectedItem={interval} setSelectedItem={(item) => dispatch({ type: 'SET_INTERVAL', payload: item })} />
-        ) : null}
-      </div>
-      <div className="f1">
-        {chartType === 'coinGecko' ? (
-          <MainChart data={chartData} />
-        ) : (
-          <TradingViewChart
-            theme={theme}
-            symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
-            interval="1"
-            width="100%"
-            height="100%"
-            locale="en"
-            hide_side_toolbar
-            allow_symbol_change
-            save_image
-            container_id="tradingview_9e3a4"
-          />
-        )}
-      </div>
-      <ListModal
-        title="Select token"
-        isOpen={token.base.modalVisible}
-        setIsOpen={setIsOpenCallback}
-        onSelect={handleSelectCallback}
-        getItems={getItemsCallback}
-        RenderItem={ListEntityButton}
-      />
-    </Card>
-  )
+	return (
+		<Card className={classNames.container}>
+			<div className={classNames.headerContainer}>
+				<div className={classNames.selectChainContainer}>
+					<h5 className="cardHeaderTitle">Chart</h5>
+					<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
+						<CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
+					</Button>
+					{isDesktop ? (
+						<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
+							<Beacon isOn={chartType === 'tradingView'} />
+							<p className="body1">TradingView</p>
+						</Button>
+					) : null}
+				</div>
+				{chartType === 'coinGecko' ? <SegmentedControl data={intervals} selectedItem={interval} setSelectedItem={item => dispatch({ type: 'SET_INTERVAL', payload: item })} /> : null}
+			</div>
+			<div className="f1">
+				{chartType === 'coinGecko' ? (
+					<MainChart data={chartData} />
+				) : (
+					<TradingViewChart
+						theme={theme}
+						symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
+						interval="1"
+						width="100%"
+						height="100%"
+						locale="en"
+						hide_side_toolbar
+						allow_symbol_change
+						save_image
+						container_id="tradingview_9e3a4"
+					/>
+				)}
+			</div>
+			<ListModal
+				title="Select token"
+				isOpen={token.base.modalVisible}
+				setIsOpen={setIsOpenCallback}
+				onSelect={handleSelectCallback}
+				getItems={getItemsCallback}
+				RenderItem={ListEntityButton}
+			/>
+		</Card>
+	)
 }

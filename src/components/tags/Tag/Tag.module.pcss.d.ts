@@ -4,17 +4,17 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  cheapest: string | undefined
-  container: string | undefined
-  fastest: string | undefined
-  green: string | undefined
-  grey: string | undefined
-  lg: string | undefined
-  main: string | undefined
-  mainDarker: string | undefined
-  md: string | undefined
-  recommended: string | undefined
-  red: string | undefined
-  tag: string | undefined
-  xs: string | undefined
+	cheapest: string | undefined
+	container: string | undefined
+	fastest: string | undefined
+	green: string | undefined
+	grey: string | undefined
+	lg: string | undefined
+	main: string | undefined
+	mainDarker: string | undefined
+	md: string | undefined
+	recommended: string | undefined
+	red: string | undefined
+	tag: string | undefined
+	xs: string | undefined
 }

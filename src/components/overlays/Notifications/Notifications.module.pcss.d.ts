@@ -4,6 +4,6 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  container: string | undefined
-  notification: string | undefined
+	container: string | undefined
+	notification: string | undefined
 }

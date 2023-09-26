@@ -5,4 +5,4 @@ import { Route } from './types'
 import { lifi } from './lifi'
 
 export const executeLifiRoute = async (signer: WalletClient<Transport, Chain, Account> | null, route: Route, settings?: ExecutionSettings): Promise<Route> =>
-  lifi.executeRoute(signer, route, settings)
+	lifi.executeRoute(signer, route, settings)

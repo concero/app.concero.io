@@ -11,32 +11,32 @@ import { NotificationsProvider } from './hooks/notificationsContext'
 import { DataProvider } from './hooks/DataContext/DataContext'
 import { lazy } from 'react'
 
-const WalletConnectModal = lazy(() => import('./web3/WalletConnectModal').then((module) => ({ default: module.WalletConnectModal })))
+const WalletConnectModal = lazy(() => import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })))
 
 function App() {
-  if (!process.env.DEVELOPMENT) {
-    posthog.init(process.env.REACT_APP_PUBLIC_POSTHOG_KEY, {
-      api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
-    })
-  }
+	if (!process.env.DEVELOPMENT) {
+		posthog.init(process.env.REACT_APP_PUBLIC_POSTHOG_KEY, {
+			api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
+		})
+	}
 
-  return (
-    <PostHogProvider>
-      <DataProvider>
-        <SelectionProvider>
-          <ThemeProvider>
-            <NotificationsProvider>
-              <Notifications />
-              <WagmiConfig config={wagmiConfig}>
-                <Navigator />
-                <WalletConnectModal />
-              </WagmiConfig>
-            </NotificationsProvider>
-          </ThemeProvider>
-        </SelectionProvider>
-      </DataProvider>
-    </PostHogProvider>
-  )
+	return (
+		<PostHogProvider>
+			<DataProvider>
+				<SelectionProvider>
+					<ThemeProvider>
+						<NotificationsProvider>
+							<Notifications />
+							<WagmiConfig config={wagmiConfig}>
+								<Navigator />
+								<WalletConnectModal />
+							</WagmiConfig>
+						</NotificationsProvider>
+					</ThemeProvider>
+				</SelectionProvider>
+			</DataProvider>
+		</PostHogProvider>
+	)
 }
 
 export default App

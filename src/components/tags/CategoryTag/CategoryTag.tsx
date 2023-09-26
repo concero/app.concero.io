@@ -3,14 +3,14 @@ import classNames from '../../cards/StakingCard/StakingCard.module.pcss'
 import { Tag } from '../Tag/Tag'
 
 interface CategoryTagProps {
-  category: string
-  isSelected?: boolean
+	category: string
+	isSelected?: boolean
 }
 
 export function CategoryTag({ category, isSelected = false }: CategoryTagProps) {
-  return (
-    <Tag leftIcon={getCategoryIconByTitle(category, isSelected)} color={isSelected ? 'mainDarker' : 'grey'}>
-      <p className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{category}</p>
-    </Tag>
-  )
+	return (
+		<Tag leftIcon={getCategoryIconByTitle(category, isSelected)} color={isSelected ? 'mainDarker' : 'grey'}>
+			<p className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{category}</p>
+		</Tag>
+	)
 }

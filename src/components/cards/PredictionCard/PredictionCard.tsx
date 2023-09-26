@@ -7,45 +7,45 @@ import { colors } from '../../../constants/colors'
 import { numberToFormatString } from '../../../utils/formatting'
 
 interface PredictionCardProps {
-  stakingState: StakingState
+	stakingState: StakingState
 }
 
 interface PredictionItemCardProps {
-  predictedClass: string
-  value: string | number
+	predictedClass: string
+	value: string | number
 }
 
 const PredictionItemCard: FC<PredictionItemCardProps> = ({ predictedClass, value }) => {
-  const containerClasses = `${classNames.itemContainer} ${predictedClass === 'Down' ? classNames.down : classNames.up}`
+	const containerClasses = `${classNames.itemContainer} ${predictedClass === 'Down' ? classNames.down : classNames.up}`
 
-  return (
-    <div className={`card ${containerClasses}`}>
-      <div className={classNames.sideContainer}>
-        {predictedClass === 'Down' ? <IconArrowDown size={16} color={'var(--color-red-450)'} /> : <IconArrowUp size={16} color={colors.green.main} />}
-        <p className="body1">{predictedClass}</p>
-      </div>
-      <p className="body1">{`${numberToFormatString(value, 2)}%`}</p>
-    </div>
-  )
+	return (
+		<div className={`card ${containerClasses}`}>
+			<div className={classNames.sideContainer}>
+				{predictedClass === 'Down' ? <IconArrowDown size={16} color={'var(--color-red-450)'} /> : <IconArrowUp size={16} color={colors.green.main} />}
+				<p className="body1">{predictedClass}</p>
+			</div>
+			<p className="body1">{`${numberToFormatString(value, 2)}%`}</p>
+		</div>
+	)
 }
 
 const RiskCard: FC = () => (
-  <div className={`card ${classNames.riskContainer} ${classNames.down}`}>
-    <IconAlertTriangle size={16} color={'var(--color-red-450)'} />
-    <p className="body1">Impermanent loss risk</p>
-  </div>
+	<div className={`card ${classNames.riskContainer} ${classNames.down}`}>
+		<IconAlertTriangle size={16} color={'var(--color-red-450)'} />
+		<p className="body1">Impermanent loss risk</p>
+	</div>
 )
 
 export const PredictionCard: FC<PredictionCardProps> = ({ stakingState }) => {
-  const predictions = stakingState.selectedVault?.predictions
+	const predictions = stakingState.selectedVault?.predictions
 
-  return predictions?.predictedClass ? (
-    <div className={classNames.container}>
-      <CardHeader title="Predictions" />
-      <div className={classNames.innerContainer}>
-        <PredictionItemCard predictedClass={predictions.predictedClass} value={predictions.predictedProbability} />
-        {stakingState.selectedVault.ilRisk === 'yes' ? <RiskCard /> : null}
-      </div>
-    </div>
-  ) : null
+	return predictions?.predictedClass ? (
+		<div className={classNames.container}>
+			<CardHeader title="Predictions" />
+			<div className={classNames.innerContainer}>
+				<PredictionItemCard predictedClass={predictions.predictedClass} value={predictions.predictedProbability} />
+				{stakingState.selectedVault.ilRisk === 'yes' ? <RiskCard /> : null}
+			</div>
+		</div>
+	) : null
 }

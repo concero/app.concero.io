@@ -1,26 +1,74 @@
 {
-  "extends": ["stylelint-config-prettier", "stylelint-config-recommended-scss"],
+  "extends": [
+    "stylelint-config-prettier",
+    "stylelint-config-recommended-scss"
+  ],
+  "plugins": [
+    "stylelint-order"
+  ],
   "rules": {
+    "order/order": [
+      "custom-properties",
+      "declarations"
+    ],
+    "order/properties-order": [
+      "width",
+      "height"
+    ],
     "at-rule-no-unknown": null,
     "color-named": "never",
     "color-hex-length": "long",
-    "function-disallowed-list": ["rgb", "hsl"],
+    "function-disallowed-list": [
+      "rgb",
+      "hsl"
+    ],
     "declaration-block-no-duplicate-properties": [
       true,
       {
-        "ignore": ["consecutive-duplicates-with-different-values"]
+        "ignore": [
+          "consecutive-duplicates-with-different-values"
+        ]
       }
     ],
     "declaration-empty-line-before": null,
     "declaration-property-unit-allowed-list": {
-      "/^border(?!.*-radius$)/": ["px", "%"],
-      "/^border-radius/": ["px", "rem", "%"],
-      "/^box-shadow": ["px"],
-      "/^margin/": ["rem", "px"],
-      "/^padding/": ["rem", "px"],
-      "font-size": ["rem", "em", "px"],
-      "height": ["rem", "%", "vh", "px"],
-      "width": ["rem", "%", "vw", "px"]
+      "/^border(?!.*-radius$)/": [
+        "px",
+        "%"
+      ],
+      "/^border-radius/": [
+        "px",
+        "rem",
+        "%"
+      ],
+      "/^box-shadow": [
+        "px"
+      ],
+      "/^margin/": [
+        "rem",
+        "px"
+      ],
+      "/^padding/": [
+        "rem",
+        "px"
+      ],
+      "font-size": [
+        "rem",
+        "em",
+        "px"
+      ],
+      "height": [
+        "rem",
+        "%",
+        "vh",
+        "px"
+      ],
+      "width": [
+        "rem",
+        "%",
+        "vw",
+        "px"
+      ]
     },
     "max-empty-lines": 1,
     "no-duplicate-selectors": true,
@@ -38,7 +86,9 @@
         "severity": "warning"
       }
     ],
-    "selector-max-id": [0],
+    "selector-max-id": [
+      0
+    ],
     "string-quotes": "single",
     "value-no-vendor-prefix": true,
     "font-family-no-missing-generic-family-keyword": null,
@@ -46,7 +96,9 @@
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoClasses": ["global"]
+        "ignorePseudoClasses": [
+          "global"
+        ]
       }
     ],
     "no-invalid-position-at-import-rule": null,

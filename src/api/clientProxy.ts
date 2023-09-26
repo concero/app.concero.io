@@ -3,48 +3,48 @@ import { config } from '../constants/config'
 import queue from './queue.ts'
 
 interface GetParams {
-  [key: string]: any
+	[key: string]: any
 }
 
 interface PostData {
-  [key: string]: any
+	[key: string]: any
 }
 
 const api = axios.create({
-  baseURL: config.baseURL,
-  headers: config.headers,
+	baseURL: config.baseURL,
+	headers: config.headers,
 })
 
 // Axios interceptor for adding authorization token to request headers.
 api.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => Promise.reject(error),
+	(config: AxiosRequestConfig) => {
+		const token = localStorage.getItem('token')
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`
+		}
+		return config
+	},
+	error => Promise.reject(error),
 )
 
 export async function get({ url, headers }): Promise<any> {
-  try {
-    const request = {
-      method: 'post',
-      url: `${config.baseURL}/proxy`,
-      headers: config.headers,
-      data: {
-        url,
-        method: 'GET',
-        headers: headers || {},
-      },
-    }
-    const response: AxiosResponse = await queue.add(request)
-    return response
-  } catch (error) {
-    console.error('GET request failed:', error)
-    throw error
-  }
+	try {
+		const request = {
+			method: 'post',
+			url: `${config.baseURL}/proxy`,
+			headers: config.headers,
+			data: {
+				url,
+				method: 'GET',
+				headers: headers || {},
+			},
+		}
+		const response: AxiosResponse = await queue.add(request)
+		return response
+	} catch (error) {
+		console.error('GET request failed:', error)
+		throw error
+	}
 }
 
 /**
@@ -54,23 +54,23 @@ export async function get({ url, headers }): Promise<any> {
  * @returns {Promise<any>} A promise that resolves with the response data if the request succeeds, or rejects with an error if it fails.
  */
 export async function post({ url, headers, body }): Promise<any> {
-  try {
-    const response: AxiosResponse = await queue.add({
-      method: 'post',
-      url: `${config.baseURL}/proxy`,
-      headers: config.headers,
-      data: {
-        url,
-        method: 'POST',
-        headers: headers || {},
-        body,
-      },
-    })
-    return response
-  } catch (error) {
-    console.error('POST proxy request failed:', error)
-    throw error
-  }
+	try {
+		const response: AxiosResponse = await queue.add({
+			method: 'post',
+			url: `${config.baseURL}/proxy`,
+			headers: config.headers,
+			data: {
+				url,
+				method: 'POST',
+				headers: headers || {},
+				body,
+			},
+		})
+		return response
+	} catch (error) {
+		console.error('POST proxy request failed:', error)
+		throw error
+	}
 }
 
 export default { get, post }

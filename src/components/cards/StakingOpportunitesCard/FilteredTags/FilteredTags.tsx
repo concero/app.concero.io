@@ -16,109 +16,104 @@ import { useFilteredTagsReducer } from './useFilteredTagsReducer/useFilteredTags
 import { categories } from './constants'
 
 interface FilteredTagsProps {
-  stakingDispatch: Dispatch<StakingAction>
-  stakingState: StakingState
+	stakingDispatch: Dispatch<StakingAction>
+	stakingState: StakingState
 }
 
 export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingState }) => {
-  const { getChains } = useContext(DataContext)
-  const [filterState, filterDispatch] = useFilteredTagsReducer()
+	const { getChains } = useContext(DataContext)
+	const [filterState, filterDispatch] = useFilteredTagsReducer()
 
-  const { isChainsModalOpened, isCategoriesModalOpened, isApyModalOpened } = filterState
-  const { filter, address } = stakingState
-  const { all, my_holdings, chains } = filter
+	const { isChainsModalOpened, isCategoriesModalOpened, isApyModalOpened } = filterState
+	const { filter, address } = stakingState
+	const { all, my_holdings, chains } = filter
 
-  function handleSelectChains(item) {
-    let value = []
-    if (chains.includes(item)) {
-      value = chains.filter((chain) => chain !== item)
-    } else {
-      value = [...chains, ...[item]]
-    }
-    stakingDispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.chains, value } })
-  }
+	function handleSelectChains(item) {
+		let value = []
+		if (chains.includes(item)) {
+			value = chains.filter(chain => chain !== item)
+		} else {
+			value = [...chains, ...[item]]
+		}
+		stakingDispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.chains, value } })
+	}
 
-  function handleSelectCategory(item: string) {
-    let value = []
-    if (filter.category.includes(item)) {
-      value = filter.category.filter((category) => category !== item)
-    } else {
-      value = [...filter.category, ...[item]]
-    }
-    stakingDispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.category, value } })
-  }
+	function handleSelectCategory(item: string) {
+		let value = []
+		if (filter.category.includes(item)) {
+			value = filter.category.filter(category => category !== item)
+		} else {
+			value = [...filter.category, ...[item]]
+		}
+		stakingDispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.category, value } })
+	}
 
-  function handleTagClick(filterKey: FilterCategory, value: boolean) {
-    if (filterKey === FilterCategory.all) return resetFilter(stakingDispatch)
-    stakingDispatch({ type: 'SET_FILTER', payload: { filter: filterKey, value } })
-  }
+	function handleTagClick(filterKey: FilterCategory, value: boolean) {
+		if (filterKey === FilterCategory.all) return resetFilter(stakingDispatch)
+		stakingDispatch({ type: 'SET_FILTER', payload: { filter: filterKey, value } })
+	}
 
-  function setIsChainsModalOpened(value: boolean) {
-    filterDispatch({ type: FilterDispatchType.setIsChainsModalOpened, payload: value })
-  }
+	function setIsChainsModalOpened(value: boolean) {
+		filterDispatch({ type: FilterDispatchType.setIsChainsModalOpened, payload: value })
+	}
 
-  function setIsCategoryModalOpened(value: boolean) {
-    filterDispatch({ type: FilterDispatchType.setIsCategoryModalOpened, payload: value })
-  }
+	function setIsCategoryModalOpened(value: boolean) {
+		filterDispatch({ type: FilterDispatchType.setIsCategoryModalOpened, payload: value })
+	}
 
-  function setIsApyModalVisible(value: boolean) {
-    filterDispatch({ type: FilterDispatchType.setIsApyModalOpened, payload: value })
-  }
+	function setIsApyModalVisible(value: boolean) {
+		filterDispatch({ type: FilterDispatchType.setIsApyModalOpened, payload: value })
+	}
 
-  const getCategories = () => categories
+	const getCategories = () => categories
 
-  return (
-    <div className={classNames.container}>
-      <Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick(FilterCategory.all, !all)}>
-        All
-      </Button>
-      <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}>
-        My holdings
-      </Button>
-      <Button
-        size="sm"
-        variant={getChainTitle(chains) === 'All' ? 'subtle' : 'primary'}
-        rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
-        onClick={() => setIsChainsModalOpened(true)}
-      >
-        {`Chains: ${getChainTitle(chains)}`}
-      </Button>
-      <Button
-        variant={getSelectedStyle(filter.apy)}
-        size="sm"
-        rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
-        onClick={() => setIsApyModalVisible(true)}
-      >
-        APY: {filter.apy ? `${filter.apy}%` : 'All'}
-      </Button>
-      <Button
-        size="sm"
-        variant={getCategoryTitle(filter) === 'All' ? 'subtle' : 'primary'}
-        rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
-        onClick={() => setIsCategoryModalOpened(true)}
-      >
-        {`Category: ${getCategoryTitle(filter)}`}
-      </Button>
-      <ListModal
-        isOpen={isChainsModalOpened}
-        setIsOpen={setIsChainsModalOpened}
-        getItems={getChains}
-        title={'Select chain'}
-        RenderItem={ListEntityButton}
-        selectedItems={chains}
-        onSelect={handleSelectChains}
-        isSearchable={true}
-      />
-      <ListModal
-        isOpen={isCategoriesModalOpened}
-        setIsOpen={setIsCategoryModalOpened}
-        getItems={getCategories}
-        title={'Select category'}
-        RenderItem={ListCategoryButton}
-        selectedItems={filter.category}
-        onSelect={handleSelectCategory}
-      />
-      <ApyModal isOpen={isApyModalOpened} onClose={() => setIsApyModalVisible(false)} stakingState={stakingState} stakingDispatch={stakingDispatch} />
-    </div>
-  )
+	return (
+		<div className={classNames.container}>
+			<Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick(FilterCategory.all, !all)}>
+				All
+			</Button>
+			<Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}>
+				My holdings
+			</Button>
+			<Button
+				size="sm"
+				variant={getChainTitle(chains) === 'All' ? 'subtle' : 'primary'}
+				rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
+				onClick={() => setIsChainsModalOpened(true)}
+			>
+				{`Chains: ${getChainTitle(chains)}`}
+			</Button>
+			<Button variant={getSelectedStyle(filter.apy)} size="sm" rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />} onClick={() => setIsApyModalVisible(true)}>
+				APY: {filter.apy ? `${filter.apy}%` : 'All'}
+			</Button>
+			<Button
+				size="sm"
+				variant={getCategoryTitle(filter) === 'All' ? 'subtle' : 'primary'}
+				rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
+				onClick={() => setIsCategoryModalOpened(true)}
+			>
+				{`Category: ${getCategoryTitle(filter)}`}
+			</Button>
+			<ListModal
+				isOpen={isChainsModalOpened}
+				setIsOpen={setIsChainsModalOpened}
+				getItems={getChains}
+				title={'Select chain'}
+				RenderItem={ListEntityButton}
+				selectedItems={chains}
+				onSelect={handleSelectChains}
+				isSearchable={true}
+			/>
+			<ListModal
+				isOpen={isCategoriesModalOpened}
+				setIsOpen={setIsCategoryModalOpened}
+				getItems={getCategories}
+				title={'Select category'}
+				RenderItem={ListCategoryButton}
+				selectedItems={filter.category}
+				onSelect={handleSelectCategory}
+			/>
+			<ApyModal isOpen={isApyModalOpened} onClose={() => setIsApyModalVisible(false)} stakingState={stakingState} stakingDispatch={stakingDispatch} />
+		</div>
+	)
 }

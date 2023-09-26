@@ -1,56 +1,55 @@
 .header {
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: var(--sp-md);
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: var(--sp-md);
 }
 
 .comingSoonContainer {
-    flex-direction: row;
+	flex-direction: row;
 }
 
 ul {
-    color: var(--color-text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    gap: var(--sp-sm);
+	color: var(--color-text-secondary);
+	font-size: 0.875rem;
+	font-weight: 500;
+	gap: var(--sp-sm);
 
-    a {
-        border: 1px solid var(--color-base-black);
-        border-radius: 6px;
-        padding: var(--sp-sm) var(--sp-md);
-    }
+	a {
+		border: 1px solid var(--color-base-black);
+		border-radius: 6px;
+		padding: var(--sp-sm) var(--sp-md);
+	}
 
-    .active {
-        background-color: var(--color-primary-700);
-        border: 1px solid var(--color-primary-650);
-        color: var(--color-text-primary);
+	.active {
+		background-color: var(--color-primary-700);
+		border: 1px solid var(--color-primary-650);
+		color: var(--color-text-primary);
+	}
 
-    }
+	.active:hover {
+		background-color: var(--color-primary-700);
+	}
 
-    .active:hover {
-        background-color: var(--color-primary-700);
-    }
-
-    .comingSoon {
-        color: var(--color-grey-550);
-    }
+	.comingSoon {
+		color: var(--color-grey-550);
+	}
 }
 
 a {
-    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 a:hover {
-    transform: translateY(-2px);
+	transform: translateY(-2px);
 }
 
 .logoContainer {
-    margin-right: var(--sp-sm);
+	margin-right: var(--sp-sm);
 }
 
 .navigatorContainer {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--sp-md);
+	flex-direction: row;
+	align-items: center;
+	gap: var(--sp-md);
 }

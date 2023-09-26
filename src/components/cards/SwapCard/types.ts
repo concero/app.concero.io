@@ -3,235 +3,235 @@ import { Route, Step } from '../../../api/lifi/types'
 export interface SwapCardProps {}
 
 export interface SwapDetailsProps {
-  swapState: any
-  setSelectedRoute: (route: Route) => void
+	swapState: any
+	setSelectedRoute: (route: Route) => void
 }
 
 export interface Selection {
-  chain: Chain
-  token: Token
+	chain: Chain
+	token: Token
 }
 
 export interface Token {
-  name: string
-  symbol: string
-  logoURI: string
+	name: string
+	symbol: string
+	logoURI: string
 }
 
 export interface Chain {
-  name: string
-  symbol: string
+	name: string
+	symbol: string
 }
 
 export interface RouteButtonProps {
-  selectedRoute: Route
-  onClick: () => void
+	selectedRoute: Route
+	onClick: () => void
 }
 
 export interface AvatarsProps {
-  entities: Step[]
+	entities: Step[]
 }
 
 // SWAP REDUCER TYPES
 
 export type State = {
-  from: {
-    chain: {
-      name: string
-      symbol: string
-      id: string
-      logoURI: string
-      providers: {
-        lifi?: {
-          key: string
-        }
-        rango?: {
-          key: string
-        }
-      }
-    }
-    token: {
-      name: string
-      symbol: string
-      address: `0x${string}`
-      decimals: number
-      logoURI: string
-    }
-    amount: string
-    amount_usd: number
-    address: string
-  }
-  to: {
-    chain: {
-      name: string
-      symbol: string
-      id: string
-      logoURI: string
-      providers: {
-        lifi?: {
-          key: string
-        }
-        rango?: {
-          key: string
-        }
-      }
-    }
-    token: {
-      name: string
-      symbol: string
-      address: `0x${string}`
-      decimals: number
-      logoURI: string
-    }
-    amount: string
-    amount_usd: number
-    address: string
-  }
-  routes: any[]
-  isLoading: boolean
-  selectedRoute: any
-  originalRoutes: any[]
-  typingTimeout: number
-  response: Response | null
-  stage: 'input' | 'progress'
-  steps: Step[]
-  status: 'pending' | 'success' | 'failure' | 'awaiting'
-  settings: {
-    slippage_percent: string
-    showDestinationAddress: boolean
-  }
+	from: {
+		chain: {
+			name: string
+			symbol: string
+			id: string
+			logoURI: string
+			providers: {
+				lifi?: {
+					key: string
+				}
+				rango?: {
+					key: string
+				}
+			}
+		}
+		token: {
+			name: string
+			symbol: string
+			address: `0x${string}`
+			decimals: number
+			logoURI: string
+		}
+		amount: string
+		amount_usd: number
+		address: string
+	}
+	to: {
+		chain: {
+			name: string
+			symbol: string
+			id: string
+			logoURI: string
+			providers: {
+				lifi?: {
+					key: string
+				}
+				rango?: {
+					key: string
+				}
+			}
+		}
+		token: {
+			name: string
+			symbol: string
+			address: `0x${string}`
+			decimals: number
+			logoURI: string
+		}
+		amount: string
+		amount_usd: number
+		address: string
+	}
+	routes: any[]
+	isLoading: boolean
+	selectedRoute: any
+	originalRoutes: any[]
+	typingTimeout: number
+	response: Response | null
+	stage: 'input' | 'progress'
+	steps: Step[]
+	status: 'pending' | 'success' | 'failure' | 'awaiting'
+	settings: {
+		slippage_percent: string
+		showDestinationAddress: boolean
+	}
 }
 
 type Response = {
-  provider: string
-  isOk: boolean
-  message: string
+	provider: string
+	isOk: boolean
+	message: string
 }
 
 type Direction = 'from' | 'to'
 
 export type SetRoutesAction = {
-  type: 'SET_ROUTES'
-  payload: any[]
+	type: 'SET_ROUTES'
+	payload: any[]
 }
 
 export type PopulateRoutesAction = {
-  type: 'POPULATE_ROUTES'
-  payload: any
+	type: 'POPULATE_ROUTES'
+	payload: any
 }
 
 export type ClearRoutesAction = {
-  type: 'CLEAR_ROUTES'
+	type: 'CLEAR_ROUTES'
 }
 
 export type SetLoadingAction = {
-  type: 'SET_LOADING'
-  payload: boolean
+	type: 'SET_LOADING'
+	payload: boolean
 }
 
 export type SetSelectedRouteAction = {
-  type: 'SET_SELECTED_ROUTE'
-  payload: any
+	type: 'SET_SELECTED_ROUTE'
+	payload: any
 }
 
 export type SetOriginalRoutesAction = {
-  type: 'SET_ORIGINAL_ROUTES'
-  payload: any[]
+	type: 'SET_ORIGINAL_ROUTES'
+	payload: any[]
 }
 
 export type SetTypingTimeoutAction = {
-  type: 'SET_TYPING_TIMEOUT'
-  payload: number
+	type: 'SET_TYPING_TIMEOUT'
+	payload: number
 }
 
 export type SetAmountAction = {
-  type: 'SET_AMOUNT'
-  direction: Direction
-  payload: {
-    amount?: string
-    amount_usd?: number
-  }
+	type: 'SET_AMOUNT'
+	direction: Direction
+	payload: {
+		amount?: string
+		amount_usd?: number
+	}
 }
 
 export type ResetAmountsAction = {
-  type: 'RESET_AMOUNTS'
-  direction: Direction
+	type: 'RESET_AMOUNTS'
+	direction: Direction
 }
 
 export type SetChainAction = {
-  type: 'SET_CHAIN'
-  direction: Direction
-  payload: {
-    name: string
-    symbol: string
-    id: number
-  }
+	type: 'SET_CHAIN'
+	direction: Direction
+	payload: {
+		name: string
+		symbol: string
+		id: number
+	}
 }
 
 export type SetTokenAction = {
-  type: 'SET_TOKEN'
-  direction: Direction
-  payload: {
-    name: string
-    symbol: string
-  }
+	type: 'SET_TOKEN'
+	direction: Direction
+	payload: {
+		name: string
+		symbol: string
+	}
 }
 
 export type SetFromAmountAction = {
-  type: 'setFromAmount'
-  direction: Direction
-  payload: string
+	type: 'setFromAmount'
+	direction: Direction
+	payload: string
 }
 
 export type SetToAmountAction = {
-  type: 'setToAmount'
-  direction: Direction
-  payload: string
+	type: 'setToAmount'
+	direction: Direction
+	payload: string
 }
 
 export type SetFromAmountUSDAction = {
-  type: 'setFromAmountUSD'
-  direction: Direction
-  payload: number
+	type: 'setFromAmountUSD'
+	direction: Direction
+	payload: number
 }
 
 export type SetAddressAction = {
-  type: 'SET_ADDRESS'
-  direction: Direction
-  payload: string
+	type: 'SET_ADDRESS'
+	direction: Direction
+	payload: string
 }
 
 export type SetResponses = {
-  type: 'SET_RESPONSE'
-  payload: Response
+	type: 'SET_RESPONSE'
+	payload: Response
 }
 
 export type ToggleInsurance = {
-  type: 'TOGGLE_INSURANCE'
-  payload: Response
+	type: 'TOGGLE_INSURANCE'
+	payload: Response
 }
 
 export type SetBalanceAction = {
-  type: 'SET_BALANCE'
-  payload: string
+	type: 'SET_BALANCE'
+	payload: string
 }
 
 export type Action =
-  | SetChainAction
-  | SetTokenAction
-  | SetFromAmountAction
-  | SetToAmountAction
-  | SetFromAmountUSDAction
-  | SetRoutesAction
-  | PopulateRoutesAction
-  | ClearRoutesAction
-  | SetLoadingAction
-  | SetSelectedRouteAction
-  | SetOriginalRoutesAction
-  | SetTypingTimeoutAction
-  | SetAmountAction
-  | ResetAmountsAction
-  | SetAddressAction
-  | SetResponses
-  | ToggleInsurance
-  | SetBalanceAction
+	| SetChainAction
+	| SetTokenAction
+	| SetFromAmountAction
+	| SetToAmountAction
+	| SetFromAmountUSDAction
+	| SetRoutesAction
+	| PopulateRoutesAction
+	| ClearRoutesAction
+	| SetLoadingAction
+	| SetSelectedRouteAction
+	| SetOriginalRoutesAction
+	| SetTypingTimeoutAction
+	| SetAmountAction
+	| ResetAmountsAction
+	| SetAddressAction
+	| SetResponses
+	| ToggleInsurance
+	| SetBalanceAction

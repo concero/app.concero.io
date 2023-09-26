@@ -4,7 +4,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  bottomRow: string | undefined
-  container: string | undefined
-  topRow: string | undefined
+	bottomRow: string | undefined
+	container: string | undefined
+	topRow: string | undefined
 }

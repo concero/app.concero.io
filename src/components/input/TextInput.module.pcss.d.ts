@@ -4,7 +4,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  inline: string | undefined
-  inputIcon: string | undefined
-  inputWrapper: string | undefined
+	inline: string | undefined
+	inputIcon: string | undefined
+	inputWrapper: string | undefined
 }

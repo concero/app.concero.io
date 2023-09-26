@@ -8,25 +8,25 @@ import { buttonMessages, Status } from '../ManageModal/constants'
 import { buttonClassNames, buttonIcons } from './styleHandlers'
 
 interface StakeButtonProps {
-  manageState: ManageState
-  manageDispatch: Dispatch<any>
+	manageState: ManageState
+	manageDispatch: Dispatch<any>
 }
 
 export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
-  const { switchNetworkAsync } = useSwitchNetwork()
-  const { status } = manageState
-  const isDisabled = status !== Status.swap
+	const { switchNetworkAsync } = useSwitchNetwork()
+	const { status } = manageState
+	const isDisabled = status !== Status.swap
 
-  return (
-    <Button
-      leftIcon={buttonIcons[status]}
-      size="lg"
-      isLoading={manageState.isLoading}
-      className={classNames[buttonClassNames(status)]}
-      onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync)}
-      isDisabled={isDisabled}
-    >
-      {buttonMessages[status]}
-    </Button>
-  )
+	return (
+		<Button
+			leftIcon={buttonIcons[status]}
+			size="lg"
+			isLoading={manageState.isLoading}
+			className={classNames[buttonClassNames(status)]}
+			onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync)}
+			isDisabled={isDisabled}
+		>
+			{buttonMessages[status]}
+		</Button>
+	)
 }

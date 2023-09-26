@@ -8,40 +8,40 @@ import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
 
 export const renderTags = (route: Route, isSelected: boolean, getTextColor: () => string, getIconColor: () => string) => {
-  const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
-  const { toggleInsurance } = useContext(InsuranceContext)
+	const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
+	const { toggleInsurance } = useContext(InsuranceContext)
 
-  const handleInsuranceButtonClick = (event) => {
-    event.stopPropagation()
-    toggleInsurance(route.id)
-  }
+	const handleInsuranceButtonClick = event => {
+		event.stopPropagation()
+		toggleInsurance(route.id)
+	}
 
-  return (
-    <div className={classNames.infoTagsContainer}>
-      {route?.tags[0]?.length > 0 ? (
-        <Tag color={route.tags[0].toLowerCase()}>
-          <p style={{ color: 'inherit', flexWrap: 'nowrap' }}>{capitalize(advantageTagText)}</p>
-        </Tag>
-      ) : null}
-      {route.insurance ? (
-        <Tag color="green" onClick={(e) => handleInsuranceButtonClick(e)}>
-          <p style={{ color: 'inherit', flexWrap: 'nowrap' }}>Insurance</p>
-          <Beacon isOn={route.insurance?.state === 'INSURED'} color="green" />
-        </Tag>
-      ) : null}
-      <Tag color="transparent" leftIcon={<IconClock size={20} color={getIconColor()} />}>
-        <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
-      </Tag>
-      {route.slippage_percent ? (
-        <Tag color="transparent" leftIcon={<IconArrowWaveRightUp size={20} color={getIconColor()} />}>
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>
-        </Tag>
-      ) : null}
-      {route.cost.total_gas_usd ? (
-        <Tag color="transparent" leftIcon={<IconPigMoney size={20} color={getIconColor()} />}>
-          <h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
-        </Tag>
-      ) : null}
-    </div>
-  )
+	return (
+		<div className={classNames.infoTagsContainer}>
+			{route?.tags[0]?.length > 0 ? (
+				<Tag color={route.tags[0].toLowerCase()}>
+					<p style={{ color: 'inherit', flexWrap: 'nowrap' }}>{capitalize(advantageTagText)}</p>
+				</Tag>
+			) : null}
+			{route.insurance ? (
+				<Tag color="green" onClick={e => handleInsuranceButtonClick(e)}>
+					<p style={{ color: 'inherit', flexWrap: 'nowrap' }}>Insurance</p>
+					<Beacon isOn={route.insurance?.state === 'INSURED'} color="green" />
+				</Tag>
+			) : null}
+			<Tag color="transparent" leftIcon={<IconClock size={20} color={getIconColor()} />}>
+				<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
+			</Tag>
+			{route.slippage_percent ? (
+				<Tag color="transparent" leftIcon={<IconArrowWaveRightUp size={20} color={getIconColor()} />}>
+					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>
+				</Tag>
+			) : null}
+			{route.cost.total_gas_usd ? (
+				<Tag color="transparent" leftIcon={<IconPigMoney size={20} color={getIconColor()} />}>
+					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
+				</Tag>
+			) : null}
+		</div>
+	)
 }

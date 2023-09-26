@@ -4,7 +4,7 @@ declare const identifiersMap: CssIdentifiersMap
 export default identifiersMap
 
 export type CssIdentifiersMap = {
-  container: string | undefined
-  mainCardStack: string | undefined
-  secondaryCardStack: string | undefined
+	container: string | undefined
+	mainCardStack: string | undefined
+	secondaryCardStack: string | undefined
 }

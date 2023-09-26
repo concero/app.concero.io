@@ -4,8 +4,8 @@ export const authToken = config.CRYPTOPANIC_API_KEY
 export const baseURL = 'https://cryptopanic.com/api/v1'
 
 export const headers = {
-  Authorization: `Bearer ${authToken}`,
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-  'Content-Type': 'application/json',
+	Authorization: `Bearer ${authToken}`,
+	'Access-Control-Allow-Origin': '*',
+	'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+	'Content-Type': 'application/json',
 }

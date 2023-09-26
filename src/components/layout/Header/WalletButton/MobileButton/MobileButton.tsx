@@ -9,19 +9,19 @@ import classNames from './MobileButton.module.pcss'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface MobileButtonProps {
-  open: IntrinsicAttributes & ((options?: any) => Promise<void>)
-  toggleTheme: () => void
+	open: IntrinsicAttributes & ((options?: any) => Promise<void>)
+	toggleTheme: () => void
 }
 
 export const MobileButton: FC<MobileButtonProps> = ({ open, toggleTheme }) => {
-  const matchExchange = useMatch(routes.exchange)
-  const matchPortfolio = useMatch(routes.portfolio)
-  const { isConnected } = useAccount()
+	const matchExchange = useMatch(routes.exchange)
+	const matchPortfolio = useMatch(routes.portfolio)
+	const { isConnected } = useAccount()
 
-  return (
-    <div className={classNames.container}>
-      <BaseButton onClick={open} isConnected={isConnected} />
-      <MobileBurgerMenu matchPortfolio={matchPortfolio} matchExchange={matchExchange} toggleTheme={toggleTheme} />
-    </div>
-  )
+	return (
+		<div className={classNames.container}>
+			<BaseButton onClick={open} isConnected={isConnected} />
+			<MobileBurgerMenu matchPortfolio={matchPortfolio} matchExchange={matchExchange} toggleTheme={toggleTheme} />
+		</div>
+	)
 }

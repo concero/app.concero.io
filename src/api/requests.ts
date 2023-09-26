@@ -1,57 +1,57 @@
 import client from './clientProxy'
 
 export async function get(req, on_ok = null, on_err = null) {
-  try {
-    const res = await client.get(req)
-    if (on_ok) on_ok(res)
-  } catch (error) {
-    if (on_err) on_err(error.response)
-  }
+	try {
+		const res = await client.get(req)
+		if (on_ok) on_ok(res)
+	} catch (error) {
+		if (on_err) on_err(error.response)
+	}
 }
 
 export async function post(req, on_ok = null, on_err = null) {
-  try {
-    const res = await client.post(req)
-    if (on_ok) on_ok(res)
-  } catch (error) {
-    if (on_err) on_err(error.response)
-  }
+	try {
+		const res = await client.post(req)
+		if (on_ok) on_ok(res)
+	} catch (error) {
+		if (on_err) on_err(error.response)
+	}
 }
 
 export async function apiRequestExec(req_fn) {
-  // executes req_fn and returns { response, ok, err }
-  let response = null
-  let ok = false
-  let err = null
-  try {
-    response = await req_fn()
-    ok = true
-  } catch (error) {
-    err = error.response
-  }
-  return { response, ok, err }
+	// executes req_fn and returns { response, ok, err }
+	let response = null
+	let ok = false
+	let err = null
+	try {
+		response = await req_fn()
+		ok = true
+	} catch (error) {
+		err = error.response
+	}
+	return { response, ok, err }
 }
 
 export async function api(req_fn, on_ok, on_err) {
-  // executes req_fn and calls on_ok or on_err depending on the result
-  const { response, ok, err } = await apiRequestExec(req_fn)
-  if (ok) {
-    if (on_ok) on_ok(response)
-  } else if (on_err) on_err(err)
+	// executes req_fn and calls on_ok or on_err depending on the result
+	const { response, ok, err } = await apiRequestExec(req_fn)
+	if (ok) {
+		if (on_ok) on_ok(response)
+	} else if (on_err) on_err(err)
 }
 
 export async function apiRequest(response) {
-  let ok = false
-  let err = null
+	let ok = false
+	let err = null
 
-  if (response) {
-    if (response.status >= 200 && response.status < 300) {
-      ok = true
-    } else {
-      err = response?.data?.error || response?.data?.message || response?.data || response
-    }
-  } else {
-    err = 'No response object. Likely a network error.'
-  }
-  return { res: response, ok, err }
+	if (response) {
+		if (response.status >= 200 && response.status < 300) {
+			ok = true
+		} else {
+			err = response?.data?.error || response?.data?.message || response?.data || response
+		}
+	} else {
+		err = 'No response object. Likely a network error.'
+	}
+	return { res: response, ok, err }
 }

@@ -5,10 +5,10 @@
  @returns {void}
  */
 export const logError = (error: Error, additionalInfo?: any): void => {
-  console.error(`Error: ${error.message}`, error, additionalInfo)
+	console.error(`Error: ${error.message}`, error, additionalInfo)
 
-  // Send the error to an external error tracking service (e.g., Sentry, Rollbar)
-  // Example: Sentry.captureException(error, { extra: additionalInfo });
+	// Send the error to an external error tracking service (e.g., Sentry, Rollbar)
+	// Example: Sentry.captureException(error, { extra: additionalInfo });
 }
 
 /**
@@ -20,15 +20,15 @@ export const logError = (error: Error, additionalInfo?: any): void => {
  @returns {(...args: TArgs) => TResult | null} - The wrapped function with error handling logic.
  */
 export const withErrorHandling =
-  <TArgs extends any[], TResult>(fn: (...args: TArgs) => TResult, errorMessage: string): ((...args: TArgs) => TResult | null) =>
-  (...args: TArgs): TResult | null => {
-    try {
-      return fn(...args)
-    } catch (error) {
-      logError(new Error(errorMessage), { originalError: error })
-      return null
-    }
-  }
+	<TArgs extends any[], TResult>(fn: (...args: TArgs) => TResult, errorMessage: string): ((...args: TArgs) => TResult | null) =>
+	(...args: TArgs): TResult | null => {
+		try {
+			return fn(...args)
+		} catch (error) {
+			logError(new Error(errorMessage), { originalError: error })
+			return null
+		}
+	}
 
 /**
  Wraps an async function with error handling logic to log and handle any errors that may occur.
@@ -39,12 +39,12 @@ export const withErrorHandling =
  @returns {(...args: TArgs) => Promise<TResult | null>} - The wrapped async function with error handling logic.
  */
 export const withErrorHandlingAsync =
-  <TArgs extends any[], TResult>(fn: (...args: TArgs) => Promise<TResult>, errorMessage: string): ((...args: TArgs) => Promise<TResult | null>) =>
-  async (...args: TArgs): Promise<TResult | null> => {
-    try {
-      return await fn(...args)
-    } catch (error) {
-      logError(new Error(errorMessage), { originalError: error })
-      return null
-    }
-  }
+	<TArgs extends any[], TResult>(fn: (...args: TArgs) => Promise<TResult>, errorMessage: string): ((...args: TArgs) => Promise<TResult | null>) =>
+	async (...args: TArgs): Promise<TResult | null> => {
+		try {
+			return await fn(...args)
+		} catch (error) {
+			logError(new Error(errorMessage), { originalError: error })
+			return null
+		}
+	}

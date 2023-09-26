@@ -1,97 +1,97 @@
 .row {
-    flex-direction: row;
+	flex-direction: row;
 }
 
 .ac {
-    align-items: center;
+	align-items: center;
 }
 
 .afe {
-    align-items: flex-end;
+	align-items: flex-end;
 }
 
 .afs {
-    align-items: flex-start;
+	align-items: flex-start;
 }
 
 .jc {
-    justify-content: center;
+	justify-content: center;
 }
 
 .jfe {
-    justify-content: flex-end;
+	justify-content: flex-end;
 }
 
 .jsb {
-    justify-content: space-between;
+	justify-content: space-between;
 }
 
 .jfs {
-    justify-content: flex-start;
+	justify-content: flex-start;
 }
 
 .f1 {
-    flex: 1;
+	flex: 1;
 }
 
 .gap-xs {
-    gap: var(--sp-xs);
+	gap: var(--sp-xs);
 }
 
 .gap-sm {
-    gap: var(--sp-sm);
+	gap: var(--sp-sm);
 }
 
 .gap-md {
-    gap: var(--sp-md);
+	gap: var(--sp-md);
 }
 
 .gap-lg {
-    gap: var(--sp-lg);
+	gap: var(--sp-lg);
 }
 
 .gap-xl {
-    gap: var(--sp-xl);
+	gap: var(--sp-xl);
 }
 
 .hide-down {
-    opacity: 0;
-    transform: translateY(10px);
+	opacity: 0;
+	transform: translateY(10px);
 }
 
 .show-up {
-    opacity: 1;
-    transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0);
 }
 
 /* For Firefox */
 input[type='number'] {
-    -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 /* For Chrome, Safari, Edge */
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 .fade-in-out {
-    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+	transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
 }
 
 .card {
-    background: linear-gradient(154deg, var(--color-main-card-gradient), rgba(0, 0, 0, 0)) no-repeat;
-    background-size: 200% 200%;
-    background-position: 200% 200%;
-    border: 1px solid var(--color-grey-600);
-    border-radius: var(--st-br-md);
-    padding: var(--sp-md);
-    transition: background-position 0.4s;
+	background: linear-gradient(154deg, var(--color-main-card-gradient), rgba(0, 0, 0, 0)) no-repeat;
+	background-size: 200% 200%;
+	background-position: 200% 200%;
+	border: 1px solid var(--color-grey-600);
+	border-radius: var(--st-br-md);
+	padding: var(--sp-md);
+	transition: background-position 0.4s;
 }
 
 .dark {
-    .card:hover {
-        background-position: 80% 80%;
-    }
+	.card:hover {
+		background-position: 80% 80%;
+	}
 }

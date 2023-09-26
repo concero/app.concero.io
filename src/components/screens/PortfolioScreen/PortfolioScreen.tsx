@@ -9,17 +9,17 @@ import { HoldingsCard } from '../../cards/HoldingsCard/HoldingsCard'
 export interface PortfolioScreenProps {}
 
 export const PortfolioScreen: FC<PortfolioScreenProps> = () => (
-  <div className={`row ${classNames.container}`}>
-    <div className={classNames.mainCardStack}>
-      <div className={classNames.horizontalCardStack}>
-        <HighlightsCard />
-        <BarChartCard />
-      </div>
-      <ChartCard />
-    </div>
-    <div className={classNames.secondaryCardStack}>
-      <HoldingsCard />
-      <HistoryCard />
-    </div>
-  </div>
+	<div className={`row ${classNames.container}`}>
+		<div className={classNames.mainCardStack}>
+			<div className={classNames.horizontalCardStack}>
+				<HighlightsCard />
+				<BarChartCard />
+			</div>
+			<ChartCard />
+		</div>
+		<div className={classNames.secondaryCardStack}>
+			<HoldingsCard />
+			<HistoryCard />
+		</div>
+	</div>
 )

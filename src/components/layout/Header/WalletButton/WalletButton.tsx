@@ -11,20 +11,20 @@ import { DesktopButton } from './DesktopButton/DesktopButton'
 interface WalletButtonProps {}
 
 export const WalletButton: FC<WalletButtonProps> = () => {
-  const isDesktop = useMediaQuery('mobile')
-  const { theme, toggleTheme } = useContext(ThemeContext)
-  const { open } = useWeb3Modal()
-  const ButtonWithPopover = WithPopover(BaseButton, HeaderPopoverMenu, 'hover')
+	const isDesktop = useMediaQuery('mobile')
+	const { theme, toggleTheme } = useContext(ThemeContext)
+	const { open } = useWeb3Modal()
+	const ButtonWithPopover = WithPopover(BaseButton, HeaderPopoverMenu, 'hover')
 
-  return (
-    <div>
-      {isDesktop ? (
-        <div>
-          <DesktopButton open={open} ButtonWithPopover={ButtonWithPopover} toggleTheme={toggleTheme} theme={theme} />
-        </div>
-      ) : (
-        <MobileButton open={open} toggleTheme={toggleTheme} />
-      )}
-    </div>
-  )
+	return (
+		<div>
+			{isDesktop ? (
+				<div>
+					<DesktopButton open={open} ButtonWithPopover={ButtonWithPopover} toggleTheme={toggleTheme} theme={theme} />
+				</div>
+			) : (
+				<MobileButton open={open} toggleTheme={toggleTheme} />
+			)}
+		</div>
+	)
 }

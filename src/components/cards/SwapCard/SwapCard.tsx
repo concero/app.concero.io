@@ -16,41 +16,32 @@ import { Button } from '../../buttons/Button/Button'
 import { colors } from '../../../constants/colors'
 
 export const SwapCard: FC<SwapCardProps> = () => {
-  const { selection, dispatch } = useContext(SelectionContext)
-  const [swapState, swapDispatch] = useSwapReducer(selection)
-  const { address } = useAccount()
-  const typingTimeoutRef = useRef(null)
+	const { selection, dispatch } = useContext(SelectionContext)
+	const [swapState, swapDispatch] = useSwapReducer(selection)
+	const { address } = useAccount()
+	const typingTimeoutRef = useRef(null)
 
-  const toggleInsurance = (routeId) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
-  useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
+	const toggleInsurance = routeId => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
+	useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
 
-  return (
-    <InsuranceProvider toggleInsurance={toggleInsurance}>
-      <div className={`card ${classNames.container}`}>
-        <CardHeader title={getCardTitleByStatus(swapState.status)}>
-          <div className={classNames.cardHeader}>
-            <Button
-              variant="black"
-              size="sq-sm"
-              onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-              leftIcon={<IconSettings2 size={16} color={colors.grey.dark} />}
-            />
-          </div>
-        </CardHeader>
-        <div className={classNames.swapContainer}>
-          {swapState.stage === 'input' ? (
-            <SwapInput swapState={swapState} swapDispatch={swapDispatch} />
-          ) : (
-            <SwapProgress swapState={swapState} swapDispatch={swapDispatch} />
-          )}
-        </div>
-      </div>
-      <SwapSettingsModal
-        show={swapState.settingsModalOpen}
-        setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
-        swapDispatch={swapDispatch}
-        settings={swapState.settings}
-      />
-    </InsuranceProvider>
-  )
+	return (
+		<InsuranceProvider toggleInsurance={toggleInsurance}>
+			<div className={`card ${classNames.container}`}>
+				<CardHeader title={getCardTitleByStatus(swapState.status)}>
+					<div className={classNames.cardHeader}>
+						<Button variant="black" size="sq-sm" onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })} leftIcon={<IconSettings2 size={16} color={colors.grey.dark} />} />
+					</div>
+				</CardHeader>
+				<div className={classNames.swapContainer}>
+					{swapState.stage === 'input' ? <SwapInput swapState={swapState} swapDispatch={swapDispatch} /> : <SwapProgress swapState={swapState} swapDispatch={swapDispatch} />}
+				</div>
+			</div>
+			<SwapSettingsModal
+				show={swapState.settingsModalOpen}
+				setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+				swapDispatch={swapDispatch}
+				settings={swapState.settings}
+			/>
+		</InsuranceProvider>
+	)
 }

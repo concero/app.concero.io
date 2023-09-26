@@ -1,4 +1,4 @@
-export const handleBeforeUnload = (event) => {
-  event.preventDefault()
-  event.returnValue = ''
+export const handleBeforeUnload = event => {
+	event.preventDefault()
+	event.returnValue = ''
 }

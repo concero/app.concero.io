@@ -18,51 +18,51 @@ const Ratio = memo(withErrorBoundary(RatioCard))
 const Details = memo(withErrorBoundary(StakingDetailsCard))
 
 export const StakingScreen: FC = () => {
-  const [stakingState, stakingDispatch] = useStakingReducer()
-  const { address } = useAccount()
-  const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
-  const Chart = memo(withErrorBoundary(StakingChartCard))
+	const [stakingState, stakingDispatch] = useStakingReducer()
+	const { address } = useAccount()
+	const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
+	const Chart = memo(withErrorBoundary(StakingChartCard))
 
-  useEffect(() => {
-    stakingDispatch({ type: 'SET_ADDRESS', payload: address })
-    getUserBalancesSortedByChain(address).then((balances) => {
-      stakingDispatch({ type: 'SET_BALANCES', payload: balances })
-    })
-  }, [address])
+	useEffect(() => {
+		stakingDispatch({ type: 'SET_ADDRESS', payload: address })
+		getUserBalancesSortedByChain(address).then(balances => {
+			stakingDispatch({ type: 'SET_BALANCES', payload: balances })
+		})
+	}, [address])
 
-  const mobileLayout = (
-    <div className={classNames.container}>
-      <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
-      {stakingState.selectedVault ? (
-        <div className={classNames.mainCardStack}>
-          <Chart stakingState={stakingState} />
-          <Highlights stakingState={stakingState} />
-          <Ratio />
-          <Details />
-        </div>
-      ) : null}
-    </div>
-  )
+	const mobileLayout = (
+		<div className={classNames.container}>
+			<StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
+			{stakingState.selectedVault ? (
+				<div className={classNames.mainCardStack}>
+					<Chart stakingState={stakingState} />
+					<Highlights stakingState={stakingState} />
+					<Ratio />
+					<Details />
+				</div>
+			) : null}
+		</div>
+	)
 
-  const vaultDetails = useMemo(() => {
-    if (!stakingState.selectedVault) return null
-    return (
-      <div className={classNames.stacksContainer}>
-        <div className={classNames.mainCardStack}>
-          <Header stakingState={stakingState} />
-          <Chart selectedVault={stakingState.selectedVault} />
-        </div>
-        <Details stakingState={stakingState} />
-      </div>
-    )
-  }, [stakingState.selectedVault])
+	const vaultDetails = useMemo(() => {
+		if (!stakingState.selectedVault) return null
+		return (
+			<div className={classNames.stacksContainer}>
+				<div className={classNames.mainCardStack}>
+					<Header stakingState={stakingState} />
+					<Chart selectedVault={stakingState.selectedVault} />
+				</div>
+				<Details stakingState={stakingState} />
+			</div>
+		)
+	}, [stakingState.selectedVault])
 
-  const desktopLayout = (
-    <div className={classNames.container}>
-      <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
-      {vaultDetails}
-    </div>
-  )
+	const desktopLayout = (
+		<div className={classNames.container}>
+			<StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
+			{vaultDetails}
+		</div>
+	)
 
-  return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
+	return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
 }

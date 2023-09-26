@@ -1,3 +1,3 @@
 export function copyInBuffer(value: string) {
-  window.navigator.clipboard.writeText(value)
+	window.navigator.clipboard.writeText(value)
 }

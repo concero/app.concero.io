@@ -1,4 +1,4 @@
 export interface SwapInputProps {
-  swapState: any
-  swapDispatch: any
+	swapState: any
+	swapDispatch: any
 }

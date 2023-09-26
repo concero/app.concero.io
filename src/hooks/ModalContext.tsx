@@ -4,20 +4,20 @@ import { useListModalReducer } from '../components/modals/Modal/listModalReducer
 export const ModalContext = createContext(null)
 
 interface ModalContextProps {
-  children: ReactNode
+	children: ReactNode
 }
 
 export function ModalProvider({ children }: ModalContextProps) {
-  const [modalState, modalDispatch] = useListModalReducer()
+	const [modalState, modalDispatch] = useListModalReducer()
 
-  return (
-    <ModalContext.Provider
-      value={{
-        modalState,
-        modalDispatch,
-      }}
-    >
-      {children}
-    </ModalContext.Provider>
-  )
+	return (
+		<ModalContext.Provider
+			value={{
+				modalState,
+				modalDispatch,
+			}}
+		>
+			{children}
+		</ModalContext.Provider>
+	)
 }

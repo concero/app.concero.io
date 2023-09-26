@@ -12,31 +12,31 @@ import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
 
 interface ProtocolCardProps {
-  stakingState: StakingState
+	stakingState: StakingState
 }
 
 export function ProtocolCard({ stakingState }: ProtocolCardProps) {
-  const [isOpened, setIsOpened] = useState(false)
-  const [protocolData, setProtocolData] = useState<Protocol | null>(null)
-  const { selectedVault } = stakingState
+	const [isOpened, setIsOpened] = useState(false)
+	const [protocolData, setProtocolData] = useState<Protocol | null>(null)
+	const { selectedVault } = stakingState
 
-  useEffect(() => {
-    getProtocolData(selectedVault?.protocolId, setProtocolData)
-  }, [selectedVault])
+	useEffect(() => {
+		getProtocolData(selectedVault?.protocolId, setProtocolData)
+	}, [selectedVault])
 
-  return (
-    <div>
-      <CardHeader title="Protocol" />
-      <Button variant="subtle" onClick={() => setIsOpened(true)}>
-        <div className={classNames.cardContainer}>
-          <div className={classNames.avatarContainer}>
-            <Avatar src={selectedVault?.protocol?.logoURI ?? null} />
-            <h5>{capitalize(selectedVault.name)}</h5>
-          </div>
-          <IconChevronRight size={18} color={colors.text.secondary} />
-        </div>
-      </Button>
-      <ProtocolModal show={isOpened} setShow={setIsOpened} protocol={protocolData} />
-    </div>
-  )
+	return (
+		<div>
+			<CardHeader title="Protocol" />
+			<Button variant="subtle" onClick={() => setIsOpened(true)}>
+				<div className={classNames.cardContainer}>
+					<div className={classNames.avatarContainer}>
+						<Avatar src={selectedVault?.protocol?.logoURI ?? null} />
+						<h5>{capitalize(selectedVault.name)}</h5>
+					</div>
+					<IconChevronRight size={18} color={colors.text.secondary} />
+				</div>
+			</Button>
+			<ProtocolModal show={isOpened} setShow={setIsOpened} protocol={protocolData} />
+		</div>
+	)
 }
