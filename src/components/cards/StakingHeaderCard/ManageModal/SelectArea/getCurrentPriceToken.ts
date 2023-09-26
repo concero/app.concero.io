@@ -1,13 +1,11 @@
 import { fetchCurrentTokenPriceUSD } from '../../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
-import { Dispatch } from 'react'
-import { ManageAction } from '../useManageReducer/types'
 
-export async function getCurrentPriceToken(selection, dispatch: Dispatch<ManageAction>) {
+export async function getCurrentPriceToken(selection, setCurrentUsdPrice) {
   try {
     const response = await fetchCurrentTokenPriceUSD(selection.token.coinGeckoId)
-    dispatch({ type: 'SET_TOKEN_USD_PRICE', payload: response, direction: 'from' })
+    setCurrentUsdPrice(response)
   } catch (error) {
     console.log('ERROR: ', error)
-    dispatch({ type: 'SET_TOKEN_USD_PRICE', payload: null, direction: 'from' })
+    setCurrentUsdPrice(null)
   }
 }

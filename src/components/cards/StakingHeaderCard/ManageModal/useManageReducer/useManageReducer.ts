@@ -47,9 +47,6 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
       return { ...state, status: action.payload }
     case 'SET_BALANCE':
       return { ...state, balance: action.payload }
-    // case 'SWITCH_SWAP_TYPE':
-    //   const type = state.swapType === SwapType.stake ? SwapType.withdraw : SwapType.stake
-    //   return { ...state, swapType: type, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
     case 'SET_WITHDRAW_TYPE':
       return {
         ...state,
@@ -80,8 +77,6 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
           },
         },
       }
-    case 'SET_TOKEN_USD_PRICE':
-      return { ...state, [action.direction]: { ...state.to, amount_usd: action.payload } }
     case 'RESET':
       return manageInitialState(action.payload)
     default:

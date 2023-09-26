@@ -22,11 +22,14 @@ interface SelectAreaProps {
 export function SelectArea({ selection, direction, dispatch, balance = null, swapType }: SelectAreaProps) {
   const inputRef = useRef()
   const [isFocused, setIsFocused] = useState(false)
+  const [currentUsdPrice, setCurrentUsdPrice] = useState<number | null>(null)
   const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 
   function handleChangeText(value) {
     if (value && !isFloatInput(value)) return
     dispatch({ type: 'SET_AMOUNT', amount: value, direction })
+    if (swapType === SwapType.withdraw) return
+    dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? Number(value) * currentUsdPrice : null, direction })
   }
 
   function handleChainButtonClick() {
@@ -38,8 +41,8 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
   }
 
   useEffect(() => {
-    if (direction === 'from' && swapType === SwapType.stake) getCurrentPriceToken(selection, dispatch)
-  }, [selection.chain, selection.token])
+    if (direction === 'from' && swapType === SwapType.stake) getCurrentPriceToken(selection, setCurrentUsdPrice)
+  }, [selection.chain.id, selection.token.address])
 
   return (
     <div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
@@ -70,7 +73,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
             onChangeText={handleChangeText}
             isDisabled={direction === 'to'}
           />
-          <h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
+          {selection.amount_usd !== null && selection.amount_usd !== undefined ? <h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5> : null}
         </div>
         <Button
           onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}

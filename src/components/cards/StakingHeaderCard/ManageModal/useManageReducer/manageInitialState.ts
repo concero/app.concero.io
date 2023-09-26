@@ -15,6 +15,7 @@ export const manageInitialState = (stakingState: StakingState) => {
         logoURI: 'https://static.debank.com/image/token/logo_url/eth/935ae4e4d1d12d59a99717a24f2540b5.png',
         address: config.NULL_ADDRESS,
         decimals: 18,
+        coinGeckoId: 'ethereum',
       },
       chain: {
         name: 'Ethereum',
