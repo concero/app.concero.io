@@ -36,6 +36,9 @@ export const Header: FC<HeaderProps> = ({ children }) => {
             <Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
               Exchange
             </Link>
+            <Link className={matchStaking ? classNames.active : classNames.link} to={routes.staking}>
+              Staking
+            </Link>
             {ComingSoon}
           </ul>
         ) : null}

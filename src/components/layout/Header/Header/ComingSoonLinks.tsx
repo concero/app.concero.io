@@ -5,9 +5,6 @@ export function ComingSoonLinks() {
   return (
     <div className={classNames.comingSoonContainer}>
       <Link className={classNames.comingSoon} to="#">
-        Staking
-      </Link>
-      <Link className={classNames.comingSoon} to="#">
         Portfolio
       </Link>
       <Link className={classNames.comingSoon} to="#">

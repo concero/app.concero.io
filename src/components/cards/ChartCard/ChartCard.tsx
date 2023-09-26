@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useContext, useEffect } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
@@ -19,9 +19,6 @@ import { ListModal } from '../../modals/MultiselectModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
 
 export interface ChartCardProps {}
-
-const MainChart = memo(Chart)
-const TradingViewChart = memo(AdvancedRealTimeChart)
 
 export const ChartCard: FC<ChartCardProps> = () => {
   const { selection } = useContext(SelectionContext)
@@ -51,30 +48,6 @@ export const ChartCard: FC<ChartCardProps> = () => {
     dispatch({ type: 'SET_TOKEN', tokenType: 'base', payload: token })
     dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
   }
-
-  const setIsOpenCallback = useCallback(() => {
-    dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
-  }, [dispatch])
-
-  const handleSelectCallback = useCallback(
-    (token) => {
-      handleSelect(token)
-    },
-    [handleSelect],
-  )
-
-  const getItemsCallback = useCallback(
-    ({ offset, limit, search }) => {
-      return getTokens({
-        chainId: selection.swapCard.to.chain.id,
-        offset,
-        limit,
-        search,
-      })
-    },
-    [getTokens, selection.swapCard.to.chain.id],
-  )
-
   return (
     <Card className={classNames.container}>
       <div className={classNames.headerContainer}>
@@ -96,9 +69,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
       </div>
       <div className="f1">
         {chartType === 'coinGecko' ? (
-          <MainChart data={chartData} />
+          <Chart data={chartData} />
         ) : (
-          <TradingViewChart
+          <AdvancedRealTimeChart
             theme={theme}
             symbol={`BINANCE:${selection.swapCard.to.token.symbol}USDT`}
             interval="1"
@@ -115,9 +88,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
       <ListModal
         title="Select token"
         isOpen={token.base.modalVisible}
-        setIsOpen={setIsOpenCallback}
-        onSelect={handleSelectCallback}
-        getItems={getItemsCallback}
+        setIsOpen={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}
+        onSelect={(token) => handleSelect(token)}
+        getItems={({ offset, limit, search }) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
         RenderItem={ListEntityButton}
       />
     </Card>
