@@ -15,7 +15,7 @@ interface StakingHeaderCardProps {
 }
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, stakingDispatch }) => {
-	const isDesktop = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('mobile')
 	const [isManageModalOpen, setIsManageModalOpen] = useState(false)
 	const { selectedVault } = stakingState
 
@@ -36,7 +36,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 	return (
 		<>
 			<div className={classNames.wrapper}>
-				{!isDesktop ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.staked : ''} onClick={handleGoBackbuttonClick} /> : null}
+				{isMobile ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.staked : ''} onClick={handleGoBackbuttonClick} /> : null}
 				<div className={classNames.innerContainer}>
 					<div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
 						<div className={classNames.headerContainer}>
@@ -47,7 +47,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 									<p className={`body1 ${classNames.protocolTitle}`}>{capitalize(selectedVault?.protocol?.name ?? '')}</p>
 								</div>
 							</div>
-							{isDesktop ? (
+							{!isMobile ? (
 								<div className={classNames.sideContainer}>
 									<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick} className={classNames.stakeButton}>
 										{stakedAmount ? 'Manage' : 'Stake'}
@@ -55,7 +55,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 								</div>
 							) : null}
 						</div>
-						{isDesktop && stakedAmount ? (
+						{!isMobile && stakedAmount ? (
 							<div className={classNames.cardsContainer}>
 								<InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} />
 								<InfoCard title={'Earned'} value={stakedAmount} />
@@ -65,14 +65,14 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 					</div>
 				</div>
 			</div>
-			{!isDesktop && stakedAmount ? (
+			{isMobile && stakedAmount ? (
 				<div className={classNames.cardsContainer}>
 					<InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} />
 					<InfoCard title={'Earned'} value={stakedAmount} />
 					<InfoCard title={'Pool share'} value={stakedAmount} />
 				</div>
 			) : null}
-			{!isDesktop ? (
+			{isMobile ? (
 				<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick}>
 					{stakedAmount ? 'Manage' : 'Stake'}
 				</Button>

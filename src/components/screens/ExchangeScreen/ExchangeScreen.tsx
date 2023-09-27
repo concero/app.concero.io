@@ -15,7 +15,7 @@ const News = memo(withErrorBoundary(NewsCard))
 const Chart = memo(withErrorBoundary(ChartCard))
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
-	const isDesktop = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('mobile')
 
 	const desktopLayout = (
 		<div className={`row ${classNames.container}`}>
@@ -41,5 +41,5 @@ export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
 		</div>
 	)
 
-	return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
+	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : desktopLayout}</div>
 }

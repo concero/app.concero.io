@@ -20,7 +20,8 @@ const Details = memo(withErrorBoundary(StakingDetailsCard))
 export const StakingScreen: FC = () => {
 	const [stakingState, stakingDispatch] = useStakingReducer()
 	const { address } = useAccount()
-	const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
+	const isMobile = useMediaQuery('mobile')
+	const isIpad = useMediaQuery('ipad')
 	const Chart = memo(withErrorBoundary(StakingChartCard))
 
 	useEffect(() => {
@@ -66,5 +67,5 @@ export const StakingScreen: FC = () => {
 		</div>
 	)
 
-	return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
+	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : desktopLayout}</div>
 }
