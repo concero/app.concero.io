@@ -8,7 +8,7 @@ import { useChartReducer } from './chartReducer/chartReducer'
 import { getData } from './getData'
 import { switchChartType } from './switchChartType'
 import { buttonsData } from './constants'
-import { ListModal } from '../../modals/MultiselectModal/ListModal'
+import { ListModal } from '../../modals/ListModal/ListModal'
 import { RowComponent } from './RowComponent/RowConponent'
 import { CardHeader } from '../CardHeader/CardHeader'
 

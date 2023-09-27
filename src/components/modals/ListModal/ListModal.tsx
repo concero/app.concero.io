@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
 import { Modal } from '../Modal/Modal'
-import classNames from './MultiselectModal.module.pcss'
+import classNames from './ListModal.module.pcss'
 import { MultiSelectModalProps } from './types'
 import { TextInput } from '../../input/TextInput'
 
@@ -48,7 +48,9 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
 		<Modal show={isOpen} setShow={setIsOpen} title={title}>
 			<div className={classNames.container}>
 				<div className={classNames.inputContainer}>
-					{isSearchable ? <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} /> : null}
+					{isSearchable ? (
+						<TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} />
+					) : null}
 				</div>
 				<div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
 					{items.map((item, index) => {

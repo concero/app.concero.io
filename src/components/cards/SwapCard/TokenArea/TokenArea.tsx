@@ -13,7 +13,7 @@ import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
-import { ListModal } from '../../../modals/MultiselectModal/ListModal'
+import { ListModal } from '../../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, chains }) => {

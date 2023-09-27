@@ -15,7 +15,7 @@ import { fetchChartData } from '../../../api/defilama/fetchChartData'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
-import { ListModal } from '../../modals/MultiselectModal/ListModal'
+import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
 
 export interface ChartCardProps {}
