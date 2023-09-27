@@ -30,17 +30,19 @@ export const StakingScreen: FC = () => {
 		})
 	}, [address])
 
+	const mobileVault = (
+		<div className={classNames.stacksContainer}>
+			<div className={classNames.mainCardStack}>
+				<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
+				<Chart selectedVault={stakingState.selectedVault} />
+			</div>
+			<Details stakingState={stakingState} />
+		</div>
+	)
+
 	const mobileLayout = (
 		<div className={classNames.container}>
-			<StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
-			{stakingState.selectedVault ? (
-				<div className={classNames.mainCardStack}>
-					<Chart stakingState={stakingState} />
-					<Highlights stakingState={stakingState} />
-					<Ratio />
-					<Details />
-				</div>
-			) : null}
+			{stakingState.selectedVault ? mobileVault : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
 		</div>
 	)
 
@@ -49,7 +51,7 @@ export const StakingScreen: FC = () => {
 		return (
 			<div className={classNames.stacksContainer}>
 				<div className={classNames.mainCardStack}>
-					<Header stakingState={stakingState} />
+					<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
 					<Chart selectedVault={stakingState.selectedVault} />
 				</div>
 				<Details stakingState={stakingState} />
