@@ -23,10 +23,10 @@
 	flex-direction: row;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
 	.secondaryCardStack {
 		flex-direction: row;
-		width: 100%;
+		width: 300px;
 	}
 
 	.card {
@@ -36,17 +36,10 @@
 	.stacksContainer {
 		flex-wrap: wrap;
 	}
-}
-
-@media (max-width: 768px) {
-	.container {
-		width: 100%;
-		flex: none;
-		flex-direction: column;
-	}
 
 	.mainCardStack {
 		flex-direction: column;
+		min-height: unset;
 	}
 
 	.secondaryCardStack {
@@ -54,5 +47,13 @@
 		width: 100%;
 		overflow-y: unset;
 		max-height: unset;
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		width: 100%;
+		flex: none;
+		flex-direction: column;
 	}
 }

@@ -31,7 +31,7 @@ export const StakingScreen: FC = () => {
 		})
 	}, [address])
 
-	const mobileVault = (
+	const mobileVaultDetails = (
 		<div className={classNames.stacksContainer}>
 			<div className={classNames.mainCardStack}>
 				<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
@@ -43,7 +43,23 @@ export const StakingScreen: FC = () => {
 
 	const mobileLayout = (
 		<div className={classNames.container}>
-			{stakingState.selectedVault ? mobileVault : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
+			{stakingState.selectedVault ? mobileVaultDetails : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
+		</div>
+	)
+
+	const ipadVaultDetails = (
+		<div className={classNames.stacksContainer}>
+			<div className={classNames.mainCardStack}>
+				<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
+			</div>
+			<Details stakingState={stakingState} />
+		</div>
+	)
+
+	const ipadLayout = (
+		<div className={classNames.container}>
+			{stakingState.selectedVault ? ipadVaultDetails : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
+			{stakingState.selectedVault ? <Chart selectedVault={stakingState.selectedVault} /> : null}
 		</div>
 	)
 
@@ -67,5 +83,5 @@ export const StakingScreen: FC = () => {
 		</div>
 	)
 
-	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : desktopLayout}</div>
+	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : isIpad ? ipadLayout : desktopLayout}</div>
 }

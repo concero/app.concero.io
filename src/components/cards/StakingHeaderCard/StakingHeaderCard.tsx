@@ -16,6 +16,7 @@ interface StakingHeaderCardProps {
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, stakingDispatch }) => {
 	const isMobile = useMediaQuery('mobile')
+	const isIpad = useMediaQuery('ipad')
 	const [isManageModalOpen, setIsManageModalOpen] = useState(false)
 	const { selectedVault } = stakingState
 
@@ -36,7 +37,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 	return (
 		<>
 			<div className={classNames.wrapper}>
-				{isMobile ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.staked : ''} onClick={handleGoBackbuttonClick} /> : null}
+				{isIpad ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.staked : ''} onClick={handleGoBackbuttonClick} /> : null}
 				<div className={classNames.innerContainer}>
 					<div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
 						<div className={classNames.headerContainer}>
