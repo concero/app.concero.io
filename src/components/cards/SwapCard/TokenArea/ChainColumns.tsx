@@ -1,5 +1,4 @@
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
-import { colors } from '../../../../constants/colors'
 
 export const ChainColumns = [
 	{
@@ -8,6 +7,6 @@ export const ChainColumns = [
 	},
 	{
 		columnTitle: 'Name',
-		cellComponent: (chain: { name: string; symbol: string }) => <p style={{ color: colors.grey.medium }}>{chain.name}</p>,
+		cellComponent: (chain: { name: string; symbol: string }) => <p style={{ color: 'var(--color-grey-500' }}>{chain.name}</p>,
 	},
 ]

@@ -6,7 +6,6 @@ import classNames from './ProtocolCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { capitalize } from '../../../utils/formatting'
-import { colors } from '../../../constants/colors'
 import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
@@ -33,7 +32,7 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 						<Avatar src={selectedVault?.protocol?.logoURI ?? null} />
 						<h5>{capitalize(selectedVault.name)}</h5>
 					</div>
-					<IconChevronRight size={18} color={colors.text.secondary} />
+					<IconChevronRight size={18} color={'var(--color-text-secondary)'} />
 				</div>
 			</Button>
 			<ProtocolModal show={isOpened} setShow={setIsOpened} protocol={protocolData} />

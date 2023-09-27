@@ -3,7 +3,6 @@ import { IconCornerUpRight, IconLogout } from '@tabler/icons-react'
 import classNames from './TokensCard.module.pcss'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
-import { colors } from '../../../constants/colors'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoIcon } from '../../tags/CryptoSymbol/CryptoIcon'
 
@@ -21,7 +20,7 @@ export function TokenCard({ name, symbol, logoURI }) {
 				</div>
 				<div className="row ac gap-sm">
 					<h4 className="body1">{symbol}</h4>
-					<IconCornerUpRight size={16} color={colors.text.secondary} />
+					<IconCornerUpRight size={16} color={'var(--color-text-secondary)'} />
 				</div>
 			</div>
 		</div>
@@ -33,7 +32,7 @@ export function TokenRatioCard({ item }) {
 	return (
 		<TokenCard item={item}>
 			<div className={classNames.valueContainer}>
-				<IconLogout size={16} color={colors.text.secondary} />
+				<IconLogout size={16} color={'var(--color-text-secondary)'} />
 				<p className="body2">{`${ratio}%`}</p>
 			</div>
 			<div className={classNames.chartContainer}>

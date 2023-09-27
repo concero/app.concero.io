@@ -5,7 +5,6 @@ import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { capitalize, numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
-import { colors } from '../../../../constants/colors'
 import { TextInput } from '../../../input/TextInput'
 import { TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'
@@ -67,7 +66,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 							onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: true })}
 							size="sm"
 							variant="black"
-							rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
+							rightIcon={<IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
 						>
 							<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
 						</Button>
@@ -92,7 +91,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 						onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })}
 						size="sm"
 						variant="black"
-						rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
+						rightIcon={<IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
 					>
 						<CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
 					</Button>

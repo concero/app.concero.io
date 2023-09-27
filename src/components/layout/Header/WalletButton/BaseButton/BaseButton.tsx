@@ -24,8 +24,8 @@ export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
 	return (
 		<Button
 			variant={isConnected ? 'subtle' : 'primary'}
-			rightIcon={isConnected ? <IconChevronDown size={18} color={colors.text.secondary} /> : null}
-			leftIcon={<IconWallet size={18} color={isConnected ? colors.text.secondary : colors.white} />}
+			rightIcon={isConnected ? <IconChevronDown size={18} color={'var(--color-grey-500)'} /> : null}
+			leftIcon={<IconWallet size={16} color={isConnected ? 'var(--color-grey-500)' : 'var(--color-base-white)'} />}
 			size="sm"
 			onClick={() => onClick && onClick()}
 		>

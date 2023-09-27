@@ -17,8 +17,8 @@ export const ToggleButton: FC<ToggleButtonProps> = ({ value, onChange }) => {
 				width={54}
 				sliderHeight={20}
 				sliderWidth={20}
-				backgroundColorChecked={colors.green.main}
-				backgroundColorUnchecked={colors.grey.dark}
+				backgroundColorChecked={'var(--color-green-500)'}
+				backgroundColorUnchecked={'var(--color-grey-600)'}
 				checked={value}
 				onChange={onChange}
 			/>

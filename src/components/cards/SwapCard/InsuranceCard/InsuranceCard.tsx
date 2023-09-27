@@ -4,7 +4,6 @@ import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 import { ToggleButton } from '../../../layout/ToggleButton/ToggleButton'
 import classNames from './InsuranceCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { colors } from '../../../../constants/colors'
 
 export function InsuranceCard({ swapState, swapDispatch }) {
 	const [isInfoVisible, setIsInfoVisible] = useState(false)
@@ -39,9 +38,9 @@ export function InsuranceCard({ swapState, swapDispatch }) {
 					<Button
 						leftIcon={
 							isInfoVisible ? (
-								<IconChevronUp size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
+								<IconChevronUp size={16} color={isChecked ? 'var(--color-green-500)' : 'var(--color-text-secondary)'} />
 							) : (
-								<IconChevronDown size={16} color={isChecked ? colors.green.main : colors.text.secondary} />
+								<IconChevronDown size={16} color={isChecked ? 'var(--color-green-500)' : 'var(--color-text-secondary)'} />
 							)
 						}
 						variant="black"

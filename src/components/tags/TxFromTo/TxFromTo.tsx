@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import className from './TxFromTo.module.pcss'
-import { colors } from '../../../constants/colors'
 
 // todo: add chain icons component
 export interface TxFromToProps {
@@ -40,10 +39,10 @@ export const TxFromTo: FC<TxFromToProps> = ({ from, to, type }) => {
 const getColor = (type: string) => {
 	switch (type) {
 		case 'sell':
-			return colors.green.dark
+			return 'var(--color-green-500)'
 		case 'buy':
-			return colors.red.dark
+			return 'var(--color-red-500)'
 		default:
-			return colors.text.primary
+			return 'var(--color-text-primary)'
 	}
 }

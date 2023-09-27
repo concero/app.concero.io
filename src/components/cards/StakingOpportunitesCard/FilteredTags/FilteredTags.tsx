@@ -1,7 +1,6 @@
 import { Dispatch, FC, useContext } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from './FilteredTags.module.pcss'
-import { colors } from '../../../../constants/colors'
 import { Button } from '../../../buttons/Button/Button'
 import { FilterCategory, StakingAction, StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
 import { ListModal } from '../../../modals/ListModal/ListModal'
@@ -78,18 +77,18 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingSt
 			<Button
 				size="sm"
 				variant={getChainTitle(chains) === 'All' ? 'subtle' : 'primary'}
-				rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
+				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
 				onClick={() => setIsChainsModalOpened(true)}
 			>
 				{`Chains: ${getChainTitle(chains)}`}
 			</Button>
-			<Button variant={getSelectedStyle(filter.apy)} size="sm" rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />} onClick={() => setIsApyModalVisible(true)}>
+			<Button variant={getSelectedStyle(filter.apy)} size="sm" rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />} onClick={() => setIsApyModalVisible(true)}>
 				APY: {filter.apy ? `${filter.apy}%` : 'All'}
 			</Button>
 			<Button
 				size="sm"
 				variant={getCategoryTitle(filter) === 'All' ? 'subtle' : 'primary'}
-				rightIcon={<IconChevronDown size={13} color={colors.text.secondary} />}
+				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
 				onClick={() => setIsCategoryModalOpened(true)}
 			>
 				{`Category: ${getCategoryTitle(filter)}`}
