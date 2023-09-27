@@ -3,18 +3,7 @@
     "stylelint-config-prettier",
     "stylelint-config-recommended-scss"
   ],
-  "plugins": [
-    "stylelint-order"
-  ],
   "rules": {
-    "order/order": [
-      "custom-properties",
-      "declarations"
-    ],
-    "order/properties-order": [
-      "width",
-      "height"
-    ],
     "at-rule-no-unknown": null,
     "color-named": "never",
     "color-hex-length": "long",
