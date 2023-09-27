@@ -1,9 +1,8 @@
 import { IconChartPie, IconLayoutGrid, IconRipple, IconSeeding } from '@tabler/icons-react'
-import { colors } from '../../../constants/colors'
 
 export function getCategoryIconByTitle(title: string, isSelected) {
 	const size = 13
-	const color = isSelected ? colors.primary.light : colors.text.secondary
+	const color = isSelected ? 'var(--color-primary-400)' : 'var(--color-grey-500)'
 
 	switch (title) {
 		case 'Liquid Staking':

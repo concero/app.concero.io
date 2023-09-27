@@ -3,8 +3,6 @@ import { Ping } from '@uiball/loaders'
 import { IconCheck, IconExternalLink, IconX } from '@tabler/icons-react'
 import classNames from './SwapProgress.module.pcss'
 import { LoadingAnimation } from '../../../layout/LoadingAnimation/LoadingAnimation'
-
-import { colors } from '../../../../constants/colors'
 import { Button } from '../../../buttons/Button/Button'
 
 interface stageProps {
@@ -26,9 +24,9 @@ const renderTag = (status: string) => {
 			case 'await':
 				return <Ping size={iconSize} color="var(--color-primary-500)" />
 			case 'success':
-				return <IconCheck size={iconSize} color={colors.green.darker} />
+				return <IconCheck size={iconSize} color={'var(--color-green-600'} />
 			case 'error':
-				return <IconX size={iconSize} color={colors.red.dark} />
+				return <IconX size={iconSize} color={'var(--color-red-600'} />
 			default:
 				return <div style={{ width: iconSize, height: iconSize }} />
 		}
@@ -49,7 +47,7 @@ export const TransactionStep: FC<stageProps> = ({ step }) => {
 					{txLink && (
 						<a href={txLink} target="_blank" rel="noopener noreferrer">
 							<Button variant="black" size="xs">
-								<IconExternalLink size={16} color={colors.text.secondary} />
+								<IconExternalLink size={16} color={'var(--color-text-secondary)'} />
 							</Button>
 						</a>
 					)}

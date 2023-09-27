@@ -2,7 +2,6 @@ import { Dispatch, useEffect, useRef, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
-import { colors } from '../../../../../constants/colors'
 import { CryptoSymbol } from '../../../../tags/CryptoSymbol/CryptoSymbol'
 import { TextInput } from '../../../../input/TextInput'
 import classNames from './SelectArea.module.pcss'
@@ -53,7 +52,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 						onClick={handleChainButtonClick}
 						size="sm"
 						variant="black"
-						rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={colors.text.secondary} />}
+						rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
 						isDisabled={isSelectDisabled}
 					>
 						<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
@@ -82,7 +81,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 					onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
 					size="sm"
 					variant="black"
-					rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={colors.text.secondary} />}
+					rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
 					isDisabled={isSelectDisabled}
 				>
 					<CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />

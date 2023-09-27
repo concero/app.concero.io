@@ -49,12 +49,12 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 				<div className={classNames.tagsContainer}>
 					{protocol.category && <CategoryTag category={protocol.category} />}
 					{protocol.address && (
-						<Tag color="grey" leftIcon={<IconCopy color={colors.text.secondary} size={16} />} onClick={() => copyInBuffer(protocol.address)}>
+						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyInBuffer(protocol.address)}>
 							<p className="body1">Contract address</p>
 						</Tag>
 					)}
 					{protocol.url && (
-						<Tag color="grey" leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />} onClick={() => window.open(protocol.url, '_blank')}>
+						<Tag color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(protocol.url, '_blank')}>
 							<p className="body1">Website</p>
 						</Tag>
 					)}
@@ -106,7 +106,7 @@ function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
 			<p className="body1">Audits</p>
 			<div className={classNames.tagsContainer}>
 				{auditLinks.map((link, index) => (
-					<Tag key={index} color="grey" leftIcon={<IconExternalLink color={colors.text.secondary} size={16} />} onClick={() => window.open(link, '_blank')}>
+					<Tag key={index} color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(link, '_blank')}>
 						<p className="body1">Github</p>
 					</Tag>
 				))}

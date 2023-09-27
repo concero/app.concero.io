@@ -4,7 +4,6 @@ import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import classNames from './RewardsCard.module.pcss'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { CardHeader } from '../CardHeader/CardHeader'
-import { colors } from '../../../constants/colors'
 
 interface RewardsCardProps {
 	stakingState: StakingState
@@ -22,7 +21,7 @@ const RewardsItemCard: FC<RewardsItemCardProps> = ({ name, logoURI, value }) => 
 	<div className={`card ${classNames.rewardsItemContainer}`}>
 		<CryptoSymbol symbol={name} src={logoURI} />
 		<div className={classNames.valueContainer}>
-			<IconMoneybag size={16} color={colors.primary.main} />
+			<IconMoneybag size={16} color={'var(--color-primary-500)'} />
 			{/* <p className="body1">{`${value}%`}</p> */}
 		</div>
 	</div>

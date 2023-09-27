@@ -3,7 +3,6 @@ import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 import { Card } from '../Card/Card'
 import classNames from './RouteCard.module.pcss'
-import { colors } from '../../../constants/colors'
 import { Button } from '../../buttons/Button/Button'
 import { renderTags } from './renderTags'
 import { renderSteps } from './renderSteps'
@@ -18,7 +17,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 	const [springProps, setSpringProps] = useSpring(() => ({ height: 'auto' }))
 
 	const getTextColor = () => (isSelected ? classNames.bestText : '')
-	const getIconColor = () => (isSelected ? colors.primary.light : colors.text.secondary)
+	const getIconColor = () => (isSelected ? 'var(--color-primary-400)' : 'var(--color-text-secondary)')
 
 	const handleButtonClick = event => {
 		event.stopPropagation()

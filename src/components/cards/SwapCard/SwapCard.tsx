@@ -13,7 +13,6 @@ import { SwapProgress } from './SwapProgress/SwapProgress'
 import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
 import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
 import { Button } from '../../buttons/Button/Button'
-import { colors } from '../../../constants/colors'
 
 export const SwapCard: FC<SwapCardProps> = () => {
 	const { selection, dispatch } = useContext(SelectionContext)
@@ -29,7 +28,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 			<div className={`card ${classNames.container}`}>
 				<CardHeader title={getCardTitleByStatus(swapState.status)}>
 					<div className={classNames.cardHeader}>
-						<Button variant="black" size="sq-sm" onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })} leftIcon={<IconSettings2 size={16} color={colors.grey.dark} />} />
+						<Button variant="black" size="sq-sm" onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })} leftIcon={<IconSettings2 size={16} color={'var(--color-grey-500)'} />} />
 					</div>
 				</CardHeader>
 				<div className={classNames.swapContainer}>

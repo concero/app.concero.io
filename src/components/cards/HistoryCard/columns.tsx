@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { TxFromTo } from '../../tags/TxFromTo/TxFromTo'
-import { colors } from '../../../constants/colors'
 import { DotsIconButton } from './DotsIconButton'
 import { numberToFormatString, unixtimeFromNow } from '../../../utils/formatting'
 import { SelectionContext } from '../../../hooks/SelectionContext'
@@ -41,7 +40,7 @@ export const columns = (setModalData, setIsModalOpen) => [
 				>
 					<p
 						style={{
-							color: colors.text.secondary,
+							color: 'var(--color-text-secondary)',
 							textAlign: 'end',
 						}}
 					>

@@ -7,7 +7,7 @@ export function ErrorCard({ setIsOk }) {
   return (
     <div className={classNames.container} >
       <h4 className={classNames.headerTitle}>Couldn’t load data.</h4>
-      <Button variant='black' size='sm' leftIcon={<Reload size={16} color={colors.text.secondary} />} onClick={() => setIsOk(true)}>
+      <Button variant='black' size='sm' leftIcon={<Reload size={16} color={'var(--color-text-secondary)'} />} onClick={() => setIsOk(true)}>
         <p className="body1">Retry<p>
       </Button>
     </div>

@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react'
 import styles from './MenuPopover.module.pcss'
-import { colors } from '../../../constants/colors'
 
 export interface MenuItem {
 	title: string
@@ -17,7 +16,7 @@ export const MenuPopover: FC<MenuPopoverProps> = ({ items }) => (
 		{items.map((item, index) => (
 			<div key={index} className={styles.menuItem} onClick={() => item.onClick && item.onClick()}>
 				{item.icon ? item.icon : null}
-				<span className={styles.title} style={item.danger ? { color: colors.red.dark } : {}}>
+				<span className={styles.title} style={item.danger ? { color: 'var(--color-red-500)' } : {}}>
 					{item.title}
 				</span>
 			</div>
