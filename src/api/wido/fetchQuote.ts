@@ -14,7 +14,7 @@ export async function fetchQuote(manageState: ManageState): Promise<QuoteResult>
 		toToken: to.token.address,
 		amount,
 		slippagePercentage: 0.5,
-		user: address,
+		...(address && { user: address }),
 	}
 
 	console.log('quoteParams', quoteParams)

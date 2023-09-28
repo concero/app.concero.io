@@ -24,7 +24,6 @@ function handleError(error: Error, manageDispatch: Dispatch<ManageAction>) {
 async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispatch<ManageAction>) {
 	manageDispatch({ type: 'SET_LOADING', payload: true })
 	manageDispatch({ type: 'SET_STATUS', payload: Status.loading })
-
 	try {
 		const route = await retryRequest(
 			async () => await fetchQuote(manageState),
@@ -32,7 +31,6 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
 			3,
 		)
 		if (!route) return manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
-
 		manageDispatch({ type: 'SET_ROUTE', payload: route, fromAmount: manageState.from.amount })
 	} catch (error) {
 		console.log(error)

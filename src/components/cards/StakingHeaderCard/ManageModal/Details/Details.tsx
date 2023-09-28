@@ -26,7 +26,7 @@ export function Details({ manageState }: DetailsProps) {
 					{manageState?.route?.feeUsdValue ? (
 						<div className={classNames.tagInnerContainer}>
 							<IconGasStation color={'var(--color-text-secondary)'} size={16} />
-							<p className="body1">${numberToFormatString(parseFloat(manageState?.route?.feeUsdValue), 4)}</p>
+							<p className="body1">${numberToFormatString(parseFloat(manageState?.route?.gasFeeUsdValue), 4)}</p>
 						</div>
 					) : null}
 					{manageState?.route?.expectedSlippage ? (
