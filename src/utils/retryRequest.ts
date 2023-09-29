@@ -6,9 +6,9 @@ export async function retryRequest(request: () => Promise<any>, condition: Funct
 			const response = await request()
 			if (response) return response
 		} catch (e: any) {
+			console.log(e)
 			if (condition(e)) throw e
 			error = e
-			console.log(e)
 		}
 	}
 

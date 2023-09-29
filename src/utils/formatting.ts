@@ -1,6 +1,7 @@
 import relativeTime from 'dayjs/plugin/relativeTime'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import dayjs from 'dayjs'
+import BigNumber from 'bignumber.js'
 
 dayjs.extend(relativeTime)
 dayjs.extend(updateLocale)
@@ -110,7 +111,26 @@ export const roundNumberByDecimals = (number: number, decimals = 4): number => {
 	return parseFloat(number?.toFixed(factor))
 }
 
-export const addingTokenDecimals = (amount: number | string, decimals: number): string => numberToFormatString(Number(amount) / 10 ** decimals, 4)
+function isValidNumber(number: string | number) {
+	if (typeof number === 'string') {
+		return number != ''
+	} else {
+		return !(number === undefined || number === null || isNaN(number))
+	}
+}
+
+export function addingTokenDecimals(amount: number | string, decimals: number): string | null {
+	if (!isValidNumber(amount) || !isValidNumber(decimals)) return null
+	const number = new BigNumber(amount).dividedBy(BigNumber(10).pow(decimals))
+	const right = number.toString().split('.')[1]
+	if (!right) return number.toString()
+	let i = 0
+	while (right[i] === '0') i++
+	return number
+		.toFixed(i + 4)
+		.toString()
+		.replace(/\.?0*$/, '')
+}
 
 export const timestampToLocalTime = (timestamp: number): number => {
 	const currentTime = new Date()

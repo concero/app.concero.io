@@ -10,10 +10,13 @@ import { Notifications } from './components/overlays/Notifications/Notifications
 import { NotificationsProvider } from './hooks/notificationsContext'
 import { DataProvider } from './hooks/DataContext/DataContext'
 import { lazy } from 'react'
+import { bigNumberSettings } from './utils/bigNumberSettings'
 
 const WalletConnectModal = lazy(() => import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })))
 
 function App() {
+	bigNumberSettings()
+
 	if (!process.env.DEVELOPMENT) {
 		posthog.init(process.env.REACT_APP_PUBLIC_POSTHOG_KEY, {
 			api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,

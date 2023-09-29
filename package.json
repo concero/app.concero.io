@@ -25,6 +25,7 @@
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
     "axios": "^1.5.0",
+    "bignumber": "^1.1.0",
     "dayjs": "^1.11.10",
     "ethers": "^5.7.2",
     "lightweight-charts": "^4.0.1",
