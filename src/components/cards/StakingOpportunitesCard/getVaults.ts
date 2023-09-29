@@ -20,7 +20,6 @@ export async function getVaults(stakingDispatch: Dispatch<any>, address, staking
 		const pools = await fetchPools(stakingState, address, offset, limit)
 		const poolsWithBalances = populatePoolsBalances(pools, stakingState)
 		stakingDispatch({ type: 'SET_VAULTS', payload: poolsWithBalances })
-		stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
 	} catch (error) {
 		console.error(error)
 		stakingDispatch({ type: 'SET_VAULTS', payload: [] })

@@ -1,10 +1,17 @@
 .container {
-	padding-bottom: var(--sp-md);
 	flex-direction: row;
 	gap: var(--sp-xs);
 	flex-wrap: wrap;
 
 	.tagText {
 		color: var(--color-base-white);
+	}
+}
+
+@media (max-width: 768px) {
+	.container {
+		width: 100%;
+		flex-wrap: unset;
+		overflow-x: scroll;
 	}
 }

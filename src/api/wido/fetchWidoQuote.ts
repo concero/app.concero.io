@@ -3,7 +3,7 @@ import { ManageState } from '../../components/cards/StakingHeaderCard/ManageModa
 import { addingDecimals } from '../../utils/formatting'
 import { QuoteResult } from 'types'
 
-export async function fetchQuote(manageState: ManageState): Promise<QuoteResult> {
+export async function fetchWidoQuote(manageState: ManageState): Promise<QuoteResult> {
 	const { from, to, address } = manageState
 	if (!from || !from.amount || !to || !address) return null
 	const amount = addingDecimals(parseFloat(from.amount), from.token.decimals)
@@ -14,7 +14,7 @@ export async function fetchQuote(manageState: ManageState): Promise<QuoteResult>
 		toToken: to.token.address,
 		amount,
 		slippagePercentage: 0.5,
-		user: address,
+		...(address && { user: address }),
 	}
 
 	console.log('quoteParams', quoteParams)

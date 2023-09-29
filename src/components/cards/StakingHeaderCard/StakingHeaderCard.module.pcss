@@ -1,7 +1,19 @@
+.wrapper {
+	flex-direction: row;
+	gap: var(--sp-xs);
+}
+
 .container {
+	width: 100%;
 	min-width: 400px;
 	gap: var(--sp-md);
 	flex-direction: column;
+	align-items: center;
+}
+
+.innerContainer {
+	width: 100%;
+	gap: var(--sp-sm);
 	align-items: center;
 }
 
@@ -38,5 +50,19 @@
 
 	.symbolTitle {
 		color: var(--color-primary-300);
+	}
+}
+
+.staked:hover {
+	background-color: var(--color-primary-700);
+	border: solid 1px var(--color-primary-700);
+}
+
+@media (max-width: 768px) {
+	.container {
+		min-width: unset;
+	}
+	.cardsContainer {
+		flex-direction: column;
 	}
 }

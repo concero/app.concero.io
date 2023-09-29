@@ -42,8 +42,9 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 
 	return (
 		<div className={`card ${classNames.container}`}>
-			<CardHeader title="Staking opportunities" isLoading={stakingState.loading} />
-			<FilteredTags stakingDispatch={stakingDispatch} stakingState={stakingState} />
+			<CardHeader title="Staking opportunities" isLoading={stakingState.loading}>
+				<FilteredTags stakingDispatch={stakingDispatch} stakingState={stakingState} />
+			</CardHeader>
 			<div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
 				{vaults?.map((vault: Vault) => (
 					<MemoizedStakingCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />

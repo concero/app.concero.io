@@ -20,7 +20,8 @@ const Details = memo(withErrorBoundary(StakingDetailsCard))
 export const StakingScreen: FC = () => {
 	const [stakingState, stakingDispatch] = useStakingReducer()
 	const { address } = useAccount()
-	const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
+	const isMobile = useMediaQuery('mobile')
+	const isIpad = useMediaQuery('ipad')
 	const Chart = memo(withErrorBoundary(StakingChartCard))
 
 	useEffect(() => {
@@ -30,17 +31,35 @@ export const StakingScreen: FC = () => {
 		})
 	}, [address])
 
+	const mobileVaultDetails = (
+		<div className={classNames.stacksContainer}>
+			<div className={classNames.mainCardStack}>
+				<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
+				<Chart selectedVault={stakingState.selectedVault} />
+			</div>
+			<Details stakingState={stakingState} />
+		</div>
+	)
+
 	const mobileLayout = (
 		<div className={classNames.container}>
-			<StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
-			{stakingState.selectedVault ? (
-				<div className={classNames.mainCardStack}>
-					<Chart stakingState={stakingState} />
-					<Highlights stakingState={stakingState} />
-					<Ratio />
-					<Details />
-				</div>
-			) : null}
+			{stakingState.selectedVault ? mobileVaultDetails : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
+		</div>
+	)
+
+	const ipadVaultDetails = (
+		<div className={classNames.stacksContainer}>
+			<div className={classNames.mainCardStack}>
+				<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
+			</div>
+			<Details stakingState={stakingState} />
+		</div>
+	)
+
+	const ipadLayout = (
+		<div className={classNames.container}>
+			{stakingState.selectedVault ? ipadVaultDetails : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
+			{stakingState.selectedVault ? <Chart selectedVault={stakingState.selectedVault} /> : null}
 		</div>
 	)
 
@@ -49,7 +68,7 @@ export const StakingScreen: FC = () => {
 		return (
 			<div className={classNames.stacksContainer}>
 				<div className={classNames.mainCardStack}>
-					<Header stakingState={stakingState} />
+					<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
 					<Chart selectedVault={stakingState.selectedVault} />
 				</div>
 				<Details stakingState={stakingState} />
@@ -64,5 +83,5 @@ export const StakingScreen: FC = () => {
 		</div>
 	)
 
-	return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
+	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : isIpad ? ipadLayout : desktopLayout}</div>
 }

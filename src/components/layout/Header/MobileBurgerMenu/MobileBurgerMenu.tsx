@@ -1,18 +1,19 @@
 import { disconnect } from '@wagmi/core'
 import { FC, useState } from 'react'
-import { Link, PathMatch } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 import { routes } from '../../../../constants/routes'
 import classNames from './MobileBurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 
 export interface MobileBurgerMenuProps {
-	matchExchange: PathMatch<string> | null
-	matchPortfolio: PathMatch<string> | null
 	toggleTheme: () => void
 }
 
-export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ matchExchange, matchPortfolio, toggleTheme }) => {
+export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ toggleTheme }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+	const matchExchange = useMatch(routes.exchange)
+	const matchStaking = useMatch(routes.staking)
 
 	return (
 		<div className={classNames.container}>
@@ -25,6 +26,9 @@ export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ matchExchange, mat
 			<nav className={`${classNames.menu} ${isMenuOpen ? classNames.menuActive : ''}`}>
 				<Link to={routes.exchange} aria-label={routes.exchange}>
 					<h4 className={matchExchange ? classNames.active : classNames.secondary}>Exchange</h4>
+				</Link>
+				<Link to={routes.staking} aria-label={routes.staking}>
+					<h4 className={matchStaking ? classNames.active : classNames.secondary}>Staking</h4>
 				</Link>
 				{/* <Link to={routes.portfolio}> */}
 				{/*   <h4 className={matchPortfolio ? classNames.active : classNames.secondary}>Portfolio</h4> */}

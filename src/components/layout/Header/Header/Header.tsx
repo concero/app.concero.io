@@ -15,7 +15,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children }) => {
-	const isDesktop = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('mobile')
 	const matchExchange = useMatch(routes.exchange)
 
 
@@ -31,7 +31,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 				<div className={classNames.logoContainer}>
 					<Logo />
 				</div>
-				{isDesktop ? (
+				{!isMobile ? (
 					<ul>
 						<Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
 							Exchange

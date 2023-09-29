@@ -38,7 +38,7 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 				},
 				to: {
 					...state.to,
-					amount: addingTokenDecimals(parseFloat(action.payload.toTokenAmount), parseFloat(state.to.token.decimals)),
+					amount: addingTokenDecimals(Number(action.payload.toTokenAmount), Number(state.to.token.decimals)),
 					amount_usd: action.payload.toTokenAmountUsdValue,
 				},
 			}
