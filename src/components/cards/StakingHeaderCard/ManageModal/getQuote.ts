@@ -26,9 +26,11 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
 	manageDispatch({ type: 'SET_STATUS', payload: Status.loading })
 	try {
 		const route = await retryRequest(
-			async () => await fetchQuote(manageState),
-			(e: any) => !e.message.includes('FAILED_DEPENDENCY'),
-			3,
+			async iterator => {
+				if (iterator > 0) manageDispatch({ type: 'SET_STATUS', payload: Status.thisMakeTakeAWhile })
+				return await fetchQuote(manageState)
+			},
+			{ throwCondition: (e: any) => !e.message.includes('FAILED_DEPENDENCY'), retryCount: 3 },
 		)
 		if (!route) return manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 		manageDispatch({ type: 'SET_ROUTE', payload: route, fromAmount: manageState.from.amount })

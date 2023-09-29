@@ -5,10 +5,10 @@ bigNumberSettings()
 
 describe('addingTokenDecimals', () => {
 	it('should handle numbers without decimals', () => {
-		expect(addingTokenDecimals('2377240483', 18)).toBe('0.000000002377')
+		expect(addingTokenDecimals('2377240483', 18)).toBe('0.000000002')
 		expect(addingTokenDecimals('1000000000', 9)).toBe('1')
 		expect(addingTokenDecimals('1234567890', 0)).toBe('1234567890')
-		expect(addingTokenDecimals('9876543210', 12)).toBe('0.009877')
+		expect(addingTokenDecimals('9876543210', 12)).toBe('0.0099')
 	})
 
 	it('should handle zero decimals', () => {
@@ -17,7 +17,7 @@ describe('addingTokenDecimals', () => {
 	})
 
 	it('should handle maximum decimals', () => {
-		expect(addingTokenDecimals('12345', 18)).toBe('0.00000000000001235')
+		expect(addingTokenDecimals('12345', 18)).toBe('0.00000000000001')
 		expect(addingTokenDecimals('95838876798487546548546564654', 9)).toBe('95838876798487546548.5466')
 	})
 

@@ -3,7 +3,7 @@ import { ManageState } from '../useManageReducer/types'
 import classNames from './Details.module.pcss'
 import { Avatar } from '../../../../tags/Avatar/Avatar'
 import { Tag } from '../../../../tags/Tag/Tag'
-import { numberToFormatString } from '../../../../../utils/formatting'
+import { numberToFormatString, roundNumberByDecimals } from '../../../../../utils/formatting'
 import BigNumber from 'bignumber.js'
 
 interface DetailsProps {
@@ -11,7 +11,7 @@ interface DetailsProps {
 }
 
 export function Details({ manageState }: DetailsProps) {
-	const rate = new BigNumber(manageState.to.amount).div(manageState.from.amount).toString()
+	const rate = roundNumberByDecimals(new BigNumber(manageState.to.amount).div(manageState.from.amount).toString())
 
 	return (
 		<div className={`${classNames.container} ${!manageState.route ? classNames.hidden : ''}`}>

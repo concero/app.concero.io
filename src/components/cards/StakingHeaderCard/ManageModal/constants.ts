@@ -19,6 +19,7 @@ export enum Status {
 	balanceError = 6,
 	unknownError = 7,
 	noRoute = 8,
+	thisMakeTakeAWhile = 9,
 }
 
 export const buttonMessages = {
@@ -31,4 +32,5 @@ export const buttonMessages = {
 	[Status.balanceError]: 'Insufficient balance',
 	[Status.unknownError]: 'Something went wrong.',
 	[Status.noRoute]: 'No route found',
+	[Status.thisMakeTakeAWhile]: 'Hang tight, this may take a while…',
 }
