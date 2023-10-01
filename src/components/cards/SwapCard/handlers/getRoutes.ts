@@ -24,6 +24,7 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
 const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
 	try {
 		const rangoRoutes = await fetchRangoRoutes({ from, to, settings })
+		console.log('standard rango route: ', rangoRoutes)
 		routes.push(...rangoRoutes)
 		populateRoutes({ routes, from, swapDispatch })
 		return rangoRoutes // Return the rangoRoutes for Promise.all

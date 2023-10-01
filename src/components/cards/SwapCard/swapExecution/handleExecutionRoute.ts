@@ -1,4 +1,4 @@
-import { Route } from '../../../../api/lifi/types'
+import { StandardRoute } from '../../../../api/lifi/types'
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { updateLifiSteps } from './updateLifiSteps'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
@@ -7,7 +7,7 @@ import { executeRangoRoute } from './executeRangoRoute'
 
 export const handleExecuteRoute = async ({ route, provider, address, from, settings, swapDispatch, switchChainHook }) => {
 	if (provider === 'lifi') {
-		const updateRouteHook = (updatedRoute: Route) => {
+		const updateRouteHook = (updatedRoute: StandardRoute) => {
 			const stdRoute = standardiseLifiRoute(updatedRoute)
 			updateLifiSteps({
 				swapDispatch,

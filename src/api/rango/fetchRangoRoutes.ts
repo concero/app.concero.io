@@ -1,7 +1,6 @@
 import { rangoClient } from './rangoClient'
-import { addingDecimals } from '../../utils/formatting'
-import { standardizeRangoRoutes } from './standardizeRangoRoutes'
 import { config } from '../../constants/config'
+import { standardizeRangoBestRoute } from './standardizeRangoBestRoute'
 
 export const fetchRangoRoutes = async ({ from, to, settings }) => {
 	// todo: how to control rango slippage?
@@ -11,7 +10,7 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
 
 	if (fromRangoChainSymbol === undefined || toRangoChainSymbol === undefined) return []
 
-	const routesRequest = {
+	const quoteParams = {
 		from: {
 			blockchain: fromRangoChainSymbol,
 			symbol: from.token.symbol,
@@ -22,15 +21,27 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
 			symbol: to.token.symbol,
 			address: to.token.address === config.NULL_ADDRESS ? null : to.token.address,
 		},
-		slippage: settings.slippage_percent,
-		amount: addingDecimals(Number(from.amount), from.token.decimals),
-		// slippage: '0.1',
-		// slippage_percent: '0.1',
-		// slippage_limit: '0.1',
+		amount: from.amount,
+		checkPrerequisites: false,
+		connectedWallets: [
+			{ blockchain: fromRangoChainSymbol, addresses: [from.address] },
+			{ blockchain: toRangoChainSymbol, addresses: [from.address] },
+		],
+		selectedWallets: { [fromRangoChainSymbol]: from.address, [toRangoChainSymbol]: from.address },
 	}
 
-	const quote = await rangoClient.quote(routesRequest)
-	if (quote.route === null) return []
-	console.log('quote', quote)
-	return [standardizeRangoRoutes(quote)]
+	console.log('quoteParams', quoteParams)
+
+	const route = await rangoClient.getBestRoute(quoteParams)
+	console.log('rango original route', route)
+
+	return route ? [await standardizeRangoBestRoute(route, from, to)] : []
 }
+
+// const transaction = await rangoClient.createTransaction({
+// 	requestId: quote.requestId,
+// 	step: 1,
+// 	userSettings: { slippage: '1' },
+// 	validations: { balance: true, fee: true },
+// })
+// console.log('transaction', transaction)

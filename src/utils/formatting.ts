@@ -87,13 +87,16 @@ export const removeNonNumeric = (str: string): string => str.replace(/\D/g, '')
 
 export const removeNonAlphaNumeric = (str: string): string => str.replace(/\W/g, '')
 
-export const addingDecimals = (number: number, decimals: number) => {
-	while (number % 1 !== 0) {
-		number *= 10
+export function addingAmountDecimals(number: number | string, decimals: number): string | null {
+	if (!isValidNumber(number) || !isValidNumber(decimals)) return null
+	let bNumber = new BigNumber(number)
+
+	while (!bNumber.isInteger()) {
+		bNumber = bNumber.times(10)
 		decimals--
 	}
 
-	return number + '0'.repeat(decimals)
+	return bNumber.toString() + '0'.repeat(decimals)
 }
 
 export const secondsConverter = (seconds: number): string => {
@@ -108,7 +111,7 @@ export const numberToFormatString = (number: number, decimals = 4, isTransformNe
 	return result?.toString()
 }
 
-export function roundNumberByDecimals(number: number | string, decimals = 4): string | null {
+export function roundNumberByDecimals(number: number | string | undefined | null, decimals = 4): string | null {
 	if (!isValidNumber(number) || !isValidNumber(decimals)) return null
 	const bigNumber = new BigNumber(number)
 	const decimalPart = bigNumber.toString().split('.')[1]

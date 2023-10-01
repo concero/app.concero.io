@@ -1,11 +1,11 @@
-import { EvmTransaction } from 'rango-sdk-basic'
+import { EvmTransaction } from 'rango-sdk'
 import { rangoClient } from '../../../../api/rango/rangoClient'
 import { checkApprovalSync, checkTransactionStatusSync, prepareEvmTransaction } from '../../../../api/rango/prepareEvmTransaction'
 import { viemSigner } from '../../../../web3/ethers'
-import { addingDecimals } from '../../../../utils/formatting'
+import { addingAmountDecimals } from '../../../../utils/formatting'
 
 const getRangoSwapOptions = (route, address, from, settings) => {
-	const amount = addingDecimals(from.amount, from.token.decimals)
+	const amount = addingAmountDecimals(from.amount, from.token.decimals)
 
 	return {
 		from: {

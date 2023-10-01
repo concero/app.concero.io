@@ -1,10 +1,10 @@
-import { Route, Step } from '../../../api/lifi/types'
+import { StandardRoute, Step } from '../../../api/lifi/types'
 
 export interface SwapCardProps {}
 
 export interface SwapDetailsProps {
 	swapState: any
-	setSelectedRoute: (route: Route) => void
+	setSelectedRoute: (route: StandardRoute) => void
 }
 
 export interface Selection {
@@ -24,7 +24,7 @@ export interface Chain {
 }
 
 export interface RouteButtonProps {
-	selectedRoute: Route
+	selectedRoute: StandardRoute
 	onClick: () => void
 }
 

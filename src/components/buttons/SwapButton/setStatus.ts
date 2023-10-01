@@ -1,7 +1,7 @@
 import { Dispatch, From, To } from './types'
-import { Route } from '../../../api/lifi/types'
+import { StandardRoute } from '../../../api/lifi/types'
 
-const handleresponse = (response: { isOk: boolean; message: string }, routes: Route[], dispatch: Dispatch) => {
+const handleresponse = (response: { isOk: boolean; message: string }, routes: StandardRoute[], dispatch: Dispatch) => {
 	if (!response.isOk) {
 		switch (response.message) {
 			// case 'user rejected':
@@ -33,7 +33,7 @@ export const setStatus = (
 	isConnected: boolean,
 	isLoading: boolean,
 	dispatch: Dispatch,
-	routes: Route[],
+	routes: StandardRoute[],
 	balance: string,
 	response: {
 		isOk: boolean

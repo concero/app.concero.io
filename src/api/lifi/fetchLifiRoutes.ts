@@ -1,13 +1,13 @@
-import { FetchRoutesParams, Route } from './types'
+import { FetchRoutesParams, StandardRoute } from './types'
 import { standardiseLifiRoute } from './standardiseLifiRoute'
-import { addingDecimals } from '../../utils/formatting'
+import { addingAmountDecimals } from '../../utils/formatting'
 import { lifi } from './lifi'
 
 interface GetRoutes {
-	(params: FetchRoutesParams): Promise<Route[]>
+	(params: FetchRoutesParams): Promise<StandardRoute[]>
 }
 
-const sortByTags = (routeA: Route, routeB: Route): number => {
+const sortByTags = (routeA: StandardRoute, routeB: StandardRoute): number => {
 	const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
 	const tagIndexA = routeA.tags ? tagsOrder.indexOf(routeA.tags[0]) : -1
 	const tagIndexB = routeB.tags ? tagsOrder.indexOf(routeB.tags[0]) : -1
@@ -30,7 +30,7 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
 
 	const routesRequest = {
 		fromChainId: parseInt(from.chain.id),
-		fromAmount: addingDecimals(Number(from.amount), from.token.decimals),
+		fromAmount: addingAmountDecimals(Number(from.amount), from.token.decimals),
 		fromTokenAddress: from.token.address,
 		fromAddress: from.address,
 		toChainId: parseInt(to.chain.id),

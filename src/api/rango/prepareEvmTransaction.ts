@@ -1,5 +1,5 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider/src.ts/index'
-import { EvmTransaction, RangoClient, TransactionStatus } from 'rango-sdk-basic'
+import { EvmTransaction, RangoClient, TransactionStatus } from 'rango-sdk'
 import { addingTokenDecimals } from '../../utils/formatting'
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
