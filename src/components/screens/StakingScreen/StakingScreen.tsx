@@ -6,15 +6,13 @@ import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
-import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
-import { RatioCard } from '../../cards/RatioCard/RatioCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
 import { getUserBalancesSortedByChain } from '../../../api/wido/getUserBalancesSortedByChain'
 
 const Header = memo(withErrorBoundary(StakingHeaderCard))
-const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
-const Ratio = memo(withErrorBoundary(RatioCard))
+// const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
+// const Ratio = memo(withErrorBoundary(RatioCard))
 const Details = memo(withErrorBoundary(StakingDetailsCard))
 
 export const StakingScreen: FC = () => {

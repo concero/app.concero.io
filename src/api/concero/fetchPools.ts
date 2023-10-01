@@ -38,8 +38,7 @@ export async function fetchPools(stakingState: StakingState, address: string, of
 		getApyQuery(filter),
 		getMyHoldingsQuery(stakingState, address),
 		getCategoryQuery(filter),
-		'widoSupported=true',
-		'outlier=false',
+		'is_outlier=false',
 		`offset=${offset}`,
 		`limit=${limit}`,
 	]

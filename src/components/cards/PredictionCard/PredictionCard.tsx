@@ -37,14 +37,14 @@ const RiskCard: FC = () => (
 )
 
 export const PredictionCard: FC<PredictionCardProps> = ({ stakingState }) => {
-	const predictions = stakingState.selectedVault?.predictions
+	const predictions = stakingState.selectedVault?.data?.predictions
 
 	return predictions?.predictedClass ? (
 		<div className={classNames.container}>
 			<CardHeader title="Predictions" />
 			<div className={classNames.innerContainer}>
 				<PredictionItemCard predictedClass={predictions.predictedClass} value={predictions.predictedProbability} />
-				{stakingState.selectedVault.ilRisk === 'yes' ? <RiskCard /> : null}
+				{stakingState.selectedVault.data.il_risk === 'yes' ? <RiskCard /> : null}
 			</div>
 		</div>
 	) : null

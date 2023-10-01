@@ -3,7 +3,7 @@ import { IconArrowsUpDown, IconChevronLeft } from '@tabler/icons-react'
 import classNames from './StakingHeaderCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { StakingAction, StakingState } from '../../screens/StakingScreen/stakingReducer/types'
-import { capitalize, formatNumber } from '../../../utils/formatting'
+import { formatNumber } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
@@ -42,10 +42,10 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 					<div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
 						<div className={classNames.headerContainer}>
 							<div className={classNames.sideContainer}>
-								<Avatar src={selectedVault.protocol?.logoURI} />
+								<Avatar src={selectedVault.project?.logoURI} />
 								<div>
-									<h5 className={classNames.symbolTitle}>{selectedVault.widoSymbol}</h5>
-									<p className={`body1 ${classNames.protocolTitle}`}>{capitalize(selectedVault?.protocol?.name ?? '')}</p>
+									<h5 className={classNames.symbolTitle}>{selectedVault.symbol}</h5>
+									<p className={`body1 ${classNames.protocolTitle}`}>{selectedVault?.name ?? ''}</p>
 								</div>
 							</div>
 							{!isIpad ? (
