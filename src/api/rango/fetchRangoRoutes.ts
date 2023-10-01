@@ -22,11 +22,8 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
 			address: to.token.address === config.NULL_ADDRESS ? null : to.token.address,
 		},
 		amount: from.amount,
-		checkPrerequisites: false,
-		connectedWallets: [
-			{ blockchain: fromRangoChainSymbol, addresses: [from.address] },
-			{ blockchain: toRangoChainSymbol, addresses: [from.address] },
-		],
+		checkPrerequisites: true,
+		connectedWallets: [],
 		selectedWallets: { [fromRangoChainSymbol]: from.address, [toRangoChainSymbol]: from.address },
 	}
 
@@ -37,11 +34,3 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
 
 	return route ? [await standardizeRangoBestRoute(route, from, to)] : []
 }
-
-// const transaction = await rangoClient.createTransaction({
-// 	requestId: quote.requestId,
-// 	step: 1,
-// 	userSettings: { slippage: '1' },
-// 	validations: { balance: true, fee: true },
-// })
-// console.log('transaction', transaction)
