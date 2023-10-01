@@ -4,8 +4,12 @@ import { TransactionStatus } from 'rango-types/src/api/shared/transactions'
 export const handleRangoResponse = (executedRoute, swapDispatch, provider) => {
 	if (executedRoute.status === TransactionStatus.FAILED) {
 		swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: false, message: executedRoute.error } })
+		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
+		swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'failed' })
 	} else if (executedRoute.status === 'success') {
 		swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: true, message: 'Success' } })
+		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'success' })
+		swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'success' })
 	}
 }
 

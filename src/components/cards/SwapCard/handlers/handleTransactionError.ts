@@ -28,4 +28,5 @@ export const handleTransactionError = (e, swapDispatch, provider) => {
 		})
 	}
 	swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
+	swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'failed' })
 }

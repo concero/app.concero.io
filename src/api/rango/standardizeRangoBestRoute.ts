@@ -30,7 +30,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 				symbol: route.to.symbol,
 				decimals: to.token.decimals,
 				amount: roundNumberByDecimals(route.result?.outputAmount, 4),
-				amount_usd: new BigNumber(route.result?.outputAmount ?? 0).times(route.result?.swaps.pop()?.to.usdPrice ?? 0).toString(),
+				amount_usd: new BigNumber(route.result?.outputAmount ?? 0).times(route.result?.swaps[route.result.swaps.length - 1]?.to.usdPrice ?? 0).toString(),
 			},
 			chain: {
 				id: route.to.blockchain,

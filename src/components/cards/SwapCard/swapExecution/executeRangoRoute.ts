@@ -1,9 +1,8 @@
 import { rangoClient } from '../../../../api/rango/rangoClient'
 import { CreateTransactionRequest } from 'rango-types/src/api/main/transactions'
 import { BestRouteResponse } from 'rango-types/src/api/main/routing'
-import { getSigner } from '../../../../web3/getSigner'
 import { TransactionStatus } from 'rango-types/src/api/shared/transactions'
-import { dispatchTransactionStatus } from '../../../../api/rango/dispatchTransactionStatus'
+import { updateRangoTransactionStatus } from '../../../../api/rango/updateRangoTransactionStatus'
 import { TransactionResponse } from '@ethersproject/abstract-provider'
 import { Dispatch } from 'react'
 
@@ -28,11 +27,8 @@ interface CreateTransactionProps {
 }
 
 async function createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, step }: CreateTransactionProps): Promise<TransactionResponse> {
-	try {
-		await switchChainHook(from.chain.id)
-	} catch (error) {
-		throw new Error('user rejected')
-	}
+	const signer = await switchChainHook(from.chain.id)
+	console.log('signer', signer)
 
 	const swapOptions = getRangoSwapOptions(route, address, from, settings, step)
 	console.log('rango swapOptions: ', swapOptions)
@@ -41,8 +37,8 @@ async function createAndSendRangoTransaction({ route, address, from, settings, s
 	if (!response.transaction || !response.ok) throw new Error('no transaction')
 	console.log('response', response)
 
-	const signer = await getSigner(from.chain.id)
-	console.log('signer', signer)
+	// const signer = await getSigner(from.chain.id)
+	// console.log('signer', signer)
 
 	return await signer.sendTransaction({
 		data: response.transaction.data,
@@ -71,7 +67,7 @@ export async function executeRangoRoute({ route, address, from, settings, swapDi
 			const { status } = statusResponse
 			console.log('statusResponse', JSON.stringify(statusResponse))
 
-			dispatchTransactionStatus(statusResponse, swapDispatch)
+			updateRangoTransactionStatus(statusResponse, swapDispatch)
 
 			if (status === TransactionStatus.FAILED) return statusResponse
 			if (status === TransactionStatus.SUCCESS) {
