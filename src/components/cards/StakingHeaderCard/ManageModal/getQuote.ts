@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject } from 'react'
-import { fetchQuote } from '../../../../api/wido/fetchQuote'
+import { fetchWidoQuote } from '../../../../api/wido/fetchWidoQuote'
 import { ManageAction, ManageState } from './useManageReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status } from './constants'
@@ -28,7 +28,7 @@ async function handleFetchQuote(manageState: ManageState, manageDispatch: Dispat
 		const route = await retryRequest(
 			async iterator => {
 				if (iterator > 0) manageDispatch({ type: 'SET_STATUS', payload: Status.thisMakeTakeAWhile })
-				return await fetchQuote(manageState)
+				return await fetchWidoQuote(manageState)
 			},
 			{ throwCondition: (e: any) => !e.message.includes('FAILED_DEPENDENCY'), retryCount: 3 },
 		)
