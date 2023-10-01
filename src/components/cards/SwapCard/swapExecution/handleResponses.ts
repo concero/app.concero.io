@@ -1,7 +1,8 @@
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
+import { TransactionStatus } from 'rango-types/src/api/shared/transactions'
 
 export const handleRangoResponse = (executedRoute, swapDispatch, provider) => {
-	if (executedRoute.status === 'failed') {
+	if (executedRoute.status === TransactionStatus.FAILED) {
 		swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: false, message: executedRoute.error } })
 	} else if (executedRoute.status === 'success') {
 		swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: true, message: 'Success' } })
