@@ -65,19 +65,18 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 			return {
 				...state,
 				to: {
-					...state.to,
 					token: {
-						name: action.payload.name,
-						symbol: action.payload.widoSymbol,
-						logoURI: action.payload.logoURI,
-						address: action.payload.widoAddress,
-						decimals: action.payload.decimals,
+						name: action.payload.data.vault_token.name,
+						symbol: action.payload.data.vault_token.symbol,
+						address: action.payload.data.vault_token.address,
+						logoURI: action.payload.project.logoURI,
+						decimals: action.payload.data.vault_token.decimals,
 					},
 					chain: {
-						name: action.payload.chain,
-						symbol: action.payload.widoSymbol,
-						logoURI: action.payload.logoURI,
-						id: action.payload.chainId,
+						name: action.payload.chain.name,
+						symbol: action.payload.chain.symbol,
+						logoURI: action.payload.chain.logoURI,
+						id: action.payload.chain.id,
 					},
 				},
 			}

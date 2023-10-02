@@ -62,6 +62,13 @@ interface IData {
   defiLlamaRewardTokens?: string[]
   underlyingTokens?: string[]
   subtitle?: string
+  chain: {
+    _id?: string
+    id?: string
+    name?: string
+    symbol?: string
+    logoURI?: string
+  }
 }
 interface IProviderInfo {
   id?: string
