@@ -1,7 +1,7 @@
 import { StandardRoute, Step } from '../../../../api/lifi/types'
 import { Provider } from '../../../../api/concero/types'
 
-export type Direction = {
+export interface Direction {
 	chain: {
 		name: string
 		symbol: string
@@ -39,7 +39,7 @@ export interface SwapState {
 	}
 }
 
-type Response = {
+interface Response {
 	provider: string
 	isOk: boolean
 	message: string
