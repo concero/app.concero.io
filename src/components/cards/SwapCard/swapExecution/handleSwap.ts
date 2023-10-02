@@ -2,8 +2,19 @@ import { handleTransactionError } from '../handlers/handleTransactionError'
 import { handleLifiResponse, handleRangoResponse } from './handleResponses'
 import { handleExecuteRoute } from './handleExecutionRoute'
 import { updateLifiSteps } from './updateLifiSteps'
+import { GetChainByProviderSymbolI } from '../../../../hooks/DataContext/types'
+import { SwitchChainHookType } from '../SwapInput/types'
+import { Dispatch } from 'react'
 
-export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook }) => {
+interface HandleSwapProps {
+	swapState: any
+	swapDispatch: Dispatch<any>
+	address: string
+	switchChainHook: SwitchChainHookType
+	getChainByProviderSymbol: GetChainByProviderSymbolI
+}
+
+export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol }: HandleSwapProps) => {
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
 
@@ -26,6 +37,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			settings,
 			swapDispatch,
 			switchChainHook,
+			getChainByProviderSymbol,
 		})
 
 		if (provider === 'rango') {

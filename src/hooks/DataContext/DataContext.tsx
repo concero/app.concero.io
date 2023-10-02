@@ -1,13 +1,9 @@
-import { createContext, FC, ReactNode, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { fetchTokens } from '../../api/concero/fetchTokens'
 import { fetchChains } from '../../api/concero/fetchChains'
 import { config } from '../../constants/config'
-
-interface DataProviderProps {
-	children: ReactNode
-}
-
-export const DataContext = createContext(null)
+import { DataContextValue, DataProviderProps, GetChainsParams } from './types'
+import { Chain } from '../../api/concero/types'
 
 export const initialState = {
 	tokens: {
@@ -71,29 +67,35 @@ export const initialState = {
 		},
 	],
 }
-export const DataProvider: FC<DataProviderProps> = ({ children }) => {
+
+export const DataContext = createContext<DataContextValue>({
+	getTokens: () => Promise.resolve([]),
+	getChains: () => Promise.resolve([]),
+	tokens: {},
+	chains: [],
+	setTokens: () => {},
+	setChains: () => {},
+	getChainByProviderSymbol: () => Promise.resolve(null),
+})
+
+export function DataProvider({ children }: DataProviderProps) {
 	const [tokens, setTokens] = useState(initialState.tokens)
 	const [chains, setChains] = useState(initialState.chains)
 
 	const getTokens = async ({ chainId, offset, limit, search }) => {
 		if (search) {
-			// console.log('searching tokens')
-			const response = await fetchTokens({ chainId, offset, limit, search })
-			return response
+			return await fetchTokens({ chainId, offset, limit, search })
 		}
 
 		if (tokens[chainId]) {
 			if (tokens[chainId].length >= offset + limit) {
-				// console.log(`returning tokens from state ${offset}`)
 				return tokens[chainId].slice(offset, offset + limit)
 			}
 			if (tokens[chainId].length < limit) {
-				// console.log(`returning tokens from state ${offset}`)
 				return tokens[chainId]
 			}
 		}
 
-		// console.log('fetching tokens with offset', offset)
 		const response = await fetchTokens({ chainId, offset, limit, search })
 		setTokens(prevTokens => {
 			const existingTokens = prevTokens[chainId] || []
@@ -102,21 +104,23 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
 		return response
 	}
 
-	const getChains = async ({ chainId, offset, limit, search }) => {
-		// console.log('getChains', chainId, offset, limit, search)
+	const getChains = async ({ chainId, offset, limit, search }: GetChainsParams): Promise<Chain[]> => {
 		if (search) {
-			const response = await fetchChains({ search })
-			return response
+			return await fetchChains({ search })
 		}
 		if (chains.length >= offset + limit) {
-			// console.log(`returning chains from state ${offset}`)
 			return chains.slice(offset, offset + limit)
 		}
 
-		// console.log('fetching chains with offset', offset)
 		const response = await fetchChains({ chainId, offset, limit })
 		setChains(prevChains => [...prevChains, ...response])
 		return response
+	}
+
+	async function getChainByProviderSymbol(providerSymbol: string): Promise<Chain | null> {
+		const chains = await getChains({})
+		const index = chains.findIndex((chain: Chain) => chain.providers.some(provider => provider.symbol === providerSymbol))
+		return index !== -1 ? chains[index] : null
 	}
 
 	const initialFetch = async () => {
@@ -126,7 +130,6 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
 			fetchChains({ offset: 0, limit: 100 }),
 		])
 		setTokens({ 1: ethTokens, 137: polygonTokens })
-		// console.log('tokens', ethTokens)
 		setChains(fetchedChains)
 	}
 
@@ -134,5 +137,5 @@ export const DataProvider: FC<DataProviderProps> = ({ children }) => {
 		initialFetch()
 	}, [])
 
-	return <DataContext.Provider value={{ getTokens, getChains, tokens, chains, setTokens, setChains }}>{children}</DataContext.Provider>
+	return <DataContext.Provider value={{ getTokens, getChains, tokens, chains, setTokens, setChains, getChainByProviderSymbol }}>{children}</DataContext.Provider>
 }

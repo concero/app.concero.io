@@ -1,6 +1,6 @@
-import { State } from '../types'
+import { SwapState } from './types'
 
-export const swapInitialState: State = selection => ({
+export const swapInitialState: SwapState = selection => ({
 	from: {
 		chain: selection.swapCard.from.chain,
 		token: selection.swapCard.from.token,

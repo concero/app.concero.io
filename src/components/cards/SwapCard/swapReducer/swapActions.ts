@@ -1,7 +1,8 @@
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
+import { SwapAction } from './types'
 
-export const swapActions = {
+export const swapActions: SwapAction = {
 	/* ROUTE-RELATED ACTIONS */
 	SET_ROUTES: (state, action) => ({ ...state, routes: action.payload }),
 	POPULATE_ROUTES: (state, action) => {

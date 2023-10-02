@@ -13,14 +13,15 @@ import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
+import { DataContextValue } from '../../../hooks/DataContext/types'
 
 interface NewsCardProps {}
 
 export const NewsCard: FC<NewsCardProps> = () => {
 	const { selection } = useContext(SelectionContext)
-	const { getTokens, tokens: dataTokens } = useContext(DataContext)
+	const { getTokens } = useContext<DataContextValue>(DataContext)
 	const { addNotification } = useContext(NotificationsContext)
-	const [{ data, isLoading, timestamp, isModalVisible, selectedToken, tokens }, dispatch] = useNewsReducer(selection)
+	const [{ data, isLoading, timestamp, isModalVisible, selectedToken }, dispatch] = useNewsReducer(selection)
 
 	useEffect(() => {
 		if (!selectedToken) return

@@ -1,8 +1,9 @@
 import { rangoClient } from './rangoClient'
 import { config } from '../../constants/config'
 import { standardizeRangoBestRoute } from './standardizeRangoBestRoute'
+import { BestRouteResponse } from 'rango-sdk/src/types'
 
-export const fetchRangoRoutes = async ({ from, to, settings }) => {
+export const fetchRangoRoutes = async ({ from, to, settings }): Promise<BestRouteResponse> => {
 	// todo: how to control rango slippage?
 
 	const fromRangoChainSymbol = from.chain.providers?.find(item => item.name === 'rango')?.symbol
