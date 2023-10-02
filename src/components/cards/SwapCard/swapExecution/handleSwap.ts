@@ -15,18 +15,6 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 
 	if (provider === 'lifi') {
 		updateLifiSteps({ swapDispatch, selectedRoute })
-	} else if (provider === 'rango') {
-		swapDispatch({
-			type: 'SET_SWAP_STEPS',
-			payload: [
-				{
-					title: 'Action required',
-					body: 'Please approve the transaction in your wallet',
-					status: 'await',
-					txLink: null,
-				},
-			],
-		})
 	}
 
 	try {

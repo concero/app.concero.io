@@ -24,9 +24,22 @@ interface CreateTransactionProps {
 	from: any
 	settings: any
 	switchChainHook: any
+	swapDispatch: Dispatch<any>
 }
 
-async function createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, step }: CreateTransactionProps): Promise<TransactionResponse> {
+async function createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, swapDispatch, step }: CreateTransactionProps): Promise<TransactionResponse> {
+	swapDispatch({
+		type: 'SET_SWAP_STEPS',
+		payload: [
+			{
+				title: 'Action required',
+				body: 'Please approve the transaction in your wallet',
+				status: 'await',
+				txLink: null,
+			},
+		],
+	})
+
 	const signer = await switchChainHook(parseInt(from.chain.id))
 	console.log('signer', signer)
 
@@ -36,9 +49,6 @@ async function createAndSendRangoTransaction({ route, address, from, settings, s
 	const response = await rangoClient.createTransaction(swapOptions)
 	if (!response.transaction || !response.ok) throw new Error('no transaction')
 	console.log('response', response)
-
-	// const signer = await getSigner(from.chain.id)
-	// console.log('signer', signer)
 
 	return await signer.sendTransaction({
 		data: response.transaction.data,
@@ -58,7 +68,8 @@ interface ExecuteRangoRouteProps {
 
 export async function executeRangoRoute({ route, address, from, settings, swapDispatch, switchChainHook }: ExecuteRangoRouteProps) {
 	let step = 1
-	let transactionResponse = await createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, step })
+	let transactionResponse = await createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, swapDispatch, step })
+	console.log('transactionResponse', transactionResponse)
 
 	while (step <= (route.result?.swaps.length || 1)) {
 		try {
@@ -71,8 +82,8 @@ export async function executeRangoRoute({ route, address, from, settings, swapDi
 			if (status === TransactionStatus.FAILED) return statusResponse
 			if (status === TransactionStatus.SUCCESS) {
 				step++
-				if (step === (route.result?.swaps.length || 1)) return statusResponse
-				transactionResponse = await createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, step })
+				if (step > (route.result?.swaps.length || 1)) return statusResponse
+				transactionResponse = await createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, swapDispatch, step })
 				console.log('transactionResponse', transactionResponse)
 			}
 		} catch (error) {
