@@ -20,7 +20,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
 	// const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
 
-	const switchChainFunction = async requiredChainId => {
+	const switchChainFunction = async (requiredChainId: number): Promise<providers.JsonRpcSigner> => {
 		if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
 		const client0 = createWalletClient({
 			transport: custom(window.ethereum),
@@ -29,8 +29,8 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 		return provider.getSigner()
 	}
 
-	const switchChainHook = async (requiredChainId): Promise<providers.JsonRpcSigner> => {
-		if (!window.ethereum.chainId || !requiredChainId || parseInt(window.ethereum.chainId) === parseInt(requiredChainId)) return
+	const switchChainHook = async (requiredChainId: number): Promise<providers.JsonRpcSigner> => {
+		if (!window.ethereum.chainId || !requiredChainId || parseInt(window.ethereum.chainId) === requiredChainId) return
 		return switchChainFunction(requiredChainId)
 	}
 

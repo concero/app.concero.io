@@ -27,7 +27,7 @@ interface CreateTransactionProps {
 }
 
 async function createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, step }: CreateTransactionProps): Promise<TransactionResponse> {
-	const signer = await switchChainHook(from.chain.id)
+	const signer = await switchChainHook(parseInt(from.chain.id))
 	console.log('signer', signer)
 
 	const swapOptions = getRangoSwapOptions(route, address, from, settings, step)
@@ -59,13 +59,12 @@ interface ExecuteRangoRouteProps {
 export async function executeRangoRoute({ route, address, from, settings, swapDispatch, switchChainHook }: ExecuteRangoRouteProps) {
 	let step = 1
 	let transactionResponse = await createAndSendRangoTransaction({ route, address, from, settings, switchChainHook, step })
-	let statusResponse
 
 	while (step <= (route.result?.swaps.length || 1)) {
 		try {
-			statusResponse = await rangoClient.checkStatus({ requestId: route.requestId, step, txId: transactionResponse.hash })
+			const statusResponse = await rangoClient.checkStatus({ requestId: route.requestId, step, txId: transactionResponse.hash })
 			const { status } = statusResponse
-			console.log('statusResponse', JSON.stringify(statusResponse))
+			console.log('statusResponse', statusResponse, JSON.stringify(statusResponse, null, 2))
 
 			updateRangoTransactionStatus(statusResponse, swapDispatch)
 
