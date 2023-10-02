@@ -1,4 +1,5 @@
 import { StandardRoute, Step } from '../../../../api/lifi/types'
+import { Provider } from '../../../../api/concero/types'
 
 export type Direction = {
 	chain: {
@@ -6,14 +7,7 @@ export type Direction = {
 		symbol: string
 		id: string
 		logoURI: string
-		providers: {
-			lifi?: {
-				key: string
-			}
-			rango?: {
-				key: string
-			}
-		}
+		providers: Provider[]
 	}
 	token: {
 		name: string
@@ -27,7 +21,7 @@ export type Direction = {
 	address: string
 }
 
-export type SwapState = {
+export interface SwapState {
 	from: Direction
 	to: Direction
 	routes: StandardRoute[]
