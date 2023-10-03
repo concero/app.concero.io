@@ -1,6 +1,6 @@
 import { FetchRoutesParams, Route } from './types'
 import { standardiseLifiRoute } from './standardiseLifiRoute'
-import { addingDecimals } from '../../utils/formatting'
+import { addingAmountDecimals } from '../../utils/formatting'
 import { lifi } from './lifi'
 
 interface GetRoutes {
@@ -30,7 +30,7 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
 
 	const routesRequest = {
 		fromChainId: parseInt(from.chain.id),
-		fromAmount: addingDecimals(Number(from.amount), from.token.decimals),
+		fromAmount: addingAmountDecimals(Number(from.amount), from.token.decimals),
 		fromTokenAddress: from.token.address,
 		fromAddress: from.address,
 		toChainId: parseInt(to.chain.id),

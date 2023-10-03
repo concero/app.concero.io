@@ -2,9 +2,8 @@ import { Dispatch, MutableRefObject } from 'react'
 import { ManageAction, ManageState } from './useManageReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status } from './constants'
-import { get } from '../../../../api/client'
-import { config } from '../../../../constants/config'
-import { addingDecimals } from '../../../../utils/formatting'
+import { addingAmountDecimals } from '../../../../utils/formatting'
+import { fetchEnsoQuote } from '../../../../api/enso'
 
 interface IGetQuote {
 	manageState: ManageState
@@ -22,38 +21,6 @@ function handleError(error: Error, manageDispatch: Dispatch<ManageAction>) {
 	}
 }
 
-export interface FetchEnsoQuoteParams {
-	chainId: number;
-	fromAddress: string;
-	toEoa?: boolean;
-	amountIn: string;
-	tokenIn: string;
-	tokenOut: string;
-}
-
-async function fetchEnsoQuote({ chainId, fromAddress, toEoa = false, amountIn, tokenIn, tokenOut} : FetchEnsoQuoteParams) {
-	const headers = {
-		'Content-Type': 'application/json',
-		'Authorization': `Bearer ${config.ENSO_API_KEY}`
-	}
-  const url = `https://api.enso.finance/api/v1/shortcuts/route?chainId=${chainId}&fromAddress=${fromAddress}&toEoa=${toEoa}&amountIn=${amountIn}&tokenIn=${tokenIn}&tokenOut=${tokenOut}`;
-
-	console.log('chainId', chainId)
-	console.log('fromAddress', fromAddress)
-	console.log('toEoa', toEoa)
-	console.log('amountIn', amountIn)
-	console.log('tokenIn', tokenIn)
-	console.log('tokenOut', tokenOut)
-
-  try {
-    const response = await get(url, { headers });
-		console.log('response', response.data)
-		return response.data;
-  } catch (error) {
-    console.error('Error fetching Enso route:', error);
-  }
-};
-
 async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>) {
 	dispatch({ type: 'SET_LOADING', payload: true })
 	dispatch({ type: 'SET_STATUS', payload: Status.loading })
@@ -61,17 +28,10 @@ async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>) 
 		const route = await fetchEnsoQuote({
 			chainId: state.from.chain.id,
 			fromAddress: state.address,
-			amountIn: addingDecimals(state.from.amount, state.from.token.decimals),
+			amountIn: addingAmountDecimals(state.from.amount, state.from.token.decimals) as string,
 			tokenIn: state.from.token.address,
-			tokenOut: state.to.token.address
-		});
-		// const route = await retryRequest(
-		// 	async iterator => {
-		// 		if (iterator > 0) manageDispatch({ type: 'SET_STATUS', payload: Status.thisMakeTakeAWhile })
-		// 		return await fetchWidoQuote(manageState)
-		// 	},
-		// 	{ throwCondition: (e: any) => !e.message.includes('FAILED_DEPENDENCY'), retryCount: 3 },
-		// )
+			tokenOut: state.to.token.address,
+		})
 		if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 		dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount })
 	} catch (error) {
