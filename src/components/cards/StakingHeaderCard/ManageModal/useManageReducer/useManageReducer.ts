@@ -30,7 +30,7 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 			if (action.fromAmount.toString() !== state.from.amount.toString()) return state
 			return {
 				...state,
-				route: action.payload,
+				route: { ...action.payload, gas: action.gas },
 				status: Status.swap,
 				// from: {
 				// 	...state.from,

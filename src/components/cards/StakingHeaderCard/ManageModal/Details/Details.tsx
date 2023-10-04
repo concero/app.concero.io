@@ -3,7 +3,7 @@ import { ManageState } from '../useManageReducer/types'
 import classNames from './Details.module.pcss'
 import { Avatar } from '../../../../tags/Avatar/Avatar'
 import { Tag } from '../../../../tags/Tag/Tag'
-import { numberToFormatString, roundNumberByDecimals } from '../../../../../utils/formatting'
+import { roundNumberByDecimals } from '../../../../../utils/formatting'
 import BigNumber from 'bignumber.js'
 import { ReactElement } from 'react'
 
@@ -28,7 +28,7 @@ export function Details({ manageState }: DetailsProps): ReactElement {
 					{manageState?.route?.gas ? (
 						<div className={classNames.tagInnerContainer}>
 							<IconGasStation color={'var(--color-text-secondary)'} size={16} />
-							<p className="body1">${numberToFormatString(manageState.route.gas, 4)}</p>
+							<p className="body1">{manageState.route.gas}</p>
 						</div>
 					) : null}
 					{/* {manageState?.route?.expectedSlippage ? ( */}

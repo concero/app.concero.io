@@ -24,11 +24,15 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	const [currentUsdPrice, setCurrentUsdPrice] = useState<number | null>(null)
 	const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 
+	function setAmountUsd(value: string): void {
+		dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
+	}
+
 	function handleChangeText(value: string) {
 		if (value && !isFloatInput(value)) return
 		dispatch({ type: 'SET_AMOUNT', amount: value, direction })
 		if (swapType === SwapType.withdraw) return
-		dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
+		setAmountUsd(value)
 	}
 
 	function handleChainButtonClick() {
@@ -40,8 +44,14 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	}
 
 	useEffect(() => {
-		if (direction === 'from' && swapType === SwapType.stake) getCurrentPriceToken(selection, setCurrentUsdPrice)
+		if (direction === 'from' && swapType === SwapType.stake) {
+			getCurrentPriceToken(selection, setCurrentUsdPrice)
+		}
 	}, [selection.chain.id, selection.token.address])
+
+	useEffect(() => {
+		setAmountUsd(selection.amount)
+	}, [currentUsdPrice])
 
 	return (
 		<div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
