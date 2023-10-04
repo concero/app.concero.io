@@ -3,9 +3,9 @@ import { ManageAction, ManageState } from './useManageReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status } from './constants'
 import { addingAmountDecimals, addingTokenDecimals, roundNumberByDecimals } from '../../../../utils/formatting'
-import { fetchEnsoQuote } from '../../../../api/enso/enso'
 import { fetchNativeTokenPriceByChainId } from '../../../../api/enso/fetchNativeTokenPriceByChainId'
 import BigNumber from 'bignumber.js'
+import { fetchEnsoQuote } from '../../../../api/enso/fetchEnsoQuote'
 
 interface IGetQuote {
 	manageState: ManageState

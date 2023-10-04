@@ -84,19 +84,8 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 			return {
 				...state,
 				from: {
-					token: {
-						name: action.token.name,
-						symbol: action.token.symbol,
-						address: action.token.address,
-						logoURI: action.token.logoURI,
-						decimals: action.token.decimals,
-					},
-					chain: {
-						name: action.chain.name,
-						symbol: action.chain.symbol,
-						logoURI: action.chain.logoURI,
-						id: action.chain.id,
-					},
+					token: action.token,
+					chain: action.chain,
 				},
 			}
 		case 'RESET':
