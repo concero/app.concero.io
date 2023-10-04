@@ -80,6 +80,25 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 					},
 				},
 			}
+		case 'SET_FROM_SELECTION':
+			return {
+				...state,
+				from: {
+					token: {
+						name: action.token.name,
+						symbol: action.token.symbol,
+						address: action.token.address,
+						logoURI: action.token.logoURI,
+						decimals: action.token.decimals,
+					},
+					chain: {
+						name: action.chain.name,
+						symbol: action.chain.symbol,
+						logoURI: action.chain.logoURI,
+						id: action.chain.id,
+					},
+				},
+			}
 		case 'RESET':
 			return manageInitialState(action.payload)
 		default:

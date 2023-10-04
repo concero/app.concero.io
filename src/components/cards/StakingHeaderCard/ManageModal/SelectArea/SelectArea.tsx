@@ -58,13 +58,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 			<div className={classNames.tokenRow}>
 				<div className={classNames.tokenRowHeader}>
 					<p>{capitalize(direction)}</p>
-					<Button
-						onClick={handleChainButtonClick}
-						size="sm"
-						variant="black"
-						rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
-						isDisabled={isSelectDisabled}
-					>
+					<Button onClick={handleChainButtonClick} size="sm" variant="black" isDisabled={true}>
 						<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
 					</Button>
 				</div>

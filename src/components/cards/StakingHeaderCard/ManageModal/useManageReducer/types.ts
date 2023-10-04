@@ -79,6 +79,7 @@ export type ManageAction =
 	| { type: 'SET_STATUS'; payload: Status }
 	| { type: 'SET_BALANCE'; payload: number }
 	| { type: 'SET_TO_SELECTION'; payload: any }
+	| { type: 'SET_FROM_SELECTION'; token: Token; chain: Chain }
 	| { type: 'RESET'; payload: any }
 	| { type: 'SET_WITHDRAW_TYPE'; token: Token }
 	| { type: 'SET_STAKE_TYPE' }

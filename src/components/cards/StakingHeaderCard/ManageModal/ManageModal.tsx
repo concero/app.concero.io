@@ -14,6 +14,7 @@ import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
 import { addingTokenDecimals } from '../../../../utils/formatting'
+import { DataContextValue } from '../../../../hooks/DataContext/types'
 
 interface ManageModalProps {
 	isOpen: boolean
@@ -22,7 +23,7 @@ interface ManageModalProps {
 }
 
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
-	const { getChains, getTokens } = useContext(DataContext)
+	const { getChains, getTokens } = useContext<DataContextValue>(DataContext)
 	const [manageState, manageDispatch] = useManageReducer(stakingState)
 	const { modalType, swapType } = manageState
 	const typingTimeoutRef = useRef(null)
@@ -41,7 +42,6 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 	}
 
 	function handleOnClose() {
-		manageDispatch({ type: 'RESET', payload: stakingState })
 		setIsOpen(false)
 	}
 
@@ -54,6 +54,13 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 	function setStakeType() {
 		if (manageState.swapType === SwapType.stake) return
 		manageDispatch({ type: 'SET_STAKE_TYPE' })
+	}
+
+	async function populateSelections(): Promise<void> {
+		const [chains, tokens] = await Promise.all([getChains({}), getTokens({ chainId: stakingState.selectedVault?.chain_id as string, offset: 0, limit: 15 })])
+		const chain = chains.find(chain => chain.id === stakingState.selectedVault?.chain_id)
+		manageDispatch({ type: 'SET_FROM_SELECTION', chain, token: tokens[0] })
+		manageDispatch({ type: 'SET_TO_SELECTION', payload: stakingState.selectedVault })
 	}
 
 	useEffect(() => {
@@ -70,8 +77,8 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 	}, [manageState.from.chain.id, manageState.from.token.address, manageState.from.token.symbol])
 
 	useEffect(() => {
-		manageDispatch({ type: 'SET_TO_SELECTION', payload: stakingState.selectedVault })
-	}, [stakingState.selectedVault])
+		populateSelections()
+	}, [stakingState.selectedVault?.address])
 
 	return (
 		<Modal title="Manage position" show={isOpen} setShow={handleOnClose}>
