@@ -28,7 +28,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
 			<div className={`card ${classNames.container}`}>
 				<CardHeader title={getCardTitleByStatus(swapState.status)}>
 					<div className={classNames.cardHeader}>
-						<Button variant="black" size="sq-sm" onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })} leftIcon={<IconSettings2 size={16} color={'var(--color-grey-500)'} />} />
+						<Button
+							variant="black"
+							size="sq-sm"
+							onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+							leftIcon={<IconSettings2 size={16} color={'var(--color-grey-500)'} />}
+						/>
 					</div>
 				</CardHeader>
 				<div className={classNames.swapContainer}>
