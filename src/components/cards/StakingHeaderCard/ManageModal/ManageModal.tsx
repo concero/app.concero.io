@@ -28,30 +28,30 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 	const { modalType, swapType } = manageState
 	const typingTimeoutRef = useRef(null)
 
-	async function handleSelectChain(item: any) {
+	async function handleSelectChain(item: any): Promise<void> {
 		const direction = swapType === SwapType.stake ? 'from' : 'to'
 		const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
 		manageDispatch({ type: 'SET_CHAIN', payload: item, tokens, direction })
 		manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
 	}
 
-	function handleSelectToken(item: any) {
+	function handleSelectToken(item: any): void {
 		const direction = swapType === SwapType.stake ? 'from' : 'to'
 		manageDispatch({ type: 'SET_TOKEN', payload: item, direction })
 		manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
 	}
 
-	function handleOnClose() {
+	function handleOnClose(): void {
 		setIsOpen(false)
 	}
 
-	async function setWithdrawType() {
+	async function setWithdrawType(): Promise<void> {
 		if (manageState.swapType === SwapType.withdraw) return
 		const tokens = await getTokens({ chainId: manageState.to.chain.id, offset: 0, limit: 15 })
 		manageDispatch({ type: 'SET_WITHDRAW_TYPE', token: tokens[0] })
 	}
 
-	function setStakeType() {
+	function setStakeType(): void {
 		if (manageState.swapType === SwapType.stake) return
 		manageDispatch({ type: 'SET_STAKE_TYPE' })
 	}
@@ -89,7 +89,12 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 							<Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={setStakeType}>
 								Stake
 							</Button>
-							<Button size="sm" variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={setWithdrawType} isDisabled={!stakingState.selectedVault?.stakedAmount}>
+							<Button
+								size="sm"
+								variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'}
+								onClick={setWithdrawType}
+								// isDisabled={!stakingState.selectedVault?.stakedAmount}
+							>
 								Withdraw
 							</Button>
 						</div>

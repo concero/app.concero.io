@@ -10,7 +10,7 @@ export async function fetchEnsoQuote({ chainId, fromAddress, amountIn, tokenIn, 
 
 	const url = `https://api.enso.finance/api/v1/shortcuts/route?chainId=${chainId}&fromAddress=${fromAddress}&toEoa=true&amountIn=${amountIn}&tokenIn=${
 		tokenIn === config.NULL_ADDRESS ? '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' : tokenIn
-	}&tokenOut=${tokenOut}`
+	}&tokenOut=${tokenOut === config.NULL_ADDRESS ? '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' : tokenOut}`
 
 	console.log(url)
 

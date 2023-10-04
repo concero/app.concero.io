@@ -15,29 +15,29 @@ interface StakingHeaderCardProps {
 }
 
 export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, stakingDispatch }) => {
-	const isMobile = useMediaQuery('mobile')
 	const isIpad = useMediaQuery('ipad')
 	const [isManageModalOpen, setIsManageModalOpen] = useState(false)
 	const { selectedVault } = stakingState
-
-	const stakedAmount = formatNumber(selectedVault.stakedAmount, {
-		decimals: selectedVault.decimals,
+	const isConnected = !!stakingState.address
+	const stakedAmount = formatNumber(selectedVault?.stakedAmount, {
+		decimals: selectedVault?.decimals,
 		decimalPlaces: 5,
 		disableUnit: true,
 	})
+	const stakeButtonTitle = isConnected ? (stakedAmount ? 'Manage' : 'Stake') : 'Connect wallet to swap'
 
 	function handleManageButtonClick() {
 		setIsManageModalOpen(true)
 	}
 
-	function handleGoBackbuttonClick() {
+	function handleGoBackButtonClick() {
 		stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: null })
 	}
 
 	return (
 		<>
 			<div className={classNames.wrapper}>
-				{isIpad ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.staked : ''} onClick={handleGoBackbuttonClick} /> : null}
+				{isIpad ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.staked : ''} onClick={handleGoBackButtonClick} /> : null}
 				<div className={classNames.innerContainer}>
 					<div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
 						<div className={classNames.headerContainer}>
@@ -50,8 +50,14 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 							</div>
 							{!isIpad ? (
 								<div className={classNames.sideContainer}>
-									<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick} className={classNames.stakeButton}>
-										{stakedAmount ? 'Manage' : 'Stake'}
+									<Button
+										leftIcon={isConnected ? <IconArrowsUpDown size={16} color="white" /> : null}
+										variant="primary"
+										onClick={handleManageButtonClick}
+										className={classNames.stakeButton}
+										isDisabled={!stakingState.address}
+									>
+										{stakeButtonTitle}
 									</Button>
 								</div>
 							) : null}
@@ -74,8 +80,8 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 				</div>
 			) : null}
 			{isIpad ? (
-				<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick}>
-					{stakedAmount ? 'Manage' : 'Stake'}
+				<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick} isDisabled={!stakingState.address}>
+					{stakeButtonTitle}
 				</Button>
 			) : null}
 			<ManageModal isOpen={isManageModalOpen} setIsOpen={setIsManageModalOpen} stakingState={stakingState} />

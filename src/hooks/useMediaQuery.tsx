@@ -5,7 +5,9 @@ const sizes = {
 	ipad: '1024px',
 }
 
-export const useMediaQuery = (screen: keyof string) => {
+type Screen = 'ipad' | 'mobile'
+
+export const useMediaQuery = (screen: Screen) => {
 	const [matches, setMatches] = useState(() => {
 		const query = `(max-width: ${sizes[screen]})`
 		return window.matchMedia(query).matches

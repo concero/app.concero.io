@@ -72,7 +72,7 @@ export const StakingScreen: FC = () => {
 				<Details stakingState={stakingState} />
 			</div>
 		)
-	}, [stakingState.selectedVault])
+	}, [stakingState.selectedVault, stakingState.address])
 
 	const desktopLayout = (
 		<div className={classNames.container}>
