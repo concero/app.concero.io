@@ -3,7 +3,7 @@ import { ManageAction, ManageState } from './useManageReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status } from './constants'
 import { addingAmountDecimals } from '../../../../utils/formatting'
-import { fetchEnsoQuote } from '../../../../api/enso'
+import { fetchEnsoQuote } from '../../../../api/enso/enso'
 
 interface IGetQuote {
 	manageState: ManageState
@@ -11,7 +11,7 @@ interface IGetQuote {
 	typingTimeoutRef: MutableRefObject<any>
 }
 
-function handleError(error: Error, manageDispatch: Dispatch<ManageAction>) {
+function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void {
 	if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
 		manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
 	} else if (error.message.includes('FAILED_DEPENDENCY')) {
@@ -21,7 +21,7 @@ function handleError(error: Error, manageDispatch: Dispatch<ManageAction>) {
 	}
 }
 
-async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>) {
+async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
 	dispatch({ type: 'SET_LOADING', payload: true })
 	dispatch({ type: 'SET_STATUS', payload: Status.loading })
 	try {
@@ -36,18 +36,17 @@ async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>) 
 		dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount })
 	} catch (error) {
 		console.log(error)
-		handleError(error, dispatch)
+		handleError(error as Error, dispatch)
 	} finally {
 		dispatch({ type: 'SET_LOADING', payload: false })
 	}
 }
 
-export async function getQuote({ manageState, manageDispatch, typingTimeoutRef }: IGetQuote) {
+export async function getQuote({ manageState, manageDispatch, typingTimeoutRef }: IGetQuote): Promise<void> {
 	if (!manageState.from.amount) return clearRoute(manageDispatch, typingTimeoutRef)
 	try {
 		if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-		const typingTimeoutId = setTimeout(() => fetchQuote(manageState, manageDispatch), 700)
-		typingTimeoutRef.current = typingTimeoutId
+		typingTimeoutRef.current = setTimeout(() => fetchQuote(manageState, manageDispatch), 700)
 	} catch (error) {
 		console.error('[getQuote] ', error)
 	}

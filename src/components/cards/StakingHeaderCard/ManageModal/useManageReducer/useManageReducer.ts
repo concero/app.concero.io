@@ -32,14 +32,14 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 				...state,
 				route: action.payload,
 				status: Status.swap,
-				from: {
-					...state.from,
-					amount_usd: action.payload.fromTokenAmountUsdValue,
-				},
+				// from: {
+				// 	...state.from,
+				// 	amount_usd: action.,
+				// },
 				to: {
 					...state.to,
-					amount: addingTokenDecimals(Number(action.payload.toTokenAmount), Number(state.to.token.decimals)),
-					amount_usd: action.payload.toTokenAmountUsdValue,
+					amount: addingTokenDecimals(Number(action.payload.amountOut), state.to.token.decimals) as string,
+					// amount_usd: null,
 				},
 			}
 		case 'CLEAR_ROUTE':

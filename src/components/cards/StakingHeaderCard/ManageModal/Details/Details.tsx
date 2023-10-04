@@ -1,16 +1,17 @@
-import { IconArrowWaveRightUp, IconGasStation } from '@tabler/icons-react'
+import { IconGasStation } from '@tabler/icons-react'
 import { ManageState } from '../useManageReducer/types'
 import classNames from './Details.module.pcss'
 import { Avatar } from '../../../../tags/Avatar/Avatar'
 import { Tag } from '../../../../tags/Tag/Tag'
 import { numberToFormatString, roundNumberByDecimals } from '../../../../../utils/formatting'
 import BigNumber from 'bignumber.js'
+import { ReactElement } from 'react'
 
 interface DetailsProps {
 	manageState: ManageState
 }
 
-export function Details({ manageState }: DetailsProps) {
+export function Details({ manageState }: DetailsProps): ReactElement {
 	const rate = roundNumberByDecimals(new BigNumber(manageState.to.amount).div(manageState.from.amount).toString())
 
 	return (
@@ -24,18 +25,18 @@ export function Details({ manageState }: DetailsProps) {
 			</Tag>
 			<Tag color="grey">
 				<div className={classNames.tagContainer}>
-					{manageState?.route?.feeUsdValue ? (
+					{manageState?.route?.gas ? (
 						<div className={classNames.tagInnerContainer}>
 							<IconGasStation color={'var(--color-text-secondary)'} size={16} />
-							<p className="body1">${numberToFormatString(parseFloat(manageState?.route?.gasFeeUsdValue), 4)}</p>
+							<p className="body1">${numberToFormatString(manageState.route.gas, 4)}</p>
 						</div>
 					) : null}
-					{manageState?.route?.expectedSlippage ? (
-						<div className={classNames.tagInnerContainer}>
-							<IconArrowWaveRightUp size={16} color={'var(--color-text-secondary)'} />
-							<p className="body1">{numberToFormatString(parseFloat(manageState?.route?.expectedSlippage), 4)}%</p>
-						</div>
-					) : null}
+					{/* {manageState?.route?.expectedSlippage ? ( */}
+					{/* 	<div className={classNames.tagInnerContainer}> */}
+					{/* 		<IconArrowWaveRightUp size={16} color={'var(--color-text-secondary)'} /> */}
+					{/* 		<p className="body1">{numberToFormatString(parseFloat(manageState?.route.), 4)}%</p> */}
+					{/* 	</div> */}
+					{/* ) : null} */}
 				</div>
 			</Tag>
 		</div>
