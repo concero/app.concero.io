@@ -5,7 +5,7 @@ function getChainsQuery(filter: Filter) {
 	if (!filter) return ''
 	const { chains } = filter
 	if (!chains || chains.length === 0) return ''
-	return `chainId=${chains.map(chain => chain.id).join(',')}`
+	return `chain_id=${chains.map(chain => chain.id).join(',')}`
 }
 
 function getApyQuery(filter: Filter) {
