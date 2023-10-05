@@ -3,7 +3,7 @@ import { ManageAction, ManageState } from './useManageReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status } from './constants'
 import { addingAmountDecimals, addingTokenDecimals, roundNumberByDecimals } from '../../../../utils/formatting'
-import { fetchNativeTokenPriceByChainId } from '../../../../api/enso/fetchNativeTokenPriceByChainId'
+import { fetchTokenPrice } from '../../../../api/enso/fetchTokenPrice'
 import BigNumber from 'bignumber.js'
 import { fetchEnsoQuote } from '../../../../api/enso/fetchEnsoQuote'
 
@@ -35,7 +35,7 @@ async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>):
 				tokenIn: state.from.token.address,
 				tokenOut: state.to.token.address,
 			}),
-			fetchNativeTokenPriceByChainId(state.from.chain.id),
+			fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'),
 		])
 
 		if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })

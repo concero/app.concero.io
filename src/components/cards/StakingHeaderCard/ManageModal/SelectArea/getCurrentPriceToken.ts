@@ -1,8 +1,8 @@
-import { fetchCurrentTokenPriceUSD } from '../../../../../api/coinGecko/fetchCurrentTokenPriceUSD'
+import { fetchTokenPrice } from '../../../../../api/enso/fetchTokenPrice'
 
 export async function getCurrentPriceToken(selection, setCurrentUsdPrice) {
 	try {
-		const response = await fetchCurrentTokenPriceUSD(selection.token.coinGeckoId)
+		const response = await fetchTokenPrice(selection.chain.id, selection.token.address)
 		setCurrentUsdPrice(response)
 	} catch (error) {
 		console.log('ERROR: ', error)

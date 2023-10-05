@@ -30,16 +30,11 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 			if (action.fromAmount.toString() !== state.from.amount.toString()) return state
 			return {
 				...state,
-				route: { ...action.payload, gas: action.gas },
+				route: { ...action.payload, gas: action.gas as string },
 				status: Status.swap,
-				// from: {
-				// 	...state.from,
-				// 	amount_usd: action.,
-				// },
 				to: {
 					...state.to,
 					amount: addingTokenDecimals(Number(action.payload.amountOut), state.to.token.decimals) as string,
-					// amount_usd: null,
 				},
 			}
 		case 'CLEAR_ROUTE':
@@ -60,7 +55,15 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 				route: null,
 			}
 		case 'SET_STAKE_TYPE':
-			return { ...state, swapType: SwapType.stake, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
+			return { ...state, swapType: SwapType.stake }
+		case 'SWITCH_TYPE':
+			return {
+				...state,
+				swapType: state.swapType === SwapType.stake ? SwapType.withdraw : SwapType.stake,
+				from: { ...state.to, amount: '' },
+				to: { ...state.from, amount: '' },
+				route: null,
+			}
 		case 'SET_TO_SELECTION':
 			return {
 				...state,

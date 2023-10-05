@@ -44,9 +44,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	}
 
 	useEffect(() => {
-		if (direction === 'from' && swapType === SwapType.stake) {
-			getCurrentPriceToken(selection, setCurrentUsdPrice)
-		}
+		getCurrentPriceToken(selection, setCurrentUsdPrice)
 	}, [selection.chain.id, selection.token.address])
 
 	useEffect(() => {

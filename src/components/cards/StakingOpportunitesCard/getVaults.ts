@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { StakingAction, StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { fetchPools } from '../../../api/concero/fetchPools'
 
 export function populatePoolsBalances(pools, stakingState) {
@@ -14,7 +14,7 @@ export function populatePoolsBalances(pools, stakingState) {
 	})
 }
 
-export async function getVaults(stakingDispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
+export async function getVaults(stakingDispatch: Dispatch<StakingAction>, address: string, stakingState: StakingState, offset: number, limit: number): Promise<void> {
 	stakingDispatch({ type: 'SET_LOADING', payload: true })
 	try {
 		const pools = await fetchPools(stakingState, address, offset, limit)
@@ -29,7 +29,7 @@ export async function getVaults(stakingDispatch: Dispatch<any>, address, staking
 	}
 }
 
-export async function getMoreVaults(stakingDispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number) {
+export async function getMoreVaults(stakingDispatch: Dispatch<any>, address, stakingState: StakingState, offset: number, limit: number): Promise<void> {
 	stakingDispatch({ type: 'SET_LOADING', payload: true })
 	try {
 		const pools = await fetchPools(stakingState, address, offset, limit)

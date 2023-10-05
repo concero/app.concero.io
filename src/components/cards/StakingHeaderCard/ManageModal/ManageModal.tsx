@@ -47,13 +47,12 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 
 	async function setWithdrawType(): Promise<void> {
 		if (manageState.swapType === SwapType.withdraw) return
-		const tokens = await getTokens({ chainId: manageState.to.chain.id, offset: 0, limit: 15 })
-		manageDispatch({ type: 'SET_WITHDRAW_TYPE', token: tokens[0] })
+		manageDispatch({ type: 'SWITCH_TYPE' })
 	}
 
 	function setStakeType(): void {
 		if (manageState.swapType === SwapType.stake) return
-		manageDispatch({ type: 'SET_STAKE_TYPE' })
+		manageDispatch({ type: 'SWITCH_TYPE' })
 	}
 
 	async function populateSelections(): Promise<void> {
@@ -61,6 +60,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 		const chain = chains.find(chain => chain.id === stakingState.selectedVault?.chain_id)
 		manageDispatch({ type: 'SET_FROM_SELECTION', chain, token: tokens[0] })
 		manageDispatch({ type: 'SET_TO_SELECTION', payload: stakingState.selectedVault })
+		manageDispatch({ type: 'SET_STAKE_TYPE' })
 	}
 
 	useEffect(() => {

@@ -83,3 +83,4 @@ export type ManageAction =
 	| { type: 'RESET'; payload: any }
 	| { type: 'SET_WITHDRAW_TYPE'; token: Token }
 	| { type: 'SET_STAKE_TYPE' }
+	| { type: 'SWITCH_TYPE' }
