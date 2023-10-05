@@ -24,7 +24,7 @@ interface ManageModalProps {
 
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
 	const { getChains, getTokens } = useContext<DataContextValue>(DataContext)
-	const [manageState, manageDispatch] = useManageReducer(stakingState)
+	const [manageState, manageDispatch] = useManageReducer(stakingState)0
 	const { modalType, swapType } = manageState
 	const typingTimeoutRef = useRef(null)
 

@@ -27,16 +27,15 @@ async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>):
 	dispatch({ type: 'SET_LOADING', payload: true })
 	dispatch({ type: 'SET_STATUS', payload: Status.loading })
 	try {
-		const [route, price] = await Promise.all([
-			fetchEnsoQuote({
-				chainId: state.from.chain.id,
-				fromAddress: state.address,
-				amountIn: addingAmountDecimals(state.from.amount, state.from.token.decimals) as string,
-				tokenIn: state.from.token.address,
-				tokenOut: state.to.token.address,
-			}),
-			fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'),
-		])
+		const route = await fetchEnsoQuote({
+			chainId: state.from.chain.id,
+			fromAddress: state.address,
+			amountIn: addingAmountDecimals(state.from.amount, state.from.token.decimals) as string,
+			tokenIn: state.from.token.address,
+			tokenOut: state.to.token.address,
+		})
+
+		const price = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 		if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 		let gas: null | string = null
