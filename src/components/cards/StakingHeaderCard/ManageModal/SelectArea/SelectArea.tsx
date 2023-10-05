@@ -44,6 +44,10 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	}
 
 	useEffect(() => {
+		if (isSelectDisabled) {
+			setCurrentUsdPrice(null)
+			return
+		}
 		getCurrentPriceToken(selection, setCurrentUsdPrice)
 	}, [selection.chain.id, selection.token.address])
 

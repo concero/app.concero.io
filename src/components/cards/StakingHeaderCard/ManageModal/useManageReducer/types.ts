@@ -73,7 +73,7 @@ export type ManageAction =
 	| { type: 'SET_AMOUNT_USD'; direction: string; amount: string | null }
 	| { type: 'SET_ADDRESS'; payload: string }
 	| { type: 'SET_CHAIN_BY_VAULT'; direction: string; payload: any }
-	| { type: 'SET_ROUTE'; fromAmount: string; payload: EnsoRouteResponse; gas: string | null }
+	| { type: 'SET_ROUTE'; fromAmount: string; payload: EnsoRouteResponse; gas: string | null; toAmountUsd: string | null }
 	| { type: 'CLEAR_ROUTE' }
 	| { type: 'SET_LOADING'; payload: boolean }
 	| { type: 'SET_STATUS'; payload: Status }

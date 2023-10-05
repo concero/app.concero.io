@@ -35,6 +35,7 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 				to: {
 					...state.to,
 					amount: addingTokenDecimals(Number(action.payload.amountOut), state.to.token.decimals) as string,
+					...(action.toAmountUsd && { amount_usd: action.toAmountUsd }),
 				},
 			}
 		case 'CLEAR_ROUTE':
