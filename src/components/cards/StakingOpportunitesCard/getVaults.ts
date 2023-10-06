@@ -14,12 +14,22 @@ export function populatePoolsBalances(pools, stakingState) {
 	})
 }
 
-export async function getVaults(stakingDispatch: Dispatch<StakingAction>, address: string, stakingState: StakingState, offset: number, limit: number): Promise<void> {
+export async function getVaults(
+	stakingDispatch: Dispatch<StakingAction>,
+	address: string,
+	stakingState: StakingState,
+	offset: number,
+	limit: number,
+	isIpad: boolean,
+): Promise<void> {
 	stakingDispatch({ type: 'SET_LOADING', payload: true })
 	try {
 		const pools = await fetchPools(stakingState, address, offset, limit)
 		const poolsWithBalances = populatePoolsBalances(pools, stakingState)
 		stakingDispatch({ type: 'SET_VAULTS', payload: poolsWithBalances })
+		if (!isIpad) {
+			stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
+		}
 	} catch (error) {
 		console.error(error)
 		stakingDispatch({ type: 'SET_VAULTS', payload: [] })
