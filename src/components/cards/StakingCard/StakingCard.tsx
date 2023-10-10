@@ -38,7 +38,7 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
 				<h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{truncate(vault.symbol, 25)}</h5>
 			</div>
 			{vault.stakedAmount ? (
-				<StakedAmountTag value={formatNumber(vault.stakedAmount, { decimals: vault.decimals, disableUnit: true })} />
+				<StakedAmountTag value={formatNumber(vault.stakedAmountUsd)} />
 			) : (
 				<UnderlyingTokens underlyingTokens={vault.input_tokens} isSelected={isSelected} />
 			)}
