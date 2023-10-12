@@ -33,7 +33,6 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 		}
 
 		console.log('transactionArgs: ', transactionArgs)
-
 		await signer.sendTransaction(transactionArgs)
 		manageDispatch({ type: 'SET_STATUS', payload: Status.success })
 	} catch (error) {
