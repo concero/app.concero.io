@@ -1,18 +1,6 @@
 import { Dispatch } from 'react'
-import { StakingAction, StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
+import { StakingAction, StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { fetchPools } from '../../../api/concero/fetchPools'
-
-export function populatePoolsBalances(pools: Vault[], stakingState: StakingState) {
-	const { balances } = stakingState
-	return pools.map((pool: Vault) => {
-		const stakedAmount = balances[pool.chainId]?.find(b => b.address === pool.widoAddress)?.balance
-		if (stakedAmount) {
-			console.log('found stakedAmount', stakedAmount)
-			pool.stakedAmount = stakedAmount
-		}
-		return pool
-	})
-}
 
 export async function getVaults(
 	stakingDispatch: Dispatch<StakingAction>,
@@ -25,8 +13,7 @@ export async function getVaults(
 	stakingDispatch({ type: 'SET_LOADING', payload: true })
 	try {
 		const pools = await fetchPools(stakingState, address, offset, limit)
-		const poolsWithBalances = populatePoolsBalances(pools, stakingState)
-		stakingDispatch({ type: 'SET_VAULTS', payload: poolsWithBalances })
+		stakingDispatch({ type: 'SET_VAULTS', payload: pools })
 		if (!isIpad) {
 			stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: pools[0] })
 		}

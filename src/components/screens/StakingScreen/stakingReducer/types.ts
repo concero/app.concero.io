@@ -81,7 +81,7 @@ export interface Vault {
 	_id: string
 	address?: string
 	address_normalized?: string
-	chain_id?: string
+	chain_id: string
 	decimals?: number
 	symbol?: string
 	name?: string
