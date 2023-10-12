@@ -40,9 +40,9 @@ async function handleFetchEnsoQuote(state: ManageState, dispatch: Dispatch<Manag
 	const response = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 	if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
-	let gas: null | string = null
+	let gasUsd: null | string = null
 	if (route.gas) {
-		gas = roundNumberByDecimals(new BigNumber(addingTokenDecimals(route.gas, response.decimals) as string).times(response.price).toString(), 4)
+		gasUsd = roundNumberByDecimals(new BigNumber(addingTokenDecimals(route.gas, response.decimals) as string).times(response.price).toString(), 4)
 	}
 
 	let toAmountUsd: null | string = null
@@ -52,7 +52,7 @@ async function handleFetchEnsoQuote(state: ManageState, dispatch: Dispatch<Manag
 		toAmountUsd = roundNumberByDecimals(new BigNumber(addingTokenDecimals(route.amountOut, toTokenPrice.decimals) as string).times(toTokenPrice.price).toString(), 4)
 	}
 
-	dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount, gas, toAmountUsd })
+	dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount, gasUsd, toAmountUsd })
 }
 
 async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {

@@ -36,6 +36,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 	}
 
 	function InfoCards() {
+		if (!stakedAmount) return null
 		return (
 			<div className={classNames.cardsContainer}>
 				{stakedAmount ? <InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} /> : null}

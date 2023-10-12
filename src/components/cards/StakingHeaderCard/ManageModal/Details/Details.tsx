@@ -28,7 +28,7 @@ export function Details({ manageState }: DetailsProps): ReactElement {
 					{manageState?.route?.gas ? (
 						<div className={classNames.tagInnerContainer}>
 							<IconGasStation color={'var(--color-text-secondary)'} size={16} />
-							<p className="body1">${manageState.route.gas}</p>
+							<p className="body1">${manageState.route.gasUsd}</p>
 						</div>
 					) : null}
 					{/* {manageState?.route?.expectedSlippage ? ( */}
