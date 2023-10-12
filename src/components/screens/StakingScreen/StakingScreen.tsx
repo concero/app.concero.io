@@ -6,15 +6,12 @@ import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
-import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
-import { RatioCard } from '../../cards/RatioCard/RatioCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
-import { getUserBalancesSortedByChain } from '../../../api/wido/getUserBalancesSortedByChain'
 
 const Header = memo(withErrorBoundary(StakingHeaderCard))
-const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
-const Ratio = memo(withErrorBoundary(RatioCard))
+// const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
+// const Ratio = memo(withErrorBoundary(RatioCard))
 const Details = memo(withErrorBoundary(StakingDetailsCard))
 
 export const StakingScreen: FC = () => {
@@ -26,9 +23,6 @@ export const StakingScreen: FC = () => {
 
 	useEffect(() => {
 		stakingDispatch({ type: 'SET_ADDRESS', payload: address })
-		getUserBalancesSortedByChain(address).then(balances => {
-			stakingDispatch({ type: 'SET_BALANCES', payload: balances })
-		})
 	}, [address])
 
 	const mobileVaultDetails = (
@@ -74,7 +68,7 @@ export const StakingScreen: FC = () => {
 				<Details stakingState={stakingState} />
 			</div>
 		)
-	}, [stakingState.selectedVault])
+	}, [stakingState.selectedVault, stakingState.address])
 
 	const desktopLayout = (
 		<div className={classNames.container}>

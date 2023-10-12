@@ -30,16 +30,12 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 			if (action.fromAmount.toString() !== state.from.amount.toString()) return state
 			return {
 				...state,
-				route: action.payload,
+				route: { ...action.payload, gasUsd: action.gasUsd as string },
 				status: Status.swap,
-				from: {
-					...state.from,
-					amount_usd: action.payload.fromTokenAmountUsdValue,
-				},
 				to: {
 					...state.to,
-					amount: addingTokenDecimals(Number(action.payload.toTokenAmount), Number(state.to.token.decimals)),
-					amount_usd: action.payload.toTokenAmountUsdValue,
+					amount: addingTokenDecimals(Number(action.payload.amountOut), state.to.token.decimals) as string,
+					...(action.toAmountUsd && { amount_usd: action.toAmountUsd }),
 				},
 			}
 		case 'CLEAR_ROUTE':
@@ -60,25 +56,40 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 				route: null,
 			}
 		case 'SET_STAKE_TYPE':
-			return { ...state, swapType: SwapType.stake, from: { ...state.to, amount: '' }, to: { ...state.from, amount: '' }, route: null }
+			return { ...state, swapType: SwapType.stake }
+		case 'SWITCH_TYPE':
+			return {
+				...state,
+				swapType: state.swapType === SwapType.stake ? SwapType.withdraw : SwapType.stake,
+				from: { ...state.to, amount: '' },
+				to: { ...state.from, amount: '' },
+				route: null,
+			}
 		case 'SET_TO_SELECTION':
 			return {
 				...state,
 				to: {
-					...state.to,
 					token: {
-						name: action.payload.name,
-						symbol: action.payload.widoSymbol,
-						logoURI: action.payload.logoURI,
-						address: action.payload.widoAddress,
-						decimals: action.payload.decimals,
+						name: action.payload.data.vault_token.name,
+						symbol: action.payload.data.vault_token.symbol,
+						address: action.payload.data.vault_token.address,
+						logoURI: action.payload.project.logoURI,
+						decimals: action.payload.data.vault_token.decimals,
 					},
 					chain: {
-						name: action.payload.chain,
-						symbol: action.payload.widoSymbol,
-						logoURI: action.payload.logoURI,
-						id: action.payload.chainId,
+						name: action.payload.chain.name,
+						symbol: action.payload.chain.symbol,
+						logoURI: action.payload.chain.logoURI,
+						id: action.payload.chain.id,
 					},
+				},
+			}
+		case 'SET_FROM_SELECTION':
+			return {
+				...state,
+				from: {
+					token: action.token,
+					chain: action.chain,
 				},
 			}
 		case 'RESET':

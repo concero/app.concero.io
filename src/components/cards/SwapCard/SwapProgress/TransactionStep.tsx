@@ -26,7 +26,7 @@ const renderTag = (status: string) => {
 			case 'success':
 				return <IconCheck size={iconSize} color={'var(--color-green-600'} />
 			case 'error':
-				return <IconX size={iconSize} color={'var(--color-red-600'} />
+				return <IconX size={iconSize} color={'var(--color-red-500'} />
 			default:
 				return <div style={{ width: iconSize, height: iconSize }} />
 		}

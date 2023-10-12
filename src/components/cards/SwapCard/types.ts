@@ -21,6 +21,7 @@ export interface Token {
 export interface Chain {
 	name: string
 	symbol: string
+	id: string
 }
 
 export interface RouteButtonProps {

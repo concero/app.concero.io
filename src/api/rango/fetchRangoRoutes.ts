@@ -1,5 +1,5 @@
 import { rangoClient } from './rangoClient'
-import { addingDecimals } from '../../utils/formatting'
+import { addingAmountDecimals } from '../../utils/formatting'
 import { standardizeRangoRoutes } from './standardizeRangoRoutes'
 import { config } from '../../constants/config'
 
@@ -23,7 +23,7 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
 			address: to.token.address === config.NULL_ADDRESS ? null : to.token.address,
 		},
 		slippage: settings.slippage_percent,
-		amount: addingDecimals(Number(from.amount), from.token.decimals),
+		amount: addingAmountDecimals(Number(from.amount), from.token.decimals),
 		// slippage: '0.1',
 		// slippage_percent: '0.1',
 		// slippage_limit: '0.1',

@@ -10,7 +10,7 @@ interface FetchDataParams {
 export async function getData({ selectedVault, dispatch }: FetchDataParams) {
 	dispatch({ type: 'SET_LOADING', payload: true })
 	try {
-		const response = await fetchStakingChartData(selectedVault.defiLlamaPoolId)
+		const response = await fetchStakingChartData(selectedVault.data.defiLlamaPoolId)
 		dispatch({ type: 'SET_RESPONSE', payload: response })
 	} catch (e) {
 		console.log(e)

@@ -1,11 +1,12 @@
 import { get } from '../client'
 import { Filter, StakingState } from '../../components/screens/StakingScreen/stakingReducer/types'
+import { Chain } from '../../components/cards/SwapCard/types'
 
 function getChainsQuery(filter: Filter) {
 	if (!filter) return ''
 	const { chains } = filter
 	if (!chains || chains.length === 0) return ''
-	return `chainId=${chains.map(chain => chain.id).join(',')}`
+	return `chain_id=${chains.map((chain: Chain) => chain.id).join(',')}`
 }
 
 function getApyQuery(filter: Filter) {
@@ -15,12 +16,20 @@ function getApyQuery(filter: Filter) {
 	return `apy=${apy}`
 }
 
-function getMyHoldingsQuery(stakingState: StakingState, address) {
+function getMyHoldingsQuery(stakingState: StakingState, address: string) {
 	if (!stakingState) return ''
 	const { filter } = stakingState
 	const { my_holdings } = filter
 	if (!my_holdings || !address) return ''
 	return `byHoldingsOfAddress=${address}`
+}
+
+function getMyPositionsQuery(stakingState: StakingState, address: string) {
+	if (!stakingState) return ''
+	const { filter } = stakingState
+	const { my_positions } = filter
+	if (!my_positions || !address) return ''
+	return `byPositionsOfAddress=${address}`
 }
 
 function getCategoryQuery(filter: Filter) {
@@ -37,9 +46,9 @@ export async function fetchPools(stakingState: StakingState, address: string, of
 		getChainsQuery(filter),
 		getApyQuery(filter),
 		getMyHoldingsQuery(stakingState, address),
+		getMyPositionsQuery(stakingState, address),
 		getCategoryQuery(filter),
-		'widoSupported=true',
-		'outlier=false',
+		'is_outlier=false',
 		`offset=${offset}`,
 		`limit=${limit}`,
 	]
