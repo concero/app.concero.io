@@ -75,8 +75,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 						placeholder={`0.0 ${selection.token.symbol}`}
 						value={selection.amount}
 						onChangeText={handleChangeText}
-						// isDisabled={direction === 'to'}
-						isDisabled={true}
+						isDisabled={direction === 'to'}
 					/>
 					<h5 className={selection.amount_usd === null || selection.amount_usd === undefined ? classNames.invisible : ''}>{`$${numberToFormatString(
 						Number(selection.amount_usd),
