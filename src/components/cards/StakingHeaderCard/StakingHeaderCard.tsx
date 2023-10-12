@@ -37,7 +37,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 	return (
 		<>
 			<div className={classNames.wrapper}>
-				{isIpad ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.staked : ''} onClick={handleGoBackButtonClick} /> : null}
+				{isIpad ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.backButton : ''} onClick={handleGoBackButtonClick} /> : null}
 				<div className={classNames.innerContainer}>
 					<div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
 						<div className={classNames.headerContainer}>

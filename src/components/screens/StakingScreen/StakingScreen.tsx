@@ -8,7 +8,6 @@ import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCa
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
-import { getUserBalancesSortedByChain } from '../../../api/enso/getUserBalancesSortedByChain'
 
 const Header = memo(withErrorBoundary(StakingHeaderCard))
 // const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
@@ -24,9 +23,6 @@ export const StakingScreen: FC = () => {
 
 	useEffect(() => {
 		stakingDispatch({ type: 'SET_ADDRESS', payload: address })
-		getUserBalancesSortedByChain(address).then(balances => {
-			stakingDispatch({ type: 'SET_BALANCES', payload: balances })
-		})
 	}, [address])
 
 	const mobileVaultDetails = (
