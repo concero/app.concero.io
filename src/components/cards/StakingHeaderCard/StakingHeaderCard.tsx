@@ -3,7 +3,7 @@ import { IconArrowsUpDown, IconChevronLeft } from '@tabler/icons-react'
 import classNames from './StakingHeaderCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { StakingAction, StakingState } from '../../screens/StakingScreen/stakingReducer/types'
-import { formatNumber } from '../../../utils/formatting'
+import { formatNumber, numberToFormatString } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
@@ -24,6 +24,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 		decimalPlaces: 5,
 		disableUnit: true,
 	})
+
 	const stakeButtonTitle = isConnected ? (stakedAmount ? 'Manage' : 'Stake') : 'Connect wallet to swap'
 
 	function handleManageButtonClick() {
@@ -32,6 +33,16 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 
 	function handleGoBackButtonClick() {
 		stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: null })
+	}
+
+	function InfoCards() {
+		return (
+			<div className={classNames.cardsContainer}>
+				{stakedAmount ? <InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} /> : null}
+				{stakingState.selectedVault?.stakedAmountUsd ? <InfoCard title={'Amount usd'} value={numberToFormatString(stakingState.selectedVault?.stakedAmountUsd, 4)} /> : null}
+				{stakedAmount ? <InfoCard title={'Pool share'} value={stakedAmount} /> : null}
+			</div>
+		)
 	}
 
 	return (
@@ -62,23 +73,11 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 								</div>
 							) : null}
 						</div>
-						{!isIpad && stakedAmount ? (
-							<div className={classNames.cardsContainer}>
-								<InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} />
-								<InfoCard title={'Earned'} value={stakedAmount} />
-								<InfoCard title={'Pool share'} value={stakedAmount} />
-							</div>
-						) : null}
+						{!isIpad ? <InfoCards /> : null}
 					</div>
 				</div>
 			</div>
-			{isIpad && stakedAmount ? (
-				<div className={classNames.cardsContainer}>
-					<InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} />
-					<InfoCard title={'Earned'} value={stakedAmount} />
-					<InfoCard title={'Pool share'} value={stakedAmount} />
-				</div>
-			) : null}
+			{isIpad ? <InfoCards /> : null}
 			{isIpad ? (
 				<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick} isDisabled={!stakingState.address}>
 					{stakeButtonTitle}
