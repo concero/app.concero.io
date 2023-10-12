@@ -3,7 +3,6 @@ import { IconArrowsUpDown, IconChevronLeft } from '@tabler/icons-react'
 import classNames from './StakingHeaderCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { StakingAction, StakingState } from '../../screens/StakingScreen/stakingReducer/types'
-import { formatNumber } from '../../../utils/formatting'
 import { Button } from '../../buttons/Button/Button'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
@@ -19,11 +18,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 	const [isManageModalOpen, setIsManageModalOpen] = useState(false)
 	const { selectedVault } = stakingState
 	const isConnected = !!stakingState.address
-	const stakedAmount = formatNumber(selectedVault?.stakedAmount, {
-		decimals: selectedVault?.decimals,
-		decimalPlaces: 5,
-		disableUnit: true,
-	})
+	const stakedAmount = selectedVault?.stakedAmount
 
 	const stakeButtonTitle = isConnected ? (stakedAmount ? 'Manage' : 'Stake') : 'Connect wallet to swap'
 
@@ -37,13 +32,13 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 
 	function InfoCards() {
 		if (!stakedAmount) return null
-		const poolShare = stakingState.selectedVault?.poolShare ? `${stakingState.selectedVault.poolShare} %` : 'unknown'
+		const poolShare = stakingState.selectedVault?.poolShare ? `${stakingState.selectedVault.poolShare}%` : 'unknown'
 		const amountUsd = stakingState.selectedVault?.stakedAmountUsd ? `$${stakingState.selectedVault?.stakedAmountUsd}` : 'unknown'
 		return (
 			<div className={classNames.cardsContainer}>
+				<InfoCard title={'Staked'} value={amountUsd} secondaryValue={'usd'}/>
 				<InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} />
-				<InfoCard title={'Amount usd'} value={amountUsd} />
-				<InfoCard title={'Pool share'} value={poolShare} />
+				<InfoCard title={'Pool share'} value={poolShare} secondaryValue={'%'}/>
 			</div>
 		)
 	}
