@@ -1,5 +1,4 @@
 import { Dispatch, useEffect, useRef, useState } from 'react'
-import { IconChevronDown } from '@tabler/icons-react'
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import { CryptoSymbol } from '../../../../tags/CryptoSymbol/CryptoSymbol'
@@ -76,7 +75,8 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 						placeholder={`0.0 ${selection.token.symbol}`}
 						value={selection.amount}
 						onChangeText={handleChangeText}
-						isDisabled={direction === 'to'}
+						// isDisabled={direction === 'to'}
+						isDisabled={true}
 					/>
 					<h5 className={selection.amount_usd === null || selection.amount_usd === undefined ? classNames.invisible : ''}>{`$${numberToFormatString(
 						Number(selection.amount_usd),
@@ -87,8 +87,9 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 					onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
 					size="sm"
 					variant="black"
-					rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
-					isDisabled={isSelectDisabled}
+					// rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
+					// isDisabled={isSelectDisabled}
+					isDisabled={true}
 				>
 					<CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
 				</Button>
