@@ -40,7 +40,7 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 	useEffect(() => {
 		setOffset(0)
 		getVaults(stakingDispatch, address as string, stakingState, 0, limit, isIpad)
-	}, [stakingState.filter])
+	}, [stakingState.filter, stakingState.balances])
 
 	return (
 		<div className={`card ${classNames.container}`}>

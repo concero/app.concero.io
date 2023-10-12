@@ -6,6 +6,7 @@ import { addingAmountDecimals, addingTokenDecimals, roundNumberByDecimals } from
 import { fetchTokenPrice } from '../../../../api/enso/fetchTokenPrice'
 import BigNumber from 'bignumber.js'
 import { fetchEnsoQuote } from '../../../../api/enso/fetchEnsoQuote'
+import { retryRequest } from '../../../../utils/retryRequest'
 
 interface IGetQuote {
 	manageState: ManageState
@@ -16,21 +17,25 @@ interface IGetQuote {
 function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void {
 	if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
 		manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
-	} else if (error.message.includes('FAILED_DEPENDENCY')) {
-		manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 	} else {
-		manageDispatch({ type: 'SET_STATUS', payload: Status.unknownError })
+		manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 	}
 }
 
 async function handleFetchEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
-	const route = await fetchEnsoQuote({
-		chainId: state.from.chain.id,
-		fromAddress: state.address,
-		amountIn: addingAmountDecimals(state.from.amount, state.from.token.decimals) as string,
-		tokenIn: state.from.token.address,
-		tokenOut: state.to.token.address,
-	})
+	const route = await retryRequest(
+		async () =>
+			await fetchEnsoQuote({
+				chainId: state.from.chain.id,
+				fromAddress: state.address,
+				amountIn: addingAmountDecimals(state.from.amount, state.from.token.decimals) as string,
+				tokenIn: state.from.token.address,
+				tokenOut: state.to.token.address,
+			}),
+		{
+			retryCount: 3,
+		},
+	)
 
 	const response = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 

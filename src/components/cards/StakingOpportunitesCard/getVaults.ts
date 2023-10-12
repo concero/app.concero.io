@@ -1,10 +1,10 @@
 import { Dispatch } from 'react'
-import { StakingAction, StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { StakingAction, StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { fetchPools } from '../../../api/concero/fetchPools'
 
-export function populatePoolsBalances(pools, stakingState) {
+export function populatePoolsBalances(pools: Vault[], stakingState: StakingState) {
 	const { balances } = stakingState
-	return pools.map(pool => {
+	return pools.map((pool: Vault) => {
 		const stakedAmount = balances[pool.chainId]?.find(b => b.address === pool.widoAddress)?.balance
 		if (stakedAmount) {
 			console.log('found stakedAmount', stakedAmount)

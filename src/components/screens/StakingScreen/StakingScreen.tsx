@@ -8,7 +8,7 @@ import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCa
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
-import { getUserBalancesSortedByChain } from '../../../api/wido/getUserBalancesSortedByChain'
+import { getUserBalancesSortedByChain } from '../../../api/enso/getUserBalancesSortedByChain'
 
 const Header = memo(withErrorBoundary(StakingHeaderCard))
 // const Highlights = memo(withErrorBoundary(StakingHighlightsCard))

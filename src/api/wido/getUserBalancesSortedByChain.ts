@@ -1,6 +1,6 @@
 import { getBalances } from 'wido'
 
-export const getUserBalancesSortedByChain = async (address: `0x${string}` | undefined | string) => {
+const getUserBalancesSortedByChain = async (address: `0x${string}` | undefined | string) => {
 	if (!address) return {}
 	const balances = await getBalances(address)
 	return balances.reduce((acc: any, balance: any) => {

@@ -31,3 +31,15 @@ export interface EnsoRouteResponse {
 	amountOut: string
 	tx: Transaction
 }
+
+export interface UserBalances {
+	token: string
+	amount: string
+	decimals: number
+}
+
+export interface IFetchBalances {
+	token: string
+	amount: string
+	decimals: number
+}
