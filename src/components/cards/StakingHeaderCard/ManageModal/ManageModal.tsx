@@ -14,6 +14,7 @@ import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
 import { addingTokenDecimals } from '../../../../utils/formatting'
+import { DataContextValue } from '../../../../hooks/DataContext/types'
 
 interface ManageModalProps {
 	isOpen: boolean
@@ -22,37 +23,43 @@ interface ManageModalProps {
 }
 
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
-	const { getChains, getTokens } = useContext(DataContext)
+	const { getChains, getTokens } = useContext<DataContextValue>(DataContext)
 	const [manageState, manageDispatch] = useManageReducer(stakingState)
 	const { modalType, swapType } = manageState
 	const typingTimeoutRef = useRef(null)
 
-	async function handleSelectChain(item: any) {
+	async function handleSelectChain(item: any): Promise<void> {
 		const direction = swapType === SwapType.stake ? 'from' : 'to'
 		const tokens = await getTokens({ chainId: item.id, offset: 0, limit: 15 })
 		manageDispatch({ type: 'SET_CHAIN', payload: item, tokens, direction })
 		manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
 	}
 
-	function handleSelectToken(item: any) {
+	function handleSelectToken(item: any): void {
 		const direction = swapType === SwapType.stake ? 'from' : 'to'
 		manageDispatch({ type: 'SET_TOKEN', payload: item, direction })
 		manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
 	}
 
-	function handleOnClose() {
-		manageDispatch({ type: 'RESET', payload: stakingState })
+	function handleOnClose(): void {
 		setIsOpen(false)
 	}
 
-	async function setWithdrawType() {
+	async function setWithdrawType(): Promise<void> {
 		if (manageState.swapType === SwapType.withdraw) return
-		const tokens = await getTokens({ chainId: manageState.to.chain.id, offset: 0, limit: 15 })
-		manageDispatch({ type: 'SET_WITHDRAW_TYPE', token: tokens[0] })
+		manageDispatch({ type: 'SWITCH_TYPE' })
 	}
 
-	function setStakeType() {
+	function setStakeType(): void {
 		if (manageState.swapType === SwapType.stake) return
+		manageDispatch({ type: 'SWITCH_TYPE' })
+	}
+
+	async function populateSelections(): Promise<void> {
+		const [chains, tokens] = await Promise.all([getChains({}), getTokens({ chainId: stakingState.selectedVault?.chain_id as string, offset: 0, limit: 15 })])
+		const chain = chains.find(chain => chain.id === stakingState.selectedVault?.chain_id)
+		manageDispatch({ type: 'SET_FROM_SELECTION', chain, token: tokens[0] })
+		manageDispatch({ type: 'SET_TO_SELECTION', payload: stakingState.selectedVault })
 		manageDispatch({ type: 'SET_STAKE_TYPE' })
 	}
 
@@ -64,14 +71,14 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 		if (swapType == SwapType.stake) {
 			getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
 		} else {
-			const balanceAmount = stakingState?.selectedVault?.stakedAmount ? addingTokenDecimals(stakingState.selectedVault.stakedAmount, stakingState.selectedVault.decimals) : null
+			const balanceAmount = stakingState?.selectedVault?.stakedAmount ? addingTokenDecimals(stakingState.selectedVault.stakedAmount, stakingState.selectedVault?.decimals) : null
 			manageDispatch({ type: 'SET_BALANCE', payload: balanceAmount })
 		}
 	}, [manageState.from.chain.id, manageState.from.token.address, manageState.from.token.symbol])
 
 	useEffect(() => {
-		manageDispatch({ type: 'SET_TO_SELECTION', payload: stakingState.selectedVault })
-	}, [stakingState.selectedVault])
+		populateSelections()
+	}, [stakingState.selectedVault?.address])
 
 	return (
 		<Modal title="Manage position" show={isOpen} setShow={handleOnClose}>

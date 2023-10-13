@@ -29,7 +29,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
 	const { theme } = useContext(ThemeContext)
 	const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
 	const { addNotification } = useContext(NotificationsContext)
-	const isDesktop = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('mobile')
 
 	const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
 
@@ -83,7 +83,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
 					<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
 						<CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
 					</Button>
-					{isDesktop ? (
+					{!isMobile ? (
 						<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
 							<Beacon isOn={chartType === 'tradingView'} />
 							<p className="body1">TradingView</p>

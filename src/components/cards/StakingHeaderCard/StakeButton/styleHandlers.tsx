@@ -1,7 +1,11 @@
 import { IconArrowsUpDown, IconCornerDownRight, IconWallet } from '@tabler/icons-react'
 import { Status } from '../ManageModal/constants'
 
-export const buttonIcons = {
+interface ButtonIcons {
+	[key: string]: JSX.Element | string
+}
+
+export const buttonIcons: ButtonIcons = {
 	[Status.swap]: <IconCornerDownRight size={18} />,
 	[Status.input]: '',
 	[Status.balanceError]: <IconWallet size={18} />,

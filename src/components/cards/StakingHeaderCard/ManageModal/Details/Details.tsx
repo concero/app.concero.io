@@ -1,16 +1,18 @@
-import { IconArrowWaveRightUp, IconGasStation } from '@tabler/icons-react'
+import { IconGasStation } from '@tabler/icons-react'
 import { ManageState } from '../useManageReducer/types'
 import classNames from './Details.module.pcss'
 import { Avatar } from '../../../../tags/Avatar/Avatar'
 import { Tag } from '../../../../tags/Tag/Tag'
-import { numberToFormatString } from '../../../../../utils/formatting'
+import { roundNumberByDecimals } from '../../../../../utils/formatting'
+import BigNumber from 'bignumber.js'
+import { ReactElement } from 'react'
 
 interface DetailsProps {
 	manageState: ManageState
 }
 
-export function Details({ manageState }: DetailsProps) {
-	const rate = numberToFormatString(parseFloat(manageState.to.amount) / parseFloat(manageState.from.amount))
+export function Details({ manageState }: DetailsProps): ReactElement {
+	const rate = roundNumberByDecimals(new BigNumber(manageState.to.amount).div(manageState.from.amount).toString())
 
 	return (
 		<div className={`${classNames.container} ${!manageState.route ? classNames.hidden : ''}`}>
@@ -23,18 +25,18 @@ export function Details({ manageState }: DetailsProps) {
 			</Tag>
 			<Tag color="grey">
 				<div className={classNames.tagContainer}>
-					{manageState?.route?.feeUsdValue ? (
+					{manageState?.route?.gas ? (
 						<div className={classNames.tagInnerContainer}>
 							<IconGasStation color={'var(--color-text-secondary)'} size={16} />
-							<p className="body1">${numberToFormatString(parseFloat(manageState?.route?.feeUsdValue), 4)}</p>
+							<p className="body1">${manageState.route.gasUsd}</p>
 						</div>
 					) : null}
-					{manageState?.route?.expectedSlippage ? (
-						<div className={classNames.tagInnerContainer}>
-							<IconArrowWaveRightUp size={16} color={'var(--color-text-secondary)'} />
-							<p className="body1">{numberToFormatString(parseFloat(manageState?.route?.expectedSlippage), 4)}%</p>
-						</div>
-					) : null}
+					{/* {manageState?.route?.expectedSlippage ? ( */}
+					{/* 	<div className={classNames.tagInnerContainer}> */}
+					{/* 		<IconArrowWaveRightUp size={16} color={'var(--color-text-secondary)'} /> */}
+					{/* 		<p className="body1">{numberToFormatString(parseFloat(manageState?.route.), 4)}%</p> */}
+					{/* 	</div> */}
+					{/* ) : null} */}
 				</div>
 			</Tag>
 		</div>

@@ -19,9 +19,23 @@ export enum Status {
 	balanceError = 6,
 	unknownError = 7,
 	noRoute = 8,
+	thisMakeTakeAWhile = 9,
 }
 
-export const buttonMessages = {
+interface ButtonMessages {
+	[Status.input]: string
+	[Status.swap]: string
+	[Status.loading]: string
+	[Status.success]: string
+	[Status.failure]: string
+	[Status.canceled]: string
+	[Status.balanceError]: string
+	[Status.unknownError]: string
+	[Status.noRoute]: string
+	[Status.thisMakeTakeAWhile]: string
+}
+
+export const buttonMessages: ButtonMessages = {
 	[Status.input]: 'Enter amount to swap',
 	[Status.swap]: 'Stake',
 	[Status.loading]: '',
@@ -31,4 +45,5 @@ export const buttonMessages = {
 	[Status.balanceError]: 'Insufficient balance',
 	[Status.unknownError]: 'Something went wrong.',
 	[Status.noRoute]: 'No route found',
+	[Status.thisMakeTakeAWhile]: 'Hang tight, this may take a while…',
 }

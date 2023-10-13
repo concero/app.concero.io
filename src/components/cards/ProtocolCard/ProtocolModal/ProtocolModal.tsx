@@ -32,36 +32,37 @@ function ChangeTag({ change, period }: { change: number; period: string }) {
 
 export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 	if (!protocol) return null
+	const { name, symbol, address, category, description, url, dailyFees, totalAllTime, dailySupplySideRevenue, audit_links, logoURI } = protocol
 
 	return (
 		<Modal show={show} setShow={setShow} title="Protocol">
 			<div className={classNames.container}>
 				<div className={classNames.headerContainer}>
-					<Avatar src={protocol.logoURI ?? null} size="lg" />
+					<Avatar src={logoURI ?? null} size="lg" />
 					<div>
 						<div className={classNames.titleContainer}>
-							<h4>{protocol.displayName ?? null}</h4>
-							<p className="body1">{protocol.symbol}</p>
+							<h4>{name}</h4>
+							<p className="body1">{symbol}</p>
 						</div>
-						<p className="body1">{protocol.description}</p>
+						<p className="body1">{description}</p>
 					</div>
 				</div>
 				<div className={classNames.tagsContainer}>
-					{protocol.category && <CategoryTag category={protocol.category} />}
-					{protocol.address && (
-						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyInBuffer(protocol.address)}>
+					{category && <CategoryTag category={category} />}
+					{address && (
+						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyInBuffer(address)}>
 							<p className="body1">Contract address</p>
 						</Tag>
 					)}
-					{protocol.url && (
-						<Tag color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(protocol.url, '_blank')}>
+					{url && (
+						<Tag color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(url, '_blank')}>
 							<p className="body1">Website</p>
 						</Tag>
 					)}
 				</div>
-				{protocol.totalAllTime && <TransactionTotal protocol={protocol} />}
-				{protocol.dailySupplySideRevenue && protocol.dailyFees && <DailyInfo protocol={protocol} />}
-				{protocol.audit_links.length > 0 && <AuditLinks auditLinks={protocol.audit_links} />}
+				{totalAllTime && <TransactionTotal protocol={protocol} />}
+				{dailySupplySideRevenue && dailyFees && <DailyInfo protocol={protocol} />}
+				{audit_links.length > 0 && <AuditLinks auditLinks={audit_links} />}
 			</div>
 		</Modal>
 	)

@@ -12,7 +12,7 @@ import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
 	const stepsContainerRef = useRef(null)
-	const isDesktop = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('mobile')
 	const [isRoutesCollapsed, setIsRoutesCollapsed] = useState(true)
 	const [springProps, setSpringProps] = useSpring(() => ({ height: 'auto' }))
 
@@ -33,7 +33,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 		<Card className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`} onClick={() => onClick(route.id)}>
 			<div className={classNames.cardHeader}>
 				<div className={classNames.cardHeaderLeftSide}>
-					{isDesktop ? <h4>Net value:</h4> : null}
+					{!isMobile ? <h4>Net value:</h4> : null}
 					<h3>{`$${numberToFormatString(Number(route.to.token.amount_usd), 2, true)}`}</h3>
 					<h3 className={classNames.subtitle}>{`${roundNumberByDecimals(Number(route.to.token.amount), 4)} ${route.to.token.symbol}`}</h3>
 				</div>

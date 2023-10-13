@@ -1,5 +1,4 @@
 import { Dispatch, useEffect, useRef, useState } from 'react'
-import { IconChevronDown } from '@tabler/icons-react'
 import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import { CryptoSymbol } from '../../../../tags/CryptoSymbol/CryptoSymbol'
@@ -24,11 +23,15 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	const [currentUsdPrice, setCurrentUsdPrice] = useState<number | null>(null)
 	const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 
+	function setAmountUsd(value: string): void {
+		dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
+	}
+
 	function handleChangeText(value: string) {
 		if (value && !isFloatInput(value)) return
 		dispatch({ type: 'SET_AMOUNT', amount: value, direction })
 		if (swapType === SwapType.withdraw) return
-		dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
+		setAmountUsd(value)
 	}
 
 	function handleChainButtonClick() {
@@ -40,21 +43,23 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	}
 
 	useEffect(() => {
-		if (direction === 'from' && swapType === SwapType.stake) getCurrentPriceToken(selection, setCurrentUsdPrice)
+		if (isSelectDisabled) {
+			setCurrentUsdPrice(null)
+			return
+		}
+		getCurrentPriceToken(selection, setCurrentUsdPrice)
 	}, [selection.chain.id, selection.token.address])
+
+	useEffect(() => {
+		setAmountUsd(selection.amount)
+	}, [currentUsdPrice])
 
 	return (
 		<div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
 			<div className={classNames.tokenRow}>
 				<div className={classNames.tokenRowHeader}>
 					<p>{capitalize(direction)}</p>
-					<Button
-						onClick={handleChainButtonClick}
-						size="sm"
-						variant="black"
-						rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
-						isDisabled={isSelectDisabled}
-					>
+					<Button onClick={handleChainButtonClick} size="sm" variant="black" isDisabled={true}>
 						<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
 					</Button>
 				</div>
@@ -81,8 +86,9 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 					onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
 					size="sm"
 					variant="black"
-					rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
-					isDisabled={isSelectDisabled}
+					// rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
+					// isDisabled={isSelectDisabled}
+					isDisabled={true}
 				>
 					<CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
 				</Button>

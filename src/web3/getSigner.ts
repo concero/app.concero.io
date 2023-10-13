@@ -1,10 +1,12 @@
 import { createWalletClient, custom } from 'viem'
 import { providers } from 'ethers'
-import { SwitchNetworkResult } from '@wagmi/core'
+import { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
 
-export async function getSigner(requiredChainId: number, switchNetworkAsync: Promise<SwitchNetworkResult>) {
-	if (parseInt(window.ethereum.chainId) !== parseInt(requiredChainId) && switchNetworkAsync) {
-		await switchNetworkAsync(Number(requiredChainId))
+type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<SwitchNetworkResult>
+
+export async function getSigner(requiredChainId: number, switchNetworkAsync: SwitchChainNetwork) {
+	if (Number(window.ethereum.chainId) !== requiredChainId && switchNetworkAsync) {
+		await switchNetworkAsync(requiredChainId)
 	}
 	const client0 = createWalletClient({
 		transport: custom(window.ethereum),

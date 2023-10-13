@@ -9,8 +9,8 @@ export function getSelectedStyle(isSelected: boolean) {
 }
 
 export function getAllTagStyle(filter) {
-	const { all, my_holdings, chains, compound, apy } = filter
-	if (my_holdings || chains.length > 0 || compound || apy) return 'subtle'
+	const { my_holdings, my_positions, chains, compound, apy } = filter
+	if (my_holdings || my_positions || chains.length > 0 || compound || apy) return 'subtle'
 	return 'primary'
 }
 

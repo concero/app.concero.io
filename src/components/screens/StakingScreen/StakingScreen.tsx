@@ -6,41 +6,54 @@ import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'
 import { StakingHeaderCard } from '../../cards/StakingHeaderCard/StakingHeaderCard'
 import { StakingChartCard } from '../../cards/StakingChartCard/StakingChartCard'
-import { StakingHighlightsCard } from '../../cards/StakingHighlightsCard/StakingHighlightsCard'
-import { RatioCard } from '../../cards/RatioCard/RatioCard'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { StakingDetailsCard } from '../../cards/StakingDetailsCard/StakingDetailsCard'
-import { getUserBalancesSortedByChain } from '../../../api/wido/getUserBalancesSortedByChain'
 
 const Header = memo(withErrorBoundary(StakingHeaderCard))
-const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
-const Ratio = memo(withErrorBoundary(RatioCard))
+// const Highlights = memo(withErrorBoundary(StakingHighlightsCard))
+// const Ratio = memo(withErrorBoundary(RatioCard))
 const Details = memo(withErrorBoundary(StakingDetailsCard))
 
 export const StakingScreen: FC = () => {
 	const [stakingState, stakingDispatch] = useStakingReducer()
 	const { address } = useAccount()
-	const isDesktop = useMediaQuery('mobile') // Adjust this as per your specific media query needs
+	const isMobile = useMediaQuery('mobile')
+	const isIpad = useMediaQuery('ipad')
 	const Chart = memo(withErrorBoundary(StakingChartCard))
 
 	useEffect(() => {
 		stakingDispatch({ type: 'SET_ADDRESS', payload: address })
-		getUserBalancesSortedByChain(address).then(balances => {
-			stakingDispatch({ type: 'SET_BALANCES', payload: balances })
-		})
 	}, [address])
+
+	const mobileVaultDetails = (
+		<div className={classNames.stacksContainer}>
+			<div className={classNames.mainCardStack}>
+				<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
+				<Chart selectedVault={stakingState.selectedVault} />
+			</div>
+			<Details stakingState={stakingState} />
+		</div>
+	)
 
 	const mobileLayout = (
 		<div className={classNames.container}>
-			<StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />
-			{stakingState.selectedVault ? (
-				<div className={classNames.mainCardStack}>
-					<Chart stakingState={stakingState} />
-					<Highlights stakingState={stakingState} />
-					<Ratio />
-					<Details />
-				</div>
-			) : null}
+			{stakingState.selectedVault ? mobileVaultDetails : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
+		</div>
+	)
+
+	const ipadVaultDetails = (
+		<div className={classNames.stacksContainer}>
+			<div className={classNames.mainCardStack}>
+				<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
+			</div>
+			<Details stakingState={stakingState} />
+		</div>
+	)
+
+	const ipadLayout = (
+		<div className={classNames.container}>
+			{stakingState.selectedVault ? ipadVaultDetails : <StakingOpportunitiesCard stakingState={stakingState} stakingDispatch={stakingDispatch} />}
+			{stakingState.selectedVault ? <Chart selectedVault={stakingState.selectedVault} /> : null}
 		</div>
 	)
 
@@ -49,13 +62,13 @@ export const StakingScreen: FC = () => {
 		return (
 			<div className={classNames.stacksContainer}>
 				<div className={classNames.mainCardStack}>
-					<Header stakingState={stakingState} />
+					<Header stakingState={stakingState} stakingDispatch={stakingDispatch} />
 					<Chart selectedVault={stakingState.selectedVault} />
 				</div>
 				<Details stakingState={stakingState} />
 			</div>
 		)
-	}, [stakingState.selectedVault])
+	}, [stakingState.selectedVault, stakingState.address])
 
 	const desktopLayout = (
 		<div className={classNames.container}>
@@ -64,5 +77,5 @@ export const StakingScreen: FC = () => {
 		</div>
 	)
 
-	return <div style={{ width: '100%', height: '100%' }}>{isDesktop ? desktopLayout : mobileLayout}</div>
+	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : isIpad ? ipadLayout : desktopLayout}</div>
 }

@@ -6,11 +6,14 @@ import { handleExecuteSwap } from '../ManageModal/handleExecuteSwap'
 import { ManageState } from '../ManageModal/useManageReducer/types'
 import { buttonMessages, Status } from '../ManageModal/constants'
 import { buttonClassNames, buttonIcons } from './styleHandlers'
+import { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
 
 interface StakeButtonProps {
 	manageState: ManageState
 	manageDispatch: Dispatch<any>
 }
+
+type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<SwitchNetworkResult>
 
 export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 	const { switchNetworkAsync } = useSwitchNetwork()
@@ -19,14 +22,14 @@ export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 
 	return (
 		<Button
-			leftIcon={buttonIcons[status]}
+			leftIcon={buttonIcons[status as Status]}
 			size="lg"
 			isLoading={manageState.isLoading}
 			className={classNames[buttonClassNames(status)]}
-			onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync)}
+			onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync as SwitchChainNetwork)}
 			isDisabled={isDisabled}
 		>
-			{buttonMessages[status]}
+			{buttonMessages[status as Status]}
 		</Button>
 	)
 }
