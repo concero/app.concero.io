@@ -7,6 +7,7 @@ import { TransactionResponse } from '@ethersproject/abstract-provider'
 import { Dispatch } from 'react'
 import { SwitchChainHookType } from '../SwapInput/types'
 import { GetChainByProviderSymbolI } from '../../../../hooks/DataContext/types'
+import { SwapAction } from '../swapReducer/types'
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -26,7 +27,7 @@ interface CreateTransactionProps {
 	from: any
 	settings: any
 	switchChainHook: SwitchChainHookType
-	swapDispatch: Dispatch<any>
+	swapDispatch: Dispatch<SwapAction>
 	getChainByProviderSymbol: GetChainByProviderSymbolI
 }
 
@@ -75,7 +76,7 @@ interface ExecuteRangoRouteProps {
 	address: string
 	from: any
 	settings: any
-	swapDispatch: Dispatch<any>
+	swapDispatch: Dispatch<SwapAction>
 	switchChainHook: SwitchChainHookType
 	getChainByProviderSymbol: GetChainByProviderSymbolI
 }
