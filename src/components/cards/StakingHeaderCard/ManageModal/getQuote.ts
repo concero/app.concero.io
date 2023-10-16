@@ -15,8 +15,11 @@ interface IGetQuote {
 }
 
 function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void {
-	if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
-	else manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
+	if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
+		manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
+	} else {
+		manageDispatch({ type: 'SET_STATUS', payload: Status.noRoute })
+	}
 }
 
 async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
@@ -35,7 +38,11 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 	const response = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 	if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 	let gasUsd: null | string = null
-	if (route.gas) gasUsd = roundNumberByDecimals(new BigNumber(addingTokenDecimals(route.gas, response.decimals) as string).times(response.price).toString(), 4)
+	if (route.gas) {
+		const humanReadableGas = addingTokenDecimals(route.gas, response.decimals) as string
+		gasUsd = roundNumberByDecimals(new BigNumber(humanReadableGas).times(response.price).toString(), 4)
+	}
+
 	let toAmountUsd: null | string = null
 
 	if (state.swapType === SwapType.withdraw) {

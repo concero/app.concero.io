@@ -18,7 +18,7 @@ type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<S
 export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 	const { switchNetworkAsync } = useSwitchNetwork()
 	const { status } = manageState
-	const isDisabled = status !== Status.swap
+	const isDisabled = status !== Status.stake && status !== Status.withdraw
 
 	return (
 		<Button

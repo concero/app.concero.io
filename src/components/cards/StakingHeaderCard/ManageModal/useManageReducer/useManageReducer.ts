@@ -31,7 +31,7 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 			return {
 				...state,
 				route: { ...action.payload, gasUsd: action.gasUsd as string },
-				status: Status.swap,
+				status: state.swapType === SwapType.stake ? Status.stake : Status.withdraw,
 				to: {
 					...state.to,
 					amount: addingTokenDecimals(Number(action.payload.amountOut), state.to.token.decimals) as string,
