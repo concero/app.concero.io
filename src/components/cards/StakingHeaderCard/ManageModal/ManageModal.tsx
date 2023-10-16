@@ -13,7 +13,6 @@ import { Details } from './Details/Details'
 import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
-import { addingTokenDecimals } from '../../../../utils/formatting'
 import { DataContextValue } from '../../../../hooks/DataContext/types'
 
 interface ManageModalProps {
@@ -71,7 +70,8 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 		if (swapType == SwapType.stake) {
 			getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
 		} else {
-			const balanceAmount = stakingState?.selectedVault?.stakedAmount ? addingTokenDecimals(stakingState.selectedVault.stakedAmount, stakingState.selectedVault?.decimals) : null
+			const balanceAmount = stakingState?.selectedVault?.stakedAmount ?? null
+			console.log('withdraw amountt: ', balanceAmount)
 			manageDispatch({ type: 'SET_BALANCE', payload: balanceAmount })
 		}
 	}, [manageState.from.chain.id, manageState.from.token.address, manageState.from.token.symbol])
