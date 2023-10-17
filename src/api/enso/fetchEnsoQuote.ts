@@ -33,6 +33,8 @@ export async function fetchEnsoQuote({ chainId, fromAddress, amountIn, tokenIn, 
 
 	const url = `https://api.enso.finance/api/v1/shortcuts/quote`
 
+	console.log('fetchEnsoQuote', chainId, fromAddress, amountIn, tokenInAddress, tokenOutAddress)
+
 	const params = {
 		chainId,
 		fromAddress,

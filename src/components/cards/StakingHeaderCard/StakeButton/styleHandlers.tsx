@@ -13,7 +13,7 @@ export const buttonIcons: ButtonIcons = {
 	[Status.success]: <IconArrowsUpDown size={18} />,
 }
 
-export function buttonClassNames(status) {
+export function buttonClassNames(status: Status) {
 	switch (status) {
 		case Status.input || Status.loading || Status.noRoute:
 			return 'disabled'
