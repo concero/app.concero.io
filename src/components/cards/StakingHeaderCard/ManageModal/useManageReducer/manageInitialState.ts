@@ -59,5 +59,6 @@ export const manageInitialState = (stakingState: StakingState) => {
 		isLoading: false,
 		status: Status.input,
 		balance: null,
+		steps: [],
 	}
 }

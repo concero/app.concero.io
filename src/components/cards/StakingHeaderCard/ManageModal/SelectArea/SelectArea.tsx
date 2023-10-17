@@ -8,6 +8,7 @@ import { ModalType, SwapType } from '../constants'
 import { isFloatInput } from '../../../../../utils/validation'
 import { ManageAction } from '../useManageReducer/types'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
+import { IconChevronDown } from '@tabler/icons-react'
 
 interface SelectAreaProps {
 	selection: any
@@ -86,9 +87,9 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 					onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
 					size="sm"
 					variant="black"
-					// rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
-					// isDisabled={isSelectDisabled}
-					isDisabled={true}
+					rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
+					isDisabled={isSelectDisabled}
+					// isDisabled={true}
 				>
 					<CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
 				</Button>

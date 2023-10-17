@@ -2,7 +2,7 @@ import { Dispatch } from 'react'
 import { useSwitchNetwork } from 'wagmi'
 import { Button } from '../../../buttons/Button/Button'
 import classNames from './StakeButton.module.pcss'
-import { handleExecuteSwap } from '../ManageModal/handleExecuteSwap'
+import { handleExecuteSwap } from '../ManageModal/swapExecution/handleExecuteSwap'
 import { ManageState } from '../ManageModal/useManageReducer/types'
 import { buttonMessages, Status } from '../ManageModal/constants'
 import { buttonClassNames, buttonIcons } from './styleHandlers'
@@ -18,7 +18,7 @@ type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<S
 export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 	const { switchNetworkAsync } = useSwitchNetwork()
 	const { status } = manageState
-	const isDisabled = status !== Status.swap
+	const isDisabled = status !== Status.stake && status !== Status.withdraw
 
 	return (
 		<Button

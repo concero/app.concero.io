@@ -22,7 +22,7 @@ function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void
 	}
 }
 
-async function handleFetchEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
+async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
 	const route = await retryRequest(
 		async () =>
 			await fetchEnsoQuote({
@@ -32,26 +32,24 @@ async function handleFetchEnsoQuote(state: ManageState, dispatch: Dispatch<Manag
 				tokenIn: state.from.token.address,
 				tokenOut: state.to.token.address,
 			}),
-		{
-			retryCount: 3,
-		},
+		{ retryCount: 3 },
 	)
 
 	const response = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
-
 	if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 	let gasUsd: null | string = null
 	if (route.gas) {
-		gasUsd = roundNumberByDecimals(new BigNumber(addingTokenDecimals(route.gas, response.decimals) as string).times(response.price).toString(), 4)
+		const humanReadableGas = addingTokenDecimals(route.gas, response.decimals) as string
+		gasUsd = roundNumberByDecimals(new BigNumber(humanReadableGas).times(response.price).toString(), 4)
 	}
 
 	let toAmountUsd: null | string = null
 
 	if (state.swapType === SwapType.withdraw) {
 		const toTokenPrice = await fetchTokenPrice(state.from.chain.id, state.to.token.address)
-		toAmountUsd = roundNumberByDecimals(new BigNumber(addingTokenDecimals(route.amountOut, toTokenPrice.decimals) as string).times(toTokenPrice.price).toString(), 4)
+		const humanReadableAmount = addingTokenDecimals(route.amountOut, toTokenPrice.decimals) as string
+		toAmountUsd = roundNumberByDecimals(new BigNumber(humanReadableAmount).times(toTokenPrice.price).toString(), 4)
 	}
-
 	dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount, gasUsd, toAmountUsd })
 }
 
@@ -59,7 +57,7 @@ async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>):
 	dispatch({ type: 'SET_LOADING', payload: true })
 	dispatch({ type: 'SET_STATUS', payload: Status.loading })
 	try {
-		await handleFetchEnsoQuote(state, dispatch)
+		await getEnsoQuote(state, dispatch)
 	} catch (error) {
 		console.log(error)
 		handleError(error as Error, dispatch)

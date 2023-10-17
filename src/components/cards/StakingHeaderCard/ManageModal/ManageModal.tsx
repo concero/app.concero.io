@@ -13,8 +13,9 @@ import { Details } from './Details/Details'
 import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
-import { addingTokenDecimals } from '../../../../utils/formatting'
 import { DataContextValue } from '../../../../hooks/DataContext/types'
+import { SwapProgress } from '../../../layout/SwapProgress/SwapProgress'
+import { clearRoute } from './clearRoute'
 
 interface ManageModalProps {
 	isOpen: boolean
@@ -63,6 +64,10 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 		manageDispatch({ type: 'SET_STAKE_TYPE' })
 	}
 
+	function handleGoBack(): void {
+		clearRoute(manageDispatch, typingTimeoutRef)
+	}
+
 	useEffect(() => {
 		getQuote({ manageState, manageDispatch, typingTimeoutRef })
 	}, [manageState.from.amount, manageState.from.chain.id, manageState.to.chain.id, manageState.from.token.address, manageState.to.token.address])
@@ -71,7 +76,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 		if (swapType == SwapType.stake) {
 			getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
 		} else {
-			const balanceAmount = stakingState?.selectedVault?.stakedAmount ? addingTokenDecimals(stakingState.selectedVault.stakedAmount, stakingState.selectedVault?.decimals) : null
+			const balanceAmount = stakingState?.selectedVault?.stakedAmount.toString() ?? null
 			manageDispatch({ type: 'SET_BALANCE', payload: balanceAmount })
 		}
 	}, [manageState.from.chain.id, manageState.from.token.address, manageState.from.token.symbol])
@@ -100,8 +105,10 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 					</div>
 				) : modalType === ModalType.chains ? (
 					<InnerSelectModal RenderItem={ListEntityButton} getItems={getChains} onSelect={handleSelectChain} />
-				) : (
+				) : modalType === ModalType.tokens ? (
 					<InnerSelectModal RenderItem={ListEntityButton} getItems={getTokens} onSelect={handleSelectToken} chainId={manageState.from.chain.id} />
+				) : (
+					<SwapProgress swapState={manageState} handleGoBack={handleGoBack} />
 				)}
 			</div>
 		</Modal>

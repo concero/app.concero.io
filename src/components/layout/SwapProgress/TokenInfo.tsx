@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import classNames from './SwapProgress.module.pcss'
-import { Avatar } from '../../../tags/Avatar/Avatar'
+import { Avatar } from '../../tags/Avatar/Avatar'
 
 export const TokenInfo: FC = ({ direction }) => {
 	const { token, chain, amount } = direction

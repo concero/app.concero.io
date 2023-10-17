@@ -6,17 +6,20 @@ interface ButtonIcons {
 }
 
 export const buttonIcons: ButtonIcons = {
-	[Status.swap]: <IconCornerDownRight size={18} />,
+	[Status.stake]: <IconCornerDownRight size={18} />,
+	[Status.withdraw]: <IconCornerDownRight size={18} />,
 	[Status.input]: '',
 	[Status.balanceError]: <IconWallet size={18} />,
 	[Status.success]: <IconArrowsUpDown size={18} />,
 }
 
-export function buttonClassNames(status) {
+export function buttonClassNames(status: Status) {
 	switch (status) {
 		case Status.input || Status.loading || Status.noRoute:
 			return 'disabled'
-		case Status.swap:
+		case Status.stake:
+			return ''
+		case Status.withdraw:
 			return ''
 		case Status.balanceError:
 			return 'wrong'
