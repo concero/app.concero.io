@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { Status } from './constants'
+import { ModalType, Status } from './constants'
 
 export function clearRoute(manageDispatch: Dispatch<any>, typingTimout: React.MutableRefObject<any>) {
 	if (typingTimout.current) clearTimeout(typingTimout.current)
@@ -10,4 +10,6 @@ export function clearRoute(manageDispatch: Dispatch<any>, typingTimout: React.Mu
 	manageDispatch({ type: 'SET_AMOUNT_USD', direction: 'to', amount: null })
 	manageDispatch({ type: 'SET_LOADING', payload: false })
 	manageDispatch({ type: 'SET_STATUS', payload: Status.input })
+	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.input })
+	manageDispatch({ type: 'SET_STEPS', steps: [] })
 }

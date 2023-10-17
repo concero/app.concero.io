@@ -40,6 +40,13 @@ interface Chain {
 // 	value: string
 // }
 
+export interface IStep {
+	title: string
+	body?: string
+	status: 'pending' | 'success' | 'error' | 'await'
+	txLink?: string
+}
+
 export interface ManageState {
 	from: {
 		amount: string
@@ -60,8 +67,9 @@ export interface ManageState {
 	swapType: number
 	address: string
 	isLoading: boolean
-	status: number
+	status: Status
 	balance: string | null
+	steps: IStep[]
 }
 
 export type ManageAction =
@@ -84,3 +92,5 @@ export type ManageAction =
 	| { type: 'SET_WITHDRAW_TYPE'; token: Token }
 	| { type: 'SET_STAKE_TYPE' }
 	| { type: 'SWITCH_TYPE' }
+	| { type: 'PUSH_STEP'; step: IStep }
+	| { type: 'SET_STEPS'; steps: [] }
