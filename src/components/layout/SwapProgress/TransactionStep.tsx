@@ -24,7 +24,7 @@ const renderTag = (status: string) => {
 			case 'await':
 				return <Ping size={iconSize} color="var(--color-primary-500)" />
 			case 'success':
-				return <IconCheck size={iconSize} color={'var(--color-green-600'} />
+				return <IconCheck size={iconSize} color={'var(--color-green-500'} />
 			case 'error':
 				return <IconX size={iconSize} color={'var(--color-red-500'} />
 			default:
