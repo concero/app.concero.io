@@ -1,6 +1,6 @@
 import { Dispatch } from 'react'
 import { ManageAction, ManageState } from '../useManageReducer/types'
-import { Status } from '../constants'
+import { ModalType, Status } from '../constants'
 import { getSigner } from '../../../../../web3/getSigner'
 import { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
 import BigNumber from 'bignumber.js'
@@ -14,7 +14,8 @@ type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<S
 
 export async function handleExecuteSwap(manageState: ManageState, manageDispatch: Dispatch<ManageAction>, switchNetworkAsync: SwitchChainNetwork): Promise<void> {
 	manageDispatch({ type: 'SET_LOADING', payload: true })
-	manageDispatch({ type: 'SET_STATUS', payload: Status.loading })
+	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.progress })
+	manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
 
 	if (!manageState.route) return
 	const { from, address, to } = manageState
@@ -22,13 +23,14 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 	try {
 		const signer = await getSigner(Number(from.chain.id), switchNetworkAsync)
 		const approvalTx = await fetchApprovalTx(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals) as string)
-
 		const isApproveNeeded = await checkIsApproveNeeded(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals) as string)
 
 		if (isApproveNeeded) {
+			manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
 			await approveToken({ signer, tokenAddress: from.token.address, receiverAddress: approvalTx.spender, fromAmount: approvalTx.amount })
 		}
 
+		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
 		const route = await retryRequest(
 			async () =>
 				await fetchEnsoRoute({
@@ -46,9 +48,12 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 			gasLimit: BigNumber(manageState.route.gas).times(1.8).toFixed(0).toString(),
 		}
 
-		console.log('transactionArgs', transactionArgs)
+		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
 		await signer.sendTransaction(transactionArgs)
+
 		manageDispatch({ type: 'SET_STATUS', payload: Status.success })
+		manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.success })
+		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Swap started successfully!', status: 'success' } })
 	} catch (error) {
 		console.log(error)
 		handleError(error as Error, manageDispatch)

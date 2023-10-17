@@ -1,29 +1,31 @@
 import { Dispatch } from 'react'
 import { ManageAction } from '../useManageReducer/types'
-import { Status } from '../constants'
+import { ModalType, Status } from '../constants'
 import { Contract } from 'ethers'
 import { get } from '../../../../../api/client'
 import BigNumber from 'bignumber.js'
+import { JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider'
 
 export function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void {
+	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.failure })
+	manageDispatch({ type: 'SET_STATUS', payload: Status.failure })
 	if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
-		manageDispatch({ type: 'SET_STATUS', payload: Status.balanceError })
+		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Insufficient balance', status: 'error' } })
 	} else if (error.message.toLowerCase().includes('user rejected')) {
-		manageDispatch({ type: 'SET_STATUS', payload: Status.canceled })
+		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Cancelled by user', body: 'Transaction was cancelled', status: 'error' } })
 	} else {
-		manageDispatch({ type: 'SET_STATUS', payload: Status.unknownError })
+		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Something went wrong.', status: 'error' } })
 	}
 }
 
 interface IApproveToken {
-	signer: any
+	signer: JsonRpcSigner
 	tokenAddress: string
 	receiverAddress: string
 	fromAmount: string
 }
 
 export async function approveToken({ signer, tokenAddress, receiverAddress, fromAmount }: IApproveToken): Promise<void> {
-	console.log('approveToken', receiverAddress, tokenAddress, fromAmount)
 	const erc20 = new Contract(tokenAddress, ['function approve(address,uint256)'], signer)
 	return (await erc20.approve(receiverAddress, fromAmount)).wait()
 }

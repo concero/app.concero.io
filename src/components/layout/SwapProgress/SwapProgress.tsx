@@ -3,24 +3,18 @@ import { IconArrowLeft } from '@tabler/icons-react'
 import classNames from './SwapProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
 import { TransactionStep } from './TransactionStep'
-import { Button } from '../../../buttons/Button/Button'
+import { Button } from '../../buttons/Button/Button'
+import { IStep } from '../../cards/StakingHeaderCard/ManageModal/useManageReducer/types'
+import { colors } from '../../../constants/colors'
 
 interface SwapProgressProps {
 	swapState: any
-	swapDispatch: any
+	handleGoBack: () => void
 }
 
-export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch }) => {
+export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack }) => {
 	const { from, to, steps, status } = swapState
-	const handleGoBack = () => {
-		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'from' })
-		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
-		swapDispatch({ type: 'CLEAR_ROUTES' })
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'input' })
-		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'pending' })
-		swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
-	}
-
+	console.log('status', status)
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.tokensInfoContainer}>
@@ -28,12 +22,12 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch })
 				<TokenInfo direction={to} />
 			</div>
 			<div className={classNames.progressContainer}>
-				{steps.map((step, index) => (
+				{steps.map((step: IStep, index: number) => (
 					<TransactionStep key={index.toString()} step={step} />
 				))}
 			</div>
 			{status === 'failure' || status === 'success' ? (
-				<Button leftIcon={<IconArrowLeft size={20} color="var(--color-primary-300)" />} onClick={() => handleGoBack()} variant="secondary">
+				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
 					Go back
 				</Button>
 			) : null}

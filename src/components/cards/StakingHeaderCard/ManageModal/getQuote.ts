@@ -23,7 +23,6 @@ function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void
 }
 
 async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
-	console.log(state.from.amount, state.from.token.decimals)
 	const route = await retryRequest(
 		async () =>
 			await fetchEnsoQuote({
@@ -51,7 +50,6 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 		const humanReadableAmount = addingTokenDecimals(route.amountOut, toTokenPrice.decimals) as string
 		toAmountUsd = roundNumberByDecimals(new BigNumber(humanReadableAmount).times(toTokenPrice.price).toString(), 4)
 	}
-	console.log('route: ', route)
 	dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount, gasUsd, toAmountUsd })
 }
 

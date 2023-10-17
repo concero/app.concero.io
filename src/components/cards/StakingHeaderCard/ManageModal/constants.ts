@@ -2,6 +2,9 @@ export enum ModalType {
 	input = 0,
 	tokens = 1,
 	chains = 2,
+	progress = 3,
+	success = 4,
+	failure = 5,
 }
 
 export enum SwapType {
@@ -13,8 +16,9 @@ export enum Status {
 	input = 0,
 	stake = 1,
 	loading = 2,
-	success = 3,
-	failure = 4,
+	success = 'success',
+	failure = 'failure',
+	progress = 'progress',
 	canceled = 5,
 	balanceError = 6,
 	unknownError = 7,

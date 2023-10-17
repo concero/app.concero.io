@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { Ping } from '@uiball/loaders'
 import { IconCheck, IconExternalLink, IconX } from '@tabler/icons-react'
 import classNames from './SwapProgress.module.pcss'
-import { LoadingAnimation } from '../../../layout/LoadingAnimation/LoadingAnimation'
-import { Button } from '../../../buttons/Button/Button'
+import { LoadingAnimation } from '../LoadingAnimation/LoadingAnimation'
+import { Button } from '../../buttons/Button/Button'
 
 interface stageProps {
 	step: {

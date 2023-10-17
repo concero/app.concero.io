@@ -87,13 +87,14 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 		case 'SET_FROM_SELECTION':
 			return {
 				...state,
-				from: {
-					token: action.token,
-					chain: action.chain,
-				},
+				from: { token: action.token, chain: action.chain },
 			}
 		case 'RESET':
 			return manageInitialState(action.payload)
+		case 'PUSH_STEP':
+			return { ...state, steps: [...state.steps, action.step] }
+		case 'SET_STEPS':
+			return { ...state, steps: action.steps }
 		default:
 			return new Error(`Unhandled action type`)
 	}
