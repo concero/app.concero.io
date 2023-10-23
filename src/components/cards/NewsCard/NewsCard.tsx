@@ -1,15 +1,11 @@
 import { FC, useContext, useEffect } from 'react'
-import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
-import { Button } from '../../buttons/Button/Button'
-import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getMoreNews, getNews } from './getNews'
 import { columns } from './columns'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { useNewsReducer } from './newsReducer'
-import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
@@ -42,13 +38,13 @@ export const NewsCard: FC<NewsCardProps> = () => {
 		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })
 	}
 	return (
-		<div>
-			<Card className={classNames.container}>
-				<CardHeader title="News">
-					<Button variant="black" size="sm" onClick={handleShowModal}>
-						<CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
-					</Button>
-				</CardHeader>
+		<>
+			<div className={classNames.container}>
+				{/* <CardHeader title="News"> */}
+				{/* 	<Button variant="black" size="sm" onClick={handleShowModal}> */}
+				{/* 		<CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} /> */}
+				{/* 	</Button> */}
+				{/* </CardHeader> */}
 				<Table
 					items={data}
 					columns={columns}
@@ -56,7 +52,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 					isLoading={isLoading}
 					onEndReached={() => getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)}
 				/>
-			</Card>
+			</div>
 			<ListModal
 				title="Select token"
 				isOpen={isModalVisible}
@@ -65,6 +61,6 @@ export const NewsCard: FC<NewsCardProps> = () => {
 				getItems={({ offset, limit, search }) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
 				RenderItem={ListEntityButton}
 			/>
-		</div>
+		</>
 	)
 }

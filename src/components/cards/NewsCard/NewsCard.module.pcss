@@ -1,6 +1,30 @@
 .container {
-	max-height: 220px;
-	min-height: 220px;
+	flex: 1;
+	overflow: hidden;
+	table {
+		tbody {
+			tr {
+				display: flex;
+				flex-wrap: wrap;
+				border-radius: var(--st-br-sm);
+				align-items: center;
+			}
+		}
+	}
+}
+
+.cellComponentContainer {
+	flex-direction: row;
+	flex-wrap: wrap;
+	column-gap: var(--sp-md);
+	row-gap: var(--sp-sm);
+}
+
+.truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100px;
 }
 
 .newsTitle {
@@ -9,35 +33,4 @@
 
 .truncate {
 	color: var(--color-text-secondary);
-}
-
-@media (max-width: 768px) {
-	.container {
-		max-height: 400px;
-
-		table {
-			tbody {
-				tr {
-					display: flex;
-					flex-wrap: wrap;
-					border-radius: var(--st-br-sm);
-					align-items: center;
-				}
-			}
-		}
-	}
-
-	.cellComponentContainer {
-		flex-direction: row;
-		flex-wrap: wrap;
-		column-gap: var(--sp-md);
-		row-gap: var(--sp-sm);
-	}
-
-	.truncate {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		max-width: 100px;
-	}
 }

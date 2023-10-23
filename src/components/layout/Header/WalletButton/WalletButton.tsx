@@ -14,7 +14,7 @@ export const WalletButton: FC<WalletButtonProps> = () => {
 	const isMobile = useMediaQuery('mobile')
 	const { theme, toggleTheme } = useContext(ThemeContext)
 	const { open } = useWeb3Modal()
-	const ButtonWithPopover = WithPopover(BaseButton, HeaderPopoverMenu, 'hover')
+	const ButtonWithPopover = WithPopover(BaseButton, HeaderPopoverMenu)
 
 	return (
 		<div>
