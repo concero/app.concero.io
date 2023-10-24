@@ -1,12 +1,39 @@
-import { Direction, StandardRoute } from '../lifi/types'
+import { StandardRoute, Step } from '../lifi/types'
 import { BestRouteResponse } from 'rango-types/src/api/main/routing'
 import BigNumber from 'bignumber.js'
-import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
 import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
 import { roundNumberByDecimals } from '../../utils/formatting'
-import { Step } from 'types'
+import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
 
-export async function standardizeRangoBestRoute(route: BestRouteResponse, from: Direction, to: Direction): Promise<StandardRoute> {
+// function standardizeRangoSuperNode(node: SwapSuperNode, index: number): Step {
+// 	return {
+// 		id: index.toString(),
+// 		from: {
+// 			token: {
+// 				name: node.from,
+// 				address: node.fromAddress,
+// 				symbol: node.from,
+//
+// 			},
+// 		},
+// 	}
+// }
+
+function getSteps(route: BestRouteResponse): Step[] | null {
+	// const getNode = (node: SwapSuperNode) => node.nodes?.flatMap(standardizeRangoSuperNode) ?? []
+	// const getInnerRoute = (innerRoute: SwapRoute) => innerRoute.nodes?.flatMap((node: SwapSuperNode) => node.nodes?.flatMap(getNode) ?? [])
+
+	// const getInternalSwap = (swap: SwapResult) => standardizeRangoBestRouteStep(swap)
+	// const getRoute = (route: SwapResult) => route.internalSwaps?.map(getInternalSwap) ?? []
+
+	const steps = route.result?.swaps.map((swap: SwapResult) => standardizeRangoBestRouteStep(swap)) ?? null
+
+	return steps ?? null
+}
+
+export async function standardizeRangoBestRoute(route: BestRouteResponse, from: any, to: any): Promise<StandardRoute> {
+	console.log(route)
+
 	return {
 		id: route.requestId,
 		provider: 'rango',
@@ -36,17 +63,16 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 				id: route.to.blockchain,
 			},
 		},
-		steps:
-			route.result?.swaps.flatMap<Step>((route: SwapResult): Step[] => route.internalSwaps?.map<Step>((swap: SwapResult): Step => standardizeRangoBestRouteStep(swap)) ?? []) ?? null,
+		steps: getSteps(route),
 		cost: {
 			total_usd: null,
 			total_gas_usd: roundNumberByDecimals(
 				new BigNumber(
-					route.result?.swaps.reduce<number>(
+					route.result?.swaps.reduce(
 						(res: number, swap: SwapResult): number =>
-							(swap.internalSwaps?.reduce<number>(
+							(swap.internalSwaps?.reduce(
 								(innerSwapRes: number, innerSwap: SwapResult): number =>
-									innerSwap.fee.reduce<number>((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + innerSwapRes,
+									innerSwap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + innerSwapRes,
 								0,
 							) ?? 0) + res,
 						0,
@@ -59,7 +85,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 		},
 		tags: [],
 		slippage_percent: null,
-		transaction_time_seconds: route.result?.swaps.reduce<number>((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ?? null,
+		transaction_time_seconds: route.result?.swaps.reduce((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ?? null,
 		originalRoute: route,
 	}
 }
