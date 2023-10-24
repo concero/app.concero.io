@@ -10,6 +10,14 @@ import { providers } from 'ethers'
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
+function handleError(error: Error): void {
+	console.log('error', error)
+
+	if (error.message.toLowerCase().includes('user rejected')) {
+		throw new Error('user rejected')
+	}
+}
+
 function getRangoSwapOptions(route: BestRouteResponse, address: string, from, settings, step): CreateTransactionRequest {
 	return {
 		requestId: route.requestId,
@@ -113,8 +121,7 @@ export async function executeRangoRoute({ route, address, from, settings, swapDi
 				console.log('transactionResponse', transactionResponse)
 			}
 		} catch (error) {
-			console.log('error', error)
-			// TODO handle if can not check status of transaction
+			handleError(Error(error))
 		}
 		await sleep(5000)
 	}

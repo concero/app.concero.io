@@ -5,27 +5,7 @@ import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
 
-// function standardizeRangoSuperNode(node: SwapSuperNode, index: number): Step {
-// 	return {
-// 		id: index.toString(),
-// 		from: {
-// 			token: {
-// 				name: node.from,
-// 				address: node.fromAddress,
-// 				symbol: node.from,
-//
-// 			},
-// 		},
-// 	}
-// }
-
 function getSteps(route: BestRouteResponse): Step[] | null {
-	// const getNode = (node: SwapSuperNode) => node.nodes?.flatMap(standardizeRangoSuperNode) ?? []
-	// const getInnerRoute = (innerRoute: SwapRoute) => innerRoute.nodes?.flatMap((node: SwapSuperNode) => node.nodes?.flatMap(getNode) ?? [])
-
-	// const getInternalSwap = (swap: SwapResult) => standardizeRangoBestRouteStep(swap)
-	// const getRoute = (route: SwapResult) => route.internalSwaps?.map(getInternalSwap) ?? []
-
 	const steps = route.result?.swaps.map((swap: SwapResult) => standardizeRangoBestRouteStep(swap)) ?? null
 	return steps ?? null
 }

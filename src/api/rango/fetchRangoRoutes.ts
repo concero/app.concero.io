@@ -1,11 +1,9 @@
 import { rangoClient } from './rangoClient'
 import { config } from '../../constants/config'
 import { standardizeRangoBestRoute } from './standardizeRangoBestRoute'
-import { BestRouteResponse } from 'rango-sdk/src/types'
+import { StandardRoute } from '../lifi/types'
 
-export const fetchRangoRoutes = async ({ from, to, settings }): Promise<BestRouteResponse> => {
-	// todo: how to control rango slippage?
-
+export const fetchRangoRoutes = async ({ from, to, settings }): Promise<StandardRoute | []> => {
 	const fromRangoChainSymbol = from.chain.providers?.find(item => item.name === 'rango')?.symbol
 	const toRangoChainSymbol = to.chain.providers?.find(item => item.name === 'rango')?.symbol
 
@@ -28,10 +26,7 @@ export const fetchRangoRoutes = async ({ from, to, settings }): Promise<BestRout
 		selectedWallets: { [fromRangoChainSymbol]: from.address, [toRangoChainSymbol]: from.address },
 	}
 
-	console.log('quoteParams', quoteParams)
-
 	const route = await rangoClient.getBestRoute(quoteParams)
-	console.log('rango original route', route)
 
 	return route ? [await standardizeRangoBestRoute(route, from, to)] : []
 }
