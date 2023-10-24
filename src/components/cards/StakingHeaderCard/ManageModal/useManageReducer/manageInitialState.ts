@@ -38,17 +38,17 @@ export const manageInitialState = (stakingState: StakingState) => {
 			amount: '',
 			amount_usd: '',
 			token: {
-				name: selectedVault.name,
-				symbol: selectedVault.widoSymbol,
-				logoURI: selectedVault.logoURI,
-				address: selectedVault.widoAddress,
-				decimals: null,
+				name: selectedVault.data.vault_token.name,
+				symbol: selectedVault.data.vault_token.symbol,
+				logoURI: selectedVault?.project.logoURI,
+				address: selectedVault.data.vault_token.address,
+				decimals: selectedVault.data.vault_token.decimals,
 			},
 			chain: {
-				name: selectedVault.chain,
-				symbol: selectedVault.widoSymbol,
-				logoURI: selectedVault.logoURI,
-				id: selectedVault.chainId,
+				name: selectedVault.chain.name,
+				symbol: selectedVault.chain.symbol,
+				logoURI: selectedVault.chain.logoURI,
+				id: selectedVault.chain.id,
 			},
 		},
 		address,
@@ -59,5 +59,6 @@ export const manageInitialState = (stakingState: StakingState) => {
 		isLoading: false,
 		status: Status.input,
 		balance: null,
+		steps: [],
 	}
 }

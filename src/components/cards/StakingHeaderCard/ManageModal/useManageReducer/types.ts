@@ -1,4 +1,5 @@
 import { ModalType, Status } from '../constants'
+import { EnsoRouteResponse } from '../../../../../api/enso/types'
 
 interface Token {
 	name: string
@@ -15,26 +16,35 @@ interface Chain {
 	id: number
 }
 
-interface Route {
-	feeBps: number
-	feeUsdValue: string
-	isSupported: boolean
-	price: number
-	expectedSlippage: number
-	steps: {
-		chainId: number
-		fromToken: string
-		functionName: string
-		protocol: string
-		swapAddress: string
-		toChainId: number
-		toToken: string
-	}[]
-	toTokenAmount: string
-	steps_count: number
-	data: string
-	to: string
-	value: string
+// wido route type
+
+// interface Route {
+// 	feeBps: number
+// 	feeUsdValue: string
+// 	isSupported: boolean
+// 	price: number
+// 	expectedSlippage: number
+// 	steps: {
+// 		chainId: number
+// 		fromToken: string
+// 		functionName: string
+// 		protocol: string
+// 		swapAddress: string
+// 		toChainId: number
+// 		toToken: string
+// 	}[]
+// 	toTokenAmount: string
+// 	steps_count: number
+// 	data: string
+// 	to: string
+// 	value: string
+// }
+
+export interface IStep {
+	title: string
+	body?: string
+	status: 'pending' | 'success' | 'error' | 'await'
+	txLink?: string
 }
 
 export interface ManageState {
@@ -53,12 +63,13 @@ export interface ManageState {
 	snake: boolean
 	modalType: ModalType
 	direction: string
-	route: Route | null
+	route: EnsoRouteResponse | null
 	swapType: number
 	address: string
 	isLoading: boolean
-	status: number
+	status: Status
 	balance: string | null
+	steps: IStep[]
 }
 
 export type ManageAction =
@@ -70,12 +81,16 @@ export type ManageAction =
 	| { type: 'SET_AMOUNT_USD'; direction: string; amount: string | null }
 	| { type: 'SET_ADDRESS'; payload: string }
 	| { type: 'SET_CHAIN_BY_VAULT'; direction: string; payload: any }
-	| { type: 'SET_ROUTE'; fromAmount: number; payload: any }
+	| { type: 'SET_ROUTE'; fromAmount: string; payload: EnsoRouteResponse; gasUsd: string | null; toAmountUsd: string | null }
 	| { type: 'CLEAR_ROUTE' }
 	| { type: 'SET_LOADING'; payload: boolean }
 	| { type: 'SET_STATUS'; payload: Status }
 	| { type: 'SET_BALANCE'; payload: number }
 	| { type: 'SET_TO_SELECTION'; payload: any }
+	| { type: 'SET_FROM_SELECTION'; token: Token; chain: Chain }
 	| { type: 'RESET'; payload: any }
 	| { type: 'SET_WITHDRAW_TYPE'; token: Token }
 	| { type: 'SET_STAKE_TYPE' }
+	| { type: 'SWITCH_TYPE' }
+	| { type: 'PUSH_STEP'; step: IStep }
+	| { type: 'SET_STEPS'; steps: [] }

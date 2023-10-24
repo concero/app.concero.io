@@ -5,7 +5,6 @@ import { Button } from '../../buttons/Button/Button'
 import classNames from './ProtocolCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
-import { capitalize } from '../../../utils/formatting'
 import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
@@ -20,7 +19,7 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 	const { selectedVault } = stakingState
 
 	useEffect(() => {
-		getProtocolData(selectedVault?.protocolId, setProtocolData)
+		getProtocolData(selectedVault?.project._id, setProtocolData)
 	}, [selectedVault])
 
 	return (
@@ -29,8 +28,8 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 			<Button variant="subtle" onClick={() => setIsOpened(true)}>
 				<div className={classNames.cardContainer}>
 					<div className={classNames.avatarContainer}>
-						<Avatar src={selectedVault?.protocol?.logoURI ?? null} />
-						<h5>{capitalize(selectedVault.name)}</h5>
+						<Avatar src={selectedVault?.project?.logoURI ?? null} />
+						<h5>{selectedVault?.project.name}</h5>
 					</div>
 					<IconChevronRight size={18} color={'var(--color-text-secondary)'} />
 				</div>

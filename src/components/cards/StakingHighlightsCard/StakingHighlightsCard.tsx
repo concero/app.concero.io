@@ -9,30 +9,30 @@ interface StakingHighlightsCardProps {
 }
 
 export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingState }) => {
-	const renderHighlights = vault => {
+	const renderHighlights = ({ data }) => {
 		const highlights = []
-		if (vault.tvlUsd) {
-			highlights.push(<Highlight key="tvl" title="TVL" value={`$${formatNumber(stakingState?.selectedVault?.tvlUsd)}`} tag={vault.tvlPct30D ? formatNumber(vault.tvlPct30D) : null} />)
+		if (data.tvlUsd) {
+			highlights.push(<Highlight key="tvl" title="TVL" value={`$${formatNumber(stakingState.selectedVault?.data?.tvlUsd)}`} tag={data.tvlPct30D ? formatNumber(data.tvlPct30D) : null} />)
 		}
 
-		if (vault.apy) {
+		if (data.apy) {
 			highlights.push(
 				<Highlight
 					key="apy"
 					title="APY"
-					value={`${formatNumber(vault.apy, { decimalPlaces: 2 })}%`}
-					tag={vault.apyPct30D ? formatNumber(vault.apyPct30D, { decimalPlaces: 2 }) : null}
+					value={`${formatNumber(data.apy, { decimalPlaces: 2 })}%`}
+					tag={data.apyPct30D ? formatNumber(data.apyPct30D, { decimalPlaces: 2 }) : null}
 				/>,
 			)
 		}
 
-		if (vault.apyMean30d) {
+		if (data.apyMean30d) {
 			highlights.push(
 				<Highlight
 					key="apyMean30d"
 					title="Mean APY (30d)"
-					value={`${formatNumber(vault.apyMean30d, { decimalPlaces: 2 })}%`}
-					tag={vault.apyMean30dPct30D ? formatNumber(vault.apyMean30dPct30D) : null}
+					value={`${formatNumber(data.apyMean30d, { decimalPlaces: 2 })}%`}
+					tag={data.apyMean30d ? formatNumber(data.apyMean30d, { decimalPlaces: 2 }) : null}
 				/>,
 			)
 		}

@@ -51,11 +51,11 @@ export function TokenRatioCard({ item }) {
 export const TokensCard: FC<TokensCardProps> = ({ stakingState }) => {
 	// console.log('TokensCard', stakingState)
 
-	const renderTokens = vault => {
+	const renderTokens = ({ input_tokens }) => {
 		// loops through the tokens array and renders a TokenCard for each token.
 		const tokens = []
-		if (vault.inputTokens) {
-			vault.inputTokens.forEach((token, index) => {
+		if (input_tokens) {
+			input_tokens.forEach((token, index) => {
 				if (token === null) tokens.push(<TokenCard key={index} name="Unknown" symbol="Unknown" logoURI={null} />)
 				else tokens.push(<TokenCard key={token.name} name={token.name} symbol={token.symbol} logoURI={token.logoURI} />)
 			})

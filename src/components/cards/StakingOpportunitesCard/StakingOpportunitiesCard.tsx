@@ -6,6 +6,7 @@ import { StakingCard } from '../StakingCard/StakingCard'
 import { StakingAction, StakingState, Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { getMoreVaults, getVaults } from './getVaults'
 import { CardHeader } from '../CardHeader/CardHeader'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 interface StakingOpportunitiesProps {
 	stakingState: StakingState
@@ -15,12 +16,13 @@ interface StakingOpportunitiesProps {
 const MemoizedStakingCard = memo(StakingCard)
 
 export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: StakingOpportunitiesProps) {
+	const isIpad = useMediaQuery('ipad')
 	const { selectedVault, vaults } = stakingState
 	const { address } = useAccount()
 	const [offset, setOffset] = useState(0)
 	const limit = 15
 
-	function handleSelect(vault) {
+	function handleSelect(vault: Vault) {
 		stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
 	}
 
@@ -32,13 +34,17 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 
 	function handleScroll(e: UIEvent<HTMLDivElement>) {
 		const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
-		if (scrollHeight - scrollTop === clientHeight) handleEndReached()
+		const scrollTolerance = 10
+
+		if (scrollHeight - scrollTop <= clientHeight + scrollTolerance) {
+			handleEndReached()
+		}
 	}
 
 	useEffect(() => {
 		setOffset(0)
-		getVaults(stakingDispatch, address, stakingState, 0, limit)
-	}, [stakingState.filter])
+		getVaults(stakingDispatch, address as string, stakingState, 0, limit, isIpad)
+	}, [stakingState.filter, stakingState.balances])
 
 	return (
 		<div className={`card ${classNames.container}`}>
