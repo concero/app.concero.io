@@ -27,13 +27,16 @@ function getSteps(route: BestRouteResponse): Step[] | null {
 	// const getRoute = (route: SwapResult) => route.internalSwaps?.map(getInternalSwap) ?? []
 
 	const steps = route.result?.swaps.map((swap: SwapResult) => standardizeRangoBestRouteStep(swap)) ?? null
-
 	return steps ?? null
+}
+
+function getTotalGasUsd(route: BestRouteResponse): string | null {
+	const reduceSwaps = (res: number, swap: SwapResult): number => swap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + res
+	return roundNumberByDecimals(new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0).times(route.result?.swaps[0]?.from.usdPrice ?? 0).toString(), 2)
 }
 
 export async function standardizeRangoBestRoute(route: BestRouteResponse, from: any, to: any): Promise<StandardRoute> {
 	console.log(route)
-
 	return {
 		id: route.requestId,
 		provider: 'rango',
@@ -66,22 +69,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 		steps: getSteps(route),
 		cost: {
 			total_usd: null,
-			total_gas_usd: roundNumberByDecimals(
-				new BigNumber(
-					route.result?.swaps.reduce(
-						(res: number, swap: SwapResult): number =>
-							(swap.internalSwaps?.reduce(
-								(innerSwapRes: number, innerSwap: SwapResult): number =>
-									innerSwap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + innerSwapRes,
-								0,
-							) ?? 0) + res,
-						0,
-					) ?? 0,
-				)
-					.times(route.result?.swaps[0]?.from.usdPrice ?? 0)
-					.toString(),
-				2,
-			),
+			total_gas_usd: getTotalGasUsd(route),
 		},
 		tags: [],
 		slippage_percent: null,
