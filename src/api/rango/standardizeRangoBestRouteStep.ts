@@ -42,7 +42,7 @@ export function standardizeRangoBestRouteStep(step: SwapResult): Step {
 			slippage_limit: null,
 			fees_usd: null,
 			gas: null,
-			gas_usd: null,
+			gas_usd: roundNumberByDecimals(step.fee[0].amount) + ' ' + step.fee[0].asset.symbol,
 			logo_uri: step.swapperLogo,
 		},
 	}

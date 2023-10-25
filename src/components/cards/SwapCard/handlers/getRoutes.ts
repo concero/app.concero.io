@@ -12,7 +12,7 @@ const populateRoutes = ({ routes, from, swapDispatch }) => {
 const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
 	try {
 		const lifiRoutes = await fetchLifiRoutes({ from, to, settings })
-		routes.push(...lifiRoutes)
+		routes.unshift(...lifiRoutes)
 		populateRoutes({ routes, from, swapDispatch })
 		return lifiRoutes // Return the lifiRoutes for Promise.all
 	} catch (error) {

@@ -49,7 +49,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 		steps: getSteps(route),
 		cost: {
 			total_usd: null,
-			total_gas_usd: getTotalGasUsd(route),
+			total_gas_usd: null,
 		},
 		tags: [],
 		slippage_percent: null,

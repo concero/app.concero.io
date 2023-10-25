@@ -3,7 +3,7 @@ import { config } from '../../constants/config'
 import { standardizeRangoBestRoute } from './standardizeRangoBestRoute'
 import { StandardRoute } from '../lifi/types'
 
-export const fetchRangoRoutes = async ({ from, to, settings }): Promise<StandardRoute | []> => {
+export const fetchRangoRoutes = async ({ from, to, settings }): Promise<[StandardRoute] | []> => {
 	const fromRangoChainSymbol = from.chain.providers?.find(item => item.name === 'rango')?.symbol
 	const toRangoChainSymbol = to.chain.providers?.find(item => item.name === 'rango')?.symbol
 
@@ -24,6 +24,9 @@ export const fetchRangoRoutes = async ({ from, to, settings }): Promise<Standard
 		checkPrerequisites: true,
 		connectedWallets: [],
 		selectedWallets: { [fromRangoChainSymbol]: from.address, [toRangoChainSymbol]: from.address },
+		affiliateRef: process.env.RANGO_AFFILIATE_REF,
+		affiliatePercent: Number(process.env.RANGO_AFFILIATE_PERCENTAGE),
+		slippage: settings.slippage_percent,
 	}
 
 	const route = await rangoClient.getBestRoute(quoteParams)
