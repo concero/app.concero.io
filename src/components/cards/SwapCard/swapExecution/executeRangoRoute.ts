@@ -100,7 +100,16 @@ async function executeRangoSwap({
 	return response.transaction
 }
 
-export async function executeRangoRoute({ route, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol }: ExecuteRangoRouteProps) {
+export async function executeRangoRoute({
+	route,
+	address,
+	from,
+	settings,
+	swapDispatch,
+	swapState,
+	switchChainHook,
+	getChainByProviderSymbol,
+}: ExecuteRangoRouteProps): Promise<void> {
 	let step = 1
 	let transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
 	console.log('transactionResponse', transactionResponse)
@@ -111,7 +120,7 @@ export async function executeRangoRoute({ route, address, from, settings, swapDi
 			const { status } = statusResponse
 			console.log('statusResponse', statusResponse, JSON.stringify(statusResponse, null, 2))
 
-			updateRangoTransactionStatus(statusResponse, swapDispatch)
+			updateRangoTransactionStatus(statusResponse, swapDispatch, swapState)
 
 			if (status === TransactionStatus.FAILED) return statusResponse
 			if (status === TransactionStatus.SUCCESS) {
@@ -120,7 +129,7 @@ export async function executeRangoRoute({ route, address, from, settings, swapDi
 				transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
 				console.log('transactionResponse', transactionResponse)
 			}
-		} catch (error) {
+		} catch (error: Error) {
 			handleError(Error(error))
 		}
 		await sleep(5000)

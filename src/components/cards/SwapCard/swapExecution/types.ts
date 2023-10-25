@@ -1,6 +1,6 @@
 import { BestRouteResponse } from 'rango-types/src/api/main/routing'
 import { Dispatch } from 'react'
-import { SwapAction } from '../swapReducer/types'
+import { SwapAction, SwapState } from '../swapReducer/types'
 import { SwitchChainHookType } from '../SwapInput/types'
 import { GetChainByProviderSymbolI } from '../../../../hooks/DataContext/types'
 
@@ -10,6 +10,7 @@ export interface ExecuteRangoRouteProps {
 	from: any
 	settings: any
 	swapDispatch: Dispatch<SwapAction>
+	swapState: SwapState
 	switchChainHook: SwitchChainHookType
 	getChainByProviderSymbol: GetChainByProviderSymbolI
 }
