@@ -4,14 +4,12 @@ import { Dispatch } from 'react'
 import { SwapAction, SwapState } from '../../components/cards/SwapCard/swapReducer/types'
 import { Step } from '../lifi/types'
 
-function updatePrevStatuses(swapDispatch: Dispatch<SwapAction>, swapState: SwapState) {
+export function updatePrevStatuses(swapDispatch: Dispatch<SwapAction>, swapState: SwapState) {
 	const { steps } = swapState
 
 	const newStatuses = steps.map((step: Step) => {
 		return { ...step, status: 'success' }
 	})
-
-	console.log('newStatuses', newStatuses)
 
 	swapDispatch({ type: 'UPSERT_SWAP_STEP', payload: newStatuses })
 }

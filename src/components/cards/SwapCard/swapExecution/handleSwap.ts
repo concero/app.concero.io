@@ -31,7 +31,8 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 
 	try {
 		if (provider === 'rango') {
-			const response = await executeRangoRoute({ originalRoute, address, from, settings, swapDispatch, swapState, switchChainHook, getChainByProviderSymbol })
+			console.log('originalRoute: ', originalRoute)
+			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, swapState, switchChainHook, getChainByProviderSymbol })
 			handleRangoResponse(response, swapDispatch, provider)
 		} else if (provider === 'lifi') {
 			updateLifiSteps({ swapDispatch, selectedRoute })
@@ -48,7 +49,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			const response = await executeLifiRoute(viemSigner, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
 			handleLifiResponse(response, swapDispatch, provider)
 		}
-	} catch (error) {
+	} catch (error: Error) {
 		console.log('ERROR: ', error)
 		handleTransactionError(error, swapDispatch, provider)
 	} finally {

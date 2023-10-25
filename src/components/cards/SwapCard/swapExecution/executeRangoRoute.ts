@@ -4,13 +4,13 @@ import { BestRouteResponse } from 'rango-types/src/api/main/routing'
 import { TransactionStatus } from 'rango-types/src/api/shared/transactions'
 import { updateRangoTransactionStatus } from '../../../../api/rango/updateRangoTransactionStatus'
 import { TransactionResponse } from '@ethersproject/abstract-provider'
-import { CheckApprovalResponse, CreateTransactionResponse } from 'rango-sdk/src/types'
+import { CheckApprovalResponse, CreateTransactionResponse, TransactionStatusResponse } from 'rango-sdk/src/types'
 import { CreateTransactionProps, ExecuteRangoRouteProps } from './types'
 import { providers } from 'ethers'
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-function handleError(error: Error): void {
+function handleError(error: Error) {
 	console.log('error', error)
 
 	if (error.message.toLowerCase().includes('user rejected')) {
@@ -36,7 +36,6 @@ async function createAndSendRangoTransaction({
 }): Promise<{ creation: CreateTransactionResponse; transaction: TransactionResponse }> {
 	const creation = await rangoClient.createTransaction(swapOptions)
 	if (!creation.transaction || !creation.ok) throw new Error('no transaction')
-	console.log('creationResponse', creation)
 
 	const transaction = await signer.sendTransaction({
 		data: creation.transaction.data,
@@ -48,7 +47,6 @@ async function createAndSendRangoTransaction({
 		maxPriorityFeePerGas: creation.transaction.maxPriorityFeePerGas,
 		nonce: creation.transaction.nonce,
 	})
-	console.log('transaction', transaction)
 
 	return { creation, transaction }
 }
@@ -75,7 +73,6 @@ async function executeRangoSwap({
 
 	const signer = await switchChainHook(parseInt(requiredChain.id))
 	const swapOptions = getRangoSwapOptions(route, address, from, settings, step)
-	console.log('rango swapOptions: ', swapOptions)
 
 	let response = await createAndSendRangoTransaction({ signer, swapOptions })
 	let approvalResponse: CheckApprovalResponse | undefined
@@ -84,7 +81,7 @@ async function executeRangoSwap({
 		while (true) {
 			try {
 				approvalResponse = await rangoClient.checkApproval(route.requestId)
-				console.log('approvalResponse', approvalResponse)
+
 				if (approvalResponse.isApproved) break
 				if (!approvalResponse.isApproved && approvalResponse.txStatus === TransactionStatus.FAILED) break
 				if (!approvalResponse.isApproved && approvalResponse.txStatus == TransactionStatus.SUCCESS) break
@@ -109,16 +106,13 @@ export async function executeRangoRoute({
 	swapState,
 	switchChainHook,
 	getChainByProviderSymbol,
-}: ExecuteRangoRouteProps): Promise<void> {
+}: ExecuteRangoRouteProps): Promise<TransactionStatusResponse | undefined> {
 	let step = 1
 	let transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
-	console.log('transactionResponse', transactionResponse)
-
 	while (step <= (route.result?.swaps.length || 1)) {
 		try {
 			const statusResponse = await rangoClient.checkStatus({ requestId: route.requestId, step, txId: transactionResponse.hash })
 			const { status } = statusResponse
-			console.log('statusResponse', statusResponse, JSON.stringify(statusResponse, null, 2))
 
 			updateRangoTransactionStatus(statusResponse, swapDispatch, swapState)
 
@@ -127,7 +121,6 @@ export async function executeRangoRoute({
 				step++
 				if (step > (route.result?.swaps.length || 1)) return statusResponse
 				transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
-				console.log('transactionResponse', transactionResponse)
 			}
 		} catch (error: Error) {
 			handleError(Error(error))
