@@ -62,8 +62,8 @@ async function executeRangoSwap({
 	step,
 }: CreateTransactionProps): Promise<TransactionResponse> {
 	swapDispatch({
-		type: 'SET_SWAP_STEPS',
-		payload: [{ title: 'Action required', body: 'Please approve the transaction in your wallet', status: 'await', txLink: null }],
+		type: 'APPEND_SWAP_STEP',
+		payload: { title: 'Action required', body: 'Please approve the transaction in your wallet', status: 'await', txLink: null },
 	})
 	const rangoSymbol = route.result?.swaps[step - 1].from.blockchain
 	if (!rangoSymbol) throw new Error('no rangoSymbol')

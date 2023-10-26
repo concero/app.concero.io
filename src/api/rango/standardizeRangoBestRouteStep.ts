@@ -41,8 +41,8 @@ export function standardizeRangoBestRouteStep(step: SwapResult): Step {
 			estimated_execution_time_seconds: step.estimatedTimeInSeconds,
 			slippage_limit: null,
 			fees_usd: null,
-			gas: null,
-			gas_usd: roundNumberByDecimals(step.fee[0].amount) + ' ' + step.fee[0].asset.symbol,
+			gas: roundNumberByDecimals(step.fee[0].amount) + ' ' + step.fee[0].asset.symbol,
+			gas_usd: null,
 			logo_uri: step.swapperLogo,
 		},
 	}

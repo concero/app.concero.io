@@ -30,6 +30,7 @@ export const fetchRangoRoutes = async ({ from, to, settings }): Promise<[Standar
 	}
 
 	const route = await rangoClient.getBestRoute(quoteParams)
+	if (!route || !route.result) return []
 
-	return route ? [await standardizeRangoBestRoute(route, from, to)] : []
+	return [await standardizeRangoBestRoute(route, from, to)]
 }
