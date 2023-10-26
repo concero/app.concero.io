@@ -1,13 +1,19 @@
 import { Dispatch, useReducer } from 'react'
 import { manageInitialState } from './manageInitialState'
 import { StakingState } from '../../../../screens/StakingScreen/stakingReducer/types'
-import { Status, SwapType } from '../constants'
+import { ModalType, Status, SwapType } from '../constants'
 import { addingTokenDecimals } from '../../../../../utils/formatting'
 import { ManageAction, ManageState } from './types'
+import { handleBeforeUnload } from '../../../../../utils/leavingPageEvents'
 
 function manageReducer(state: ManageState, action: ManageAction): ManageState {
 	switch (action.type) {
 		case 'SET_MODAL_TYPE':
+			if (action.payload === ModalType.progress) {
+				window.addEventListener('beforeunload', handleBeforeUnload)
+			} else {
+				window.removeEventListener('beforeunload', handleBeforeUnload)
+			}
 			return { ...state, modalType: action.payload }
 		case 'SET_CHAIN': {
 			return { ...state, [action.direction]: { ...state[action.direction], chain: action.payload, token: action.tokens[0] } }

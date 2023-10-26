@@ -1,17 +1,15 @@
 import { rangoClient } from './rangoClient'
-import { addingAmountDecimals } from '../../utils/formatting'
-import { standardizeRangoRoutes } from './standardizeRangoRoutes'
 import { config } from '../../constants/config'
+import { standardizeRangoBestRoute } from './standardizeRangoBestRoute'
+import { StandardRoute } from '../lifi/types'
 
-export const fetchRangoRoutes = async ({ from, to, settings }) => {
-	// todo: how to control rango slippage?
-
+export const fetchRangoRoutes = async ({ from, to, settings }): Promise<[StandardRoute] | []> => {
 	const fromRangoChainSymbol = from.chain.providers?.find(item => item.name === 'rango')?.symbol
 	const toRangoChainSymbol = to.chain.providers?.find(item => item.name === 'rango')?.symbol
 
 	if (fromRangoChainSymbol === undefined || toRangoChainSymbol === undefined) return []
 
-	const routesRequest = {
+	const quoteParams = {
 		from: {
 			blockchain: fromRangoChainSymbol,
 			symbol: from.token.symbol,
@@ -22,15 +20,17 @@ export const fetchRangoRoutes = async ({ from, to, settings }) => {
 			symbol: to.token.symbol,
 			address: to.token.address === config.NULL_ADDRESS ? null : to.token.address,
 		},
+		amount: from.amount,
+		checkPrerequisites: true,
+		connectedWallets: [],
+		selectedWallets: { [fromRangoChainSymbol]: from.address, [toRangoChainSymbol]: from.address },
+		affiliateRef: process.env.RANGO_AFFILIATE_REF,
+		affiliatePercent: Number(process.env.RANGO_AFFILIATE_PERCENTAGE),
 		slippage: settings.slippage_percent,
-		amount: addingAmountDecimals(Number(from.amount), from.token.decimals),
-		// slippage: '0.1',
-		// slippage_percent: '0.1',
-		// slippage_limit: '0.1',
 	}
 
-	const quote = await rangoClient.quote(routesRequest)
-	if (quote.route === null) return []
-	console.log('quote', quote)
-	return [standardizeRangoRoutes(quote)]
+	const route = await rangoClient.getBestRoute(quoteParams)
+	if (!route || !route.result) return []
+
+	return [await standardizeRangoBestRoute(route, from, to)]
 }
