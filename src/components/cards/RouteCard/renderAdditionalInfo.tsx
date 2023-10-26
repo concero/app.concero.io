@@ -10,7 +10,7 @@ function AdditionalInfoTag({ title, type, getColor, isBestRoute }: { title: stri
 	return (
 		<div className={classNames.additionalInfoTag}>
 			<RenderedIcon size="1rem" color={isBestRoute ? colors.primary.light : colors.grey.medium} />
-			<h5 className={`${classNames.textSubtitle} ${getColor('text')}`}>{`${type === 'gasUsd' ? '$' : ''}${type === 'gas' ? title : secondsConverter(title)}`}</h5>
+			<h5 className={`${classNames.textSubtitle} ${getColor('text')}`}>{`${type === 'gasUsd' ? '$' : ''}${type === 'time' ? secondsConverter(title) : title}`}</h5>
 		</div>
 	)
 }
