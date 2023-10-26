@@ -43,6 +43,10 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 	}
 
 	function handleOnClose(): void {
+		if (manageState.modalType === ModalType.progress) {
+			window.alert('Please wait for the transaction to complete')
+			return
+		}
 		setIsOpen(false)
 	}
 

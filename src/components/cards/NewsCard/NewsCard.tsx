@@ -1,26 +1,26 @@
 import { FC, useContext, useEffect } from 'react'
-import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
-import { Button } from '../../buttons/Button/Button'
-import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { getMoreNews, getNews } from './getNews'
 import { columns } from './columns'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { useNewsReducer } from './newsReducer'
-import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
+import { DataContextValue } from '../../../hooks/DataContext/types'
+import { Button } from '../../buttons/Button/Button'
+import { CardHeader } from '../CardHeader/CardHeader'
+import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 
 interface NewsCardProps {}
 
 export const NewsCard: FC<NewsCardProps> = () => {
 	const { selection } = useContext(SelectionContext)
-	const { getTokens, tokens: dataTokens } = useContext(DataContext)
+	const { getTokens } = useContext<DataContextValue>(DataContext)
 	const { addNotification } = useContext(NotificationsContext)
-	const [{ data, isLoading, timestamp, isModalVisible, selectedToken, tokens }, dispatch] = useNewsReducer(selection)
+	const [{ data, isLoading, timestamp, isModalVisible, selectedToken }, dispatch] = useNewsReducer(selection)
 
 	useEffect(() => {
 		if (!selectedToken) return
@@ -41,9 +41,10 @@ export const NewsCard: FC<NewsCardProps> = () => {
 	const handleShowModal = async () => {
 		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })
 	}
+
 	return (
-		<div>
-			<Card className={classNames.container}>
+		<>
+			<div className={classNames.container}>
 				<CardHeader title="News">
 					<Button variant="black" size="sm" onClick={handleShowModal}>
 						<CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
@@ -56,7 +57,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 					isLoading={isLoading}
 					onEndReached={() => getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)}
 				/>
-			</Card>
+			</div>
 			<ListModal
 				title="Select token"
 				isOpen={isModalVisible}
@@ -65,6 +66,6 @@ export const NewsCard: FC<NewsCardProps> = () => {
 				getItems={({ offset, limit, search }) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
 				RenderItem={ListEntityButton}
 			/>
-		</div>
+		</>
 	)
 }

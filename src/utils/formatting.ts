@@ -87,7 +87,7 @@ export const removeNonNumeric = (str: string): string => str.replace(/\D/g, '')
 
 export const removeNonAlphaNumeric = (str: string): string => str.replace(/\W/g, '')
 
-export const addingAmountDecimals = (number: number | string, decimals: number): string | null => {
+export function addingAmountDecimals(number: number | string, decimals: number): string | null {
 	if (!isValidNumber(number) || !isValidNumber(decimals)) return null
 	let bNumber = new BigNumber(number)
 
@@ -111,7 +111,7 @@ export const numberToFormatString = (number: number, decimals = 4, isTransformNe
 	return result?.toString()
 }
 
-export function roundNumberByDecimals(number: number | string, decimals = 4): string | null {
+export function roundNumberByDecimals(number: number | string | undefined | null, decimals = 4): string | null {
 	if (!isValidNumber(number) || !isValidNumber(decimals)) return null
 	const bigNumber = new BigNumber(number)
 	const decimalPart = bigNumber.toString().split('.')[1]

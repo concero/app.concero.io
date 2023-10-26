@@ -20,7 +20,7 @@ export function StakingDetailsCard({ stakingState }) {
 		<Highlights stakingState={stakingState} />,
 		<Tokens stakingState={stakingState} />,
 		stakingState.rewardTokens && <Rewards stakingState={stakingState} />,
-		<Prediction stakingState={stakingState} />,
+		// <Prediction stakingState={stakingState} />,
 	]
 
 	// console.log('secondaryCards', secondaryCards)

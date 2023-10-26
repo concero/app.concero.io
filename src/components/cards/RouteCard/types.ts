@@ -1,4 +1,4 @@
-import { Route, Step } from '../../../api/lifi/types'
+import { StandardRoute, Step } from '../../../api/lifi/types'
 
 export interface RouteStepTagProps {
 	step: Step
@@ -8,7 +8,7 @@ export interface RouteStepTagProps {
 }
 
 export interface RouteCardProps {
-	route: Route
+	route: StandardRoute
 	isSelected: boolean
 	onClick: (id: string) => void
 }

@@ -1,8 +1,8 @@
 import { getRangoRouteStep } from './getRangoRouteStep'
 import { numberToFormatString } from '../../utils/formatting'
-import { Route } from '../lifi/types'
+import { StandardRoute } from '../lifi/types'
 
-export const standardizeRangoRoutes = (rangoResponse): Route => {
+export const standardizeRangoRoutes = (rangoResponse): StandardRoute => {
 	const { route } = rangoResponse
 
 	return {

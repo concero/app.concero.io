@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import React, { FC, memo } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
@@ -6,6 +6,7 @@ import { SwapCard } from '../../cards/SwapCard/SwapCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { ChartCard } from '../../cards/ChartCard/ChartCard'
 import classNames from './ExchangeScreen.module.pcss'
+import { TargetInfoCard } from '../../cards/TargetInfoCard/TargetInfoCard'
 
 export interface ExchangeScreenProps {}
 
@@ -21,11 +22,10 @@ export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
 		<div className={`row ${classNames.container}`}>
 			<div className={classNames.mainCardStack}>
 				<Chart />
-				<News />
 			</div>
 			<div className={classNames.secondaryCardStack}>
 				<Swap />
-				<History />
+				<TargetInfoCard />
 			</div>
 		</div>
 	)
@@ -35,8 +35,7 @@ export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
 			<div className={classNames.mainCardStack}>
 				<Swap />
 				<Chart />
-				<News />
-				<History />
+				<TargetInfoCard />
 			</div>
 		</div>
 	)

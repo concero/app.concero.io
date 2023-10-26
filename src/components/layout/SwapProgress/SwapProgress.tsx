@@ -14,7 +14,7 @@ interface SwapProgressProps {
 
 export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack }) => {
 	const { from, to, steps, status } = swapState
-	console.log('status', status)
+
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.tokensInfoContainer}>
