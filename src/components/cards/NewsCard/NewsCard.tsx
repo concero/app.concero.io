@@ -10,6 +10,9 @@ import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
 import { DataContextValue } from '../../../hooks/DataContext/types'
+import { Button } from '../../buttons/Button/Button'
+import { CardHeader } from '../CardHeader/CardHeader'
+import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 
 interface NewsCardProps {}
 
@@ -38,14 +41,15 @@ export const NewsCard: FC<NewsCardProps> = () => {
 	const handleShowModal = async () => {
 		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: true })
 	}
+
 	return (
 		<>
 			<div className={classNames.container}>
-				{/* <CardHeader title="News"> */}
-				{/* 	<Button variant="black" size="sm" onClick={handleShowModal}> */}
-				{/* 		<CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} /> */}
-				{/* 	</Button> */}
-				{/* </CardHeader> */}
+				<CardHeader title="News">
+					<Button variant="black" size="sm" onClick={handleShowModal}>
+						<CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
+					</Button>
+				</CardHeader>
 				<Table
 					items={data}
 					columns={columns}

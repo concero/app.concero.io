@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Card } from '../Card/Card'
 import { NewsCard } from '../NewsCard/NewsCard'
 import classNames from './TargetInfoContainer.module.pcss'
-import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import { IconChevronDown } from '@tabler/icons-react'
 import { colors } from '../../../constants/colors'
@@ -16,7 +15,7 @@ enum CardTarget {
 }
 
 export function TargetInfoCard() {
-	const [cardTarget, setCardTarget] = useState<CardTarget>(CardTarget.transactions)
+	const [cardTarget, setCardTarget] = useState<CardTarget>(CardTarget.news)
 
 	function menuPopover() {
 		const items = [
@@ -50,9 +49,9 @@ export function TargetInfoCard() {
 
 	return (
 		<Card className={classNames.container}>
-			<CardHeader>
-				<ButtonWithPopover />
-			</CardHeader>
+			{/* <CardHeader> */}
+			{/* 	<ButtonWithPopover /> */}
+			{/* </CardHeader> */}
 			{RenderComponent[cardTarget]}
 		</Card>
 	)

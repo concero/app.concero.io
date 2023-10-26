@@ -26,7 +26,6 @@ export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
 			<div className={classNames.secondaryCardStack}>
 				<Swap />
 				<TargetInfoCard />
-				{/* <History /> */}
 			</div>
 		</div>
 	)
@@ -36,6 +35,7 @@ export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
 			<div className={classNames.mainCardStack}>
 				<Swap />
 				<Chart />
+				<TargetInfoCard />
 			</div>
 		</div>
 	)
