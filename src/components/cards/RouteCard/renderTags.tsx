@@ -2,12 +2,12 @@ import { useContext } from 'react'
 import { IconArrowWaveRightUp, IconClock, IconPigMoney } from '@tabler/icons-react'
 import { Tag } from '../../tags/Tag/Tag'
 import classNames from './RouteCard.module.pcss'
-import { Route } from '../../../api/lifi/types'
+import { StandardRoute } from '../../../api/lifi/types'
 import { capitalize, numberToFormatString, secondsConverter } from '../../../utils/formatting'
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
 
-export const renderTags = (route: Route, isSelected: boolean, getTextColor: () => string, getIconColor: () => string) => {
+export const renderTags = (route: StandardRoute, isSelected: boolean, getTextColor: () => string, getIconColor: () => string) => {
 	const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
 	const { toggleInsurance } = useContext(InsuranceContext)
 

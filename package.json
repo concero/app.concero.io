@@ -30,7 +30,7 @@
     "ethers": "^5.7.2",
     "lightweight-charts": "^4.0.1",
     "posthog-js": "^1.79.1",
-    "rango-sdk-basic": "^0.1.40",
+    "rango-sdk": "^0.1.40",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",

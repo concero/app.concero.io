@@ -5,13 +5,15 @@ import classNames from './SwapProgress.module.pcss'
 import { LoadingAnimation } from '../LoadingAnimation/LoadingAnimation'
 import { Button } from '../../buttons/Button/Button'
 
-interface stageProps {
-	step: {
-		title: string
-		body?: string
-		status: 'pending' | 'success' | 'error' | 'await'
-		txLink?: string
-	}
+interface StageProps {
+	step: StageStep
+}
+
+export interface StageStep {
+	title: string
+	body?: string
+	status: 'pending' | 'success' | 'error' | 'await'
+	txLink?: string
 }
 
 const renderTag = (status: string) => {
@@ -35,7 +37,7 @@ const renderTag = (status: string) => {
 	return <div className={`${classNames.tagContainer} ${classNames[status]}`}>{content()}</div>
 }
 
-export const TransactionStep: FC<stageProps> = ({ step }) => {
+export const TransactionStep: FC<StageProps> = ({ step }) => {
 	const { title, body, status, txLink } = step
 
 	return (

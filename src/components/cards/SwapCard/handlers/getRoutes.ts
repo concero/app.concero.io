@@ -12,7 +12,7 @@ const populateRoutes = ({ routes, from, swapDispatch }) => {
 const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
 	try {
 		const lifiRoutes = await fetchLifiRoutes({ from, to, settings })
-		routes.push(...lifiRoutes)
+		routes.unshift(...lifiRoutes)
 		populateRoutes({ routes, from, swapDispatch })
 		return lifiRoutes // Return the lifiRoutes for Promise.all
 	} catch (error) {
@@ -24,6 +24,7 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
 const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }) => {
 	try {
 		const rangoRoutes = await fetchRangoRoutes({ from, to, settings })
+		console.log('standard rango route: ', rangoRoutes)
 		routes.push(...rangoRoutes)
 		populateRoutes({ routes, from, swapDispatch })
 		return rangoRoutes // Return the rangoRoutes for Promise.all

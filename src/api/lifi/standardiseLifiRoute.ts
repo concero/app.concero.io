@@ -1,8 +1,8 @@
 import * as types from '@lifi/sdk/dist/types'
 import { getRouteStep } from './getRouteStep'
-import { Route } from './types'
+import { StandardRoute } from './types'
 
-export const standardiseLifiRoute = (route: types.Route): Route => ({
+export const standardiseLifiRoute = (route: types.Route): StandardRoute => ({
 	id: route.id,
 	provider: 'lifi',
 	from: {
