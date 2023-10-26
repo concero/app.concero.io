@@ -4,7 +4,7 @@ import { headers } from '../bitquery/config'
 
 export async function submitFeedback({ type, message }): Promise<any> {
 	if (!type || !message) return
-	const url = 'http://localhost:4000/api/feedback'
+	const url = `${process.env.CONCERO_API_URL}/feedback`
 	const body = { type, message }
 
 	function on_ok() {
