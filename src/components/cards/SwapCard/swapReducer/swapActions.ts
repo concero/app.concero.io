@@ -1,6 +1,7 @@
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
-import { SwapAction } from './types'
+import { SwapAction, SwapState } from './types'
+import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
 
 export const swapActions: SwapAction = {
 	/* ROUTE-RELATED ACTIONS */
@@ -40,7 +41,7 @@ export const swapActions: SwapAction = {
 		...state,
 		[action.direction]: { ...state[action.direction], address: action.payload },
 	}),
-	SET_RESPONSE: (state, action) => ({ ...state, response: action.payload }),
+	SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
 	TOGGLE_INSURANCE: (state, action) => toggleRouteInsurance(state, action.payload),
 	SET_SWAP_STAGE: (state, action) => {
 		if (action.payload === 'progress') {
@@ -71,6 +72,31 @@ export const swapActions: SwapAction = {
 		newSteps[index] = { ...newSteps[index], ...rest }
 		return { ...state, steps: newSteps }
 	},
+	UPDATE_LAST_SWAP_STEP: updateLastSwapState,
+	UPDATE_PREV_RANGO_STEPS: (state: SwapState, action: SwapAction): SwapState => {
+		if (!state.steps.length) return state
+		if (action.currentTransactionStatus === 'failed') {
+			return updateLastSwapState(state)
+		} else {
+			const newStatuses = state.steps.map((step: StageStep): StageStep => {
+				if (step.title === 'Bridging transaction') {
+					return { ...step, status: 'success' }
+				} else if (step.title === 'Action required') {
+					return { ...step, status: 'success', title: 'Transaction approved', body: 'Your transaction has been successfully approved.' }
+				}
+				return step
+			})
+			return { ...state, steps: newStatuses }
+		}
+	},
 	SET_CHAINS: (state, action) => ({ ...state, chains: action.payload }),
 	POPULATE_INIT_DATA: (state, action) => action.payload,
+}
+
+function updateLastSwapState(state: SwapState): SwapState {
+	const lastStep = state.steps[state.steps.length - 1]
+	if (lastStep.status === 'pending' || lastStep.status === 'await') {
+		return { ...state, steps: [...state.steps.slice(0, state.steps.length - 1)] }
+	}
+	return state
 }

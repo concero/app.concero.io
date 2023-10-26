@@ -1,5 +1,7 @@
-import { StandardRoute, Step } from '../../../../api/lifi/types'
+import { StandardRoute } from '../../../../api/lifi/types'
 import { Provider } from '../../../../api/concero/types'
+import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
+import { TransactionStatus } from 'rango-sdk'
 
 export interface Direction {
 	chain: {
@@ -31,7 +33,7 @@ export interface SwapState {
 	typingTimeout: number
 	response: Response | null
 	stage: 'input' | 'progress'
-	steps: Step[]
+	steps: StageStep[]
 	status: 'pending' | 'success' | 'failure' | 'awaiting'
 	settings: {
 		slippage_percent: string
@@ -75,5 +77,7 @@ export type SwapAction =
 	| { type: 'APPEND_SWAP_STEP'; payload: any }
 	| { type: 'SET_TO_ADDRESS'; payload: string }
 	| { type: 'UPSERT_SWAP_STEP'; payload: any }
+	| { type: 'UPDATE_LAST_SWAP_STEP' }
+	| { type: 'UPDATE_PREV_RANGO_STEPS'; currentTransactionStatus: TransactionStatus }
 	| { type: 'SET_CHAINS'; payload: any[] }
 	| { type: 'POPULATE_INIT_DATA'; payload: SwapState }

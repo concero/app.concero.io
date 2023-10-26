@@ -1,26 +1,16 @@
 import { TransactionStatus } from 'rango-sdk'
 import { TransactionStatusResponse } from 'rango-sdk/src/types'
 import { Dispatch } from 'react'
-import { SwapAction, SwapState } from '../../components/cards/SwapCard/swapReducer/types'
-import { Step } from '../lifi/types'
+import { SwapAction } from '../../components/cards/SwapCard/swapReducer/types'
 
-export function updatePrevStatuses(swapDispatch: Dispatch<SwapAction>, swapState: SwapState) {
-	const { steps } = swapState
-
-	const newStatuses = steps.map((step: Step) => {
-		return { ...step, status: 'success' }
-	})
-
-	swapDispatch({ type: 'UPSERT_SWAP_STEP', payload: newStatuses })
-}
-
-export function updateRangoTransactionStatus(txStatus: TransactionStatusResponse, swapDispatch: Dispatch<SwapAction>, swapState: SwapState) {
+export function updateRangoTransactionStatus(txStatus: TransactionStatusResponse, swapDispatch: Dispatch<SwapAction>) {
 	const txLink = txStatus.explorerUrl[0]?.url ?? null
 	const { status } = txStatus
 
+	swapDispatch({ type: 'UPDATE_PREV_RANGO_STEPS', currentTransactionStatus: status as TransactionStatus })
+
 	switch (status) {
 		case TransactionStatus.FAILED: {
-			updatePrevStatuses(swapDispatch, swapState)
 			swapDispatch({
 				type: 'APPEND_SWAP_STEP',
 				payload: {
@@ -34,7 +24,6 @@ export function updateRangoTransactionStatus(txStatus: TransactionStatusResponse
 		}
 		case TransactionStatus.SUCCESS: {
 			let body = 'Your transaction was successful.'
-			updatePrevStatuses(swapDispatch, swapState)
 			swapDispatch({
 				type: 'APPEND_SWAP_STEP',
 				payload: { status: 'success', title: 'Swap completed', body, txLink },
@@ -45,7 +34,7 @@ export function updateRangoTransactionStatus(txStatus: TransactionStatusResponse
 			const body = 'Please wait, this may take up to 20 minutes.'
 			swapDispatch({
 				type: 'UPSERT_SWAP_STEP',
-				payload: { status: 'pending', title: 'Transaction pending', body, txLink },
+				payload: { status: 'pending', title: 'Bridging transaction', body, txLink },
 			})
 			return
 		}

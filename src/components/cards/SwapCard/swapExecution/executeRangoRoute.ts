@@ -103,18 +103,18 @@ export async function executeRangoRoute({
 	from,
 	settings,
 	swapDispatch,
-	swapState,
 	switchChainHook,
 	getChainByProviderSymbol,
 }: ExecuteRangoRouteProps): Promise<TransactionStatusResponse | undefined> {
 	let step = 1
 	let transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
+
 	while (step <= (route.result?.swaps.length || 1)) {
 		try {
 			const statusResponse = await rangoClient.checkStatus({ requestId: route.requestId, step, txId: transactionResponse.hash })
 			const { status } = statusResponse
 
-			updateRangoTransactionStatus(statusResponse, swapDispatch, swapState)
+			updateRangoTransactionStatus(statusResponse, swapDispatch)
 
 			if (status === TransactionStatus.FAILED) return statusResponse
 			if (status === TransactionStatus.SUCCESS) {

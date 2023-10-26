@@ -32,7 +32,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 	try {
 		if (provider === 'rango') {
 			console.log('originalRoute: ', originalRoute)
-			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, swapState, switchChainHook, getChainByProviderSymbol })
+			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol })
 			handleRangoResponse(response, swapDispatch, provider)
 		} else if (provider === 'lifi') {
 			updateLifiSteps({ swapDispatch, selectedRoute })
