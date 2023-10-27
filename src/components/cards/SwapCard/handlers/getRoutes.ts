@@ -67,7 +67,7 @@ export const getRoutes = async (from: Direction, to: Direction, settings: Settin
 
 	try {
 		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
-
+		console.log(routes)
 		if (routes.length === 0) {
 			swapDispatch({
 				type: 'SET_RESPONSE',

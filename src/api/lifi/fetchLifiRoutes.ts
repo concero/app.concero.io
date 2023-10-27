@@ -5,6 +5,7 @@ import { lifi } from './lifi'
 import { FetchRoutesParams } from './types'
 import { RoutesRequest } from '@lifi/types'
 import { RouteOptions } from '@lifi/types/dist/api'
+import { config } from '../../constants/config'
 
 const sortByTags = (routeA: StandardRoute, routeB: StandardRoute): number => {
 	const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
@@ -22,9 +23,9 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
 	let result: StandardRoute[] | [] = []
 
 	const routeOptions: RouteOptions = {
-		fee: 0.002,
+		fee: parseFloat(config.LIFI_FEES),
 		insurance: false,
-		integrator: 'concero',
+		integrator: config.LIFI_INTEGRATOR,
 		slippage: Number(settings.slippage_percent) / 100,
 	}
 
