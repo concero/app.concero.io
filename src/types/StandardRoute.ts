@@ -27,9 +27,16 @@ export type Direction = {
 	}
 	chain: {
 		id: number | string
+		providers: Providers[]
 	}
 	amount: string | null
 	address: string | null
+}
+
+export interface Providers {
+	name: string
+	symbol: string
+	_id: string
 }
 
 export type Step = {

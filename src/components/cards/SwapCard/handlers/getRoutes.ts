@@ -48,7 +48,7 @@ interface GetRangoRoutesProps {
 
 const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutesProps): Promise<void | StandardRoute[] | []> => {
 	try {
-		const rangoRoutes = await fetchRangoRoutes({ from, to, settings })
+		const rangoRoutes: StandardRoute[] = await fetchRangoRoutes({ from, to, settings })
 		console.log('standard rango route: ', rangoRoutes)
 		routes.push(...rangoRoutes)
 		populateRoutes({ routes, from, swapDispatch })
