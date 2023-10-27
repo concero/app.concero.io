@@ -104,8 +104,8 @@ export const secondsConverter = (seconds: number): string => {
 	return `${seconds}s`
 }
 
-export const numberToFormatString = (number: number, decimals = 4, isTransformNeeded = false): string => {
-	if (number === undefined || number === null) return
+export const numberToFormatString = (number: number, decimals = 4, isTransformNeeded = false): string | null => {
+	if (number === undefined || number === null) return null
 	const result = parseFloat(number.toFixed(decimals))
 	if (isTransformNeeded && result === 0) return '< 0.01'
 	return result?.toString()

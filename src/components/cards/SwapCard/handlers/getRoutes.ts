@@ -4,13 +4,13 @@ import { Direction, StandardRoute } from '../../../../types/StandardRoute'
 import { Settings, SwapAction } from '../swapReducer/types'
 import { Dispatch } from 'react'
 
-interface PopulateRoutesProps {
+interface PopulateRoutes {
 	routes: StandardRoute[] | []
 	from: Direction
 	swapDispatch: Dispatch<SwapAction>
 }
 
-const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutesProps) => {
+const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
 	swapDispatch({
 		type: 'POPULATE_ROUTES',
 		payload: routes,
@@ -18,7 +18,7 @@ const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutesProps) => 
 	})
 }
 
-interface GetLifiRoutesProps {
+interface GetLifiRoutes {
 	routes: StandardRoute[] | []
 	from: Direction
 	to: Direction
@@ -26,7 +26,7 @@ interface GetLifiRoutesProps {
 	swapDispatch: Dispatch<SwapAction>
 }
 
-const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLifiRoutesProps): Promise<void | StandardRoute[] | []> => {
+const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLifiRoutes): Promise<void | StandardRoute[] | []> => {
 	try {
 		const lifiRoutes: StandardRoute[] | [] = await fetchLifiRoutes({ from, to, settings })
 		routes.unshift(...lifiRoutes)
@@ -38,7 +38,7 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLi
 	}
 }
 
-interface GetRangoRoutesProps {
+interface GetRangoRoutes {
 	routes: StandardRoute[] | []
 	from: Direction
 	to: Direction
@@ -46,10 +46,9 @@ interface GetRangoRoutesProps {
 	swapDispatch: Dispatch<SwapAction>
 }
 
-const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutesProps): Promise<void | StandardRoute[] | []> => {
+const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void | StandardRoute[] | []> => {
 	try {
 		const rangoRoutes: StandardRoute[] = await fetchRangoRoutes({ from, to, settings })
-		console.log('standard rango route: ', rangoRoutes)
 		routes.push(...rangoRoutes)
 		populateRoutes({ routes, from, swapDispatch })
 		return rangoRoutes // Return the rangoRoutes for Promise.all
@@ -57,6 +56,11 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 		console.log('rangoRoutes', error)
 		// throw error // Re-throw the error to be caught by Promise.all
 	}
+}
+
+function checkInsufficientGas(routes: StandardRoute[], swapDispatch: Dispatch<SwapAction>) {
+	console.log(routes)
+	// const chainsToFetch = routes.map((route: StandardRoute) => route.steps)
 }
 
 export const getRoutes = async (from: Direction, to: Direction, settings: Settings, swapDispatch: Dispatch<SwapAction>): Promise<void> => {
@@ -67,6 +71,9 @@ export const getRoutes = async (from: Direction, to: Direction, settings: Settin
 
 	try {
 		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
+
+		await checkInsufficientGas(routes, swapDispatch)
+
 		console.log(routes)
 		if (routes.length === 0) {
 			swapDispatch({

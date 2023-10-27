@@ -49,7 +49,7 @@ export const standardiseLifiRoute = (route: types.Route): StandardRoute => ({
 		0,
 	),
 	transaction_time_seconds: route.steps.reduce(
-		(acc: number, step) => acc + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
+		(acc: number, step) => acc + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + parseInt(innerStep.estimate.executionDuration), 0),
 		0,
 	),
 	execution: route.steps.map(step => step.execution),
