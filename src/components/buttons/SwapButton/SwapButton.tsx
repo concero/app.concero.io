@@ -14,7 +14,7 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 		setStatus(from, to, isConnected, isLoading, dispatch, routes, balance, response)
 	}, [from, to, isLoading, isConnected, routes, response])
 
-	const iconComponents = {
+	const iconComponents: Record<string, JSX.Element> | Record<string, Record<string, JSX.Element>> = {
 		Wallet: <IconWallet size={18} color="white" />,
 		ArrowsUpDown: <IconArrowsUpDown size={18} color="white" />,
 	}

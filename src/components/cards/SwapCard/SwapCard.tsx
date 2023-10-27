@@ -29,7 +29,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 		swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
 	}
 
-	const toggleInsurance = routeId => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
+	const toggleInsurance = (routeId: string) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
 	useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
 
 	return (

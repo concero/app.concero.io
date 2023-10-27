@@ -1,26 +1,15 @@
-import { Dispatch, From, To } from './types'
-import { StandardRoute } from '../../../types/StandardRoute'
+import { Direction, StandardRoute } from '../../../types/StandardRoute'
+import { SwapButtonAction } from './buttonReducer'
+import { Dispatch } from 'react'
 
-const handleresponse = (response: { isOk: boolean; message: string }, routes: StandardRoute[], dispatch: Dispatch) => {
+const handleResponse = (response: { isOk: boolean; message: string }, routes: StandardRoute[], dispatch: Dispatch<SwapButtonAction>) => {
 	if (!response.isOk) {
 		switch (response.message) {
-			// case 'user rejected':
-			//   dispatch({ type: 'CANCELED' })
-			//   break
-			// case 'unknown error':
-			//   dispatch({ type: 'WRONG' })
-			//   break
 			case 'No routes found':
 				if (!routes.length) {
 					dispatch({ type: 'NO_ROUTES' })
 				}
 				break
-			// case 'Insufficient balance':
-			//   dispatch({ type: 'LOW_BALANCE' })
-			//   break
-			// default:
-			//   dispatch({ type: 'SET_RESPONSE', payload: response })
-			//   break
 		}
 	} else {
 		dispatch({ type: 'SUCCESS' })
@@ -28,11 +17,11 @@ const handleresponse = (response: { isOk: boolean; message: string }, routes: St
 }
 
 export const setStatus = (
-	from: From,
-	to: To,
+	from: Direction,
+	to: Direction,
 	isConnected: boolean,
 	isLoading: boolean,
-	dispatch: Dispatch,
+	dispatch: Dispatch<SwapButtonAction>,
 	routes: StandardRoute[],
 	balance: string,
 	response: {
@@ -49,18 +38,18 @@ export const setStatus = (
 	}
 
 	if (response) {
-		return handleresponse(response, routes, dispatch)
+		return handleResponse(response, routes, dispatch)
 	}
 
 	if (!from.amount || (from.amount && !routes.length)) {
 		return dispatch({ type: 'NO_AMOUNT' })
 	}
 
-	if (to.chain.destinationAddressRequired) {
-		if (!to.address) return dispatch({ type: 'NO_DESTINATION_ADDRESS' })
-	}
+	// if (to.chain.destinationAddressRequired) {
+	// 	if (!to.address) return dispatch({ type: 'NO_DESTINATION_ADDRESS' })
+	// }
 
-	if (balance && from.amount > parseFloat(balance)) {
+	if (balance && Number(from.amount) > parseFloat(balance)) {
 		return dispatch({ type: 'LOW_BALANCE' })
 	}
 

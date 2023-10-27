@@ -1,6 +1,20 @@
-import { useReducer } from 'react'
+import { Dispatch, useReducer } from 'react'
 
-const reducer = (state, action) => {
+export interface SwapButtonState {
+	isDisabled: boolean
+	text: string
+	icon: string
+	className: string
+}
+
+type ActionType = 'LOW_BALANCE' | 'NO_AMOUNT' | 'SWAP' | 'DISCONNECTED' | 'LOADING' | 'NO_ROUTES' | 'SUCCESS' | 'WRONG' | 'CANCELED' | 'SET_RESPONSE' | 'NO_DESTINATION_ADDRESS'
+
+export interface SwapButtonAction {
+	type: ActionType
+	payload?: { message: string }
+}
+
+const reducer = (state: SwapButtonState, action: SwapButtonAction): SwapButtonState => {
 	switch (action.type) {
 		case 'LOW_BALANCE':
 			return {
@@ -70,7 +84,7 @@ const reducer = (state, action) => {
 		case 'SET_RESPONSE':
 			return {
 				isDisabled: true,
-				text: action.payload.message,
+				text: action.payload?.message ?? 'Something went wrong',
 				icon: '',
 				className: 'wrong',
 			}
@@ -86,7 +100,7 @@ const reducer = (state, action) => {
 	}
 }
 
-export const useButtonReducer = () => {
+export function useButtonReducer(): [SwapButtonState, Dispatch<SwapButtonAction>] {
 	const [buttonState, dispatch] = useReducer(reducer, {
 		text: 'Enter amount to swap',
 		isDisabled: true,

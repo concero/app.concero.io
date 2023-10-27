@@ -19,5 +19,3 @@ export type To = {
 		amount_usd: number
 	}
 }
-
-export type Dispatch = (action: { type: string }) => void
