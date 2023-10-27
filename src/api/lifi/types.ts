@@ -1,28 +1,8 @@
+import { Settings } from '../../components/cards/SwapCard/swapReducer/types'
+import { Direction } from '../../types/StandardRoute'
+
 export interface FetchRoutesParams {
-	from: {
-		chain: {
-			id: number
-		}
-		token: {
-			name: string
-			address: string
-			symbol: string
-		}
-		address: string
-		amount: string
-	}
-	to: {
-		chain: {
-			id: number
-		}
-		token: {
-			name: string
-			address: string
-			symbol: string
-		}
-		address: string
-	}
-	settings: {
-		slippage_percent: number
-	}
+	from: Direction
+	to: Direction
+	settings: Settings
 }

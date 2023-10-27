@@ -29,6 +29,7 @@ export type Direction = {
 		id: number | string
 	}
 	amount: string | null
+	address: string | null
 }
 
 export type Step = {

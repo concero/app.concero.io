@@ -44,7 +44,7 @@ export interface Settings {
 }
 
 interface Response {
-	provider: string
+	provider?: string
 	isOk: boolean
 	message: string
 }
