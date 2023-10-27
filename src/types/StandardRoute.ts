@@ -1,15 +1,13 @@
-import { Insurance } from '@lifi/sdk'
-
 export interface StandardRoute {
 	id: string
 	from: Direction
 	to: Direction
 	steps: Step[] | null
 	cost: {
-		total_usd: number | string | null
-		total_gas_usd: number | string | null
+		total_usd: string | null | undefined
+		total_gas_usd: string | null | undefined
 	}
-	tags: string[]
+	tags: ('RECOMMENDED' | 'FASTEST' | 'CHEAPEST' | 'SAFEST')[] | undefined
 	slippage_percent: number | null
 	transaction_time_seconds: number | null
 	insurance: Insurance | null
@@ -27,7 +25,7 @@ export type Direction = {
 	}
 	chain: {
 		id: number | string
-		providers: Providers[]
+		providers?: Providers[]
 	}
 	amount: string | null
 	address: string | null
@@ -79,4 +77,9 @@ export type Step = {
 		gas_usd: number
 		logo_uri: string
 	}
+}
+
+interface Insurance {
+	state: string
+	fee_amount_usd: string
 }
