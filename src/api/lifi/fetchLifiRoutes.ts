@@ -1,7 +1,8 @@
-import { FetchRoutesParams, StandardRoute } from './types'
+import { StandardRoute } from '../../types/StandardRoute'
 import { standardiseLifiRoute } from './standardiseLifiRoute'
 import { addingAmountDecimals } from '../../utils/formatting'
 import { lifi } from './lifi'
+import { FetchRoutesParams } from './types'
 
 interface GetRoutes {
 	(params: FetchRoutesParams): Promise<StandardRoute[]>

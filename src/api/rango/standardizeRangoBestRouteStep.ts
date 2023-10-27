@@ -1,6 +1,6 @@
 import { SwapResult } from 'rango-types/src/api/main/common'
 import BigNumber from 'bignumber.js'
-import { Step } from '../lifi/types'
+import { Step } from '../../types/StandardRoute'
 import { roundNumberByDecimals } from '../../utils/formatting'
 
 export function standardizeRangoBestRouteStep(step: SwapResult): Step {

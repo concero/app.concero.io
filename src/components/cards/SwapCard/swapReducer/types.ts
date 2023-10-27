@@ -1,4 +1,4 @@
-import { StandardRoute } from '../../../../api/lifi/types'
+import { StandardRoute } from '../../../../types/StandardRoute'
 import { Provider } from '../../../../api/concero/types'
 import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
 import { TransactionStatus } from 'rango-sdk'
@@ -35,10 +35,12 @@ export interface SwapState {
 	stage: 'input' | 'progress'
 	steps: StageStep[]
 	status: 'pending' | 'success' | 'failure' | 'awaiting'
-	settings: {
-		slippage_percent: string
-		showDestinationAddress: boolean
-	}
+	settings: Settings
+}
+
+export interface Settings {
+	slippage_percent: string
+	showDestinationAddress: boolean
 }
 
 interface Response {
@@ -51,7 +53,7 @@ type ActionDirection = 'from' | 'to'
 
 export type SwapAction =
 	| { type: 'SET_ROUTES'; payload: any[] }
-	| { type: 'POPULATE_ROUTES'; payload: any; fromAmount: string }
+	| { type: 'POPULATE_ROUTES'; payload: any; fromAmount: string | null }
 	| { type: 'CLEAR_ROUTES' }
 	| { type: 'SET_BALANCE'; payload: string }
 	| { type: 'SET_LOADING'; payload: boolean }

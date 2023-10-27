@@ -1,7 +1,7 @@
 import { IconClock, IconPigMoney } from '@tabler/icons-react'
 import classNames from './RouteCard.module.pcss'
 import { colors } from '../../../constants/colors'
-import { Step } from '../../../api/lifi/types'
+import { Step } from '../../../types/StandardRoute'
 import { secondsConverter } from '../../../utils/formatting'
 
 function AdditionalInfoTag({ title, type, getColor, isBestRoute }: { title: string; type: 'gasUsd' | 'gas' | 'time'; getColor: () => string; isBestRoute: boolean }) {

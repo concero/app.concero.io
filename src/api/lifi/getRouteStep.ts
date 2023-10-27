@@ -1,5 +1,5 @@
 import * as lifiTypes from '@lifi/sdk/dist/types'
-import { Step } from './types'
+import { Step } from '../../types/StandardRoute'
 
 export const getRouteStep = (step: lifiTypes.Step): Step => {
 	// const fromDecimals = step.action.fromToken.decimals

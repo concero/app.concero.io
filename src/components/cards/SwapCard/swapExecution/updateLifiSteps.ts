@@ -1,6 +1,6 @@
 import { SwapAction } from '../swapReducer/types'
 import { Dispatch } from 'react'
-import { StandardRoute } from '../../../../api/lifi/types'
+import { StandardRoute } from '../../../../types/StandardRoute'
 import { Process } from '@lifi/types/dist/cjs/step'
 
 const getStepStatus = (action: Process) => {

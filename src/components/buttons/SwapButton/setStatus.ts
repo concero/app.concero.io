@@ -1,5 +1,5 @@
 import { Dispatch, From, To } from './types'
-import { StandardRoute } from '../../../api/lifi/types'
+import { StandardRoute } from '../../../types/StandardRoute'
 
 const handleresponse = (response: { isOk: boolean; message: string }, routes: StandardRoute[], dispatch: Dispatch) => {
 	if (!response.isOk) {

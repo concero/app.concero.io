@@ -1,7 +1,7 @@
 import { rangoClient } from './rangoClient'
 import { config } from '../../constants/config'
 import { standardizeRangoBestRoute } from './standardizeRangoBestRoute'
-import { StandardRoute } from '../lifi/types'
+import { StandardRoute } from '../../types/StandardRoute'
 
 export const fetchRangoRoutes = async ({ from, to, settings }): Promise<[StandardRoute] | []> => {
 	const fromRangoChainSymbol = from.chain.providers?.find(item => item.name === 'rango')?.symbol

@@ -1,4 +1,4 @@
-import { StandardRoute, Step } from '../lifi/types'
+import { StandardRoute, Step } from '../../types/StandardRoute'
 import { BestRouteResponse } from 'rango-types/src/api/main/routing'
 import BigNumber from 'bignumber.js'
 import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
