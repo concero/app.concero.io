@@ -16,7 +16,6 @@ function getTotalGasUsd(route: BestRouteResponse): string | null {
 }
 
 export async function standardizeRangoBestRoute(route: BestRouteResponse, from: any, to: any): Promise<StandardRoute> {
-	console.log(route)
 	return {
 		id: route.requestId,
 		provider: 'rango',

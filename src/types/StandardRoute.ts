@@ -47,10 +47,11 @@ export type Step = {
 			decimals: number
 			price_usd: string | number | null
 			amount: string
-			logo_uri: string
+			amount_usd?: string | null
+			logo_uri: string | null
 		}
 		chain: {
-			id: number
+			id: string
 		}
 	}
 	to: {
@@ -59,22 +60,23 @@ export type Step = {
 			address: string
 			symbol: string
 			decimals: number
-			price_usd: string
+			price_usd: string | null
 			amount: string
-			logo_uri: string | undefined
+			amount_usd?: string | null
+			logo_uri: string | null
 		}
 		chain: {
-			id: number
+			id: string
 		}
 	}
 	tool: {
 		name: string
 		estimated_execution_time_seconds: number
-		slippage_limit: number
-		fees: number
-		fees_usd: number
-		gas: number
-		gas_usd: number
+		slippage_limit: number | null
+		fees: Fees[] | []
+		fees_usd: number | null
+		gas: Gas[] | []
+		gas_usd: number | string | null
 		logo_uri: string
 	}
 }
@@ -82,4 +84,26 @@ export type Step = {
 interface Insurance {
 	state: string
 	fee_amount_usd: string
+}
+
+export interface Fees {
+	amount: string
+	type?: string
+	asset: {
+		chainId: string
+		symbol: string
+		decimals?: number
+		address?: string | null
+	}
+}
+
+export interface Gas {
+	amount: string
+	type?: string
+	asset: {
+		chainId: string
+		symbol: string
+		decimals?: number
+		address: string | null
+	}
 }

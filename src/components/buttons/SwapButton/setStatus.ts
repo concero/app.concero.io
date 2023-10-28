@@ -24,10 +24,7 @@ export const setStatus = (
 	dispatch: Dispatch<SwapButtonAction>,
 	routes: StandardRoute[],
 	balance: string,
-	response: {
-		isOk: boolean
-		message: string
-	},
+	response: { isOk: boolean; message: string },
 ) => {
 	if (isLoading) {
 		return dispatch({ type: 'LOADING' })

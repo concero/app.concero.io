@@ -1,11 +1,10 @@
 import { Dispatch, MutableRefObject } from 'react'
-import { getRoutes } from './getRoutes'
-import { Direction } from '../../../../types/StandardRoute'
-import { Settings, SwapAction } from '../swapReducer/types'
+import { getRoutes } from '../getRoutes/getRoutes'
+import { Settings, SwapAction, SwapStateDirection } from '../swapReducer/types'
 
 export const handleFetchRoutes = async (
-	from: Direction,
-	to: Direction,
+	from: SwapStateDirection,
+	to: SwapStateDirection,
 	settings: Settings,
 	swapDispatch: Dispatch<SwapAction>,
 	typingTimeoutRef: MutableRefObject<number | undefined>,
@@ -16,9 +15,6 @@ export const handleFetchRoutes = async (
 		typingTimeoutRef.current = typingTimeoutId
 	} catch (e) {
 		console.error(e)
-		swapDispatch({
-			type: 'SET_LOADING',
-			payload: false,
-		})
+		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
 }

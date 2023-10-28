@@ -2,10 +2,10 @@ import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 import { SwapAction, SwapState } from './types'
 import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
+import { ButtonType } from '../../../buttons/SwapButton/constants'
 
 export const swapActions: SwapAction = {
 	/* ROUTE-RELATED ACTIONS */
-	SET_ROUTES: (state, action) => ({ ...state, routes: action.payload }),
 	POPULATE_ROUTES: (state, action) => {
 		if (action.fromAmount !== state.from.amount) return state
 		return { ...state, routes: action.payload, selectedRoute: action.payload[0] }
@@ -14,8 +14,6 @@ export const swapActions: SwapAction = {
 	SET_BALANCE: (state, action) => ({ ...state, balance: action.payload }),
 	SET_LOADING: (state, action) => ({ ...state, isLoading: action.payload }),
 	SET_SELECTED_ROUTE: (state, action) => ({ ...state, selectedRoute: action.payload }),
-	SET_ORIGINAL_ROUTES: (state, action) => ({ ...state, originalRoutes: action.payload }),
-	SET_TYPING_TIMEOUT: (state, action) => ({ ...state, typingTimeout: action.payload }),
 	/* INPUT_RELATED ACTIONS */
 	SET_CHAIN: (state, action) => {
 		const { chain } = action.payload
@@ -41,7 +39,7 @@ export const swapActions: SwapAction = {
 		...state,
 		[action.direction]: { ...state[action.direction], address: action.payload },
 	}),
-	SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
+	// SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
 	TOGGLE_INSURANCE: (state, action) => toggleRouteInsurance(state, action.payload),
 	SET_SWAP_STAGE: (state, action) => {
 		if (action.payload === 'progress') {
@@ -89,8 +87,7 @@ export const swapActions: SwapAction = {
 			return { ...state, steps: newStatuses }
 		}
 	},
-	SET_CHAINS: (state, action) => ({ ...state, chains: action.payload }),
-	POPULATE_INIT_DATA: (state, action) => action.payload,
+	SET_BUTTON_STATE: (state: SwapState, action: { buttonType: ButtonType; message?: string }) => ({ ...state, buttonState: { type: action.buttonType, message: action.message } }),
 }
 
 function updateLastSwapState(state: SwapState): SwapState {

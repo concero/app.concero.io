@@ -39,10 +39,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 
 			const updateRouteHook = (updatedRoute: Route) => {
 				const stdRoute = standardiseLifiRoute(updatedRoute)
-				updateLifiSteps({
-					swapDispatch,
-					selectedRoute: stdRoute,
-				})
+				updateLifiSteps({ swapDispatch, selectedRoute: stdRoute })
 			}
 
 			const acceptExchangeRateUpdateHook = () => Promise.resolve(true)

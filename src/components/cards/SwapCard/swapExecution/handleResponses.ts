@@ -7,11 +7,9 @@ export const handleRangoResponse = (executedRoute, swapDispatch: Dispatch<SwapAc
 	swapDispatch({ type: 'UPDATE_LAST_SWAP_STEP' })
 
 	if (executedRoute.status === TransactionStatus.FAILED) {
-		swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: false, message: executedRoute.error } })
 		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'failed' })
 	} else if (executedRoute.status === 'success') {
-		swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: true, message: 'Success' } })
 		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'success' })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'success' })
 	}
@@ -23,13 +21,11 @@ export const handleLifiResponse = (executedRoute, swapDispatch: Dispatch<SwapAct
 	swapDispatch({ type: 'UPDATE_LAST_SWAP_STEP' })
 
 	if (lastExecutionStep?.status.toLowerCase() === 'done') {
-		swapDispatch({ type: 'SET_RESPONSE', payload: { provider, isOk: true, message: 'Success' } })
 		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'success' })
 		return
 	}
 
 	if (lastExecutionStep?.status.toLowerCase() === 'failed') {
-		swapDispatch({ type: 'SET_RESPONSES', payload: { provider, isOk: false, message: stdRoute.execution.error } })
 		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
 	}
 }

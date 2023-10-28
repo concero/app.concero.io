@@ -100,7 +100,7 @@ export function addingAmountDecimals(number: number | string, decimals: number):
 }
 
 export const secondsConverter = (seconds: number): string => {
-	if (seconds > 60) return `${Math.floor(seconds / 60)}m ${seconds % 60 ? `${(seconds % 60).toString()}s` : ''}`
+	if (seconds > 60) return `${Math.round(seconds / 60)}m ${seconds % 60 ? `${Math.round(seconds % 60).toString()}s` : ''}`
 	return `${seconds}s`
 }
 

@@ -13,7 +13,7 @@ interface IConfig {
 }
 
 export const config: IConfig = {
-	baseURL: 'https://api.concero.io',
+	baseURL: process.env.CONCERO_API_URL as string,
 	headers: { 'Content-Type': 'application/json' },
 	CRYPTOPANIC_API_KEY: process.env.CRYPTOPANIC_API_KEY as string,
 	LIFI_INTEGRATOR: process.env.LIFI_INTEGRATOR as string,
