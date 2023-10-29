@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react'
+import React, { FC, memo, useEffect } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
@@ -9,10 +9,9 @@ import classNames from './ExchangeScreen.module.pcss'
 import { TargetInfoCard } from '../../cards/TargetInfoCard/TargetInfoCard'
 
 export interface ExchangeScreenProps {}
-
-const History = memo(withErrorBoundary(HistoryCard))
+// const History = memo(withErrorBoundary(HistoryCard))
 const Swap = memo(withErrorBoundary(SwapCard))
-const News = memo(withErrorBoundary(NewsCard))
+// const News = memo(withErrorBoundary(NewsCard))
 const Chart = memo(withErrorBoundary(ChartCard))
 
 export const ExchangeScreen: FC<ExchangeScreenProps> = () => {
