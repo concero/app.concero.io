@@ -16,6 +16,7 @@ interface UseSwapCardEffectsProps {
 
 export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef }: UseSwapCardEffectsProps) {
 	const { from, to, settings, selectedRoute } = swapState
+
 	useEffect(() => {
 		setHistoryCard(dispatch, from, to)
 		setSwapCard(dispatch, from, to)

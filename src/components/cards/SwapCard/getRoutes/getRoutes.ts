@@ -1,9 +1,8 @@
 import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
 import { StandardRoute } from '../../../../types/StandardRoute'
-import { Settings, SwapAction, SwapActionType, SwapStateDirection } from '../swapReducer/types'
+import { Settings, SwapAction, SwapStateDirection } from '../swapReducer/types'
 import { Dispatch } from 'react'
-import { ButtonType } from '../../../buttons/SwapButton/constants'
 import { GetLifiRoutes, GetRangoRoutes, PopulateRoutes } from './types'
 
 const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
@@ -36,23 +35,15 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 	}
 }
 
-function setButtonState(routes: StandardRoute[], swapDispatch: Dispatch<SwapAction>) {
-	if (routes.length === 0) {
-		swapDispatch({ type: SwapActionType.SET_BUTTON_STATE, buttonType: ButtonType.NO_ROUTES })
-	}
-}
-
 export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection, settings: Settings, swapDispatch: Dispatch<SwapAction>): Promise<void> => {
 	if (!from.amount) return
 	swapDispatch({ type: 'SET_LOADING', payload: true })
-	swapDispatch({ type: SwapActionType.SET_BUTTON_STATE, buttonType: ButtonType.LOADING })
 
 	const routes: StandardRoute[] | [] = []
 
 	try {
 		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
 		// await checkInsufficientGasAndFeeOnAllSteps(routes, swapDispatch, from.address)
-		setButtonState(routes, swapDispatch)
 	} catch (error) {
 		console.log(error)
 	} finally {

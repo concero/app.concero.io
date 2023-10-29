@@ -10,8 +10,6 @@ export enum ButtonType {
 	LOW_FEES = 6,
 	CONNECT_WALLET = 7,
 	NO_ROUTES = 8,
-	SOMETHING_WENT_WRONG = 9,
-	CANCELED = 10,
 }
 
 export const buttonText: { [key in ButtonType]: string } = {
@@ -23,8 +21,6 @@ export const buttonText: { [key in ButtonType]: string } = {
 	[ButtonType.LOW_FEES]: 'Insufficient fees',
 	[ButtonType.CONNECT_WALLET]: 'Connect wallet to swap',
 	[ButtonType.NO_ROUTES]: 'No routes found',
-	[ButtonType.SOMETHING_WENT_WRONG]: 'Something went wrong',
-	[ButtonType.CANCELED]: 'Cancelled by user',
 }
 
 export const isButtonDisabled: { [key in ButtonType]: boolean } = {
@@ -36,8 +32,6 @@ export const isButtonDisabled: { [key in ButtonType]: boolean } = {
 	[ButtonType.LOW_FEES]: true,
 	[ButtonType.CONNECT_WALLET]: true,
 	[ButtonType.NO_ROUTES]: true,
-	[ButtonType.SOMETHING_WENT_WRONG]: true,
-	[ButtonType.CANCELED]: true,
 }
 
 export const buttonStyleClass: { [key in ButtonType]: string } = {
@@ -49,8 +43,6 @@ export const buttonStyleClass: { [key in ButtonType]: string } = {
 	[ButtonType.LOW_FEES]: 'wrong',
 	[ButtonType.CONNECT_WALLET]: 'disabled',
 	[ButtonType.NO_ROUTES]: 'disabled',
-	[ButtonType.SOMETHING_WENT_WRONG]: 'wrong',
-	[ButtonType.CANCELED]: 'canceled',
 }
 
 export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
@@ -62,6 +54,4 @@ export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
 	[ButtonType.LOW_FEES]: null,
 	[ButtonType.CONNECT_WALLET]: null,
 	[ButtonType.NO_ROUTES]: null,
-	[ButtonType.SOMETHING_WENT_WRONG]: null,
-	[ButtonType.CANCELED]: null,
 }

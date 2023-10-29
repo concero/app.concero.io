@@ -74,7 +74,6 @@ export enum SwapActionType {
 	UPSERT_SWAP_STEP = 'UPSERT_SWAP_STEP',
 	UPDATE_LAST_SWAP_STEP = 'UPDATE_LAST_SWAP_STEP',
 	UPDATE_PREV_RANGO_STEPS = 'UPDATE_PREV_RANGO_STEPS',
-	SET_BUTTON_STATE = 'SET_BUTTON_STATE',
 }
 
 export type SwapAction =
@@ -103,4 +102,3 @@ export type SwapAction =
 	| { type: 'UPSERT_SWAP_STEP'; payload: any }
 	| { type: 'UPDATE_LAST_SWAP_STEP' }
 	| { type: 'UPDATE_PREV_RANGO_STEPS'; currentTransactionStatus: TransactionStatus }
-	| { type: SwapActionType.SET_BUTTON_STATE; buttonType: ButtonType; message?: string }

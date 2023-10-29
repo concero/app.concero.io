@@ -2,7 +2,6 @@ import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 import { SwapAction, SwapState } from './types'
 import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
-import { ButtonType } from '../../../buttons/SwapButton/constants'
 
 export const swapActions: SwapAction = {
 	/* ROUTE-RELATED ACTIONS */
@@ -87,7 +86,6 @@ export const swapActions: SwapAction = {
 			return { ...state, steps: newStatuses }
 		}
 	},
-	SET_BUTTON_STATE: (state: SwapState, action: { buttonType: ButtonType; message?: string }) => ({ ...state, buttonState: { type: action.buttonType, message: action.message } }),
 }
 
 function updateLastSwapState(state: SwapState): SwapState {
