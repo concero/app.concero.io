@@ -1,4 +1,5 @@
 import { IconArrowsUpDown, IconWallet } from '@tabler/icons-react'
+import { ReactNode } from 'react'
 
 export enum ButtonType {
 	LOADING = 1,
@@ -52,7 +53,15 @@ export const buttonStyleClass: { [key in ButtonType]: string } = {
 	[ButtonType.CANCELED]: 'canceled',
 }
 
-export const iconComponent: Record<string, JSX.Element> | Record<string, Record<string, JSX.Element>> = {
-	Wallet: <IconWallet size={18} color="white" />,
-	ArrowsUpDown: <IconArrowsUpDown size={18} color="white" />,
+export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
+	[ButtonType.LOADING]: null,
+	[ButtonType.SWAP]: <IconArrowsUpDown size={18} color="white" />,
+	[ButtonType.ENTER_AMOUNT]: null,
+	[ButtonType.LOW_BALANCE]: <IconWallet size={18} color="white" />,
+	[ButtonType.LOW_GAS]: null,
+	[ButtonType.LOW_FEES]: null,
+	[ButtonType.CONNECT_WALLET]: null,
+	[ButtonType.NO_ROUTES]: null,
+	[ButtonType.SOMETHING_WENT_WRONG]: null,
+	[ButtonType.CANCELED]: null,
 }
