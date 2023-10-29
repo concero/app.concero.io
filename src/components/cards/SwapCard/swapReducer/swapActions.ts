@@ -86,6 +86,7 @@ export const swapActions: SwapAction = {
 			return { ...state, steps: newStatuses }
 		}
 	},
+	SET_WALLET_BALANCES: (state: SwapState, action: SwapAction) => ({ ...state, walletBalances: action.balances }),
 }
 
 function updateLastSwapState(state: SwapState): SwapState {

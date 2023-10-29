@@ -4,6 +4,7 @@ import { StandardRoute } from '../../../../types/StandardRoute'
 import { Settings, SwapAction, SwapStateDirection } from '../swapReducer/types'
 import { Dispatch } from 'react'
 import { GetLifiRoutes, GetRangoRoutes, PopulateRoutes } from './types'
+import { fetchWalletBalancesOnStepChains } from './fetchWalletBalancesOnStepChains'
 
 const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
 	swapDispatch({
@@ -38,12 +39,11 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection, settings: Settings, swapDispatch: Dispatch<SwapAction>): Promise<void> => {
 	if (!from.amount) return
 	swapDispatch({ type: 'SET_LOADING', payload: true })
-
 	const routes: StandardRoute[] | [] = []
 
 	try {
 		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
-		// await checkInsufficientGasAndFeeOnAllSteps(routes, swapDispatch, from.address)
+		await fetchWalletBalancesOnStepChains(routes, swapDispatch, from.address)
 	} catch (error) {
 		console.log(error)
 	} finally {

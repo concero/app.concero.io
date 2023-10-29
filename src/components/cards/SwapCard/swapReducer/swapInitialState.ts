@@ -31,4 +31,5 @@ export const swapInitialState = (selection): SwapState => ({
 	},
 	chains: [],
 	buttonState: { type: ButtonType.ENTER_AMOUNT },
+	walletBalances: null,
 })

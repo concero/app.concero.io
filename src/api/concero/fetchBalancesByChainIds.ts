@@ -8,9 +8,9 @@ export interface TokenBalance {
 	amount: string
 	decimals: number
 }
-export type Balance = { [key: string]: TokenBalance[] }
+export type ConceroBalanceResponse = { [key: string]: TokenBalance[] }
 
-export async function fetchBalancesByChainIds(chainIds: string[], walletAddress: string): Promise<Balance | null> {
+export async function fetchBalancesByChainIds(chainIds: string[], walletAddress: string): Promise<ConceroBalanceResponse | null> {
 	if (!walletAddress || !chainIds) return null
 	try {
 		const url = `${config.baseURL}/balances?chain_id=${chainIds.join(',')}&wallet_address=${walletAddress}`
@@ -18,7 +18,7 @@ export async function fetchBalancesByChainIds(chainIds: string[], walletAddress:
 		if (!response?.data?.success) return null
 		return response.data.data
 	} catch (error) {
-		return null
 		console.log(error)
+		return null
 	}
 }

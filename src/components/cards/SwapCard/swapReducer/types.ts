@@ -3,6 +3,7 @@ import { Provider } from '../../../../api/concero/types'
 import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
 import { TransactionStatus } from 'rango-sdk'
 import { ButtonType } from '../../../buttons/SwapButton/constants'
+import { ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'
 
 export interface SwapStateDirection {
 	chain: {
@@ -43,6 +44,7 @@ export interface SwapState {
 	settings: Settings
 	buttonState: ButtonState
 	balance: string
+	walletBalances: ConceroBalanceResponse | null
 }
 
 export interface Settings {
@@ -74,6 +76,7 @@ export enum SwapActionType {
 	UPSERT_SWAP_STEP = 'UPSERT_SWAP_STEP',
 	UPDATE_LAST_SWAP_STEP = 'UPDATE_LAST_SWAP_STEP',
 	UPDATE_PREV_RANGO_STEPS = 'UPDATE_PREV_RANGO_STEPS',
+	SET_WALLET_BALANCES = 'SET_WALLET_BALANCES',
 }
 
 export type SwapAction =
@@ -102,3 +105,4 @@ export type SwapAction =
 	| { type: 'UPSERT_SWAP_STEP'; payload: any }
 	| { type: 'UPDATE_LAST_SWAP_STEP' }
 	| { type: 'UPDATE_PREV_RANGO_STEPS'; currentTransactionStatus: TransactionStatus }
+	| { type: SwapActionType.SET_WALLET_BALANCES; balances: ConceroBalanceResponse | null }

@@ -6,6 +6,7 @@ export interface StandardRoute {
 	cost: {
 		total_usd: string | null | undefined
 		total_gas_usd: string | null | undefined
+		total_fee: Fees[] | []
 	}
 	tags: ('RECOMMENDED' | 'FASTEST' | 'CHEAPEST' | 'SAFEST')[] | undefined
 	slippage_percent: number | null

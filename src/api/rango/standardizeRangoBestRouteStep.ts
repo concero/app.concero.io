@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js'
 import { Fees, Gas, Step } from '../../types/StandardRoute'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { rangoChaindMap } from './rangoChainsMap'
+import { config } from '../../constants/config'
 
 function getFees(step: SwapResult): Fees[] | Gas[] | [] {
 	return step.fee.map((feeItem: SwapFee): Fees => {
@@ -11,7 +12,7 @@ function getFees(step: SwapResult): Fees[] | Gas[] | [] {
 			asset: {
 				chainId: rangoChaindMap[feeItem.asset.blockchain] as string,
 				symbol: feeItem.asset.symbol,
-				address: feeItem.asset.address ?? null,
+				address: feeItem.asset.address ?? config.NULL_ADDRESS,
 			},
 		}
 	})

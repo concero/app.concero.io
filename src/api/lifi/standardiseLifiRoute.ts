@@ -1,8 +1,56 @@
 import * as lifiTypes from '@lifi/sdk/dist/types'
 import { standardizeLifiStep } from './standardizeLifiStep'
-import { StandardRoute } from '../../types/StandardRoute'
+import { Fees, StandardRoute } from '../../types/StandardRoute'
 import BigNumber from 'bignumber.js'
 import { addingTokenDecimals, roundNumberByDecimals } from '../../utils/formatting'
+import { FeeCost, GasCost, Step } from '@lifi/types/dist/cjs/step'
+import { LifiStep } from '@lifi/types/dist/cjs'
+
+function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
+	let result: Fees[] = []
+
+	route.steps.forEach((step: Step) => {
+		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
+			if (result.find((item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString())) {
+				const index = result.findIndex((item: Fees) => item.asset.address === fee.token.address)
+				const normalizedFeeAmount = addingTokenDecimals(fee.amount, fee.token.decimals)
+				result[index].amount = new BigNumber(result[index].amount).plus(normalizedFeeAmount as string).toString()
+			} else {
+				const normalizedFeeAmount = addingTokenDecimals(fee.amount, fee.token.decimals)
+				result.push({
+					amount: normalizedFeeAmount as string,
+					asset: {
+						chainId: fee.token.chainId.toString(),
+						symbol: fee.token.symbol,
+						address: fee.token.address,
+					},
+				})
+			}
+		})
+	})
+
+	route.steps.forEach((step: LifiStep) => {
+		step.estimate.gasCosts?.forEach((gas: GasCost) => {
+			if (result.find((item: Fees) => item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString())) {
+				const index = result.findIndex((item: Fees) => item.asset.address === gas.token.address)
+				const normalizedGasAmount = addingTokenDecimals(gas.amount, gas.token.decimals)
+				result[index].amount = new BigNumber(result[index].amount).plus(normalizedGasAmount as string).toString()
+			} else {
+				const normalizedGasAmount = addingTokenDecimals(gas.amount, gas.token.decimals)
+				result.push({
+					amount: normalizedGasAmount as string,
+					asset: {
+						chainId: gas.token.chainId.toString(),
+						symbol: gas.token.symbol,
+						address: gas.token.address,
+					},
+				})
+			}
+		})
+	})
+
+	return result
+}
 
 export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => ({
 	id: route.id,
@@ -40,6 +88,7 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 	cost: {
 		total_usd: roundNumberByDecimals(new BigNumber(route.fromAmountUSD).minus(route.toAmountUSD).toString(), 2),
 		total_gas_usd: route.gasCostUSD,
+		total_fee: getTotalFee(route),
 	},
 	tags: route.tags,
 	insurance: {

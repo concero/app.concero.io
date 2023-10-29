@@ -51,7 +51,7 @@ export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
 	[ButtonType.ENTER_AMOUNT]: null,
 	[ButtonType.LOW_BALANCE]: <IconWallet size={18} color="white" />,
 	[ButtonType.LOW_GAS]: null,
-	[ButtonType.LOW_FEES]: null,
+	[ButtonType.LOW_FEES]: <IconWallet size={18} color="white" />,
 	[ButtonType.CONNECT_WALLET]: null,
 	[ButtonType.NO_ROUTES]: null,
 }
