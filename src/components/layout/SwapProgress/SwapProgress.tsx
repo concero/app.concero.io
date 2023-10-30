@@ -15,6 +15,24 @@ interface SwapProgressProps {
 export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack }) => {
 	const { from, to, steps, status } = swapState
 
+	const renderButtons: { [key: string]: JSX.Element } | { [key: string]: null } = {
+		failure: (
+			<div className={classNames.buttonsContainer}>
+				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
+					Go back
+				</Button>
+				<Button variant={'primary'}>Contact support</Button>
+			</div>
+		),
+		success: (
+			<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
+				Go back
+			</Button>
+		),
+	}
+
+	const button = renderButtons[status] ?? null
+
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.tokensInfoContainer}>
@@ -26,11 +44,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack })
 					<TransactionStep key={index.toString()} step={step} />
 				))}
 			</div>
-			{status === 'failure' || status === 'success' ? (
-				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
-					Go back
-				</Button>
-			) : null}
+			{button}
 		</div>
 	)
 }
