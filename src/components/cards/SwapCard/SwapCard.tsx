@@ -14,7 +14,7 @@ import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
 import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
 import { Button } from '../../buttons/Button/Button'
 import { SwapCardStage } from './swapReducer/types'
-import { ContactSupport } from './SwapProgress/ContactSupport'
+import { ContactSupport } from './SwapProgress/ContactSupport/ContactSupport'
 
 export const SwapCard: FC<SwapCardProps> = () => {
 	const { selection, dispatch } = useContext(SelectionContext)
@@ -38,7 +38,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 		[SwapCardStage.progress]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
 		[SwapCardStage.success]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
 		[SwapCardStage.failed]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
-		[SwapCardStage.contactSupport]: <ContactSupport />,
+		[SwapCardStage.contactSupport]: <ContactSupport swapState={swapState} swapDispatch={swapDispatch} />,
 	}
 
 	return (

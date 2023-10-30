@@ -5,6 +5,7 @@ export const getCardTitleByStatus = (status: SwapCardStage): string => {
 		[SwapCardStage.progress]: 'Swap in progress',
 		[SwapCardStage.success]: 'Swap successful',
 		[SwapCardStage.failed]: 'Swap failed',
+		[SwapCardStage.contactSupport]: 'Contact support',
 	}
 
 	return statusMap[status] ?? 'Swap'
