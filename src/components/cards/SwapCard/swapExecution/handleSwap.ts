@@ -9,7 +9,7 @@ import { Route } from '@lifi/types/dist/cjs'
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 import { viemSigner } from '../../../../web3/ethers'
-import { SwapAction, SwapState } from '../swapReducer/types'
+import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 
 interface HandleSwapProps {
 	swapState: SwapState
@@ -26,8 +26,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 	if (!originalRoute) return console.error('No original route passed')
 
 	swapDispatch({ type: 'SET_LOADING', payload: true })
-	swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'progress' })
-	swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'pending' })
+	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
 
 	try {
 		if (provider === 'rango') {
@@ -48,7 +47,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 		}
 	} catch (error: Error) {
 		console.log('ERROR: ', error)
-		handleTransactionError(error, swapDispatch, provider)
+		handleTransactionError(error, swapDispatch)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}

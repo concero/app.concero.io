@@ -9,10 +9,12 @@ import { SelectionContext } from '../../../hooks/SelectionContext'
 import { InsuranceProvider } from './InsuranceContext'
 import { useSwapCardEffects } from './SwapCardEffects'
 import { SwapInput } from './SwapInput/SwapInput'
-import { SwapProgress } from '../../layout/SwapProgress/SwapProgress'
+import { SwapProgress } from './SwapProgress/SwapProgress'
 import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
 import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
 import { Button } from '../../buttons/Button/Button'
+import { SwapCardStage } from './swapReducer/types'
+import { ContactSupport } from './SwapProgress/ContactSupport'
 
 export const SwapCard: FC<SwapCardProps> = () => {
 	const { selection, dispatch } = useContext(SelectionContext)
@@ -24,18 +26,25 @@ export const SwapCard: FC<SwapCardProps> = () => {
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'from' })
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
 		swapDispatch({ type: 'CLEAR_ROUTES' })
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'input' })
-		swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'pending' })
+		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.input })
 		swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
 	}
 
 	const toggleInsurance = (routeId: string) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
 	useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
 
+	const renderSwapStage = {
+		[SwapCardStage.input]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
+		[SwapCardStage.progress]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
+		[SwapCardStage.success]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
+		[SwapCardStage.failed]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
+		[SwapCardStage.contactSupport]: <ContactSupport />,
+	}
+
 	return (
 		<InsuranceProvider toggleInsurance={toggleInsurance}>
 			<div className={`card ${classNames.container}`}>
-				<CardHeader title={getCardTitleByStatus(swapState.status)}>
+				<CardHeader title={getCardTitleByStatus(swapState.stage)}>
 					<div className={classNames.cardHeader}>
 						<Button
 							variant="black"
@@ -45,9 +54,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 						/>
 					</div>
 				</CardHeader>
-				<div className={classNames.swapContainer}>
-					{swapState.stage === 'input' ? <SwapInput swapState={swapState} swapDispatch={swapDispatch} /> : <SwapProgress swapState={swapState} handleGoBack={handleGoBack} />}
-				</div>
+				<div className={classNames.swapContainer}>{renderSwapStage[swapState.stage]}</div>
 			</div>
 			<SwapSettingsModal
 				show={swapState.settingsModalOpen}

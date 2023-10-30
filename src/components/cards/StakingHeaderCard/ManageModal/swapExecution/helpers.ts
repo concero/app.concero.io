@@ -8,7 +8,7 @@ import { JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider
 
 export function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void {
 	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.failure })
-	manageDispatch({ type: 'SET_STATUS', payload: Status.failure })
+	manageDispatch({ type: 'SET_STATUS', payload: Status.failed })
 	if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Insufficient balance', status: 'error' } })
 	} else if (error.message.toLowerCase().includes('user rejected')) {

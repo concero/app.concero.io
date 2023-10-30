@@ -16,30 +16,6 @@ interface Chain {
 	id: number
 }
 
-// wido route type
-
-// interface Route {
-// 	feeBps: number
-// 	feeUsdValue: string
-// 	isSupported: boolean
-// 	price: number
-// 	expectedSlippage: number
-// 	steps: {
-// 		chainId: number
-// 		fromToken: string
-// 		functionName: string
-// 		protocol: string
-// 		swapAddress: string
-// 		toChainId: number
-// 		toToken: string
-// 	}[]
-// 	toTokenAmount: string
-// 	steps_count: number
-// 	data: string
-// 	to: string
-// 	value: string
-// }
-
 export interface IStep {
 	title: string
 	body?: string

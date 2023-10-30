@@ -1,7 +1,7 @@
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 import { SwapAction, SwapState } from './types'
-import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
+import { StageStep } from '../../StakingHeaderCard/ManageModal/SwapProgress/TransactionStep'
 
 export const swapActions: SwapAction = {
 	/* ROUTE-RELATED ACTIONS */
@@ -51,12 +51,6 @@ export const swapActions: SwapAction = {
 	TOGGLE_SETTINGS_MODAL_OPEN: state => ({ ...state, settingsModalOpen: !state.settingsModalOpen }),
 	SET_SETTINGS: (state, action) => ({ ...state, settings: { ...state.settings, ...action.payload } }),
 	SET_SWAP_STEPS: (state, action) => ({ ...state, steps: action.payload }),
-	SET_SWAP_STATUS: (state, action) => {
-		if (action.payload === 'success' || action.payload === 'failure') {
-			window.removeEventListener('beforeunload', handleBeforeUnload)
-		}
-		return { ...state, status: action.payload }
-	},
 	APPEND_SWAP_STEP: (state, action) => ({ ...state, steps: [...state.steps, action.payload] }),
 	SET_TO_ADDRESS: (state, action) => ({ ...state, to: { ...state.to, address: action.payload } }),
 	UPSERT_SWAP_STEP: (state, action) => {

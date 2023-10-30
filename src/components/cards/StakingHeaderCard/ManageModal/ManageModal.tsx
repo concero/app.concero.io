@@ -14,8 +14,9 @@ import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
 import { DataContextValue } from '../../../../hooks/DataContext/types'
-import { SwapProgress } from '../../../layout/SwapProgress/SwapProgress'
+
 import { clearRoute } from './clearRoute'
+import { StakingSwapProgress } from './StakingSwapProgress/StakingSwapProgress'
 
 interface ManageModalProps {
 	isOpen: boolean
@@ -112,7 +113,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 				) : modalType === ModalType.tokens ? (
 					<InnerSelectModal RenderItem={ListEntityButton} getItems={getTokens} onSelect={handleSelectToken} chainId={manageState.from.chain.id} />
 				) : (
-					<SwapProgress swapState={manageState} handleGoBack={handleGoBack} />
+					<StakingSwapProgress manageState={manageState} handleGoBack={handleGoBack} />
 				)}
 			</div>
 		</Modal>

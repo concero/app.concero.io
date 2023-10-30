@@ -13,11 +13,11 @@ export enum SwapType {
 }
 
 export enum Status {
-	input = 0,
+	input = 'input',
 	stake = 1,
 	loading = 2,
 	success = 'success',
-	failure = 'failure',
+	failed = 'failed',
 	progress = 'progress',
 	canceled = 5,
 	balanceError = 6,
@@ -33,7 +33,7 @@ interface ButtonMessages {
 	[Status.withdraw]: string
 	[Status.loading]: string
 	[Status.success]: string
-	[Status.failure]: string
+	[Status.failed]: string
 	[Status.canceled]: string
 	[Status.balanceError]: string
 	[Status.unknownError]: string
@@ -47,7 +47,7 @@ export const buttonMessages: ButtonMessages = {
 	[Status.withdraw]: 'Withdraw',
 	[Status.loading]: '',
 	[Status.success]: 'Swap started successfully!',
-	[Status.failure]: 'Failure',
+	[Status.failed]: 'Failure',
 	[Status.canceled]: 'Canceled by user',
 	[Status.balanceError]: 'Insufficient balance',
 	[Status.unknownError]: 'Something went wrong.',
