@@ -2,19 +2,22 @@ import { SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { Fees } from '../../../types/StandardRoute'
 import { TokenBalance } from '../../../api/concero/fetchBalancesByChainIds'
 
-export function getInsufficientFeeChaiSymbols(swapState: SwapState): string | '' {
+export function isInsufficientFee(swapState: SwapState): boolean {
 	const { walletBalances, selectedRoute } = swapState
-	let insufficientGasChainSymbols: string | '' = ''
+	let isInsufficient = false
 
 	selectedRoute?.cost.total_fee.forEach((fee: Fees) => {
-		if (!walletBalances) return
+		if (!walletBalances) {
+			isInsufficient = true
+			return
+		}
 		const tokenBalance = walletBalances[fee.asset.chainId]?.find((balance: TokenBalance) => {
 			return balance.address.toLowerCase() === fee.asset.address?.toLowerCase()
 		})
 		if (!tokenBalance || (tokenBalance && parseFloat(tokenBalance.amount) < parseFloat(fee.amount))) {
-			insufficientGasChainSymbols = insufficientGasChainSymbols.concat(`${fee.asset.symbol} ${fee.asset.chainId} `)
+			isInsufficient = true
 		}
 	})
 
-	return insufficientGasChainSymbols
+	return isInsufficient
 }

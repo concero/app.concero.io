@@ -1,7 +1,8 @@
 import { SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
+import { isInsufficientFee } from './isInsufficientFee'
 
-export function getButtonType(swapState: SwapState, isConnected: boolean, insufficientFeeChainSymbols: string): ButtonType {
+export function getButtonType(swapState: SwapState, isConnected: boolean): ButtonType {
 	const { from, to, routes, isLoading, balance } = swapState
 
 	if (isLoading) {
@@ -20,7 +21,9 @@ export function getButtonType(swapState: SwapState, isConnected: boolean, insuff
 		return ButtonType.LOW_BALANCE
 	}
 
-	if (insufficientFeeChainSymbols) {
+	const isInsufficient = isInsufficientFee(swapState)
+
+	if (isInsufficient) {
 		return ButtonType.LOW_FEES
 	}
 
