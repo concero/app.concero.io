@@ -4,7 +4,7 @@ import classNames from './ContactSupport.module.pcss'
 import { Button } from '../../../../buttons/Button/Button'
 import { IconArrowLeft, IconBrandDiscord, IconCheck, IconCopy, IconMail } from '@tabler/icons-react'
 import { colors } from '../../../../../constants/colors'
-import { copyInBuffer } from '../../../../../utils/copyInBuffer'
+import { copyToClipboard } from '../../../../../utils/copyToClipboard'
 
 interface ContactSupportProps {
 	swapState: SwapState
@@ -19,7 +19,7 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 	}
 
 	function handleCopy() {
-		copyInBuffer(JSON.stringify(swapState.selectedRoute)).then(() => {
+		copyToClipboard(JSON.stringify(swapState.selectedRoute)).then(() => {
 			setIsCopied(true)
 			setIsCopiedTimeout()
 		})

@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { ManageAction } from '../useManageReducer/types'
+import { ManageAction } from '../useStakingReducer/types'
 import { ModalType, Status } from '../constants'
 import { Contract } from 'ethers'
 import { get } from '../../../../../api/client'

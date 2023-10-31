@@ -6,7 +6,7 @@ import { TransactionStep } from '../../../layout/TransactionStep/TransactionStep
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { Button } from '../../../buttons/Button/Button'
 import { colors } from '../../../../constants/colors'
-import { IStep } from '../../StakingHeaderCard/ManageModal/useManageReducer/types'
+import { IStep } from '../../StakingHeaderCard/ManageModal/useStakingReducer/types'
 
 interface SwapProgressProps {
 	swapState: SwapState

@@ -4,7 +4,7 @@ import classNames from './StakingSwapProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
 import { colors } from '../../../../../constants/colors'
 import { Button } from '../../../../buttons/Button/Button'
-import { IStep, ManageState } from '../useManageReducer/types'
+import { IStep, ManageState } from '../useStakingReducer/types'
 import { TransactionStep } from '../../../../layout/TransactionStep/TransactionStep'
 
 interface SwapProgressProps {

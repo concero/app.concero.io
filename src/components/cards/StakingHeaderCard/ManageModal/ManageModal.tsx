@@ -3,7 +3,7 @@ import { Modal } from '../../../modals/Modal/Modal'
 import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
 import classNames from './ManageModal.module.pcss'
 import { SelectArea } from './SelectArea/SelectArea'
-import { useManageReducer } from './useManageReducer/useManageReducer'
+import { useStakingReducer } from './useStakingReducer/useStakingReducer'
 import { ModalType, SwapType } from './constants'
 import { InnerSelectModal } from './InnerSelectModal/InnerSelectModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
@@ -26,7 +26,7 @@ interface ManageModalProps {
 
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
 	const { getChains, getTokens } = useContext<DataContextValue>(DataContext)
-	const [manageState, manageDispatch] = useManageReducer(stakingState)
+	const [manageState, manageDispatch] = useStakingReducer(stakingState)
 	const { modalType, swapType } = manageState
 	const typingTimeoutRef = useRef(null)
 
