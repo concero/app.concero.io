@@ -55,7 +55,7 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 					>
 						Discord
 					</Button>
-					<Button leftIcon={<IconMail size={16} />} className={classNames.f1} variant="secondary">
+					<Button leftIcon={<IconMail size={16} />} className={classNames.f1} variant="secondary" onClick={() => window.open('mailto:Concerocrypto@gmail.com', '_blank')}>
 						Email
 					</Button>
 				</div>
