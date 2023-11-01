@@ -3,8 +3,8 @@ import { SwapAction, SwapCardStage, SwapState } from '../../swapReducer/types'
 import classNames from './ContactSupport.module.pcss'
 import { Button } from '../../../../buttons/Button/Button'
 import { IconArrowLeft, IconBrandDiscord, IconCheck, IconCopy, IconMail } from '@tabler/icons-react'
-import { colors } from '../../../../../constants/colors'
 import { copyToClipboard } from '../../../../../utils/copyToClipboard'
+import posthog from 'posthog-js'
 
 interface ContactSupportProps {
 	swapState: SwapState
@@ -19,7 +19,9 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 	}
 
 	function handleCopy() {
-		copyToClipboard(JSON.stringify(swapState.selectedRoute)).then(() => {
+		const replay_id = posthog.get_distinct_id()
+		const session_id = posthog.get_session_id()
+		copyToClipboard(JSON.stringify({ ...swapState.selectedRoute, replay_id, session_id })).then(() => {
 			setIsCopied(true)
 			setIsCopiedTimeout()
 		})
@@ -59,7 +61,7 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 						Email
 					</Button>
 				</div>
-				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
+				<Button leftIcon={<IconArrowLeft size={18} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
 					Go back
 				</Button>
 			</div>

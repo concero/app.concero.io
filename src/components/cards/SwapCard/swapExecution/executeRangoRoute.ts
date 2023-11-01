@@ -11,7 +11,7 @@ import { providers } from 'ethers'
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 function handleError(error: Error) {
-	console.log('error', error)
+	console.error('error', error)
 
 	if (error.message.toLowerCase().includes('user rejected')) {
 		throw new Error('user rejected')
@@ -86,7 +86,7 @@ async function executeRangoSwap({
 				if (!approvalResponse.isApproved && approvalResponse.txStatus === TransactionStatus.FAILED) break
 				if (!approvalResponse.isApproved && approvalResponse.txStatus == TransactionStatus.SUCCESS) break
 			} catch (error) {
-				console.log('error', error)
+				console.error('error', error)
 			}
 			await sleep(5000)
 		}

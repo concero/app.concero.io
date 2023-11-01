@@ -1,5 +1,5 @@
 import { Dispatch, FC } from 'react'
-import { IconArrowLeft } from '@tabler/icons-react'
+import { IconArrowLeft, IconUser } from '@tabler/icons-react'
 import classNames from './SwapProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
 import { TransactionStep } from '../../../layout/TransactionStep/TransactionStep'
@@ -24,16 +24,21 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 	const renderButtons: { [key: string]: JSX.Element } | { [key: string]: null } = {
 		[SwapCardStage.failed]: (
 			<div className={classNames.buttonsContainer}>
-				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
+				<Button leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
 					Go back
 				</Button>
-				<Button variant={'primary'} className={classNames.button} onClick={handleContactSupportButtonClick}>
+				<Button
+					variant={'primary'}
+					className={classNames.button}
+					onClick={handleContactSupportButtonClick}
+					leftIcon={<IconUser color={'var(--color-button-text-primary)'} size={18} />}
+				>
 					Contact support
 				</Button>
 			</div>
 		),
 		[SwapCardStage.success]: (
-			<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
+			<Button leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
 				Go back
 			</Button>
 		),
