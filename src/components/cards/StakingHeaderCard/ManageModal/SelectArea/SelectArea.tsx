@@ -6,7 +6,7 @@ import { TextInput } from '../../../../input/TextInput'
 import classNames from './SelectArea.module.pcss'
 import { ModalType, SwapType } from '../constants'
 import { isFloatInput } from '../../../../../utils/validation'
-import { ManageAction } from '../useManageReducer/types'
+import { ManageAction } from '../useStakingReducer/types'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { IconChevronDown } from '@tabler/icons-react'
 

@@ -28,7 +28,7 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 		const height = isRoutesCollapsed ? 54 : stepsContainerRef.current.scrollHeight + 8
 		setSpringProps({ height })
 	}, [isRoutesCollapsed])
-
+	console.log(route)
 	return (
 		<Card className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`} onClick={() => onClick(route.id)}>
 			<div className={classNames.cardHeader}>

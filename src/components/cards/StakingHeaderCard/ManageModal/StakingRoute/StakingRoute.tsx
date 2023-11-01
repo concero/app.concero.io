@@ -1,5 +1,5 @@
 import classNames from './StakingRoute.module.pcss'
-import { ManageState } from '../useManageReducer/types'
+import { ManageState } from '../useStakingReducer/types'
 import { CardHeader } from '../../../CardHeader/CardHeader'
 
 interface StakingRouteProps {

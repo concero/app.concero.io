@@ -1,5 +1,4 @@
 import './styles/App.css'
-import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
 import { WagmiConfig } from 'wagmi'
 import { Navigator } from './Navigator'
@@ -9,19 +8,17 @@ import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
 import { DataProvider } from './hooks/DataContext/DataContext'
-import { lazy } from 'react'
+import { lazy, useEffect } from 'react'
 import { bigNumberSettings } from './utils/bigNumberSettings'
+import { initPosthog } from './utils/initPosthog'
 
 const WalletConnectModal = lazy(() => import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })))
 
 function App() {
-	bigNumberSettings()
-
-	if (!process.env.DEVELOPMENT) {
-		posthog.init(process.env.REACT_APP_PUBLIC_POSTHOG_KEY, {
-			api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
-		})
-	}
+	useEffect(() => {
+		initPosthog()
+		bigNumberSettings()
+	}, [])
 
 	return (
 		<PostHogProvider>

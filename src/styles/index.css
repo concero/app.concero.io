@@ -324,6 +324,7 @@ a {
 .body1 {
 	color: var(--color-text-secondary);
 	font-size: 0.85rem;
+	flex: none;
 }
 
 .tagBody {

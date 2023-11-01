@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { IconArrowWaveRightUp, IconClock, IconPigMoney } from '@tabler/icons-react'
 import { Tag } from '../../tags/Tag/Tag'
 import classNames from './RouteCard.module.pcss'
-import { StandardRoute } from '../../../api/lifi/types'
+import { StandardRoute } from '../../../types/StandardRoute'
 import { capitalize, numberToFormatString, secondsConverter } from '../../../utils/formatting'
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
@@ -29,9 +29,11 @@ export const renderTags = (route: StandardRoute, isSelected: boolean, getTextCol
 					<Beacon isOn={route.insurance?.state === 'INSURED'} color="green" />
 				</Tag>
 			) : null}
-			<Tag color="transparent" leftIcon={<IconClock size={20} color={getIconColor()} />}>
-				<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
-			</Tag>
+			{route.transaction_time_seconds ? (
+				<Tag color="transparent" leftIcon={<IconClock size={20} color={getIconColor()} />}>
+					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
+				</Tag>
+			) : null}
 			{route.slippage_percent ? (
 				<Tag color="transparent" leftIcon={<IconArrowWaveRightUp size={20} color={getIconColor()} />}>
 					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>

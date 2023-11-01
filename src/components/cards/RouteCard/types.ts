@@ -1,10 +1,11 @@
-import { StandardRoute, Step } from '../../../api/lifi/types'
+import { StandardRoute, Step } from '../../../types/StandardRoute'
 
 export interface RouteStepTagProps {
 	step: Step
 	isRoutesCollapsed: true | false
 	length?: number | undefined
 	isSelected: true | false
+	setIsRoutesCollapsed: (isCollapsed: boolean) => void
 }
 
 export interface RouteCardProps {

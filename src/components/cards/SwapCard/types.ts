@@ -1,4 +1,4 @@
-import { StandardRoute, Step } from '../../../api/lifi/types'
+import { StandardRoute, Step } from '../../../types/StandardRoute'
 import { Chain, Token } from '../../../api/concero/types'
 
 export interface SwapCardProps {}

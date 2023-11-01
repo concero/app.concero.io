@@ -1,11 +1,11 @@
-import { FetchRoutesParams, StandardRoute } from './types'
+import { StandardRoute } from '../../types/StandardRoute'
 import { standardiseLifiRoute } from './standardiseLifiRoute'
 import { addingAmountDecimals } from '../../utils/formatting'
 import { lifi } from './lifi'
-
-interface GetRoutes {
-	(params: FetchRoutesParams): Promise<StandardRoute[]>
-}
+import { FetchRoutesParams } from './types'
+import { RoutesRequest } from '@lifi/types'
+import { RouteOptions } from '@lifi/types/dist/api'
+import { config } from '../../constants/config'
 
 const sortByTags = (routeA: StandardRoute, routeB: StandardRoute): number => {
 	const tagsOrder = ['RECOMMENDED', 'CHEAPEST', 'FASTEST']
@@ -19,23 +19,24 @@ const sortByTags = (routeA: StandardRoute, routeB: StandardRoute): number => {
 	return 0
 }
 
-export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams): Promise<GetRoutes> => {
-	let result = []
-	const routeOptions = {
-		fee: 0.002,
+export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams): Promise<StandardRoute[] | []> => {
+	let result: StandardRoute[] | [] = []
+
+	const routeOptions: RouteOptions = {
+		fee: parseFloat(config.LIFI_FEES),
 		insurance: false,
-		integrator: 'concero',
-		slippage: settings.slippage_percent / 100,
+		integrator: config.LIFI_INTEGRATOR,
+		slippage: Number(settings.slippage_percent) / 100,
 	}
 
-	const routesRequest = {
-		fromChainId: parseInt(from.chain.id),
-		fromAmount: addingAmountDecimals(Number(from.amount), from.token.decimals),
-		fromTokenAddress: from.token.address,
-		fromAddress: from.address,
-		toChainId: parseInt(to.chain.id),
-		toTokenAddress: to.token.address,
-		toAddress: to.address,
+	const routesRequest: RoutesRequest = {
+		fromChainId: Number(from.chain.id),
+		fromAmount: addingAmountDecimals(Number(from.amount), from.token.decimals) as string,
+		fromTokenAddress: from.token.address as string,
+		fromAddress: from.address as string,
+		toChainId: Number(to.chain.id),
+		toTokenAddress: to.token.address as string,
+		toAddress: to.address as string,
 		options: routeOptions,
 	}
 

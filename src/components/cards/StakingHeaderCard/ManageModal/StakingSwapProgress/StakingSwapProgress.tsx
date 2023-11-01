@@ -1,19 +1,19 @@
 import { FC } from 'react'
 import { IconArrowLeft } from '@tabler/icons-react'
-import classNames from './SwapProgress.module.pcss'
+import classNames from './StakingSwapProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
-import { TransactionStep } from './TransactionStep'
-import { Button } from '../../buttons/Button/Button'
-import { IStep } from '../../cards/StakingHeaderCard/ManageModal/useManageReducer/types'
-import { colors } from '../../../constants/colors'
+import { colors } from '../../../../../constants/colors'
+import { Button } from '../../../../buttons/Button/Button'
+import { IStep, ManageState } from '../useStakingReducer/types'
+import { TransactionStep } from '../../../../layout/TransactionStep/TransactionStep'
 
 interface SwapProgressProps {
-	swapState: any
+	manageState: ManageState
 	handleGoBack: () => void
 }
 
-export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack }) => {
-	const { from, to, steps, status } = swapState
+export const StakingSwapProgress: FC<SwapProgressProps> = ({ manageState, handleGoBack }) => {
+	const { from, to, steps, status } = manageState
 
 	return (
 		<div className={classNames.container}>
@@ -26,7 +26,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack })
 					<TransactionStep key={index.toString()} step={step} />
 				))}
 			</div>
-			{status === 'failure' || status === 'success' ? (
+			{status === 'failed' || status === 'success' ? (
 				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
 					Go back
 				</Button>

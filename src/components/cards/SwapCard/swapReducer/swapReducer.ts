@@ -1,7 +1,7 @@
 import { Dispatch, useReducer } from 'react'
-import { SwapAction, SwapState } from '../types'
 import { swapActions } from './swapActions'
 import { swapInitialState } from './swapInitialState'
+import { SwapAction, SwapState } from './types'
 
 function swapReducer(state: SwapState, action: SwapAction): SwapState {
 	const actionHandler = swapActions[action.type]

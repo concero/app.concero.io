@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject } from 'react'
-import { ManageAction, ManageState } from './useManageReducer/types'
+import { ManageAction, ManageState } from './useStakingReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status, SwapType } from './constants'
 import { addingAmountDecimals, addingTokenDecimals, roundNumberByDecimals } from '../../../../utils/formatting'

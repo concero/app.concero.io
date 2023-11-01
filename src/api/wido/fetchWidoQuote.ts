@@ -1,5 +1,5 @@
 import { quote } from 'wido'
-import { ManageState } from '../../components/cards/StakingHeaderCard/ManageModal/useManageReducer/types'
+import { ManageState } from '../../components/cards/StakingHeaderCard/ManageModal/useStakingReducer/types'
 import { addingAmountDecimals } from '../../utils/formatting'
 import { QuoteResult } from 'types'
 

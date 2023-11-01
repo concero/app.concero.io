@@ -3,7 +3,7 @@ import { Modal } from '../../../modals/Modal/Modal'
 import { StakingState } from '../../../screens/StakingScreen/stakingReducer/types'
 import classNames from './ManageModal.module.pcss'
 import { SelectArea } from './SelectArea/SelectArea'
-import { useManageReducer } from './useManageReducer/useManageReducer'
+import { useStakingReducer } from './useStakingReducer/useStakingReducer'
 import { ModalType, SwapType } from './constants'
 import { InnerSelectModal } from './InnerSelectModal/InnerSelectModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
@@ -14,8 +14,9 @@ import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
 import { DataContextValue } from '../../../../hooks/DataContext/types'
-import { SwapProgress } from '../../../layout/SwapProgress/SwapProgress'
+
 import { clearRoute } from './clearRoute'
+import { StakingSwapProgress } from './StakingSwapProgress/StakingSwapProgress'
 
 interface ManageModalProps {
 	isOpen: boolean
@@ -25,7 +26,7 @@ interface ManageModalProps {
 
 export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProps) {
 	const { getChains, getTokens } = useContext<DataContextValue>(DataContext)
-	const [manageState, manageDispatch] = useManageReducer(stakingState)
+	const [manageState, manageDispatch] = useStakingReducer(stakingState)
 	const { modalType, swapType } = manageState
 	const typingTimeoutRef = useRef(null)
 
@@ -112,7 +113,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 				) : modalType === ModalType.tokens ? (
 					<InnerSelectModal RenderItem={ListEntityButton} getItems={getTokens} onSelect={handleSelectToken} chainId={manageState.from.chain.id} />
 				) : (
-					<SwapProgress swapState={manageState} handleGoBack={handleGoBack} />
+					<StakingSwapProgress manageState={manageState} handleGoBack={handleGoBack} />
 				)}
 			</div>
 		</Modal>

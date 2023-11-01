@@ -100,12 +100,12 @@ export function addingAmountDecimals(number: number | string, decimals: number):
 }
 
 export const secondsConverter = (seconds: number): string => {
-	if (seconds > 60) return `${Math.floor(seconds / 60)}m ${seconds % 60 ? `${(seconds % 60).toString()}s` : ''}`
+	if (seconds > 60) return `${Math.round(seconds / 60)}m ${seconds % 60 ? `${Math.round(seconds % 60).toString()}s` : ''}`
 	return `${seconds}s`
 }
 
-export const numberToFormatString = (number: number, decimals = 4, isTransformNeeded = false): string => {
-	if (number === undefined || number === null) return
+export const numberToFormatString = (number: number, decimals = 4, isTransformNeeded = false): string | null => {
+	if (number === undefined || number === null) return null
 	const result = parseFloat(number.toFixed(decimals))
 	if (isTransformNeeded && result === 0) return '< 0.01'
 	return result?.toString()

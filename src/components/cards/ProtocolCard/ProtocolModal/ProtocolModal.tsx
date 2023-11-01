@@ -7,7 +7,7 @@ import { CategoryTag } from '../../../tags/CategoryTag/CategoryTag'
 import { Tag } from '../../../tags/Tag/Tag'
 import { colors } from '../../../../constants/colors'
 import { formatNumber } from '../../../../utils/formatting'
-import { copyInBuffer } from '../../../../utils/copyInBuffer'
+import { copyToClipboard } from '../../../../utils/copyToClipboard'
 
 interface ProtocolModalProps {
 	show: boolean
@@ -50,7 +50,7 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 				<div className={classNames.tagsContainer}>
 					{category && <CategoryTag category={category} />}
 					{address && (
-						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyInBuffer(address)}>
+						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyToClipboard(address)}>
 							<p className="body1">Contract address</p>
 						</Tag>
 					)}

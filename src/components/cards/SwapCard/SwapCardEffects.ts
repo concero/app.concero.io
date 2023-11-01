@@ -1,12 +1,22 @@
-import { useEffect } from 'react'
+import { Dispatch, MutableRefObject, useEffect } from 'react'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
 import { getBalance } from '../../../utils/getBalance'
 import { clearRoutes } from './handlers/handleRoutes'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
+import { SwapAction, SwapState } from './swapReducer/types'
 
-export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef }) {
+interface UseSwapCardEffectsProps {
+	swapState: SwapState
+	swapDispatch: Dispatch<SwapAction>
+	address: string
+	dispatch: Dispatch<any>
+	typingTimeoutRef: MutableRefObject<number | undefined>
+}
+
+export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef }: UseSwapCardEffectsProps) {
 	const { from, to, settings, selectedRoute } = swapState
+
 	useEffect(() => {
 		setHistoryCard(dispatch, from, to)
 		setSwapCard(dispatch, from, to)
@@ -35,15 +45,7 @@ export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch,
 	}, [selectedRoute])
 
 	useEffect(() => {
-		swapDispatch({
-			type: 'SET_ADDRESS',
-			direction: 'from',
-			payload: address,
-		})
-		swapDispatch({
-			type: 'SET_ADDRESS',
-			direction: 'to',
-			payload: address,
-		})
+		swapDispatch({ type: 'SET_ADDRESS', direction: 'from', payload: address })
+		swapDispatch({ type: 'SET_ADDRESS', direction: 'to', payload: address })
 	}, [address])
 }

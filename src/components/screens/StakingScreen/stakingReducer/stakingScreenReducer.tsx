@@ -2,7 +2,7 @@ import { Dispatch, useReducer } from 'react'
 import { initialState } from './initialState'
 import { StakingAction, StakingState } from './types'
 
-const stakingReducer = (state: StakingState, action: StakingAction): StakingState => {
+const stakingScreenReducer = (state: StakingState, action: StakingAction): StakingState => {
 	switch (action.type) {
 		case 'SET_FILTER':
 			return { ...state, filter: { ...state.filter, [action.payload.filter]: action.payload.value } }
@@ -24,6 +24,6 @@ const stakingReducer = (state: StakingState, action: StakingAction): StakingStat
 }
 
 export function useStakingReducer(): [StakingState, Dispatch<StakingAction>] {
-	const [stakingState, dispatch] = useReducer(stakingReducer, initialState)
+	const [stakingState, dispatch] = useReducer(stakingScreenReducer, initialState)
 	return [stakingState, dispatch]
 }

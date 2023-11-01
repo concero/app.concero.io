@@ -1,5 +1,5 @@
 import { IconGasStation } from '@tabler/icons-react'
-import { ManageState } from '../useManageReducer/types'
+import { ManageState } from '../useStakingReducer/types'
 import classNames from './Details.module.pcss'
 import { Avatar } from '../../../../tags/Avatar/Avatar'
 import { Tag } from '../../../../tags/Tag/Tag'

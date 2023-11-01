@@ -1,9 +1,10 @@
-import { StandardRoute, Step } from '../lifi/types'
+import { Fees, StandardRoute, Step } from '../../types/StandardRoute'
 import { BestRouteResponse } from 'rango-types/src/api/main/routing'
 import BigNumber from 'bignumber.js'
 import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
+import { config } from '../../constants/config'
 
 function getSteps(route: BestRouteResponse): Step[] | null {
 	const steps = route.result?.swaps.map((swap: SwapResult) => standardizeRangoBestRouteStep(swap)) ?? null
@@ -15,8 +16,31 @@ function getTotalGasUsd(route: BestRouteResponse): string | null {
 	return roundNumberByDecimals(new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0).times(route.result?.swaps[0]?.from.usdPrice ?? 0).toString(), 2)
 }
 
+function getTotalFee(route: BestRouteResponse): Fees[] | [] {
+	const result: Fees[] = []
+
+	route.result?.swaps.forEach((swap: SwapResult) => {
+		swap.fee.forEach((feeItem: SwapFee) => {
+			const feeIndex = result.findIndex((item: Fees): boolean => item.asset.symbol === feeItem.asset.symbol)
+			if (feeIndex === -1) {
+				result.push({
+					amount: feeItem.amount,
+					asset: {
+						chainId: swap.from.blockchain,
+						symbol: feeItem.asset.symbol,
+						address: feeItem.asset.address ?? config.NULL_ADDRESS,
+					},
+				})
+			} else {
+				result[feeIndex].amount = new BigNumber(result[feeIndex].amount).plus(feeItem.amount).toString()
+			}
+		})
+	})
+
+	return result
+}
+
 export async function standardizeRangoBestRoute(route: BestRouteResponse, from: any, to: any): Promise<StandardRoute> {
-	console.log(route)
 	return {
 		id: route.requestId,
 		provider: 'rango',
@@ -50,6 +74,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 		cost: {
 			total_usd: null,
 			total_gas_usd: null,
+			total_fee: getTotalFee(route),
 		},
 		tags: [],
 		slippage_percent: null,
