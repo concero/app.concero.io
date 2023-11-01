@@ -5,6 +5,7 @@ export interface RouteStepTagProps {
 	isRoutesCollapsed: true | false
 	length?: number | undefined
 	isSelected: true | false
+	setIsRoutesCollapsed: (isCollapsed: boolean) => void
 }
 
 export interface RouteCardProps {

@@ -2,7 +2,7 @@ import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
 import BigNumber from 'bignumber.js'
 import { Fees, Gas, Step } from '../../types/StandardRoute'
 import { roundNumberByDecimals } from '../../utils/formatting'
-import { rangoChaindMap } from './rangoChainsMap'
+import { rangoChainsMap } from './rangoChainsMap'
 import { config } from '../../constants/config'
 
 function getFees(step: SwapResult): Fees[] | Gas[] | [] {
@@ -10,7 +10,7 @@ function getFees(step: SwapResult): Fees[] | Gas[] | [] {
 		return {
 			amount: roundNumberByDecimals(feeItem.amount, 2) as string,
 			asset: {
-				chainId: rangoChaindMap[feeItem.asset.blockchain] as string,
+				chainId: rangoChainsMap[feeItem.asset.blockchain] as string,
 				symbol: feeItem.asset.symbol,
 				address: feeItem.asset.address ?? config.NULL_ADDRESS,
 			},
@@ -32,7 +32,7 @@ export function standardizeRangoBestRouteStep(step: SwapResult): Step {
 				logo_uri: step.from.logo,
 			},
 			chain: {
-				id: step.from.blockchain,
+				id: rangoChainsMap[step.from.blockchain],
 			},
 		},
 		to: {
@@ -47,7 +47,7 @@ export function standardizeRangoBestRouteStep(step: SwapResult): Step {
 				logo_uri: step.to.logo,
 			},
 			chain: {
-				id: step.to.blockchain,
+				id: rangoChainsMap[step.to.blockchain],
 			},
 		},
 		tool: {
