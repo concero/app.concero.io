@@ -11,7 +11,8 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 
 	route.steps.forEach((step: Step) => {
 		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
-			if (result.find((item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString())) {
+			const matchedFeeAsset = result.find((item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString())
+			if (matchedFeeAsset) {
 				const index = result.findIndex((item: Fees) => item.asset.address === fee.token.address)
 				const normalizedFeeAmount = addingTokenDecimals(fee.amount, fee.token.decimals)
 				result[index].amount = new BigNumber(result[index].amount).plus(normalizedFeeAmount as string).toString()

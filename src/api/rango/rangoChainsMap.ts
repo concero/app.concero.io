@@ -1,4 +1,4 @@
-export const rangoChaindMap: { [key: string]: string } = {
+export const rangoChainsMap: { [key: string]: string } = {
 	ETH: '1',
 	ARBITRUM: '42161',
 	OPTIMISM: '10',

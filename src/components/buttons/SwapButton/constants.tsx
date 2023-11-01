@@ -1,4 +1,4 @@
-import { IconArrowsUpDown, IconWallet } from '@tabler/icons-react'
+import { IconArrowsUpDown, IconGasStation, IconWallet } from '@tabler/icons-react'
 import { ReactNode } from 'react'
 
 export enum ButtonType {
@@ -50,7 +50,7 @@ export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
 	[ButtonType.SWAP]: <IconArrowsUpDown size={18} color="white" />,
 	[ButtonType.ENTER_AMOUNT]: null,
 	[ButtonType.LOW_BALANCE]: <IconWallet size={18} color="white" />,
-	[ButtonType.LOW_GAS]: null,
+	[ButtonType.LOW_GAS]: <IconGasStation size={18} color="white" />,
 	[ButtonType.LOW_FEES]: <IconWallet size={18} color="white" />,
 	[ButtonType.CONNECT_WALLET]: null,
 	[ButtonType.NO_ROUTES]: null,
