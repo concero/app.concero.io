@@ -6,7 +6,7 @@ import { addingTokenDecimals } from '../../../../../utils/formatting'
 import { ManageAction, ManageState } from './types'
 import { handleBeforeUnload } from '../../../../../utils/leavingPageEvents'
 
-function manageReducer(state: ManageState, action: ManageAction): ManageState {
+function stakingReducer(state: ManageState, action: ManageAction): ManageState {
 	switch (action.type) {
 		case 'SET_MODAL_TYPE':
 			if (action.payload === ModalType.progress) {
@@ -106,8 +106,8 @@ function manageReducer(state: ManageState, action: ManageAction): ManageState {
 	}
 }
 
-export function useManageReducer(stakingState: StakingState): [ManageState, Dispatch<ManageAction>] {
+export function useStakingReducer(stakingState: StakingState): [ManageState, Dispatch<ManageAction>] {
 	const initState = manageInitialState(stakingState)
-	const [manageState, manageDispatch] = useReducer(manageReducer, initState)
+	const [manageState, manageDispatch] = useReducer(stakingReducer, initState)
 	return [manageState, manageDispatch]
 }

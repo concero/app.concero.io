@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useMemo } from 'react'
 import { useAccount } from 'wagmi'
-import { useStakingReducer } from './stakingReducer/stakingReducer'
+import { useStakingReducer } from './stakingReducer/stakingScreenReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import classNames from './StakingScreen.module.pcss'
 import { StakingOpportunitiesCard } from '../../cards/StakingOpportunitesCard/StakingOpportunitiesCard'

@@ -1,7 +1,7 @@
 import { Dispatch } from 'react'
-import { SwapAction } from '../swapReducer/types'
+import { SwapAction, SwapCardStage } from '../swapReducer/types'
 
-export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapAction>, provider: 'rango' | 'lifi') => {
+export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapAction>) => {
 	swapDispatch({ type: 'UPDATE_LAST_SWAP_STEP' })
 	if (e.toString().toLowerCase().includes('user rejected')) {
 		swapDispatch({
@@ -20,6 +20,5 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 		})
 	}
 
-	swapDispatch({ type: 'SET_SWAP_STATUS', payload: 'failure' })
-	swapDispatch({ type: 'SET_SWAP_STAGE', payload: 'failed' })
+	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 }

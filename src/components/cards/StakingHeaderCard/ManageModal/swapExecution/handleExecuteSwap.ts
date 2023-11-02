@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import { ManageAction, ManageState } from '../useManageReducer/types'
+import { ManageAction, ManageState } from '../useStakingReducer/types'
 import { ModalType, Status } from '../constants'
 import { getSigner } from '../../../../../web3/getSigner'
 import { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'

@@ -1,8 +1,13 @@
 import { FC } from 'react'
 import classNames from './SwapProgress.module.pcss'
-import { Avatar } from '../../tags/Avatar/Avatar'
+import { Avatar } from '../../../tags/Avatar/Avatar'
+import { Direction } from '../../../../types/StandardRoute'
 
-export const TokenInfo: FC = ({ direction }) => {
+interface TokenInfoProps {
+	direction: Direction
+}
+
+export const TokenInfo: FC<TokenInfoProps> = ({ direction }) => {
 	const { token, chain, amount } = direction
 	return (
 		<div className={classNames.tokenInfoItem}>

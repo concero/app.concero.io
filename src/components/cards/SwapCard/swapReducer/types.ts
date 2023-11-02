@@ -1,6 +1,6 @@
 import { StandardRoute } from '../../../../types/StandardRoute'
 import { Provider } from '../../../../api/concero/types'
-import { StageStep } from '../../../layout/SwapProgress/TransactionStep'
+import { StageStep } from '../../StakingHeaderCard/ManageModal/SwapProgress/TransactionStep'
 import { TransactionStatus } from 'rango-sdk'
 import { ButtonType } from '../../../buttons/SwapButton/constants'
 import { ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'
@@ -30,17 +30,23 @@ export interface ButtonState {
 	message?: string
 }
 
+export enum SwapCardStage {
+	input = 'input',
+	progress = 'progress',
+	failed = 'failed',
+	success = 'success',
+	contactSupport = 'contactSupport',
+}
+
 export interface SwapState {
 	from: SwapStateDirection
 	to: SwapStateDirection
 	routes: StandardRoute[]
 	isLoading: boolean
-	selectedRoute: any
-	originalRoutes: any[]
+	selectedRoute: StandardRoute | null
 	typingTimeout: number
-	stage: 'input' | 'progress'
+	stage: SwapCardStage
 	steps: StageStep[]
-	status: 'pending' | 'success' | 'failure' | 'awaiting'
 	settings: Settings
 	buttonState: ButtonState
 	balance: string
@@ -70,7 +76,6 @@ export enum SwapActionType {
 	TOGGLE_SETTINGS_MODAL_OPEN = 'TOGGLE_SETTINGS_MODAL_OPEN',
 	SET_SETTINGS = 'SET_SETTINGS',
 	SET_SWAP_STEPS = 'SET_SWAP_STEPS',
-	SET_SWAP_STATUS = 'SET_SWAP_STATUS',
 	APPEND_SWAP_STEP = 'APPEND_SWAP_STEP',
 	SET_TO_ADDRESS = 'SET_TO_ADDRESS',
 	UPSERT_SWAP_STEP = 'UPSERT_SWAP_STEP',
@@ -95,11 +100,10 @@ export type SwapAction =
 	| { type: 'RESET_AMOUNTS'; direction: ActionDirection }
 	| { type: 'SET_ADDRESS'; direction: ActionDirection; payload: string }
 	| { type: 'TOGGLE_INSURANCE'; payload: Response }
-	| { type: 'SET_SWAP_STAGE'; payload: 'input' | 'progress' }
+	| { type: 'SET_SWAP_STAGE'; payload: SwapCardStage }
 	| { type: 'TOGGLE_SETTINGS_MODAL_OPEN' }
 	| { type: 'SET_SETTINGS'; payload: any }
 	| { type: 'SET_SWAP_STEPS'; payload: any[] }
-	| { type: 'SET_SWAP_STATUS'; payload: 'pending' | 'success' | 'failure' | 'awaiting' }
 	| { type: 'APPEND_SWAP_STEP'; payload: any }
 	| { type: 'SET_TO_ADDRESS'; payload: string }
 	| { type: 'UPSERT_SWAP_STEP'; payload: any }
