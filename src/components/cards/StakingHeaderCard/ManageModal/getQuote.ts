@@ -38,8 +38,9 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 	const response = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 	if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 	let gasUsd: null | string = null
+
 	if (route.gas) {
-		const humanReadableGas = addingTokenDecimals(route.gas, response.decimals) as string
+		const humanReadableGas = addingTokenDecimals(route.gas._hex, response.decimals) as string
 		gasUsd = roundNumberByDecimals(new BigNumber(humanReadableGas).times(response.price).toString(), 4)
 	}
 
