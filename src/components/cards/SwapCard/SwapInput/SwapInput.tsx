@@ -23,7 +23,9 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	// const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
 
 	async function switchChainHook(requiredChainId: number): Promise<providers.JsonRpcSigner> {
-		if (walletClient.data?.chain.id !== requiredChainId) {
+		const currentChainId = walletClient.data?.chain.id
+		console.log('currentChainId: ', currentChainId)
+		if (currentChainId !== requiredChainId) {
 			if (switchNetworkAsync) {
 				const chain = await switchNetworkAsync(requiredChainId)
 				if (!chain) throw new Error('Failed to switch to the required network')
@@ -34,6 +36,15 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 		}
 
 		return (await getEthersSigner(requiredChainId)) as providers.JsonRpcSigner
+	}
+
+	async function getSigner(): Promise<providers.JsonRpcSigner> {
+		const currentChainId = walletClient.data?.chain.id
+		if (currentChainId) {
+			return (await getEthersSigner(currentChainId)) as providers.JsonRpcSigner
+		} else {
+			throw new Error('Failed to get signer')
+		}
 	}
 
 	return (
@@ -51,7 +62,11 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 			{/* ) : null} */}
 			{isInsuranceCardVisible ? <InsuranceCard swapState={swapState} swapDispatch={swapDispatch} /> : null}
 			<SwapDetails swapState={swapState} setSelectedRoute={route => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })} />
-			<SwapButton swapState={swapState} isConnected={isConnected} onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol })} />
+			<SwapButton
+				swapState={swapState}
+				isConnected={isConnected}
+				onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })}
+			/>
 		</div>
 	)
 }

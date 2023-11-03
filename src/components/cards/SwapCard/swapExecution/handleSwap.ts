@@ -9,6 +9,7 @@ import { Route } from '@lifi/types/dist/cjs'
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
+import { providers } from 'ethers'
 
 interface HandleSwapProps {
 	swapState: SwapState
@@ -16,9 +17,10 @@ interface HandleSwapProps {
 	address: string
 	switchChainHook: SwitchChainHookType
 	getChainByProviderSymbol: GetChainByProviderSymbolI
+	getSigner: () => Promise<providers.JsonRpcSigner>
 }
 
-export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol }: HandleSwapProps): Promise<void> => {
+export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner }: HandleSwapProps): Promise<void> => {
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
 
@@ -39,7 +41,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 				updateLifiSteps({ swapDispatch, selectedRoute: stdRoute })
 			}
 
-			const signer = await switchChainHook(Number(from.chain.id))
+			const signer = await getSigner()
 			const acceptExchangeRateUpdateHook = () => Promise.resolve(true)
 
 			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
