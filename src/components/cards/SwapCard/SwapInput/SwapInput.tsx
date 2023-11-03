@@ -24,7 +24,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
 	async function switchChainHook(requiredChainId: number): Promise<providers.JsonRpcSigner> {
 		const currentChainId = walletClient.data?.chain.id
-		console.log('currentChainId: ', currentChainId)
+
 		if (currentChainId !== requiredChainId) {
 			if (switchNetworkAsync) {
 				const chain = await switchNetworkAsync(requiredChainId)
