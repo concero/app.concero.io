@@ -24,7 +24,7 @@ dayjs.updateLocale('en', {
 })
 export default dayjs
 
-function isValidNumber(number: string | number) {
+export function isValidNumber(number: string | number) {
 	if (typeof number === 'string') {
 		return number != ''
 	} else {
