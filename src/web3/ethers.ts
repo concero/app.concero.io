@@ -1,25 +1,26 @@
 import { type WalletClient } from 'wagmi'
 import { providers } from 'ethers'
 import { getPublicClient, getWalletClient, type PublicClient, type WalletClient } from '@wagmi/core'
-import { createWalletClient, custom, type HttpTransport } from 'viem'
+import { type HttpTransport } from 'viem'
+import { JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider'
 
 // // viem to ethers
-let client0
-let provider
-export let viemSigner
+// let client0
+// let provider
+// export let viemSigner
+//
+// if (window.ethereum) {
+// 	client0 = createWalletClient({
+// 		transport: custom(window.ethereum),
+// 	})
+//
+// 	provider = new providers.Web3Provider(client0.transport, 'any')
+// 	viemSigner = provider.getSigner()
+// } else {
+// 	console.error('Ethereum is not supported in this browser.')
+// }
 
-if (window.ethereum) {
-	client0 = createWalletClient({
-		transport: custom(window.ethereum),
-	})
-
-	provider = new providers.Web3Provider(client0.transport, 'any')
-	viemSigner = provider.getSigner()
-} else {
-	console.error('Ethereum is not supported in this browser.')
-}
-
-export function publicClientToProvider(publicClient: PublicClient) {
+function publicClientToProvider(publicClient: PublicClient) {
 	const { chain, transport } = publicClient
 	const network = {
 		chainId: chain.id,
@@ -33,12 +34,12 @@ export function publicClientToProvider(publicClient: PublicClient) {
 }
 
 /** Action to convert a viem Public Client to an ethers.js Provider. */
-export function getEthersProvider({ chainId }: { chainId?: number } = {}) {
+function getEthersProvider({ chainId }: { chainId?: number } = {}) {
 	const publicClient = getPublicClient({ chainId })
 	return publicClientToProvider(publicClient)
 }
 
-export function walletClientToSigner(walletClient: WalletClient) {
+function walletClientToSigner(walletClient: WalletClient) {
 	const { account, chain, transport } = walletClient
 	const network = {
 		chainId: chain.id,
@@ -51,7 +52,7 @@ export function walletClientToSigner(walletClient: WalletClient) {
 }
 
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
-export async function getEthersSigner({ chainId }: { chainId?: number } = {}) {
+export async function getEthersSigner(chainId: number): Promise<JsonRpcSigner | undefined> {
 	const walletClient = await getWalletClient({ chainId })
 	if (!walletClient) return undefined
 	return walletClientToSigner(walletClient)

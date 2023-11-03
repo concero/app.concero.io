@@ -8,7 +8,6 @@ import { executeRangoRoute } from './executeRangoRoute'
 import { Route } from '@lifi/types/dist/cjs'
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
-import { viemSigner } from '../../../../web3/ethers'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 
 interface HandleSwapProps {
@@ -35,14 +34,15 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			handleRangoResponse(response, swapDispatch, provider)
 		} else if (provider === 'lifi') {
 			updateLifiSteps({ swapDispatch, selectedRoute })
-
 			const updateRouteHook = (updatedRoute: Route) => {
 				const stdRoute = standardiseLifiRoute(updatedRoute)
 				updateLifiSteps({ swapDispatch, selectedRoute: stdRoute })
 			}
 
+			const signer = await switchChainHook(Number(from.chain.id))
 			const acceptExchangeRateUpdateHook = () => Promise.resolve(true)
-			const response = await executeLifiRoute(viemSigner, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
+
+			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
 			handleLifiResponse(response, swapDispatch, provider)
 		}
 	} catch (error: Error) {
