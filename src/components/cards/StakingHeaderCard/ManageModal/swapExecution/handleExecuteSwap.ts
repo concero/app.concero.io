@@ -30,6 +30,8 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 			await approveToken({ signer, tokenAddress: from.token.address, receiverAddress: approvalTx.spender, fromAmount: approvalTx.amount })
 		}
 
+		console.log(from.amount, from.token.decimals)
+
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
 		const route = await retryRequest(
 			async () =>
@@ -45,8 +47,10 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 
 		const transactionArgs = {
 			...route.tx,
-			gasLimit: BigNumber(manageState.route.gas).times(1.8).toFixed(0).toString(),
+			gasLimit: BigNumber(manageState.route.gas._hex).times(1.8).toFixed(0).toString(),
 		}
+
+		console.log(transactionArgs)
 
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
 		await signer.sendTransaction(transactionArgs)

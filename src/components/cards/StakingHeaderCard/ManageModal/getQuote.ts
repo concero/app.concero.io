@@ -54,7 +54,7 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 	dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount, gasUsd, toAmountUsd })
 }
 
-async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
+async function handleFetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
 	dispatch({ type: 'SET_LOADING', payload: true })
 	dispatch({ type: 'SET_STATUS', payload: Status.loading })
 	try {
@@ -71,7 +71,7 @@ export async function getQuote({ manageState, manageDispatch, typingTimeoutRef }
 	if (!manageState.from.amount) return clearRoute(manageDispatch, typingTimeoutRef)
 	try {
 		if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-		typingTimeoutRef.current = setTimeout(() => fetchQuote(manageState, manageDispatch), 700)
+		typingTimeoutRef.current = setTimeout(() => handleFetchQuote(manageState, manageDispatch), 700)
 	} catch (error) {
 		console.error('[getQuote] ', error)
 	}

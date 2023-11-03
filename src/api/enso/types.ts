@@ -27,7 +27,9 @@ export interface EnsoRouteResponse {
 	createdAt: number
 	route: EnsoRoute[]
 	priceImpact: number
-	gas: number | string
+	gas: {
+		_hex: string
+	}
 	gasUsd: string | null
 	amountOut: string
 	tx: Transaction
