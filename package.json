@@ -38,8 +38,7 @@
     "react-ts-tradingview-widgets": "^1.2.0",
     "recharts": "^2.8.0",
     "viem": "^1.11.1",
-    "wagmi": "^1.4.2",
-    "wido": "^0.4.1"
+    "wagmi": "^1.4.2"
   },
   "devDependencies": {
     "@storybook/addon-controls": "^7.4.3",
