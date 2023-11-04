@@ -26,8 +26,10 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
 		fee: parseFloat(config.LIFI_FEES),
 		insurance: false,
 		integrator: config.LIFI_INTEGRATOR,
-		slippage: Number(settings.slippage_percent) / 100,
+		slippage: Number(settings.slippage_percent || 5) / 100,
 	}
+
+	console.log('routeOptions: ', routeOptions)
 
 	const routesRequest: RoutesRequest = {
 		fromChainId: Number(from.chain.id),
