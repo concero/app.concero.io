@@ -9,10 +9,10 @@ export const handleRangoResponse = (executedRoute, swapDispatch: Dispatch<SwapAc
 
 	if (executedRoute.status === TransactionStatus.FAILED) {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'failure', provider: 'rango' })
+		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'failure', provider: 'rango', tx_data: executedRoute })
 	} else if (executedRoute.status === 'success') {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
-		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'success', provider: 'rango' })
+		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'success', provider: 'rango', tx_data: executedRoute })
 	}
 }
 
@@ -23,9 +23,9 @@ export const handleLifiResponse = (executedRoute, swapDispatch: Dispatch<SwapAct
 
 	if (lastExecutionStep?.status.toLowerCase() === 'done') {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
-		logTxToDB({ tx_id: executedRoute.id, status: 'success', provider: 'lifi' })
+		logTxToDB({ tx_id: executedRoute.id, status: 'success', provider: 'lifi', tx_data: executedRoute })
 	} else if (lastExecutionStep?.status.toLowerCase() === 'failed') {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-		logTxToDB({ tx_id: executedRoute.id, status: 'failure', provider: 'lifi' })
+		logTxToDB({ tx_id: executedRoute.id, status: 'failure', provider: 'lifi', tx_data: executedRoute })
 	}
 }
