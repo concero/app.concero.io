@@ -17,6 +17,7 @@ import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
+import { useTranslation } from 'react-i18next'
 
 export interface ChartCardProps {}
 
@@ -30,6 +31,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
 	const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
 	const { addNotification } = useContext(NotificationsContext)
 	const isMobile = useMediaQuery('mobile')
+	const { t } = useTranslation()
 
 	const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
 
@@ -79,7 +81,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
 		<Card className={classNames.container}>
 			<div className={classNames.headerContainer}>
 				<div className={classNames.selectChainContainer}>
-					<h5 className="cardHeaderTitle">Chart</h5>
+					<h5 className="cardHeaderTitle">{t('chart.title')}</h5>
 					<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
 						<CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
 					</Button>

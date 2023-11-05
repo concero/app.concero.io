@@ -3,7 +3,7 @@ import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from '../SwapCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { capitalize, numberToFormatString } from '../../../../utils/formatting'
+import { numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { TextInput } from '../../../input/TextInput'
 import { TokenAreaProps } from './types'
@@ -14,11 +14,13 @@ import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
+import { useTranslation } from 'react-i18next'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, chains }) => {
 	const { getTokens, getChains } = useContext(DataContext)
 	const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
 	const inputRef = useRef()
+	const { t } = useTranslation()
 
 	const shakeProps = useSpring({
 		from: { transform: 'translateX(0)' },
@@ -61,7 +63,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 			>
 				<div className={classNames.tokenRow}>
 					<div className={classNames.tokenRowHeader}>
-						<p>{capitalize(direction)}</p>
+						<p>{t(`swapCard.${direction}`)}</p>
 						<Button
 							onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: true })}
 							size="sm"

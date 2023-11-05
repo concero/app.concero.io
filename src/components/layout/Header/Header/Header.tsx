@@ -8,6 +8,7 @@ import { WalletButton } from '../WalletButton/WalletButton'
 import { WithTooltip } from '../../../wrappers/WithTooltip'
 import { TooltipContent } from './TooltipContent'
 import { ComingSoonLinks } from './ComingSoonLinks'
+import { useTranslation } from 'react-i18next'
 
 interface HeaderProps {
 	style?: CSSProperties
@@ -18,6 +19,7 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 	const isMobile = useMediaQuery('mobile')
 	const matchExchange = useMatch(routes.exchange)
 	const matchStaking = useMatch(routes.staking)
+	const { t } = useTranslation()
 
 	const ComingSoon = WithTooltip({
 		WrappedComponent: ComingSoonLinks,
@@ -34,10 +36,10 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 				{!isMobile ? (
 					<ul>
 						<Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
-							Exchange
+							{t('header.exchange')}
 						</Link>
 						<Link className={matchStaking ? classNames.active : classNames.link} to={routes.staking}>
-							Staking
+							{t('header.staking')}
 						</Link>
 						{ComingSoon}
 					</ul>
