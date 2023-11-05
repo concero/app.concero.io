@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react'
-import { useAccount, useWalletClient } from 'wagmi'
+import { useAccount, useSwitchNetwork, useWalletClient } from 'wagmi'
 import { TokenArea } from '../TokenArea/TokenArea'
 import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
@@ -18,15 +18,21 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { address, isConnected } = useAccount()
 	const isInsuranceCardVisible = swapState.selectedRoute?.insurance
 	const walletClient = useWalletClient()
+	const { switchNetworkAsync } = useSwitchNetwork()
 
 	// const handleChangeToAddress = (value: string) => swapDispatch({ type: 'SET_TO_ADDRESS', payload: value })
 
 	async function switchChainHook(requiredChainId: number): Promise<providers.JsonRpcSigner> {
 		const currentChainId = walletClient.data?.chain.id
-		const signer = await getEthersSigner(currentChainId as number)
 
 		if (currentChainId !== requiredChainId) {
-			await signer?.provider.send('wallet_switchEthereumChain', [{ chainId: '0x' + requiredChainId.toString(16) }])
+			if (switchNetworkAsync) {
+				const chain = await switchNetworkAsync(requiredChainId)
+				if (!chain) throw new Error('Failed to switch to the required network')
+				return (await getEthersSigner(chain.id)) as providers.JsonRpcSigner
+			} else {
+				throw new Error('Failed to switch to the required network')
+			}
 		}
 
 		return (await getEthersSigner(requiredChainId)) as providers.JsonRpcSigner
