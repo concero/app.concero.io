@@ -10,6 +10,7 @@ export interface TextInputProps {
 	isDisabled?: boolean
 	title?: string
 	type?: string
+	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<HTMLInputElement, TextInputProps>(
