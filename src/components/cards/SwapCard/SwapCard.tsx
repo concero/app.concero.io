@@ -46,6 +46,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 	return (
 		<InsuranceProvider toggleInsurance={toggleInsurance}>
 			<div className={`card ${classNames.container}`}>
+				<div>{t('swapCard.title')}</div>
 				<CardHeader title={getCardTitleByStatus(swapState.stage)}>
 					<div className={classNames.cardHeader}>
 						<Button
