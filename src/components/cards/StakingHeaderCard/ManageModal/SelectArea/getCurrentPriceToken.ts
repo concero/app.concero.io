@@ -5,7 +5,7 @@ export async function getCurrentPriceToken(selection, setCurrentUsdPrice) {
 		const response = await fetchTokenPrice(selection.chain.id, selection.token.address)
 		setCurrentUsdPrice(response?.price ?? null)
 	} catch (error) {
-		console.log('ERROR: ', error)
+		console.error('ERROR: ', error)
 		setCurrentUsdPrice(null)
 	}
 }

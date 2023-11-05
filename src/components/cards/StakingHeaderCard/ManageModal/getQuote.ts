@@ -60,7 +60,7 @@ async function handleFetchQuote(state: ManageState, dispatch: Dispatch<ManageAct
 	try {
 		await getEnsoQuote(state, dispatch)
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		handleError(error as Error, dispatch)
 	} finally {
 		dispatch({ type: 'SET_LOADING', payload: false })

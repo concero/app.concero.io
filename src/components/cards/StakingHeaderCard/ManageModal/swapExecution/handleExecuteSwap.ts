@@ -29,9 +29,6 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 			manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
 			await approveToken({ signer, tokenAddress: from.token.address, receiverAddress: approvalTx.spender, fromAmount: approvalTx.amount })
 		}
-
-		console.log(from.amount, from.token.decimals)
-
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
 		const route = await retryRequest(
 			async () =>
@@ -49,9 +46,6 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 			...route.tx,
 			gasLimit: BigNumber(manageState.route.gas._hex).times(1.8).toFixed(0).toString(),
 		}
-
-		console.log(transactionArgs)
-
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
 		await signer.sendTransaction(transactionArgs)
 
@@ -59,7 +53,7 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 		manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.success })
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Swap started successfully!', status: 'success' } })
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		handleError(error as Error, manageDispatch)
 	} finally {
 		manageDispatch({ type: 'SET_LOADING', payload: false })

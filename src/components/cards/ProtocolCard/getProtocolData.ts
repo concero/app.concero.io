@@ -6,6 +6,6 @@ export async function getProtocolData(protocolName: string, setProtocolData: Set
 		const response = await fetchProtocolDataById(protocolName)
 		setProtocolData(response[0])
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }

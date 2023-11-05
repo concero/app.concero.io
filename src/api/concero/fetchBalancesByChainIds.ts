@@ -18,7 +18,7 @@ export async function fetchBalancesByChainIds(chainIds: string[], walletAddress:
 		if (!response?.data?.success) return null
 		return response.data.data
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		return null
 	}
 }

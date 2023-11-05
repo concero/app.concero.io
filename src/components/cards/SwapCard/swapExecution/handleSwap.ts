@@ -47,7 +47,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			handleLifiResponse(response, swapDispatch, provider)
 		}
 	} catch (error: Error) {
-		console.log('ERROR: ', error)
+		console.error('ERROR: ', error)
 		handleTransactionError(error, swapDispatch)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
