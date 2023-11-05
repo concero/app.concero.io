@@ -12,6 +12,7 @@ interface IConfig {
 	POSTHOG_HOST: string
 	NULL_ADDRESS: string
 	NULL_E_ADDRESS: string
+	WEB3_MODAL_PROJECT_ID: string
 }
 
 export const config: IConfig = {
@@ -26,4 +27,5 @@ export const config: IConfig = {
 	POSTHOG_HOST: process.env.POSTHOG_HOST as string,
 	NULL_ADDRESS: '0x0000000000000000000000000000000000000000',
 	NULL_E_ADDRESS: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+	WEB3_MODAL_PROJECT_ID: process.env.WEB3_MODAL_PROJECT_ID as string,
 }
