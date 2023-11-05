@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
-import { ToggleButton } from '../../../layout/ToggleButton/ToggleButton'
 import classNames from './InsuranceCard.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
+import { Toggle } from '../../../layout/Toggle/Toggle'
 
 export function InsuranceCard({ swapState, swapDispatch }) {
 	const [isInfoVisible, setIsInfoVisible] = useState(false)
@@ -30,7 +30,7 @@ export function InsuranceCard({ swapState, swapDispatch }) {
 		<div className={`card ${classNames.container} ${isChecked ? classNames.checked : classNames.unchecked}`}>
 			<div className={classNames.innerContainer}>
 				<div className={classNames.sideContainer}>
-					<ToggleButton value={isChecked} onChange={handleClickInsuranceButton} />
+					<Toggle isChecked={isChecked} onChange={handleClickInsuranceButton} />
 					<h5>Insurance</h5>
 				</div>
 				<div className={classNames.sideContainer}>
