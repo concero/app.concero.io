@@ -3,7 +3,7 @@ import { ManageState } from '../useStakingReducer/types'
 import classNames from './Details.module.pcss'
 import { Avatar } from '../../../../tags/Avatar/Avatar'
 import { Tag } from '../../../../tags/Tag/Tag'
-import { roundNumberByDecimals } from '../../../../../utils/formatting'
+import { numberToFormatString, roundNumberByDecimals } from '../../../../../utils/formatting'
 import BigNumber from 'bignumber.js'
 import { ReactElement } from 'react'
 
@@ -25,10 +25,10 @@ export function Details({ manageState }: DetailsProps): ReactElement {
 			</Tag>
 			<Tag color="grey">
 				<div className={classNames.tagContainer}>
-					{manageState?.route?.gas ? (
+					{manageState?.route?.gasUsd ? (
 						<div className={classNames.tagInnerContainer}>
 							<IconGasStation color={'var(--color-text-secondary)'} size={16} />
-							<p className="body1">${manageState.route.gasUsd}</p>
+							<p className="body1">${numberToFormatString(Number(manageState.route.gasUsd), 4, true)}</p>
 						</div>
 					) : null}
 					{/* {manageState?.route?.expectedSlippage ? ( */}

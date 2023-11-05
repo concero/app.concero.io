@@ -4,6 +4,7 @@ import { Link, useMatch } from 'react-router-dom'
 import { routes } from '../../../../constants/routes'
 import classNames from './MobileBurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
+import { FeedbackModal } from '../../../modals/FeedbackModal/FeedbackModal'
 
 export interface MobileBurgerMenuProps {
 	toggleTheme: () => void
@@ -11,6 +12,7 @@ export interface MobileBurgerMenuProps {
 
 export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ toggleTheme }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
 
 	const matchExchange = useMatch(routes.exchange)
 	const matchStaking = useMatch(routes.staking)
@@ -33,6 +35,10 @@ export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ toggleTheme }) => 
 				{/* <Link to={routes.portfolio}> */}
 				{/*   <h4 className={matchPortfolio ? classNames.active : classNames.secondary}>Portfolio</h4> */}
 				{/* </Link> */}
+				<a href="#" aria-label="Help us improve" onClick={() => setIsFeedbackModalOpened(true)}>
+					<h4 className={classNames.secondary}>Help us improve</h4>
+				</a>
+
 				<a href="#" onClick={toggleTheme} aria-label="Toggle theme">
 					<h4 className={classNames.secondary}>Toggle theme</h4>
 				</a>
@@ -40,6 +46,7 @@ export const MobileBurgerMenu: FC<MobileBurgerMenuProps> = ({ toggleTheme }) => 
 					<h4 className={classNames.logOutButton}>Log out</h4>
 				</a>
 			</nav>
+			<FeedbackModal show={isFeedbackModalOpened} setShow={setIsFeedbackModalOpened} />
 		</div>
 	)
 }

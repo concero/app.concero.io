@@ -8,8 +8,8 @@ import { executeRangoRoute } from './executeRangoRoute'
 import { Route } from '@lifi/types/dist/cjs'
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
-import { viemSigner } from '../../../../web3/ethers'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
+import { providers } from 'ethers'
 
 interface HandleSwapProps {
 	swapState: SwapState
@@ -17,9 +17,10 @@ interface HandleSwapProps {
 	address: string
 	switchChainHook: SwitchChainHookType
 	getChainByProviderSymbol: GetChainByProviderSymbolI
+	getSigner: () => Promise<providers.JsonRpcSigner>
 }
 
-export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol }: HandleSwapProps): Promise<void> => {
+export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner }: HandleSwapProps): Promise<void> => {
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
 
@@ -30,23 +31,23 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 
 	try {
 		if (provider === 'rango') {
-			console.log('originalRoute: ', originalRoute)
 			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol })
 			handleRangoResponse(response, swapDispatch, provider)
 		} else if (provider === 'lifi') {
 			updateLifiSteps({ swapDispatch, selectedRoute })
-
 			const updateRouteHook = (updatedRoute: Route) => {
 				const stdRoute = standardiseLifiRoute(updatedRoute)
 				updateLifiSteps({ swapDispatch, selectedRoute: stdRoute })
 			}
 
+			const signer = await getSigner()
 			const acceptExchangeRateUpdateHook = () => Promise.resolve(true)
-			const response = await executeLifiRoute(viemSigner, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
+
+			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
 			handleLifiResponse(response, swapDispatch, provider)
 		}
 	} catch (error: Error) {
-		console.log('ERROR: ', error)
+		console.error('ERROR: ', error)
 		handleTransactionError(error, swapDispatch)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })

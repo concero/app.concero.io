@@ -21,7 +21,7 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLi
 		populateRoutes({ routes, from, swapDispatch })
 		return lifiRoutes
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }
 
@@ -32,7 +32,7 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 		populateRoutes({ routes, from, swapDispatch })
 		return rangoRoutes
 	} catch (error) {
-		console.log('rangoRoutes', error)
+		console.error('rangoRoutes', error)
 	}
 }
 
@@ -45,7 +45,7 @@ export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection
 		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
 		await fetchWalletBalancesOnStepChains(routes, swapDispatch, from.address)
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}

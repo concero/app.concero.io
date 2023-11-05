@@ -17,15 +17,23 @@ const getStepStatus = (action: Process) => {
 }
 
 const getActionTitle = (action: Process) => {
-	if (action?.type === 'SWITCH_CHAIN') return action.status.toLowerCase() === 'action_required' ? 'Action Required' : 'Chain switched successfully'
+	if (action?.type === 'SWITCH_CHAIN') {
+		return action.status.toLowerCase() === 'action_required' ? 'Action Required' : 'Chain switched successfully'
+	}
 	if (action?.message) return action.message
 	if (action?.error?.message) return action.error.message
 	return 'Transaction in progress'
 }
 
 const getActionBody = (action: Process) => {
-	if (action?.type === 'SWITCH_CHAIN' && action?.status.toLowerCase() === 'action_required') return 'Please approve the chain switch in your wallet'
-	return action.substatusMessage ?? null
+	const { status, type, message, substatusMessage } = action
+	if (type === 'SWITCH_CHAIN' && status.toLowerCase() === 'action_required') {
+		return 'Please approve the chain switch in your wallet.'
+	}
+	if (message?.includes('An unexpected error occurred.') && (status === 'PENDING' || status === 'ACTION_REQUIRED')) {
+		return 'Swap in progress.'
+	}
+	return substatusMessage ?? null
 }
 
 interface UpdateLifiSteps {

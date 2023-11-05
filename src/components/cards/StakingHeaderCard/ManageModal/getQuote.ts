@@ -38,8 +38,9 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 	const response = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 	if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
 	let gasUsd: null | string = null
+
 	if (route.gas) {
-		const humanReadableGas = addingTokenDecimals(route.gas, response.decimals) as string
+		const humanReadableGas = addingTokenDecimals(route.gas._hex, response.decimals) as string
 		gasUsd = roundNumberByDecimals(new BigNumber(humanReadableGas).times(response.price).toString(), 4)
 	}
 
@@ -53,13 +54,13 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 	dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount, gasUsd, toAmountUsd })
 }
 
-async function fetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
+async function handleFetchQuote(state: ManageState, dispatch: Dispatch<ManageAction>): Promise<void> {
 	dispatch({ type: 'SET_LOADING', payload: true })
 	dispatch({ type: 'SET_STATUS', payload: Status.loading })
 	try {
 		await getEnsoQuote(state, dispatch)
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 		handleError(error as Error, dispatch)
 	} finally {
 		dispatch({ type: 'SET_LOADING', payload: false })
@@ -70,7 +71,7 @@ export async function getQuote({ manageState, manageDispatch, typingTimeoutRef }
 	if (!manageState.from.amount) return clearRoute(manageDispatch, typingTimeoutRef)
 	try {
 		if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-		typingTimeoutRef.current = setTimeout(() => fetchQuote(manageState, manageDispatch), 700)
+		typingTimeoutRef.current = setTimeout(() => handleFetchQuote(manageState, manageDispatch), 700)
 	} catch (error) {
 		console.error('[getQuote] ', error)
 	}

@@ -12,7 +12,7 @@ export async function retryRequest(request: (i: number) => Promise<any>, options
 			const response = await request(i)
 			if (response) return response
 		} catch (e: any) {
-			console.log(e)
+			console.error(e)
 			if (throwCondition(e)) throw e
 			error = e
 		}

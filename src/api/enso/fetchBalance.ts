@@ -7,7 +7,7 @@ export async function fetchBalances(address: string, chainId: string): Promise<I
 		const response = await get(url)
 		return response.data
 	} catch (error) {
-		console.log('error: ', error)
+		console.error('error: ', error)
 		return []
 	}
 }
