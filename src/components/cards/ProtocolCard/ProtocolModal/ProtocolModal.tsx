@@ -32,25 +32,27 @@ function ChangeTag({ change, period }: { change: number; period: string }) {
 }
 
 function TransactionTotal({ protocol }: { protocol: Protocol }) {
+	const { t } = useTranslation()
 	return (
 		<div className={`card ${classNames.totalContainer} ${classNames.cardContainer}`}>
 			<div className={classNames.priceContainer}>
-				<h4 className="body1">Transactions total</h4>
+				<h4 className="body1">{t('protocolModal.transactionsTotal')}</h4>
 				<h3>${formatNumber(protocol.totalAllTime)}</h3>
 			</div>
 			<div className={classNames.rowContainer}>
-				<ChangeTag change={protocol.change_7d} period="This week" />
-				<ChangeTag change={protocol.change_1m} period="This month" />
+				<ChangeTag change={protocol.change_7d} period={t('protocolModal.thisWeek')} />
+				<ChangeTag change={protocol.change_1m} period={t('protocolModal.thisMonth')} />
 			</div>
 		</div>
 	)
 }
 
 function DailyInfo({ protocol }: { protocol: Protocol }) {
+	const { t } = useTranslation()
 	return (
 		<div className={classNames.dailyContainer}>
-			<InfoCard title="Daily fees" value={formatNumber(protocol.dailyFees)} />
-			<InfoCard title="Daily supply revenue" value={formatNumber(protocol.dailySupplySideRevenue)} />
+			<InfoCard title={t('protocolModal.dailyFees')} value={formatNumber(protocol.dailyFees)} />
+			<InfoCard title={t('protocolModal.dailySupplyRevenue')} value={formatNumber(protocol.dailySupplySideRevenue)} />
 		</div>
 	)
 }
@@ -65,9 +67,11 @@ function InfoCard({ title, value }: { title: string; value: string }) {
 }
 
 function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
+	const { t } = useTranslation()
+
 	return (
 		<div className={`card ${classNames.cardContainer}`}>
-			<p className="body1">Audits</p>
+			<p className="body1">{t('protocolModal.audits')}</p>
 			<div className={classNames.tagsContainer}>
 				{auditLinks.map((link, index) => (
 					<Tag key={index} color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(link, '_blank')}>

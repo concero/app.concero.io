@@ -6,6 +6,7 @@ import { BaseButton } from '../BaseButton/BaseButton'
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from '../WalletButton.module.pcss'
 import { FeedbackModal } from '../../../../modals/FeedbackModal/FeedbackModal'
+import { useTranslation } from 'react-i18next'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface DesktopButtonProps {
@@ -18,6 +19,7 @@ interface DesktopButtonProps {
 export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover, toggleTheme, theme }) => {
 	const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
 	const { isConnected } = useAccount()
+	const { t } = useTranslation()
 
 	const handleHelpButtonClick = () => {
 		setIsFeedbackModalOpened(prev => !prev)
@@ -26,7 +28,7 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ open, ButtonWithPopover,
 	return (
 		<div className={classNames.container}>
 			<Button variant="subtle" size="sm" className={classNames.helpButton} onClick={() => handleHelpButtonClick()}>
-				Help us improve
+				{t('modal.helpUsImprove')}
 			</Button>
 			{isConnected ? <ButtonWithPopover onClick={open} /> : <BaseButton onClick={open} />}
 			<Button size="sq-md" onClick={toggleTheme} variant="black" leftIcon={theme === 'light' ? <IconMoon size={18} /> : <IconSun size={18} />} />

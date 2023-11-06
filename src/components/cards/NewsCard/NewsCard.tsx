@@ -61,7 +61,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 				/>
 			</div>
 			<ListModal
-				title="Select token"
+				title={t('modal.selectToken')}
 				isOpen={isModalVisible}
 				setIsOpen={value => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
 				onSelect={token => handleSelectToken(token)}

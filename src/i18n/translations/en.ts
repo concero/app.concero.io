@@ -8,6 +8,7 @@ export const en = {
 				failed: 'Swap failed',
 				contactSupport: 'Contact support',
 			},
+			insurance: 'Insurance',
 		},
 		header: {
 			exchange: 'Exchange',
@@ -18,6 +19,7 @@ export const en = {
 			copyAddress: 'Copy address',
 			logOut: 'Log out',
 			comingSoon: 'Coming Soon',
+			toggleTheme: 'Toggle theme',
 		},
 		chartCard: {
 			title: 'Chart',
@@ -59,11 +61,10 @@ export const en = {
 			somethingWentWrong: 'Something went wrong',
 			mayTakeAWhile: 'Hang tight, this may take a while…',
 			goBack: 'Go back',
+			sendFeedback: 'Send feedback',
 		},
 		contactSupportCard: {
 			contractSupport: 'Contact support',
-			email: 'Email',
-			discord: 'Discord',
 			copyTransactionInfo: 'Copy transaction info',
 			dropUsAMessage: 'Drop us a message',
 			apologise: 'We apologise that you had issues with your transaction. We will do our best to resolve the issue.',
@@ -79,6 +80,41 @@ export const en = {
 			title: 'Protocol',
 			contractAddress: 'Contract address',
 			website: 'Website',
+			transactionsTotal: 'Transactions total',
+			dailyFees: 'Daily fees',
+			dailySupplyRevenue: 'Daily supply revenue',
+			audits: 'Audits',
+			thisWeek: 'This week',
+			thisMonth: 'This month',
+		},
+		utils: {
+			cuoldNotLoadData: 'Couldn’t load data.',
+			retry: 'Retry',
+		},
+		swapProgressCard: {
+			on: 'on',
+		},
+		modal: {
+			selectToken: 'Select token',
+			selectChain: 'Select chain',
+			helpUsImprove: 'Help us improve',
+			howCanWeReachOut: 'How can we reach out?',
+		},
+		socialMedia: {
+			discord: 'Discord',
+			email: 'Email',
+			twitter: 'Twitter',
+			telegram: 'Telegram',
+		},
+		placeholder: {
+			search: 'Search',
+			explainYourFeedback: 'Explain your feedback in detail',
+			yourUsername: 'Your username',
+		},
+		tagTitle: {
+			question: 'Question',
+			issue: 'Issue',
+			suggestion: 'Suggestion',
 		},
 	},
 }

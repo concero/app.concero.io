@@ -57,10 +57,10 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 						onClick={() => window.open('https://discord.com/channels/1155792755105214535/1156171906228170795', '_blank')}
 						variant="secondary"
 					>
-						{t('contactSupportCard.discord')}
+						{t('socialMedia.discord')}
 					</Button>
 					<Button leftIcon={<IconMail size={16} />} className={classNames.f1} variant="secondary" onClick={() => window.open('mailto:Concerocrypto@gmail.com', '_blank')}>
-						{t('contactSupportCard.email')}
+						{t('socialMedia.email')}
 					</Button>
 				</div>
 				<Button leftIcon={<IconArrowLeft size={18} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">

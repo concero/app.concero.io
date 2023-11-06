@@ -113,7 +113,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
 				)}
 			</div>
 			<ListModal
-				title="Select token"
+				title={t('modal.selectToken')}
 				isOpen={token.base.modalVisible}
 				setIsOpen={setIsOpenCallback}
 				onSelect={handleSelectCallback}

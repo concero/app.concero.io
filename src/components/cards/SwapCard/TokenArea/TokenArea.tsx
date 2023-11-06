@@ -109,7 +109,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 			{/*  onSelect={handleSelectChain} */}
 			{/* /> */}
 			<ListModal
-				title="Select token"
+				title={t('modal.selectToken')}
 				isOpen={state.showTokensModal}
 				setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: value })}
 				onSelect={token => handleSelectToken(token)}
@@ -117,7 +117,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 				RenderItem={ListEntityButton}
 			/>
 			<ListModal
-				title="Select chain"
+				title={t('modal.selectChain')}
 				isOpen={state.showChainsModal}
 				setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
 				onSelect={chain => handleSelectChain(chain)}
