@@ -8,6 +8,7 @@ import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
+import { useTranslation } from 'react-i18next'
 
 interface ProtocolCardProps {
 	stakingState: StakingState
@@ -17,6 +18,7 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 	const [isOpened, setIsOpened] = useState(false)
 	const [protocolData, setProtocolData] = useState<Protocol | null>(null)
 	const { selectedVault } = stakingState
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		getProtocolData(selectedVault?.project._id, setProtocolData)
@@ -24,7 +26,7 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 
 	return (
 		<div>
-			<CardHeader title="Protocol" />
+			<CardHeader title={t('stakingDetailsCard.protocol')} />
 			<Button variant="subtle" onClick={() => setIsOpened(true)}>
 				<div className={classNames.cardContainer}>
 					<div className={classNames.avatarContainer}>

@@ -8,6 +8,7 @@ import { Tag } from '../../../tags/Tag/Tag'
 import { colors } from '../../../../constants/colors'
 import { formatNumber } from '../../../../utils/formatting'
 import { copyToClipboard } from '../../../../utils/copyToClipboard'
+import { useTranslation } from 'react-i18next'
 
 interface ProtocolModalProps {
 	show: boolean
@@ -27,44 +28,6 @@ function ChangeTag({ change, period }: { change: number; period: string }) {
 				<p className="body1">{period}</p>
 			</div>
 		</Tag>
-	)
-}
-
-export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
-	if (!protocol) return null
-	const { name, symbol, address, category, description, url, dailyFees, totalAllTime, dailySupplySideRevenue, audit_links, logoURI } = protocol
-
-	return (
-		<Modal show={show} setShow={setShow} title="Protocol">
-			<div className={classNames.container}>
-				<div className={classNames.headerContainer}>
-					<Avatar src={logoURI ?? null} size="lg" />
-					<div>
-						<div className={classNames.titleContainer}>
-							<h4>{name}</h4>
-							<p className="body1">{symbol}</p>
-						</div>
-						<p className="body1">{description}</p>
-					</div>
-				</div>
-				<div className={classNames.tagsContainer}>
-					{category && <CategoryTag category={category} />}
-					{address && (
-						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyToClipboard(address)}>
-							<p className="body1">Contract address</p>
-						</Tag>
-					)}
-					{url && (
-						<Tag color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(url, '_blank')}>
-							<p className="body1">Website</p>
-						</Tag>
-					)}
-				</div>
-				{totalAllTime && <TransactionTotal protocol={protocol} />}
-				{dailySupplySideRevenue && dailyFees && <DailyInfo protocol={protocol} />}
-				{audit_links.length > 0 && <AuditLinks auditLinks={audit_links} />}
-			</div>
-		</Modal>
 	)
 }
 
@@ -113,5 +76,44 @@ function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
 				))}
 			</div>
 		</div>
+	)
+}
+
+export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
+	if (!protocol) return null
+	const { name, symbol, address, category, description, url, dailyFees, totalAllTime, dailySupplySideRevenue, audit_links, logoURI } = protocol
+	const { t } = useTranslation()
+
+	return (
+		<Modal show={show} setShow={setShow} title={t('protocolModal.title')}>
+			<div className={classNames.container}>
+				<div className={classNames.headerContainer}>
+					<Avatar src={logoURI ?? null} size="lg" />
+					<div>
+						<div className={classNames.titleContainer}>
+							<h4>{name}</h4>
+							<p className="body1">{symbol}</p>
+						</div>
+						<p className="body1">{description}</p>
+					</div>
+				</div>
+				<div className={classNames.tagsContainer}>
+					{category && <CategoryTag category={category} />}
+					{address && (
+						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyToClipboard(address)}>
+							<p className="body1">{t('protocolModal.contractAddress')}</p>
+						</Tag>
+					)}
+					{url && (
+						<Tag color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(url, '_blank')}>
+							<p className="body1">{t('protocolModal.website')}</p>
+						</Tag>
+					)}
+				</div>
+				{totalAllTime && <TransactionTotal protocol={protocol} />}
+				{dailySupplySideRevenue && dailyFees && <DailyInfo protocol={protocol} />}
+				{audit_links.length > 0 && <AuditLinks auditLinks={audit_links} />}
+			</div>
+		</Modal>
 	)
 }

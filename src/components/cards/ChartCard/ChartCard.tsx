@@ -81,14 +81,14 @@ export const ChartCard: FC<ChartCardProps> = () => {
 		<Card className={classNames.container}>
 			<div className={classNames.headerContainer}>
 				<div className={classNames.selectChainContainer}>
-					<h5 className="cardHeaderTitle">{t('chart.title')}</h5>
+					<h5 className="cardHeaderTitle">{t('chartCard.title')}</h5>
 					<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
 						<CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
 					</Button>
 					{!isMobile ? (
 						<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
 							<Beacon isOn={chartType === 'tradingView'} />
-							<p className="body1">TradingView</p>
+							<p className="body1">{t('chartCard.tradingView')}</p>
 						</Button>
 					) : null}
 				</div>

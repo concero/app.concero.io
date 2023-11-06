@@ -6,6 +6,7 @@ import { colors } from '../../../../../constants/colors'
 import { Button } from '../../../../buttons/Button/Button'
 import { IStep, ManageState } from '../useStakingReducer/types'
 import { TransactionStep } from '../../../../layout/TransactionStep/TransactionStep'
+import { useTranslation } from 'react-i18next'
 
 interface SwapProgressProps {
 	manageState: ManageState
@@ -14,6 +15,7 @@ interface SwapProgressProps {
 
 export const StakingSwapProgress: FC<SwapProgressProps> = ({ manageState, handleGoBack }) => {
 	const { from, to, steps, status } = manageState
+	const { t } = useTranslation()
 
 	return (
 		<div className={classNames.container}>
@@ -28,7 +30,7 @@ export const StakingSwapProgress: FC<SwapProgressProps> = ({ manageState, handle
 			</div>
 			{status === 'failed' || status === 'success' ? (
 				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
-					Go back
+					{t('button.goBack')}
 				</Button>
 			) : null}
 		</div>

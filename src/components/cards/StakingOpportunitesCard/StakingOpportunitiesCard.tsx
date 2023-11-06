@@ -7,6 +7,7 @@ import { StakingAction, StakingState, Vault } from '../../screens/StakingScreen/
 import { getMoreVaults, getVaults } from './getVaults'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { useTranslation } from 'react-i18next'
 
 interface StakingOpportunitiesProps {
 	stakingState: StakingState
@@ -21,6 +22,7 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 	const { address } = useAccount()
 	const [offset, setOffset] = useState(0)
 	const limit = 15
+	const { t } = useTranslation()
 
 	function handleSelect(vault: Vault) {
 		stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
@@ -48,7 +50,7 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 
 	return (
 		<div className={`card ${classNames.container}`}>
-			<CardHeader title="Staking opportunities" isLoading={stakingState.loading}>
+			<CardHeader title={t('stakingOpportunitiesCard.title')} isLoading={stakingState.loading}>
 				<FilteredTags stakingDispatch={stakingDispatch} stakingState={stakingState} />
 			</CardHeader>
 			<div className={classNames.stakingCardsContainer} onScroll={handleScroll}>

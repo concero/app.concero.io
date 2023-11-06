@@ -5,8 +5,8 @@ import { TokenInfo } from './TokenInfo'
 import { TransactionStep } from '../../../layout/TransactionStep/TransactionStep'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { Button } from '../../../buttons/Button/Button'
-import { colors } from '../../../../constants/colors'
 import { IStep } from '../../StakingHeaderCard/ManageModal/useStakingReducer/types'
+import { useTranslation } from 'react-i18next'
 
 interface SwapProgressProps {
 	swapState: SwapState
@@ -16,6 +16,7 @@ interface SwapProgressProps {
 
 export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, swapDispatch }) => {
 	const { from, to, steps, stage } = swapState
+	const { t } = useTranslation()
 
 	function handleContactSupportButtonClick() {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.contactSupport })
@@ -25,7 +26,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 		[SwapCardStage.failed]: (
 			<div className={classNames.buttonsContainer}>
 				<Button leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
-					Go back
+					{t('button.goBack')}
 				</Button>
 				<Button
 					variant={'primary'}
@@ -33,13 +34,13 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 					onClick={handleContactSupportButtonClick}
 					leftIcon={<IconUser color={'var(--color-button-text-primary)'} size={18} />}
 				>
-					Contact support
+					{t('contactSupportCard.contractSupport')}
 				</Button>
 			</div>
 		),
 		[SwapCardStage.success]: (
 			<Button leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
-				Go back
+				{t('button.goBack')}
 			</Button>
 		),
 	}

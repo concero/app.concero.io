@@ -63,7 +63,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 			>
 				<div className={classNames.tokenRow}>
 					<div className={classNames.tokenRowHeader}>
-						<p>{t(`swapCard.${direction}`)}</p>
+						<p>{t(`tokenArea.${direction}`)}</p>
 						<Button
 							onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: true })}
 							size="sm"
