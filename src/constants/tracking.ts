@@ -77,12 +77,16 @@ export enum action {
 	SelectToken = 'action_select_token',
 	ScrollToEnd = 'action_scroll_to_end',
 	ExternalLinkClicked = 'action_external_link_clicked',
+	ConnectWallet = 'action_connect_wallet',
+	BeginSwap = 'action_begin_swap',
+	SwapFailed = 'action_swap_failed',
+	SwapSuccess = 'action_swap_success',
+
 	// Widget
 	AddChain = 'action_add_chain',
 	AddToken = 'action_add_token',
 
 	// WalletMenu
-	ConnectWallet = 'action_connect_wallet',
 	CopyAddressToClipboard = 'action_copy_addr_to_clipboard',
 	DisconnectWallet = 'action_disconnect_wallet',
 	OpenBlockchainExplorer = 'action_open_blockchain_explorer',
@@ -90,7 +94,6 @@ export enum action {
 	SwitchChain = 'action_switch_chain',
 
 	// Widget
-	BeginSwap = 'action_begin_swap',
 	OnRouteExecutionCompleted = 'action_on_route_exec_completed',
 	OnRouteExecutionFailed = 'action_on_route_exec_failed',
 	OnRouteExecutionUpdated = 'action_on_route_exec_updated',

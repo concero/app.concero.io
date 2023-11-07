@@ -53,7 +53,6 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 	} catch (error: Error) {
 		console.error('ERROR: ', error)
 		handleTransactionError(error, swapDispatch)
-		trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'Swap Error', data: { error, originalRoute } })
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
