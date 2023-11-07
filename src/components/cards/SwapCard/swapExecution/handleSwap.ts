@@ -10,6 +10,8 @@ import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { providers } from 'ethers'
+import { useTracking } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 interface HandleSwapProps {
 	swapState: SwapState
@@ -23,7 +25,7 @@ interface HandleSwapProps {
 export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner }: HandleSwapProps): Promise<void> => {
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
-
+	const { trackEvent } = useTracking()
 	if (!originalRoute) return console.error('No original route passed')
 
 	swapDispatch({ type: 'SET_LOADING', payload: true })
@@ -33,7 +35,9 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 		if (provider === 'rango') {
 			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol })
 			handleRangoResponse(response, swapDispatch, provider)
+			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'rango_begin_swap', data: originalRoute })
 		} else if (provider === 'lifi') {
+			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'lifi_begin_swap', data: originalRoute })
 			updateLifiSteps({ swapDispatch, selectedRoute })
 			const updateRouteHook = (updatedRoute: Route) => {
 				const stdRoute = standardiseLifiRoute(updatedRoute)
@@ -49,6 +53,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 	} catch (error: Error) {
 		console.error('ERROR: ', error)
 		handleTransactionError(error, swapDispatch)
+		trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'Swap Error', data: { error, originalRoute } })
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}

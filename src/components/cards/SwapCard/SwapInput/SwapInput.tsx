@@ -34,7 +34,6 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 				throw new Error('Failed to switch to the required network')
 			}
 		}
-
 		return (await getEthersSigner(requiredChainId)) as providers.JsonRpcSigner
 	}
 

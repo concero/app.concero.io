@@ -1,4 +1,6 @@
 import { useReducer } from 'react'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action as trackingAction, category as trackingCategory } from '../../../constants/tracking'
 
 const initialState = selection => ({
 	chartType: 'coinGecko',
@@ -45,9 +47,16 @@ const chartReducer = (state, action) => {
 				interval: action.payload,
 			}
 		case 'TOGGLE_CHART_TYPE':
+			const newChartType = state.chartType === 'coinGecko' ? 'tradingView' : 'coinGecko'
+			trackEvent({
+				category: trackingCategory.ChartCard,
+				action: trackingAction.ToggleChart,
+				label: 'Toggle Chart Type',
+				data: { chartType: newChartType },
+			})
 			return {
 				...state,
-				chartType: state.chartType === 'coinGecko' ? 'tradingView' : 'coinGecko',
+				chartType: newChartType,
 			}
 		case 'TOGGLE_MODAL_VISIBLE':
 			return {

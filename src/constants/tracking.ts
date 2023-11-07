@@ -1,4 +1,7 @@
 export enum category {
+	NewsCard = 'cat_news_card',
+	SwapCard = 'cat_swap_card',
+	ChartCard = 'cat_chart_card',
 	ChainsMenu = 'cat_chains_menu',
 	MainMenu = 'cat_main_menu',
 	Menu = 'cat_menu',
@@ -15,7 +18,7 @@ export enum category {
 	Widget = 'cat_widget',
 	WidgetEvent = 'cat_widget_event',
 }
-export enum event {
+export enum param {
 	FeatureCardTitle = 'param_feature_card_title',
 	FeatureCardId = 'param_feature_card_id',
 	Tab = 'param_tab',
@@ -60,6 +63,15 @@ export enum event {
 	ValueLoss = 'param_value_loss',
 }
 export enum action {
+	ToggleInsurance = 'action_toggle_insurance',
+	ToggleRouteCard = 'action_toggle_route_card',
+	OpenRoutesModal = 'action_open_routes_modal',
+	SelectRoute = 'action_select_route',
+	ToggleSettingsModal = 'action_toggle_settings_modal',
+	ToggleChart = 'action_toggle_chart',
+	SelectToken = 'action_select_token',
+	ScrollToEnd = 'action_scroll_to_end',
+	ExternalLinkClicked = 'action_external_link_clicked',
 	// Widget
 	AddChain = 'action_add_chain',
 	AddToken = 'action_add_token',
@@ -73,7 +85,7 @@ export enum action {
 	SwitchChain = 'action_switch_chain',
 
 	// Widget
-	OnRouteExecutionStarted = 'action_on_route_exec_started',
+	BeginSwap = 'action_begin_swap',
 	OnRouteExecutionCompleted = 'action_on_route_exec_completed',
 	OnRouteExecutionFailed = 'action_on_route_exec_failed',
 	OnRouteExecutionUpdated = 'action_on_route_exec_updated',
@@ -98,3 +110,4 @@ export enum action {
 	SwitchTheme = 'action_switch_theme',
 	DownloadBrandAssets = 'action_dl_brand_assets',
 }
+export enum label {}

@@ -17,6 +17,7 @@ import { Card } from '../Card/Card'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
+import { useTracking } from '../../../hooks/useTracking'
 
 export interface ChartCardProps {}
 
@@ -27,15 +28,16 @@ export const ChartCard: FC<ChartCardProps> = () => {
 	const { selection } = useContext(SelectionContext)
 	const { getTokens } = useContext(DataContext)
 	const { theme } = useContext(ThemeContext)
+	const { trackEvent } = useTracking()
 	const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
 	const { addNotification } = useContext(NotificationsContext)
+
 	const isMobile = useMediaQuery('mobile')
 
 	const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
 
 	useEffect(() => {
 		fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
-
 		const intervalId = setInterval(() => {
 			fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
 		}, 15000)
@@ -84,7 +86,13 @@ export const ChartCard: FC<ChartCardProps> = () => {
 						<CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
 					</Button>
 					{!isMobile ? (
-						<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
+						<Button
+							variant="black"
+							size="sm"
+							onClick={() => {
+								dispatch({ type: 'TOGGLE_CHART_TYPE' })
+							}}
+						>
 							<Beacon isOn={chartType === 'tradingView'} />
 							<p className="body1">TradingView</p>
 						</Button>
