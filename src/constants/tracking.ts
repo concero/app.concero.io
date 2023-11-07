@@ -1,4 +1,5 @@
 export enum category {
+	Header = 'cat_header',
 	NewsCard = 'cat_news_card',
 	SwapCard = 'cat_swap_card',
 	ChartCard = 'cat_chart_card',
@@ -63,12 +64,16 @@ export enum param {
 	ValueLoss = 'param_value_loss',
 }
 export enum action {
+	ToggleTheme = 'action_toggle_theme',
+	ToggleFeedbackModalVisible = 'action_toggle_feedback_modal_visible',
 	ToggleInsurance = 'action_toggle_insurance',
 	ToggleRouteCard = 'action_toggle_route_card',
 	OpenRoutesModal = 'action_open_routes_modal',
 	SelectRoute = 'action_select_route',
 	ToggleSettingsModal = 'action_toggle_settings_modal',
+	ToggleChartModalVisible = 'action_toggle_chart_modal_visible',
 	ToggleChart = 'action_toggle_chart',
+	SetChartInterval = 'action_set_chart_interval',
 	SelectToken = 'action_select_token',
 	ScrollToEnd = 'action_scroll_to_end',
 	ExternalLinkClicked = 'action_external_link_clicked',

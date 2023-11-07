@@ -42,8 +42,8 @@ export const swapActions: SwapAction = {
 	}),
 	// SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
 	TOGGLE_INSURANCE: (state, action) => {
-		toggleRouteInsurance(state, action.payload)
-		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleInsurance, label: 'toggle_insurance', data: { isInsuranceEnabled: action.payload } })
+		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleInsurance, label: 'toggle_insurance' })
+		return toggleRouteInsurance(state, action.payload)
 	},
 	SET_SWAP_STAGE: (state, action) => {
 		if (action.payload === 'progress') {

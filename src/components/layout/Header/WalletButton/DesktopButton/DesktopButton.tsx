@@ -6,6 +6,8 @@ import { BaseButton } from '../BaseButton/BaseButton'
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from '../WalletButton.module.pcss'
 import { FeedbackModal } from '../../../../modals/FeedbackModal/FeedbackModal'
+import { trackEvent } from '../../../../../hooks/useTracking'
+import { action, category } from '../../../../../constants/tracking'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface DesktopButtonProps {
@@ -21,6 +23,7 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ onClick, ButtonWithPopov
 
 	const handleHelpButtonClick = () => {
 		setIsFeedbackModalOpened(prev => !prev)
+		trackEvent({ category: category.Header, action: action.ToggleFeedbackModalVisible, label: 'toggle_feedback_modal' })
 	}
 
 	return (

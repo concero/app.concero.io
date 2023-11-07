@@ -42,6 +42,12 @@ const chartReducer = (state, action) => {
 				},
 			}
 		case 'SET_INTERVAL':
+			trackEvent({
+				category: trackingCategory.ChartCard,
+				action: trackingAction.SetChartInterval,
+				label: 'set_chart_interval',
+				data: { interval: action.payload },
+			})
 			return {
 				...state,
 				interval: action.payload,
@@ -51,7 +57,7 @@ const chartReducer = (state, action) => {
 			trackEvent({
 				category: trackingCategory.ChartCard,
 				action: trackingAction.ToggleChart,
-				label: 'Toggle Chart Type',
+				label: 'toggle_chart_type',
 				data: { chartType: newChartType },
 			})
 			return {
@@ -59,6 +65,11 @@ const chartReducer = (state, action) => {
 				chartType: newChartType,
 			}
 		case 'TOGGLE_MODAL_VISIBLE':
+			trackEvent({
+				category: trackingCategory.ChartCard,
+				action: trackingAction.ToggleChartModalVisible,
+				label: 'toggle_chart_modal_visible',
+			})
 			return {
 				...state,
 				token: {
