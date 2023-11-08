@@ -5,6 +5,8 @@ import { Settings, SwapAction, SwapStateDirection } from '../swapReducer/types'
 import { Dispatch } from 'react'
 import { GetLifiRoutes, GetRangoRoutes, PopulateRoutes } from './types'
 import { fetchWalletBalancesOnStepChains } from './fetchWalletBalancesOnStepChains'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
 	swapDispatch({
@@ -21,6 +23,7 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLi
 		populateRoutes({ routes, from, swapDispatch })
 		return lifiRoutes
 	} catch (error) {
+		trackEvent({ category: category.SwapCard, action: action.FetchLifiRoutesError, label: 'fetch_lifi_routes_error', data: { error } })
 		console.error(error)
 	}
 }
@@ -32,6 +35,7 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 		populateRoutes({ routes, from, swapDispatch })
 		return rangoRoutes
 	} catch (error) {
+		trackEvent({ category: category.SwapCard, action: action.FetchRangoRoutesError, label: 'fetch_rango_routes_error', data: { error } })
 		console.error('rangoRoutes', error)
 	}
 }

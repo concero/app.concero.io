@@ -10,7 +10,7 @@ import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { providers } from 'ethers'
-import { useTracking } from '../../../../hooks/useTracking'
+import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
 interface HandleSwapProps {
@@ -25,7 +25,7 @@ interface HandleSwapProps {
 export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner }: HandleSwapProps): Promise<void> => {
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
-	const { trackEvent } = useTracking()
+
 	if (!originalRoute) return console.error('No original route passed')
 
 	swapDispatch({ type: 'SET_LOADING', payload: true })

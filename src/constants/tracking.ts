@@ -64,20 +64,29 @@ export enum param {
 	ValueLoss = 'param_value_loss',
 }
 export enum action {
+	//Header
 	ToggleTheme = 'action_toggle_theme',
 	ToggleFeedbackModalVisible = 'action_toggle_feedback_modal_visible',
-	ToggleInsurance = 'action_toggle_insurance',
+	ConnectWallet = 'action_connect_wallet',
+
+	// SwapCard
 	ToggleRouteCard = 'action_toggle_route_card',
+	ToggleInsurance = 'action_toggle_insurance',
+	InsufficientGas = 'action_insufficient_gas',
 	OpenRoutesModal = 'action_open_routes_modal',
 	SelectRoute = 'action_select_route',
 	ToggleSettingsModal = 'action_toggle_settings_modal',
+	FetchLifiRoutesError = 'action_fetch_lifi_routes_error',
+	FetchRangoRoutesError = 'action_fetch_rango_routes_error',
+	// Chart
 	ToggleChartModalVisible = 'action_toggle_chart_modal_visible',
 	ToggleChart = 'action_toggle_chart',
 	SetChartInterval = 'action_set_chart_interval',
+
+	// General
 	SelectToken = 'action_select_token',
 	ScrollToEnd = 'action_scroll_to_end',
 	ExternalLinkClicked = 'action_external_link_clicked',
-	ConnectWallet = 'action_connect_wallet',
 	BeginSwap = 'action_begin_swap',
 	SwapFailed = 'action_swap_failed',
 	SwapSuccess = 'action_swap_success',
