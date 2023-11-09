@@ -41,7 +41,7 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 }
 
 export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection, settings: Settings, swapDispatch: Dispatch<SwapAction>): Promise<void> => {
-	if (!from.amount) return
+	if (!from.amount || !parseFloat(from.amount)) return
 	swapDispatch({ type: 'SET_LOADING', payload: true })
 	const routes: StandardRoute[] | [] = []
 
