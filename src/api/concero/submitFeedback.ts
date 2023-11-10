@@ -35,7 +35,7 @@ export async function submitFeedback({ type, message, contact_option, contact_us
 }
 
 export async function submitTx({ tx_id, status, session_id, replay_id, provider, tx_data }): Promise<any> {
-	const url = `${config.baseURL}/tx`
+	const url = `${config.baseURL}/log/tx`
 	try {
 		const data = { tx_id, status, session_id, replay_id, provider, tx_data }
 		let res = await post(url, data)
