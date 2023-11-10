@@ -1,7 +1,9 @@
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 import { SwapAction, SwapState } from './types'
-import { StageStep } from '../../StakingHeaderCard/ManageModal/SwapProgress/TransactionStep'
+// import { StageStep } from '../../StakingHeaderCard/ManageModal/SwapProgress/TransactionStep'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action as trackingAction, category as trackingCategory } from '../../../../constants/tracking'
 
 export const swapActions: SwapAction = {
 	/* ROUTE-RELATED ACTIONS */
@@ -39,7 +41,10 @@ export const swapActions: SwapAction = {
 		[action.direction]: { ...state[action.direction], address: action.payload },
 	}),
 	// SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
-	TOGGLE_INSURANCE: (state, action) => toggleRouteInsurance(state, action.payload),
+	TOGGLE_INSURANCE: (state, action) => {
+		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleInsurance, label: 'toggle_insurance' })
+		return toggleRouteInsurance(state, action.payload)
+	},
 	SET_SWAP_STAGE: (state, action) => {
 		if (action.payload === 'progress') {
 			window.addEventListener('beforeunload', handleBeforeUnload)
@@ -48,8 +53,15 @@ export const swapActions: SwapAction = {
 		}
 		return { ...state, stage: action.payload }
 	},
-	TOGGLE_SETTINGS_MODAL_OPEN: state => ({ ...state, settingsModalOpen: !state.settingsModalOpen }),
-	SET_SETTINGS: (state, action) => ({ ...state, settings: { ...state.settings, ...action.payload } }),
+	TOGGLE_SETTINGS_MODAL_OPEN: state => {
+		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleSettingsModal, label: 'toggle_settings_modal_open', data: { isOpen: !state.settingsModalOpen } })
+		return { ...state, settingsModalOpen: !state.settingsModalOpen }
+	},
+	SET_SETTINGS: (state, action) => {
+		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleSettingsModal, label: 'set_settings', data: state.settings })
+		return { ...state, settings: { ...state.settings, ...action.payload } }
+	},
+
 	SET_SWAP_STEPS: (state, action) => ({ ...state, steps: action.payload }),
 	APPEND_SWAP_STEP: (state, action) => ({ ...state, steps: [...state.steps, action.payload] }),
 	SET_TO_ADDRESS: (state, action) => ({ ...state, to: { ...state.to, address: action.payload } }),
@@ -64,22 +76,22 @@ export const swapActions: SwapAction = {
 		return { ...state, steps: newSteps }
 	},
 	UPDATE_LAST_SWAP_STEP: updateLastSwapState,
-	UPDATE_PREV_RANGO_STEPS: (state: SwapState, action: SwapAction): SwapState => {
-		if (!state.steps.length) return state
-		if (action.currentTransactionStatus === 'failed') {
-			return updateLastSwapState(state)
-		} else {
-			const newStatuses = state.steps.map((step: StageStep): StageStep => {
-				if (step.title === 'Bridging transaction') {
-					return { ...step, status: 'success' }
-				} else if (step.title === 'Action required') {
-					return { ...step, status: 'success', title: 'Transaction approved', body: 'Your transaction has been successfully approved.' }
-				}
-				return step
-			})
-			return { ...state, steps: newStatuses }
-		}
-	},
+	// UPDATE_PREV_RANGO_STEPS: (state: SwapState, action: SwapAction): SwapState => {
+	// 	if (!state.steps.length) return state
+	// 	if (action.currentTransactionStatus === 'failed') {
+	// 		return updateLastSwapState(state)
+	// 	} else {
+	// 		const newStatuses = state.steps.map((step: StageStep): StageStep => {
+	// 			if (step.title === 'Bridging transaction') {
+	// 				return { ...step, status: 'success' }
+	// 			} else if (step.title === 'Action required') {
+	// 				return { ...step, status: 'success', title: 'Transaction approved', body: 'Your transaction has been successfully approved.' }
+	// 			}
+	// 			return step
+	// 		})
+	// 		return { ...state, steps: newStatuses }
+	// 	}
+	// },
 	SET_WALLET_BALANCES: (state: SwapState, action: SwapAction) => ({ ...state, walletBalances: action.balances }),
 }
 

@@ -10,6 +10,8 @@ import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { providers } from 'ethers'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 interface HandleSwapProps {
 	swapState: SwapState
@@ -33,7 +35,9 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 		if (provider === 'rango') {
 			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol })
 			handleRangoResponse(response, swapDispatch, provider)
+			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'rango_begin_swap', data: originalRoute })
 		} else if (provider === 'lifi') {
+			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'lifi_begin_swap', data: originalRoute })
 			updateLifiSteps({ swapDispatch, selectedRoute })
 			const updateRouteHook = (updatedRoute: Route) => {
 				const stdRoute = standardiseLifiRoute(updatedRoute)

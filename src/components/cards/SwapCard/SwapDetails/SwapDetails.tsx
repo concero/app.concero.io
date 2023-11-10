@@ -6,9 +6,12 @@ import { RateTag } from './RateTag'
 import { RouteCard } from '../../RouteCard/RouteCard'
 import { SwapDetailsProps } from '../types'
 import { numberToFormatString } from '../../../../utils/formatting'
+import { useTracking } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute }) => {
 	const { from, to, routes, isLoading, selectedRoute } = swapState
+	const { trackEvent } = useTracking()
 	const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
 
 	const rate = {
@@ -17,13 +20,20 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute 
 	}
 
 	const handleSelectRoute = (id: string) => {
+		trackEvent({ action: action.SelectRoute, category: category.SwapCard, label: 'route_selected', data: { routeId: id } })
 		setSelectedRoute(routes.find(route => route.id === id))
 	}
 
 	return (
 		<div className={classNames.swapDetailsContainer}>
 			<RateTag from={from.token} to={to.token} rate={rate} isLoading={isLoading} />
-			<RouteButton selectedRoute={selectedRoute} onClick={() => setIsSelectRouteModalVisible(true)} />
+			<RouteButton
+				selectedRoute={selectedRoute}
+				onClick={() => {
+					trackEvent({ action: action.OpenRoutesModal, category: category.SwapCard, label: 'route_modal_opened' })
+					setIsSelectRouteModalVisible(true)
+				}}
+			/>
 			<Modal title="Select route" show={isSelectRouteModalVisible} setShow={setIsSelectRouteModalVisible}>
 				<div className={classNames.routeCardsContainer}>
 					{routes?.length

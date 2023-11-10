@@ -1,7 +1,6 @@
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import { useAccount } from 'wagmi'
 import { IconChevronDown, IconWallet } from '@tabler/icons-react'
-import { ThemeContext } from '../../../../../hooks/themeContext'
 import { truncateWallet } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from './BaseButton.module.pcss'
@@ -11,8 +10,6 @@ interface BaseButtonProps {
 }
 
 export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
-	const { colors } = useContext(ThemeContext)
-
 	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 
 	const getStatus = () => {
@@ -21,6 +18,7 @@ export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
 		if (isDisconnected) return 'Connect Wallet'
 		return 'Connect Wallet'
 	}
+
 	return (
 		<Button
 			variant={isConnected ? 'subtle' : 'primary'}

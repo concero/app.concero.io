@@ -4,6 +4,8 @@ import { Colors } from '../constants/colors'
 
 import lightColors from '../constants/json/colors-light.json'
 import darkColors from '../constants/json/colors-dark.json'
+import { trackEvent } from './useTracking'
+import { action, category } from '../constants/tracking'
 
 type ThemeContextType = {
 	theme: 'light' | 'dark'
@@ -29,6 +31,8 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 
 		document.body.classList.remove(bodyClassTheme)
 		document.body.classList.add(newTheme)
+
+		trackEvent({ category: category.Header, action: action.ToggleTheme, label: 'toggle_theme', data: { theme: newTheme } })
 	}
 
 	const watchSystemThemeChanges = () => {
