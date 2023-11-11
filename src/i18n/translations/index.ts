@@ -5,6 +5,11 @@ import { id } from './id'
 import { it } from './it'
 import { ko } from './ko'
 import { pt } from './pt'
+import { tr } from './tr'
+import { zh } from './zh'
+import { uk } from './uk'
+import { vi } from './vi'
+import { th } from './th'
 
 export const translations = {
 	en: en,
@@ -14,4 +19,9 @@ export const translations = {
 	it: it,
 	ko: ko,
 	pt: pt,
+	tr: tr,
+	zh: zh,
+	uk: uk,
+	vi: vi,
+	th: th,
 }
