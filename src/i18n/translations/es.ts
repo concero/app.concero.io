@@ -116,5 +116,9 @@ export const es = {
 			issue: 'Asunto',
 			suggestion: 'Sugerencia',
 		},
+		walletButton: {
+			connectWallet: 'Conectar Billetera',
+			connecting: 'Conectando...',
+		},
 	},
 }

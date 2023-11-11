@@ -116,5 +116,9 @@ export const en = {
 			issue: 'Issue',
 			suggestion: 'Suggestion',
 		},
+		walletButton: {
+			connectWallet: 'Connect Wallet',
+			connecting: 'Connecting...',
+		},
 	},
 }
