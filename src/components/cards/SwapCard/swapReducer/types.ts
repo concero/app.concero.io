@@ -19,6 +19,7 @@ export interface SwapStateDirection {
 		address: `0x${string}` | string
 		decimals: number
 		logoURI: string
+		coinGeckoId: string
 	}
 	amount: string
 	amount_usd: number
