@@ -1,5 +1,8 @@
 export enum category {
+	API = 'cat_api',
 	Header = 'cat_header',
+	StakingScreen = 'cat_staking_screen',
+	StakingHeader = 'cat_staking_header',
 	NewsCard = 'cat_news_card',
 	SwapCard = 'cat_swap_card',
 	ChartCard = 'cat_chart_card',
@@ -64,11 +67,20 @@ export enum param {
 	ValueLoss = 'param_value_loss',
 }
 export enum action {
+	// API
+	APIError = 'action_api_error',
+	SubmitTxError = 'action_submit_tx_error',
 	//Header
 	ToggleTheme = 'action_toggle_theme',
 	ToggleFeedbackModalVisible = 'action_toggle_feedback_modal_visible',
 	ConnectWallet = 'action_connect_wallet',
+	FeedbackSubmitSuccess = 'action_feedback_submit_success',
+	FeedbackSubmitError = 'action_feedback_submit_error',
 
+	// Wallet
+	ConnectWalletSuccess = 'action_connect_wallet_success',
+	ConnectWalletFailed = 'action_connect_wallet_failed',
+	WalletClientNotFound = 'action_wallet_client_not_found',
 	// SwapCard
 	ToggleRouteCard = 'action_toggle_route_card',
 	ToggleInsurance = 'action_toggle_insurance',
@@ -86,6 +98,7 @@ export enum action {
 	// General
 	SelectToken = 'action_select_token',
 	ScrollToEnd = 'action_scroll_to_end',
+	Click = 'action_click',
 	ExternalLinkClicked = 'action_external_link_clicked',
 	BeginSwap = 'action_begin_swap',
 	SwapFailed = 'action_swap_failed',

@@ -7,6 +7,8 @@ import { StakingAction, StakingState, Vault } from '../../screens/StakingScreen/
 import { getMoreVaults, getVaults } from './getVaults'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action, category } from '../../../constants/tracking'
 
 interface StakingOpportunitiesProps {
 	stakingState: StakingState
@@ -24,12 +26,14 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 
 	function handleSelect(vault: Vault) {
 		stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+		trackEvent({ category: category.StakingScreen, action: action.Click, label: 'Staking opportunities select vault' })
 	}
 
 	function handleEndReached() {
 		const newOffset = offset + limit
 		setOffset(newOffset)
 		getMoreVaults(stakingDispatch, address, stakingState, newOffset, limit)
+		trackEvent({ category: category.StakingScreen, action: action.ScrollToEnd, label: 'Staking opportunities onEndReached' })
 	}
 
 	function handleScroll(e: UIEvent<HTMLDivElement>) {
