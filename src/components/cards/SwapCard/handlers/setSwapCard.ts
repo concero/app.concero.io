@@ -6,12 +6,12 @@ export const setSwapCard = (dispatch: Dispatch<SwapAction>, from: SwapStateDirec
 		type: 'SET_SWAP_CARD',
 		payload: {
 			from: {
-				// chainId: from.chain.id,
 				chain: {
 					id: from.chain.id,
 					name: from.chain.name,
 					logoURI: from.chain.logoURI,
 					symbol: from.chain.symbol,
+					providers: from.chain.providers,
 				},
 				token: {
 					symbol: from.token.symbol,
@@ -22,12 +22,12 @@ export const setSwapCard = (dispatch: Dispatch<SwapAction>, from: SwapStateDirec
 				},
 			},
 			to: {
-				// chainId: to.chain.id,
 				chain: {
 					id: to.chain.id,
 					name: to.chain.name,
 					logoURI: to.chain.logoURI,
 					symbol: to.chain.symbol,
+					providers: to.chain.providers,
 				},
 				token: {
 					symbol: to.token.symbol,
