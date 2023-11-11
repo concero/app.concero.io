@@ -9,19 +9,22 @@ import { renderSteps } from './renderSteps'
 import { RouteCardProps } from './types'
 import { numberToFormatString, roundNumberByDecimals } from '../../../utils/formatting'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { useTracking } from '../../../hooks/useTracking'
+import { action, category } from '../../../constants/tracking'
 
 export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) => {
 	const stepsContainerRef = useRef(null)
 	const isMobile = useMediaQuery('mobile')
 	const [isRoutesCollapsed, setIsRoutesCollapsed] = useState(true)
 	const [springProps, setSpringProps] = useSpring(() => ({ height: 'auto' }))
-
+	const { trackEvent } = useTracking()
 	const getTextColor = () => (isSelected ? classNames.bestText : '')
 	const getIconColor = () => (isSelected ? 'var(--color-primary-400)' : 'var(--color-text-secondary)')
 
 	const handleButtonClick = event => {
 		event.stopPropagation()
 		setIsRoutesCollapsed(!isRoutesCollapsed)
+		trackEvent({ action: action.ToggleRouteCard, category: category.SwapCard, label: 'toggle_route', data: { isOpen: !isRoutesCollapsed } })
 	}
 
 	useEffect(() => {

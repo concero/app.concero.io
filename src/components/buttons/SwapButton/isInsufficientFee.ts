@@ -1,9 +1,12 @@
 import { SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { Fees } from '../../../types/StandardRoute'
 import { TokenBalance } from '../../../api/concero/fetchBalancesByChainIds'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action, category } from '../../../constants/tracking'
 
 export function isInsufficientFee(swapState: SwapState): boolean {
 	const { walletBalances, selectedRoute } = swapState
+
 	let isInsufficient = false
 
 	selectedRoute?.cost.total_fee.forEach((fee: Fees) => {
@@ -18,6 +21,6 @@ export function isInsufficientFee(swapState: SwapState): boolean {
 			isInsufficient = true
 		}
 	})
-
+	if (isInsufficient) trackEvent({ category: category.SwapCard, action: action.InsufficientGas, label: 'insufficient_gas' })
 	return isInsufficient
 }

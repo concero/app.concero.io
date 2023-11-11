@@ -5,6 +5,7 @@ interface Direction {
 		symbol: string
 		address: string
 		logoURI: string
+		decimals: number
 	}
 	chain: {
 		id: string
@@ -21,6 +22,7 @@ export const setHistoryCard = (dispatch: Dispatch<any>, from: Direction, to: Dir
 					symbol: from.token.symbol,
 					address: from.token.address,
 					logoURI: from.token.logoURI,
+					decimals: from.token.decimals,
 				},
 			},
 			to: {
@@ -29,6 +31,7 @@ export const setHistoryCard = (dispatch: Dispatch<any>, from: Direction, to: Dir
 					symbol: to.token.symbol,
 					address: to.token.address,
 					logoURI: to.token.logoURI,
+					decimals: to.token.decimals,
 				},
 			},
 		},

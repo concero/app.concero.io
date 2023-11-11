@@ -14,6 +14,8 @@ import { Button } from '../../buttons/Button/Button'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { useTranslation } from 'react-i18next'
+import { action, category } from '../../../constants/tracking'
+import { useTracking } from '../../../hooks/useTracking'
 
 interface NewsCardProps {}
 
@@ -24,6 +26,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 	const [{ data, isLoading, timestamp, isModalVisible, selectedToken }, dispatch] = useNewsReducer(selection)
 	const { t } = useTranslation()
 
+	const { trackEvent } = useTracking()
 	useEffect(() => {
 		if (!selectedToken) return
 		getNews(data, dispatch, selectedToken, timestamp, addNotification)
@@ -38,6 +41,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 		dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
 		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false })
 		dispatch({ type: 'SET_TIMESTAMP', payload: 0 })
+		trackEvent({ category: category.NewsCard, action: action.SelectToken, label: 'NewsCard select token', data: token })
 	}
 
 	const handleShowModal = async () => {
@@ -54,10 +58,13 @@ export const NewsCard: FC<NewsCardProps> = () => {
 				</CardHeader>
 				<Table
 					items={data}
-					columns={columns}
+					columns={columns()}
 					isHeaderVisible={false}
 					isLoading={isLoading}
-					onEndReached={() => getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)}
+					onEndReached={() => {
+						getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)
+						trackEvent({ category: category.NewsCard, action: action.ScrollToEnd, label: 'NewsCard scroll to end' })
+					}}
 				/>
 			</div>
 			<ListModal

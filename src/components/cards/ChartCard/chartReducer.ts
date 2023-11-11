@@ -1,4 +1,6 @@
 import { useReducer } from 'react'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action as trackingAction, category as trackingCategory } from '../../../constants/tracking'
 
 const initialState = selection => ({
 	chartType: 'coinGecko',
@@ -19,8 +21,8 @@ const initialState = selection => ({
 		},
 	},
 	interval: {
-		title: '1d',
-		value: '1',
+		title: '1m',
+		value: '30',
 	},
 	chartData: [],
 	isLoading: false,
@@ -40,16 +42,34 @@ const chartReducer = (state, action) => {
 				},
 			}
 		case 'SET_INTERVAL':
+			trackEvent({
+				category: trackingCategory.ChartCard,
+				action: trackingAction.SetChartInterval,
+				label: 'set_chart_interval',
+				data: { interval: action.payload },
+			})
 			return {
 				...state,
 				interval: action.payload,
 			}
 		case 'TOGGLE_CHART_TYPE':
+			const newChartType = state.chartType === 'coinGecko' ? 'tradingView' : 'coinGecko'
+			trackEvent({
+				category: trackingCategory.ChartCard,
+				action: trackingAction.ToggleChart,
+				label: 'toggle_chart_type',
+				data: { chartType: newChartType },
+			})
 			return {
 				...state,
-				chartType: state.chartType === 'coinGecko' ? 'tradingView' : 'coinGecko',
+				chartType: newChartType,
 			}
 		case 'TOGGLE_MODAL_VISIBLE':
+			trackEvent({
+				category: trackingCategory.ChartCard,
+				action: trackingAction.ToggleChartModalVisible,
+				label: 'toggle_chart_modal_visible',
+			})
 			return {
 				...state,
 				token: {

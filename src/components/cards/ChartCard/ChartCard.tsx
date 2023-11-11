@@ -18,6 +18,7 @@ import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
 import { useTranslation } from 'react-i18next'
+import { useTracking } from '../../../hooks/useTracking'
 
 export interface ChartCardProps {}
 
@@ -28,6 +29,7 @@ export const ChartCard: FC<ChartCardProps> = () => {
 	const { selection } = useContext(SelectionContext)
 	const { getTokens } = useContext(DataContext)
 	const { theme } = useContext(ThemeContext)
+	const { trackEvent } = useTracking()
 	const [{ chartType, token, interval, chartData }, dispatch] = useChartReducer(selection.swapCard)
 	const { addNotification } = useContext(NotificationsContext)
 	const isMobile = useMediaQuery('mobile')
