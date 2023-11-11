@@ -11,7 +11,7 @@ export function I18Provider({ children }: i18nextProviderProps) {
 	const i18n = i18next.createInstance({
 		debug: true,
 		fallbackLng: 'en',
-		lng: 'en',
+		lng: 'es',
 		resources: translations,
 	})
 
