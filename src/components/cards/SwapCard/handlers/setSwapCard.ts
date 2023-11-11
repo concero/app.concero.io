@@ -1,4 +1,7 @@
-export const setSwapCard = (dispatch, from, to) => {
+import { Dispatch } from 'react'
+import { SwapAction, SwapStateDirection } from '../swapReducer/types'
+
+export const setSwapCard = (dispatch: Dispatch<SwapAction>, from: SwapStateDirection, to: SwapStateDirection) => {
 	dispatch({
 		type: 'SET_SWAP_CARD',
 		payload: {
@@ -15,6 +18,7 @@ export const setSwapCard = (dispatch, from, to) => {
 					address: from.token.address,
 					logoURI: from.token.logoURI,
 					coinGeckoId: from.token.coinGeckoId,
+					decimals: from.token.decimals,
 				},
 			},
 			to: {
@@ -30,6 +34,7 @@ export const setSwapCard = (dispatch, from, to) => {
 					address: to.token.address,
 					logoURI: to.token.logoURI,
 					coinGeckoId: to.token.coinGeckoId,
+					decimals: to.token.decimals,
 				},
 			},
 		},

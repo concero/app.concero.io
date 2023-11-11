@@ -1,6 +1,8 @@
 import { Dispatch } from 'react'
 import { fetchTokenBalance } from '../api/rango/fetchTokenBalance'
 import { addingTokenDecimals } from './formatting'
+import { SwapAction } from '../components/cards/SwapCard/swapReducer/types'
+import { reverseRangoChainsMap } from '../api/rango/rangoChainsMap'
 
 interface HandleBalanceProps {
 	dispatch: Dispatch<any>
@@ -21,17 +23,20 @@ interface HandleBalanceProps {
 	address: string | null
 }
 
-const handleError = dispatch => dispatch({ type: 'SET_BALANCE', payload: null })
+const handleError = (dispatch: Dispatch<SwapAction>) => {
+	dispatch({ type: 'SET_BALANCE', payload: null })
+}
 
 export async function getBalance({ dispatch, from, address }: HandleBalanceProps) {
 	if (!from || !address) return handleError(dispatch)
 
-	const rangoChainSymbol = from.chain?.providers?.find(item => item.name === 'rango')?.symbol
+	const rangoChainSymbol = reverseRangoChainsMap[String(from.chain.id)]
 	if (!rangoChainSymbol) return handleError(dispatch)
 
 	const response = await fetchTokenBalance(rangoChainSymbol, from.token.address, address, from.token.symbol)
 	if (response.status !== 200) return handleError(dispatch)
 
-	const result = `${addingTokenDecimals(Number(response.data), from.token.decimals)} ${from.token.symbol}`
+	const balanceAmount = addingTokenDecimals(response.data, from.token.decimals)
+	const result = `${balanceAmount} ${from.token.symbol}`
 	dispatch({ type: 'SET_BALANCE', payload: result })
 }
