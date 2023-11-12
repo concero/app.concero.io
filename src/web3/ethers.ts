@@ -1,6 +1,6 @@
 import { type WalletClient } from 'wagmi'
 import { providers } from 'ethers'
-import { getPublicClient, type PublicClient, type WalletClient } from '@wagmi/core'
+import { getPublicClient, getWalletClient, type PublicClient, type WalletClient } from '@wagmi/core'
 import { type HttpTransport } from 'viem'
 import { JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider'
 import { trackEvent } from '../hooks/useTracking'
@@ -55,7 +55,7 @@ function walletClientToSigner(walletClient: WalletClient) {
 
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
 export async function getEthersSigner(chainId: number): Promise<JsonRpcSigner | undefined> {
-	const walletClient = await { chainId }
+	const walletClient = await getWalletClient({ chainId })
 	if (!walletClient) {
 		trackEvent({
 			category: category.Wallet,
@@ -63,5 +63,7 @@ export async function getEthersSigner(chainId: number): Promise<JsonRpcSigner | 
 			label: 'WalletClient not found',
 		})
 		return undefined
-	} else return walletClientToSigner(walletClient)
+	} else {
+		return walletClientToSigner(walletClient)
+	}
 }
