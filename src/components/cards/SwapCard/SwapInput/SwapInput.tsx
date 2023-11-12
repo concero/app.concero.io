@@ -16,7 +16,7 @@ import { providers } from 'ethers'
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
 	const { address, isConnected } = useAccount()
-	const isInsuranceCardVisible = swapState.selectedRoute?.insurance?.state === 'INSURABLE'
+	const isInsuranceCardVisible = swapState.selectedRoute?.insurance?.state === 'INSURABLE' || swapState.selectedRoute?.insurance?.state === 'INSURED'
 	const walletClient = useWalletClient()
 	const { switchNetworkAsync } = useSwitchNetwork()
 
