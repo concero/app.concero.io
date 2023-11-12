@@ -2,8 +2,6 @@ import { apiRequest } from '../requests'
 import { post } from '../client'
 import posthog from 'posthog-js'
 import { config } from '../../constants/config'
-import { trackEvent } from '../../hooks/useTracking'
-import { action, category } from '../../constants/tracking'
 
 export async function submitFeedback({ type, message, contact_option, contact_username, addNotification }): Promise<any> {
 	if (!type || !message) return
@@ -19,12 +17,6 @@ export async function submitFeedback({ type, message, contact_option, contact_us
 			message: 'Thank you for your feedback!',
 			type: 'success',
 		})
-		trackEvent({
-			category: category.Header,
-			action: action.FeedbackSubmitSuccess,
-			label: 'Feedback Submitted',
-			data: { type, message, contact_option, contact_username, session_id, replay_id },
-		})
 	}
 
 	function on_error() {
@@ -32,12 +24,6 @@ export async function submitFeedback({ type, message, contact_option, contact_us
 			title: 'Error submitting feedback',
 			message: 'Please try again later',
 			type: 'error',
-		})
-		trackEvent({
-			category: category.Header,
-			action: action.FeedbackSubmitError,
-			label: 'Feedback Submit error',
-			data: { type, message, contact_option, contact_username, session_id, replay_id },
 		})
 	}
 
@@ -56,11 +42,5 @@ export async function submitTx({ tx_id, status, session_id, replay_id, provider,
 		return res
 	} catch (error) {
 		console.error(error)
-		trackEvent({
-			category: category.API,
-			action: action.SubmitTxError,
-			label: 'Submit Tx Error',
-			data: { error },
-		})
 	}
 }
