@@ -8,6 +8,8 @@ import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action, category } from '../../../constants/tracking'
 
 interface ProtocolCardProps {
 	stakingState: StakingState
@@ -18,6 +20,15 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 	const [protocolData, setProtocolData] = useState<Protocol | null>(null)
 	const { selectedVault } = stakingState
 
+	function handleOpenProtocolModal() {
+		setIsOpened(true)
+		trackEvent({
+			category: category.StakingScreen,
+			action: action.ProtocolModalOpened,
+			label: 'ProtocolModalOpened',
+		})
+	}
+
 	useEffect(() => {
 		getProtocolData(selectedVault?.project._id, setProtocolData)
 	}, [selectedVault])
@@ -25,7 +36,7 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 	return (
 		<div>
 			<CardHeader title="Protocol" />
-			<Button variant="subtle" onClick={() => setIsOpened(true)}>
+			<Button variant="subtle" onClick={handleOpenProtocolModal}>
 				<div className={classNames.cardContainer}>
 					<div className={classNames.avatarContainer}>
 						<Avatar src={selectedVault?.project?.logoURI ?? null} />
