@@ -7,6 +7,8 @@ import { TransactionResponse } from '@ethersproject/abstract-provider'
 import { CheckApprovalResponse, CreateTransactionResponse, TransactionStatusResponse } from 'rango-sdk/src/types'
 import { CreateTransactionProps, ExecuteRangoRouteProps } from './types'
 import { providers } from 'ethers'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -14,6 +16,12 @@ function handleError(error: Error) {
 	console.error('error', error)
 
 	if (error.message.toLowerCase().includes('user rejected')) {
+		trackEvent({
+			category: category.SwapCard,
+			action: action.SwapRejected,
+			label: 'User rejected swap',
+			data: { provider: 'rango', error: error },
+		})
 		throw new Error('user rejected')
 	}
 }

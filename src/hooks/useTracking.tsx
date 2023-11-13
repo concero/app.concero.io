@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react'
 import posthog from 'posthog-js'
 import { useAccount } from 'wagmi'
 import { TrackEventProps } from '../types/TrackEventProps'
+import { action, category } from '../constants/tracking'
 
 // Standalone function for trackTransaction
 export const trackTransaction = () => {
@@ -29,6 +30,11 @@ export const useTracking = () => {
 	useEffect(() => {
 		if (isConnected) {
 			posthog.identify(address)
+			trackEvent({
+				category: category.Wallet,
+				action: action.ConnectWalletSuccess,
+				label: 'Wallet Connected',
+			})
 		}
 	}, [address, isConnected])
 
