@@ -120,5 +120,8 @@ export const tr = {
 			connectWallet: 'Cüzdanı Bağla',
 			connecting: 'Bağlanıyor...',
 		},
+		languageModal: {
+			title: 'Dil değiştir',
+		},
 	},
 }

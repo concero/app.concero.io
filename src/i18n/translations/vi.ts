@@ -120,5 +120,8 @@ export const vi = {
 			connectWallet: 'Kết nối Ví',
 			connecting: 'Đang kết nối...',
 		},
+		languageModal: {
+			title: 'Thay đổi ngôn ngữ',
+		},
 	},
 }

@@ -120,5 +120,8 @@ export const en = {
 			connectWallet: 'Connect Wallet',
 			connecting: 'Connecting...',
 		},
+		languageModal: {
+			title: 'Change language',
+		},
 	},
 }

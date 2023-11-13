@@ -120,5 +120,8 @@ export const es = {
 			connectWallet: 'Conectar Billetera',
 			connecting: 'Conectando...',
 		},
+		languageModal: {
+			title: 'Cambiar idioma',
+		},
 	},
 }

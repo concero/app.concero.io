@@ -120,5 +120,8 @@ export const fr = {
 			connectWallet: 'Connecter le portefeuille',
 			connecting: 'Connexion en cours...',
 		},
+		languageModal: {
+			title: 'Changer de langue',
+		},
 	},
 }

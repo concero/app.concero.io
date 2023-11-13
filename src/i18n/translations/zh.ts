@@ -120,5 +120,8 @@ export const zh = {
 			connectWallet: '连接钱包',
 			connecting: '连接中...',
 		},
+		languageModal: {
+			title: '更改语言',
+		},
 	},
 }

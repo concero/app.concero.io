@@ -120,5 +120,8 @@ export const pt = {
 			connectWallet: 'Conectar carteira',
 			connecting: 'Conectando...',
 		},
+		languageModal: {
+			title: 'Mudar idioma',
+		},
 	},
 }

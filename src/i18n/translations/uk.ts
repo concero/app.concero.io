@@ -120,5 +120,8 @@ export const uk = {
 			connectWallet: 'Підключити гаманець',
 			connecting: 'Підключення...',
 		},
+		languageModal: {
+			title: 'Змінити мову',
+		},
 	},
 }

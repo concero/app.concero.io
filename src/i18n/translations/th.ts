@@ -120,5 +120,8 @@ export const th = {
 			connectWallet: 'เชื่อมต่อกระเป๋าเงิน',
 			connecting: 'กำลังเชื่อมต่อ...',
 		},
+		languageModal: {
+			title: 'เปลี่ยนภาษา',
+		},
 	},
 }

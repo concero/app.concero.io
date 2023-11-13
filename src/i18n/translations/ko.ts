@@ -120,5 +120,8 @@ export const ko = {
 			connectWallet: '지갑 연결',
 			connecting: '연결 중...',
 		},
+		languageModal: {
+			title: '언어 변경',
+		},
 	},
 }

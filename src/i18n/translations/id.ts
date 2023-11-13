@@ -120,5 +120,8 @@ export const id = {
 			connectWallet: 'Hubungkan Dompet',
 			connecting: 'Menghubungkan...',
 		},
+		languageModal: {
+			title: 'Ganti bahasa',
+		},
 	},
 }
