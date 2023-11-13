@@ -97,7 +97,7 @@ export const swapActions: SwapAction = {
 
 function updateLastSwapState(state: SwapState): SwapState {
 	const lastStep = state.steps[state.steps.length - 1]
-	if (lastStep.status === 'pending' || lastStep.status === 'await') {
+	if (lastStep?.status === 'pending' || lastStep?.status === 'await') {
 		return { ...state, steps: [...state.steps.slice(0, state.steps.length - 1)] }
 	}
 	return state

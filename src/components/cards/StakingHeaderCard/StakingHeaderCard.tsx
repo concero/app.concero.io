@@ -8,6 +8,8 @@ import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { useTranslation } from 'react-i18next'
+import { action, category } from '../../../constants/tracking'
+import { trackEvent } from '../../../hooks/useTracking'
 
 interface StakingHeaderCardProps {
 	stakingState: StakingState
@@ -26,6 +28,7 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 
 	function handleManageButtonClick() {
 		setIsManageModalOpen(true)
+		trackEvent({ category: category.StakingHeader, action: action.Click, label: 'Manage button clicked' })
 	}
 
 	function handleGoBackButtonClick() {

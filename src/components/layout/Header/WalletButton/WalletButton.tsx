@@ -20,7 +20,7 @@ export const WalletButton: FC<WalletButtonProps> = () => {
 
 	function handleClick() {
 		open()
-		trackEvent({ category: category.Wallet, action: action.ConnectWallet, label: 'Connect' })
+		trackEvent({ category: category.Wallet, action: action.ClickConnectWallet, label: 'Clicked Connect Wallet' })
 	}
 
 	const ButtonWithPopover = WithPopover(BaseButton, HeaderPopoverMenu)

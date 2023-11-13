@@ -9,6 +9,8 @@ import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
 import { useTranslation } from 'react-i18next'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action, category } from '../../../constants/tracking'
 
 interface ProtocolCardProps {
 	stakingState: StakingState
@@ -19,6 +21,15 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 	const [protocolData, setProtocolData] = useState<Protocol | null>(null)
 	const { selectedVault } = stakingState
 	const { t } = useTranslation()
+
+	function handleOpenProtocolModal() {
+		setIsOpened(true)
+		trackEvent({
+			category: category.StakingScreen,
+			action: action.ProtocolModalOpened,
+			label: 'ProtocolModalOpened',
+		})
+	}
 
 	useEffect(() => {
 		getProtocolData(selectedVault?.project._id, setProtocolData)

@@ -14,6 +14,8 @@ import { FilterDispatchType } from './contants'
 import { useFilteredTagsReducer } from './useFilteredTagsReducer/useFilteredTagsReducer'
 import { categories } from './constants'
 import { useTranslation } from 'react-i18next'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 interface FilteredTagsProps {
 	stakingDispatch: Dispatch<StakingAction>
@@ -55,6 +57,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingSt
 			resetFilter(stakingDispatch)
 		}
 		stakingDispatch({ type: 'SET_FILTER', payload: { filter: filterKey, value } })
+		trackEvent({ category: category.StakingScreen, action: action.FilterTagClicked, label: 'Staking filter tag clicked', data: { filterKey } })
 	}
 
 	function setIsChainsModalOpened(value: boolean) {
