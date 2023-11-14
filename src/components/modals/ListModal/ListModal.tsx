@@ -5,7 +5,17 @@ import classNames from './ListModal.module.pcss'
 import { MultiSelectModalProps } from './types'
 import { TextInput } from '../../input/TextInput'
 
-export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOpen, title, RenderItem, selectedItems = [], onSelect, isSearchable = true }) => {
+export const ListModal: FC<MultiSelectModalProps> = ({
+	getItems,
+	isOpen,
+	setIsOpen,
+	title,
+	RenderItem,
+	selectedItems = [],
+	onSelect,
+	isSearchable = true,
+	isHandleEndReached = true,
+}) => {
 	const limit = 15
 	const [offset, setOffset] = useState<number>(0)
 	const [items, setItems] = useState<any[]>([])
@@ -13,16 +23,16 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
 	const itemsContainerRef = useRef(null)
 
 	useEffect(() => {
-		if (isOpen) {
-			setOffset(0) // Reset offset
-			;(async () => {
-				const initialItems = await getItems({ offset: 0, limit, search })
-				setItems(initialItems)
-			})()
-		}
+		if (!isOpen) return
+		setOffset(0)
+		;(async () => {
+			const initialItems = await getItems({ offset: 0, limit, search })
+			setItems(initialItems)
+		})()
 	}, [isOpen])
 
 	const handleEndReached = async () => {
+		if (!isHandleEndReached) return
 		const newOffset = offset + limit
 		setOffset(newOffset)
 		try {
@@ -48,9 +58,7 @@ export const ListModal: FC<MultiSelectModalProps> = ({ getItems, isOpen, setIsOp
 		<Modal show={isOpen} setShow={setIsOpen} title={title}>
 			<div className={classNames.container}>
 				<div className={classNames.inputContainer}>
-					{isSearchable ? (
-						<TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} />
-					) : null}
+					{isSearchable ? <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} /> : null}
 				</div>
 				<div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
 					{items.map((item, index) => {

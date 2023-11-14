@@ -2,6 +2,7 @@ import i18next from 'i18next'
 import { ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { translations } from './translations'
+import { getItem } from '../utils/localStorage'
 
 interface i18nextProviderProps {
 	children: ReactNode
@@ -9,9 +10,9 @@ interface i18nextProviderProps {
 
 export function I18Provider({ children }: i18nextProviderProps) {
 	const i18n = i18next.createInstance({
-		debug: true,
+		debug: false,
 		fallbackLng: 'en',
-		lng: 'en',
+		lng: getItem('language', 'en') ?? 'en',
 		resources: translations,
 	})
 

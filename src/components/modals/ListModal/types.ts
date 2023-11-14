@@ -15,4 +15,5 @@ export interface MultiSelectModalProps {
 	getItems: (key: any) => Promise<any>
 	RenderItem: FC<RowsComponentProps>
 	isSearchable?: boolean
+	isHandleEndReached?: boolean
 }
