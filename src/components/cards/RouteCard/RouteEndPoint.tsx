@@ -28,6 +28,7 @@ function getFormatAmount(amount: string, decimals: number) {
 
 export const RouteEndPoint: FC<RouteEndPointProps> = ({ side }) => {
 	const [chainLogoURI, setChainLogoURI] = useState('')
+
 	const { amount } = side.token
 	const { getChains } = useContext(DataContext)
 

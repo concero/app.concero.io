@@ -95,6 +95,7 @@ export enum action {
 	ToggleSettingsModal = 'action_toggle_settings_modal',
 	FetchLifiRoutesError = 'action_fetch_lifi_routes_error',
 	FetchRangoRoutesError = 'action_fetch_rango_routes_error',
+	FetchOkxRoutesError = 'action_fetch_okx_routes_error',
 	BeginSwap = 'action_begin_swap',
 	SwapFailed = 'action_swap_failed',
 	SwapSuccess = 'action_swap_success',
