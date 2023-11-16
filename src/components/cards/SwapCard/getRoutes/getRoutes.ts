@@ -22,7 +22,6 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLi
 		const lifiRoutes: StandardRoute[] | [] = await fetchLifiRoutes({ from, to, settings })
 		routes.unshift(...lifiRoutes)
 		populateRoutes({ routes, from, swapDispatch })
-		return lifiRoutes
 	} catch (error) {
 		trackEvent({ category: category.SwapCard, action: action.FetchLifiRoutesError, label: 'fetch_lifi_routes_error', data: { error } })
 		console.error(error)
@@ -34,7 +33,6 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 		const rangoRoutes: StandardRoute[] = await fetchRangoRoutes({ from, to, settings })
 		routes.push(...rangoRoutes)
 		populateRoutes({ routes, from, swapDispatch })
-		return rangoRoutes
 	} catch (error) {
 		trackEvent({ category: category.SwapCard, action: action.FetchRangoRoutesError, label: 'fetch_rango_routes_error', data: { error } })
 		console.error('rangoRoutes', error)
