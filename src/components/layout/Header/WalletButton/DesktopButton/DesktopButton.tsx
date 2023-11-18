@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { trackEvent } from '../../../../../hooks/useTracking'
 import { action, category } from '../../../../../constants/tracking'
 import { LanguageModal } from '../../../../modals/LanguageModal/LanguageModal'
+import { BurgerMenu } from '../../Header/BurgerMenu/BurgerMenu'
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 interface DesktopButtonProps {
@@ -39,6 +40,7 @@ export const DesktopButton: FC<DesktopButtonProps> = ({ onClick, ButtonWithPopov
 			<Button size="sq-md" onClick={toggleTheme} variant="black" leftIcon={theme === 'light' ? <IconMoon size={18} /> : <IconSun size={18} />} />
 			<FeedbackModal show={isFeedbackModalOpened} setShow={setIsFeedbackModalOpened} />
 			<Button leftIcon={<IconLanguage size={18} />} variant={'black'} onClick={() => setIsLanguageModalVisible(prev => !prev)} />
+			<BurgerMenu />
 			<LanguageModal show={isLanguageModalVisible} setShow={setIsLanguageModalVisible} />
 		</div>
 	)
