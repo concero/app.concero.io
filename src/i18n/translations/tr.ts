@@ -20,6 +20,11 @@ export const tr = {
 			logOut: 'Çıkış yap',
 			comingSoon: 'Yakında',
 			toggleTheme: 'Tema değiştir',
+			menu: {
+				contactSupport: 'Destek ile iletişime geçin',
+				changeLanguage: 'Dili değiştir',
+				toggleTheme: 'Tema değiştir',
+			},
 		},
 		chartCard: {
 			title: 'Grafik',

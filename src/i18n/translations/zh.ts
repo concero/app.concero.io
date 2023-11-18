@@ -20,6 +20,11 @@ export const zh = {
 			logOut: '退出',
 			comingSoon: '即将推出',
 			toggleTheme: '切换主题',
+			menu: {
+				contactSupport: '联系支持',
+				changeLanguage: '更改语言',
+				toggleTheme: '切换主题',
+			},
 		},
 		chartCard: {
 			title: '图表',

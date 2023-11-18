@@ -20,6 +20,11 @@ export const vi = {
 			logOut: 'Đăng xuất',
 			comingSoon: 'Sắp ra mắt',
 			toggleTheme: 'Chuyển đổi chủ đề',
+			menu: {
+				contactSupport: 'Liên hệ hỗ trợ',
+				changeLanguage: 'Thay đổi ngôn ngữ',
+				toggleTheme: 'Chuyển đổi chủ đề',
+			},
 		},
 		chartCard: {
 			title: 'Biểu đồ',

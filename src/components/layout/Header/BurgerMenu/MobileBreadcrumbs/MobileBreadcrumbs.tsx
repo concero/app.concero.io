@@ -1,8 +1,8 @@
 import classNames from './MobileBreadcrumbs.module.pcss'
-import { Button } from '../../../../../buttons/Button/Button'
+import { Button } from '../../../../buttons/Button/Button'
 import { useTranslation } from 'react-i18next'
 import { Link, useMatch } from 'react-router-dom'
-import { routes } from '../../../../../../constants/routes'
+import { routes } from '../../../../../constants/routes'
 
 export function MobileBreadcrumbs() {
 	const { t } = useTranslation()

@@ -20,6 +20,11 @@ export const pt = {
 			logOut: 'Sair',
 			comingSoon: 'Em breve',
 			toggleTheme: 'Alternar tema',
+			menu: {
+				contactSupport: 'Contatar suporte',
+				changeLanguage: 'Mudar idioma',
+				toggleTheme: 'Alternar tema',
+			},
 		},
 		chartCard: {
 			title: 'Gráfico',

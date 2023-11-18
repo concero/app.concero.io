@@ -20,6 +20,11 @@ export const uk = {
 			logOut: 'Вийти',
 			comingSoon: 'Скоро',
 			toggleTheme: 'Перемикання теми',
+			menu: {
+				contactSupport: "Зв'язатися з підтримкою",
+				changeLanguage: 'Змінити мову',
+				toggleTheme: 'Перемкнути тему',
+			},
 		},
 		chartCard: {
 			title: 'Графік',

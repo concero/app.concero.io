@@ -20,6 +20,11 @@ export const es = {
 			logOut: 'Cerrar sesión',
 			comingSoon: 'Muy pronto',
 			toggleTheme: 'Alternar tema',
+			menu: {
+				contactSupport: 'Contactar soporte',
+				changeLanguage: 'Cambiar idioma',
+				toggleTheme: 'Cambiar tema',
+			},
 		},
 		chartCard: {
 			title: 'Cuadro',

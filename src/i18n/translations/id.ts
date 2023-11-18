@@ -20,6 +20,11 @@ export const id = {
 			logOut: 'Keluar',
 			comingSoon: 'Segera Hadir',
 			toggleTheme: 'Ganti tema',
+			menu: {
+				contactSupport: 'Hubungi dukungan',
+				changeLanguage: 'Ubah bahasa',
+				toggleTheme: 'Ubah tema',
+			},
 		},
 		chartCard: {
 			title: 'Grafik',

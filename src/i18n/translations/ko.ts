@@ -20,6 +20,11 @@ export const ko = {
 			logOut: '로그아웃',
 			comingSoon: '곧 출시',
 			toggleTheme: '테마 전환',
+			menu: {
+				contactSupport: '고객 지원 문의',
+				changeLanguage: '언어 변경',
+				toggleTheme: '테마 전환',
+			},
 		},
 		chartCard: {
 			title: '차트',

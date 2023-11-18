@@ -1,13 +1,13 @@
-import burgerMenuIcon from '../../../../../assets/icons/burgerMenuIcon.svg'
+import burgerMenuIcon from '../../../../assets/icons/burgerMenuIcon.svg'
 import classNames from './BurgerMenu.module.pcss'
-import { Button } from '../../../../buttons/Button/Button'
+import { Button } from '../../../buttons/Button/Button'
 import { KeyboardEvent, useContext, useEffect, useState } from 'react'
 import { IconBrandDiscord, IconBrandTwitter, IconLanguage, IconMoon, IconSun } from '@tabler/icons-react'
-import { LanguageModal } from '../../../../modals/LanguageModal/LanguageModal'
-import { ThemeContext } from '../../../../../hooks/themeContext'
+import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
+import { ThemeContext } from '../../../../hooks/themeContext'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
-import { useMediaQuery } from '../../../../../hooks/useMediaQuery'
+import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { MobileBreadcrumbs } from './MobileBreadcrumbs/MobileBreadcrumbs'
 
 export function BurgerMenu() {
@@ -31,7 +31,10 @@ export function BurgerMenu() {
 
 	useEffect(() => {
 		if (isMenuOpened) {
+			document.body.style.overflowY = 'hidden'
 			document.addEventListener('keydown', handleKeyDown)
+		} else {
+			document.body.style.removeProperty('overflow-y')
 		}
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown)
@@ -60,7 +63,7 @@ export function BurgerMenu() {
 								}}
 							>
 								{theme === 'dark' ? <IconMoon size={18} color={'var(--color-text-secondary)'} /> : <IconSun size={18} color={'var(--color-text-secondary)'} />}
-								<h5>Toggle theme</h5>
+								<h5>{t('header.menu.toggleTheme')}</h5>
 							</Button>
 						</li>
 						<li>
@@ -74,7 +77,7 @@ export function BurgerMenu() {
 								}}
 							>
 								<IconLanguage size={18} color={'var(--color-text-secondary)'} />
-								<h5>Change language</h5>
+								<h5>{t('header.menu.changeLanguage')}</h5>
 							</Button>
 						</li>
 						<li>
@@ -106,7 +109,9 @@ export function BurgerMenu() {
 							</Button>
 						</li>
 					</ul>
-					<Button onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>Contact support</Button>
+					<Button onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>
+						<h5>{t('header.menu.contactSupport')}</h5>
+					</Button>
 				</div>
 			</animated.div>
 			<LanguageModal show={isLanguageModalVisible} setShow={setIsLanguageModalVisible} />

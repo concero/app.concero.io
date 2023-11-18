@@ -20,6 +20,11 @@ export const th = {
 			logOut: 'ออกจากระบบ',
 			comingSoon: 'เร็ว ๆ นี้',
 			toggleTheme: 'สลับธีม',
+			menu: {
+				contactSupport: 'ติดต่อสนับสนุน',
+				changeLanguage: 'เปลี่ยนภาษา',
+				toggleTheme: 'สลับธีม',
+			},
 		},
 		chartCard: {
 			title: 'กราฟ',
