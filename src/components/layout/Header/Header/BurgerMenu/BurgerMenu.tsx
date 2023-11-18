@@ -26,6 +26,7 @@ export function BurgerMenu() {
 	const fadeAnimation = useSpring({
 		opacity: isMenuOpened ? 1 : 0,
 		pointerEvents: isMenuOpened ? 'auto' : 'none',
+		from: { opacity: 0, pointerEvents: 'none' },
 	})
 
 	useEffect(() => {
@@ -44,72 +45,70 @@ export function BurgerMenu() {
 					<img src={burgerMenuIcon} />
 				</div>
 			</Button>
-			{isMenuOpened ? (
-				<animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setIsMenuOpened(false)}>
-					<div className={classNames.menuContainer}>
-						{isMobile ? <MobileBreadcrumbs /> : null}
-						<ul className={classNames.listContainer}>
-							<li>
-								<Button
-									variant={'black'}
-									size={'sq-sm'}
-									className={classNames.listButton}
-									onClick={(e: MouseEvent) => {
-										toggleTheme()
-										e.stopPropagation()
-									}}
-								>
-									{theme === 'dark' ? <IconMoon size={18} color={'var(--color-text-secondary)'} /> : <IconSun size={18} color={'var(--color-text-secondary)'} />}
-									<h5>Toggle theme</h5>
-								</Button>
-							</li>
-							<li>
-								<Button
-									variant={'black'}
-									size={'sq-sm'}
-									className={classNames.listButton}
-									onClick={(e: MouseEvent) => {
-										setIsLanguageModalVisible(true)
-										e.stopPropagation()
-									}}
-								>
-									<IconLanguage size={18} color={'var(--color-text-secondary)'} />
-									<h5>Change language</h5>
-								</Button>
-							</li>
-							<li>
-								<Button
-									variant={'black'}
-									size={'sq-sm'}
-									className={classNames.listButton}
-									onClick={(e: MouseEvent) => {
-										window.open('https://twitter.com/concero_io', '_blank')
-										e.stopPropagation()
-									}}
-								>
-									<IconBrandTwitter size={18} color={'var(--color-text-secondary)'} />
-									<h5>{t('socialMedia.twitter')}</h5>
-								</Button>
-							</li>
-							<li>
-								<Button
-									variant={'black'}
-									size={'sq-sm'}
-									className={classNames.listButton}
-									onClick={(e: MouseEvent) => {
-										window.open('https://discord.com/channels/1155792755105214535', '_blank')
-										e.stopPropagation()
-									}}
-								>
-									<IconBrandDiscord size={18} color={'var(--color-text-secondary)'} />
-									<h5>{t('socialMedia.discord')}</h5>
-								</Button>
-							</li>
-						</ul>
-						<Button onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>Contact support</Button>
-					</div>
-				</animated.div>
-			) : null}
+			<animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setIsMenuOpened(false)}>
+				<div className={classNames.menuContainer}>
+					{isMobile ? <MobileBreadcrumbs /> : null}
+					<ul className={classNames.listContainer}>
+						<li>
+							<Button
+								variant={'black'}
+								size={'sq-sm'}
+								className={classNames.listButton}
+								onClick={(e: MouseEvent) => {
+									toggleTheme()
+									e.stopPropagation()
+								}}
+							>
+								{theme === 'dark' ? <IconMoon size={18} color={'var(--color-text-secondary)'} /> : <IconSun size={18} color={'var(--color-text-secondary)'} />}
+								<h5>Toggle theme</h5>
+							</Button>
+						</li>
+						<li>
+							<Button
+								variant={'black'}
+								size={'sq-sm'}
+								className={classNames.listButton}
+								onClick={(e: MouseEvent) => {
+									setIsLanguageModalVisible(true)
+									e.stopPropagation()
+								}}
+							>
+								<IconLanguage size={18} color={'var(--color-text-secondary)'} />
+								<h5>Change language</h5>
+							</Button>
+						</li>
+						<li>
+							<Button
+								variant={'black'}
+								size={'sq-sm'}
+								className={classNames.listButton}
+								onClick={(e: MouseEvent) => {
+									window.open('https://twitter.com/concero_io', '_blank')
+									e.stopPropagation()
+								}}
+							>
+								<IconBrandTwitter size={18} color={'var(--color-text-secondary)'} />
+								<h5>{t('socialMedia.twitter')}</h5>
+							</Button>
+						</li>
+						<li>
+							<Button
+								variant={'black'}
+								size={'sq-sm'}
+								className={classNames.listButton}
+								onClick={(e: MouseEvent) => {
+									window.open('https://discord.com/channels/1155792755105214535', '_blank')
+									e.stopPropagation()
+								}}
+							>
+								<IconBrandDiscord size={18} color={'var(--color-text-secondary)'} />
+								<h5>{t('socialMedia.discord')}</h5>
+							</Button>
+						</li>
+					</ul>
+					<Button onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>Contact support</Button>
+				</div>
+			</animated.div>
 			<LanguageModal show={isLanguageModalVisible} setShow={setIsLanguageModalVisible} />
 		</div>
 	)
