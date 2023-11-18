@@ -1,7 +1,7 @@
 import burgerMenuIcon from '../../../../../assets/icons/burgerMenuIcon.svg'
 import classNames from './BurgerMenu.module.pcss'
 import { Button } from '../../../../buttons/Button/Button'
-import { useContext, useState } from 'react'
+import { KeyboardEvent, useContext, useEffect, useState } from 'react'
 import { IconBrandDiscord, IconBrandTwitter, IconLanguage, IconMoon, IconSun } from '@tabler/icons-react'
 import { LanguageModal } from '../../../../modals/LanguageModal/LanguageModal'
 import { ThemeContext } from '../../../../../hooks/themeContext'
@@ -17,10 +17,25 @@ export function BurgerMenu() {
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
 
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if (event.key === 'Escape') {
+			setIsMenuOpened(false)
+		}
+	}
+
 	const fadeAnimation = useSpring({
 		opacity: isMenuOpened ? 1 : 0,
 		pointerEvents: isMenuOpened ? 'auto' : 'none',
 	})
+
+	useEffect(() => {
+		if (isMenuOpened) {
+			document.addEventListener('keydown', handleKeyDown)
+		}
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [isMenuOpened])
 
 	return (
 		<div className={classNames.container}>
@@ -35,25 +50,57 @@ export function BurgerMenu() {
 						{isMobile ? <MobileBreadcrumbs /> : null}
 						<ul className={classNames.listContainer}>
 							<li>
-								<Button variant={'black'} size={'sq-sm'} className={classNames.listButton} onClick={() => toggleTheme()}>
+								<Button
+									variant={'black'}
+									size={'sq-sm'}
+									className={classNames.listButton}
+									onClick={(e: MouseEvent) => {
+										toggleTheme()
+										e.stopPropagation()
+									}}
+								>
 									{theme === 'dark' ? <IconMoon size={18} color={'var(--color-text-secondary)'} /> : <IconSun size={18} color={'var(--color-text-secondary)'} />}
 									<h5>Toggle theme</h5>
 								</Button>
 							</li>
 							<li>
-								<Button variant={'black'} size={'sq-sm'} className={classNames.listButton} onClick={() => setIsLanguageModalVisible(true)}>
+								<Button
+									variant={'black'}
+									size={'sq-sm'}
+									className={classNames.listButton}
+									onClick={(e: MouseEvent) => {
+										setIsLanguageModalVisible(true)
+										e.stopPropagation()
+									}}
+								>
 									<IconLanguage size={18} color={'var(--color-text-secondary)'} />
 									<h5>Change language</h5>
 								</Button>
 							</li>
 							<li>
-								<Button variant={'black'} size={'sq-sm'} className={classNames.listButton} onClick={() => window.open('https://twitter.com/concero_io', '_blank')}>
+								<Button
+									variant={'black'}
+									size={'sq-sm'}
+									className={classNames.listButton}
+									onClick={(e: MouseEvent) => {
+										window.open('https://twitter.com/concero_io', '_blank')
+										e.stopPropagation()
+									}}
+								>
 									<IconBrandTwitter size={18} color={'var(--color-text-secondary)'} />
 									<h5>{t('socialMedia.twitter')}</h5>
 								</Button>
 							</li>
 							<li>
-								<Button variant={'black'} size={'sq-sm'} className={classNames.listButton} onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>
+								<Button
+									variant={'black'}
+									size={'sq-sm'}
+									className={classNames.listButton}
+									onClick={(e: MouseEvent) => {
+										window.open('https://discord.com/channels/1155792755105214535', '_blank')
+										e.stopPropagation()
+									}}
+								>
 									<IconBrandDiscord size={18} color={'var(--color-text-secondary)'} />
 									<h5>{t('socialMedia.discord')}</h5>
 								</Button>
