@@ -77,9 +77,9 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingSt
 			<Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick(FilterCategory.all, !all)}>
 				All
 			</Button>
-			<Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}>
-				My holdings
-			</Button>
+			{/* <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}> */}
+			{/* 	My holdings */}
+			{/* </Button> */}
 			<Button size="sm" variant={getSelectedStyle(my_positions)} onClick={() => handleTagClick(FilterCategory.my_positions, !my_positions)} isDisabled={!address}>
 				My positions
 			</Button>
