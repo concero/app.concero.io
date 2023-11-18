@@ -37,7 +37,7 @@ export const RewardsCard: FC<RewardsCardProps> = ({ stakingState }) => {
 
 	return (
 		<div className={classNames.container}>
-			<CardHeader title={t('stakingDetailsCard.reward')} />
+			<CardHeader title={t('stakingDetailsCard.rewards')} />
 			{stakingState.selectedVault.rewardTokens?.map(item => (
 				<RewardsItemCard key={item.name} name={item.name} logoURI={item.logoURI} value={item.value} />
 			))}

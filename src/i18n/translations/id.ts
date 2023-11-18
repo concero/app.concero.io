@@ -72,7 +72,7 @@ export const id = {
 			contractSupport: 'Hubungi dukungan',
 			copyTransactionInfo: 'Salin info transaksi',
 			dropUsAMessage: 'Kirimkan pesan kepada kami',
-			apologise: 'Kami meminta maaf atas masalah yang Anda alami dengan transaksi Anda. Kami akan melakukan yang terbaik untuk menyelesaikan masalah.',
+			txFailedMessage: 'Kami meminta maaf atas masalah yang Anda alami dengan transaksi Anda. Kami akan melakukan yang terbaik untuk menyelesaikan masalah.',
 		},
 		manageModal: {
 			title: 'Kelola posisi',
@@ -93,7 +93,7 @@ export const id = {
 			thisMonth: 'Bulan ini',
 		},
 		utils: {
-			cuoldNotLoadData: 'Tidak dapat memuat data.',
+			couldNotLoadData: 'Tidak dapat memuat data.',
 			retry: 'Coba lagi',
 		},
 		swapProgressCard: {

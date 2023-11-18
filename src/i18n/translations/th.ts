@@ -72,7 +72,7 @@ export const th = {
 			contractSupport: 'ติดต่อฝ่ายสนับสนุน',
 			copyTransactionInfo: 'คัดลอกข้อมูลธุรกรรม',
 			dropUsAMessage: 'ส่งข้อความถึงเรา',
-			apologise: 'เราขออภัยที่คุณมีปัญหากับธุรกรรมของคุณ เราจะทำดีที่สุดเพื่อแก้ไขปัญหา',
+			txFailedMessage: 'เราขออภัยที่คุณมีปัญหากับธุรกรรมของคุณ เราจะทำดีที่สุดเพื่อแก้ไขปัญหา',
 		},
 		manageModal: {
 			title: 'จัดการตำแหน่ง',
@@ -93,7 +93,7 @@ export const th = {
 			thisMonth: 'เดือนนี้',
 		},
 		utils: {
-			cuoldNotLoadData: 'ไม่สามารถโหลดข้อมูลได้',
+			couldNotLoadData: 'ไม่สามารถโหลดข้อมูลได้',
 			retry: 'ลองใหม่',
 		},
 		swapProgressCard: {

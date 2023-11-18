@@ -72,7 +72,7 @@ export const pt = {
 			contractSupport: 'Contatar suporte',
 			copyTransactionInfo: 'Copiar informações da transação',
 			dropUsAMessage: 'Deixe-nos uma mensagem',
-			apologise: 'Pedimos desculpas pelos problemas com sua transação. Faremos o nosso melhor para resolver o problema.',
+			txFailedMessage: 'Pedimos desculpas pelos problemas com sua transação. Faremos o nosso melhor para resolver o problema.',
 		},
 		manageModal: {
 			title: 'Gerenciar posição',
@@ -93,7 +93,7 @@ export const pt = {
 			thisMonth: 'Este mês',
 		},
 		utils: {
-			cuoldNotLoadData: 'Não foi possível carregar os dados.',
+			couldNotLoadData: 'Não foi possível carregar os dados.',
 			retry: 'Tentar novamente',
 		},
 		swapProgressCard: {

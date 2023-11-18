@@ -72,7 +72,7 @@ export const tr = {
 			contractSupport: 'Destekle iletişime geç',
 			copyTransactionInfo: 'İşlem bilgisini kopyala',
 			dropUsAMessage: 'Bize bir mesaj bırakın',
-			apologise: 'İşleminizde sorun yaşadığınız için özür dileriz. Sorunu çözmek için elimizden geleni yapacağız.',
+			txFailedMessage: 'İşleminizde sorun yaşadığınız için özür dileriz. Sorunu çözmek için elimizden geleni yapacağız.',
 		},
 		manageModal: {
 			title: 'Pozisyon yönetimi',
@@ -93,7 +93,7 @@ export const tr = {
 			thisMonth: 'Bu ay',
 		},
 		utils: {
-			cuoldNotLoadData: 'Veri yüklenemedi.',
+			couldNotLoadData: 'Veri yüklenemedi.',
 			retry: 'Yeniden dene',
 		},
 		swapProgressCard: {

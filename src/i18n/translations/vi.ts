@@ -72,7 +72,7 @@ export const vi = {
 			contractSupport: 'Liên hệ hỗ trợ',
 			copyTransactionInfo: 'Sao chép thông tin giao dịch',
 			dropUsAMessage: 'Gửi cho chúng tôi một tin nhắn',
-			apologise: 'Chúng tôi xin lỗi vì bạn gặp vấn đề với giao dịch của mình. Chúng tôi sẽ cố gắng hết sức để giải quyết vấn đề.',
+			txFailedMessage: 'Chúng tôi xin lỗi vì bạn gặp vấn đề với giao dịch của mình. Chúng tôi sẽ cố gắng hết sức để giải quyết vấn đề.',
 		},
 		manageModal: {
 			title: 'Quản lý vị trí',
@@ -93,7 +93,7 @@ export const vi = {
 			thisMonth: 'Tháng này',
 		},
 		utils: {
-			cuoldNotLoadData: 'Không thể tải dữ liệu.',
+			couldNotLoadData: 'Không thể tải dữ liệu.',
 			retry: 'Thử lại',
 		},
 		swapProgressCard: {

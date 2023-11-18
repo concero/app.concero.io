@@ -38,7 +38,7 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 	return (
 		<div className={classNames.container}>
 			<div>
-				<p className={'body1'}>{t('contactSupportCard.apologise')}</p>
+				<p className={'body1'}>{t('contactSupportCard.txFailedMessage')}</p>
 			</div>
 			<div className={classNames.stepBlock}>
 				<h4 className={classNames.title}>1. {t('contactSupportCard.copyTransactionInfo')}</h4>

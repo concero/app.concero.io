@@ -72,7 +72,7 @@ export const zh = {
 			contractSupport: '联系支持',
 			copyTransactionInfo: '复制交易信息',
 			dropUsAMessage: '给我们留言',
-			apologise: '很抱歉您在交易中遇到问题。我们将尽力解决问题。',
+			txFailedMessage: '很抱歉您在交易中遇到问题。我们将尽力解决问题。',
 		},
 		manageModal: {
 			title: '管理持仓',
@@ -93,7 +93,7 @@ export const zh = {
 			thisMonth: '本月',
 		},
 		utils: {
-			cuoldNotLoadData: '无法加载数据。',
+			couldNotLoadData: '无法加载数据。',
 			retry: '重试',
 		},
 		swapProgressCard: {
