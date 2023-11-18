@@ -11,10 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: setup npm
-        run: |
-          curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-          sudo apt-get install -y nodejs
+        uses: actions/setup-node@v2
       - name: run tests
         run: npm run test
