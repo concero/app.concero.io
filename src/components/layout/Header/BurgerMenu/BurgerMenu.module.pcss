@@ -44,6 +44,7 @@
 	li {
 		width: 100%;
 		gap: var(--sp-md);
+		transition: transform 0.2s ease-out;
 		.listButton {
 			width: 100%;
 			justify-content: flex-start;
@@ -51,6 +52,9 @@
 				flex: none;
 			}
 		}
+	}
+	li:hover {
+		transform: translateY(-2px)
 	}
 }
 
