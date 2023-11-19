@@ -1,4 +1,4 @@
-export const uk = {
+export const ua = {
 	translation: {
 		swapCard: {
 			headerTitle: {
