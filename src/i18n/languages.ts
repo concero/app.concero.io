@@ -16,4 +16,5 @@ export const languages: Language[] = [
 	{ id: 'uk', title: 'Українська' },
 	{ id: 'vi', title: 'Tiếng Việt' },
 	{ id: 'zh', title: '中文' },
+	{ id: 'ru', title: 'Русский' },
 ]
