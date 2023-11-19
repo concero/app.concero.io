@@ -14,16 +14,16 @@ export const ua = {
 			exchange: 'Обмін',
 			staking: 'Стейкінг',
 			portfolio: 'Портфель',
-			myReferrals: 'Мої рекомендації',
-			helpUsImprove: 'Допоможіть нам покращити',
+			myReferrals: 'Мої реферали',
+			helpUsImprove: 'Допоможіть нам покращитись',
 			copyAddress: 'Копіювати адресу',
 			logOut: 'Вийти',
 			comingSoon: 'Скоро',
-			toggleTheme: 'Перемикання теми',
+			toggleTheme: 'Змінити тему',
 			menu: {
 				contactSupport: "Зв'язатися з підтримкою",
 				changeLanguage: 'Змінити мову',
-				toggleTheme: 'Перемкнути тему',
+				toggleTheme: 'Змінити тему',
 			},
 		},
 		chartCard: {
@@ -34,12 +34,12 @@ export const ua = {
 			title: 'Новини',
 		},
 		stakingOpportunitiesCard: {
-			title: 'Можливості стейкінгу',
+			title: 'Варіанти стейкінгу',
 			filterTag: {
 				all: 'Все',
-				myHoldings: 'Мої утримання',
+				myHoldings: 'Мої активи',
 				myPositions: 'Мої позиції',
-				chains: 'Ланцюги',
+				chains: 'Блокчейни',
 				category: 'Категорія',
 			},
 		},
@@ -78,7 +78,7 @@ export const ua = {
 			title: 'Керування позицією',
 		},
 		tokenArea: {
-			from: 'Від',
+			from: 'З',
 			to: 'До',
 		},
 		protocolModal: {
@@ -89,8 +89,8 @@ export const ua = {
 			dailyFees: 'Щоденні комісійні',
 			dailySupplyRevenue: 'Щоденний дохід від постачання',
 			audits: 'Аудити',
-			thisWeek: 'На цьому тижні',
-			thisMonth: 'В цьому місяці',
+			thisWeek: 'Цього тижня',
+			thisMonth: 'Цього місяця',
 		},
 		utils: {
 			couldNotLoadData: 'Не вдалося завантажити дані.',
@@ -102,7 +102,7 @@ export const ua = {
 		modal: {
 			selectToken: 'Виберіть токен',
 			selectChain: 'Виберіть ланцюг',
-			helpUsImprove: 'Допоможіть нам покращити',
+			helpUsImprove: 'Допоможіть нам покращитись',
 			howCanWeReachOut: "Як ми можемо зв'язатися з вами?",
 		},
 		socialMedia: {
@@ -114,7 +114,7 @@ export const ua = {
 		placeholder: {
 			search: 'Пошук',
 			explainYourFeedback: 'Поясніть свій відгук докладно',
-			yourUsername: "Ваше ім'я користувача",
+			yourUsername: "Ваше ім'я",
 		},
 		tagTitle: {
 			question: 'Питання',
