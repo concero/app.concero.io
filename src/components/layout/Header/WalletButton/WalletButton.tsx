@@ -1,29 +1,42 @@
 import { useWeb3Modal } from '@web3modal/react'
-import { FC, useContext } from 'react'
-import { WithPopover } from '../../../wrappers/WithPopover'
-import { HeaderPopoverMenu } from '../HeaderPopoverMenu/HeaderPopoverMenu'
-import { useMediaQuery } from '../../../../hooks/useMediaQuery'
-import { ThemeContext } from '../../../../hooks/themeContext'
-import { BaseButton } from './BaseButton/BaseButton'
+import { FC } from 'react'
 import { useTracking } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { useAccount } from 'wagmi'
+import { IconWallet } from '@tabler/icons-react'
+import { Button } from '../../../buttons/Button/Button'
+import { truncateWallet } from '../../../../utils/formatting'
+import { useTranslation } from 'react-i18next'
+import classNames from './WalletButton.module.pcss'
 
 interface WalletButtonProps {}
 
 export const WalletButton: FC<WalletButtonProps> = () => {
-	const isMobile = useMediaQuery('mobile')
-	const { toggleTheme } = useContext(ThemeContext)
+	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 	const { open } = useWeb3Modal()
 	const { trackEvent } = useTracking()
-	const { isConnected } = useAccount()
+	const { t } = useTranslation()
 
 	function handleClick() {
 		open()
 		trackEvent({ category: category.Wallet, action: action.ClickConnectWallet, label: 'Clicked Connect Wallet' })
 	}
 
-	const ButtonWithPopover = WithPopover(BaseButton, HeaderPopoverMenu)
+	const getStatus = () => {
+		if (isConnected) return truncateWallet(address)
+		if (isConnecting) return t('walletButton.connecting')
+		if (isDisconnected) return t('walletButton.connectWallet')
+		return t('walletButton.connectWallet')
+	}
 
-	return <div>{isMobile ? <BaseButton onClick={handleClick} /> : <>{isConnected ? <ButtonWithPopover onClick={handleClick} /> : <BaseButton onClick={handleClick} />}</>}</div>
+	return (
+		<Button
+			variant={isConnected ? 'subtle' : 'primary'}
+			leftIcon={<IconWallet size={16} color={isConnected ? 'var(--color-grey-500)' : 'var(--color-base-white)'} />}
+			size="sm"
+			onClick={handleClick}
+		>
+			<p className={!isConnected ? classNames.buttonText : 'body1'}>{getStatus()}</p>
+		</Button>
+	)
 }
