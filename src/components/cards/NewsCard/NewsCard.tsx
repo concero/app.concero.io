@@ -13,6 +13,7 @@ import { DataContextValue } from '../../../hooks/DataContext/types'
 import { Button } from '../../buttons/Button/Button'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
+import { useTranslation } from 'react-i18next'
 import { action, category } from '../../../constants/tracking'
 import { useTracking } from '../../../hooks/useTracking'
 
@@ -23,6 +24,8 @@ export const NewsCard: FC<NewsCardProps> = () => {
 	const { getTokens } = useContext<DataContextValue>(DataContext)
 	const { addNotification } = useContext(NotificationsContext)
 	const [{ data, isLoading, timestamp, isModalVisible, selectedToken }, dispatch] = useNewsReducer(selection)
+	const { t } = useTranslation()
+
 	const { trackEvent } = useTracking()
 	useEffect(() => {
 		if (!selectedToken) return
@@ -48,7 +51,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 	return (
 		<>
 			<div className={classNames.container}>
-				<CardHeader title="News">
+				<CardHeader title={t('newsCard.title')}>
 					<Button variant="black" size="sm" onClick={handleShowModal}>
 						<CryptoSymbol src={selectedToken.logoURI} symbol={selectedToken.symbol} />
 					</Button>
@@ -65,7 +68,7 @@ export const NewsCard: FC<NewsCardProps> = () => {
 				/>
 			</div>
 			<ListModal
-				title="Select token"
+				title={t('modal.selectToken')}
 				isOpen={isModalVisible}
 				setIsOpen={value => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
 				onSelect={token => handleSelectToken(token)}

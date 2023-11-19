@@ -7,6 +7,9 @@ import { Button } from '../../buttons/Button/Button'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { useTranslation } from 'react-i18next'
+import { action, category } from '../../../constants/tracking'
+import { trackEvent } from '../../../hooks/useTracking'
 
 interface StakingHeaderCardProps {
 	stakingState: StakingState
@@ -19,11 +22,13 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 	const { selectedVault } = stakingState
 	const isConnected = !!stakingState.address
 	const stakedAmount = selectedVault?.stakedAmount
+	const { t } = useTranslation()
 
-	const stakeButtonTitle = isConnected ? (stakedAmount ? 'Manage' : 'Stake') : 'Connect wallet to swap'
+	const stakeButtonTitle = isConnected ? (stakedAmount ? t('button.menage') : t('button.stake')) : 'Connect wallet to swap'
 
 	function handleManageButtonClick() {
 		setIsManageModalOpen(true)
+		trackEvent({ category: category.StakingHeader, action: action.Click, label: 'Manage button clicked' })
 	}
 
 	function handleGoBackButtonClick() {
@@ -36,9 +41,9 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 		const amountUsd = stakingState.selectedVault?.stakedAmountUsd ? `$${stakingState.selectedVault?.stakedAmountUsd}` : 'unknown'
 		return (
 			<div className={classNames.cardsContainer}>
-				<InfoCard title={'Staked'} value={amountUsd} secondaryValue={'usd'}/>
+				<InfoCard title={'Staked'} value={amountUsd} secondaryValue={'usd'} />
 				<InfoCard title={'Staked'} value={stakedAmount} secondaryValue={stakingState.selectedVault.symbol} />
-				<InfoCard title={'Pool share'} value={poolShare} secondaryValue={'%'}/>
+				<InfoCard title={'Pool share'} value={poolShare} secondaryValue={'%'} />
 			</div>
 		)
 	}

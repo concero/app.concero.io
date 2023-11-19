@@ -19,7 +19,7 @@ export const trackEvent = async ({ category, action, label, data }: TrackEventPr
 			...data,
 		})
 	} catch (error) {
-		console.log('trackEvent error', error)
+		console.error('trackEvent error', error)
 	}
 }
 

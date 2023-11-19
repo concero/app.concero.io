@@ -6,10 +6,12 @@ import { StandardRoute } from '../../../types/StandardRoute'
 import { capitalize, numberToFormatString, secondsConverter } from '../../../utils/formatting'
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
+import { useTranslation } from 'react-i18next'
 
 export const renderTags = (route: StandardRoute, isSelected: boolean, getTextColor: () => string, getIconColor: () => string) => {
 	const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
 	const { toggleInsurance } = useContext(InsuranceContext)
+	const { t } = useTranslation()
 
 	const handleInsuranceButtonClick = event => {
 		event.stopPropagation()
@@ -25,7 +27,7 @@ export const renderTags = (route: StandardRoute, isSelected: boolean, getTextCol
 			) : null}
 			{route.insurance ? (
 				<Tag color="green" onClick={e => handleInsuranceButtonClick(e)}>
-					<p style={{ color: 'inherit', flexWrap: 'nowrap' }}>Insurance</p>
+					<p style={{ color: 'inherit', flexWrap: 'nowrap' }}>{t('swapCard.insurance')}</p>
 					<Beacon isOn={route.insurance?.state === 'INSURED'} color="green" />
 				</Tag>
 			) : null}

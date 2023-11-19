@@ -14,13 +14,13 @@ export enum ButtonType {
 
 export const buttonText: { [key in ButtonType]: string } = {
 	[ButtonType.LOADING]: '',
-	[ButtonType.SWAP]: 'Swap',
-	[ButtonType.ENTER_AMOUNT]: 'Enter amount to swap',
-	[ButtonType.LOW_BALANCE]: 'Insufficient balance',
-	[ButtonType.LOW_GAS]: 'Insufficient gas',
-	[ButtonType.LOW_FEES]: 'Insufficient fees',
-	[ButtonType.CONNECT_WALLET]: 'Connect wallet to swap',
-	[ButtonType.NO_ROUTES]: 'No routes found',
+	[ButtonType.SWAP]: 'button.swap',
+	[ButtonType.ENTER_AMOUNT]: 'button.enterAmountToSwap',
+	[ButtonType.LOW_BALANCE]: 'button.insufficientBalance',
+	[ButtonType.LOW_GAS]: 'button.insufficientGas',
+	[ButtonType.LOW_FEES]: 'button.insufficientFees',
+	[ButtonType.CONNECT_WALLET]: 'button.connectWalletToSwap',
+	[ButtonType.NO_ROUTES]: 'button.noRoutesFound',
 }
 
 export const isButtonDisabled: { [key in ButtonType]: boolean } = {

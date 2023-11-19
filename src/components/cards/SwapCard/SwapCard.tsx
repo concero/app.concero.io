@@ -15,8 +15,10 @@ import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
 import { Button } from '../../buttons/Button/Button'
 import { SwapCardStage } from './swapReducer/types'
 import { ContactSupport } from './SwapProgress/ContactSupport/ContactSupport'
+import { useTranslation } from 'react-i18next'
 
 export const SwapCard: FC<SwapCardProps> = () => {
+	const { t } = useTranslation()
 	const { selection, dispatch } = useContext(SelectionContext)
 	const [swapState, swapDispatch] = useSwapReducer(selection)
 	const { address } = useAccount()

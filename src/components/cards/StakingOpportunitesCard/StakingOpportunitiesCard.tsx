@@ -7,6 +7,9 @@ import { StakingAction, StakingState, Vault } from '../../screens/StakingScreen/
 import { getMoreVaults, getVaults } from './getVaults'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { useTranslation } from 'react-i18next'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action, category } from '../../../constants/tracking'
 
 interface StakingOpportunitiesProps {
 	stakingState: StakingState
@@ -21,15 +24,18 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 	const { address } = useAccount()
 	const [offset, setOffset] = useState(0)
 	const limit = 15
+	const { t } = useTranslation()
 
 	function handleSelect(vault: Vault) {
 		stakingDispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
+		trackEvent({ category: category.StakingScreen, action: action.Click, label: 'Staking opportunities select vault' })
 	}
 
 	function handleEndReached() {
 		const newOffset = offset + limit
 		setOffset(newOffset)
 		getMoreVaults(stakingDispatch, address, stakingState, newOffset, limit)
+		trackEvent({ category: category.StakingScreen, action: action.ScrollToEnd, label: 'Staking opportunities onEndReached' })
 	}
 
 	function handleScroll(e: UIEvent<HTMLDivElement>) {
@@ -48,7 +54,7 @@ export function StakingOpportunitiesCard({ stakingState, stakingDispatch }: Stak
 
 	return (
 		<div className={`card ${classNames.container}`}>
-			<CardHeader title="Staking opportunities" isLoading={stakingState.loading}>
+			<CardHeader title={t('stakingOpportunitiesCard.title')} isLoading={stakingState.loading}>
 				<FilteredTags stakingDispatch={stakingDispatch} stakingState={stakingState} />
 			</CardHeader>
 			<div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
