@@ -2,10 +2,12 @@ name: Run tests
 on:
   push:
     branches:
-      - tests
+      - master
+      - release
   pull_request:
     branches:
-      - tests
+      - master
+      - release
 jobs:
   run_tests:
     runs-on: ubuntu-latest
