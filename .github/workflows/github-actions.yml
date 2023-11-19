@@ -14,6 +14,9 @@ jobs:
         uses: actions/checkout@v3
       - name: setup npm
         uses: actions/setup-node@v2
+      - name: install bun
+        run: oven-sh/setup-bun@v1
+      - name: install dependencies
+        run: bun install
       - name: run tests
-        run: npm run test
-#test
+        run: bun run test
