@@ -5,6 +5,7 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoIcon } from '../../tags/CryptoSymbol/CryptoIcon'
+import { useTranslation } from 'react-i18next'
 
 interface TokensCardProps {
 	stakingState: StakingState
@@ -49,6 +50,8 @@ export function TokenRatioCard({ item }) {
 }
 
 export const TokensCard: FC<TokensCardProps> = ({ stakingState }) => {
+	const { t } = useTranslation()
+
 	// console.log('TokensCard', stakingState)
 
 	const renderTokens = ({ input_tokens }) => {
@@ -65,7 +68,7 @@ export const TokensCard: FC<TokensCardProps> = ({ stakingState }) => {
 
 	return (
 		<div className={classNames.container}>
-			<CardHeader title="Tokens" />
+			<CardHeader title={t('stakingDetailsCard.tokens')} />
 			<div className={classNames.innerContainer}>{renderTokens(stakingState.selectedVault)}</div>
 		</div>
 	)

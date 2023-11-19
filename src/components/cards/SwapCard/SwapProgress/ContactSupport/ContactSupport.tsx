@@ -5,6 +5,7 @@ import { Button } from '../../../../buttons/Button/Button'
 import { IconArrowLeft, IconBrandDiscord, IconCheck, IconCopy, IconMail } from '@tabler/icons-react'
 import { copyToClipboard } from '../../../../../utils/copyToClipboard'
 import posthog from 'posthog-js'
+import { useTranslation } from 'react-i18next'
 
 interface ContactSupportProps {
 	swapState: SwapState
@@ -13,6 +14,7 @@ interface ContactSupportProps {
 
 export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps) {
 	const [isCopied, setIsCopied] = useState(false)
+	const { t } = useTranslation()
 
 	function handleGoBack() {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
@@ -36,18 +38,18 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 	return (
 		<div className={classNames.container}>
 			<div>
-				<p className={'body1'}>We apologise that you had issues with your transaction. We will do our best to resolve the issue.</p>
+				<p className={'body1'}>{t('contactSupportCard.apologise')}</p>
 			</div>
 			<div className={classNames.stepBlock}>
-				<h4 className={classNames.title}>1. Copy transaction info</h4>
+				<h4 className={classNames.title}>1. {t('contactSupportCard.copyTransactionInfo')}</h4>
 				<div className={classNames.alightStart}>
 					<Button variant={'primary'} leftIcon={isCopied ? <IconCheck size={16} /> : <IconCopy size={16} />} onClick={handleCopy}>
-						Copy transaction info
+						{t('contactSupportCard.copyTransactionInfo')}
 					</Button>
 				</div>
 			</div>
 			<div className={classNames.stepBlock}>
-				<h4 className={classNames.title}>2. Drop us a message</h4>
+				<h4 className={classNames.title}>2. {t('contactSupportCard.dropUsAMessage')}</h4>
 				<div className={classNames.buttonContainer}>
 					<Button
 						leftIcon={<IconBrandDiscord size={16} />}
@@ -55,14 +57,14 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 						onClick={() => window.open('https://discord.com/channels/1155792755105214535/1156171906228170795', '_blank')}
 						variant="secondary"
 					>
-						Discord
+						{t('socialMedia.discord')}
 					</Button>
 					<Button leftIcon={<IconMail size={16} />} className={classNames.f1} variant="secondary" onClick={() => window.open('mailto:Concerocrypto@gmail.com', '_blank')}>
-						Email
+						{t('socialMedia.email')}
 					</Button>
 				</div>
 				<Button leftIcon={<IconArrowLeft size={18} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
-					Go back
+					{t('button.goBack')}
 				</Button>
 			</div>
 		</div>

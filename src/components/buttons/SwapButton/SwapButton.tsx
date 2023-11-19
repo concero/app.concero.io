@@ -4,10 +4,12 @@ import { Button } from '../Button/Button'
 import { SwapButtonProps } from './types'
 import { buttonStyleClass, buttonText, iconComponent, isButtonDisabled } from './constants'
 import { getButtonType } from './getButtonType'
+import { useTranslation } from 'react-i18next'
 
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
 	const { isLoading } = swapState
 	const buttonType = getButtonType(swapState, isConnected)
+	const { t } = useTranslation()
 
 	return (
 		<Button
@@ -18,7 +20,7 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 			onClick={onClick}
 			className={`${classNames.swapButton} ${classNames[buttonStyleClass[buttonType]]}`}
 		>
-			{buttonText[buttonType]}
+			{t(buttonText[buttonType])}
 		</Button>
 	)
 }

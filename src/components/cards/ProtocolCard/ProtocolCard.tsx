@@ -8,6 +8,7 @@ import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
+import { useTranslation } from 'react-i18next'
 import { trackEvent } from '../../../hooks/useTracking'
 import { action, category } from '../../../constants/tracking'
 
@@ -19,6 +20,7 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 	const [isOpened, setIsOpened] = useState(false)
 	const [protocolData, setProtocolData] = useState<Protocol | null>(null)
 	const { selectedVault } = stakingState
+	const { t } = useTranslation()
 
 	function handleOpenProtocolModal() {
 		setIsOpened(true)
@@ -35,8 +37,8 @@ export function ProtocolCard({ stakingState }: ProtocolCardProps) {
 
 	return (
 		<div>
-			<CardHeader title="Protocol" />
-			<Button variant="subtle" onClick={handleOpenProtocolModal}>
+			<CardHeader title={t('stakingDetailsCard.protocol')} />
+			<Button variant="subtle" onClick={() => setIsOpened(true)}>
 				<div className={classNames.cardContainer}>
 					<div className={classNames.avatarContainer}>
 						<Avatar src={selectedVault?.project?.logoURI ?? null} />
