@@ -7,6 +7,7 @@ import { Button } from '../../buttons/Button/Button'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { useTranslation } from 'react-i18next'
 import { action, category } from '../../../constants/tracking'
 import { trackEvent } from '../../../hooks/useTracking'
 
@@ -21,8 +22,9 @@ export const StakingHeaderCard: FC<StakingHeaderCardProps> = ({ stakingState, st
 	const { selectedVault } = stakingState
 	const isConnected = !!stakingState.address
 	const stakedAmount = selectedVault?.stakedAmount
+	const { t } = useTranslation()
 
-	const stakeButtonTitle = isConnected ? (stakedAmount ? 'Manage' : 'Stake') : 'Connect wallet to swap'
+	const stakeButtonTitle = isConnected ? (stakedAmount ? t('button.menage') : t('button.stake')) : 'Connect wallet to swap'
 
 	function handleManageButtonClick() {
 		setIsManageModalOpen(true)

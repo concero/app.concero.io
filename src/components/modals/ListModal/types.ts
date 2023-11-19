@@ -12,7 +12,8 @@ export interface MultiSelectModalProps {
 	title: string
 	selectedItems: any[]
 	onSelect: (item: any) => void
-	getItems: (key: any) => void
+	getItems: (key: any) => Promise<any>
 	RenderItem: FC<RowsComponentProps>
 	isSearchable?: boolean
+	isHandleEndReached?: boolean
 }

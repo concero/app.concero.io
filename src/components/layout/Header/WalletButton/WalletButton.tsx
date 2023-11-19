@@ -4,19 +4,19 @@ import { WithPopover } from '../../../wrappers/WithPopover'
 import { HeaderPopoverMenu } from '../HeaderPopoverMenu/HeaderPopoverMenu'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { ThemeContext } from '../../../../hooks/themeContext'
-import { MobileButton } from './MobileButton/MobileButton'
 import { BaseButton } from './BaseButton/BaseButton'
-import { DesktopButton } from './DesktopButton/DesktopButton'
 import { useTracking } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { useAccount } from 'wagmi'
 
 interface WalletButtonProps {}
 
 export const WalletButton: FC<WalletButtonProps> = () => {
 	const isMobile = useMediaQuery('mobile')
-	const { theme, toggleTheme } = useContext(ThemeContext)
+	const { toggleTheme } = useContext(ThemeContext)
 	const { open } = useWeb3Modal()
 	const { trackEvent } = useTracking()
+	const { isConnected } = useAccount()
 
 	function handleClick() {
 		open()
@@ -25,15 +25,5 @@ export const WalletButton: FC<WalletButtonProps> = () => {
 
 	const ButtonWithPopover = WithPopover(BaseButton, HeaderPopoverMenu)
 
-	return (
-		<div>
-			{isMobile ? (
-				<MobileButton onClick={handleClick} toggleTheme={toggleTheme} />
-			) : (
-				<div>
-					<DesktopButton onClick={handleClick} ButtonWithPopover={ButtonWithPopover} toggleTheme={toggleTheme} theme={theme} />
-				</div>
-			)}
-		</div>
-	)
+	return <div>{isMobile ? <BaseButton onClick={handleClick} /> : <>{isConnected ? <ButtonWithPopover onClick={handleClick} /> : <BaseButton onClick={handleClick} />}</>}</div>
 }

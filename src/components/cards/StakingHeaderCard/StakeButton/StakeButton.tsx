@@ -7,6 +7,7 @@ import { ManageState } from '../ManageModal/useStakingReducer/types'
 import { buttonMessages, Status } from '../ManageModal/constants'
 import { buttonClassNames, buttonIcons } from './styleHandlers'
 import { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { useTranslation } from 'react-i18next'
 
 interface StakeButtonProps {
 	manageState: ManageState
@@ -19,6 +20,7 @@ export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 	const { switchNetworkAsync } = useSwitchNetwork()
 	const { status } = manageState
 	const isDisabled = status !== Status.stake && status !== Status.withdraw
+	const { t } = useTranslation()
 
 	return (
 		<Button
@@ -29,7 +31,7 @@ export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 			onClick={() => handleExecuteSwap(manageState, manageDispatch, switchNetworkAsync as SwitchChainNetwork)}
 			isDisabled={isDisabled}
 		>
-			{buttonMessages[status as Status]}
+			{t(buttonMessages[status as Status])}
 		</Button>
 	)
 }

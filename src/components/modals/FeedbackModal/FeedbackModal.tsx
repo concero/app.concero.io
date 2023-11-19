@@ -7,6 +7,7 @@ import { Button } from '../../buttons/Button/Button'
 import { submitFeedback } from '../../../api/concero/submitFeedback'
 import { TextInput } from '../../input/TextInput'
 import { NotificationsContext } from '../../../hooks/notificationsContext'
+import { useTranslation } from 'react-i18next'
 
 interface FeedbackModalProps {
 	show: boolean
@@ -33,17 +34,19 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 	const [contactOption, setContactOption] = useState<ContactOptions | null>(null)
 	const [username, setUsername] = useState<string>('')
 	const { addNotification } = useContext(NotificationsContext)
+	const { t } = useTranslation()
+
 	const feedbackOptions = [
-		{ label: 'Question', value: FeedbackTags.QUESTION, icon: <IconQuestionMark size={16} /> },
-		{ label: 'Issue', value: FeedbackTags.ISSUE, icon: <IconAlertHexagon size={16} /> },
-		{ label: 'Suggestion', value: FeedbackTags.SUGGESTION, icon: <IconMessageChatbot size={16} /> },
+		{ label: t('tagTitle.question'), value: FeedbackTags.QUESTION, icon: <IconQuestionMark size={16} /> },
+		{ label: t('tagTitle.issue'), value: FeedbackTags.ISSUE, icon: <IconAlertHexagon size={16} /> },
+		{ label: t('tagTitle.suggestion'), value: FeedbackTags.SUGGESTION, icon: <IconMessageChatbot size={16} /> },
 	]
 
 	const contactOptions = [
-		{ label: 'Discord', value: ContactOptions.DISCORD, icon: <IconBrandDiscord size={16} /> },
-		{ label: 'Twitter', value: ContactOptions.TWITTER, icon: <IconBrandTwitter size={16} /> },
-		{ label: 'Telegram', value: ContactOptions.TELEGRAM, icon: <IconBrandTelegram size={16} /> },
-		{ label: 'Email', value: ContactOptions.EMAIL, icon: <IconMessage size={16} /> },
+		{ label: t('socialMedia.discord'), value: ContactOptions.DISCORD, icon: <IconBrandDiscord size={16} /> },
+		{ label: t('socialMedia.twitter'), value: ContactOptions.TWITTER, icon: <IconBrandTwitter size={16} /> },
+		{ label: t('socialMedia.telegram'), value: ContactOptions.TELEGRAM, icon: <IconBrandTelegram size={16} /> },
+		{ label: t('socialMedia.email'), value: ContactOptions.EMAIL, icon: <IconMessage size={16} /> },
 	]
 
 	const handleSubmit = async () => {
@@ -65,7 +68,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 	const textInputRef = useRef(null)
 
 	return (
-		<Modal title="Help us improve" show={show} setShow={setShow}>
+		<Modal title={t('modal.helpUsImprove')} show={show} setShow={setShow}>
 			<div className={classNames.container}>
 				<div className={classNames.tagContainer}>
 					{feedbackOptions.map(option => (
@@ -79,9 +82,9 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 					ref={textAreaRef}
 					onFocus={() => textInputRef.current.blur()}
 					onChange={e => setMessage(e.target.value)}
-					placeholder={'Explain your feedback in detail'}
+					placeholder={t('placeholder.explainYourFeedback')}
 				/>
-				<h5 className={classNames.sectionTitle}>How can we reach out?</h5>
+				<h5 className={classNames.sectionTitle}>{t('modal.howCanWeReachOut')}</h5>
 				<div className={classNames.tagContainer}>
 					{contactOptions.map(option => (
 						<Button key={option.value} size="sm" variant={contactOption === option.value ? 'primary' : 'subtle'} onClick={() => setContactOption(option.value)} leftIcon={option.icon}>
@@ -92,13 +95,12 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 				<TextInput
 					key="textInput"
 					ref={textInputRef}
-					placeholder={'Your username'}
+					placeholder={t('placeholder.yourUsername')}
 					icon={<IconUser size={18} color={'var(--color-grey-500'} />}
 					onChange={e => setUsername(e.target.value)}
 				/>
-
 				<Button className={classNames.ctaButton} variant="primary" isDisabled={!message || !contactOption || !username} leftIcon={<IconSend size={16} />} onClick={handleSubmit}>
-					Send Feedback
+					{t('button.sendFeedback')}
 				</Button>
 			</div>
 		</Modal>

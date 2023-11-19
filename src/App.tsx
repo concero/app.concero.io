@@ -11,6 +11,7 @@ import { DataProvider } from './hooks/DataContext/DataContext'
 import { lazy, useEffect } from 'react'
 import { bigNumberSettings } from './utils/bigNumberSettings'
 import { initPosthog } from './utils/initPosthog'
+import { I18Provider } from './i18n/I18nextProvider'
 
 const WalletConnectModal = lazy(() => import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })))
 
@@ -22,19 +23,21 @@ function App() {
 
 	return (
 		<PostHogProvider>
-			<DataProvider>
-				<SelectionProvider>
-					<ThemeProvider>
-						<NotificationsProvider>
-							<Notifications />
-							<WagmiConfig config={wagmiConfig}>
-								<Navigator />
-								<WalletConnectModal />
-							</WagmiConfig>
-						</NotificationsProvider>
-					</ThemeProvider>
-				</SelectionProvider>
-			</DataProvider>
+			<I18Provider>
+				<DataProvider>
+					<SelectionProvider>
+						<ThemeProvider>
+							<NotificationsProvider>
+								<Notifications />
+								<WagmiConfig config={wagmiConfig}>
+									<Navigator />
+									<WalletConnectModal />
+								</WagmiConfig>
+							</NotificationsProvider>
+						</ThemeProvider>
+					</SelectionProvider>
+				</DataProvider>
+			</I18Provider>
 		</PostHogProvider>
 	)
 }

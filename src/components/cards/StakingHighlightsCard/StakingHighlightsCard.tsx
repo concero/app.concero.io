@@ -3,26 +3,25 @@ import classNames from './StakingHighlightsCard.module.pcss'
 import { Highlight } from '../../tags/Highlight/Highlight'
 import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
 import { formatNumber } from '../../../utils/formatting'
+import { useTranslation } from 'react-i18next'
 
 interface StakingHighlightsCardProps {
 	stakingState: StakingState
 }
 
 export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingState }) => {
+	const { t } = useTranslation()
 	const renderHighlights = ({ data }) => {
 		const highlights = []
 		if (data.tvlUsd) {
-			highlights.push(<Highlight key="tvl" title="TVL" value={`$${formatNumber(stakingState.selectedVault?.data?.tvlUsd)}`} tag={data.tvlPct30D ? formatNumber(data.tvlPct30D) : null} />)
+			highlights.push(
+				<Highlight key="tvl" title="TVL" value={`$${formatNumber(stakingState.selectedVault?.data?.tvlUsd)}`} tag={data.tvlPct30D ? formatNumber(data.tvlPct30D) : null} />,
+			)
 		}
 
 		if (data.apy) {
 			highlights.push(
-				<Highlight
-					key="apy"
-					title="APY"
-					value={`${formatNumber(data.apy, { decimalPlaces: 2 })}%`}
-					tag={data.apyPct30D ? formatNumber(data.apyPct30D, { decimalPlaces: 2 }) : null}
-				/>,
+				<Highlight key="apy" title="APY" value={`${formatNumber(data.apy, { decimalPlaces: 2 })}%`} tag={data.apyPct30D ? formatNumber(data.apyPct30D, { decimalPlaces: 2 }) : null} />,
 			)
 		}
 
@@ -41,7 +40,7 @@ export const StakingHighlightsCard: FC<StakingHighlightsCardProps> = ({ stakingS
 
 	return (
 		<div className={classNames.container}>
-			<h5 className="cardHeaderTitle">Vault Details</h5>
+			<h5 className="cardHeaderTitle">{t('stakingDetailsCard.vaultDetails')}</h5>
 			{renderHighlights(stakingState.selectedVault)}
 		</div>
 	)

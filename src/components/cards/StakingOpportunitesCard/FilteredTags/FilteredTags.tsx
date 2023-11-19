@@ -13,6 +13,7 @@ import { ListCategoryButton } from './ListCategoryButton/ListCategoryButton'
 import { FilterDispatchType } from './contants'
 import { useFilteredTagsReducer } from './useFilteredTagsReducer/useFilteredTagsReducer'
 import { categories } from './constants'
+import { useTranslation } from 'react-i18next'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
@@ -24,6 +25,7 @@ interface FilteredTagsProps {
 export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingState }) => {
 	const { getChains } = useContext(DataContext)
 	const [filterState, filterDispatch] = useFilteredTagsReducer()
+	const { t } = useTranslation()
 
 	const { isChainsModalOpened, isCategoriesModalOpened, isApyModalOpened } = filterState
 	const { filter, address } = stakingState
@@ -75,13 +77,13 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingSt
 	return (
 		<div className={classNames.container}>
 			<Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick(FilterCategory.all, !all)}>
-				All
+				{t('stakingOpportunitiesCard.filterTag.all')}
 			</Button>
-			{/* <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}> */}
-			{/* 	My holdings */}
-			{/* </Button> */}
+			<Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}>
+				{t('stakingOpportunitiesCard.filterTag.myHoldings')}
+			</Button>
 			<Button size="sm" variant={getSelectedStyle(my_positions)} onClick={() => handleTagClick(FilterCategory.my_positions, !my_positions)} isDisabled={!address}>
-				My positions
+				{t('stakingOpportunitiesCard.filterTag.myPositions')}
 			</Button>
 			<Button
 				size="sm"
@@ -89,7 +91,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingSt
 				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
 				onClick={() => setIsChainsModalOpened(true)}
 			>
-				{`Chains: ${getChainTitle(chains)}`}
+				{`${t('stakingOpportunitiesCard.filterTag.chains')}: ${getChainTitle(chains)}`}
 			</Button>
 			<Button
 				variant={getSelectedStyle(filter.apy)}
@@ -97,7 +99,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingSt
 				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
 				onClick={() => setIsApyModalVisible(true)}
 			>
-				APY: {filter.apy ? `${filter.apy}%` : 'All'}
+				APY: {filter.apy ? `${filter.apy}%` : t('stakingOpportunitiesCard.filterTag.all')}
 			</Button>
 			<Button
 				size="sm"
@@ -105,7 +107,7 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ stakingDispatch, stakingSt
 				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
 				onClick={() => setIsCategoryModalOpened(true)}
 			>
-				{`Category: ${getCategoryTitle(filter)}`}
+				{`${t('stakingOpportunitiesCard.filterTag.category')}: ${getCategoryTitle(filter)}`}
 			</Button>
 			<ListModal
 				isOpen={isChainsModalOpened}

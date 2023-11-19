@@ -4,6 +4,7 @@ import { IconChevronDown, IconWallet } from '@tabler/icons-react'
 import { truncateWallet } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from './BaseButton.module.pcss'
+import { useTranslation } from 'react-i18next'
 
 interface BaseButtonProps {
 	onClick?: () => void
@@ -11,12 +12,13 @@ interface BaseButtonProps {
 
 export const BaseButton: FC<BaseButtonProps> = ({ onClick }) => {
 	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
+	const { t } = useTranslation()
 
 	const getStatus = () => {
 		if (isConnected) return truncateWallet(address)
-		if (isConnecting) return 'Connecting...'
-		if (isDisconnected) return 'Connect Wallet'
-		return 'Connect Wallet'
+		if (isConnecting) return t('walletButton.connecting')
+		if (isDisconnected) return t('walletButton.connectWallet')
+		return t('walletButton.connectWallet')
 	}
 
 	return (
