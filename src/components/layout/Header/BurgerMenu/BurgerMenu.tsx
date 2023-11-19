@@ -25,6 +25,15 @@ export function BurgerMenu() {
 
 	const fadeAnimation = useSpring({
 		opacity: isMenuOpened ? 1 : 0,
+		translateY: isMenuOpened ? 0 : -100,
+		config: { easing: 'spring', mass: 1, tension: 600, friction: 30 },
+		pointerEvents: isMenuOpened ? 'auto' : 'none',
+		from: { opacity: 0, pointerEvents: 'none' },
+	})
+
+	const overlayFadeAnimation = useSpring({
+		opacity: isMenuOpened ? 1 : 0,
+		config: { easing: 'spring', mass: 1, tension: 600, friction: 30 },
 		pointerEvents: isMenuOpened ? 'auto' : 'none',
 		from: { opacity: 0, pointerEvents: 'none' },
 	})
@@ -48,8 +57,8 @@ export function BurgerMenu() {
 					<img src={burgerMenuIcon} />
 				</div>
 			</Button>
-			<animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setIsMenuOpened(false)}>
-				<div className={classNames.menuContainer}>
+			<animated.div style={overlayFadeAnimation} className={classNames.overlay} onClick={() => setIsMenuOpened(false)}>
+				<animated.div style={fadeAnimation} className={classNames.menuContainer}>
 					{isMobile ? <MobileBreadcrumbs /> : null}
 					<ul className={classNames.listContainer}>
 						<li>
@@ -109,10 +118,8 @@ export function BurgerMenu() {
 							</Button>
 						</li>
 					</ul>
-					<Button onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>
-						<h5>{t('header.menu.contactSupport')}</h5>
-					</Button>
-				</div>
+					<Button onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>{t('header.menu.contactSupport')}</Button>
+				</animated.div>
 			</animated.div>
 			<LanguageModal show={isLanguageModalVisible} setShow={setIsLanguageModalVisible} />
 		</div>

@@ -12,12 +12,12 @@ export function MobileBreadcrumbs() {
 	return (
 		<ul className={classNames.container}>
 			<Link to={routes.exchange} className={classNames.link}>
-				<Button variant={matchExchange ? 'filled' : 'black'} className={classNames.listButton}>
+				<Button variant={'black'} className={`${classNames.listButton} ${matchExchange ? classNames.active : ''}`}>
 					<h5>{t('header.exchange')}</h5>
 				</Button>
 			</Link>
 			<Link to={routes.staking} className={classNames.link}>
-				<Button variant={matchStaking ? 'filled' : 'black'} className={classNames.listButton}>
+				<Button variant={'black'} className={`${classNames.listButton} ${matchStaking ? classNames.active : ''}`}>
 					<h5>{t('header.staking')}</h5>
 				</Button>
 			</Link>
