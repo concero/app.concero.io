@@ -1,14 +1,18 @@
-import { providers } from 'ethers'
+import { Contract, providers } from 'ethers'
 import { Dispatch } from 'react'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { fetchOkxTx } from '../../../../api/okx/fetchOkxTx'
 import { IFetchOkxTransactionStatus, OKXRoute, OkxTx } from '../../../../api/okx/types'
 import { fetchOkxTransactionStatus } from '../../../../api/okx/fetchOkxTransactionStatus'
+import { addingAmountDecimals } from '../../../../utils/formatting'
+import { okxSmartContractAddressesMap } from '../../../../api/okx/okxSmartContractAddressesMap'
+import { fetchOkxTokenAllowance } from '../../../../api/okx/fetchOkxTokenAllowance'
 
 async function checkOkxTransactionStatus(hash: string): Promise<IFetchOkxTransactionStatus> {
 	let statusResponse = await fetchOkxTransactionStatus(hash as string)
 	console.log(statusResponse)
 	let status = statusResponse.detailStatus
+	console.log('Status: ', status)
 	while (status !== 'SUCCESS' && status !== 'FAILURE') {
 		statusResponse = await fetchOkxTransactionStatus(hash as string)
 		console.log(statusResponse)
@@ -20,14 +24,24 @@ async function checkOkxTransactionStatus(hash: string): Promise<IFetchOkxTransac
 	return statusResponse
 }
 
+async function checkApprovalTransactionStatus(hash: string, signer: providers.JsonRpcSigner): Promise<string> {
+	const status = await signer.provider?.waitForTransaction(hash)
+	console.log('status: ', status)
+	return status.status?.toString() ?? '0'
+}
+
+async function checkIfApprovalNeeded(chainId: string, tokenAddress: string, walletAddress: string, fromAmount: string): Promise<boolean> {
+	const tokenAllowance = await fetchOkxTokenAllowance(chainId, tokenAddress, walletAddress)
+	console.log('tokenAllowance: ', tokenAllowance, fromAmount)
+	return Number(fromAmount) > Number(tokenAllowance)
+}
+
 async function sendOkxTransaction(tx: OkxTx, signer: providers.JsonRpcSigner, walletAddress: string): Promise<IFetchOkxTransactionStatus> {
 	const sendTransactionArgs = {
 		to: tx.to,
 		from: walletAddress,
 		value: tx.value,
 		data: tx.data,
-		// gasLimit: tx.gasLimit,
-		// gasPrice: new BigNumber(tx.gasPrice).times(1e9).toString(),
 	}
 	console.log('sendTransactionArgs: ', sendTransactionArgs)
 	const transactionTx = await signer.sendTransaction(sendTransactionArgs)
@@ -40,14 +54,17 @@ export async function executeOkxRoute(signer: providers.JsonRpcSigner, swapDispa
 	let okxTransactionTx = await fetchOkxTx(selectedRoute?.originalRoute as OKXRoute, walletAddress, settings.slippage_percent, from.amount)
 	console.log(okxTransactionTx)
 
-	const isApproveNeeded = !!selectedRoute?.originalRoute?.routerList[0].needApprove ?? false
+	const isApproveNeeded = await checkIfApprovalNeeded(from.chain.id, from.token.address, walletAddress, from.amount)
 	console.log('isApproveNeeded', isApproveNeeded)
 
-	// if (isApproveNeeded) {
-	// 	await sendOkxTransaction(okxTransactionTx[0].tx, signer, walletAddress)
-	// 	okxTransactionTx = await fetchOkxTx(selectedRoute?.originalRoute as OKXRoute, walletAddress, settings.slippage_percent, from.amount)
-	// 	console.log(okxTransactionTx)
-	// }
+	if (isApproveNeeded) {
+		const approveContract = new Contract(from.token.address, ['function approve(address,uint256)'], signer)
+		const approvalContractAddress = okxSmartContractAddressesMap[from.chain.id]
+		if (!approvalContractAddress) throw new Error('No approval contract address found')
+		const approveTx = await approveContract.approve(approvalContractAddress, addingAmountDecimals(from.amount, from.token.decimals))
+		console.log('approveTx: ', approveTx)
+		await checkApprovalTransactionStatus(approveTx.hash, signer)
+	}
 
 	const transactionStatus = await sendOkxTransaction(okxTransactionTx[0].tx, signer, walletAddress)
 	console.log(transactionStatus)
