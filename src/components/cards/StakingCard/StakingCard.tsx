@@ -2,7 +2,6 @@ import classNames from './StakingCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { Vault } from '../../screens/StakingScreen/stakingReducer/types'
 import { numberToFormatString, truncate } from '../../../utils/formatting'
-import { UnderlyingTokens } from './UnderlyingTokens/UnderlyingTokens'
 import { CategoryTag } from '../../tags/CategoryTag/CategoryTag'
 import { IconCurrencyDollar } from '@tabler/icons-react'
 
@@ -37,11 +36,11 @@ export function StakingCard({ isSelected, vault, onClick }: StakingCardProps) {
 				</div>
 				<h5 className={`body1 ${isSelected ? classNames.selectedText : ''}`}>{truncate(vault.symbol, 25)}</h5>
 			</div>
-			{vault.stakedAmount ? (
-				<StakedAmountTag value={vault.stakedAmountUsd} />
-			) : (
-				<UnderlyingTokens underlyingTokens={vault.input_tokens} isSelected={isSelected} />
-			)}
+			{/* {vault.stakedAmount ? ( */}
+			{/* 	<StakedAmountTag value={vault.stakedAmountUsd} /> */}
+			{/* ) : ( */}
+			{/* 	<UnderlyingTokens underlyingTokens={vault.input_tokens} isSelected={isSelected} /> */}
+			{/* )} */}
 		</div>
 	)
 }

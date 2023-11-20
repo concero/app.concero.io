@@ -6,6 +6,7 @@ import lightColors from '../constants/json/colors-light.json'
 import darkColors from '../constants/json/colors-dark.json'
 import { trackEvent } from './useTracking'
 import { action, category } from '../constants/tracking'
+import { getItem, setItem } from '../utils/localStorage'
 
 type ThemeContextType = {
 	theme: 'light' | 'dark'
@@ -15,19 +16,19 @@ type ThemeContextType = {
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 export const useTheme = () => useContext(ThemeContext)
-type ThemeProviderProps = {
-	children: ReactNode
-}
+type ThemeProviderProps = { children: ReactNode }
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-	const bodyClassTheme = document.body.classList.contains('dark') ? 'dark' : 'light'
+	const bodyClassTheme = getItem<'light' | 'dark'>('theme', 'dark') ?? 'dark'
+
 	const [theme, setTheme] = useState<'light' | 'dark'>(bodyClassTheme)
-	const [colors, setColors] = useState<Colors>(lightColors.color as Colors)
+	const [colors, setColors] = useState<Colors>(bodyClassTheme === 'light' ? (lightColors.color as Colors) : (darkColors.color as Colors))
 
 	const toggleTheme = () => {
 		const bodyClassTheme = document.body.classList.contains('dark') ? 'dark' : 'light'
 		const newTheme = bodyClassTheme === 'light' ? 'dark' : 'light'
 		setTheme(newTheme)
+		setItem('theme', newTheme)
 
 		document.body.classList.remove(bodyClassTheme)
 		document.body.classList.add(newTheme)
@@ -35,48 +36,18 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 		trackEvent({ category: category.Header, action: action.ToggleTheme, label: 'toggle_theme', data: { theme: newTheme } })
 	}
 
-	const watchSystemThemeChanges = () => {
-		const prefersDarkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-		const handleSystemThemeChange = event => {
-			if (event.matches) {
-				setTheme('dark')
-				document.body.classList.remove(bodyClassTheme)
-				document.body.classList.add('dark')
-			} else {
-				setTheme('light')
-				document.body.classList.remove(bodyClassTheme)
-				document.body.classList.add('light')
-			}
+	useEffect(() => {
+		if (theme === 'light') {
+			document.body.classList.remove('dark')
+			document.body.classList.add('light')
+		} else {
+			document.body.classList.remove('light')
+			document.body.classList.add('dark')
 		}
 
-		prefersDarkModeMediaQuery.addListener(handleSystemThemeChange)
-		handleSystemThemeChange(prefersDarkModeMediaQuery)
-
-		return () => {
-			prefersDarkModeMediaQuery.removeListener(handleSystemThemeChange)
-		}
-	}
-
-	useEffect(() => {
-		const clean = watchSystemThemeChanges()
-		return () => clean()
-	}, [])
-
-	useEffect(() => {
 		const themeColors = theme === 'light' ? lightColors : darkColors
 		setColors(themeColors.color as Colors)
 	}, [theme])
 
-	return (
-		<ThemeContext.Provider
-			value={{
-				theme,
-				toggleTheme,
-				colors,
-			}}
-		>
-			{children}
-		</ThemeContext.Provider>
-	)
+	return <ThemeContext.Provider value={{ theme, toggleTheme, colors }}>{children}</ThemeContext.Provider>
 }

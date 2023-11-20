@@ -1,0 +1,24 @@
+name: Run tests
+on:
+  push:
+    branches:
+      - master
+      - release
+  pull_request:
+    branches:
+      - master
+      - release
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v3
+      - name: setup npm
+        uses: actions/setup-node@v2
+      - name: install bun
+        uses: oven-sh/setup-bun@v1
+      - name: install dependencies
+        run: bun install
+      - name: run tests
+        run: bun run test

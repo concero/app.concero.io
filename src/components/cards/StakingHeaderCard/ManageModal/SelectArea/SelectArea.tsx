@@ -1,5 +1,5 @@
 import { Dispatch, useEffect, useRef, useState } from 'react'
-import { capitalize, numberToFormatString } from '../../../../../utils/formatting'
+import { numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import { CryptoSymbol } from '../../../../tags/CryptoSymbol/CryptoSymbol'
 import { TextInput } from '../../../../input/TextInput'
@@ -9,6 +9,7 @@ import { isFloatInput } from '../../../../../utils/validation'
 import { ManageAction } from '../useStakingReducer/types'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { IconChevronDown } from '@tabler/icons-react'
+import { useTranslation } from 'react-i18next'
 
 interface SelectAreaProps {
 	selection: any
@@ -23,6 +24,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	const [isFocused, setIsFocused] = useState(false)
 	const [currentUsdPrice, setCurrentUsdPrice] = useState<number | null>(null)
 	const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
+	const { t } = useTranslation()
 
 	function setAmountUsd(value: string): void {
 		dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
@@ -59,7 +61,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 		<div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
 			<div className={classNames.tokenRow}>
 				<div className={classNames.tokenRowHeader}>
-					<p>{capitalize(direction)}</p>
+					<p>{t(`tokenArea.${direction}`)}</p>
 					<Button onClick={handleChainButtonClick} size="sm" variant="black" isDisabled={true}>
 						<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
 					</Button>

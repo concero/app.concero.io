@@ -17,6 +17,7 @@ import { DataContextValue } from '../../../../hooks/DataContext/types'
 
 import { clearRoute } from './clearRoute'
 import { StakingSwapProgress } from './StakingSwapProgress/StakingSwapProgress'
+import { useTranslation } from 'react-i18next'
 
 interface ManageModalProps {
 	isOpen: boolean
@@ -29,6 +30,7 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 	const [manageState, manageDispatch] = useStakingReducer(stakingState)
 	const { modalType, swapType } = manageState
 	const typingTimeoutRef = useRef(null)
+	const { t } = useTranslation()
 
 	async function handleSelectChain(item: any): Promise<void> {
 		const direction = swapType === SwapType.stake ? 'from' : 'to'
@@ -91,16 +93,16 @@ export function ManageModal({ isOpen, setIsOpen, stakingState }: ManageModalProp
 	}, [stakingState.selectedVault?.address])
 
 	return (
-		<Modal title="Manage position" show={isOpen} setShow={handleOnClose}>
+		<Modal title={t('manageModal.title')} show={isOpen} setShow={handleOnClose}>
 			<div className={classNames.container}>
 				{modalType === ModalType.input ? (
 					<div className={classNames.areaContainer}>
 						<div className={classNames.row}>
 							<Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={setStakeType}>
-								Stake
+								{t('button.stake')}
 							</Button>
 							<Button size="sm" variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={setWithdrawType} isDisabled={!stakingState.selectedVault?.stakedAmount}>
-								Withdraw
+								{t('button.withdraw')}
 							</Button>
 						</div>
 						<SelectArea selection={manageState.from} direction="from" dispatch={manageDispatch} swapType={swapType} balance={manageState.balance} />

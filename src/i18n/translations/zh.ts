@@ -1,0 +1,132 @@
+export const zh = {
+	translation: {
+		swapCard: {
+			headerTitle: {
+				swap: '兑换',
+				progress: '兑换进行中',
+				success: '兑换成功',
+				failed: '兑换失败',
+				contactSupport: '联系支持',
+			},
+			insurance: '保险',
+		},
+		header: {
+			exchange: '兑换',
+			staking: '质押',
+			portfolio: '投资组合',
+			myReferrals: '我的推荐',
+			helpUsImprove: '帮助我们改进',
+			copyAddress: '复制地址',
+			logOut: '退出',
+			comingSoon: '即将推出',
+			toggleTheme: '切换主题',
+			menu: {
+				contactSupport: '联系支持',
+				changeLanguage: '更改语言',
+				toggleTheme: '切换主题',
+			},
+		},
+		chartCard: {
+			title: '图表',
+			tradingView: 'TradingView',
+		},
+		newsCard: {
+			title: '新闻',
+		},
+		stakingOpportunitiesCard: {
+			title: '质押机会',
+			filterTag: {
+				all: '全部',
+				myHoldings: '我的持有',
+				myPositions: '我的持仓',
+				chains: '链',
+				category: '类别',
+			},
+		},
+		stakingDetailsCard: {
+			protocol: '协议',
+			vaultDetails: '储藏室详情',
+			tokens: '代币',
+			rewards: '奖励',
+		},
+		button: {
+			stake: '质押',
+			menage: '管理',
+			withdraw: '提现',
+			enterAmountToSwap: '输入要兑换的金额',
+			noRoutesFound: '未找到路由',
+			connectWalletToSwap: '连接钱包以进行兑换',
+			insufficientGas: '燃料不足',
+			insufficientFees: '费用不足',
+			insufficientBalance: '余额不足',
+			swap: '兑换',
+			swapStartedSuccessfully: '兑换成功开始！',
+			failure: '失败',
+			canceledByUser: '用户取消',
+			somethingWentWrong: '出了些问题',
+			mayTakeAWhile: '请耐心等待，这可能需要一些时间...',
+			goBack: '返回',
+			sendFeedback: '发送反馈',
+		},
+		contactSupportCard: {
+			contractSupport: '联系支持',
+			copyTransactionInfo: '复制交易信息',
+			dropUsAMessage: '给我们留言',
+			txFailedMessage: '很抱歉您在交易中遇到问题。我们将尽力解决问题。',
+		},
+		manageModal: {
+			title: '管理持仓',
+		},
+		tokenArea: {
+			from: '从',
+			to: '到',
+		},
+		protocolModal: {
+			title: '协议',
+			contractAddress: '合约地址',
+			website: '网站',
+			transactionsTotal: '总交易数',
+			dailyFees: '每日费用',
+			dailySupplyRevenue: '每日供应收入',
+			audits: '审计',
+			thisWeek: '本周',
+			thisMonth: '本月',
+		},
+		utils: {
+			couldNotLoadData: '无法加载数据。',
+			retry: '重试',
+		},
+		swapProgressCard: {
+			on: '开启',
+		},
+		modal: {
+			selectToken: '选择代币',
+			selectChain: '选择链',
+			helpUsImprove: '帮助我们改进',
+			howCanWeReachOut: '我们如何联系您？',
+		},
+		socialMedia: {
+			discord: 'Discord',
+			email: '电子邮件',
+			twitter: 'Twitter',
+			telegram: 'Telegram',
+		},
+		placeholder: {
+			search: '搜索',
+			explainYourFeedback: '详细说明您的反馈',
+			yourUsername: '您的用户名',
+		},
+		tagTitle: {
+			question: '问题',
+			issue: '问题',
+			suggestion: '建议',
+		},
+		walletButton: {
+			connectWallet: '连接钱包',
+			connecting: '连接中...',
+		},
+		languageModal: {
+			title: '更改语言',
+		},
+	},
+}
