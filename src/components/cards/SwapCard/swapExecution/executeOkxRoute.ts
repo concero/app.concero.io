@@ -3,21 +3,20 @@ import { Dispatch } from 'react'
 import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { fetchOkxTx } from '../../../../api/okx/fetchOkxTx'
 import { IFetchOkxTransactionStatus, OKXRoute, OkxTx } from '../../../../api/okx/types'
-import { fetchOkxTransactionStatus } from '../../../../api/okx/fetchOkxTransactionStatus'
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { okxSmartContractAddressesMap } from '../../../../api/okx/okxSmartContractAddressesMap'
 import { fetchOkxTokenAllowance } from '../../../../api/okx/fetchOkxTokenAllowance'
+import { fetchOkxTransactionStatus } from '../../../../api/okx/fetchOkxTransactionStatus'
 
 async function checkOkxTransactionStatus(hash: string): Promise<IFetchOkxTransactionStatus> {
 	let statusResponse = await fetchOkxTransactionStatus(hash as string)
 	console.log(statusResponse)
-	let status = statusResponse.detailStatus
+	let status = statusResponse?.detailStatus
 	console.log('Status: ', status)
 	while (status !== 'SUCCESS' && status !== 'FAILURE') {
-		statusResponse = await fetchOkxTransactionStatus(hash as string)
+		statusResponse = await fetchOkxTransactionStatus(hash)
 		console.log(statusResponse)
-		status = statusResponse.detailStatus
-		// updateOkxTransactionStatue(status, swapDispatch)
+		status = statusResponse?.detailStatus
 		await new Promise(resolve => setTimeout(resolve, 3000))
 	}
 	console.log(statusResponse)
@@ -36,7 +35,7 @@ async function checkIfApprovalNeeded(chainId: string, tokenAddress: string, wall
 	return Number(fromAmount) > Number(tokenAllowance)
 }
 
-async function sendOkxTransaction(tx: OkxTx, signer: providers.JsonRpcSigner, walletAddress: string): Promise<IFetchOkxTransactionStatus> {
+async function sendOkxTransaction(tx: OkxTx, signer: providers.JsonRpcSigner, walletAddress: string, swapDispatch: Dispatch<SwapAction>): Promise<IFetchOkxTransactionStatus> {
 	const sendTransactionArgs = {
 		to: tx.to,
 		from: walletAddress,
@@ -45,6 +44,12 @@ async function sendOkxTransaction(tx: OkxTx, signer: providers.JsonRpcSigner, wa
 	}
 	console.log('sendTransactionArgs: ', sendTransactionArgs)
 	const transactionTx = await signer.sendTransaction(sendTransactionArgs)
+
+	swapDispatch({
+		type: 'SET_SWAP_STEPS',
+		payload: [{ status: 'pending', title: 'Transaction in progress', body: 'Please be patient, this may take up to 20 minutes.', txLink: null }],
+	})
+
 	return await checkOkxTransactionStatus(transactionTx.hash as string)
 }
 
@@ -54,7 +59,7 @@ export async function executeOkxRoute(signer: providers.JsonRpcSigner, swapDispa
 	let okxTransactionTx = await fetchOkxTx(selectedRoute?.originalRoute as OKXRoute, walletAddress, settings.slippage_percent, from.amount)
 	console.log(okxTransactionTx)
 
-	const isApproveNeeded = await checkIfApprovalNeeded(from.chain.id, from.token.address, walletAddress, from.amount)
+	const isApproveNeeded = await checkIfApprovalNeeded(from.chain.id, from.token.address, walletAddress, addingAmountDecimals(from.amount, from.token.decimals) as string)
 	console.log('isApproveNeeded', isApproveNeeded)
 
 	if (isApproveNeeded) {
@@ -66,12 +71,27 @@ export async function executeOkxRoute(signer: providers.JsonRpcSigner, swapDispa
 		await checkApprovalTransactionStatus(approveTx.hash, signer)
 	}
 
-	const transactionStatus = await sendOkxTransaction(okxTransactionTx[0].tx, signer, walletAddress)
+	const transactionStatus = await sendOkxTransaction(okxTransactionTx[0].tx, signer, walletAddress, swapDispatch)
 	console.log(transactionStatus)
 
 	if (transactionStatus.detailStatus === 'SUCCESS') {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
+		swapDispatch({
+			type: 'SET_SWAP_STEPS',
+			payload: [{ status: 'success', title: 'Swap completed', body: null, txLink: null }],
+		})
 	} else {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+		swapDispatch({
+			type: 'SET_SWAP_STEPS',
+			payload: [
+				{
+					status: 'error',
+					title: 'Transaction failed',
+					body: 'Please look up the transaction in the explorer to find out the details.',
+					txLink: null,
+				},
+			],
+		})
 	}
 }
