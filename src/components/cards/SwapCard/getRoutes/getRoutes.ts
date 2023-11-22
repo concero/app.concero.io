@@ -42,7 +42,6 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 async function getOkxRoutes({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void> {
 	try {
 		const okxRoutes = await fetchOkxRoutes(from, to, settings)
-		console.log('okxRoutes', okxRoutes)
 		routes.push(...okxRoutes)
 		populateRoutes({ routes, from, swapDispatch })
 	} catch (error) {
@@ -58,8 +57,8 @@ export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection
 
 	try {
 		await Promise.all([
-			// getLifiRoutes({ routes, from, to, settings, swapDispatch }),
-			// getRangoRoutes({ routes, from, to, settings, swapDispatch }),
+			getLifiRoutes({ routes, from, to, settings, swapDispatch }),
+			getRangoRoutes({ routes, from, to, settings, swapDispatch }),
 			getOkxRoutes({ routes, from, to, settings, swapDispatch }),
 		])
 		await fetchWalletBalancesOnStepChains(routes, swapDispatch, from.address)

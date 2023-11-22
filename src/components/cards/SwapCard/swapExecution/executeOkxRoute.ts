@@ -10,28 +10,22 @@ import { fetchOkxTransactionStatus } from '../../../../api/okx/fetchOkxTransacti
 
 async function checkOkxTransactionStatus(hash: string): Promise<IFetchOkxTransactionStatus> {
 	let statusResponse = await fetchOkxTransactionStatus(hash as string)
-	console.log(statusResponse)
 	let status = statusResponse?.detailStatus
-	console.log('Status: ', status)
 	while (status !== 'SUCCESS' && status !== 'FAILURE') {
 		statusResponse = await fetchOkxTransactionStatus(hash)
-		console.log(statusResponse)
 		status = statusResponse?.detailStatus
 		await new Promise(resolve => setTimeout(resolve, 3000))
 	}
-	console.log(statusResponse)
 	return statusResponse
 }
 
 async function checkApprovalTransactionStatus(hash: string, signer: providers.JsonRpcSigner): Promise<string> {
 	const status = await signer.provider?.waitForTransaction(hash)
-	console.log('status: ', status)
 	return status.status?.toString() ?? '0'
 }
 
 async function checkIfApprovalNeeded(chainId: string, tokenAddress: string, walletAddress: string, fromAmount: string): Promise<boolean> {
 	const tokenAllowance = await fetchOkxTokenAllowance(chainId, tokenAddress, walletAddress)
-	console.log('tokenAllowance: ', tokenAllowance, fromAmount)
 	return Number(fromAmount) > Number(tokenAllowance)
 }
 
@@ -42,7 +36,6 @@ async function sendOkxTransaction(tx: OkxTx, signer: providers.JsonRpcSigner, wa
 		value: tx.value,
 		data: tx.data,
 	}
-	console.log('sendTransactionArgs: ', sendTransactionArgs)
 	const transactionTx = await signer.sendTransaction(sendTransactionArgs)
 
 	swapDispatch({
@@ -57,22 +50,18 @@ export async function executeOkxRoute(signer: providers.JsonRpcSigner, swapDispa
 	const { selectedRoute, from, settings } = swapState
 	const walletAddress = from.address
 	let okxTransactionTx = await fetchOkxTx(selectedRoute?.originalRoute as OKXRoute, walletAddress, settings.slippage_percent, from.amount)
-	console.log(okxTransactionTx)
 
 	const isApproveNeeded = await checkIfApprovalNeeded(from.chain.id, from.token.address, walletAddress, addingAmountDecimals(from.amount, from.token.decimals) as string)
-	console.log('isApproveNeeded', isApproveNeeded)
 
 	if (isApproveNeeded) {
 		const approveContract = new Contract(from.token.address, ['function approve(address,uint256)'], signer)
 		const approvalContractAddress = okxSmartContractAddressesMap[from.chain.id]
 		if (!approvalContractAddress) throw new Error('No approval contract address found')
 		const approveTx = await approveContract.approve(approvalContractAddress, addingAmountDecimals(from.amount, from.token.decimals))
-		console.log('approveTx: ', approveTx)
 		await checkApprovalTransactionStatus(approveTx.hash, signer)
 	}
 
 	const transactionStatus = await sendOkxTransaction(okxTransactionTx[0].tx, signer, walletAddress, swapDispatch)
-	console.log(transactionStatus)
 
 	if (transactionStatus.detailStatus === 'SUCCESS') {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
