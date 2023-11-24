@@ -81,7 +81,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 						</Button>
 					</div>
 					{balance !== null ? (
-						<Button variant={'black'} size={'sm'} onClick={handleMaxButtonClick}>
+						<Button variant={'subtle'} size={'sm'} onClick={handleMaxButtonClick}>
 							<p>{`Max: ${balance}`}</p>
 						</Button>
 					) : null}
