@@ -41,6 +41,13 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 		tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: false })
 	}
 
+	function handleMaxButtonClick() {
+		if (!balance) return
+		const clearBalance = balance.substring(0, balance.indexOf(' '))
+		if (!Number(clearBalance)) return
+		handleAmountChange({ value: clearBalance, state, dispatch: swapDispatch, direction: 'from' })
+	}
+
 	useEffect(() => {
 		if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
 	}, [selection.chain, selection.token])
@@ -73,7 +80,11 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 							<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
 						</Button>
 					</div>
-					{balance !== null ? <p>{`Max: ${balance}`}</p> : null}
+					{balance !== null ? (
+						<Button variant={'black'} size={'sm'} onClick={handleMaxButtonClick}>
+							<p>{`Max: ${balance}`}</p>
+						</Button>
+					) : null}
 				</div>
 				<div className={classNames.tokenRow}>
 					<div>
