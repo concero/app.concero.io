@@ -47,6 +47,11 @@ export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection
 
 	try {
 		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
+
+		if (!routes.length) {
+			swapDispatch({ type: 'SET_IS_NO_ROUTES', status: true })
+		}
+
 		await fetchWalletBalancesOnStepChains(routes, swapDispatch, from.address)
 	} catch (error) {
 		console.error(error)

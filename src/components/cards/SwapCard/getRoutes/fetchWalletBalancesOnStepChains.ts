@@ -16,6 +16,8 @@ export async function fetchWalletBalancesOnStepChains(routes: StandardRoute[], s
 		})
 	})
 
+	if (!chainIds.length) return
+
 	const walletBalances = await fetchBalancesByChainIds(chainIds, walletAddress as string)
 	swapDispatch({ type: SwapActionType.SET_WALLET_BALANCES, balances: walletBalances })
 }

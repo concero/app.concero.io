@@ -18,6 +18,7 @@ export const swapInitialState = (selection): SwapState => ({
 	},
 	balance: null,
 	routes: [],
+	isNoRoutes: false,
 	isLoading: false,
 	selectedRoute: null,
 	typingTimeout: 0,

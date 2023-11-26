@@ -3,10 +3,14 @@ import { ButtonType } from './constants'
 import { isInsufficientFee } from './isInsufficientFee'
 
 export function getButtonType(swapState: SwapState, isConnected: boolean): ButtonType {
-	const { from, to, routes, isLoading, balance } = swapState
+	const { from, to, routes, isLoading, balance, isNoRoutes } = swapState
 
 	if (isLoading) {
 		return ButtonType.LOADING
+	}
+
+	if (isNoRoutes) {
+		return ButtonType.NO_ROUTES
 	}
 
 	if (!isConnected) {
