@@ -28,7 +28,7 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 	const isInsufficient = isInsufficientFee(swapState)
 
 	if (isInsufficient) {
-		return ButtonType.LOW_GAS
+		return ButtonType.LOW_FEES
 	}
 
 	if (from.amount && to.amount && routes.length) {
