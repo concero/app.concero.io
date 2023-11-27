@@ -70,7 +70,7 @@ export const ua = {
 		},
 		contactSupportCard: {
 			contractSupport: "Зв'язатися з підтримкою",
-			copyTransactionInfo: 'Скопіювати інформацію про транзакцію',
+			copyDebugInfo: 'Скопіювати інформацію про транзакцію',
 			dropUsAMessage: 'Залиште нам повідомлення',
 			txFailedMessage: 'Вибачте, що у вас виникли проблеми з транзакцією. Ми зробимо все можливе, щоб вирішити це питання.',
 		},

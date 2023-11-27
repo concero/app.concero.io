@@ -9,10 +9,12 @@ import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { MobileBreadcrumbs } from './MobileBreadcrumbs/MobileBreadcrumbs'
+import { ContactSupportModal } from '../../../modals/ContactSupportModal/ContactSupportModal'
 
 export function BurgerMenu() {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
+	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
 	const { theme, toggleTheme } = useContext(ThemeContext)
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
@@ -118,10 +120,11 @@ export function BurgerMenu() {
 							</Button>
 						</li>
 					</ul>
-					<Button onClick={() => window.open('https://discord.com/channels/1155792755105214535', '_blank')}>{t('header.menu.contactSupport')}</Button>
+					<Button onClick={() => setIsModalContactSupportModalVisible(true)}>{t('header.menu.contactSupport')}</Button>
 				</animated.div>
 			</animated.div>
 			<LanguageModal show={isLanguageModalVisible} setShow={setIsLanguageModalVisible} />
+			<ContactSupportModal isShow={isContactSupportModalVisible} setIsShow={setIsModalContactSupportModalVisible} />
 		</div>
 	)
 }

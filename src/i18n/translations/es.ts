@@ -70,7 +70,7 @@ export const es = {
 		},
 		contactSupportCard: {
 			contractSupport: 'Soporte de contacto',
-			copyTransactionInfo: 'Copiar información de transacción',
+			copyDebugInfo: 'Copiar información de transacción',
 			dropUsAMessage: 'Déjanos un mensaje',
 			txFailedMessage: 'Lamentamos que haya tenido problemas con su transacción. Haremos nuestro mejor esfuerzo para resolver el problema.',
 		},

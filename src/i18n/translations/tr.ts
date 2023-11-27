@@ -70,7 +70,7 @@ export const tr = {
 		},
 		contactSupportCard: {
 			contractSupport: 'Destekle iletişime geç',
-			copyTransactionInfo: 'İşlem bilgisini kopyala',
+			copyDebugInfo: 'İşlem bilgisini kopyala',
 			dropUsAMessage: 'Bize bir mesaj bırakın',
 			txFailedMessage: 'İşleminizde sorun yaşadığınız için özür dileriz. Sorunu çözmek için elimizden geleni yapacağız.',
 		},

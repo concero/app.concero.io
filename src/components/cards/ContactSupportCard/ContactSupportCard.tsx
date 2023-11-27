@@ -1,29 +1,21 @@
-import { Dispatch, useState } from 'react'
-import { SwapAction, SwapCardStage, SwapState } from '../../swapReducer/types'
-import classNames from './ContactSupport.module.pcss'
-import { Button } from '../../../../buttons/Button/Button'
+import { useState } from 'react'
+import classNames from './ContactSupportCard.module.pcss'
+import { Button } from '../../buttons/Button/Button'
 import { IconArrowLeft, IconBrandDiscord, IconCheck, IconCopy, IconMail } from '@tabler/icons-react'
-import { copyToClipboard } from '../../../../../utils/copyToClipboard'
-import posthog from 'posthog-js'
+import { copyToClipboard } from '../../../utils/copyToClipboard'
 import { useTranslation } from 'react-i18next'
 
 interface ContactSupportProps {
-	swapState: SwapState
-	swapDispatch: Dispatch<SwapAction>
+	infoToCopy: any
+	handleGoBackClick?: () => void
 }
 
-export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps) {
+export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSupportProps) {
 	const [isCopied, setIsCopied] = useState(false)
 	const { t } = useTranslation()
 
-	function handleGoBack() {
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-	}
-
 	function handleCopy() {
-		const replay_id = posthog.get_distinct_id()
-		const session_id = posthog.get_session_id()
-		copyToClipboard(JSON.stringify({ ...swapState.selectedRoute, replay_id, session_id })).then(() => {
+		copyToClipboard(JSON.stringify(infoToCopy)).then(() => {
 			setIsCopied(true)
 			setIsCopiedTimeout()
 		})
@@ -41,10 +33,10 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 				<p className={'body1'}>{t('contactSupportCard.txFailedMessage')}</p>
 			</div>
 			<div className={classNames.stepBlock}>
-				<h4 className={classNames.title}>1. {t('contactSupportCard.copyTransactionInfo')}</h4>
+				<h4 className={classNames.title}>1. {t('contactSupportCard.copyDebugInfo')}</h4>
 				<div className={classNames.alightStart}>
 					<Button variant={'primary'} leftIcon={isCopied ? <IconCheck size={16} /> : <IconCopy size={16} />} onClick={handleCopy}>
-						{t('contactSupportCard.copyTransactionInfo')}
+						{t('contactSupportCard.copyDebugInfo')}
 					</Button>
 				</div>
 			</div>
@@ -63,9 +55,11 @@ export function ContactSupport({ swapState, swapDispatch }: ContactSupportProps)
 						{t('socialMedia.email')}
 					</Button>
 				</div>
-				<Button leftIcon={<IconArrowLeft size={18} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
-					{t('button.goBack')}
-				</Button>
+				{handleGoBackClick ? (
+					<Button leftIcon={<IconArrowLeft size={18} color={'var(--color-primary-400)'} />} onClick={() => handleGoBackClick()} variant="secondary">
+						{t('button.goBack')}
+					</Button>
+				) : null}
 			</div>
 		</div>
 	)

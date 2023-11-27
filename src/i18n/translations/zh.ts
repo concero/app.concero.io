@@ -70,7 +70,7 @@ export const zh = {
 		},
 		contactSupportCard: {
 			contractSupport: '联系支持',
-			copyTransactionInfo: '复制交易信息',
+			copyDebugInfo: '复制交易信息',
 			dropUsAMessage: '给我们留言',
 			txFailedMessage: '很抱歉您在交易中遇到问题。我们将尽力解决问题。',
 		},
