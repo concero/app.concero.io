@@ -23,8 +23,8 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children }) => {
 	const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
 	const isMobile = useMediaQuery('mobile')
-	const matchExchange = useMatch(routes.exchange)
-	const matchStaking = useMatch(routes.staking)
+	const matchExchange = useMatch(routes.swap)
+	const matchStaking = useMatch(routes.earn)
 	const { t } = useTranslation()
 
 	const handleHelpButtonClick = () => {
@@ -46,10 +46,10 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 				</div>
 				{!isMobile ? (
 					<ul>
-						<Link className={matchExchange ? classNames.active : classNames.link} to={routes.exchange}>
+						<Link className={matchExchange ? classNames.active : classNames.link} to={routes.swap}>
 							{t('header.exchange')}
 						</Link>
-						<Link className={matchStaking ? classNames.active : classNames.link} to={routes.staking}>
+						<Link className={matchStaking ? classNames.active : classNames.link} to={routes.earn}>
 							{t('header.staking')}
 						</Link>
 						{ComingSoon}

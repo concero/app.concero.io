@@ -17,7 +17,7 @@ export const Navigator: FC<NavigatorProps> = () => (
 			<Header />
 			<Routes>
 				<Route
-					path={routes.exchange}
+					path={routes.swap}
 					element={
 						<Suspense fallback={<FullScreenLoader />}>
 							<ExchangeScreen />
@@ -33,14 +33,14 @@ export const Navigator: FC<NavigatorProps> = () => (
 					}
 				/>
 				<Route
-					path={routes.staking}
+					path={routes.earn}
 					element={
 						<Suspense fallback={<FullScreenLoader />}>
 							<StakingScreen />
 						</Suspense>
 					}
 				/>
-				<Route path={routes.root} element={<Navigate to={routes.exchange} />} />
+				<Route path={routes.root} element={<Navigate to={routes.swap} />} />
 			</Routes>
 		</AppScreen>
 	</BrowserRouter>
