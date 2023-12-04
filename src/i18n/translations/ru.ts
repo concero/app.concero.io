@@ -70,7 +70,7 @@ export const ru = {
 		},
 		contactSupportCard: {
 			contractSupport: 'Связь с поддержкой',
-			copyTransactionInfo: 'Скопировать информацию о транзакции',
+			copyDebugInfo: 'Скопировать информацию о транзакции',
 			dropUsAMessage: 'Оставьте нам сообщение',
 			txFailedMessage: 'Приносим извинения за проблемы с вашей транзакцией. Мы сделаем все возможное, чтобы решить проблему.',
 		},
