@@ -20,7 +20,6 @@ async function checkOkxTransactionStatus(hash: string): Promise<IFetchOkxTransac
 }
 
 async function checkApprovalTransactionStatus(hash: string, signer: providers.JsonRpcSigner): Promise<string> {
-	console.log('checkApprovalTransactionStatus', hash)
 	const status = await signer.provider?.waitForTransaction(hash)
 	return status.status?.toString() ?? '0'
 }
