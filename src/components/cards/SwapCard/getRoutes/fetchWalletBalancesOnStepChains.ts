@@ -4,8 +4,9 @@ import { SwapAction, SwapActionType } from '../swapReducer/types'
 import { fetchBalancesByChainIds } from '../../../../api/concero/fetchBalancesByChainIds'
 
 export async function fetchWalletBalancesOnStepChains(routes: StandardRoute[], swapDispatch: Dispatch<SwapAction>, walletAddress: string): Promise<void> {
-	let chainIds: string[] = []
+	if (!!routes.length) return
 
+	let chainIds: string[] = []
 	routes.forEach((route: StandardRoute) => {
 		route.steps?.forEach((step: Step) => {
 			step.tool.fees.forEach((fee: Fees) => {
