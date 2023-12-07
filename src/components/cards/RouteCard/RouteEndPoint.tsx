@@ -3,6 +3,7 @@ import classNames from './RouteCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { getChainLogoURIById } from './getChainLogoURIById'
+import { addingTokenDecimals, numberToFormatString } from '../../../utils/formatting'
 
 interface RouteEndPointProps {
 	side: {
@@ -17,13 +18,6 @@ interface RouteEndPointProps {
 		}
 		chain: { id: number }
 	}
-}
-
-function getFormatAmount(amount: string, decimals: number) {
-	if (amount.includes('.')) {
-		return parseFloat(amount).toFixed(2)
-	}
-	return (parseFloat(amount) / 10 ** decimals).toFixed(2)
 }
 
 export const RouteEndPoint: FC<RouteEndPointProps> = ({ side }) => {
@@ -41,7 +35,7 @@ export const RouteEndPoint: FC<RouteEndPointProps> = ({ side }) => {
 				<Avatar src={side.token.logo_uri} size="md" />
 				<Avatar src={chainLogoURI} size="xs" className={classNames.chainAvatar} />
 			</div>
-			<h4>{getFormatAmount(amount, side.token.decimals)}</h4>
+			<h4>{numberToFormatString(Number(addingTokenDecimals(amount, side.token.decimals)), 4, true)}</h4>
 		</div>
 	)
 }
