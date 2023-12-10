@@ -36,7 +36,7 @@ export const useTracking = () => {
 				label: 'Wallet Connected',
 			})
 		}
-	}, [address, isConnected])
+	}, [isConnected])
 
 	// Use callbacks to reference the standalone functions
 	const memoizedTrackTransaction = useCallback(trackTransaction, [])

@@ -1,7 +1,9 @@
 import { Dispatch } from 'react'
 import { SwapAction, SwapCardStage } from '../swapReducer/types'
+import { StandardRoute } from '../../../../types/StandardRoute'
+import { logTxToDB } from '../../../../utils/logTxToDB'
 
-export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapAction>) => {
+export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapAction>, selectedRoute: StandardRoute) => {
 	swapDispatch({ type: 'UPDATE_LAST_SWAP_STEP' })
 	if (e.toString().toLowerCase().includes('user rejected')) {
 		swapDispatch({
@@ -21,4 +23,5 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 	}
 
 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+	logTxToDB({ tx_id: selectedRoute.id, status: 'failure', provider: selectedRoute.provider, tx_data: selectedRoute })
 }
