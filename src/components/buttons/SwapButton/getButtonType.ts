@@ -2,6 +2,7 @@ import { SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
 import { isInsufficientFee } from './isInsufficientFee'
 import { Fees } from '../../../types/StandardRoute'
+import { config } from '../../../constants/config'
 
 export function getButtonType(swapState: SwapState, isConnected: boolean): ButtonType {
 	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute } = swapState
@@ -22,8 +23,13 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 		return ButtonType.ENTER_AMOUNT
 	}
 
-	const fromGasAmount =
-		selectedRoute?.cost.total_fee.find((fee: Fees) => fee.asset.chainId === from.chain.id && fee.asset.address?.toLowerCase() === from.token.address.toLowerCase())?.amount ?? 0
+	let fromGasAmount: string | 0 = 0
+
+	if (selectedRoute?.from.token.address === config.NULL_ADDRESS) {
+		fromGasAmount =
+			selectedRoute.cost.total_fee.find((fee: Fees) => fee.asset.chainId === from.chain.id && fee.asset.address?.toLowerCase() === from.token.address.toLowerCase())?.amount ?? 0
+	}
+
 	const fullAmount = Number(from.amount) + Number(fromGasAmount)
 	const balanceNumber = Number(balance.split(' ')[0] ?? 0)
 
