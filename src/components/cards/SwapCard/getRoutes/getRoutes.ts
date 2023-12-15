@@ -7,6 +7,7 @@ import { GetLifiRoutes, GetRangoRoutes, PopulateRoutes } from './types'
 import { fetchWalletBalancesOnStepChains } from './fetchWalletBalancesOnStepChains'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { fetchOkxRoutes } from '../../../../api/okx/fetchOkxRoutes'
 
 const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
 	swapDispatch({
@@ -16,27 +17,36 @@ const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
 	})
 }
 
-const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLifiRoutes): Promise<void | StandardRoute[] | []> => {
+const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLifiRoutes): Promise<void> => {
 	try {
 		const lifiRoutes: StandardRoute[] | [] = await fetchLifiRoutes({ from, to, settings })
 		routes.unshift(...lifiRoutes)
 		populateRoutes({ routes, from, swapDispatch })
-		return lifiRoutes
 	} catch (error) {
 		trackEvent({ category: category.SwapCard, action: action.FetchLifiRoutesError, label: 'fetch_lifi_routes_error', data: { error } })
 		console.error(error)
 	}
 }
 
-const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void | StandardRoute[] | []> => {
+const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void> => {
 	try {
 		const rangoRoutes: StandardRoute[] = await fetchRangoRoutes({ from, to, settings })
 		routes.push(...rangoRoutes)
 		populateRoutes({ routes, from, swapDispatch })
-		return rangoRoutes
 	} catch (error) {
 		trackEvent({ category: category.SwapCard, action: action.FetchRangoRoutesError, label: 'fetch_rango_routes_error', data: { error } })
 		console.error('rangoRoutes', error)
+	}
+}
+
+async function getOkxRoutes({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void> {
+	try {
+		const okxRoutes = await fetchOkxRoutes(from, to, settings)
+		routes.push(...okxRoutes)
+		populateRoutes({ routes, from, swapDispatch })
+	} catch (error) {
+		trackEvent({ category: category.SwapCard, action: action.FetchOkxRoutesError, label: 'fetch_okx_routes_error', data: { error } })
+		console.error('okxRoutes', error)
 	}
 }
 
@@ -46,7 +56,11 @@ export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection
 	const routes: StandardRoute[] | [] = []
 
 	try {
-		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
+		await Promise.all([
+			getLifiRoutes({ routes, from, to, settings, swapDispatch }),
+			getRangoRoutes({ routes, from, to, settings, swapDispatch }),
+			getOkxRoutes({ routes, from, to, settings, swapDispatch }),
+		])
 
 		if (!routes.length) {
 			swapDispatch({ type: 'SET_IS_NO_ROUTES', status: true })

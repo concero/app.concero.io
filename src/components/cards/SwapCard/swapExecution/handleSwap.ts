@@ -12,6 +12,7 @@ import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
 import { providers } from 'ethers'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { executeOkxRoute } from './executeOkxRoute'
 
 interface HandleSwapProps {
 	swapState: SwapState
@@ -49,6 +50,13 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 
 			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
 			handleLifiResponse(response, swapDispatch, provider)
+		} else if (provider === 'okx') {
+			swapDispatch({
+				type: 'APPEND_SWAP_STEP',
+				payload: { title: 'Action required', body: 'Please approve the transaction in your wallet', status: 'await', txLink: null },
+			})
+			const signer = await switchChainHook(Number(from.chain.id))
+			await executeOkxRoute(signer, swapDispatch, swapState)
 		}
 	} catch (error: Error) {
 		console.error('ERROR: ', error)

@@ -1,3 +1,7 @@
+import { OKXRoute } from '../api/okx/types'
+import { BestRouteResponse } from 'rango-types/src/api/main/routing'
+import { Route } from '@lifi/types/dist/api'
+
 export interface StandardRoute {
 	id: string
 	from: Direction
@@ -12,6 +16,7 @@ export interface StandardRoute {
 	slippage_percent: number | null
 	transaction_time_seconds: number | null
 	insurance: Insurance | null
+	originalRoute?: OKXRoute | BestRouteResponse | Route
 }
 
 export type Direction = {
