@@ -1,6 +1,6 @@
 ![Concero DEX Banner](https://pbs.twimg.com/profile_banners/1656709850234077194/1691232566/1500x500)
 
-# Concero.io - DEX
+# app.concero.io
 
 🚀 **Swap your crypto across 16 chains.**  
 📊 **Track prices, news & live transactions** on [dex.concero.io](http://dex.concero.io)
