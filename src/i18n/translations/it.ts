@@ -11,6 +11,8 @@ export const it = {
 			insurance: 'Assicurazione',
 		},
 		header: {
+			swap: 'Scambia',
+			earn: 'Guadagna',
 			exchange: 'Scambio',
 			staking: 'Staking',
 			portfolio: 'Portafoglio',

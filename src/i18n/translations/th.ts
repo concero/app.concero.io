@@ -11,6 +11,8 @@ export const th = {
 			insurance: 'ประกัน',
 		},
 		header: {
+			swap: 'สว๊อป',
+			earn: 'รับรางวัล',
 			exchange: 'แลกเปลี่ยน',
 			staking: 'Staking',
 			portfolio: 'Portfolio',

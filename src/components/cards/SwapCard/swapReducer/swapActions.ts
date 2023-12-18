@@ -1,7 +1,7 @@
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 import { SwapAction, SwapState } from './types'
-// import { StageStep } from '../../StakingHeaderCard/ManageModal/SwapProgress/TransactionStep'
+// import { StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action as trackingAction, category as trackingCategory } from '../../../../constants/tracking'
 

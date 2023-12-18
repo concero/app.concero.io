@@ -11,6 +11,8 @@ export const pt = {
 			insurance: 'Seguro',
 		},
 		header: {
+			swap: 'Troca',
+			earn: 'Ganhar',
 			exchange: 'Troca',
 			staking: 'Staking',
 			portfolio: 'Portfólio',

@@ -2,13 +2,13 @@ import { FC } from 'react'
 import { IconCornerUpRight, IconLogout } from '@tabler/icons-react'
 import classNames from './TokensCard.module.pcss'
 import { CardHeader } from '../CardHeader/CardHeader'
-import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { Button } from '../../buttons/Button/Button'
 import { CryptoIcon } from '../../tags/CryptoSymbol/CryptoIcon'
 import { useTranslation } from 'react-i18next'
 
 interface TokensCardProps {
-	stakingState: StakingState
+	earnState: EarnState
 }
 
 export function TokenCard({ name, symbol, logoURI }) {
@@ -49,10 +49,10 @@ export function TokenRatioCard({ item }) {
 	)
 }
 
-export const TokensCard: FC<TokensCardProps> = ({ stakingState }) => {
+export const TokensCard: FC<TokensCardProps> = ({ earnState }) => {
 	const { t } = useTranslation()
 
-	// console.log('TokensCard', stakingState)
+	// console.log('TokensCard', earnState)
 
 	const renderTokens = ({ input_tokens }) => {
 		// loops through the tokens array and renders a TokenCard for each token.
@@ -69,7 +69,7 @@ export const TokensCard: FC<TokensCardProps> = ({ stakingState }) => {
 	return (
 		<div className={classNames.container}>
 			<CardHeader title={t('stakingDetailsCard.tokens')} />
-			<div className={classNames.innerContainer}>{renderTokens(stakingState.selectedVault)}</div>
+			<div className={classNames.innerContainer}>{renderTokens(earnState.selectedVault)}</div>
 		</div>
 	)
 }

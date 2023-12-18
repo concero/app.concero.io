@@ -11,6 +11,8 @@ export const ua = {
 			insurance: 'Страхування',
 		},
 		header: {
+			swap: 'Обмін',
+			earn: 'Заробити',
 			exchange: 'Обмін',
 			staking: 'Стейкінг',
 			portfolio: 'Портфель',

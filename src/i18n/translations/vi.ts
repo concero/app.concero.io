@@ -11,6 +11,8 @@ export const vi = {
 			insurance: 'Bảo hiểm',
 		},
 		header: {
+			swap: 'Đổi',
+			earn: 'Kiếm',
 			exchange: 'Trao đổi',
 			staking: 'Staking',
 			portfolio: 'Hồ sơ đầu tư',

@@ -11,6 +11,8 @@ export const ru = {
 			insurance: 'Страхование',
 		},
 		header: {
+			swap: 'Обмен',
+			earn: 'Заработать',
 			exchange: 'Обмен',
 			staking: 'Стейкинг',
 			portfolio: 'Портфель',

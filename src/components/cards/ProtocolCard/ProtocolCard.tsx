@@ -4,7 +4,7 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ProtocolCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
-import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
 import { Protocol } from './types'
@@ -13,13 +13,13 @@ import { trackEvent } from '../../../hooks/useTracking'
 import { action, category } from '../../../constants/tracking'
 
 interface ProtocolCardProps {
-	stakingState: StakingState
+	earnState: EarnState
 }
 
-export function ProtocolCard({ stakingState }: ProtocolCardProps) {
+export function ProtocolCard({ earnState }: ProtocolCardProps) {
 	const [isOpened, setIsOpened] = useState(false)
 	const [protocolData, setProtocolData] = useState<Protocol | null>(null)
-	const { selectedVault } = stakingState
+	const { selectedVault } = earnState
 	const { t } = useTranslation()
 
 	function handleOpenProtocolModal() {
