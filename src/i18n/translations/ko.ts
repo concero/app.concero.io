@@ -11,6 +11,8 @@ export const ko = {
 			insurance: '보험',
 		},
 		header: {
+			swap: '스왑',
+			earn: '수익',
 			exchange: '거래소',
 			staking: '스테이킹',
 			portfolio: '포트폴리오',

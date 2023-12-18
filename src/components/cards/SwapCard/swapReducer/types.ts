@@ -1,6 +1,6 @@
 import { StandardRoute } from '../../../../types/StandardRoute'
 import { Provider } from '../../../../api/concero/types'
-import { StageStep } from '../../StakingHeaderCard/ManageModal/SwapProgress/TransactionStep'
+import { StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
 import { TransactionStatus } from 'rango-sdk'
 import { ButtonType } from '../../../buttons/SwapButton/constants'
 import { ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'

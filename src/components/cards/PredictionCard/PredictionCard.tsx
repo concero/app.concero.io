@@ -2,12 +2,12 @@ import { FC } from 'react'
 import { IconAlertTriangle, IconArrowDown, IconArrowUp } from '@tabler/icons-react'
 import classNames from './PredictionCard.module.pcss'
 import { CardHeader } from '../CardHeader/CardHeader'
-import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { colors } from '../../../constants/colors'
 import { numberToFormatString } from '../../../utils/formatting'
 
 interface PredictionCardProps {
-	stakingState: StakingState
+	earnState: EarnState
 }
 
 interface PredictionItemCardProps {
@@ -36,15 +36,15 @@ const RiskCard: FC = () => (
 	</div>
 )
 
-export const PredictionCard: FC<PredictionCardProps> = ({ stakingState }) => {
-	const predictions = stakingState.selectedVault?.data?.predictions
+export const PredictionCard: FC<PredictionCardProps> = ({ earnState }) => {
+	const predictions = earnState.selectedVault?.data?.predictions
 
 	return predictions?.predictedClass ? (
 		<div className={classNames.container}>
 			<CardHeader title="Predictions" />
 			<div className={classNames.innerContainer}>
 				<PredictionItemCard predictedClass={predictions.predictedClass} value={predictions.predictedProbability} />
-				{stakingState.selectedVault.data.il_risk === 'yes' ? <RiskCard /> : null}
+				{earnState.selectedVault.data.il_risk === 'yes' ? <RiskCard /> : null}
 			</div>
 		</div>
 	) : null

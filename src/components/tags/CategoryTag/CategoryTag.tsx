@@ -1,5 +1,5 @@
 import { getCategoryIconByTitle } from './getCategoryIconByTitle'
-import classNames from '../../cards/StakingCard/StakingCard.module.pcss'
+import classNames from '../../cards/EarnCard/EarnCard.module.pcss'
 import { Tag } from '../Tag/Tag'
 
 interface CategoryTagProps {

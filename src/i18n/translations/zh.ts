@@ -11,6 +11,8 @@ export const zh = {
 			insurance: '保险',
 		},
 		header: {
+			swap: '兑换',
+			earn: '赚取',
 			exchange: '兑换',
 			staking: '质押',
 			portfolio: '投资组合',

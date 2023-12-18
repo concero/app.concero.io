@@ -12,6 +12,7 @@ export const id = {
 		},
 		header: {
 			exchange: 'Tukar',
+			earn: 'Dapatkan',
 			staking: 'Staking',
 			portfolio: 'Portofolio',
 			myReferrals: 'Referral Saya',

@@ -1,13 +1,13 @@
 import { FC } from 'react'
 import { IconMoneybag } from '@tabler/icons-react'
-import { StakingState } from '../../screens/StakingScreen/stakingReducer/types'
+import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import classNames from './RewardsCard.module.pcss'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { useTranslation } from 'react-i18next'
 
 interface RewardsCardProps {
-	stakingState: StakingState
+	earnState: EarnState
 }
 
 interface RewardsItemCardProps {
@@ -28,17 +28,17 @@ const RewardsItemCard: FC<RewardsItemCardProps> = ({ name, logoURI, value }) => 
 	</div>
 )
 
-export const RewardsCard: FC<RewardsCardProps> = ({ stakingState }) => {
+export const RewardsCard: FC<RewardsCardProps> = ({ earnState }) => {
 	const { t } = useTranslation()
 
-	if (!stakingState.selectedVault.rewardTokens || !stakingState.selectedVault.rewardTokens.length) {
+	if (!earnState.selectedVault.rewardTokens || !earnState.selectedVault.rewardTokens.length) {
 		return null
 	}
 
 	return (
 		<div className={classNames.container}>
 			<CardHeader title={t('stakingDetailsCard.rewards')} />
-			{stakingState.selectedVault.rewardTokens?.map(item => (
+			{earnState.selectedVault.rewardTokens?.map(item => (
 				<RewardsItemCard key={item.name} name={item.name} logoURI={item.logoURI} value={item.value} />
 			))}
 		</div>

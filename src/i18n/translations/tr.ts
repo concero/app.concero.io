@@ -11,6 +11,8 @@ export const tr = {
 			insurance: 'Sigorta',
 		},
 		header: {
+			swap: 'Değiştir',
+			earn: 'Kazan',
 			exchange: 'Değişim',
 			staking: 'Staking',
 			portfolio: 'Portföy',

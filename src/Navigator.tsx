@@ -5,9 +5,9 @@ import { Header } from './components/layout/Header/Header/Header'
 import { routes } from './constants/routes'
 import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
 
-const ExchangeScreen = lazy(() => import('./components/screens/ExchangeScreen/ExchangeScreen').then(module => ({ default: module.ExchangeScreen })))
+const SwapScreen = lazy(() => import('./components/screens/SwapScreen/SwapScreen').then(module => ({ default: module.SwapScreen })))
 const PortfolioScreen = lazy(() => import('./components/screens/PortfolioScreen/PortfolioScreen').then(module => ({ default: module.PortfolioScreen })))
-const StakingScreen = lazy(() => import('./components/screens/StakingScreen/StakingScreen').then(module => ({ default: module.StakingScreen })))
+const EarnScreen = lazy(() => import('./components/screens/EarnScreen/EarnScreen').then(module => ({ default: module.EarnScreen })))
 
 export interface NavigatorProps {}
 
@@ -17,10 +17,10 @@ export const Navigator: FC<NavigatorProps> = () => (
 			<Header />
 			<Routes>
 				<Route
-					path={routes.exchange}
+					path={routes.swap}
 					element={
 						<Suspense fallback={<FullScreenLoader />}>
-							<ExchangeScreen />
+							<SwapScreen />
 						</Suspense>
 					}
 				/>
@@ -33,14 +33,14 @@ export const Navigator: FC<NavigatorProps> = () => (
 					}
 				/>
 				<Route
-					path={routes.staking}
+					path={routes.earn}
 					element={
 						<Suspense fallback={<FullScreenLoader />}>
-							<StakingScreen />
+							<EarnScreen />
 						</Suspense>
 					}
 				/>
-				<Route path={routes.root} element={<Navigate to={routes.exchange} />} />
+				<Route path={routes.root} element={<Navigate to={routes.swap} />} />
 			</Routes>
 		</AppScreen>
 	</BrowserRouter>

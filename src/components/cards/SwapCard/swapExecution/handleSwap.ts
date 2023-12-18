@@ -33,9 +33,9 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 
 	try {
 		if (provider === 'rango') {
-			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol })
-			handleRangoResponse(response, swapDispatch, provider)
 			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'rango_begin_swap', data: originalRoute })
+			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol })
+			handleRangoResponse(response, swapDispatch)
 		} else if (provider === 'lifi') {
 			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'lifi_begin_swap', data: originalRoute })
 			updateLifiSteps({ swapDispatch, selectedRoute })
@@ -48,11 +48,11 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			const acceptExchangeRateUpdateHook = () => Promise.resolve(true)
 
 			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
-			handleLifiResponse(response, swapDispatch, provider)
+			handleLifiResponse(response, swapDispatch)
 		}
 	} catch (error: Error) {
 		console.error('ERROR: ', error)
-		handleTransactionError(error, swapDispatch)
+		handleTransactionError(error, swapDispatch, selectedRoute)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}

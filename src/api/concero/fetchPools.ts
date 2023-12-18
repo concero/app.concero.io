@@ -1,5 +1,5 @@
 import { get } from '../client'
-import { Filter, StakingState } from '../../components/screens/StakingScreen/stakingReducer/types'
+import { EarnState, Filter } from '../../components/screens/EarnScreen/earnReducer/types'
 import { Chain } from '../../components/cards/SwapCard/types'
 
 function getChainsQuery(filter: Filter) {
@@ -16,17 +16,17 @@ function getApyQuery(filter: Filter) {
 	return `apy=${apy}`
 }
 
-function getMyHoldingsQuery(stakingState: StakingState, address: string) {
-	if (!stakingState) return ''
-	const { filter } = stakingState
+function getMyHoldingsQuery(earnState: EarnState, address: string) {
+	if (!earnState) return ''
+	const { filter } = earnState
 	const { my_holdings } = filter
 	if (!my_holdings || !address) return ''
 	return `byHoldingsOfAddress=${address}`
 }
 
-function getMyPositionsQuery(stakingState: StakingState, address: string) {
-	if (!stakingState) return ''
-	const { filter } = stakingState
+function getMyPositionsQuery(earnState: EarnState, address: string) {
+	if (!earnState) return ''
+	const { filter } = earnState
 	const { my_positions } = filter
 	if (!my_positions || !address) return ''
 	return `byPositionsOfAddress=${address}`
@@ -39,14 +39,14 @@ function getCategoryQuery(filter: Filter) {
 	return `category=${category.join(',')}`
 }
 
-export async function fetchPools(stakingState: StakingState, address: string, offset: number, limit: number) {
-	const { filter } = stakingState
+export async function fetchPools(earnState: EarnState, address: string, offset: number, limit: number) {
+	const { filter } = earnState
 	const urlParts = [
 		`${process.env.CONCERO_API_URL}/pools`,
 		getChainsQuery(filter),
 		getApyQuery(filter),
-		getMyHoldingsQuery(stakingState, address),
-		getMyPositionsQuery(stakingState, address),
+		getMyHoldingsQuery(earnState, address),
+		getMyPositionsQuery(earnState, address),
 		getCategoryQuery(filter),
 		'is_outlier=false',
 		`offset=${offset}`,
