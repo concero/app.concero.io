@@ -1,6 +1,5 @@
 import { useWeb3Modal } from '@web3modal/react'
 import { FC } from 'react'
-import { useTracking } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { useAccount } from 'wagmi'
 import { IconWallet } from '@tabler/icons-react'
@@ -8,13 +7,13 @@ import { Button } from '../../../buttons/Button/Button'
 import { truncateWallet } from '../../../../utils/formatting'
 import { useTranslation } from 'react-i18next'
 import classNames from './WalletButton.module.pcss'
+import { trackEvent } from '../../../../hooks/useTracking'
 
 interface WalletButtonProps {}
 
 export const WalletButton: FC<WalletButtonProps> = () => {
 	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 	const { open } = useWeb3Modal()
-	const { trackEvent } = useTracking()
 	const { t } = useTranslation()
 
 	function handleClick() {

@@ -6,12 +6,11 @@ import { RateTag } from './RateTag'
 import { RouteCard } from '../../RouteCard/RouteCard'
 import { SwapDetailsProps } from '../types'
 import { numberToFormatString } from '../../../../utils/formatting'
-import { useTracking } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { trackEvent } from '../../../../hooks/useTracking'
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute }) => {
 	const { from, to, routes, isLoading, selectedRoute } = swapState
-	const { trackEvent } = useTracking()
 	const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
 
 	const rate = {
