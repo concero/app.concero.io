@@ -15,7 +15,7 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { useTranslation } from 'react-i18next'
 import { action, category } from '../../../constants/tracking'
-import { useTracking } from '../../../hooks/useTracking'
+import { trackEvent } from '../../../hooks/useTracking'
 
 interface NewsCardProps {}
 
@@ -26,7 +26,6 @@ export const NewsCard: FC<NewsCardProps> = () => {
 	const [{ data, isLoading, timestamp, isModalVisible, selectedToken }, dispatch] = useNewsReducer(selection)
 	const { t } = useTranslation()
 
-	const { trackEvent } = useTracking()
 	useEffect(() => {
 		if (!selectedToken) return
 		getNews(data, dispatch, selectedToken, timestamp, addNotification)

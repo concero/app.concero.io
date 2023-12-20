@@ -2,11 +2,10 @@ import { IconClock } from '@tabler/icons-react'
 import { truncate, unixtimeFromNow } from '../../../utils/formatting'
 import classNames from './NewsCard.module.pcss'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
-import { useTracking } from '../../../hooks/useTracking'
 import { action, category } from '../../../constants/tracking'
+import { trackEvent } from '../../../hooks/useTracking'
 
 export const columns = () => {
-	const { trackEvent } = useTracking()
 	return [
 		{
 			columnTitle: 'Title',
