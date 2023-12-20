@@ -11,6 +11,7 @@ import { StandardRoute } from '../../../../types/StandardRoute'
 
 export const handleRangoResponse = (executedRoute: TransactionStatusResponse, swapDispatch: Dispatch<SwapAction>, stdRoute: StandardRoute) => {
 	swapDispatch({ type: 'UPDATE_LAST_SWAP_STEP' })
+	stdRoute.executedRoute = executedRoute
 
 	if (executedRoute.status === TransactionStatus.FAILED) {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
