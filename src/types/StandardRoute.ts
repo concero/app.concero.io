@@ -12,6 +12,7 @@ export interface StandardRoute {
 	slippage_percent: number | null
 	transaction_time_seconds: number | null
 	insurance: Insurance | null
+	provider: 'rango' | 'lifi'
 }
 
 export type Direction = {
