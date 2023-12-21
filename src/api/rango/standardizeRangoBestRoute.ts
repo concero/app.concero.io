@@ -56,6 +56,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 			chain: {
 				id: route.from.blockchain,
 			},
+			address: from.address,
 		},
 		to: {
 			token: {
@@ -69,6 +70,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 			chain: {
 				id: route.to.blockchain,
 			},
+			address: to.address,
 		},
 		steps: getSteps(route),
 		cost: {

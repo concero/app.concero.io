@@ -69,6 +69,7 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 		chain: {
 			id: route.fromChainId,
 		},
+		address: route.fromAddress,
 	},
 	to: {
 		token: {
@@ -84,6 +85,7 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 		chain: {
 			id: route.toChainId,
 		},
+		address: route.toAddress,
 	},
 	steps: [...route.steps.flatMap(step => step.includedSteps.map(includedStep => standardizeLifiStep(includedStep)))],
 	cost: {
