@@ -31,7 +31,7 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 	}
 
 	const fullAmount = Number(from.amount) + Number(fromGasAmount)
-	const balanceNumber = Number(balance.split(' ')[0] ?? 0)
+	const balanceNumber = Number(balance?.split(' ')[0] ?? 0)
 
 	if (balance && fullAmount > balanceNumber) {
 		return ButtonType.LOW_BALANCE
