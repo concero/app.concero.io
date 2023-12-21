@@ -1,6 +1,5 @@
 import { SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
-import { isInsufficientFee } from './isInsufficientFee'
 import { Fees } from '../../../types/StandardRoute'
 import { config } from '../../../constants/config'
 
@@ -37,11 +36,11 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 		return ButtonType.LOW_BALANCE
 	}
 
-	const isInsufficient = isInsufficientFee(swapState)
+	// const isInsufficient = isInsufficientFee(swapState)
 
-	if (isInsufficient) {
-		return ButtonType.LOW_FEES
-	}
+	// if (isInsufficient) {
+	// 	return ButtonType.LOW_FEES
+	// }
 
 	if (from.amount && to.amount && routes.length) {
 		return ButtonType.SWAP
