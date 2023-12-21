@@ -25,6 +25,7 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 	}
 
 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+	selectedRoute.error = e.toString()
 	logTxToDB({ tx_id: selectedRoute.id, status: 'failure', provider: selectedRoute.provider, tx_data: selectedRoute })
 	trackEvent({ category: category.SwapCard, action: action.SwapFailed, label: 'swap_failed', data: { provider: selectedRoute.provider, selectedRoute } })
 }
