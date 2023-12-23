@@ -38,7 +38,6 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	}
 
 	async function getSigner(): Promise<providers.JsonRpcSigner> {
-		console.log(walletClient)
 		const currentChainId = walletClient.data?.chain.id
 		if (currentChainId) {
 			return (await getEthersSigner(currentChainId)) as providers.JsonRpcSigner
