@@ -11,6 +11,8 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 
 	route.steps.forEach((step: Step) => {
 		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
+			if (fee.included) return
+
 			const matchedFeeAsset = result.find((item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString())
 			if (matchedFeeAsset) {
 				const index = result.findIndex((item: Fees) => item.asset.address === fee.token.address)
@@ -32,7 +34,8 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 
 	route.steps.forEach((step: LifiStep) => {
 		step.estimate.gasCosts?.forEach((gas: GasCost) => {
-			if (result.find((item: Fees) => item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString())) {
+			const matchedGasAsset = result.find((item: Fees) => item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString())
+			if (matchedGasAsset) {
 				const index = result.findIndex((item: Fees) => item.asset.address === gas.token.address)
 				const normalizedGasAmount = addingTokenDecimals(gas.amount, gas.token.decimals)
 				result[index].amount = new BigNumber(result[index].amount).plus(normalizedGasAmount as string).toString()

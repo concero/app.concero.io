@@ -14,12 +14,10 @@ import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
 import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
 import { Button } from '../../buttons/Button/Button'
 import { SwapCardStage } from './swapReducer/types'
-import { useTranslation } from 'react-i18next'
 import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 
 export const SwapCard: FC<SwapCardProps> = () => {
-	const { t } = useTranslation()
 	const { selection, dispatch } = useContext(SelectionContext)
 	const [swapState, swapDispatch] = useSwapReducer(selection)
 	const { address } = useAccount()

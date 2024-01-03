@@ -3,7 +3,7 @@
   "trailingComma": "all",
   "semi": false,
   "bracketSameLine": false,
-  "printWidth": 180,
+  "printWidth": 130,
   "tabWidth": 1,
   "useTabs": true,
   "arrowParens": "avoid",

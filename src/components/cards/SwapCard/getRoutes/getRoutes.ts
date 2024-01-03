@@ -9,11 +9,7 @@ import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
 const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
-	swapDispatch({
-		type: 'POPULATE_ROUTES',
-		payload: routes,
-		fromAmount: from.amount,
-	})
+	swapDispatch({ type: 'POPULATE_ROUTES', payload: routes, fromAmount: from.amount })
 }
 
 const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLifiRoutes): Promise<void | StandardRoute[] | []> => {
@@ -35,12 +31,22 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 		populateRoutes({ routes, from, swapDispatch })
 		return rangoRoutes
 	} catch (error) {
-		trackEvent({ category: category.SwapCard, action: action.FetchRangoRoutesError, label: 'fetch_rango_routes_error', data: { error } })
+		trackEvent({
+			category: category.SwapCard,
+			action: action.FetchRangoRoutesError,
+			label: 'fetch_rango_routes_error',
+			data: { error },
+		})
 		console.error('rangoRoutes', error)
 	}
 }
 
-export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection, settings: Settings, swapDispatch: Dispatch<SwapAction>): Promise<void> => {
+export const getRoutes = async (
+	from: SwapStateDirection,
+	to: SwapStateDirection,
+	settings: Settings,
+	swapDispatch: Dispatch<SwapAction>,
+): Promise<void> => {
 	if (!from.amount || !parseFloat(from.amount)) return
 	swapDispatch({ type: 'SET_LOADING', payload: true })
 	const routes: StandardRoute[] | [] = []

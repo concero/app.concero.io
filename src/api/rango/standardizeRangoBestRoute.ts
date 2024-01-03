@@ -5,6 +5,7 @@ import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
 import { config } from '../../constants/config'
+import { rangoChainsMap } from './rangoChainsMap'
 
 function getSteps(route: BestRouteResponse): Step[] | null {
 	const steps = route.result?.swaps.map((swap: SwapResult) => standardizeRangoBestRouteStep(swap)) ?? null
@@ -12,8 +13,12 @@ function getSteps(route: BestRouteResponse): Step[] | null {
 }
 
 function getTotalGasUsd(route: BestRouteResponse): string | null {
-	const reduceSwaps = (res: number, swap: SwapResult): number => swap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + res
-	return roundNumberByDecimals(new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0).times(route.result?.swaps[0]?.from.usdPrice ?? 0).toString(), 2)
+	const reduceSwaps = (res: number, swap: SwapResult): number =>
+		swap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + res
+	return roundNumberByDecimals(
+		new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0).times(route.result?.swaps[0]?.from.usdPrice ?? 0).toString(),
+		2,
+	)
 }
 
 function getTotalFee(route: BestRouteResponse): Fees[] | [] {
@@ -21,12 +26,14 @@ function getTotalFee(route: BestRouteResponse): Fees[] | [] {
 
 	route.result?.swaps.forEach((swap: SwapResult) => {
 		swap.fee.forEach((feeItem: SwapFee) => {
+			if (feeItem.expenseType === 'DECREASE_FROM_OUTPUT') return
+
 			const feeIndex = result.findIndex((item: Fees): boolean => item.asset.symbol === feeItem.asset.symbol)
 			if (feeIndex === -1) {
 				result.push({
 					amount: feeItem.amount,
 					asset: {
-						chainId: swap.from.blockchain,
+						chainId: rangoChainsMap[swap.from.blockchain],
 						symbol: feeItem.asset.symbol,
 						address: feeItem.asset.address ?? config.NULL_ADDRESS,
 					},
