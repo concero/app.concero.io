@@ -69,6 +69,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
     "husky": "^8.0.3",
+    "jest-mock": "^29.7.0",
     "jsdom": "^21.1.2",
     "postcss": "^8.4.30",
     "precss": "^4.0.0",
