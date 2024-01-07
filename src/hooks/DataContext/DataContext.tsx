@@ -2,8 +2,8 @@ import { createContext, useEffect, useState } from 'react'
 import { fetchTokens } from '../../api/concero/fetchTokens'
 import { fetchChains } from '../../api/concero/fetchChains'
 import { config } from '../../constants/config'
-import { DataContextValue, DataProviderProps, GetChainsParams } from './types'
-import { Chain } from '../../api/concero/types'
+import { type DataContextValue, type DataProviderProps, type GetChainsParams } from './types'
+import { type Chain } from '../../api/concero/types'
 
 export const initialState = {
 	tokens: {
@@ -69,13 +69,13 @@ export const initialState = {
 }
 
 export const DataContext = createContext<DataContextValue>({
-	getTokens: () => Promise.resolve([]),
-	getChains: () => Promise.resolve([]),
+	getTokens: async () => await Promise.resolve([]),
+	getChains: async () => await Promise.resolve([]),
 	tokens: {},
 	chains: [],
 	setTokens: () => {},
 	setChains: () => {},
-	getChainByProviderSymbol: () => Promise.resolve(null),
+	getChainByProviderSymbol: async () => await Promise.resolve(null),
 })
 
 export function DataProvider({ children }: DataProviderProps) {

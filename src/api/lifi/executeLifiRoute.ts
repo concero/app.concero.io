@@ -1,6 +1,6 @@
-import { ExecutionSettings } from '@lifi/sdk'
+import { type ExecutionSettings } from '@lifi/sdk'
 import { lifi } from './lifi'
-import { Route } from '@lifi/types'
-import { Signer } from 'ethers'
+import { type Route } from '@lifi/types'
+import { type Signer } from 'ethers'
 
-export const executeLifiRoute = async (signer: Signer, route: Route, settings?: ExecutionSettings): Promise<Route> => lifi.executeRoute(signer, route, settings)
+export const executeLifiRoute = async (signer: Signer, route: Route, settings?: ExecutionSettings): Promise<Route> => await lifi.executeRoute(signer, route, settings)

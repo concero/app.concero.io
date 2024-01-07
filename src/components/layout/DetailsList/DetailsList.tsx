@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './DetailsList.module.pcss'
 
 interface DetailsListProps {
 	items: Item[]
 }
 
-type Item = {
+interface Item {
 	title: string
 	value: string
 }

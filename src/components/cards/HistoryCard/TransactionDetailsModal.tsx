@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { Modal } from '../../modals/Modal/Modal'
 import { truncateWallet } from '../../../utils/formatting'
 import classNames from './TransactionDetailsModal.module.pcss'

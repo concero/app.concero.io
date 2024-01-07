@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconAlertTriangle, IconArrowDown, IconArrowUp } from '@tabler/icons-react'
 import classNames from './PredictionCard.module.pcss'
 import { CardHeader } from '../CardHeader/CardHeader'
-import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { colors } from '../../../constants/colors'
 import { numberToFormatString } from '../../../utils/formatting'
 

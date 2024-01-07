@@ -1,16 +1,16 @@
-import { FC, useContext } from 'react'
+import { type FC, useContext } from 'react'
 import { useAccount, useSwitchNetwork, useWalletClient } from 'wagmi'
 import { TokenArea } from '../TokenArea/TokenArea'
 import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
-import { SwapInputProps } from './types'
+import { type SwapInputProps } from './types'
 import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
 import { handleSwap } from '../swapExecution/handleSwap'
 import { InsuranceCard } from '../InsuranceCard/InsuranceCard'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
-import { DataContextValue } from '../../../../hooks/DataContext/types'
+import { type DataContextValue } from '../../../../hooks/DataContext/types'
 import { getEthersSigner } from '../../../../web3/ethers'
-import { providers } from 'ethers'
+import { type providers } from 'ethers'
 // import { TextInput } from '../../../input/TextInput'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
@@ -64,7 +64,9 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 			<SwapButton
 				swapState={swapState}
 				isConnected={isConnected}
-				onClick={() => handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })}
+				onClick={async () => {
+					await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
+				}}
 			/>
 		</div>
 	)

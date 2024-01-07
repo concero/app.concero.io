@@ -3,7 +3,7 @@ declare const identifiersMap: CssIdentifiersMap
 
 export default identifiersMap
 
-export type CssIdentifiersMap = {
+export interface CssIdentifiersMap {
 	additionalInfoTag: string | undefined
 	advantageTagColor: string | undefined
 	avatarContainer: string | undefined

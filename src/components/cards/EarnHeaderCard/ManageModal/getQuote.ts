@@ -1,5 +1,5 @@
-import { Dispatch, MutableRefObject } from 'react'
-import { ManageAction, ManageState } from './useEarnReducer/types'
+import { type Dispatch, type MutableRefObject } from 'react'
+import { type ManageAction, type ManageState } from './useEarnReducer/types'
 import { clearRoute } from './clearRoute'
 import { Status, SwapType } from './constants'
 import { addingAmountDecimals, addingTokenDecimals, roundNumberByDecimals } from '../../../../utils/formatting'
@@ -28,7 +28,7 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 			await fetchEnsoQuote({
 				chainId: state.from.chain.id,
 				fromAddress: state.address,
-				amountIn: addingAmountDecimals(state.from.amount, state.from.token.decimals) as string,
+				amountIn: addingAmountDecimals(state.from.amount, state.from.token.decimals)!,
 				tokenIn: state.from.token.address,
 				tokenOut: state.to.token.address,
 			}),
@@ -36,11 +36,14 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 	)
 
 	const response = await fetchTokenPrice(state.from.chain.id, '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
-	if (!route) return dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
+	if (!route) {
+		dispatch({ type: 'SET_STATUS', payload: Status.noRoute })
+		return
+	}
 	let gasUsd: null | string = null
 
 	if (route.gas) {
-		const humanReadableGas = addingTokenDecimals(route.gas._hex, response.decimals) as string
+		const humanReadableGas = addingTokenDecimals(route.gas._hex, response.decimals)!
 		gasUsd = roundNumberByDecimals(new BigNumber(humanReadableGas).times(response.price).toString(), 4)
 	}
 
@@ -48,7 +51,7 @@ async function getEnsoQuote(state: ManageState, dispatch: Dispatch<ManageAction>
 
 	if (state.swapType === SwapType.withdraw) {
 		const toTokenPrice = await fetchTokenPrice(state.from.chain.id, state.to.token.address)
-		const humanReadableAmount = addingTokenDecimals(route.amountOut, toTokenPrice.decimals) as string
+		const humanReadableAmount = addingTokenDecimals(route.amountOut, toTokenPrice.decimals)!
 		toAmountUsd = roundNumberByDecimals(new BigNumber(humanReadableAmount).times(toTokenPrice.price).toString(), 4)
 	}
 	dispatch({ type: 'SET_ROUTE', payload: route, fromAmount: state.from.amount, gasUsd, toAmountUsd })
@@ -68,10 +71,15 @@ async function handleFetchQuote(state: ManageState, dispatch: Dispatch<ManageAct
 }
 
 export async function getQuote({ manageState, manageDispatch, typingTimeoutRef }: IGetQuote): Promise<void> {
-	if (!manageState.from.amount) return clearRoute(manageDispatch, typingTimeoutRef)
+	if (!manageState.from.amount) {
+		clearRoute(manageDispatch, typingTimeoutRef)
+		return
+	}
 	try {
 		if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-		typingTimeoutRef.current = setTimeout(() => handleFetchQuote(manageState, manageDispatch), 700)
+		typingTimeoutRef.current = setTimeout(async () => {
+			await handleFetchQuote(manageState, manageDispatch)
+		}, 700)
 	} catch (error) {
 		console.error('[getQuote] ', error)
 	}

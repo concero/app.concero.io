@@ -1,4 +1,4 @@
-import { FC, useContext, useRef, useState } from 'react'
+import { type FC, useContext, useRef, useState } from 'react'
 import { IconAlertHexagon, IconBrandDiscord, IconBrandTelegram, IconBrandTwitter, IconMessage, IconMessageChatbot, IconQuestionMark, IconSend, IconUser } from '@tabler/icons-react'
 import classNames from './FeedbackModal.module.pcss'
 import { Modal } from '../Modal/Modal'
@@ -50,7 +50,7 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 	]
 
 	const handleSubmit = async () => {
-		if (selectedTag && message && contactOption && username) {
+		if (selectedTag != null && message && contactOption != null && username) {
 			const { res } = await submitFeedback({
 				type: feedbackOptions[selectedTag - 1].label.toLowerCase(),
 				message: message.trim(),
@@ -72,7 +72,15 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 			<div className={classNames.container}>
 				<div className={classNames.tagContainer}>
 					{feedbackOptions.map(option => (
-						<Button key={option.value} size="sm" variant={selectedTag === option.value ? 'primary' : 'subtle'} onClick={() => setSelectedTag(option.value)} leftIcon={option.icon}>
+						<Button
+							key={option.value}
+							size="sm"
+							variant={selectedTag === option.value ? 'primary' : 'subtle'}
+							onClick={() => {
+								setSelectedTag(option.value)
+							}}
+							leftIcon={option.icon}
+						>
 							{option.label}
 						</Button>
 					))}
@@ -81,13 +89,23 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 					key="textArea"
 					ref={textAreaRef}
 					onFocus={() => textInputRef.current.blur()}
-					onChange={e => setMessage(e.target.value)}
+					onChange={e => {
+						setMessage(e.target.value)
+					}}
 					placeholder={t('placeholder.explainYourFeedback')}
 				/>
 				<h5 className={classNames.sectionTitle}>{t('modal.howCanWeReachOut')}</h5>
 				<div className={classNames.tagContainer}>
 					{contactOptions.map(option => (
-						<Button key={option.value} size="sm" variant={contactOption === option.value ? 'primary' : 'subtle'} onClick={() => setContactOption(option.value)} leftIcon={option.icon}>
+						<Button
+							key={option.value}
+							size="sm"
+							variant={contactOption === option.value ? 'primary' : 'subtle'}
+							onClick={() => {
+								setContactOption(option.value)
+							}}
+							leftIcon={option.icon}
+						>
 							{option.label}
 						</Button>
 					))}
@@ -97,9 +115,11 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 					ref={textInputRef}
 					placeholder={t('placeholder.yourUsername')}
 					icon={<IconUser size={18} color={'var(--color-grey-500'} />}
-					onChange={e => setUsername(e.target.value)}
+					onChange={e => {
+						setUsername(e.target.value)
+					}}
 				/>
-				<Button className={classNames.ctaButton} variant="primary" isDisabled={!message || !contactOption || !username} leftIcon={<IconSend size={16} />} onClick={handleSubmit}>
+				<Button className={classNames.ctaButton} variant="primary" isDisabled={!message || contactOption == null || !username} leftIcon={<IconSend size={16} />} onClick={handleSubmit}>
 					{t('button.sendFeedback')}
 				</Button>
 			</div>

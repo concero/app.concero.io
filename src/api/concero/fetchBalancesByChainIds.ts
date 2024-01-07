@@ -8,7 +8,7 @@ export interface TokenBalance {
 	amount: string
 	decimals: number
 }
-export type ConceroBalanceResponse = { [key: string]: TokenBalance[] }
+export type ConceroBalanceResponse = Record<string, TokenBalance[]>
 
 export async function fetchBalancesByChainIds(chainIds: string[], walletAddress: string): Promise<ConceroBalanceResponse | null> {
 	if (!walletAddress || !chainIds) return null

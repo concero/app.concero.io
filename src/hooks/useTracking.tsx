@@ -1,5 +1,5 @@
 import posthog from 'posthog-js'
-import { TrackEventProps } from '../types/TrackEventProps'
+import { type TrackEventProps } from '../types/TrackEventProps'
 
 // Standalone function for trackTransaction
 export const trackTransaction = () => {

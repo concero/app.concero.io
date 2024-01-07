@@ -1,5 +1,5 @@
 import { animated, useSpring } from '@react-spring/web'
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconArrowsDiff } from '@tabler/icons-react'
 import classNames from './EarnCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'

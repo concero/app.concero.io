@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconChevronRight, IconClockHour3, IconPigMoney } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
 import classNames from '../SwapCard.module.pcss'
 import { Avatar } from '../../../tags/Avatar/Avatar'
-import { AvatarsProps, RouteButtonProps } from '../types'
+import { type AvatarsProps, type RouteButtonProps } from '../types'
 import { secondsConverter } from '../../../../utils/formatting'
 
 const Avatars: FC<AvatarsProps> = ({ entities }) => (
@@ -17,7 +17,13 @@ const Avatars: FC<AvatarsProps> = ({ entities }) => (
 
 export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) => (
 	<div>
-		<Button variant="subtle" rightIcon={<IconChevronRight size={16} color={'var(--color-text-secondary)'} />} size="sm" onClick={onClick} className={selectedRoute ? '' : classNames.invisible}>
+		<Button
+			variant="subtle"
+			rightIcon={<IconChevronRight size={16} color={'var(--color-text-secondary)'} />}
+			size="sm"
+			onClick={onClick}
+			className={selectedRoute ? '' : classNames.invisible}
+		>
 			<Avatars entities={selectedRoute?.steps} />
 			{selectedRoute?.cost.total_gas_usd ? (
 				<div className={classNames.routeInfoContainer}>

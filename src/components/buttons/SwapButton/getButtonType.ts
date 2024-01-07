@@ -1,6 +1,6 @@
-import { SwapState } from '../../cards/SwapCard/swapReducer/types'
+import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
-import { Fees } from '../../../types/StandardRoute'
+import { type Fees } from '../../../types/StandardRoute'
 import { config } from '../../../constants/config'
 
 export function getButtonType(swapState: SwapState, isConnected: boolean): ButtonType {
@@ -18,7 +18,7 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 		return ButtonType.CONNECT_WALLET
 	}
 
-	if (!from.amount || (from.amount && !routes.length)) {
+	if (!from.amount || (from.amount && routes.length === 0)) {
 		return ButtonType.ENTER_AMOUNT
 	}
 
@@ -42,7 +42,7 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 	// 	return ButtonType.LOW_FEES
 	// }
 
-	if (from.amount && to.amount && routes.length) {
+	if (from.amount && to.amount && routes.length > 0) {
 		return ButtonType.SWAP
 	}
 

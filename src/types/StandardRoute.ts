@@ -8,14 +8,14 @@ export interface StandardRoute {
 		total_gas_usd: string | null | undefined
 		total_fee: Fees[] | []
 	}
-	tags: ('RECOMMENDED' | 'FASTEST' | 'CHEAPEST' | 'SAFEST')[] | undefined
+	tags: Array<'RECOMMENDED' | 'FASTEST' | 'CHEAPEST' | 'SAFEST'> | undefined
 	slippage_percent: number | null
 	transaction_time_seconds: number | null
 	insurance: Insurance | null
 	provider: 'rango' | 'lifi'
 }
 
-export type Direction = {
+export interface Direction {
 	token: {
 		name: string
 		address: string | null
@@ -39,7 +39,7 @@ export interface Providers {
 	_id: string
 }
 
-export type Step = {
+export interface Step {
 	id: string
 	from: {
 		token: {

@@ -1,4 +1,4 @@
-import { Dispatch } from 'react'
+import { type Dispatch } from 'react'
 import { ModalType, Status } from './constants'
 
 export function clearRoute(manageDispatch: Dispatch<any>, typingTimout: React.MutableRefObject<any>) {

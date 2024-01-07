@@ -1,7 +1,7 @@
-import { SwapAction } from '../swapReducer/types'
-import { Dispatch } from 'react'
-import { StandardRoute } from '../../../../types/StandardRoute'
-import { Process } from '@lifi/types/dist/cjs/step'
+import { type SwapAction } from '../swapReducer/types'
+import { type Dispatch } from 'react'
+import { type StandardRoute } from '../../../../types/StandardRoute'
+import { type Process } from '@lifi/types/dist/cjs/step'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { Simulate } from 'react-dom/test-utils'
@@ -65,7 +65,7 @@ export const updateLifiSteps = ({ swapDispatch, selectedRoute }: UpdateLifiSteps
 			category: category.SwapCard,
 			action: action.SwapRejected,
 			label: 'User rejected swap',
-			data: { provider: 'lifi', error: error },
+			data: { provider: 'lifi', error },
 		})
 	}
 }

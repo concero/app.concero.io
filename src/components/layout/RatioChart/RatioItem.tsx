@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './RatioChart.module.pcss'
 
 interface RatioItemProps {

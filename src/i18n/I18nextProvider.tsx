@@ -1,5 +1,5 @@
 import i18next from 'i18next'
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { translations } from './translations'
 import { getItem } from '../utils/localStorage'

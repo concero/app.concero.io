@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { FilterDispatchType } from '../contants'
-import { FilterAction, FilterState } from './types'
+import { type FilterAction, type FilterState } from './types'
 
 const initialState: FilterState = {
 	isChainsModalOpened: false,

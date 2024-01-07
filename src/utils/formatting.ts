@@ -26,7 +26,7 @@ export default dayjs
 
 export function isValidNumber(number: string | number) {
 	if (typeof number === 'string') {
-		return number != ''
+		return number !== ''
 	} else {
 		return !(number === undefined || number === null || isNaN(number))
 	}
@@ -138,7 +138,7 @@ export const timestampToLocalTime = (timestamp: number): number => {
 	const timeZoneOffsetInSeconds = currentTime.getTimezoneOffset() * 60
 	return Number(timestamp) - timeZoneOffsetInSeconds
 }
-type FormatNumberOptions = {
+interface FormatNumberOptions {
 	decimals?: number
 	decimalPlaces?: number
 	separator?: string

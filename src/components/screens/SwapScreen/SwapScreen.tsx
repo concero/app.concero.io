@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { type FC, memo } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'

@@ -1,6 +1,6 @@
 import { ModalType, Status, SwapType } from '../constants'
 import { config } from '../../../../../constants/config'
-import { EarnState } from '../../../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../../../screens/EarnScreen/earnReducer/types'
 
 export const manageInitialState = (earnState: EarnState) => {
 	const { selectedVault, address } = earnState

@@ -1,5 +1,5 @@
 import classNames from './EarnRoute.module.pcss'
-import { ManageState } from '../useEarnReducer/types'
+import { type ManageState } from '../useEarnReducer/types'
 import { CardHeader } from '../../../CardHeader/CardHeader'
 
 interface EarnRouteProps {

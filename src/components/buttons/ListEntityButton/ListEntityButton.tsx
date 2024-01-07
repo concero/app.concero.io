@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconCheck } from '@tabler/icons-react'
 import classNames from './ListEntityButton.module.pcss'
 import { CryptoIcon } from '../../tags/CryptoSymbol/CryptoIcon'
@@ -12,7 +12,13 @@ interface ChainSelectionRowProps {
 }
 
 export const ListEntityButton: FC<ChainSelectionRowProps> = ({ item, isSelected, onSelect }) => (
-	<Button key={item.id} variant={isSelected ? 'filled' : 'black'} onClick={() => onSelect(item)}>
+	<Button
+		key={item.id}
+		variant={isSelected ? 'filled' : 'black'}
+		onClick={() => {
+			onSelect(item)
+		}}
+	>
 		<div className={classNames.selectItemContainer}>
 			<div className={classNames.infoContainer}>
 				<CryptoIcon src={item.logoURI} />

@@ -3,7 +3,7 @@ declare const identifiersMap: CssIdentifiersMap
 
 export default identifiersMap
 
-export type CssIdentifiersMap = {
+export interface CssIdentifiersMap {
 	container: string | undefined
 	skeletonCell: string | undefined
 	skeletonColumns: string | undefined

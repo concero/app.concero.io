@@ -1,5 +1,5 @@
-import { Dispatch } from 'react'
-import { SwapAction, SwapStateDirection } from '../swapReducer/types'
+import { type Dispatch } from 'react'
+import { type SwapAction, type SwapStateDirection } from '../swapReducer/types'
 
 export const setSwapCard = (dispatch: Dispatch<SwapAction>, from: SwapStateDirection, to: SwapStateDirection) => {
 	dispatch({

@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react'
+import { type CSSProperties, type FC } from 'react'
 import { useTransition } from '@react-spring/web'
 import classNames from './Table.module.pcss'
 import { TableSkeleton } from './TableSkeleton'

@@ -1,11 +1,11 @@
-import { Dispatch, FC } from 'react'
+import { type Dispatch, type FC } from 'react'
 import { IconArrowLeft, IconUser } from '@tabler/icons-react'
 import classNames from './SwapProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
 import { TransactionStep } from '../../../layout/TransactionStep/TransactionStep'
-import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
+import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { Button } from '../../../buttons/Button/Button'
-import { IStep } from '../../EarnHeaderCard/ManageModal/useEarnReducer/types'
+import { type IStep } from '../../EarnHeaderCard/ManageModal/useEarnReducer/types'
 import { useTranslation } from 'react-i18next'
 
 interface SwapProgressProps {
@@ -22,10 +22,16 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.contactSupport })
 	}
 
-	const renderButtons: { [key: string]: JSX.Element } | { [key: string]: null } = {
+	const renderButtons: Record<string, JSX.Element> | Record<string, null> = {
 		[SwapCardStage.failed]: (
 			<div className={classNames.buttonsContainer}>
-				<Button leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
+				<Button
+					leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />}
+					onClick={() => {
+						handleGoBack()
+					}}
+					variant="secondary"
+				>
 					{t('button.goBack')}
 				</Button>
 				<Button
@@ -39,7 +45,13 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 			</div>
 		),
 		[SwapCardStage.success]: (
-			<Button leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />} onClick={() => handleGoBack()} variant="secondary">
+			<Button
+				leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />}
+				onClick={() => {
+					handleGoBack()
+				}}
+				variant="secondary"
+			>
 				{t('button.goBack')}
 			</Button>
 		),

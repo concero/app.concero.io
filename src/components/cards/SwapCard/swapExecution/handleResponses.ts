@@ -1,13 +1,13 @@
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { TransactionStatus } from 'rango-types/src/api/shared/transactions'
-import { SwapAction, SwapCardStage } from '../swapReducer/types'
-import { Dispatch } from 'react'
+import { type SwapAction, SwapCardStage } from '../swapReducer/types'
+import { type Dispatch } from 'react'
 import { logTxToDB } from '../../../../utils/logTxToDB'
 import { action, category } from '../../../../constants/tracking'
 import { trackEvent } from '../../../../hooks/useTracking'
-import { Route } from '@lifi/types'
-import { TransactionStatusResponse } from 'rango-sdk/src/types'
-import { StandardRoute } from '../../../../types/StandardRoute'
+import { type Route } from '@lifi/types'
+import { type TransactionStatusResponse } from 'rango-sdk/src/types'
+import { type StandardRoute } from '../../../../types/StandardRoute'
 
 export const handleRangoResponse = (executedRoute: TransactionStatusResponse, swapDispatch: Dispatch<SwapAction>, stdRoute: StandardRoute) => {
 	swapDispatch({ type: 'UPDATE_LAST_SWAP_STEP' })

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
 import { TextInput } from '../../../../input/TextInput'
 import classNames from './InnerSelectModal.module.pcss'

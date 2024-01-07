@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconArrowDownRight, IconArrowUpRight } from '@tabler/icons-react'
 import classNames from './Highlight.module.pcss'
 import { Tag } from '../Tag/Tag'
@@ -12,7 +12,6 @@ interface HighlightProps {
 }
 
 export const Highlight: FC<HighlightProps> = ({ title, value, valueSecondary, tag, size = 'md' }) => {
-
 	const tagColor = tag?.split('')[0] === '-' ? 'red' : 'green'
 	const tagArrow = tag?.split('')[0] === '-' ? <IconArrowDownRight size={18} /> : <IconArrowUpRight size={18} />
 	return (

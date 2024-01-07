@@ -33,7 +33,10 @@ export function Notifications() {
 				}, 3500), // Change this to your preferred delay time in milliseconds
 		)
 
-		return () => timers.forEach(timer => clearTimeout(timer))
+		return () =>
+			timers.forEach(timer => {
+				clearTimeout(timer)
+			})
 	}, [notifications, removeNotification])
 
 	return (

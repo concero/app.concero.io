@@ -1,16 +1,16 @@
 import { rangoClient } from '../../../../api/rango/rangoClient'
-import { CreateTransactionRequest } from 'rango-types/src/api/main/transactions'
-import { BestRouteResponse } from 'rango-types/src/api/main/routing'
+import { type CreateTransactionRequest } from 'rango-types/src/api/main/transactions'
+import { type BestRouteResponse } from 'rango-types/src/api/main/routing'
 import { TransactionStatus } from 'rango-types/src/api/shared/transactions'
 import { updateRangoTransactionStatus } from '../../../../api/rango/updateRangoTransactionStatus'
-import { TransactionResponse } from '@ethersproject/abstract-provider'
-import { CheckApprovalResponse, CreateTransactionResponse, TransactionStatusResponse } from 'rango-sdk/src/types'
-import { CreateTransactionProps, ExecuteRangoRouteProps } from './types'
-import { providers } from 'ethers'
+import { type TransactionResponse } from '@ethersproject/abstract-provider'
+import { type CheckApprovalResponse, type CreateTransactionResponse, type TransactionStatusResponse } from 'rango-sdk/src/types'
+import { type CreateTransactionProps, type ExecuteRangoRouteProps } from './types'
+import { type providers } from 'ethers'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = async (ms: number) => await new Promise(resolve => setTimeout(resolve, ms))
 
 function handleError(error: Error) {
 	console.error('error', error)
@@ -20,7 +20,7 @@ function handleError(error: Error) {
 			category: category.SwapCard,
 			action: action.SwapRejected,
 			label: 'User rejected swap',
-			data: { provider: 'rango', error: error },
+			data: { provider: 'rango', error },
 		})
 		throw new Error('user rejected')
 	}
@@ -92,7 +92,7 @@ async function executeRangoSwap({
 
 				if (approvalResponse.isApproved) break
 				if (!approvalResponse.isApproved && approvalResponse.txStatus === TransactionStatus.FAILED) break
-				if (!approvalResponse.isApproved && approvalResponse.txStatus == TransactionStatus.SUCCESS) break
+				if (!approvalResponse.isApproved && approvalResponse.txStatus === TransactionStatus.SUCCESS) break
 			} catch (error) {
 				console.error('error', error)
 			}

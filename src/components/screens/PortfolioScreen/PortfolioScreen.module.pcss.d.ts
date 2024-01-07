@@ -3,7 +3,7 @@ declare const identifiersMap: CssIdentifiersMap
 
 export default identifiersMap
 
-export type CssIdentifiersMap = {
+export interface CssIdentifiersMap {
 	container: string | undefined
 	horizontalCardStack: string | undefined
 	mainCardStack: string | undefined

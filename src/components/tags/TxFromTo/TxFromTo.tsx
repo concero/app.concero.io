@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import className from './TxFromTo.module.pcss'
 

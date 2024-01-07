@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from 'react'
+import { createContext, type ReactNode } from 'react'
 import { useListModalReducer } from '../components/modals/Modal/listModalReducer'
 
 export const ModalContext = createContext(null)

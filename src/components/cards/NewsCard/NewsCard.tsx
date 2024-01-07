@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { type FC, useContext, useEffect } from 'react'
 import { Table } from '../../layout/Table/Table'
 import classNames from './NewsCard.module.pcss'
 import { getMoreNews, getNews } from './getNews'
@@ -9,7 +9,7 @@ import { useNewsReducer } from './newsReducer'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../buttons/ListEntityButton/ListEntityButton'
-import { DataContextValue } from '../../../hooks/DataContext/types'
+import { type DataContextValue } from '../../../hooks/DataContext/types'
 import { Button } from '../../buttons/Button/Button'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
@@ -70,8 +70,10 @@ export const NewsCard: FC<NewsCardProps> = () => {
 				title={t('modal.selectToken')}
 				isOpen={isModalVisible}
 				setIsOpen={value => dispatch({ type: 'SET_MODAL_VISIBILITY', payload: value })}
-				onSelect={token => handleSelectToken(token)}
-				getItems={({ offset, limit, search }) => getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
+				onSelect={token => {
+					handleSelectToken(token)
+				}}
+				getItems={async ({ offset, limit, search }) => await getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
 				RenderItem={ListEntityButton}
 			/>
 		</>
