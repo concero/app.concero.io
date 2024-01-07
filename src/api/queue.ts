@@ -10,7 +10,7 @@ interface Request {
 const MAX_RETRIES = 0
 
 class Queue {
-	private queue: Request[] = []
+	private readonly queue: Request[] = []
 
 	async add(request: AxiosRequestConfig): Promise<AxiosResponse> {
 		return await new Promise((resolve, reject) => {
