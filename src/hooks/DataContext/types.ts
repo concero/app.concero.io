@@ -1,18 +1,18 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react'
-import { Chain, Token } from '../../api/concero/types'
+import { type Dispatch, type ReactNode, type SetStateAction } from 'react'
+import { type Chain, type Token } from '../../api/concero/types'
 
 export interface DataProviderProps {
 	children: ReactNode
 }
 
-export type GetTokensParams = {
+export interface GetTokensParams {
 	chainId: string
 	offset: number
 	limit: number
 	search?: string
 }
 
-export type GetChainsParams = {
+export interface GetChainsParams {
 	chainId?: string
 	offset?: number
 	limit?: number

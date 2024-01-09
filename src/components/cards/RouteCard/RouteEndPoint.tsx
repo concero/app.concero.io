@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { type FC, useContext, useEffect, useState } from 'react'
 import classNames from './RouteCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { DataContext } from '../../../hooks/DataContext/DataContext'

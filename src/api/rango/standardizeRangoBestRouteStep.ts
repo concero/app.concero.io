@@ -1,6 +1,6 @@
-import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
+import { type SwapFee, type SwapResult } from 'rango-types/src/api/main/common'
 import BigNumber from 'bignumber.js'
-import { Fees, Gas, Step } from '../../types/StandardRoute'
+import { type Fees, type Gas, type Step } from '../../types/StandardRoute'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { rangoChainsMap } from './rangoChainsMap'
 import { config } from '../../constants/config'
@@ -8,9 +8,9 @@ import { config } from '../../constants/config'
 function getFees(step: SwapResult): Fees[] | Gas[] | [] {
 	return step.fee.map((feeItem: SwapFee): Fees => {
 		return {
-			amount: roundNumberByDecimals(feeItem.amount, 2) as string,
+			amount: roundNumberByDecimals(feeItem.amount, 2)!,
 			asset: {
-				chainId: rangoChainsMap[feeItem.asset.blockchain] as string,
+				chainId: rangoChainsMap[feeItem.asset.blockchain],
 				symbol: feeItem.asset.symbol,
 				address: feeItem.asset.address ?? config.NULL_ADDRESS,
 			},
@@ -38,12 +38,12 @@ export function standardizeRangoBestRouteStep(step: SwapResult): Step {
 		to: {
 			token: {
 				name: step.to.symbol,
-				address: step.to.address as string,
+				address: step.to.address!,
 				symbol: step.to.symbol,
 				decimals: step.to.decimals,
 				price_usd: step.to.usdPrice?.toString() ?? null,
 				amount: step.toAmount,
-				amount_usd: roundNumberByDecimals(new BigNumber(step.to.usdPrice as number).times(new BigNumber(step.toAmount)).toString(), 4) as string,
+				amount_usd: roundNumberByDecimals(new BigNumber(step.to.usdPrice!).times(new BigNumber(step.toAmount)).toString(), 4)!,
 				logo_uri: step.to.logo,
 			},
 			chain: {

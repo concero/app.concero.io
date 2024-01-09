@@ -1,6 +1,6 @@
 import classNames from './EarnCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
-import { Vault } from '../../screens/EarnScreen/earnReducer/types'
+import { type Vault } from '../../screens/EarnScreen/earnReducer/types'
 import { numberToFormatString, truncate } from '../../../utils/formatting'
 import { CategoryTag } from '../../tags/CategoryTag/CategoryTag'
 import { IconCurrencyDollar } from '@tabler/icons-react'
@@ -24,7 +24,12 @@ export const StakedAmountTag = ({ value }) => {
 
 export function EarnCard({ isSelected, vault, onClick }: StakingCardProps) {
 	return (
-		<div className={`${classNames.container} ${isSelected ? classNames.selected : ''}`} onClick={() => onClick(vault)}>
+		<div
+			className={`${classNames.container} ${isSelected ? classNames.selected : ''}`}
+			onClick={() => {
+				onClick(vault)
+			}}
+		>
 			<div>
 				<div className={classNames.headerContainer}>
 					<div className={classNames.headerSideContainer}>

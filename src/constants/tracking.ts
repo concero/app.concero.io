@@ -71,7 +71,7 @@ export enum action {
 	APIError = 'action_api_error',
 	SubmitTxError = 'action_submit_tx_error',
 
-	//Header
+	// Header
 	ToggleTheme = 'action_toggle_theme',
 	ToggleFeedbackModalVisible = 'action_toggle_feedback_modal_visible',
 	FeedbackSubmitSuccess = 'action_feedback_submit_success',

@@ -1,10 +1,10 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconArrowLeft } from '@tabler/icons-react'
 import classNames from './EarnTXProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
 import { colors } from '../../../../../constants/colors'
 import { Button } from '../../../../buttons/Button/Button'
-import { IStep, ManageState } from '../useEarnReducer/types'
+import { type IStep, type ManageState } from '../useEarnReducer/types'
 import { TransactionStep } from '../../../../layout/TransactionStep/TransactionStep'
 import { useTranslation } from 'react-i18next'
 
@@ -29,7 +29,13 @@ export const EarnTXProgress: FC<SwapProgressProps> = ({ manageState, handleGoBac
 				))}
 			</div>
 			{status === 'failed' || status === 'success' ? (
-				<Button leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />} onClick={() => handleGoBack()} variant="secondary">
+				<Button
+					leftIcon={<IconArrowLeft size={20} color={colors.primary.main} />}
+					onClick={() => {
+						handleGoBack()
+					}}
+					variant="secondary"
+				>
 					{t('button.goBack')}
 				</Button>
 			) : null}

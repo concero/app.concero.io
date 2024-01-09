@@ -1,4 +1,4 @@
-import { EarnState } from './types'
+import { type EarnState } from './types'
 
 export const initialState: EarnState = {
 	filter: {

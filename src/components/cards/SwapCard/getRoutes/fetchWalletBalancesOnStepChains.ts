@@ -1,12 +1,12 @@
-import { Fees, StandardRoute, Step } from '../../../../types/StandardRoute'
-import { Dispatch } from 'react'
-import { SwapAction, SwapActionType } from '../swapReducer/types'
+import { type Fees, type StandardRoute, type Step } from '../../../../types/StandardRoute'
+import { type Dispatch } from 'react'
+import { type SwapAction, SwapActionType } from '../swapReducer/types'
 import { fetchBalancesByChainIds } from '../../../../api/concero/fetchBalancesByChainIds'
 
 export async function fetchWalletBalancesOnStepChains(routes: StandardRoute[], swapDispatch: Dispatch<SwapAction>, walletAddress: string): Promise<void> {
-	if (!routes.length) return
+	if (routes.length === 0) return
 
-	let chainIds: string[] = []
+	const chainIds: string[] = []
 
 	routes.forEach((route: StandardRoute) => {
 		route.steps?.forEach((step: Step) => {
@@ -18,8 +18,8 @@ export async function fetchWalletBalancesOnStepChains(routes: StandardRoute[], s
 		})
 	})
 
-	if (!chainIds.length) return
+	if (chainIds.length === 0) return
 
-	const walletBalances = await fetchBalancesByChainIds(chainIds, walletAddress as string)
+	const walletBalances = await fetchBalancesByChainIds(chainIds, walletAddress)
 	swapDispatch({ type: SwapActionType.SET_WALLET_BALANCES, balances: walletBalances })
 }

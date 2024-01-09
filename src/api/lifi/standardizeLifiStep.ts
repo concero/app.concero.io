@@ -1,12 +1,12 @@
-import * as lifiTypes from '@lifi/sdk/dist/types'
-import { Fees, Gas, Step } from '../../types/StandardRoute'
+import type * as lifiTypes from '@lifi/sdk/dist/types'
+import { type Fees, type Gas, type Step } from '../../types/StandardRoute'
 import { addingTokenDecimals } from '../../utils/formatting'
-import { FeeCost, GasCost } from '@lifi/types/dist/cjs/step'
+import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
 
 function getFees(step: lifiTypes.Step): Fees[] | [] {
 	const result = step.estimate.feeCosts?.map((fee: FeeCost) => {
 		return {
-			amount: addingTokenDecimals(fee.amount, fee.token.decimals) as string,
+			amount: addingTokenDecimals(fee.amount, fee.token.decimals)!,
 			asset: {
 				chainId: fee.token.chainId.toString(),
 				symbol: fee.token.symbol,
@@ -22,7 +22,7 @@ function getFees(step: lifiTypes.Step): Fees[] | [] {
 function getGas(step: lifiTypes.Step): Gas[] | [] {
 	const result = step.estimate.gasCosts?.map((gas: GasCost) => {
 		return {
-			amount: addingTokenDecimals(gas.amount, gas.token.decimals) as string,
+			amount: addingTokenDecimals(gas.amount, gas.token.decimals)!,
 			type: gas.type,
 			asset: {
 				chainId: gas.token.chainId.toString(),
@@ -63,7 +63,7 @@ export const standardizeLifiStep = (step: lifiTypes.Step): Step => {
 				decimals: step.action.toToken.decimals,
 				price_usd: step.action.toToken.priceUSD,
 				logo_uri: step.action.toToken.logoURI ?? null,
-				amount: addingTokenDecimals(step.estimate.toAmount, toDecimals) as string,
+				amount: addingTokenDecimals(step.estimate.toAmount, toDecimals)!,
 			},
 			chain: {
 				id: step.action.toChainId.toString(),

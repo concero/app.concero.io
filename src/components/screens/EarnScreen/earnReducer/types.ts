@@ -1,7 +1,7 @@
-import { Chain } from '../../../cards/SwapCard/types'
-import { Address } from 'viem'
+import { type Chain } from '../../../cards/SwapCard/types'
+import { type Address } from 'viem'
 
-export type Filter = {
+export interface Filter {
 	search: string
 	all: boolean
 	my_holdings: boolean
@@ -102,7 +102,7 @@ export interface Vault {
 	stakedAmount?: string
 }
 
-export type InputTokens = {
+export interface InputTokens {
 	_id: string
 	name: string
 	symbol: string
@@ -125,7 +125,7 @@ export interface EarnState {
 	chains: Chain[]
 	address: Address
 	loading: boolean
-	balances: { [key: string]: string | null }
+	balances: Record<string, string | null>
 }
 
 export type EarnAction =
@@ -134,5 +134,5 @@ export type EarnAction =
 	| { type: 'SET_VAULTS'; payload: Vault[] }
 	| { type: 'PUSH_VAULTS'; payload: Vault[] }
 	| { type: 'SET_LOADING'; payload: boolean }
-	| { type: 'SET_BALANCES'; payload: { [key: string]: string | null } }
+	| { type: 'SET_BALANCES'; payload: Record<string, string | null> }
 	| { type: 'SET_ADDRESS'; payload: Address }

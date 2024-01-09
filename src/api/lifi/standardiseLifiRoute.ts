@@ -1,13 +1,13 @@
-import * as lifiTypes from '@lifi/sdk/dist/types'
+import type * as lifiTypes from '@lifi/sdk/dist/types'
 import { standardizeLifiStep } from './standardizeLifiStep'
-import { Fees, StandardRoute } from '../../types/StandardRoute'
+import { type Fees, type StandardRoute } from '../../types/StandardRoute'
 import BigNumber from 'bignumber.js'
 import { addingTokenDecimals, roundNumberByDecimals } from '../../utils/formatting'
-import { FeeCost, GasCost, Step } from '@lifi/types/dist/cjs/step'
-import { LifiStep } from '@lifi/types/dist/cjs'
+import { type FeeCost, type GasCost, type Step } from '@lifi/types/dist/cjs/step'
+import { type LifiStep } from '@lifi/types/dist/cjs'
 
 function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
-	let result: Fees[] = []
+	const result: Fees[] = []
 
 	route.steps.forEach((step: Step) => {
 		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
@@ -15,11 +15,11 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 			if (matchedFeeAsset) {
 				const index = result.findIndex((item: Fees) => item.asset.address === fee.token.address)
 				const normalizedFeeAmount = addingTokenDecimals(fee.amount, fee.token.decimals)
-				result[index].amount = new BigNumber(result[index].amount).plus(normalizedFeeAmount as string).toString()
+				result[index].amount = new BigNumber(result[index].amount).plus(normalizedFeeAmount!).toString()
 			} else {
 				const normalizedFeeAmount = addingTokenDecimals(fee.amount, fee.token.decimals)
 				result.push({
-					amount: normalizedFeeAmount as string,
+					amount: normalizedFeeAmount!,
 					asset: {
 						chainId: fee.token.chainId.toString(),
 						symbol: fee.token.symbol,
@@ -35,11 +35,11 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 			if (result.find((item: Fees) => item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString())) {
 				const index = result.findIndex((item: Fees) => item.asset.address === gas.token.address)
 				const normalizedGasAmount = addingTokenDecimals(gas.amount, gas.token.decimals)
-				result[index].amount = new BigNumber(result[index].amount).plus(normalizedGasAmount as string).toString()
+				result[index].amount = new BigNumber(result[index].amount).plus(normalizedGasAmount!).toString()
 			} else {
 				const normalizedGasAmount = addingTokenDecimals(gas.amount, gas.token.decimals)
 				result.push({
-					amount: normalizedGasAmount as string,
+					amount: normalizedGasAmount!,
 					asset: {
 						chainId: gas.token.chainId.toString(),
 						symbol: gas.token.symbol,

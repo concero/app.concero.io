@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from '../SwapCard.module.pcss'
 import { CryptoIcon } from '../../../tags/CryptoSymbol/CryptoIcon'
-import { Token } from '../types'
+import { type Token } from '../types'
 
 interface RateTagProps {
 	from: Token

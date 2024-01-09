@@ -1,4 +1,4 @@
-import { ITransactionCard } from '../types'
+import { type ITransactionCard } from '../types'
 import { Button } from '../../../buttons/Button/Button'
 import classNames from './TransactionItemCard.module.pcss'
 import { truncateWallet } from '../../../../utils/formatting'

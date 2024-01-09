@@ -1,5 +1,5 @@
 import classNames from './TextArea.module.pcss'
-import { ChangeEvent, forwardRef, TextareaHTMLAttributes } from 'react'
+import { type ChangeEvent, forwardRef, type TextareaHTMLAttributes } from 'react'
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 	onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void

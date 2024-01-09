@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useMemo } from 'react'
+import { type FC, memo, useEffect, useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import { useEarnReducer } from './earnReducer/stakingScreenReducer'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'

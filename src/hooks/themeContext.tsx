@@ -1,6 +1,6 @@
 // ThemeContext.tsx
-import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react'
-import { Colors } from '../constants/colors'
+import { createContext, type FC, type ReactNode, useContext, useEffect, useState } from 'react'
+import { type Colors } from '../constants/colors'
 
 import lightColors from '../constants/json/colors-light.json'
 import darkColors from '../constants/json/colors-dark.json'
@@ -8,7 +8,7 @@ import { trackEvent } from './useTracking'
 import { action, category } from '../constants/tracking'
 import { getItem, setItem } from '../utils/localStorage'
 
-type ThemeContextType = {
+interface ThemeContextType {
 	theme: 'light' | 'dark'
 	toggleTheme: () => void
 	colors: Colors
@@ -16,7 +16,9 @@ type ThemeContextType = {
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 export const useTheme = () => useContext(ThemeContext)
-type ThemeProviderProps = { children: ReactNode }
+interface ThemeProviderProps {
+	children: ReactNode
+}
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 	const bodyClassTheme = getItem<'light' | 'dark'>('theme', 'dark') ?? 'dark'

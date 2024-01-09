@@ -1,15 +1,15 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { RatioItem } from './RatioItem'
 import classNames from './RatioChart.module.pcss'
 
 interface RatioChartProps {
 	data: {
 		total: number
-		items: {
+		items: Array<{
 			name: string
 			value: number
 			color: string
-		}[]
+		}>
 	}
 }
 

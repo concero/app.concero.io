@@ -1,10 +1,10 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconArrowRight, IconTransform } from '@tabler/icons-react'
 import classNames from './RouteCard.module.pcss'
 import { renderStepsCountTag } from './renderStepsCountTag'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { RouteEndPoint } from './RouteEndPoint'
-import { RouteStepTagProps } from './types'
+import { type RouteStepTagProps } from './types'
 import { renderAdditionalInfo } from './renderAdditionalInfo'
 
 export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesCollapsed, setIsRoutesCollapsed, length, isSelected }) => {

@@ -1,14 +1,10 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { config } from '../constants/config'
 import queue from './queue.ts'
 
-interface GetParams {
-	[key: string]: any
-}
+type GetParams = Record<string, any>
 
-interface PostData {
-	[key: string]: any
-}
+type PostData = Record<string, any>
 
 const api = axios.create({
 	baseURL: config.baseURL,
@@ -24,7 +20,7 @@ api.interceptors.request.use(
 		}
 		return config
 	},
-	error => Promise.reject(error),
+	async error => await Promise.reject(error),
 )
 
 export async function get({ url, headers }): Promise<any> {

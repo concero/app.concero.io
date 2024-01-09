@@ -1,6 +1,6 @@
-import { Dispatch, MutableRefObject } from 'react'
+import { type Dispatch, type MutableRefObject } from 'react'
 import { getRoutes } from '../getRoutes/getRoutes'
-import { Settings, SwapAction, SwapStateDirection } from '../swapReducer/types'
+import { type Settings, type SwapAction, type SwapStateDirection } from '../swapReducer/types'
 
 export const handleFetchRoutes = async (
 	from: SwapStateDirection,
@@ -11,7 +11,9 @@ export const handleFetchRoutes = async (
 ) => {
 	try {
 		if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
-		const typingTimeoutId = setTimeout(() => getRoutes(from, to, settings, swapDispatch), 700)
+		const typingTimeoutId = setTimeout(async () => {
+			await getRoutes(from, to, settings, swapDispatch)
+		}, 700)
 		typingTimeoutRef.current = typingTimeoutId
 	} catch (e) {
 		console.error(e)

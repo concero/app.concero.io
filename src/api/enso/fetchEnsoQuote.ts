@@ -1,6 +1,6 @@
 import { config } from '../../constants/config'
 import { get } from '../client'
-import { EnsoRouteResponse, FetchEnsoQuoteParams } from './types'
+import { type EnsoRouteResponse, type FetchEnsoQuoteParams } from './types'
 
 export async function fetchEnsoRoute({ chainId, fromAddress, amountIn, tokenIn, tokenOut }: FetchEnsoQuoteParams): Promise<EnsoRouteResponse | void> {
 	const headers = {

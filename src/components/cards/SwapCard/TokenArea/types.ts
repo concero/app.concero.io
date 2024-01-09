@@ -8,7 +8,7 @@ export interface TokenAreaProps {
 	chains: any[]
 }
 
-type Selection = {
+interface Selection {
 	chain: {
 		name: string
 		symbol: string

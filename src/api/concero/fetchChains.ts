@@ -1,5 +1,5 @@
 import { get } from '../client'
-import { Chain } from '../../components/cards/SwapCard/types'
+import { type Chain } from '../../components/cards/SwapCard/types'
 
 interface FetchChains {
 	chainId?: string | null

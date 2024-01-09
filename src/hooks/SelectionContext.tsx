@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useReducer } from 'react'
+import { createContext, type ReactNode, useContext, useReducer } from 'react'
 import { DataContext } from './DataContext/DataContext'
 
 interface SelectionProviderProps {

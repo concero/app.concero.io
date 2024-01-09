@@ -1,6 +1,6 @@
-import { Dispatch } from 'react'
+import { type Dispatch } from 'react'
 import { fetchStakingChartData } from '../../../api/defilama/fetchStakingChartData'
-import { Vault } from '../../screens/EarnScreen/earnReducer/types'
+import { type Vault } from '../../screens/EarnScreen/earnReducer/types'
 
 interface FetchDataParams {
 	selectedVault: Vault

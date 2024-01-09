@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react'
 import { Card } from '../Card/Card'
@@ -6,7 +6,7 @@ import classNames from './RouteCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { renderTags } from './renderTags'
 import { renderSteps } from './renderSteps'
-import { RouteCardProps } from './types'
+import { type RouteCardProps } from './types'
 import { numberToFormatString, roundNumberByDecimals } from '../../../utils/formatting'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { action, category } from '../../../constants/tracking'
@@ -33,7 +33,12 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 	}, [isRoutesCollapsed])
 
 	return (
-		<Card className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`} onClick={() => onClick(route.id)}>
+		<Card
+			className={`${classNames.container} ${isSelected ? classNames.selectedCard : ''}`}
+			onClick={() => {
+				onClick(route.id)
+			}}
+		>
 			<div className={classNames.cardHeader}>
 				<div className={classNames.cardHeaderLeftSide}>
 					{!isMobile ? <h4>Net value:</h4> : null}
@@ -44,7 +49,9 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 					variant="black"
 					rightIcon={isRoutesCollapsed ? <IconChevronDown size={20} /> : <IconChevronUp size={20} />}
 					size="sm"
-					onClick={e => handleButtonClick(e)}
+					onClick={e => {
+						handleButtonClick(e)
+					}}
 					className={isSelected ? classNames.bestButton : ''}
 				/>
 			</div>

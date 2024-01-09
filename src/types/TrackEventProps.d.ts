@@ -3,7 +3,7 @@ export interface TrackEventProps {
 	category: string
 	label: string
 	value?: number
-	data?: { [key: string]: string | number | boolean | any }
+	data?: Record<string, string | number | boolean | any>
 }
 
 export interface TrackTransactionProps {

@@ -21,11 +21,15 @@ export function TargetInfoCard() {
 		const items = [
 			{
 				title: CardTarget.news as string,
-				onClick: () => setCardTarget(CardTarget.news),
+				onClick: () => {
+					setCardTarget(CardTarget.news)
+				},
 			},
 			{
 				title: CardTarget.transactions as string,
-				onClick: () => setCardTarget(CardTarget.transactions),
+				onClick: () => {
+					setCardTarget(CardTarget.transactions)
+				},
 			},
 		]
 

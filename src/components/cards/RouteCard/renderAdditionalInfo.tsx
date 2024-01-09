@@ -1,7 +1,7 @@
 import { IconClock, IconPigMoney } from '@tabler/icons-react'
 import classNames from './RouteCard.module.pcss'
 import { colors } from '../../../constants/colors'
-import { Step } from '../../../types/StandardRoute'
+import { type Step } from '../../../types/StandardRoute'
 import { secondsConverter } from '../../../utils/formatting'
 
 interface AdditionalInfoTagProps {

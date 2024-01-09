@@ -1,4 +1,4 @@
-import { ButtonProps } from './types'
+import { type ButtonProps } from './types'
 import styles from './Button.module.pcss'
 
 export function getButtonClasses(
@@ -13,6 +13,6 @@ export function getButtonClasses(
 	const variantClass = variant ? styles[variant] : ''
 	const isLoadingClass = isLoading ? styles.isLoading : ''
 	const isDisabledClass = isDisabled ? styles.isDisabled : ''
-	const additionalClasses = className && className.split(' ')
+	const additionalClasses = className?.split(' ')
 	return baseClasses.concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, additionalClasses).join(' ')
 }

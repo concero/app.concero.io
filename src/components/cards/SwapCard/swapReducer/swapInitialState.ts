@@ -1,4 +1,4 @@
-import { SwapState } from './types'
+import { type SwapState } from './types'
 import { ButtonType } from '../../../buttons/SwapButton/constants'
 
 export const swapInitialState = (selection): SwapState => ({

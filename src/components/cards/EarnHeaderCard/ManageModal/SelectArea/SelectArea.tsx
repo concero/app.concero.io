@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useRef, useState } from 'react'
+import { type Dispatch, useEffect, useRef, useState } from 'react'
 import { numberToFormatString } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import { CryptoSymbol } from '../../../../tags/CryptoSymbol/CryptoSymbol'
@@ -6,7 +6,7 @@ import { TextInput } from '../../../../input/TextInput'
 import classNames from './SelectArea.module.pcss'
 import { ModalType, SwapType } from '../constants'
 import { isFloatInput } from '../../../../../utils/validation'
-import { ManageAction } from '../useEarnReducer/types'
+import { type ManageAction } from '../useEarnReducer/types'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { IconChevronDown } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
@@ -58,7 +58,12 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	}, [currentUsdPrice])
 
 	return (
-		<div className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`} onClick={() => handleAreaClick(inputRef)}>
+		<div
+			className={`${classNames.tokenContainer} ${isFocused ? classNames.inputFocused : ''}`}
+			onClick={() => {
+				handleAreaClick(inputRef)
+			}}
+		>
 			<div className={classNames.tokenRow}>
 				<div className={classNames.tokenRowHeader}>
 					<p>{t(`tokenArea.${direction}`)}</p>
@@ -72,8 +77,12 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 				<div>
 					<TextInput
 						ref={inputRef}
-						onFocus={() => setIsFocused(true)}
-						onBlur={() => setIsFocused(false)}
+						onFocus={() => {
+							setIsFocused(true)
+						}}
+						onBlur={() => {
+							setIsFocused(false)
+						}}
 						variant="inline"
 						placeholder={`0.0 ${selection.token.symbol}`}
 						value={selection.amount}
@@ -86,7 +95,9 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 					)}`}</h5>
 				</div>
 				<Button
-					onClick={() => dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })}
+					onClick={() => {
+						dispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.tokens })
+					}}
 					size="sm"
 					variant="black"
 					rightIcon={!isSelectDisabled && <IconChevronDown size={16} color={'var(--color-text-secondary)'} />}

@@ -1,4 +1,4 @@
-import { SetStateAction } from 'react'
+import { type SetStateAction } from 'react'
 import { fetchProtocolDataById } from '../../../api/concero/fetchProtocolDataById'
 
 export async function getProtocolData(protocolName: string, setProtocolData: SetStateAction<any>) {

@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent, ReactNode, useEffect } from 'react'
+import { type FC, type KeyboardEvent, type ReactNode, useEffect } from 'react'
 import { animated, useSpring, useTransition } from '@react-spring/web'
 import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
@@ -48,11 +48,22 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
 
 	return (
 		fadeAnimation.opacity.to(o => o > 0) && (
-			<animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => setShow(false)}>
+			<animated.div
+				style={fadeAnimation}
+				className={classNames.overlay}
+				onClick={() => {
+					setShow(false)
+				}}
+			>
 				{transitions((style, item) =>
 					item ? (
 						<animated.div style={style} className={classNames.container} onClick={stopPropagation}>
-							<ModalHeader title={title} onClick={() => setShow(false)} />
+							<ModalHeader
+								title={title}
+								onClick={() => {
+									setShow(false)
+								}}
+							/>
 							{children}
 						</animated.div>
 					) : null,

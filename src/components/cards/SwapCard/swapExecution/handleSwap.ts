@@ -1,15 +1,15 @@
 import { handleTransactionError } from '../handlers/handleTransactionError'
 import { handleLifiResponse, handleRangoResponse } from './handleResponses'
 import { updateLifiSteps } from './updateLifiSteps'
-import { GetChainByProviderSymbolI } from '../../../../hooks/DataContext/types'
-import { SwitchChainHookType } from '../SwapInput/types'
-import { Dispatch } from 'react'
+import { type GetChainByProviderSymbolI } from '../../../../hooks/DataContext/types'
+import { type SwitchChainHookType } from '../SwapInput/types'
+import { type Dispatch } from 'react'
 import { executeRangoRoute } from './executeRangoRoute'
-import { Route } from '@lifi/types/dist/cjs'
+import { type Route } from '@lifi/types/dist/cjs'
 import { standardiseLifiRoute } from '../../../../api/lifi/standardiseLifiRoute'
 import { executeLifiRoute } from '../../../../api/lifi/executeLifiRoute'
-import { SwapAction, SwapCardStage, SwapState } from '../swapReducer/types'
-import { providers } from 'ethers'
+import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
+import { type providers } from 'ethers'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
@@ -26,7 +26,10 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
 
-	if (!originalRoute) return console.error('No original route passed')
+	if (!originalRoute) {
+		console.error('No original route passed')
+		return
+	}
 
 	swapDispatch({ type: 'SET_LOADING', payload: true })
 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
@@ -45,7 +48,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			}
 
 			const signer = await getSigner()
-			const acceptExchangeRateUpdateHook = () => Promise.resolve(true)
+			const acceptExchangeRateUpdateHook = async () => await Promise.resolve(true)
 
 			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
 			handleLifiResponse(response, swapDispatch)

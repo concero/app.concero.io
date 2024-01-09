@@ -3,7 +3,7 @@ declare const identifiersMap: CssIdentifiersMap
 
 export default identifiersMap
 
-export type CssIdentifiersMap = {
+export interface CssIdentifiersMap {
 	bottomGridContainer: string | undefined
 	highlightsContainer: string | undefined
 	separator: string | undefined

@@ -3,7 +3,7 @@ declare const identifiersMap: CssIdentifiersMap
 
 export default identifiersMap
 
-export type CssIdentifiersMap = {
+export interface CssIdentifiersMap {
 	black: string | undefined
 	button: string | undefined
 	filled: string | undefined

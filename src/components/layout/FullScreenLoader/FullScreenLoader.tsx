@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react'
+import { type FC, useContext } from 'react'
 import { RaceBy } from '@uiball/loaders'
 import classNames from './FullScreenLoader.module.pcss'
 import { ThemeContext } from '../../../hooks/themeContext'

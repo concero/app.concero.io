@@ -1,8 +1,8 @@
-import { Dispatch } from 'react'
-import { ManageAction, ManageState } from '../useEarnReducer/types'
+import { type Dispatch } from 'react'
+import { type ManageAction, type ManageState } from '../useEarnReducer/types'
 import { ModalType, Status } from '../constants'
 import { getSigner } from '../../../../../web3/getSigner'
-import { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { type SwitchNetworkArgs, type SwitchNetworkResult } from '@wagmi/core'
 import BigNumber from 'bignumber.js'
 import { addingAmountDecimals } from '../../../../../utils/formatting'
 import { fetchApprovalTx } from '../../../../../api/enso/approvalTx'
@@ -22,8 +22,8 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 
 	try {
 		const signer = await getSigner(Number(from.chain.id), switchNetworkAsync)
-		const approvalTx = await fetchApprovalTx(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals) as string)
-		const isApproveNeeded = await checkIsApproveNeeded(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals) as string)
+		const approvalTx = await fetchApprovalTx(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals)!)
+		const isApproveNeeded = await checkIsApproveNeeded(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals)!)
 
 		if (isApproveNeeded) {
 			manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
@@ -35,7 +35,7 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 				await fetchEnsoRoute({
 					chainId: from.chain.id,
 					fromAddress: address,
-					amountIn: addingAmountDecimals(from.amount, from.token.decimals) as string,
+					amountIn: addingAmountDecimals(from.amount, from.token.decimals)!,
 					tokenIn: from.token.address,
 					tokenOut: to.token.address,
 				}),

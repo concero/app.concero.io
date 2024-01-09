@@ -1,6 +1,6 @@
 import { IconArrowDown, IconArrowUp, IconCopy, IconExternalLink } from '@tabler/icons-react'
 import { Modal } from '../../../modals/Modal/Modal'
-import { Protocol } from '../types'
+import { type Protocol } from '../types'
 import classNames from './ProtocolModal.module.pcss'
 import { Avatar } from '../../../tags/Avatar/Avatar'
 import { CategoryTag } from '../../../tags/CategoryTag/CategoryTag'
@@ -104,7 +104,13 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 				<div className={classNames.tagsContainer}>
 					{category && <CategoryTag category={category} />}
 					{address && (
-						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyToClipboard(address)}>
+						<Tag
+							color="grey"
+							leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />}
+							onClick={async () => {
+								await copyToClipboard(address)
+							}}
+						>
 							<p className="body1">{t('protocolModal.contractAddress')}</p>
 						</Tag>
 					)}

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './Avatar.module.pcss'
 
 interface AvatarProps {
@@ -10,7 +10,7 @@ interface AvatarProps {
 const getClasses = (size: AvatarProps['size'], className: AvatarProps['className']) => {
 	const baseClasses = [classNames.container]
 	const sizeClass = size ? classNames[size] : ''
-	const additionalClasses = className && className.split(' ')
+	const additionalClasses = className?.split(' ')
 
 	return baseClasses.concat(sizeClass, additionalClasses).join(' ')
 }

@@ -1,6 +1,6 @@
-import { ComponentType, FC, useEffect, useRef, useState } from 'react'
+import { type ComponentType, type FC, useEffect, useRef, useState } from 'react'
 
-type WithPopoverProps = {
+interface WithPopoverProps {
 	WrappedComponent: ComponentType<any>
 	PopoverComponent: ComponentType<any>
 	popoverProps?: any

@@ -4,10 +4,10 @@ import { CardHeader } from '../CardHeader/CardHeader'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ProtocolCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
-import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { ProtocolModal } from './ProtocolModal/ProtocolModal'
 import { getProtocolData } from './getProtocolData'
-import { Protocol } from './types'
+import { type Protocol } from './types'
 import { useTranslation } from 'react-i18next'
 import { trackEvent } from '../../../hooks/useTracking'
 import { action, category } from '../../../constants/tracking'
@@ -38,7 +38,12 @@ export function ProtocolCard({ earnState }: ProtocolCardProps) {
 	return (
 		<div>
 			<CardHeader title={t('stakingDetailsCard.protocol')} />
-			<Button variant="subtle" onClick={() => setIsOpened(true)}>
+			<Button
+				variant="subtle"
+				onClick={() => {
+					setIsOpened(true)
+				}}
+			>
 				<div className={classNames.cardContainer}>
 					<div className={classNames.avatarContainer}>
 						<Avatar src={selectedVault?.project?.logoURI ?? null} />

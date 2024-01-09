@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconMoneybag } from '@tabler/icons-react'
-import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import classNames from './RewardsCard.module.pcss'
 import { CryptoSymbol } from '../../tags/CryptoSymbol/CryptoSymbol'
 import { CardHeader } from '../CardHeader/CardHeader'
@@ -31,7 +31,7 @@ const RewardsItemCard: FC<RewardsItemCardProps> = ({ name, logoURI, value }) => 
 export const RewardsCard: FC<RewardsCardProps> = ({ earnState }) => {
 	const { t } = useTranslation()
 
-	if (!earnState.selectedVault.rewardTokens || !earnState.selectedVault.rewardTokens.length) {
+	if (!earnState.selectedVault.rewardTokens?.length) {
 		return null
 	}
 
