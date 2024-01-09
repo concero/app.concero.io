@@ -43,9 +43,14 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 
 	function handleMaxButtonClick() {
 		if (!balance) return
-		const clearBalance = balance.substring(0, balance.indexOf(' '))
-		if (!Number(clearBalance)) return
-		handleAmountChange({ value: clearBalance, state, dispatch: swapDispatch, direction: 'from' })
+		const { amount } = balance
+		if (!Number(amount.formatted)) return
+		handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
+	}
+
+	const handleSelectToken = token => {
+		swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
+		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 	}
 
 	useEffect(() => {
@@ -55,11 +60,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 	useEffect(() => {
 		if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
 	}, [state.currentTokenPriceUSD])
-
-	const handleSelectToken = token => {
-		swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
-		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
-	}
 
 	return (
 		<>
@@ -84,7 +84,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 					</div>
 					{balance !== null ? (
 						<Button variant={'subtle'} size={'sm'} onClick={handleMaxButtonClick}>
-							<p>{`Max: ${balance}`}</p>
+							<p>{`Max: ${balance.amount.rounded} ${balance.symbol}`}</p>
 						</Button>
 					) : null}
 				</div>
