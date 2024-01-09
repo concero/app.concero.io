@@ -205,20 +205,3 @@ export function formatNumber(num: number, options: FormatNumberOptions = {}): st
 
 	return result
 }
-
-// // Tests
-// const tests = [
-// 	{ num: 1234567890, options: { decimals: 0 }, expected: '1 B' },
-// 	{ num: 12345678, options: { separator: "'", decimals: 0 }, expected: "12'345'678" },
-// 	{ num: 12345678, options: { decimals: 2 }, expected: '12.35 M' },
-// 	{ num: 123456, options: { decimals: 1 }, expected: '123.5 K' },
-// 	{ num: 0.12345678, options: { decimals: 2 }, expected: '0.12' },
-// 	{ num: 0.00012345678, options: { decimals: 3 }, expected: '< 0.001' },
-// 	// eth token numbers with 18 decimals
-// 	{ num: 253218960916491300, options: { decimals: 18, decimalPlaces: 4, disableUnit: true }, expected: '1.2345' },
-// 	{ num: 1000000, options: { decimals: 6, decimalPlaces: 2, disableUnit: true }, expected: '1.00' },
-// ]
-//
-// for (const test of tests) {
-// 	const result = formatNumber(test.num, test.options)
-// }
