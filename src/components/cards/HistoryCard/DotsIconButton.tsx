@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconDots } from '@tabler/icons-react'
 import { Button } from '../../buttons/Button/Button'
 

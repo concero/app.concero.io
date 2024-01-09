@@ -1,5 +1,5 @@
 import { fetchBalances } from './fetchBalance'
-import { IFetchBalances, UserBalances } from './types'
+import { type IFetchBalances, type UserBalances } from './types'
 
 const chainsMap = {
 	0: '137',
@@ -9,8 +9,8 @@ const chainsMap = {
 	4: '10',
 }
 
-export const getUserBalancesSortedByChain = async (address: string): Promise<{ [key: string]: UserBalances[] } | {}> => {
-	let balances = await Promise.all<IFetchBalances[]>([
+export const getUserBalancesSortedByChain = async (address: string): Promise<Record<string, UserBalances[]> | {}> => {
+	const balances = await Promise.all<IFetchBalances[]>([
 		fetchBalances(address, chainsMap[0]),
 		fetchBalances(address, chainsMap[1]),
 		fetchBalances(address, chainsMap[2]),
@@ -18,7 +18,7 @@ export const getUserBalancesSortedByChain = async (address: string): Promise<{ [
 		fetchBalances(address, chainsMap[4]),
 	])
 
-	let response: { [key: string]: UserBalances[] } | {} = {}
+	const response: Record<string, UserBalances[]> | {} = {}
 
 	for (let i = 0; i < balances.length; i++) {
 		if (!balances[i]?.length) continue

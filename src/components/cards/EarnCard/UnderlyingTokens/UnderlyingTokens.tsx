@@ -1,5 +1,5 @@
 import classNames from './UnderlyingTokens.module.pcss'
-import { InputTokens } from '../../../screens/EarnScreen/earnReducer/types'
+import { type InputTokens } from '../../../screens/EarnScreen/earnReducer/types'
 
 interface UnderlyingTokensProps {
 	underlyingTokens: InputTokens[]

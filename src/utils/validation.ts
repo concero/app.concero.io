@@ -23,7 +23,7 @@ export const passwordStrengthLevel = (password: string): number => {
 	if (/[a-z]/.test(password)) strength++
 	if (/[A-Z]/.test(password)) strength++
 	if (/[0-9]/.test(password)) strength++
-	if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) strength++
+	if (/[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/.test(password)) strength++
 	return strength
 }
 

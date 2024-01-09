@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 
 const client = axios.create({
 	headers: {
@@ -18,7 +18,7 @@ const request = async (options: AxiosRequestConfig): Promise<any> => {
 }
 
 export const get = async (url: string, params?: any, headers?: any): Promise<any> =>
-	request({
+	await request({
 		url,
 		method: 'GET',
 		params,
@@ -26,7 +26,7 @@ export const get = async (url: string, params?: any, headers?: any): Promise<any
 	})
 
 export const post = async (url: string, data: any, headers?: any): Promise<any> =>
-	request({
+	await request({
 		url,
 		method: 'POST',
 		data,

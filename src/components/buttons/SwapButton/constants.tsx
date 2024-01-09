@@ -1,5 +1,5 @@
 import { IconArrowsUpDown, IconGasStation, IconWallet } from '@tabler/icons-react'
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 export enum ButtonType {
 	LOADING = 1,

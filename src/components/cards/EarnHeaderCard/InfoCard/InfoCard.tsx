@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './InfoCard.module.pcss'
 import { Tag } from '../../../tags/Tag/Tag'
 

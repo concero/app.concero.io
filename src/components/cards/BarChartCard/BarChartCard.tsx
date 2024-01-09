@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { colors } from '../../../constants/colors'

@@ -14,7 +14,11 @@ export function WithTooltip({ WrappedComponent, Tooltip, tooltipProps = {} }) {
 	}
 
 	const handleMouseLeave = () => {
-		setTooltipTimeout(setTimeout(() => setTooltipVisible(false), 300))
+		setTooltipTimeout(
+			setTimeout(() => {
+				setTooltipVisible(false)
+			}, 300),
+		)
 		if (tooltipTimeout) clearTimeout(tooltipTimeout)
 	}
 

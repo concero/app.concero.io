@@ -1,5 +1,5 @@
 import { RouteStepTag } from './RouteStepTag'
-import { StandardRoute, Step } from '../../../types/StandardRoute'
+import { type StandardRoute, type Step } from '../../../types/StandardRoute'
 
 export const renderSteps = (route: StandardRoute, isRoutesCollapsed: boolean, setIsRoutesCollapsed: () => void, isSelected: boolean) => (
 	<>

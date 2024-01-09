@@ -1,5 +1,5 @@
-import { ModalType, Status } from '../constants'
-import { EnsoRouteResponse } from '../../../../../api/enso/types'
+import { type ModalType, type Status } from '../constants'
+import { type EnsoRouteResponse } from '../../../../../api/enso/types'
 
 interface Token {
 	name: string

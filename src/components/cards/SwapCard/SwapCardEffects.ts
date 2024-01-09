@@ -1,9 +1,9 @@
-import { Dispatch, MutableRefObject, useEffect } from 'react'
+import { type Dispatch, type MutableRefObject, useEffect } from 'react'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { getBalance } from '../../../utils/getBalance'
 import { clearRoutes } from './handlers/handleRoutes'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
-import { SwapAction, SwapState } from './swapReducer/types'
+import { type SwapAction, type SwapState } from './swapReducer/types'
 import { setSwapCard } from './handlers/setSwapCard'
 
 interface UseSwapCardEffectsProps {
@@ -29,7 +29,9 @@ export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch,
 	useEffect(() => {
 		clearRoutes(typingTimeoutRef, swapDispatch)
 		handleFetchRoutes(from, to, settings, swapDispatch, typingTimeoutRef)
-		return () => clearRoutes(typingTimeoutRef, swapDispatch)
+		return () => {
+			clearRoutes(typingTimeoutRef, swapDispatch)
+		}
 	}, [from.token, from.amount, from.chain, to.token, to.chain])
 
 	useEffect(() => {

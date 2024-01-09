@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './EarnHighlightsCard.module.pcss'
 import { Highlight } from '../../tags/Highlight/Highlight'
-import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { formatNumber } from '../../../utils/formatting'
 import { useTranslation } from 'react-i18next'
 

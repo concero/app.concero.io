@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { IconArrowWaveRightUp, IconClock, IconPigMoney } from '@tabler/icons-react'
 import { Tag } from '../../tags/Tag/Tag'
 import classNames from './RouteCard.module.pcss'
-import { StandardRoute } from '../../../types/StandardRoute'
+import { type StandardRoute } from '../../../types/StandardRoute'
 import { capitalize, numberToFormatString, secondsConverter } from '../../../utils/formatting'
 import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
@@ -26,7 +26,12 @@ export const renderTags = (route: StandardRoute, isSelected: boolean, getTextCol
 				</Tag>
 			) : null}
 			{route.insurance ? (
-				<Tag color="green" onClick={e => handleInsuranceButtonClick(e)}>
+				<Tag
+					color="green"
+					onClick={e => {
+						handleInsuranceButtonClick(e)
+					}}
+				>
 					<p style={{ color: 'inherit', flexWrap: 'nowrap' }}>{t('swapCard.insurance')}</p>
 					<Beacon isOn={route.insurance?.state === 'INSURED'} color="green" />
 				</Tag>

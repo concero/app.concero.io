@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './SwapProgress.module.pcss'
 import { Avatar } from '../../../tags/Avatar/Avatar'
-import { Direction } from '../../../../types/StandardRoute'
+import { type Direction } from '../../../../types/StandardRoute'
 import { useTranslation } from 'react-i18next'
 
 interface TokenInfoProps {

@@ -1,9 +1,9 @@
 import { rangoClient } from './rangoClient'
 import { config } from '../../constants/config'
 import { standardizeRangoBestRoute } from './standardizeRangoBestRoute'
-import { Direction, StandardRoute } from '../../types/StandardRoute'
-import { Settings } from '../../components/cards/SwapCard/swapReducer/types'
-import { BestRouteRequest } from 'rango-sdk/src/types'
+import { type Direction, type StandardRoute } from '../../types/StandardRoute'
+import { type Settings } from '../../components/cards/SwapCard/swapReducer/types'
+import { type BestRouteRequest } from 'rango-sdk/src/types'
 
 interface IFetchRangoRoutes {
 	from: Direction
@@ -28,17 +28,17 @@ export const fetchRangoRoutes = async ({ from, to, settings }: IFetchRangoRoutes
 			symbol: to.token.symbol,
 			address: to.token.address === config.NULL_ADDRESS ? null : to.token.address,
 		},
-		amount: from.amount as string,
+		amount: from.amount!,
 		checkPrerequisites: true,
 		connectedWallets: [],
-		selectedWallets: { [fromRangoChainSymbol]: from.address as string, [toRangoChainSymbol]: from.address as string },
+		selectedWallets: { [fromRangoChainSymbol]: from.address!, [toRangoChainSymbol]: from.address! },
 		affiliateRef: process.env.RANGO_AFFILIATE_REF,
 		affiliatePercent: Number(process.env.RANGO_AFFILIATE_PERCENTAGE),
 		slippage: settings.slippage_percent,
 	}
 
 	const route = await rangoClient.getBestRoute(quoteParams)
-	if (!route || !route.result) return []
+	if (!route?.result) return []
 
 	return [await standardizeRangoBestRoute(route, from, to)]
 }

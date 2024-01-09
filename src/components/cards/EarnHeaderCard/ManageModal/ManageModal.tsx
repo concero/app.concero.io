@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from 'react'
 import { Modal } from '../../../modals/Modal/Modal'
-import { EarnState } from '../../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../../screens/EarnScreen/earnReducer/types'
 import classNames from './ManageModal.module.pcss'
 import { SelectArea } from './SelectArea/SelectArea'
 import { useEarnReducer } from './useEarnReducer/useEarnReducer'
@@ -13,7 +13,7 @@ import { Details } from './Details/Details'
 import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
-import { DataContextValue } from '../../../../hooks/DataContext/types'
+import { type DataContextValue } from '../../../../hooks/DataContext/types'
 
 import { clearRoute } from './clearRoute'
 import { EarnTXProgress } from './EarnTXProgress/EarnTXProgress'
@@ -64,7 +64,7 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 	}
 
 	async function populateSelections(): Promise<void> {
-		const [chains, tokens] = await Promise.all([getChains({}), getTokens({ chainId: earnState.selectedVault?.chain_id as string, offset: 0, limit: 15 })])
+		const [chains, tokens] = await Promise.all([getChains({}), getTokens({ chainId: earnState.selectedVault?.chain_id!, offset: 0, limit: 15 })])
 		const chain = chains.find(chain => chain.id === earnState.selectedVault?.chain_id)
 		manageDispatch({ type: 'SET_FROM_SELECTION', chain, token: tokens[0] })
 		manageDispatch({ type: 'SET_TO_SELECTION', payload: earnState.selectedVault })
@@ -80,7 +80,7 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 	}, [manageState.from.amount, manageState.from.chain.id, manageState.to.chain.id, manageState.from.token.address, manageState.to.token.address])
 
 	useEffect(() => {
-		if (swapType == SwapType.stake) {
+		if (swapType === SwapType.stake) {
 			getBalance({ dispatch: manageDispatch, from: manageState.from, address: manageState.address })
 		} else {
 			const balanceAmount = earnState?.selectedVault?.stakedAmount.toString() ?? null

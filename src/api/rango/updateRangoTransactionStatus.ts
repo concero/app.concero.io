@@ -1,13 +1,13 @@
 import { TransactionStatus } from 'rango-sdk'
-import { TransactionStatusResponse } from 'rango-sdk/src/types'
-import { Dispatch } from 'react'
-import { SwapAction } from '../../components/cards/SwapCard/swapReducer/types'
+import { type TransactionStatusResponse } from 'rango-sdk/src/types'
+import { type Dispatch } from 'react'
+import { type SwapAction } from '../../components/cards/SwapCard/swapReducer/types'
 
 export function updateRangoTransactionStatus(txStatus: TransactionStatusResponse, swapDispatch: Dispatch<SwapAction>) {
 	const txLink = txStatus.explorerUrl[0]?.url ?? null
 	const { status } = txStatus
 
-	swapDispatch({ type: 'UPDATE_PREV_RANGO_STEPS', currentTransactionStatus: status as TransactionStatus })
+	swapDispatch({ type: 'UPDATE_PREV_RANGO_STEPS', currentTransactionStatus: status! })
 
 	switch (status) {
 		case TransactionStatus.FAILED: {
@@ -23,7 +23,7 @@ export function updateRangoTransactionStatus(txStatus: TransactionStatusResponse
 			return
 		}
 		case TransactionStatus.SUCCESS: {
-			let body = 'Your transaction was successful.'
+			const body = 'Your transaction was successful.'
 			swapDispatch({
 				type: 'APPEND_SWAP_STEP',
 				payload: { status: 'success', title: 'Swap completed', body, txLink },

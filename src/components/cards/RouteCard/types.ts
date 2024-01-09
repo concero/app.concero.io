@@ -1,4 +1,4 @@
-import { StandardRoute, Step } from '../../../types/StandardRoute'
+import { type StandardRoute, type Step } from '../../../types/StandardRoute'
 
 export interface RouteStepTagProps {
 	step: Step

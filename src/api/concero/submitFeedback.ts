@@ -38,7 +38,7 @@ export async function submitTx({ tx_id, status, session_id, replay_id, provider,
 	const url = `${config.baseURL}/log/tx`
 	try {
 		const data = { tx_id, status, session_id, replay_id, provider, tx_data }
-		let res = await post(url, data)
+		const res = await post(url, data)
 		return res
 	} catch (error) {
 		console.error(error)

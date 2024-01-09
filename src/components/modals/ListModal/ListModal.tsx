@@ -1,8 +1,8 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
 import { Modal } from '../Modal/Modal'
 import classNames from './ListModal.module.pcss'
-import { MultiSelectModalProps } from './types'
+import { type MultiSelectModalProps } from './types'
 import { TextInput } from '../../input/TextInput'
 
 export const ListModal: FC<MultiSelectModalProps> = ({

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { type FC, type ReactNode } from 'react'
 import classNames from './CardHeader.module.pcss'
 import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
 

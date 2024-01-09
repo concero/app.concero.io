@@ -30,13 +30,13 @@ export const columns = () => {
 						href={item.url}
 						target="_blank"
 						rel="noreferrer"
-						onClick={() =>
-							trackEvent({
+						onClick={async () => {
+							await trackEvent({
 								category: category.NewsCard,
 								action: action.ExternalLinkClicked,
 								label: item.url,
 							})
-						}
+						}}
 					>
 						<p className={classNames.truncate}>{item.source_info.name}</p>
 					</a>

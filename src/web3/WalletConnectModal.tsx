@@ -18,7 +18,7 @@ export function WalletConnectModal() {
 				'--w3m-overlay-backdrop-filter': 'blur(10px)',
 				'--w3m-color-overlay': 'transparent',
 			}}
-			projectId={projectId as string}
+			projectId={projectId!}
 			ethereumClient={ethereumClient}
 		/>
 	)

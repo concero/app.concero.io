@@ -1,6 +1,6 @@
 import { get } from '../client'
-import { EarnState, Filter } from '../../components/screens/EarnScreen/earnReducer/types'
-import { Chain } from '../../components/cards/SwapCard/types'
+import { type EarnState, type Filter } from '../../components/screens/EarnScreen/earnReducer/types'
+import { type Chain } from '../../components/cards/SwapCard/types'
 
 function getChainsQuery(filter: Filter) {
 	if (!filter) return ''
@@ -35,7 +35,7 @@ function getMyPositionsQuery(earnState: EarnState, address: string) {
 function getCategoryQuery(filter: Filter) {
 	if (!filter) return ''
 	const { category } = filter
-	if (!category.length) return ''
+	if (category.length === 0) return ''
 	return `category=${category.join(',')}`
 }
 

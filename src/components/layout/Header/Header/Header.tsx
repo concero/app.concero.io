@@ -1,4 +1,4 @@
-import { CSSProperties, FC, ReactNode, useState } from 'react'
+import { type CSSProperties, type FC, type ReactNode, useState } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../../constants/routes'
@@ -58,7 +58,14 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 			</div>
 			<div className={classNames.headerButtonsContainer}>
 				{!isMobile ? (
-					<Button variant="subtle" size="sm" className={classNames.helpButton} onClick={() => handleHelpButtonClick()}>
+					<Button
+						variant="subtle"
+						size="sm"
+						className={classNames.helpButton}
+						onClick={() => {
+							handleHelpButtonClick()
+						}}
+					>
 						{t('modal.helpUsImprove')}
 					</Button>
 				) : null}

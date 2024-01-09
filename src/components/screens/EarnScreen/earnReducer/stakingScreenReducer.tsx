@@ -1,6 +1,6 @@
-import { Dispatch, useReducer } from 'react'
+import { type Dispatch, useReducer } from 'react'
 import { initialState } from './initialState'
-import { EarnAction, EarnState } from './types'
+import { type EarnAction, type EarnState } from './types'
 
 const earnScreenReducer = (state: EarnState, action: EarnAction): EarnState => {
 	switch (action.type) {

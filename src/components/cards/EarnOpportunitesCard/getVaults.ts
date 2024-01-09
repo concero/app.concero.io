@@ -1,5 +1,5 @@
-import { Dispatch } from 'react'
-import { EarnAction, EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type Dispatch } from 'react'
+import { type EarnAction, type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { fetchPools } from '../../../api/concero/fetchPools'
 
 export async function getVaults(earnDispatch: Dispatch<EarnAction>, address: string, earnState: EarnState, offset: number, limit: number, isIpad: boolean): Promise<void> {

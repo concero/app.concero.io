@@ -13,7 +13,7 @@ import { bigNumberSettings } from './utils/bigNumberSettings'
 import { initPosthog } from './utils/initPosthog'
 import { I18Provider } from './i18n/I18nextProvider'
 
-const WalletConnectModal = lazy(() => import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })))
+const WalletConnectModal = lazy(async () => await import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })))
 
 function App() {
 	useEffect(() => {

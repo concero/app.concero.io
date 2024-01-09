@@ -1,4 +1,4 @@
-import { FilterDispatchType } from '../contants'
+import { type FilterDispatchType } from '../contants'
 
 export interface FilterState {
 	isChainsModalOpened: boolean

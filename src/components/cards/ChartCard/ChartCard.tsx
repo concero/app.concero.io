@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useContext, useEffect } from 'react'
+import { type FC, memo, useCallback, useContext, useEffect } from 'react'
 import { AdvancedRealTimeChart } from 'react-ts-tradingview-widgets'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './ChartCard.module.pcss'
@@ -33,7 +33,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
 
-	const setData = (data: any[]) => dispatch({ type: 'SET_CHART_DATA', payload: data })
+	const setData = (data: any[]) => {
+		dispatch({ type: 'SET_CHART_DATA', payload: data })
+	}
 
 	useEffect(() => {
 		fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
@@ -42,7 +44,9 @@ export const ChartCard: FC<ChartCardProps> = () => {
 			fetchChartData(setData, addNotification, token.base.coinGeckoId, interval)
 		}, 15000)
 
-		return () => clearInterval(intervalId)
+		return () => {
+			clearInterval(intervalId)
+		}
 	}, [interval, token.base.symbol])
 
 	useEffect(() => {
@@ -66,8 +70,8 @@ export const ChartCard: FC<ChartCardProps> = () => {
 	)
 
 	const getItemsCallback = useCallback(
-		({ offset, limit, search }) => {
-			return getTokens({
+		async ({ offset, limit, search }) => {
+			return await getTokens({
 				chainId: selection.swapCard.to.chain.id,
 				offset,
 				limit,
@@ -82,17 +86,37 @@ export const ChartCard: FC<ChartCardProps> = () => {
 			<div className={classNames.headerContainer}>
 				<div className={classNames.selectChainContainer}>
 					<h5 className="cardHeaderTitle">{t('chartCard.title')}</h5>
-					<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })}>
+					<Button
+						variant="black"
+						size="sm"
+						onClick={() => {
+							dispatch({ type: 'TOGGLE_MODAL_VISIBLE', tokenType: 'base' })
+						}}
+					>
 						<CryptoSymbol src={token.base.logoURI} symbol={token.base.symbol} />
 					</Button>
 					{!isMobile ? (
-						<Button variant="black" size="sm" onClick={() => dispatch({ type: 'TOGGLE_CHART_TYPE' })}>
+						<Button
+							variant="black"
+							size="sm"
+							onClick={() => {
+								dispatch({ type: 'TOGGLE_CHART_TYPE' })
+							}}
+						>
 							<Beacon isOn={chartType === 'tradingView'} />
 							<p className="body1">{t('chartCard.tradingView')}</p>
 						</Button>
 					) : null}
 				</div>
-				{chartType === 'coinGecko' ? <SegmentedControl data={intervals} selectedItem={interval} setSelectedItem={item => dispatch({ type: 'SET_INTERVAL', payload: item })} /> : null}
+				{chartType === 'coinGecko' ? (
+					<SegmentedControl
+						data={intervals}
+						selectedItem={interval}
+						setSelectedItem={item => {
+							dispatch({ type: 'SET_INTERVAL', payload: item })
+						}}
+					/>
+				) : null}
 			</div>
 			<div className="f1">
 				{chartType === 'coinGecko' ? (

@@ -1,8 +1,8 @@
-import { Dispatch, FC, useContext } from 'react'
+import { type Dispatch, type FC, useContext } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from './FilteredTags.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { EarnAction, EarnState, FilterCategory } from '../../../screens/EarnScreen/earnReducer/types'
+import { type EarnAction, type EarnState, FilterCategory } from '../../../screens/EarnScreen/earnReducer/types'
 import { ListModal } from '../../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { getAllTagStyle, getCategoryTitle, getChainTitle, getSelectedStyle } from './styleHandlers'
@@ -52,7 +52,10 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ earnDispatch, earnState })
 	}
 
 	function handleTagClick(filterKey: FilterCategory, value: boolean) {
-		if (filterKey === FilterCategory.all) return resetFilter(earnDispatch)
+		if (filterKey === FilterCategory.all) {
+			resetFilter(earnDispatch)
+			return
+		}
 		if (filterKey === FilterCategory.my_holdings || filterKey === FilterCategory.my_positions) {
 			resetFilter(earnDispatch)
 		}
@@ -76,20 +79,35 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ earnDispatch, earnState })
 
 	return (
 		<div className={classNames.container}>
-			<Button size="sm" variant={getAllTagStyle(filter)} onClick={() => handleTagClick(FilterCategory.all, !all)}>
+			<Button
+				size="sm"
+				variant={getAllTagStyle(filter)}
+				onClick={() => {
+					handleTagClick(FilterCategory.all, !all)
+				}}
+			>
 				{t('stakingOpportunitiesCard.filterTag.all')}
 			</Button>
 			{/* <Button size="sm" variant={getSelectedStyle(my_holdings)} onClick={() => handleTagClick(FilterCategory.my_holdings, !my_holdings)} isDisabled={!address}> */}
 			{/* 	My holdings */}
 			{/* </Button> */}
-			<Button size="sm" variant={getSelectedStyle(my_positions)} onClick={() => handleTagClick(FilterCategory.my_positions, !my_positions)} isDisabled={!address}>
+			<Button
+				size="sm"
+				variant={getSelectedStyle(my_positions)}
+				onClick={() => {
+					handleTagClick(FilterCategory.my_positions, !my_positions)
+				}}
+				isDisabled={!address}
+			>
 				{t('stakingOpportunitiesCard.filterTag.myPositions')}
 			</Button>
 			<Button
 				size="sm"
 				variant={getChainTitle(chains) === 'All' ? 'subtle' : 'primary'}
 				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
-				onClick={() => setIsChainsModalOpened(true)}
+				onClick={() => {
+					setIsChainsModalOpened(true)
+				}}
 			>
 				{`${t('stakingOpportunitiesCard.filterTag.chains')}: ${getChainTitle(chains)}`}
 			</Button>
@@ -97,7 +115,9 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ earnDispatch, earnState })
 				variant={getSelectedStyle(filter.apy)}
 				size="sm"
 				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
-				onClick={() => setIsApyModalVisible(true)}
+				onClick={() => {
+					setIsApyModalVisible(true)
+				}}
 			>
 				APY: {filter.apy ? `${filter.apy}%` : t('stakingOpportunitiesCard.filterTag.all')}
 			</Button>
@@ -105,7 +125,9 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ earnDispatch, earnState })
 				size="sm"
 				variant={getCategoryTitle(filter) === 'All' ? 'subtle' : 'primary'}
 				rightIcon={<IconChevronDown size={13} color={'var(--color-text-secondary)'} />}
-				onClick={() => setIsCategoryModalOpened(true)}
+				onClick={() => {
+					setIsCategoryModalOpened(true)
+				}}
 			>
 				{`${t('stakingOpportunitiesCard.filterTag.category')}: ${getCategoryTitle(filter)}`}
 			</Button>
@@ -128,7 +150,14 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ earnDispatch, earnState })
 				selectedItems={filter.category}
 				onSelect={handleSelectCategory}
 			/>
-			<ApyModal isOpen={isApyModalOpened} onClose={() => setIsApyModalVisible(false)} earnState={earnState} earnDispatch={earnDispatch} />
+			<ApyModal
+				isOpen={isApyModalOpened}
+				onClose={() => {
+					setIsApyModalVisible(false)
+				}}
+				earnState={earnState}
+				earnDispatch={earnDispatch}
+			/>
 		</div>
 	)
 }

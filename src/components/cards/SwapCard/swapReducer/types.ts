@@ -4,6 +4,7 @@ import { StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/Transac
 import { TransactionStatus } from 'rango-sdk'
 import { ButtonType } from '../../../buttons/SwapButton/constants'
 import { ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'
+import { TokenAmount } from '../../../../utils/TokenAmount'
 
 export interface SwapStateDirection {
 	chain: {
@@ -39,6 +40,11 @@ export enum SwapCardStage {
 	contactSupport = 'contactSupport',
 }
 
+export interface Balance {
+	amount: TokenAmount
+	symbol: string
+}
+
 export interface SwapState {
 	from: SwapStateDirection
 	to: SwapStateDirection
@@ -51,7 +57,7 @@ export interface SwapState {
 	steps: StageStep[]
 	settings: Settings
 	buttonState: ButtonState
-	balance: string
+	balance: Balance
 	walletBalances: ConceroBalanceResponse | null
 }
 
@@ -89,7 +95,7 @@ export enum SwapActionType {
 export type SwapAction =
 	| { type: 'POPULATE_ROUTES'; payload: any; fromAmount: string | null }
 	| { type: 'CLEAR_ROUTES' }
-	| { type: 'SET_BALANCE'; payload: string }
+	| { type: 'SET_BALANCE'; payload: Balance | null }
 	| { type: 'SET_LOADING'; payload: boolean }
 	| { type: 'SET_SELECTED_ROUTE'; payload: any }
 	| { type: 'SET_CHAIN'; direction: ActionDirection; payload: { chain: any; tokens: any[] } }

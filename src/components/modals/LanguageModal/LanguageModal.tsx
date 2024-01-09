@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '../../buttons/Button/Button'
 import classNames from '../../layout/Header/WalletButton/WalletButton.module.pcss'
 import { IconCheck } from '@tabler/icons-react'
-import { Language, languages } from '../../../i18n/languages'
+import { type Language, languages } from '../../../i18n/languages'
 import { setItem } from '../../../utils/localStorage'
 
 interface LanguageModalProps {
@@ -19,7 +19,12 @@ export function LanguageModal({ setShow, show }: LanguageModalProps) {
 
 	const renderItem = ({ item, isSelected, onSelect }: { item: any; isSelected: boolean; onSelect: (i: any) => void }) => {
 		return (
-			<Button onClick={() => onSelect(item)} variant={isSelected ? 'filled' : 'black'}>
+			<Button
+				onClick={() => {
+					onSelect(item)
+				}}
+				variant={isSelected ? 'filled' : 'black'}
+			>
 				<div className={classNames.renderItemContainer}>
 					{item.title}
 					<div>{isSelected ? <IconCheck size={18} /> : null}</div>
@@ -29,7 +34,9 @@ export function LanguageModal({ setShow, show }: LanguageModalProps) {
 	}
 
 	async function getItems(): Promise<any> {
-		return new Promise(resolve => resolve(languages))
+		return await new Promise(resolve => {
+			resolve(languages)
+		})
 	}
 
 	async function handleSelectLanguage(item: any): Promise<void> {
