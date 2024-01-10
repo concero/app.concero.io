@@ -1,5 +1,5 @@
 import { useWeb3Modal } from '@web3modal/react'
-import { FC } from 'react'
+import { type FC } from 'react'
 import { action, category } from '../../../../constants/tracking'
 import { useAccount } from 'wagmi'
 import { IconWallet } from '@tabler/icons-react'

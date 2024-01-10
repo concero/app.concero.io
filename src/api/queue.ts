@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 
 interface Request {
 	config: AxiosRequestConfig
@@ -10,12 +10,10 @@ interface Request {
 const MAX_RETRIES = 0
 
 class Queue {
-	private queue: Request[] = []
-
-	constructor() {}
+	private readonly queue: Request[] = []
 
 	async add(request: AxiosRequestConfig): Promise<AxiosResponse> {
-		return new Promise((resolve, reject) => {
+		return await new Promise((resolve, reject) => {
 			this.queue.push({
 				config: request,
 				resolve,

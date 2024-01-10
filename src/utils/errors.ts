@@ -39,7 +39,10 @@ export const withErrorHandling =
  @returns {(...args: TArgs) => Promise<TResult | null>} - The wrapped async function with error handling logic.
  */
 export const withErrorHandlingAsync =
-	<TArgs extends any[], TResult>(fn: (...args: TArgs) => Promise<TResult>, errorMessage: string): ((...args: TArgs) => Promise<TResult | null>) =>
+	<TArgs extends any[], TResult>(
+		fn: (...args: TArgs) => Promise<TResult>,
+		errorMessage: string,
+	): ((...args: TArgs) => Promise<TResult | null>) =>
 	async (...args: TArgs): Promise<TResult | null> => {
 		try {
 			return await fn(...args)

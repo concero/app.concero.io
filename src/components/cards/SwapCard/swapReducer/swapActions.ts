@@ -1,6 +1,6 @@
 import { toggleRouteInsurance } from './toggleRouteInsurance'
 import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
-import { SwapAction, SwapState } from './types'
+import { type SwapAction, type SwapState } from './types'
 // import { StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action as trackingAction, category as trackingCategory } from '../../../../constants/tracking'
@@ -29,7 +29,8 @@ export const swapActions: SwapAction = {
 		[action.direction]: {
 			...state[action.direction],
 			...(action.payload.amount !== undefined && action.payload.amount !== null && { amount: action.payload.amount }),
-			...(action.payload.amount_usd !== undefined && action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
+			...(action.payload.amount_usd !== undefined &&
+				action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
 		},
 	}),
 	RESET_AMOUNTS: (state, action) => ({
@@ -54,11 +55,21 @@ export const swapActions: SwapAction = {
 		return { ...state, stage: action.payload }
 	},
 	TOGGLE_SETTINGS_MODAL_OPEN: state => {
-		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleSettingsModal, label: 'toggle_settings_modal_open', data: { isOpen: !state.settingsModalOpen } })
+		trackEvent({
+			category: trackingCategory.SwapCard,
+			action: trackingAction.ToggleSettingsModal,
+			label: 'toggle_settings_modal_open',
+			data: { isOpen: !state.settingsModalOpen },
+		})
 		return { ...state, settingsModalOpen: !state.settingsModalOpen }
 	},
 	SET_SETTINGS: (state, action) => {
-		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleSettingsModal, label: 'set_settings', data: state.settings })
+		trackEvent({
+			category: trackingCategory.SwapCard,
+			action: trackingAction.ToggleSettingsModal,
+			label: 'set_settings',
+			data: state.settings,
+		})
 		return { ...state, settings: { ...state.settings, ...action.payload } }
 	},
 

@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useRef } from 'react'
+import { type FC, useContext, useEffect, useRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from '../SwapCard.module.pcss'
@@ -6,7 +6,7 @@ import { Button } from '../../../buttons/Button/Button'
 import { numberToFormatString } from '../../../../utils/formatting'
 import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { TextInput } from '../../../input/TextInput'
-import { TokenAreaProps } from './types'
+import { type TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
@@ -43,9 +43,14 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 
 	function handleMaxButtonClick() {
 		if (!balance) return
-		const clearBalance = balance.substring(0, balance.indexOf(' '))
-		if (!Number(clearBalance)) return
-		handleAmountChange({ value: clearBalance, state, dispatch: swapDispatch, direction: 'from' })
+		const { amount } = balance
+		if (!Number(amount.formatted)) return
+		handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
+	}
+
+	const handleSelectToken = token => {
+		swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
+		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 	}
 
 	useEffect(() => {
@@ -56,16 +61,13 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 		if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
 	}, [state.currentTokenPriceUSD])
 
-	const handleSelectToken = token => {
-		swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
-		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
-	}
-
 	return (
 		<>
 			<animated.div
 				className={`${classNames.tokenContainer} ${state.isFocused ? classNames.inputFocused : ''}`}
-				onClick={() => handleAreaClick({ inputRef })}
+				onClick={() => {
+					handleAreaClick({ inputRef })
+				}}
 				style={state.shake ? shakeProps : {}}
 			>
 				<div className={classNames.tokenRow}>
@@ -82,7 +84,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 					</div>
 					{balance !== null ? (
 						<Button variant={'subtle'} size={'sm'} onClick={handleMaxButtonClick}>
-							<p>{`Max: ${balance}`}</p>
+							<p>{`Max: ${balance.amount.rounded} ${balance.symbol}`}</p>
 						</Button>
 					) : null}
 				</div>
@@ -95,7 +97,9 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 							variant="inline"
 							placeholder={`0.0 ${selection.token.symbol}`}
 							value={selection.amount}
-							onChangeText={value => onChangeText(value)}
+							onChangeText={value => {
+								onChangeText(value)
+							}}
 							isDisabled={direction === 'to'}
 						/>
 						<h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
@@ -123,16 +127,20 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 				title={t('modal.selectToken')}
 				isOpen={state.showTokensModal}
 				setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: value })}
-				onSelect={token => handleSelectToken(token)}
-				getItems={({ offset, limit, search }) => getTokens({ chainId: selection.chain.id, offset, limit, search })}
+				onSelect={token => {
+					handleSelectToken(token)
+				}}
+				getItems={async ({ offset, limit, search }) => await getTokens({ chainId: selection.chain.id, offset, limit, search })}
 				RenderItem={ListEntityButton}
 			/>
 			<ListModal
 				title={t('modal.selectChain')}
 				isOpen={state.showChainsModal}
 				setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
-				onSelect={chain => handleSelectChain(chain)}
-				getItems={({ offset, limit, search }) => getChains({ offset, limit, search })}
+				onSelect={async chain => {
+					await handleSelectChain(chain)
+				}}
+				getItems={async ({ offset, limit, search }) => await getChains({ offset, limit, search })}
 				RenderItem={ListEntityButton}
 			/>
 		</>

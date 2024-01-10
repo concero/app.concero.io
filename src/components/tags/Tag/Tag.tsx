@@ -1,4 +1,4 @@
-import { FC, MouseEvent, ReactNode } from 'react'
+import { type FC, type MouseEvent, type ReactNode } from 'react'
 
 import className from './Tag.module.pcss'
 

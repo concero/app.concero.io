@@ -1,5 +1,5 @@
-import { Settings } from '../../components/cards/SwapCard/swapReducer/types'
-import { Direction } from '../../types/StandardRoute'
+import { type Settings } from '../../components/cards/SwapCard/swapReducer/types'
+import { type Direction } from '../../types/StandardRoute'
 
 export interface FetchRoutesParams {
 	from: Direction

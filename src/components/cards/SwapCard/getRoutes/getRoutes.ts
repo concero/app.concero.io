@@ -1,9 +1,9 @@
 import { fetchRangoRoutes } from '../../../../api/rango/fetchRangoRoutes'
 import { fetchLifiRoutes } from '../../../../api/lifi/fetchLifiRoutes'
-import { StandardRoute } from '../../../../types/StandardRoute'
-import { Settings, SwapAction, SwapStateDirection } from '../swapReducer/types'
-import { Dispatch } from 'react'
-import { GetLifiRoutes, GetRangoRoutes, PopulateRoutes } from './types'
+import { type StandardRoute } from '../../../../types/StandardRoute'
+import { type Settings, type SwapAction, type SwapStateDirection } from '../swapReducer/types'
+import { type Dispatch } from 'react'
+import { type GetLifiRoutes, type GetRangoRoutes, type PopulateRoutes } from './types'
 import { fetchWalletBalancesOnStepChains } from './fetchWalletBalancesOnStepChains'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
@@ -12,19 +12,36 @@ const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
 	swapDispatch({ type: 'POPULATE_ROUTES', payload: routes, fromAmount: from.amount })
 }
 
-const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLifiRoutes): Promise<void | StandardRoute[] | []> => {
+const getLifiRoutes = async ({
+	routes,
+	from,
+	to,
+	settings,
+	swapDispatch,
+}: GetLifiRoutes): Promise<void | StandardRoute[] | []> => {
 	try {
 		const lifiRoutes: StandardRoute[] | [] = await fetchLifiRoutes({ from, to, settings })
 		routes.unshift(...lifiRoutes)
 		populateRoutes({ routes, from, swapDispatch })
 		return lifiRoutes
 	} catch (error) {
-		trackEvent({ category: category.SwapCard, action: action.FetchLifiRoutesError, label: 'fetch_lifi_routes_error', data: { error } })
+		trackEvent({
+			category: category.SwapCard,
+			action: action.FetchLifiRoutesError,
+			label: 'fetch_lifi_routes_error',
+			data: { error },
+		})
 		console.error(error)
 	}
 }
 
-const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void | StandardRoute[] | []> => {
+const getRangoRoutes = async ({
+	routes,
+	from,
+	to,
+	settings,
+	swapDispatch,
+}: GetRangoRoutes): Promise<void | StandardRoute[] | []> => {
 	try {
 		const rangoRoutes: StandardRoute[] = await fetchRangoRoutes({ from, to, settings })
 		routes.push(...rangoRoutes)
@@ -52,7 +69,10 @@ export const getRoutes = async (
 	const routes: StandardRoute[] | [] = []
 
 	try {
-		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])
+		await Promise.all([
+			getLifiRoutes({ routes, from, to, settings, swapDispatch }),
+			getRangoRoutes({ routes, from, to, settings, swapDispatch }),
+		])
 
 		if (!routes.length) {
 			swapDispatch({ type: 'SET_IS_NO_ROUTES', status: true })

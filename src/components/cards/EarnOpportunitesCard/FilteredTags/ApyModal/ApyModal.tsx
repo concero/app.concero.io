@@ -1,10 +1,10 @@
-import { Dispatch, FC } from 'react'
+import { type Dispatch, type FC } from 'react'
 import { IconPercentage } from '@tabler/icons-react'
 import { Modal } from '../../../../modals/Modal/Modal'
 import classNames from './ApyModal.module.pcss'
 import { TextInput } from '../../../../input/TextInput'
 import { isFloatInput } from '../../../../../utils/validation'
-import { EarnAction, EarnState, FilterCategory } from '../../../../screens/EarnScreen/earnReducer/types'
+import { type EarnAction, type EarnState, FilterCategory } from '../../../../screens/EarnScreen/earnReducer/types'
 
 interface ApyModalProps {
 	isOpen: boolean
@@ -24,7 +24,9 @@ export const ApyModal: FC<ApyModalProps> = ({ isOpen, onClose, earnState, earnDi
 			<div className={classNames.container}>
 				<TextInput
 					placeholder="Enter APY"
-					onChangeText={value => handleChangeText(value)}
+					onChangeText={value => {
+						handleChangeText(value)
+					}}
 					value={earnState.filter.apy}
 					icon={<IconPercentage size={18} color="var(--color-text-secondary)" />}
 				/>

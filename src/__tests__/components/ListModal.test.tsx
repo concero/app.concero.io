@@ -7,7 +7,13 @@ const mockGetItems = jest.fn().mockResolvedValue([])
 describe('ListModal Component', () => {
 	it('renders ListModal component correctly', () => {
 		const { getByText, getByPlaceholderText } = render(
-			<ListModal getItems={mockGetItems} isOpen={true} setIsOpen={() => {}} title="Test Modal" RenderItem={() => <div>Mock Item</div>} />,
+			<ListModal
+				getItems={mockGetItems}
+				isOpen={true}
+				setIsOpen={() => {}}
+				title="Test Modal"
+				RenderItem={() => <div>Mock Item</div>}
+			/>,
 		)
 
 		expect(getByText('Test Modal')).toBeInTheDocument()
@@ -16,7 +22,13 @@ describe('ListModal Component', () => {
 
 	it('handles search functionality', async () => {
 		const { getByPlaceholderText, getByText } = render(
-			<ListModal getItems={mockGetItems} isOpen={true} setIsOpen={() => {}} title="Test Modal" RenderItem={() => <div>Mock Item</div>} />,
+			<ListModal
+				getItems={mockGetItems}
+				isOpen={true}
+				setIsOpen={() => {}}
+				title="Test Modal"
+				RenderItem={() => <div>Mock Item</div>}
+			/>,
 		)
 
 		const searchInput = getByPlaceholderText('Search...')

@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react'
+import { type CSSProperties, type FC } from 'react'
 import { useTransition } from '@react-spring/web'
 import classNames from './Table.module.pcss'
 import { TableSkeleton } from './TableSkeleton'
@@ -21,7 +21,15 @@ export interface TableProps {
 	animate?: boolean
 }
 
-export const Table: FC<TableProps> = ({ columns, items, isHeaderVisible = true, isLoading, onClick, onEndReached = null, animate = true }) => {
+export const Table: FC<TableProps> = ({
+	columns,
+	items,
+	isHeaderVisible = true,
+	isLoading,
+	onClick,
+	onEndReached = null,
+	animate = true,
+}) => {
 	const handleScroll = (e: any) => {
 		const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
 		if (bottom && onEndReached && !isLoading) {

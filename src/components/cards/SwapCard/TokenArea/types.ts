@@ -1,12 +1,14 @@
+import { type Balance } from '../swapReducer/types'
+
 export interface TokenAreaProps {
 	direction: 'to' | 'from'
 	selection: Selection
-	balance?: number
+	balance?: Balance | null
 	swapDispatch: any
 	chains: any[]
 }
 
-type Selection = {
+interface Selection {
 	chain: {
 		name: string
 		symbol: string

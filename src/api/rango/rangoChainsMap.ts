@@ -1,4 +1,4 @@
-export const rangoChainsMap: { [key: string]: string } = {
+export const rangoChainsMap: Record<string, string> = {
 	ETH: '1',
 	ARBITRUM: '42161',
 	OPTIMISM: '10',
@@ -71,7 +71,7 @@ export const rangoChainsMap: { [key: string]: string } = {
 	DOGE: 'DOGE',
 }
 
-export const reverseRangoChainsMap: { [key: string]: string } = {
+export const reverseRangoChainsMap: Record<string, string> = {
 	'1': 'ETH',
 	'10': 'OPTIMISM',
 	'25': 'CRONOS',

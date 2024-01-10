@@ -1,9 +1,9 @@
-import { Dispatch, useReducer } from 'react'
+import { type Dispatch, useReducer } from 'react'
 import { manageInitialState } from './manageInitialState'
-import { EarnState } from '../../../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../../../screens/EarnScreen/earnReducer/types'
 import { ModalType, Status, SwapType } from '../constants'
 import { addingTokenDecimals } from '../../../../../utils/formatting'
-import { ManageAction, ManageState } from './types'
+import { type ManageAction, type ManageState } from './types'
 import { handleBeforeUnload } from '../../../../../utils/leavingPageEvents'
 
 function earnReducer(state: ManageState, action: ManageAction): ManageState {
@@ -36,11 +36,11 @@ function earnReducer(state: ManageState, action: ManageAction): ManageState {
 			if (action.fromAmount.toString() !== state.from.amount.toString()) return state
 			return {
 				...state,
-				route: { ...action.payload, gasUsd: action.gasUsd as string },
+				route: { ...action.payload, gasUsd: action.gasUsd! },
 				status: state.swapType === SwapType.stake ? Status.stake : Status.withdraw,
 				to: {
 					...state.to,
-					amount: addingTokenDecimals(Number(action.payload.amountOut), state.to.token.decimals) as string,
+					amount: addingTokenDecimals(Number(action.payload.amountOut), state.to.token.decimals)!,
 					...(action.toAmountUsd && { amount_usd: action.toAmountUsd }),
 				},
 			}

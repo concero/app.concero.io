@@ -26,7 +26,7 @@ export default dayjs
 
 export function isValidNumber(number: string | number) {
 	if (typeof number === 'string') {
-		return number != ''
+		return number !== ''
 	} else {
 		return !(number === undefined || number === null || isNaN(number))
 	}
@@ -55,9 +55,11 @@ export const formatCurrency = (amount: number, currency = 'USD'): string =>
 	}).format(amount)
 
 // String formatting
-export const toTitleCase = (str: string): string => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+export const toTitleCase = (str: string): string =>
+	str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 
-export const toCamelCase = (str: string): string => str.replace(/([-_][a-z])/g, group => group.toUpperCase().replace('-', '').replace('_', ''))
+export const toCamelCase = (str: string): string =>
+	str.replace(/([-_][a-z])/g, group => group.toUpperCase().replace('-', '').replace('_', ''))
 
 export const toSnakeCase = (str: string): string => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`).replace(/^-/, '')
 
@@ -74,7 +76,8 @@ export const getHostname = (url: string): string => new URL(url).hostname
 export const getDomain = (url: string): string => getHostname(url).replace('www.', '').split('.')[0]
 // String manipulation
 
-export const truncate = (str: string, length = 100, ending = '...'): string => (str.length > length ? str.substring(0, length - ending.length) + ending : str)
+export const truncate = (str: string, length = 100, ending = '...'): string =>
+	str.length > length ? str.substring(0, length - ending.length) + ending : str
 
 // trucate wallet address to 6 characters on the end
 export const truncateWallet = (str: string): string => `${str.slice(0, 6)}...${str.slice(-4)}`
@@ -138,7 +141,7 @@ export const timestampToLocalTime = (timestamp: number): number => {
 	const timeZoneOffsetInSeconds = currentTime.getTimezoneOffset() * 60
 	return Number(timestamp) - timeZoneOffsetInSeconds
 }
-type FormatNumberOptions = {
+interface FormatNumberOptions {
 	decimals?: number
 	decimalPlaces?: number
 	separator?: string
@@ -204,21 +207,4 @@ export function formatNumber(num: number, options: FormatNumberOptions = {}): st
 	}
 
 	return result
-}
-
-// // Tests
-const tests = [
-	{ num: 1234567890, options: { decimals: 0 }, expected: '1 B' },
-	{ num: 12345678, options: { separator: "'", decimals: 0 }, expected: "12'345'678" },
-	{ num: 12345678, options: { decimals: 2 }, expected: '12.35 M' },
-	{ num: 123456, options: { decimals: 1 }, expected: '123.5 K' },
-	{ num: 0.12345678, options: { decimals: 2 }, expected: '0.12' },
-	{ num: 0.00012345678, options: { decimals: 3 }, expected: '< 0.001' },
-	// eth token numbers with 18 decimals
-	{ num: 253218960916491300, options: { decimals: 18, decimalPlaces: 4, disableUnit: true }, expected: '1.2345' },
-	{ num: 1000000, options: { decimals: 6, decimalPlaces: 2, disableUnit: true }, expected: '1.00' },
-]
-
-for (const test of tests) {
-	const result = formatNumber(test.num, test.options)
 }

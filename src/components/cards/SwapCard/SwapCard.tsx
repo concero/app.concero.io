@@ -1,9 +1,9 @@
-import { FC, useContext, useRef } from 'react'
+import { type FC, useContext, useRef } from 'react'
 import { useAccount } from 'wagmi'
 import { IconSettings2 } from '@tabler/icons-react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
-import { SwapCardProps } from './types'
+import { type SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer/swapReducer'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { InsuranceProvider } from './InsuranceContext'
@@ -31,7 +31,9 @@ export const SwapCard: FC<SwapCardProps> = () => {
 		swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
 	}
 
-	const toggleInsurance = (routeId: string) => swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
+	const toggleInsurance = (routeId: string) => {
+		swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
+	}
 	useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef })
 
 	function handleContactSupportGoBackClick() {
@@ -45,7 +47,9 @@ export const SwapCard: FC<SwapCardProps> = () => {
 		[SwapCardStage.progress]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
 		[SwapCardStage.success]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
 		[SwapCardStage.failed]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
-		[SwapCardStage.contactSupport]: <ContactSupportCard handleGoBackClick={handleContactSupportGoBackClick} infoToCopy={infoToCopy} />,
+		[SwapCardStage.contactSupport]: (
+			<ContactSupportCard handleGoBackClick={handleContactSupportGoBackClick} infoToCopy={infoToCopy} />
+		),
 	}
 
 	return (
@@ -56,7 +60,9 @@ export const SwapCard: FC<SwapCardProps> = () => {
 						<Button
 							variant="black"
 							size="sq-sm"
-							onClick={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+							onClick={() => {
+								swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })
+							}}
 							leftIcon={<IconSettings2 size={16} color={'var(--color-grey-500)'} />}
 						/>
 					</div>
@@ -65,7 +71,9 @@ export const SwapCard: FC<SwapCardProps> = () => {
 			</div>
 			<SwapSettingsModal
 				show={swapState.settingsModalOpen}
-				setShow={() => swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })}
+				setShow={() => {
+					swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })
+				}}
 				swapDispatch={swapDispatch}
 				settings={swapState.settings}
 			/>

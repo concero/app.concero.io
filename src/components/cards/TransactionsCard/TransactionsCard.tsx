@@ -1,6 +1,6 @@
 import classNames from './TransactionsCard.module.pcss'
 import { TransactionItemCard } from './TransactionItemCard/TransactionItemCard'
-import { ITransactionCard } from './types'
+import { type ITransactionCard } from './types'
 
 const items: ITransactionCard[] = [
 	{

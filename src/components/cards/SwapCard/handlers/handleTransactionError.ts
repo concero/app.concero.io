@@ -1,6 +1,6 @@
-import { Dispatch } from 'react'
-import { SwapAction, SwapCardStage } from '../swapReducer/types'
-import { StandardRoute } from '../../../../types/StandardRoute'
+import { type Dispatch } from 'react'
+import { type SwapAction, SwapCardStage } from '../swapReducer/types'
+import { type StandardRoute } from '../../../../types/StandardRoute'
 import { logTxToDB } from '../../../../utils/logTxToDB'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
@@ -27,5 +27,10 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 	selectedRoute.error = e.toString()
 	logTxToDB({ tx_id: selectedRoute.id, status: 'failure', provider: selectedRoute.provider, tx_data: selectedRoute })
-	trackEvent({ category: category.SwapCard, action: action.SwapFailed, label: 'swap_failed', data: { provider: selectedRoute.provider, selectedRoute } })
+	trackEvent({
+		category: category.SwapCard,
+		action: action.SwapFailed,
+		label: 'swap_failed',
+		data: { provider: selectedRoute.provider, selectedRoute },
+	})
 }

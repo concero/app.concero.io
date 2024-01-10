@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 
 export interface LogoProps {
 	width?: number
@@ -6,7 +6,14 @@ export interface LogoProps {
 }
 
 export const Logo: FC<LogoProps> = ({ width = 100, height = 30 }) => (
-	<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1812.3 243.59" width={width} height={height}>
+	<svg
+		id="Layer_2"
+		data-name="Layer 2"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 1812.3 243.59"
+		width={width}
+		height={height}
+	>
 		<defs>
 			<style>
 				{`

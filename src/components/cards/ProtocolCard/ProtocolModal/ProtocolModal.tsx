@@ -1,6 +1,6 @@
 import { IconArrowDown, IconArrowUp, IconCopy, IconExternalLink } from '@tabler/icons-react'
 import { Modal } from '../../../modals/Modal/Modal'
-import { Protocol } from '../types'
+import { type Protocol } from '../types'
 import classNames from './ProtocolModal.module.pcss'
 import { Avatar } from '../../../tags/Avatar/Avatar'
 import { CategoryTag } from '../../../tags/CategoryTag/CategoryTag'
@@ -74,7 +74,12 @@ function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
 			<p className="body1">{t('protocolModal.audits')}</p>
 			<div className={classNames.tagsContainer}>
 				{auditLinks.map((link, index) => (
-					<Tag key={index} color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(link, '_blank')}>
+					<Tag
+						key={index}
+						color="grey"
+						leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />}
+						onClick={() => window.open(link, '_blank')}
+					>
 						<p className="body1">Github</p>
 					</Tag>
 				))}
@@ -85,7 +90,19 @@ function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
 
 export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 	if (!protocol) return null
-	const { name, symbol, address, category, description, url, dailyFees, totalAllTime, dailySupplySideRevenue, audit_links, logoURI } = protocol
+	const {
+		name,
+		symbol,
+		address,
+		category,
+		description,
+		url,
+		dailyFees,
+		totalAllTime,
+		dailySupplySideRevenue,
+		audit_links,
+		logoURI,
+	} = protocol
 	const { t } = useTranslation()
 
 	return (
@@ -104,12 +121,22 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 				<div className={classNames.tagsContainer}>
 					{category && <CategoryTag category={category} />}
 					{address && (
-						<Tag color="grey" leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />} onClick={() => copyToClipboard(address)}>
+						<Tag
+							color="grey"
+							leftIcon={<IconCopy color={'var(--color-text-secondary)'} size={16} />}
+							onClick={async () => {
+								await copyToClipboard(address)
+							}}
+						>
 							<p className="body1">{t('protocolModal.contractAddress')}</p>
 						</Tag>
 					)}
 					{url && (
-						<Tag color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(url, '_blank')}>
+						<Tag
+							color="grey"
+							leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />}
+							onClick={() => window.open(url, '_blank')}
+						>
 							<p className="body1">{t('protocolModal.website')}</p>
 						</Tag>
 					)}

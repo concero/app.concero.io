@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode } from 'react'
+import { createContext, type FC, type ReactNode } from 'react'
 
 interface SwapCardProviderProps {
 	children: ReactNode

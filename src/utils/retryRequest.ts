@@ -1,6 +1,6 @@
-type Options = {
+interface Options {
 	retryCount?: number
-	throwCondition?: Function
+	throwCondition?: (e: any) => boolean
 }
 
 export async function retryRequest(request: (i: number) => Promise<any>, options: Options): Promise<any> {

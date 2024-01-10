@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { Highlight } from '../../tags/Highlight/Highlight'
 import classNames from './HighlightsCard.module.pcss'
 

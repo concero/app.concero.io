@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './EarnHighlightsCard.module.pcss'
 import { Highlight } from '../../tags/Highlight/Highlight'
-import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { formatNumber } from '../../../utils/formatting'
 import { useTranslation } from 'react-i18next'
 
@@ -14,12 +14,24 @@ export const EarnHighlightsCard: FC<EarnHighlightsCardProps> = ({ earnState }) =
 	const renderHighlights = ({ data }) => {
 		const highlights = []
 		if (data.tvlUsd) {
-			highlights.push(<Highlight key="tvl" title="TVL" value={`$${formatNumber(earnState.selectedVault?.data?.tvlUsd)}`} tag={data.tvlPct30D ? formatNumber(data.tvlPct30D) : null} />)
+			highlights.push(
+				<Highlight
+					key="tvl"
+					title="TVL"
+					value={`$${formatNumber(earnState.selectedVault?.data?.tvlUsd)}`}
+					tag={data.tvlPct30D ? formatNumber(data.tvlPct30D) : null}
+				/>,
+			)
 		}
 
 		if (data.apy) {
 			highlights.push(
-				<Highlight key="apy" title="APY" value={`${formatNumber(data.apy, { decimalPlaces: 2 })}%`} tag={data.apyPct30D ? formatNumber(data.apyPct30D, { decimalPlaces: 2 }) : null} />,
+				<Highlight
+					key="apy"
+					title="APY"
+					value={`${formatNumber(data.apy, { decimalPlaces: 2 })}%`}
+					tag={data.apyPct30D ? formatNumber(data.apyPct30D, { decimalPlaces: 2 }) : null}
+				/>,
 			)
 		}
 

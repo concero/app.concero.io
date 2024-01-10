@@ -1,7 +1,7 @@
 import burgerMenuIcon from '../../../../assets/icons/burgerMenuIcon.svg'
 import classNames from './BurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { KeyboardEvent, useContext, useEffect, useState } from 'react'
+import { type KeyboardEvent, useContext, useEffect, useState } from 'react'
 import { IconBrandDiscord, IconBrandTwitter, IconLanguage, IconMoon, IconSun } from '@tabler/icons-react'
 import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
 import { ThemeContext } from '../../../../hooks/themeContext'
@@ -54,12 +54,24 @@ export function BurgerMenu() {
 
 	return (
 		<div className={classNames.container}>
-			<Button variant={'black'} size={'sq-sm'} onClick={() => setIsMenuOpened(prev => !prev)}>
+			<Button
+				variant={'black'}
+				size={'sq-sm'}
+				onClick={() => {
+					setIsMenuOpened(prev => !prev)
+				}}
+			>
 				<div className={classNames.imgContainer}>
 					<img src={burgerMenuIcon} />
 				</div>
 			</Button>
-			<animated.div style={overlayFadeAnimation} className={classNames.overlay} onClick={() => setIsMenuOpened(false)}>
+			<animated.div
+				style={overlayFadeAnimation}
+				className={classNames.overlay}
+				onClick={() => {
+					setIsMenuOpened(false)
+				}}
+			>
 				<animated.div style={fadeAnimation} className={classNames.menuContainer}>
 					{isMobile ? <MobileBreadcrumbs /> : null}
 					<ul className={classNames.listContainer}>
@@ -73,7 +85,11 @@ export function BurgerMenu() {
 									e.stopPropagation()
 								}}
 							>
-								{theme === 'dark' ? <IconMoon size={18} color={'var(--color-text-secondary)'} /> : <IconSun size={18} color={'var(--color-text-secondary)'} />}
+								{theme === 'dark' ? (
+									<IconMoon size={18} color={'var(--color-text-secondary)'} />
+								) : (
+									<IconSun size={18} color={'var(--color-text-secondary)'} />
+								)}
 								<h5>{t('header.menu.toggleTheme')}</h5>
 							</Button>
 						</li>
@@ -120,7 +136,13 @@ export function BurgerMenu() {
 							</Button>
 						</li>
 					</ul>
-					<Button onClick={() => setIsModalContactSupportModalVisible(true)}>{t('header.menu.contactSupport')}</Button>
+					<Button
+						onClick={() => {
+							setIsModalContactSupportModalVisible(true)
+						}}
+					>
+						{t('header.menu.contactSupport')}
+					</Button>
 				</animated.div>
 			</animated.div>
 			<LanguageModal show={isLanguageModalVisible} setShow={setIsLanguageModalVisible} />

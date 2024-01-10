@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconArrowDownRight, IconArrowUpRight } from '@tabler/icons-react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
@@ -23,7 +23,10 @@ export const holdingsColumns = [
 	{
 		columnTitle: 'Last 24h',
 		cellComponent: ({ last_24h }) => (
-			<Tag leftIcon={last_24h > 0 ? <IconArrowUpRight size={18} /> : <IconArrowDownRight size={18} />} color={last_24h > 0 ? 'green' : 'red'}>
+			<Tag
+				leftIcon={last_24h > 0 ? <IconArrowUpRight size={18} /> : <IconArrowDownRight size={18} />}
+				color={last_24h > 0 ? 'green' : 'red'}
+			>
 				{last_24h}%
 			</Tag>
 		),

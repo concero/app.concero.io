@@ -1,4 +1,4 @@
-import { SwapState } from '../../cards/SwapCard/swapReducer/types'
+import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
 
 export interface SwapButtonProps {
 	swapState: SwapState

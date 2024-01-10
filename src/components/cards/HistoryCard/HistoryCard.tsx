@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react'
+import { type FC, useContext, useEffect } from 'react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import { Table } from '../../layout/Table/Table'
 import { SelectionContext } from '../../../hooks/SelectionContext'
@@ -26,7 +26,9 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
 	useEffect(() => {
 		fetchTransactions()
 		const intervalId = setInterval(fetchTransactions, 120 * 1000)
-		return () => clearInterval(intervalId)
+		return () => {
+			clearInterval(intervalId)
+		}
 	}, [selection.historyCard.from.token.symbol, selection.historyCard.to.token.symbol])
 
 	if (state.error) return FetchingFallback(fetchTransactions)
@@ -41,7 +43,11 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
 				)}
 				isLoading={state.historyIsLoading}
 			/>
-			<TransactionDetailsModal isOpen={state.modalIsOpen} setIsOpen={isOpen => dispatch({ type: 'SET_MODAL_OPEN', payload: isOpen })} data={state.modalData} />
+			<TransactionDetailsModal
+				isOpen={state.modalIsOpen}
+				setIsOpen={isOpen => dispatch({ type: 'SET_MODAL_OPEN', payload: isOpen })}
+				data={state.modalData}
+			/>
 		</Card>
 	)
 }

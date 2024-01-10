@@ -1,5 +1,5 @@
-import { StandardRoute, Step } from '../../../types/StandardRoute'
-import { Chain, Token } from '../../../api/concero/types'
+import { type StandardRoute, type Step } from '../../../types/StandardRoute'
+import { type Chain, type Token } from '../../../api/concero/types'
 
 export interface SwapCardProps {}
 

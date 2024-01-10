@@ -1,6 +1,6 @@
-import { StandardRoute } from '../../../../types/StandardRoute'
-import { Settings, SwapAction, SwapStateDirection } from '../swapReducer/types'
-import { Dispatch } from 'react'
+import { type StandardRoute } from '../../../../types/StandardRoute'
+import { type Settings, type SwapAction, type SwapStateDirection } from '../swapReducer/types'
+import { type Dispatch } from 'react'
 
 export interface GetLifiRoutes {
 	routes: StandardRoute[] | []

@@ -1,7 +1,7 @@
-import { Fees, StandardRoute, Step } from '../../types/StandardRoute'
-import { BestRouteResponse } from 'rango-types/src/api/main/routing'
+import { type Fees, type StandardRoute, type Step } from '../../types/StandardRoute'
+import { type BestRouteResponse } from 'rango-types/src/api/main/routing'
 import BigNumber from 'bignumber.js'
-import { SwapFee, SwapResult } from 'rango-types/src/api/main/common'
+import { type SwapFee, type SwapResult } from 'rango-types/src/api/main/common'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
 import { config } from '../../constants/config'
@@ -72,7 +72,9 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 				symbol: route.to.symbol,
 				decimals: to.token.decimals,
 				amount: roundNumberByDecimals(route.result?.outputAmount, 4),
-				amount_usd: new BigNumber(route.result?.outputAmount ?? 0).times(route.result?.swaps[route.result.swaps.length - 1]?.to.usdPrice ?? 0).toString(),
+				amount_usd: new BigNumber(route.result?.outputAmount ?? 0)
+					.times(route.result?.swaps[route.result.swaps.length - 1]?.to.usdPrice ?? 0)
+					.toString(),
 			},
 			chain: {
 				id: route.to.blockchain,
@@ -87,7 +89,8 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 		},
 		tags: [],
 		slippage_percent: null,
-		transaction_time_seconds: route.result?.swaps.reduce((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ?? null,
+		transaction_time_seconds:
+			route.result?.swaps.reduce((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ?? null,
 		originalRoute: route,
 	}
 }

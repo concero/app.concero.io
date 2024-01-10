@@ -34,7 +34,9 @@ export const fetchTransactions = async (setIsLoading, setHistoryItems, selection
 	try {
 		await getTransactionHistory(tokensPair, setHistoryItems)
 		setIsLoading(false)
-		return setInterval(() => getTransactionHistory(tokensPair, setHistoryItems), 10000)
+		return setInterval(async () => {
+			await getTransactionHistory(tokensPair, setHistoryItems)
+		}, 10000)
 	} catch (e) {
 		setIsLoading(false)
 		console.error(e)

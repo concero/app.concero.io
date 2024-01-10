@@ -1,4 +1,4 @@
-import { IFetchBalances } from './types'
+import { type IFetchBalances } from './types'
 import { get } from '../client'
 
 export async function fetchBalances(address: string, chainId: string): Promise<IFetchBalances[]> {

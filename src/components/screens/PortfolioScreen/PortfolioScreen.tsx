@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './PortfolioScreen.module.pcss'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 import { ChartCard } from '../../cards/ChartCard/ChartCard'

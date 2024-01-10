@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { Vault } from '../../screens/EarnScreen/earnReducer/types'
+import { type FC } from 'react'
+import { type Vault } from '../../screens/EarnScreen/earnReducer/types'
 
 interface RenderTagsProps {
 	vault: Vault

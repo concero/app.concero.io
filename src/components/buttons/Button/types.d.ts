@@ -1,6 +1,6 @@
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
-export type ButtonProps = {
+export interface ButtonProps {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
 	variant?: 'primary' | 'secondary' | 'filled' | 'subtle' | 'black'
 	leftIcon?: ReactNode

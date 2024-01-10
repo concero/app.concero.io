@@ -1,5 +1,5 @@
-import { Dispatch } from 'react'
-import { FilterCategory, EarnAction } from '../../../screens/EarnScreen/earnReducer/types'
+import { type Dispatch } from 'react'
+import { FilterCategory, type EarnAction } from '../../../screens/EarnScreen/earnReducer/types'
 
 export const resetFilter = (dispatch: Dispatch<EarnAction>) => {
 	dispatch({ type: 'SET_FILTER', payload: { filter: FilterCategory.all, value: true } })

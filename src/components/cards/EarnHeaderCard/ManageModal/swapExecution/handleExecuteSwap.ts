@@ -1,8 +1,8 @@
-import { Dispatch } from 'react'
-import { ManageAction, ManageState } from '../useEarnReducer/types'
+import { type Dispatch } from 'react'
+import { type ManageAction, type ManageState } from '../useEarnReducer/types'
 import { ModalType, Status } from '../constants'
 import { getSigner } from '../../../../../web3/getSigner'
-import { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { type SwitchNetworkArgs, type SwitchNetworkResult } from '@wagmi/core'
 import BigNumber from 'bignumber.js'
 import { addingAmountDecimals } from '../../../../../utils/formatting'
 import { fetchApprovalTx } from '../../../../../api/enso/approvalTx'
@@ -12,7 +12,11 @@ import { approveToken, checkIsApproveNeeded, handleError } from './helpers'
 
 type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<SwitchNetworkResult>
 
-export async function handleExecuteSwap(manageState: ManageState, manageDispatch: Dispatch<ManageAction>, switchNetworkAsync: SwitchChainNetwork): Promise<void> {
+export async function handleExecuteSwap(
+	manageState: ManageState,
+	manageDispatch: Dispatch<ManageAction>,
+	switchNetworkAsync: SwitchChainNetwork,
+): Promise<void> {
 	manageDispatch({ type: 'SET_LOADING', payload: true })
 	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.progress })
 	manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
@@ -22,12 +26,30 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 
 	try {
 		const signer = await getSigner(Number(from.chain.id), switchNetworkAsync)
-		const approvalTx = await fetchApprovalTx(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals) as string)
-		const isApproveNeeded = await checkIsApproveNeeded(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals) as string)
+		const approvalTx = await fetchApprovalTx(
+			from.chain.id,
+			address,
+			from.token.address,
+			addingAmountDecimals(from.amount, from.token.decimals)!,
+		)
+		const isApproveNeeded = await checkIsApproveNeeded(
+			from.chain.id,
+			address,
+			from.token.address,
+			addingAmountDecimals(from.amount, from.token.decimals)!,
+		)
 
 		if (isApproveNeeded) {
-			manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
-			await approveToken({ signer, tokenAddress: from.token.address, receiverAddress: approvalTx.spender, fromAmount: approvalTx.amount })
+			manageDispatch({
+				type: 'PUSH_STEP',
+				step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' },
+			})
+			await approveToken({
+				signer,
+				tokenAddress: from.token.address,
+				receiverAddress: approvalTx.spender,
+				fromAmount: approvalTx.amount,
+			})
 		}
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
 		const route = await retryRequest(
@@ -35,7 +57,7 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 				await fetchEnsoRoute({
 					chainId: from.chain.id,
 					fromAddress: address,
-					amountIn: addingAmountDecimals(from.amount, from.token.decimals) as string,
+					amountIn: addingAmountDecimals(from.amount, from.token.decimals)!,
 					tokenIn: from.token.address,
 					tokenOut: to.token.address,
 				}),
@@ -46,7 +68,10 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 			...route.tx,
 			gasLimit: BigNumber(manageState.route.gas._hex).times(1.8).toFixed(0).toString(),
 		}
-		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
+		manageDispatch({
+			type: 'PUSH_STEP',
+			step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' },
+		})
 		await signer.sendTransaction(transactionArgs)
 
 		manageDispatch({ type: 'SET_STATUS', payload: Status.success })

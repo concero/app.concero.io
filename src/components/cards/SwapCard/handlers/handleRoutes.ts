@@ -1,5 +1,5 @@
-import { Dispatch, MutableRefObject } from 'react'
-import { SwapAction } from '../swapReducer/types'
+import { type Dispatch, type MutableRefObject } from 'react'
+import { type SwapAction } from '../swapReducer/types'
 
 export const clearRoutes = (typingTimeoutRef: MutableRefObject<number | undefined>, swapDispatch: Dispatch<SwapAction>) => {
 	if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)

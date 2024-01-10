@@ -1,8 +1,8 @@
-import { Dispatch, FC, useState } from 'react'
+import { type Dispatch, type FC, useState } from 'react'
 import { IconArrowsUpDown, IconChevronLeft } from '@tabler/icons-react'
 import classNames from './EarnHeaderCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
-import { EarnAction, EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type EarnAction, type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { Button } from '../../buttons/Button/Button'
 import { InfoCard } from './InfoCard/InfoCard'
 import { ManageModal } from './ManageModal/ManageModal'
@@ -51,7 +51,14 @@ export const EarnHeaderCard: FC<EarnHeaderCardProps> = ({ earnState, earnDispatc
 	return (
 		<>
 			<div className={classNames.wrapper}>
-				{isIpad ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.backButton : ''} onClick={handleGoBackButtonClick} /> : null}
+				{isIpad ? (
+					<Button
+						variant={'subtle'}
+						leftIcon={<IconChevronLeft />}
+						className={stakedAmount ? classNames.backButton : ''}
+						onClick={handleGoBackButtonClick}
+					/>
+				) : null}
 				<div className={classNames.innerContainer}>
 					<div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
 						<div className={classNames.headerContainer}>
@@ -82,7 +89,12 @@ export const EarnHeaderCard: FC<EarnHeaderCardProps> = ({ earnState, earnDispatc
 			</div>
 			{isIpad ? <InfoCards /> : null}
 			{isIpad ? (
-				<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick} isDisabled={!earnState.address}>
+				<Button
+					leftIcon={<IconArrowsUpDown size={16} color="white" />}
+					variant="primary"
+					onClick={handleManageButtonClick}
+					isDisabled={!earnState.address}
+				>
 					{stakeButtonTitle}
 				</Button>
 			) : null}

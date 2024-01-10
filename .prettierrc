@@ -7,6 +7,14 @@
   "tabWidth": 1,
   "useTabs": true,
   "arrowParens": "avoid",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+    "overrides": [
+        {
+        "files": "*.json",
+        "options": {
+            "printWidth": 200
+        }
+        }
+    ]
 }
 

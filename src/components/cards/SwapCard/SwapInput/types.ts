@@ -1,4 +1,4 @@
-import { providers } from 'ethers'
+import { type providers } from 'ethers'
 
 export interface SwapInputProps {
 	swapState: any

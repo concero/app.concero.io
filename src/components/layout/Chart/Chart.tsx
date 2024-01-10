@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useRef } from 'react'
+import React, { type FC, useContext, useEffect, useRef } from 'react'
 import { createChart } from 'lightweight-charts'
 import { animated, useSpring } from '@react-spring/web'
 import { ThemeContext } from '../../../hooks/themeContext'

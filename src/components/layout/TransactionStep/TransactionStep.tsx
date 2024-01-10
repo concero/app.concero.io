@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { Ping } from '@uiball/loaders'
 import { IconCheck, IconExternalLink, IconX } from '@tabler/icons-react'
 import { LoadingAnimation } from '../LoadingAnimation/LoadingAnimation'

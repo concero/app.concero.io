@@ -1,4 +1,4 @@
-import React, { FC, ForwardedRef, forwardRef, ReactNode, useEffect, useRef, useState } from 'react'
+import React, { type FC, type ForwardedRef, forwardRef, type ReactNode, useEffect, useRef, useState } from 'react'
 import classNames from './TextInput.module.pcss'
 
 export interface TextInputProps {
@@ -13,13 +13,23 @@ export interface TextInputProps {
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<HTMLInputElement, TextInputProps>(
-	({ value, placeholder, onChangeText = null, icon = null, variant, isDisabled = false, title = null, type = 'text', ...rest }, ref) => {
+export const TextInput: FC<TextInputProps & { ref?: ForwardedRef<HTMLInputElement> }> = forwardRef<
+	HTMLInputElement,
+	TextInputProps
+>(
+	(
+		{ value, placeholder, onChangeText = null, icon = null, variant, isDisabled = false, title = null, type = 'text', ...rest },
+		ref,
+	) => {
 		const inputRef = useRef()
 		const [isFocused, setIsFocused] = useState<boolean>(false)
 		const inputClass = variant === 'inline' && !title ? '' : classNames.inputWrapper
-		const handleFocus = () => setIsFocused(true)
-		const handleBlur = () => setIsFocused(false)
+		const handleFocus = () => {
+			setIsFocused(true)
+		}
+		const handleBlur = () => {
+			setIsFocused(false)
+		}
 
 		const handleAreaClick = () => {
 			if (inputRef.current) inputRef.current.focus()

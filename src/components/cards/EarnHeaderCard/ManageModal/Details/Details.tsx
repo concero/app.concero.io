@@ -1,11 +1,11 @@
 import { IconGasStation } from '@tabler/icons-react'
-import { ManageState } from '../useEarnReducer/types'
+import { type ManageState } from '../useEarnReducer/types'
 import classNames from './Details.module.pcss'
 import { Avatar } from '../../../../tags/Avatar/Avatar'
 import { Tag } from '../../../../tags/Tag/Tag'
 import { numberToFormatString, roundNumberByDecimals } from '../../../../../utils/formatting'
 import BigNumber from 'bignumber.js'
-import { ReactElement } from 'react'
+import { type ReactElement } from 'react'
 
 interface DetailsProps {
 	manageState: ManageState

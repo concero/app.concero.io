@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import { IconAlertTriangle, IconArrowDown, IconArrowUp } from '@tabler/icons-react'
 import classNames from './PredictionCard.module.pcss'
 import { CardHeader } from '../CardHeader/CardHeader'
-import { EarnState } from '../../screens/EarnScreen/earnReducer/types'
+import { type EarnState } from '../../screens/EarnScreen/earnReducer/types'
 import { colors } from '../../../constants/colors'
 import { numberToFormatString } from '../../../utils/formatting'
 
@@ -21,7 +21,11 @@ const PredictionItemCard: FC<PredictionItemCardProps> = ({ predictedClass, value
 	return (
 		<div className={`card ${containerClasses}`}>
 			<div className={classNames.sideContainer}>
-				{predictedClass === 'Down' ? <IconArrowDown size={16} color={'var(--color-red-450)'} /> : <IconArrowUp size={16} color={colors.green.main} />}
+				{predictedClass === 'Down' ? (
+					<IconArrowDown size={16} color={'var(--color-red-450)'} />
+				) : (
+					<IconArrowUp size={16} color={colors.green.main} />
+				)}
 				<p className="body1">{predictedClass}</p>
 			</div>
 			<p className="body1">{`${numberToFormatString(value, 2)}%`}</p>

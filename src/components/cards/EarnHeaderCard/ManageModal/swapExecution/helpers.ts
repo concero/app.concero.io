@@ -1,10 +1,10 @@
-import { Dispatch } from 'react'
-import { ManageAction } from '../useEarnReducer/types'
+import { type Dispatch } from 'react'
+import { type ManageAction } from '../useEarnReducer/types'
 import { ModalType, Status } from '../constants'
 import { Contract } from 'ethers'
 import { get } from '../../../../../api/client'
 import BigNumber from 'bignumber.js'
-import { JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider'
+import { type JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider'
 
 export function handleError(error: Error, manageDispatch: Dispatch<ManageAction>): void {
 	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.failure })
@@ -36,7 +36,12 @@ interface IApproval {
 	token: string
 }
 
-export async function checkIsApproveNeeded(fromChainId: number, fromAddress: string, tokenAddress: string, fromAmount: string): Promise<boolean> {
+export async function checkIsApproveNeeded(
+	fromChainId: number,
+	fromAddress: string,
+	tokenAddress: string,
+	fromAmount: string,
+): Promise<boolean> {
 	const url = `https://api.enso.finance/api/v1/wallet/approvals?chainId=${fromChainId}&fromAddress=${fromAddress}`
 	const response = await get(url)
 	const approval: IApproval | undefined = response.data.find((item: IApproval) => item.token === tokenAddress)

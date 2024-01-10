@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { type FC } from 'react'
 import classNames from './Toggle.module.pcss'
 
 interface ToggleProps {
@@ -9,7 +9,12 @@ interface ToggleProps {
 
 export const Toggle: FC<ToggleProps> = ({ isChecked, onChange, className }) => {
 	return (
-		<div className={`${classNames.toggleContainer} ${isChecked ? classNames.checked : ''} ${className ? className : ''}`} onClick={() => onChange(!isChecked)}>
+		<div
+			className={`${classNames.toggleContainer} ${isChecked ? classNames.checked : ''} ${className || ''}`}
+			onClick={() => {
+				onChange(!isChecked)
+			}}
+		>
 			<div className={`${classNames.slider} ${isChecked ? classNames.checked : ''}`}></div>
 		</div>
 	)
