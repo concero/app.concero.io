@@ -11,11 +11,11 @@ export class TokenAmount {
 	}
 
 	public get rounded(): string {
-		return addingTokenDecimals(this.rawAmount as string, this.decimals as number) ?? ''
+		return addingTokenDecimals(this.rawAmount!, this.decimals!) ?? ''
 	}
 
 	public get formatted(): string {
-		return new BigNumber(this.rawAmount as string).dividedBy(BigNumber(10).pow(this.decimals as number)).toString()
+		return new BigNumber(this.rawAmount!).dividedBy(BigNumber(10).pow(this.decimals!)).toString()
 	}
 
 	public get raw(): string {

@@ -1,6 +1,6 @@
 import { type Dispatch } from 'react'
 import { fetchTokenBalance } from '../api/rango/fetchTokenBalance'
-import { SwapAction } from '../components/cards/SwapCard/swapReducer/types'
+import { type SwapAction } from '../components/cards/SwapCard/swapReducer/types'
 import { reverseRangoChainsMap } from '../api/rango/rangoChainsMap'
 import { TokenAmount } from './TokenAmount'
 
@@ -40,7 +40,7 @@ export async function getBalance({ dispatch, from, address }: HandleBalanceProps
 	}
 
 	const response = await fetchTokenBalance(rangoChainSymbol, from.token.address, address, from.token.symbol)
-	if (!response) return handleError(dispatch)
+	if (!response) { handleError(dispatch); return; }
 	dispatch({
 		type: 'SET_BALANCE',
 		payload: {
