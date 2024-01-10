@@ -1,4 +1,4 @@
-import { Balance } from '../swapReducer/types'
+import { type Balance } from '../swapReducer/types'
 
 export interface TokenAreaProps {
 	direction: 'to' | 'from'

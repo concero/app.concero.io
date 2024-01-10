@@ -1,10 +1,10 @@
-import { StandardRoute } from '../../../../types/StandardRoute'
-import { Provider } from '../../../../api/concero/types'
-import { StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
-import { TransactionStatus } from 'rango-sdk'
-import { ButtonType } from '../../../buttons/SwapButton/constants'
-import { ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'
-import { TokenAmount } from '../../../../utils/TokenAmount'
+import { type StandardRoute } from '../../../../types/StandardRoute'
+import { type Provider } from '../../../../api/concero/types'
+import { type StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
+import { type TransactionStatus } from 'rango-sdk'
+import { type ButtonType } from '../../../buttons/SwapButton/constants'
+import { type ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'
+import { type TokenAmount } from '../../../../utils/TokenAmount'
 
 export interface SwapStateDirection {
 	chain: {
