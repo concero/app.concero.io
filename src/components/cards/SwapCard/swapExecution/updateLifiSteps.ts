@@ -2,10 +2,6 @@ import { type SwapAction } from '../swapReducer/types'
 import { type Dispatch } from 'react'
 import { type StandardRoute } from '../../../../types/StandardRoute'
 import { type Process } from '@lifi/types/dist/cjs/step'
-import { trackEvent } from '../../../../hooks/useTracking'
-import { action, category } from '../../../../constants/tracking'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
 
 const getStepStatus = (action: Process) => {
 	switch (action.status.toLowerCase()) {
@@ -61,11 +57,5 @@ export const updateLifiSteps = ({ swapDispatch, selectedRoute }: UpdateLifiSteps
 
 	if (messages.length && !messages[messages.length - 1]?.title.includes('user rejected')) {
 		swapDispatch({ type: 'SET_SWAP_STEPS', payload: messages })
-		trackEvent({
-			category: category.SwapCard,
-			action: action.SwapRejected,
-			label: 'User rejected swap',
-			data: { provider: 'lifi', error },
-		})
 	}
 }

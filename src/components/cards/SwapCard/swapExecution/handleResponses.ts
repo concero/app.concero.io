@@ -17,7 +17,7 @@ export const handleRangoResponse = (executedRoute: TransactionStatusResponse, sw
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'failure', provider: 'rango', tx_data: stdRoute })
 		trackEvent({ category: category.SwapCard, action: action.SwapFailed, label: 'swap_failed', data: { provider: 'rango', stdRoute } })
-	} else if (executedRoute.status === 'success') {
+	} else if (executedRoute.status === TransactionStatus.SUCCESS) {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'success', provider: 'rango', tx_data: stdRoute })
 		trackEvent({ category: category.SwapCard, action: action.SwapSuccess, label: 'swap_success', data: { provider: 'rango', stdRoute } })
@@ -37,5 +37,8 @@ export const handleLifiResponse = (executedRoute: Route, swapDispatch: Dispatch<
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		logTxToDB({ tx_id: executedRoute.id, status: 'failure', provider: 'lifi', tx_data: stdRoute })
 		trackEvent({ category: category.SwapCard, action: action.SwapFailed, label: 'swap_failed', data: { provider: 'lifi', stdRoute } })
+	} else if (lastExecutionStep?.status.toLowerCase() === 'cancelled') {
+		logTxToDB({ tx_id: executedRoute.id, status: 'cancelled', provider: 'lifi', tx_data: stdRoute })
+		trackEvent({ category: category.SwapCard, action: action.SwapFailed, label: 'swap_cancelled', data: { provider: 'lifi', stdRoute } })
 	}
 }
