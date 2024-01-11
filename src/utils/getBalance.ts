@@ -40,7 +40,10 @@ export async function getBalance({ dispatch, from, address }: HandleBalanceProps
 	}
 
 	const response = await fetchTokenBalance(rangoChainSymbol, from.token.address, address, from.token.symbol)
-	if (!response) { handleError(dispatch); return; }
+	if (!response) {
+		handleError(dispatch)
+		return
+	}
 	dispatch({
 		type: 'SET_BALANCE',
 		payload: {

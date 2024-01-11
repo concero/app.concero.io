@@ -64,6 +64,7 @@ export interface SwapState {
 export interface Settings {
 	slippage_percent: string
 	showDestinationAddress: boolean
+	allowSwitchChain: boolean
 }
 
 type ActionDirection = 'from' | 'to'
