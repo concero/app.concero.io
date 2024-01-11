@@ -48,7 +48,7 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			}
 
 			const signer = await getSigner()
-			const acceptExchangeRateUpdateHook = async () => await Promise.resolve(true)
+			const acceptExchangeRateUpdateHook = async () => true
 
 			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
 			handleLifiResponse(response, swapDispatch)
