@@ -35,9 +35,11 @@ export const fetchRangoRoutes = async ({ from, to, settings }: IFetchRangoRoutes
 		affiliateRef: process.env.RANGO_AFFILIATE_REF,
 		affiliatePercent: Number(process.env.RANGO_AFFILIATE_PERCENTAGE),
 		slippage: settings.slippage_percent,
+		disableMultiStepTx: !settings.allowSwitchChain,
 	}
 
 	const route = await rangoClient.getBestRoute(quoteParams)
+
 	if (!route?.result) return []
 
 	return [await standardizeRangoBestRoute(route, from, to)]

@@ -29,8 +29,6 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLi
 }
 
 const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void | StandardRoute[] | []> => {
-	if (!settings.allowSwitchChain) return
-
 	try {
 		const rangoRoutes: StandardRoute[] = await fetchRangoRoutes({ from, to, settings })
 		routes.push(...rangoRoutes)
