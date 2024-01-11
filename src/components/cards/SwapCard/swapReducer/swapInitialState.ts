@@ -29,6 +29,7 @@ export const swapInitialState = (selection): SwapState => ({
 	settings: {
 		slippage_percent: '5',
 		showDestinationAddress: false,
+		allowSwitchChain: true,
 	},
 	chains: [],
 	buttonState: { type: ButtonType.ENTER_AMOUNT },

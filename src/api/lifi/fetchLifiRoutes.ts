@@ -27,9 +27,8 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
 		insurance: false,
 		integrator: config.LIFI_INTEGRATOR,
 		slippage: Number(settings.slippage_percent || 5) / 100,
+		allowSwitchChain: settings.allowSwitchChain,
 	}
-
-	// console.log('routeOptions: ', routeOptions)
 
 	const routesRequest: RoutesRequest = {
 		fromChainId: Number(from.chain.id),
@@ -43,6 +42,8 @@ export const fetchLifiRoutes = async ({ from, to, settings }: FetchRoutesParams)
 	}
 
 	const response = await lifi.getRoutes(routesRequest)
+
+	console.log('response', response)
 
 	if (response.routes.length > 0) {
 		result = [...response.routes.map(route => standardiseLifiRoute(route))]

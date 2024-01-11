@@ -29,6 +29,8 @@ const getLifiRoutes = async ({ routes, from, to, settings, swapDispatch }: GetLi
 }
 
 const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetRangoRoutes): Promise<void | StandardRoute[] | []> => {
+	if (!settings.allowSwitchChain) return
+
 	try {
 		const rangoRoutes: StandardRoute[] = await fetchRangoRoutes({ from, to, settings })
 		routes.push(...rangoRoutes)
@@ -43,7 +45,7 @@ const getRangoRoutes = async ({ routes, from, to, settings, swapDispatch }: GetR
 export const getRoutes = async (from: SwapStateDirection, to: SwapStateDirection, settings: Settings, swapDispatch: Dispatch<SwapAction>): Promise<void> => {
 	if (!from.amount || !parseFloat(from.amount)) return
 	swapDispatch({ type: 'SET_LOADING', payload: true })
-	const routes: StandardRoute[] | [] = []
+	const routes: StandardRoute[] = []
 
 	try {
 		await Promise.all([getLifiRoutes({ routes, from, to, settings, swapDispatch }), getRangoRoutes({ routes, from, to, settings, swapDispatch })])

@@ -1,4 +1,5 @@
 import { type Dispatch, type MutableRefObject, useEffect } from 'react'
+import { type Config } from '@wagmi/core'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { getBalance } from '../../../utils/getBalance'
 import { clearRoutes } from './handlers/handleRoutes'
@@ -12,9 +13,10 @@ interface UseSwapCardEffectsProps {
 	address: string
 	dispatch: Dispatch<any>
 	typingTimeoutRef: MutableRefObject<number | undefined>
+	connector: NonNullable<Config<TPublicClient>['connector']> | undefined
 }
 
-export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef }: UseSwapCardEffectsProps) {
+export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef, connector }: UseSwapCardEffectsProps) {
 	const { from, to, settings, selectedRoute } = swapState
 
 	useEffect(() => {
@@ -32,7 +34,7 @@ export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch,
 		return () => {
 			clearRoutes(typingTimeoutRef, swapDispatch)
 		}
-	}, [from.token, from.amount, from.chain, to.token, to.chain])
+	}, [from.token, from.amount, from.chain, to.token, to.chain, settings.slippage_percent, settings.allowSwitchChain])
 
 	useEffect(() => {
 		if (!selectedRoute) return
@@ -45,6 +47,12 @@ export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch,
 			},
 		})
 	}, [selectedRoute])
+
+	useEffect(() => {
+		if (!connector) return
+		const allowSwitchChain = connector.name !== 'WalletConnect'
+		swapDispatch({ type: 'SET_SETTINGS', payload: { allowSwitchChain } })
+	}, [connector?.id])
 
 	useEffect(() => {
 		swapDispatch({ type: 'SET_ADDRESS', direction: 'from', payload: address })
