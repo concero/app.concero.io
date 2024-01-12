@@ -7,24 +7,8 @@ import { type TransactionResponse } from '@ethersproject/abstract-provider'
 import { type CheckApprovalResponse, type CreateTransactionResponse, type TransactionStatusResponse } from 'rango-sdk/src/types'
 import { type CreateTransactionProps, type ExecuteRangoRouteProps } from './types'
 import { type providers } from 'ethers'
-import { trackEvent } from '../../../../hooks/useTracking'
-import { action, category } from '../../../../constants/tracking'
 
 const sleep = async (ms: number) => await new Promise(resolve => setTimeout(resolve, ms))
-
-function handleError(error: Error) {
-	console.error('error', error)
-
-	if (error.message.toLowerCase().includes('user rejected')) {
-		trackEvent({
-			category: category.SwapCard,
-			action: action.SwapRejected,
-			label: 'User rejected swap',
-			data: { provider: 'rango', error },
-		})
-		throw new Error('user rejected')
-	}
-}
 
 function getRangoSwapOptions(route: BestRouteResponse, address: string, from, settings, step): CreateTransactionRequest {
 	return {
@@ -118,21 +102,18 @@ export async function executeRangoRoute({
 	let transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
 
 	while (step <= (route.result?.swaps.length || 1)) {
-		try {
-			const statusResponse = await rangoClient.checkStatus({ requestId: route.requestId, step, txId: transactionResponse.hash })
-			const { status } = statusResponse
+		const statusResponse = await rangoClient.checkStatus({ requestId: route.requestId, step, txId: transactionResponse.hash })
+		const { status } = statusResponse
 
-			updateRangoTransactionStatus(statusResponse, swapDispatch)
+		updateRangoTransactionStatus(statusResponse, swapDispatch)
 
-			if (status === TransactionStatus.FAILED) return statusResponse
-			if (status === TransactionStatus.SUCCESS) {
-				step++
-				if (step > (route.result?.swaps.length || 1)) return statusResponse
-				transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
-			}
-		} catch (error: Error) {
-			handleError(Error(error))
+		if (status === TransactionStatus.FAILED) return statusResponse
+		if (status === TransactionStatus.SUCCESS) {
+			step++
+			if (step > (route.result?.swaps.length || 1)) return statusResponse
+			transactionResponse = await executeRangoSwap({ route, address, from, settings, switchChainHook, swapDispatch, getChainByProviderSymbol, step })
 		}
+
 		await sleep(5000)
 	}
 }

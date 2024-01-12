@@ -39,6 +39,12 @@ export const handleLifiResponse = (executedRoute: Route, swapDispatch: Dispatch<
 		trackEvent({ category: category.SwapCard, action: action.SwapFailed, label: 'swap_failed', data: { provider: 'lifi', stdRoute } })
 	} else if (lastExecutionStep?.status.toLowerCase() === 'cancelled') {
 		logTxToDB({ tx_id: executedRoute.id, status: 'cancelled', provider: 'lifi', tx_data: stdRoute })
-		trackEvent({ category: category.SwapCard, action: action.SwapFailed, label: 'swap_cancelled', data: { provider: 'lifi', stdRoute } })
+
+		trackEvent({
+			category: category.SwapCard,
+			action: action.SwapRejected,
+			label: 'User rejected swap',
+			data: { stdRoute },
+		})
 	}
 }

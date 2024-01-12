@@ -14,12 +14,13 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 			type: 'APPEND_SWAP_STEP',
 			payload: { title: 'Cancelled by user', body: 'Transaction was cancelled', status: 'error' },
 		})
+		console.log('CANCELLED BY USER')
 
 		trackEvent({
 			category: category.SwapCard,
 			action: action.SwapRejected,
 			label: 'User rejected swap',
-			data: { provider: selectedRoute.provider, error: e.toString() },
+			data: { stdRoute: selectedRoute },
 		})
 	} else if (e.toString().toLowerCase().includes('insufficient')) {
 		swapDispatch({
