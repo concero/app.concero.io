@@ -14,7 +14,6 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 			type: 'APPEND_SWAP_STEP',
 			payload: { title: 'Cancelled by user', body: 'Transaction was cancelled', status: 'error' },
 		})
-		console.log('CANCELLED BY USER')
 
 		trackEvent({
 			category: category.SwapCard,
