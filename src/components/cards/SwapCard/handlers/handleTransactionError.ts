@@ -19,7 +19,7 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 			category: category.SwapCard,
 			action: action.SwapRejected,
 			label: 'User rejected swap',
-			data: { provider: selectedRoute.provider, error: e.toString() },
+			data: { stdRoute: selectedRoute },
 		})
 	} else if (e.toString().toLowerCase().includes('insufficient')) {
 		swapDispatch({
