@@ -92,6 +92,7 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 		total_usd: roundNumberByDecimals(new BigNumber(route.fromAmountUSD).minus(route.toAmountUSD).toString(), 2),
 		total_gas_usd: route.gasCostUSD,
 		total_fee: getTotalFee(route),
+		// total_fee_usd: ,
 	},
 	tags: route.tags,
 	insurance: {
@@ -103,7 +104,7 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 		0,
 	),
 	transaction_time_seconds: route.steps.reduce(
-		(acc: number, step) => acc + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + parseInt(innerStep.estimate.executionDuration), 0),
+		(acc: number, step) => acc + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.estimate.executionDuration, 0),
 		0,
 	),
 	execution: route.steps.map(step => step.execution),

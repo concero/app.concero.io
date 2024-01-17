@@ -46,6 +46,7 @@ export interface Balance {
 }
 
 export interface SwapState {
+	settingsModalOpen: boolean
 	from: SwapStateDirection
 	to: SwapStateDirection
 	routes: StandardRoute[]
