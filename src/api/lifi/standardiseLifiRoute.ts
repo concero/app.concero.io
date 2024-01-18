@@ -64,6 +64,7 @@ function getFeeAmountUsd(route: lifiTypes.Route): number {
 
 	route.steps.forEach((step: LifiStep) => {
 		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
+			if (fee.included) return
 			amount += parseFloat(fee.amountUSD)
 		})
 	})
