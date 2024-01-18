@@ -10,8 +10,8 @@ import { setSwapCard } from './handlers/setSwapCard'
 interface UseSwapCardEffectsProps {
 	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
-	address: string
-	dispatch: Dispatch<any>
+	address: string | undefined
+	selectionDispatch: Dispatch<any>
 	typingTimeoutRef: MutableRefObject<number | undefined>
 	connector: NonNullable<Config<TPublicClient>['connector']> | undefined
 }
@@ -20,15 +20,15 @@ export function useSwapCardEffects({
 	swapState,
 	swapDispatch,
 	address,
-	dispatch,
+	selectionDispatch,
 	typingTimeoutRef,
 	connector,
 }: UseSwapCardEffectsProps) {
 	const { from, to, settings, selectedRoute } = swapState
 
 	useEffect(() => {
-		setHistoryCard(dispatch, from, to)
-		setSwapCard(dispatch, from, to)
+		setHistoryCard(selectionDispatch, from, to)
+		setSwapCard(selectionDispatch, from, to)
 	}, [from.token.address, to.token.address])
 
 	useEffect(() => {
@@ -37,7 +37,7 @@ export function useSwapCardEffects({
 
 	useEffect(() => {
 		clearRoutes(typingTimeoutRef, swapDispatch)
-		handleFetchRoutes(from, to, settings, swapDispatch, typingTimeoutRef)
+		void handleFetchRoutes(from, to, settings, swapDispatch, typingTimeoutRef)
 		return () => {
 			clearRoutes(typingTimeoutRef, swapDispatch)
 		}

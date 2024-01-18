@@ -66,10 +66,10 @@ export const SelectionContext = createContext(null)
 
 export function SelectionProvider({ children }: SelectionProviderProps) {
 	const { tokens, chains } = useContext(DataContext)
-	const [selection, dispatch] = useReducer(
+	const [selection, selectionDispatch] = useReducer(
 		reducer,
 		initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
 	)
 
-	return <SelectionContext.Provider value={{ selection, dispatch }}>{children}</SelectionContext.Provider>
+	return <SelectionContext.Provider value={{ selection, selectionDispatch }}>{children}</SelectionContext.Provider>
 }

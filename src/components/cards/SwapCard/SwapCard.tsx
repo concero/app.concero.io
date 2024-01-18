@@ -18,7 +18,7 @@ import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 
 export const SwapCard: FC<SwapCardProps> = () => {
-	const { selection, dispatch } = useContext(SelectionContext)
+	const { selection, selectionDispatch } = useContext(SelectionContext)
 	const [swapState, swapDispatch] = useSwapReducer(selection)
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef(null)
@@ -34,7 +34,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 	const toggleInsurance = (routeId: string) => {
 		swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
 	}
-	useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef, connector })
+	useSwapCardEffects({ swapState, swapDispatch, address, selectionDispatch, typingTimeoutRef, connector })
 
 	function handleContactSupportGoBackClick() {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
