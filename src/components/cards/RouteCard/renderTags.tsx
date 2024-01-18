@@ -51,7 +51,7 @@ export const renderTags = (
 					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>
 				</Tag>
 			) : null}
-			{route.cost.total_gas_usd ? (
+			{route.cost.total_fee_usd || route.cost.total_fee_usd ? (
 				<Tag color="transparent" leftIcon={<IconPigMoney size={20} color={getIconColor()} />}>
 					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
 						${route.cost.total_fee_usd ?? route.cost.total_gas_usd}
