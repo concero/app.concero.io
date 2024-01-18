@@ -23,15 +23,35 @@ function AdditionalInfoTag({ title, type, getColor, isBestRoute }: AdditionalInf
 	)
 }
 
-export const renderAdditionalInfo = (isRoutesCollapsed: boolean, step: Step, isBestRoute: boolean, getColor: (key?: string) => string | undefined) => (
+export const renderAdditionalInfo = (
+	isRoutesCollapsed: boolean,
+	step: Step,
+	isBestRoute: boolean,
+	getColor: (key?: string) => string | undefined,
+) => (
 	<div>
 		{!isRoutesCollapsed ? (
 			<div style={{ flexDirection: 'row', gap: 10 }}>
-				<AdditionalInfoTag title={step.tool.estimated_execution_time_seconds.toString()} type="time" getColor={getColor} isBestRoute={isBestRoute} />
+				<AdditionalInfoTag
+					title={step.tool.estimated_execution_time_seconds.toString()}
+					type="time"
+					getColor={getColor}
+					isBestRoute={isBestRoute}
+				/>
 				{step.tool.gas_usd ? (
-					<AdditionalInfoTag title={step.tool.gas_usd as string} type="gasUsd" getColor={getColor} isBestRoute={isBestRoute} />
+					<AdditionalInfoTag
+						title={step.tool.gas_usd as string}
+						type="gasUsd"
+						getColor={getColor}
+						isBestRoute={isBestRoute}
+					/>
 				) : step.tool.gas ? (
-					<AdditionalInfoTag title={`${step.tool.gas[0].amount} ${step.tool.gas[0].asset.symbol}`} type="gas" getColor={getColor} isBestRoute={isBestRoute} />
+					<AdditionalInfoTag
+						title={`${step.tool.gas[0].amount} ${step.tool.gas[0].asset.symbol}`}
+						type="gas"
+						getColor={getColor}
+						isBestRoute={isBestRoute}
+					/>
 				) : null}
 			</div>
 		) : null}

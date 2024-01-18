@@ -18,10 +18,15 @@ export function isInsufficientFee(swapState: SwapState): boolean {
 		const tokenBalance = walletBalances[fee.asset.chainId]?.find((balance: TokenBalance) => {
 			return balance.address.toLowerCase() === fee.asset.address?.toLowerCase()
 		})
-		if (!tokenBalance || (tokenBalance && parseFloat(addingTokenDecimals(tokenBalance.amount, tokenBalance.decimals)!) < parseFloat(fee.amount))) {
+		if (
+			!tokenBalance ||
+			(tokenBalance &&
+				parseFloat(addingTokenDecimals(tokenBalance.amount, tokenBalance.decimals)!) < parseFloat(fee.amount))
+		) {
 			isInsufficient = true
 		}
 	})
-	if (isInsufficient) trackEvent({ category: category.SwapCard, action: action.InsufficientGas, label: 'insufficient_gas' })
+	if (isInsufficient)
+		trackEvent({ category: category.SwapCard, action: action.InsufficientGas, label: 'insufficient_gas' })
 	return isInsufficient
 }

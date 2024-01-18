@@ -3,7 +3,11 @@ import { type Dispatch } from 'react'
 import { type SwapAction, SwapActionType } from '../swapReducer/types'
 import { fetchBalancesByChainIds } from '../../../../api/concero/fetchBalancesByChainIds'
 
-export async function fetchWalletBalancesOnStepChains(routes: StandardRoute[], swapDispatch: Dispatch<SwapAction>, walletAddress: string): Promise<void> {
+export async function fetchWalletBalancesOnStepChains(
+	routes: StandardRoute[],
+	swapDispatch: Dispatch<SwapAction>,
+	walletAddress: string,
+): Promise<void> {
 	if (routes.length === 0) return
 
 	const chainIds: string[] = []

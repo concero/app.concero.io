@@ -2,7 +2,9 @@ import { fetchPairs } from '../../../api/dexscreener/fetchPairs'
 import { fetchTransactionHistory } from '../../../api/dextools/fetchTransactionHistory'
 
 const getTokensPair = async selection => {
-	const { pairs } = await fetchPairs(`${selection.historyCard.from.token.symbol}/${selection.historyCard.to.token.symbol}`)
+	const { pairs } = await fetchPairs(
+		`${selection.historyCard.from.token.symbol}/${selection.historyCard.to.token.symbol}`,
+	)
 
 	if (!pairs) throw new Error('No pairs found')
 

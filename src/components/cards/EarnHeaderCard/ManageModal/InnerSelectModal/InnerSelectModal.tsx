@@ -11,7 +11,13 @@ interface InnerSelectModalProps {
 	chainId?: number
 }
 
-export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderItem, selectedItems = [], onSelect, chainId = null }) => {
+export const InnerSelectModal: FC<InnerSelectModalProps> = ({
+	getItems,
+	RenderItem,
+	selectedItems = [],
+	onSelect,
+	chainId = null,
+}) => {
 	const limit = 15
 	const [offset, setOffset] = useState<number>(0)
 	const [items, setItems] = useState<any[]>([])
@@ -48,7 +54,12 @@ export const InnerSelectModal: FC<InnerSelectModalProps> = ({ getItems, RenderIt
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.inputContainer}>
-				<TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} />
+				<TextInput
+					icon={<IconSearch color="var(--color-text-secondary)" size={18} />}
+					placeholder="Search..."
+					value={search}
+					onChangeText={handleSearch}
+				/>
 			</div>
 			<div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
 				{items.map(item => {

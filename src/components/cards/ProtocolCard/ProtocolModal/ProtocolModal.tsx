@@ -22,7 +22,11 @@ function ChangeTag({ change, period }: { change: number; period: string }) {
 		<Tag color={isDown ? 'red' : 'green'}>
 			<div className={isDown ? classNames.red : classNames.green}>
 				<div style={{ flexDirection: 'row', alignItems: 'center' }}>
-					{isDown ? <IconArrowDown size={16} color={colors.red.dark} /> : <IconArrowUp size={16} color={colors.green.main} />}
+					{isDown ? (
+						<IconArrowDown size={16} color={colors.red.dark} />
+					) : (
+						<IconArrowUp size={16} color={colors.green.main} />
+					)}
 					<h4>{Math.abs(change)}%</h4>
 				</div>
 				<p className="body1">{period}</p>
@@ -74,7 +78,12 @@ function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
 			<p className="body1">{t('protocolModal.audits')}</p>
 			<div className={classNames.tagsContainer}>
 				{auditLinks.map((link, index) => (
-					<Tag key={index} color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(link, '_blank')}>
+					<Tag
+						key={index}
+						color="grey"
+						leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />}
+						onClick={() => window.open(link, '_blank')}
+					>
 						<p className="body1">Github</p>
 					</Tag>
 				))}
@@ -85,7 +94,19 @@ function AuditLinks({ auditLinks }: { auditLinks: string[] }) {
 
 export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 	if (!protocol) return null
-	const { name, symbol, address, category, description, url, dailyFees, totalAllTime, dailySupplySideRevenue, audit_links, logoURI } = protocol
+	const {
+		name,
+		symbol,
+		address,
+		category,
+		description,
+		url,
+		dailyFees,
+		totalAllTime,
+		dailySupplySideRevenue,
+		audit_links,
+		logoURI,
+	} = protocol
 	const { t } = useTranslation()
 
 	return (
@@ -115,7 +136,11 @@ export function ProtocolModal({ show, setShow, protocol }: ProtocolModalProps) {
 						</Tag>
 					)}
 					{url && (
-						<Tag color="grey" leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />} onClick={() => window.open(url, '_blank')}>
+						<Tag
+							color="grey"
+							leftIcon={<IconExternalLink color={'var(--color-text-secondary)'} size={16} />}
+							onClick={() => window.open(url, '_blank')}
+						>
 							<p className="body1">{t('protocolModal.website')}</p>
 						</Tag>
 					)}

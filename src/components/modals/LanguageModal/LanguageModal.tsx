@@ -15,9 +15,19 @@ interface LanguageModalProps {
 export function LanguageModal({ setShow, show }: LanguageModalProps) {
 	const { t, i18n } = useTranslation()
 	const currentLanguage = i18n.language
-	const [selectedItems, setSelectedItems] = useState([languages.find((language: Language) => language.id === currentLanguage)])
+	const [selectedItems, setSelectedItems] = useState([
+		languages.find((language: Language) => language.id === currentLanguage),
+	])
 
-	const renderItem = ({ item, isSelected, onSelect }: { item: any; isSelected: boolean; onSelect: (i: any) => void }) => {
+	const renderItem = ({
+		item,
+		isSelected,
+		onSelect,
+	}: {
+		item: any
+		isSelected: boolean
+		onSelect: (i: any) => void
+	}) => {
 		return (
 			<Button
 				onClick={() => {

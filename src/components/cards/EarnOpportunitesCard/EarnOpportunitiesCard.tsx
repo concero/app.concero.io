@@ -35,7 +35,11 @@ export function EarnOpportunitiesCard({ earnState, earnDispatch }: EarnOpportuni
 		const newOffset = offset + limit
 		setOffset(newOffset)
 		getMoreVaults(earnDispatch, address, earnState, newOffset, limit)
-		trackEvent({ category: category.StakingScreen, action: action.ScrollToEnd, label: 'Staking opportunities onEndReached' })
+		trackEvent({
+			category: category.StakingScreen,
+			action: action.ScrollToEnd,
+			label: 'Staking opportunities onEndReached',
+		})
 	}
 
 	function handleScroll(e: UIEvent<HTMLDivElement>) {
@@ -59,7 +63,12 @@ export function EarnOpportunitiesCard({ earnState, earnDispatch }: EarnOpportuni
 			</CardHeader>
 			<div className={classNames.stakingCardsContainer} onScroll={handleScroll}>
 				{vaults?.map((vault: Vault) => (
-					<MemoizedEarnCard key={vault._id} isSelected={selectedVault?._id === vault._id} vault={vault} onClick={handleSelect} />
+					<MemoizedEarnCard
+						key={vault._id}
+						isSelected={selectedVault?._id === vault._id}
+						vault={vault}
+						onClick={handleSelect}
+					/>
 				))}
 			</div>
 		</div>

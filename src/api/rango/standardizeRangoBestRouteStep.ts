@@ -43,7 +43,10 @@ export function standardizeRangoBestRouteStep(step: SwapResult): Step {
 				decimals: step.to.decimals,
 				price_usd: step.to.usdPrice?.toString() ?? null,
 				amount: step.toAmount,
-				amount_usd: roundNumberByDecimals(new BigNumber(step.to.usdPrice!).times(new BigNumber(step.toAmount)).toString(), 4)!,
+				amount_usd: roundNumberByDecimals(
+					new BigNumber(step.to.usdPrice!).times(new BigNumber(step.toAmount)).toString(),
+					4,
+				)!,
 				logo_uri: step.to.logo,
 			},
 			chain: {

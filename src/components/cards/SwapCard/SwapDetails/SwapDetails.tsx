@@ -19,7 +19,12 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute 
 	}
 
 	const handleSelectRoute = (id: string) => {
-		trackEvent({ action: action.SelectRoute, category: category.SwapCard, label: 'route_selected', data: { routeId: id } })
+		trackEvent({
+			action: action.SelectRoute,
+			category: category.SwapCard,
+			label: 'route_selected',
+			data: { routeId: id },
+		})
 		setSelectedRoute(routes.find(route => route.id === id))
 	}
 

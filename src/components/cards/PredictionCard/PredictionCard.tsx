@@ -21,7 +21,11 @@ const PredictionItemCard: FC<PredictionItemCardProps> = ({ predictedClass, value
 	return (
 		<div className={`card ${containerClasses}`}>
 			<div className={classNames.sideContainer}>
-				{predictedClass === 'Down' ? <IconArrowDown size={16} color={'var(--color-red-450)'} /> : <IconArrowUp size={16} color={colors.green.main} />}
+				{predictedClass === 'Down' ? (
+					<IconArrowDown size={16} color={'var(--color-red-450)'} />
+				) : (
+					<IconArrowUp size={16} color={colors.green.main} />
+				)}
 				<p className="body1">{predictedClass}</p>
 			</div>
 			<p className="body1">{`${numberToFormatString(value, 2)}%`}</p>

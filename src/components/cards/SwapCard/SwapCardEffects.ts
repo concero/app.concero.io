@@ -16,7 +16,14 @@ interface UseSwapCardEffectsProps {
 	connector: NonNullable<Config<TPublicClient>['connector']> | undefined
 }
 
-export function useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef, connector }: UseSwapCardEffectsProps) {
+export function useSwapCardEffects({
+	swapState,
+	swapDispatch,
+	address,
+	dispatch,
+	typingTimeoutRef,
+	connector,
+}: UseSwapCardEffectsProps) {
 	const { from, to, settings, selectedRoute } = swapState
 
 	useEffect(() => {

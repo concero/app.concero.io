@@ -35,7 +35,11 @@ export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSup
 			<div className={classNames.stepBlock}>
 				<h4 className={classNames.title}>1. {t('contactSupportCard.copyDebugInfo')}</h4>
 				<div className={classNames.alightStart}>
-					<Button variant={'primary'} leftIcon={isCopied ? <IconCheck size={16} /> : <IconCopy size={16} />} onClick={handleCopy}>
+					<Button
+						variant={'primary'}
+						leftIcon={isCopied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+						onClick={handleCopy}
+					>
 						{t('contactSupportCard.copyDebugInfo')}
 					</Button>
 				</div>
@@ -51,7 +55,12 @@ export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSup
 					>
 						{t('socialMedia.discord')}
 					</Button>
-					<Button leftIcon={<IconMail size={16} />} className={classNames.f1} variant="secondary" onClick={() => window.open('mailto:Concerocrypto@gmail.com', '_blank')}>
+					<Button
+						leftIcon={<IconMail size={16} />}
+						className={classNames.f1}
+						variant="secondary"
+						onClick={() => window.open('mailto:Concerocrypto@gmail.com', '_blank')}
+					>
 						{t('socialMedia.email')}
 					</Button>
 				</div>

@@ -64,7 +64,10 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 	}
 
 	async function populateSelections(): Promise<void> {
-		const [chains, tokens] = await Promise.all([getChains({}), getTokens({ chainId: earnState.selectedVault?.chain_id!, offset: 0, limit: 15 })])
+		const [chains, tokens] = await Promise.all([
+			getChains({}),
+			getTokens({ chainId: earnState.selectedVault?.chain_id!, offset: 0, limit: 15 }),
+		])
 		const chain = chains.find(chain => chain.id === earnState.selectedVault?.chain_id)
 		manageDispatch({ type: 'SET_FROM_SELECTION', chain, token: tokens[0] })
 		manageDispatch({ type: 'SET_TO_SELECTION', payload: earnState.selectedVault })
@@ -77,7 +80,13 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 
 	useEffect(() => {
 		getQuote({ manageState, manageDispatch, typingTimeoutRef })
-	}, [manageState.from.amount, manageState.from.chain.id, manageState.to.chain.id, manageState.from.token.address, manageState.to.token.address])
+	}, [
+		manageState.from.amount,
+		manageState.from.chain.id,
+		manageState.to.chain.id,
+		manageState.from.token.address,
+		manageState.to.token.address,
+	])
 
 	useEffect(() => {
 		if (swapType === SwapType.stake) {
@@ -101,11 +110,22 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 							<Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={setStakeType}>
 								{t('button.stake')}
 							</Button>
-							<Button size="sm" variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'} onClick={setWithdrawType} isDisabled={!earnState.selectedVault?.stakedAmount}>
+							<Button
+								size="sm"
+								variant={swapType === SwapType.withdraw ? 'primary' : 'subtle'}
+								onClick={setWithdrawType}
+								isDisabled={!earnState.selectedVault?.stakedAmount}
+							>
 								{t('button.withdraw')}
 							</Button>
 						</div>
-						<SelectArea selection={manageState.from} direction="from" dispatch={manageDispatch} swapType={swapType} balance={manageState.balance} />
+						<SelectArea
+							selection={manageState.from}
+							direction="from"
+							dispatch={manageDispatch}
+							swapType={swapType}
+							balance={manageState.balance}
+						/>
 						<SelectArea selection={manageState.to} direction="to" dispatch={manageDispatch} swapType={swapType} />
 						<Details manageState={manageState} />
 						<StakeButton manageState={manageState} manageDispatch={manageDispatch} />
@@ -113,7 +133,12 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 				) : modalType === ModalType.chains ? (
 					<InnerSelectModal RenderItem={ListEntityButton} getItems={getChains} onSelect={handleSelectChain} />
 				) : modalType === ModalType.tokens ? (
-					<InnerSelectModal RenderItem={ListEntityButton} getItems={getTokens} onSelect={handleSelectToken} chainId={manageState.from.chain.id} />
+					<InnerSelectModal
+						RenderItem={ListEntityButton}
+						getItems={getTokens}
+						onSelect={handleSelectToken}
+						chainId={manageState.from.chain.id}
+					/>
 				) : (
 					<EarnTXProgress manageState={manageState} handleGoBack={handleGoBack} />
 				)}

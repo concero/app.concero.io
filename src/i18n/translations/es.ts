@@ -74,7 +74,8 @@ export const es = {
 			contractSupport: 'Soporte de contacto',
 			copyDebugInfo: 'Copiar información de transacción',
 			dropUsAMessage: 'Déjanos un mensaje',
-			txFailedMessage: 'Lamentamos que haya tenido problemas con su transacción. Haremos nuestro mejor esfuerzo para resolver el problema.',
+			txFailedMessage:
+				'Lamentamos que haya tenido problemas con su transacción. Haremos nuestro mejor esfuerzo para resolver el problema.',
 		},
 		manageModal: {
 			title: 'Gestionar posición',

@@ -24,7 +24,12 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 	const handleButtonClick = event => {
 		event.stopPropagation()
 		setIsRoutesCollapsed(!isRoutesCollapsed)
-		trackEvent({ action: action.ToggleRouteCard, category: category.SwapCard, label: 'toggle_route', data: { isOpen: !isRoutesCollapsed } })
+		trackEvent({
+			action: action.ToggleRouteCard,
+			category: category.SwapCard,
+			label: 'toggle_route',
+			data: { isOpen: !isRoutesCollapsed },
+		})
 	}
 
 	useEffect(() => {
@@ -43,7 +48,9 @@ export const RouteCard: FC<RouteCardProps> = ({ route, isSelected, onClick }) =>
 				<div className={classNames.cardHeaderLeftSide}>
 					{!isMobile ? <h4>Net value:</h4> : null}
 					<h3>{`$${numberToFormatString(Number(route.to.token.amount_usd), 2, true)}`}</h3>
-					<h3 className={classNames.subtitle}>{`${roundNumberByDecimals(Number(route.to.token.amount), 4)} ${route.to.token.symbol}`}</h3>
+					<h3 className={classNames.subtitle}>{`${roundNumberByDecimals(Number(route.to.token.amount), 4)} ${
+						route.to.token.symbol
+					}`}</h3>
 				</div>
 				<Button
 					variant="black"

@@ -7,6 +7,8 @@ export const ChainColumns = [
 	},
 	{
 		columnTitle: 'Name',
-		cellComponent: (chain: { name: string; symbol: string }) => <p style={{ color: 'var(--color-grey-500' }}>{chain.name}</p>,
+		cellComponent: (chain: { name: string; symbol: string }) => (
+			<p style={{ color: 'var(--color-grey-500' }}>{chain.name}</p>
+		),
 	},
 ]

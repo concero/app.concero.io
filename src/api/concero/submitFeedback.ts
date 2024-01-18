@@ -3,7 +3,13 @@ import { post } from '../client'
 import posthog from 'posthog-js'
 import { config } from '../../constants/config'
 
-export async function submitFeedback({ type, message, contact_option, contact_username, addNotification }): Promise<any> {
+export async function submitFeedback({
+	type,
+	message,
+	contact_option,
+	contact_username,
+	addNotification,
+}): Promise<any> {
 	if (!type || !message) return
 	const url = `${config.baseURL}/log/feedback`
 

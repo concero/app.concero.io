@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { type MouseEvent, useContext } from 'react'
 import { IconArrowWaveRightUp, IconClock, IconPigMoney } from '@tabler/icons-react'
 import { Tag } from '../../tags/Tag/Tag'
 import classNames from './RouteCard.module.pcss'
@@ -8,19 +8,24 @@ import { Beacon } from '../../layout/Beacon/Beacon'
 import { InsuranceContext } from '../SwapCard/InsuranceContext'
 import { useTranslation } from 'react-i18next'
 
-export const renderTags = (route: StandardRoute, isSelected: boolean, getTextColor: () => string, getIconColor: () => string) => {
+export const renderTags = (
+	route: StandardRoute,
+	isSelected: boolean,
+	getTextColor: () => string,
+	getIconColor: () => string,
+) => {
 	const advantageTagText = route?.tags[0]?.toLowerCase() === 'recommended' ? 'best' : route?.tags[0]?.toLowerCase()
 	const { toggleInsurance } = useContext(InsuranceContext)
 	const { t } = useTranslation()
 
-	const handleInsuranceButtonClick = event => {
+	const handleInsuranceButtonClick = (event: MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		event.stopPropagation()
 		toggleInsurance(route.id)
 	}
 
 	return (
 		<div className={classNames.infoTagsContainer}>
-			{route?.tags[0]?.length > 0 ? (
+			{route?.tags[0]?.length ? (
 				<Tag color={route.tags[0].toLowerCase()}>
 					<p style={{ color: 'inherit', flexWrap: 'nowrap' }}>{capitalize(advantageTagText)}</p>
 				</Tag>
@@ -48,7 +53,9 @@ export const renderTags = (route: StandardRoute, isSelected: boolean, getTextCol
 			) : null}
 			{route.cost.total_gas_usd ? (
 				<Tag color="transparent" leftIcon={<IconPigMoney size={20} color={getIconColor()} />}>
-					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>${route.cost.total_gas_usd}</h5>
+					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+						${route.cost.total_fee_usd ?? route.cost.total_gas_usd}
+					</h5>
 				</Tag>
 			) : null}
 		</div>

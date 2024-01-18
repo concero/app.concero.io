@@ -17,7 +17,11 @@ export function HeaderPopoverMenu() {
 			icon: <IconCopy size={18} color="var(--color-text-secondary)" />,
 			onClick: () => {
 				navigator.clipboard.writeText(address)
-				trackEvent({ category: category.Wallet, action: action.CopyAddressToClipboard, label: 'Address copied to clipboard' })
+				trackEvent({
+					category: category.Wallet,
+					action: action.CopyAddressToClipboard,
+					label: 'Address copied to clipboard',
+				})
 			},
 		},
 		{

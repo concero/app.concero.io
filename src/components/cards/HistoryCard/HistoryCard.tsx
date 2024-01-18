@@ -43,7 +43,11 @@ export const HistoryCard: FC<HistoryCardProps> = () => {
 				)}
 				isLoading={state.historyIsLoading}
 			/>
-			<TransactionDetailsModal isOpen={state.modalIsOpen} setIsOpen={isOpen => dispatch({ type: 'SET_MODAL_OPEN', payload: isOpen })} data={state.modalData} />
+			<TransactionDetailsModal
+				isOpen={state.modalIsOpen}
+				setIsOpen={isOpen => dispatch({ type: 'SET_MODAL_OPEN', payload: isOpen })}
+				data={state.modalData}
+			/>
 		</Card>
 	)
 }

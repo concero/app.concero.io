@@ -22,7 +22,14 @@ interface HandleSwapProps {
 	getSigner: () => Promise<providers.JsonRpcSigner>
 }
 
-export const handleSwap = async ({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner }: HandleSwapProps): Promise<void> => {
+export const handleSwap = async ({
+	swapState,
+	swapDispatch,
+	address,
+	switchChainHook,
+	getChainByProviderSymbol,
+	getSigner,
+}: HandleSwapProps): Promise<void> => {
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
 
@@ -37,7 +44,15 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 	try {
 		if (provider === 'rango') {
 			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'rango_begin_swap', data: originalRoute })
-			const response = await executeRangoRoute({ route: originalRoute, address, from, settings, swapDispatch, switchChainHook, getChainByProviderSymbol })
+			const response = await executeRangoRoute({
+				route: originalRoute,
+				address,
+				from,
+				settings,
+				swapDispatch,
+				switchChainHook,
+				getChainByProviderSymbol,
+			})
 			handleRangoResponse(response, swapDispatch)
 		} else if (provider === 'lifi') {
 			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'lifi_begin_swap', data: originalRoute })
@@ -50,7 +65,11 @@ export const handleSwap = async ({ swapState, swapDispatch, address, switchChain
 			const signer = await getSigner()
 			const acceptExchangeRateUpdateHook = async () => true
 
-			const response = await executeLifiRoute(signer, originalRoute, { updateRouteHook, switchChainHook, acceptExchangeRateUpdateHook })
+			const response = await executeLifiRoute(signer, originalRoute, {
+				updateRouteHook,
+				switchChainHook,
+				acceptExchangeRateUpdateHook,
+			})
 			handleLifiResponse(response, swapDispatch)
 		}
 	} catch (error: Error) {

@@ -7,9 +7,20 @@ import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScree
 import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
 
-const SwapScreen = lazy(async () => await import('./components/screens/SwapScreen/SwapScreen').then(module => ({ default: module.SwapScreen })))
-const PortfolioScreen = lazy(async () => await import('./components/screens/PortfolioScreen/PortfolioScreen').then(module => ({ default: module.PortfolioScreen })))
-const EarnScreen = lazy(async () => await import('./components/screens/EarnScreen/EarnScreen').then(module => ({ default: module.EarnScreen })))
+const SwapScreen = lazy(
+	async () =>
+		await import('./components/screens/SwapScreen/SwapScreen').then(module => ({ default: module.SwapScreen })),
+)
+const PortfolioScreen = lazy(
+	async () =>
+		await import('./components/screens/PortfolioScreen/PortfolioScreen').then(module => ({
+			default: module.PortfolioScreen,
+		})),
+)
+const EarnScreen = lazy(
+	async () =>
+		await import('./components/screens/EarnScreen/EarnScreen').then(module => ({ default: module.EarnScreen })),
+)
 
 export interface NavigatorProps {}
 

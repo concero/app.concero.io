@@ -11,7 +11,10 @@ const getUpdatedTokenAmount = route => {
 
 	const equivalentFeeInTokens = feeAmountUsd / priceUsd
 
-	const result = route.insurance.state === 'INSURED' ? parseFloat(route.to.token.amount) + equivalentFeeInTokens : parseFloat(route.to.token.amount) - equivalentFeeInTokens
+	const result =
+		route.insurance.state === 'INSURED'
+			? parseFloat(route.to.token.amount) + equivalentFeeInTokens
+			: parseFloat(route.to.token.amount) - equivalentFeeInTokens
 
 	if (result <= 0) return '0'
 

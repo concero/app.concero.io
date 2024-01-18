@@ -1,5 +1,15 @@
 import { type FC, useContext, useRef, useState } from 'react'
-import { IconAlertHexagon, IconBrandDiscord, IconBrandTelegram, IconBrandTwitter, IconMessage, IconMessageChatbot, IconQuestionMark, IconSend, IconUser } from '@tabler/icons-react'
+import {
+	IconAlertHexagon,
+	IconBrandDiscord,
+	IconBrandTelegram,
+	IconBrandTwitter,
+	IconMessage,
+	IconMessageChatbot,
+	IconQuestionMark,
+	IconSend,
+	IconUser,
+} from '@tabler/icons-react'
 import classNames from './FeedbackModal.module.pcss'
 import { Modal } from '../Modal/Modal'
 import { TextArea } from '../../layout/TextArea/TextArea'
@@ -119,7 +129,13 @@ export const FeedbackModal: FC<FeedbackModalProps> = ({ show, setShow }) => {
 						setUsername(e.target.value)
 					}}
 				/>
-				<Button className={classNames.ctaButton} variant="primary" isDisabled={!message || contactOption == null || !username} leftIcon={<IconSend size={16} />} onClick={handleSubmit}>
+				<Button
+					className={classNames.ctaButton}
+					variant="primary"
+					isDisabled={!message || contactOption == null || !username}
+					leftIcon={<IconSend size={16} />}
+					onClick={handleSubmit}
+				>
 					{t('button.sendFeedback')}
 				</Button>
 			</div>

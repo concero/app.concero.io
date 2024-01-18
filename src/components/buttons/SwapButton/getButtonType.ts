@@ -26,7 +26,10 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 
 	if (selectedRoute?.from.token.address === config.NULL_ADDRESS) {
 		fromGasAmount =
-			selectedRoute.cost.total_fee.find((fee: Fees) => fee.asset.chainId === from.chain.id && fee.asset.address?.toLowerCase() === from.token.address.toLowerCase())?.amount ?? 0
+			selectedRoute.cost.total_fee.find(
+				(fee: Fees) =>
+					fee.asset.chainId === from.chain.id && fee.asset.address?.toLowerCase() === from.token.address.toLowerCase(),
+			)?.amount ?? 0
 	}
 
 	const fullAmount = Number(from.amount) + Number(fromGasAmount)

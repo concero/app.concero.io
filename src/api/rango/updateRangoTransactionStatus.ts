@@ -41,7 +41,12 @@ export function updateRangoTransactionStatus(txStatus: TransactionStatusResponse
 		default:
 			swapDispatch({
 				type: 'APPEND_SWAP_STEP',
-				payload: { status: 'await', title: 'Transaction in progress', body: 'Please be patient, this may take up to 20 minutes.', txLink },
+				payload: {
+					status: 'await',
+					title: 'Transaction in progress',
+					body: 'Please be patient, this may take up to 20 minutes.',
+					txLink,
+				},
 			})
 	}
 }

@@ -3,7 +3,7 @@
   "trailingComma": "all",
   "semi": false,
   "bracketSameLine": false,
-  "printWidth": 180,
+  "printWidth": 120,
   "tabWidth": 1,
   "useTabs": true,
   "arrowParens": "avoid",
@@ -12,7 +12,7 @@
         {
         "files": "*.json",
         "options": {
-            "printWidth": 200
+            "printWidth": 120
         }
         }
     ]

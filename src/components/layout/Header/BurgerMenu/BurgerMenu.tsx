@@ -85,7 +85,11 @@ export function BurgerMenu() {
 									e.stopPropagation()
 								}}
 							>
-								{theme === 'dark' ? <IconMoon size={18} color={'var(--color-text-secondary)'} /> : <IconSun size={18} color={'var(--color-text-secondary)'} />}
+								{theme === 'dark' ? (
+									<IconMoon size={18} color={'var(--color-text-secondary)'} />
+								) : (
+									<IconSun size={18} color={'var(--color-text-secondary)'} />
+								)}
 								<h5>{t('header.menu.toggleTheme')}</h5>
 							</Button>
 						</li>

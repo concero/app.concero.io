@@ -24,7 +24,9 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 	const bodyClassTheme = getItem<'light' | 'dark'>('theme', 'dark') ?? 'dark'
 
 	const [theme, setTheme] = useState<'light' | 'dark'>(bodyClassTheme)
-	const [colors, setColors] = useState<Colors>(bodyClassTheme === 'light' ? (lightColors.color as Colors) : (darkColors.color as Colors))
+	const [colors, setColors] = useState<Colors>(
+		bodyClassTheme === 'light' ? (lightColors.color as Colors) : (darkColors.color as Colors),
+	)
 
 	const toggleTheme = () => {
 		const bodyClassTheme = document.body.classList.contains('dark') ? 'dark' : 'light'
@@ -35,7 +37,12 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 		document.body.classList.remove(bodyClassTheme)
 		document.body.classList.add(newTheme)
 
-		trackEvent({ category: category.Header, action: action.ToggleTheme, label: 'toggle_theme', data: { theme: newTheme } })
+		trackEvent({
+			category: category.Header,
+			action: action.ToggleTheme,
+			label: 'toggle_theme',
+			data: { theme: newTheme },
+		})
 	}
 
 	useEffect(() => {

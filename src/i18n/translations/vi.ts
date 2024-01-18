@@ -74,7 +74,8 @@ export const vi = {
 			contractSupport: 'Liên hệ hỗ trợ',
 			copyDebugInfo: 'Sao chép thông tin giao dịch',
 			dropUsAMessage: 'Gửi cho chúng tôi một tin nhắn',
-			txFailedMessage: 'Chúng tôi xin lỗi vì bạn gặp vấn đề với giao dịch của mình. Chúng tôi sẽ cố gắng hết sức để giải quyết vấn đề.',
+			txFailedMessage:
+				'Chúng tôi xin lỗi vì bạn gặp vấn đề với giao dịch của mình. Chúng tôi sẽ cố gắng hết sức để giải quyết vấn đề.',
 		},
 		manageModal: {
 			title: 'Quản lý vị trí',
