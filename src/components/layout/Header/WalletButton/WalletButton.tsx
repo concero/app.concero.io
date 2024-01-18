@@ -1,5 +1,4 @@
 import { useWeb3Modal } from '@web3modal/react'
-import { type FC } from 'react'
 import { action, category } from '../../../../constants/tracking'
 import { useAccount } from 'wagmi'
 import { IconWallet } from '@tabler/icons-react'
@@ -9,20 +8,18 @@ import { useTranslation } from 'react-i18next'
 import classNames from './WalletButton.module.pcss'
 import { trackEvent } from '../../../../hooks/useTracking'
 
-interface WalletButtonProps {}
-
-export const WalletButton: FC<WalletButtonProps> = () => {
+export const WalletButton = () => {
 	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 	const { open } = useWeb3Modal()
 	const { t } = useTranslation()
 
 	function handleClick() {
-		open()
-		trackEvent({ category: category.Wallet, action: action.ClickConnectWallet, label: 'Clicked Connect Wallet' })
+		void open()
+		void trackEvent({ category: category.Wallet, action: action.ClickConnectWallet, label: 'Clicked Connect Wallet' })
 	}
 
 	const getStatus = () => {
-		if (isConnected) return truncateWallet(address)
+		if (isConnected) return truncateWallet(address!)
 		if (isConnecting) return t('walletButton.connecting')
 		if (isDisconnected) return t('walletButton.connectWallet')
 		return t('walletButton.connectWallet')
