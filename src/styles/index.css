@@ -90,12 +90,13 @@ body::-webkit-scrollbar {
 	--color-primary-600: #ab86fa;
 	--color-primary-650: #c7aefc;
 	--color-primary-700: #e3d7fd;
+	--color-primary-725: #f1eaff;
 	--color-primary-750: #f7f3ff;
 
 	/* grey */
-	--color-grey-550: #cbcacf;
-	--color-grey-600: #e5e5e7;
 	--color-grey-650: #f7f7f7;
+	--color-grey-600: #e5e5e7;
+	--color-grey-550: #cbcacf;
 	--color-grey-400: #464646;
 	--color-grey-350: #1c1c1c;
 	--color-grey-300: #131313;
@@ -151,6 +152,7 @@ body::-webkit-scrollbar {
 
 	/* primary colors */
 	--color-primary-750: #0b0519;
+	--color-primary-725: #f1eaff;
 	--color-primary-700: #170b31;
 	--color-primary-650: #2e1563;
 	--color-primary-600: #452094;

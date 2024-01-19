@@ -6,10 +6,11 @@ export interface DataProviderProps {
 }
 
 export interface GetTokensParams {
-	chainId: string
+	chainId?: string
 	offset: number
 	limit: number
 	search?: string
+	walletAddress?: string
 }
 
 export interface GetChainsParams {
@@ -17,6 +18,7 @@ export interface GetChainsParams {
 	offset?: number
 	limit?: number
 	search?: string
+	walletAddress?: string
 }
 
 export type GetChainByProviderSymbolI = (providerSymbol: string) => Promise<Chain | null>

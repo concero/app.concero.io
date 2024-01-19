@@ -69,34 +69,32 @@ export const initialState = {
 }
 
 export const DataContext = createContext<DataContextValue>({
-	getTokens: async () => await Promise.resolve([]),
-	getChains: async () => await Promise.resolve([]),
+	getTokens: async () => [],
+	getChains: async () => [],
 	tokens: {},
 	chains: [],
 	setTokens: () => {},
 	setChains: () => {},
-	getChainByProviderSymbol: async () => await Promise.resolve(null),
+	getChainByProviderSymbol: async () => null,
 })
 
 export function DataProvider({ children }: DataProviderProps) {
 	const [tokens, setTokens] = useState(initialState.tokens)
 	const [chains, setChains] = useState(initialState.chains)
 
-	const getTokens = async ({ chainId, offset, limit, search }) => {
+	const getTokens = async ({ chainId, offset = 0, limit = 15, search, walletAddress }: GetChainsParams) => {
 		if (search) {
-			return await fetchTokens({ chainId, offset, limit, search })
+			return await fetchTokens({ chainId, offset, limit, search, walletAddress })
 		}
 
-		if (tokens[chainId]) {
-			if (tokens[chainId].length >= offset + limit) {
-				return tokens[chainId].slice(offset, offset + limit)
-			}
-			if (tokens[chainId].length < limit) {
-				return tokens[chainId]
-			}
+		if (tokens[chainId]?.length >= offset + limit) {
+			return tokens[chainId].slice(offset, offset + limit)
+		}
+		if (tokens[chainId]?.length < limit) {
+			return tokens[chainId]
 		}
 
-		const response = await fetchTokens({ chainId, offset, limit, search })
+		const response = await fetchTokens({ chainId, offset, limit, search, walletAddress })
 		setTokens(prevTokens => {
 			const existingTokens = prevTokens[chainId] || []
 			return { ...prevTokens, [chainId]: [...existingTokens, ...response] }
@@ -104,7 +102,7 @@ export function DataProvider({ children }: DataProviderProps) {
 		return response
 	}
 
-	const getChains = async ({ chainId, offset, limit, search }: GetChainsParams): Promise<Chain[]> => {
+	const getChains = async ({ chainId, offset, limit, search, walletAddress }: GetChainsParams): Promise<Chain[]> => {
 		if (search) {
 			return await fetchChains({ search })
 		}
@@ -112,7 +110,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			return chains.slice(offset, offset + limit)
 		}
 
-		const response = await fetchChains({ chainId, offset, limit })
+		const response = await fetchChains({ chainId, offset, limit, walletAddress })
 		setChains(prevChains => [...prevChains, ...response])
 		return response
 	}
@@ -134,7 +132,7 @@ export function DataProvider({ children }: DataProviderProps) {
 	}
 
 	useEffect(() => {
-		initialFetch()
+		void initialFetch()
 	}, [])
 
 	return (

@@ -130,5 +130,10 @@ export const en = {
 		languageModal: {
 			title: 'Change language',
 		},
+		tokensModal: {
+			selectChainToken: 'Select chain & token',
+			allChains: 'All chains',
+			searchByTokenNameOrAddress: 'Search by token name or address...',
+		},
 	},
 }

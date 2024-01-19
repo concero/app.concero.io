@@ -15,6 +15,7 @@ import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { ListModal } from '../../../modals/ListModal/ListModal'
 import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { useTranslation } from 'react-i18next'
+import { TokensModal } from '../../../modals/TokensModal/TokensModal'
 
 export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, chains }) => {
 	const { getTokens, getChains } = useContext(DataContext)
@@ -54,7 +55,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 	}
 
 	useEffect(() => {
-		if (direction === 'from') getCurrentPriceToken(selection, tokenAreaDispatch)
+		if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
 	}, [selection.chain, selection.token])
 
 	useEffect(() => {
@@ -114,15 +115,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 					</Button>
 				</div>
 			</animated.div>
-			{/* <EntityListModal */}
-			{/*  title="Select chain" */}
-			{/*  data={chains} */}
-			{/*  columns={ChainColumns} */}
-			{/*  show={state.showChainsModal} */}
-			{/*  entitiesVisible={15} */}
-			{/*  setShow={(value) => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })} */}
-			{/*  onSelect={handleSelectChain} */}
-			{/* /> */}
 			<ListModal
 				title={t('modal.selectToken')}
 				isOpen={state.showTokensModal}
@@ -135,15 +127,21 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 				}
 				RenderItem={ListEntityButton}
 			/>
-			<ListModal
-				title={t('modal.selectChain')}
+			{/* <ListModal */}
+			{/* 	title={t('modal.selectChain')} */}
+			{/* 	isOpen={state.showChainsModal} */}
+			{/* 	setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })} */}
+			{/* 	onSelect={async chain => { */}
+			{/* 		await handleSelectChain(chain) */}
+			{/* 	}} */}
+			{/* 	getItems={async ({ offset, limit, search }) => await getChains({ offset, limit, search })} */}
+			{/* 	RenderItem={ListEntityButton} */}
+			{/* /> */}
+			<TokensModal
 				isOpen={state.showChainsModal}
-				setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })}
-				onSelect={async chain => {
-					await handleSelectChain(chain)
+				onClose={() => {
+					console.log('test')
 				}}
-				getItems={async ({ offset, limit, search }) => await getChains({ offset, limit, search })}
-				RenderItem={ListEntityButton}
 			/>
 		</>
 	)
