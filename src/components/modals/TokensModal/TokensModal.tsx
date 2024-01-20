@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import type { Chain, Token } from '../../../api/concero/types'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { useAccount } from 'wagmi'
+import { TokenListItem } from './TokenListItem/TokenListItem'
 
 interface TokensModalProps {
 	isOpen: boolean
@@ -20,7 +21,7 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 	const { address } = useAccount()
 	const { getTokens } = useContext(DataContext)
 	const [selectedChain, setSelectedChain] = useState<Chain | null>(null)
-	const [tokens, setTokens] = useState<Token | null>(null)
+	const [tokens, setTokens] = useState<Token[]>([])
 
 	useEffect(() => {
 		getTokens({ chainId: selectedChain?.id ?? '1', offset: 0, limit: 15, walletAddress: address }).then(res => {
@@ -36,7 +37,11 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 					placeholder={t('tokensModal.searchByTokenNameOrAddress')}
 					icon={<IconSearch size={18} color={colors.text.secondary} />}
 				/>
-				<div></div>
+				<div className={classNames.tokenContainer}>
+					{tokens.map((token: Token) => {
+						return <TokenListItem key={token._id} token={token} />
+					})}
+				</div>
 			</div>
 		</Modal>
 	)

@@ -4,6 +4,7 @@ import { fetchChains } from '../../api/concero/fetchChains'
 import { config } from '../../constants/config'
 import { type DataContextValue, type DataProviderProps, type GetChainsParams } from './types'
 import { type Chain } from '../../api/concero/types'
+import { fetchTokensByBalances } from '../../api/concero/fetchTokensByBalances'
 
 export const initialState = {
 	tokens: {
@@ -87,6 +88,15 @@ export function DataProvider({ children }: DataProviderProps) {
 			return await fetchTokens({ chainId, offset, limit, search, walletAddress })
 		}
 
+		if (walletAddress && offset === 0) {
+			const res = await fetchTokensByBalances(chainId!, walletAddress)
+			if (res) {
+				setTokens(prevTokens => {
+					return { ...prevTokens, [chainId!]: res[chainId!] }
+				})
+			}
+		}
+
 		if (tokens[chainId]?.length >= offset + limit) {
 			return tokens[chainId].slice(offset, offset + limit)
 		}
@@ -127,7 +137,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
 			fetchChains({ offset: 0, limit: 100 }),
 		])
-		setTokens({ 1: ethTokens, 137: polygonTokens })
+		setTokens({ '1': ethTokens, '137': polygonTokens })
 		setChains(fetchedChains)
 	}
 

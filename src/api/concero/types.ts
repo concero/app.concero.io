@@ -15,6 +15,7 @@ export interface Token {
 	providers: Provider[]
 	symbol: string
 	coinGeckoId: string
+	balance?: string
 }
 
 export interface Chain {
