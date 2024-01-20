@@ -8,9 +8,10 @@ import { TokenAmount } from '../../../../utils/TokenAmount'
 
 interface TokenListItemProps {
 	token: Token
+	isBalanceLoading?: boolean
 }
 
-export function TokenListItem({ token }: TokenListItemProps) {
+export function TokenListItem({ token, isBalanceLoading }: TokenListItemProps) {
 	const [chainLogoSrc, setChainLogoSrc] = useState('')
 	const { getChains } = useContext(DataContext)
 

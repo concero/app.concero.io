@@ -11,6 +11,7 @@ import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { useAccount } from 'wagmi'
 import { TokenListItem } from './TokenListItem/TokenListItem'
 import { fetchTokensByBalances } from '../../../api/concero/fetchTokensByBalances'
+import { TokenSkeletonLoader } from './TokenSkeletonLoader/TokenSkeletonLoader'
 
 interface TokensModalProps {
 	isOpen: boolean
@@ -22,14 +23,22 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 	const { address } = useAccount()
 	const { getTokens } = useContext(DataContext)
 	const [selectedChain, setSelectedChain] = useState<Chain | null>(null)
-	const [offset, setOffset] = useState(0)
+	const [offset, setOffset] = useState<number>(0)
 	const [tokens, setTokens] = useState<Token[]>([])
 	const [balanceTokens, setBalanceTokens] = useState<Token[]>([])
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isBalanceLoading, setIsBalanceLoading] = useState<boolean>(false)
 	const tokenContainerRef = useRef<HTMLDivElement>(null)
 	const limit = 15
 
 	const getBalanceTokens = async () => {
 		if (!address) return
+		setIsBalanceLoading(true)
+
+		if (!selectedChain) {
+			setIsLoading(true)
+		}
+
 		const res = await fetchTokensByBalances(selectedChain?.id, address)
 		if (!res) return
 		if (selectedChain) {
@@ -48,7 +57,9 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 			}
 			setBalanceTokens(tokensToPaste)
 			setTokens(tokensToPaste)
+			setIsLoading(false)
 		}
+		setIsBalanceLoading(false)
 	}
 
 	const addTokens = async () => {
@@ -77,12 +88,14 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 	async function initialPopulateTokens() {
 		setOffset(0)
 		if (selectedChain) {
+			setIsLoading(true)
 			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit })
 			if (!resToken.length) {
 				setTokens([])
 			} else {
 				setTokens(resToken)
 			}
+			setIsLoading(false)
 		} else {
 			setTokens([])
 		}
@@ -109,9 +122,13 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 					icon={<IconSearch size={18} color={colors.text.secondary} />}
 				/>
 				<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
-					{tokens.map((token: Token, index: number) => {
-						return <TokenListItem key={token._id + index.toString()} token={token} />
-					})}
+					{!isLoading ? (
+						tokens.map((token: Token, index: number) => {
+							return <TokenListItem key={token._id + index.toString()} token={token} isBalanceLoading={isBalanceLoading} />
+						})
+					) : (
+						<TokenSkeletonLoader count={9} />
+					)}
 				</div>
 			</div>
 		</Modal>
