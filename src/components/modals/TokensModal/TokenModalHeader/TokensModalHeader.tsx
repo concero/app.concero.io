@@ -1,5 +1,5 @@
 import classNames from './TokensModalHeader.module.pcss'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
 import type { Chain } from '../../../../api/concero/types'
@@ -44,12 +44,14 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 	const [offset, setOffset] = useState<number>(0)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [isChainsCollapsed, setIsChainsCollapsed] = useState<boolean>(true)
+	const [chainContainerHeight, setChainContainerHeight] = useState<number>(0)
+	const chainsRef = useRef<HTMLDivElement | null>(null)
 
 	const fistLineChains = chains.slice(0, 4)
 	const restChains = chains.slice(4)
 
 	const chainsBlockAnimation = useSpring({
-		height: isChainsCollapsed ? 0 : 240,
+		height: isChainsCollapsed ? 0 : chainContainerHeight,
 		config: { duration: 200, easing: easeQuadInOut },
 	})
 
@@ -57,6 +59,10 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 		transform: isChainsCollapsed ? 'rotate(0deg)' : 'rotate(180deg)',
 		config: { duration: 200, easing: easeQuadInOut },
 	})
+
+	useLayoutEffect(() => {
+		setChainContainerHeight(chainsRef?.current?.offsetHeight ?? 0)
+	}, [chainsRef?.current?.offsetHeight])
 
 	useEffect(() => {
 		setLoading(true)
@@ -98,11 +104,13 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 					}}
 				/>
 			</div>
-			<animated.div style={chainsBlockAnimation} className={classNames.chainsContainer}>
-				{restChains.map((chain: Chain) => {
-					const isSelected = selectedChain?._id === chain._id
-					return <ChainItem key={chain._id} chain={chain} isSelected={isSelected} onSelect={setSelectedChain} />
-				})}
+			<animated.div style={chainsBlockAnimation} className={classNames.animeContainer}>
+				<div className={classNames.chainsContainer} ref={chainsRef}>
+					{restChains.map((chain: Chain) => {
+						const isSelected = selectedChain?._id === chain._id
+						return <ChainItem key={chain._id} chain={chain} isSelected={isSelected} onSelect={setSelectedChain} />
+					})}
+				</div>
 			</animated.div>
 		</div>
 	)

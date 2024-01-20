@@ -15,7 +15,7 @@ export function TokenListItem({ token }: TokenListItemProps) {
 	const { getChains } = useContext(DataContext)
 
 	useEffect(() => {
-		getChainLogoURIById(token.chainId, getChains, setChainLogoSrc)
+		getChainLogoURIById(Number(token.chain_id), getChains, setChainLogoSrc)
 	}, [])
 
 	return (
