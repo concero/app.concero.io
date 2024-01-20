@@ -30,46 +30,63 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 
 	const getBalanceTokens = async () => {
 		if (!address) return
-
-		const res = await fetchTokensByBalances(selectedChain.id, address)
+		const res = await fetchTokensByBalances(selectedChain?.id, address)
 		if (!res) return
-
-		setBalanceTokens(res[selectedChain.id])
-		setTokens(prevTokens => {
-			const filteredTokens = prevTokens.filter(token => {
-				return !res[selectedChain.id].find(t => t._id === token._id)
+		if (selectedChain) {
+			setBalanceTokens(res[selectedChain.id])
+			setTokens(prevTokens => {
+				const filteredTokens = prevTokens.filter(token => {
+					return !res[selectedChain.id].find(t => t._id === token._id)
+				})
+				return [...res[selectedChain.id], ...filteredTokens]
 			})
-			return [...res[selectedChain.id], ...filteredTokens]
-		})
+		} else {
+			// if al chains are selected
+			const tokensToPaste: Token[] = []
+			for (const key in res) {
+				tokensToPaste.push(...res[key])
+			}
+			setBalanceTokens(tokensToPaste)
+			setTokens(tokensToPaste)
+		}
 	}
 
-	const handleEndReached = async () => {
-		const newOffset = offset + limit
-		setOffset(newOffset)
-		const newTokens = await getTokens({ chainId: selectedChain?.id, offset: newOffset, limit })
+	const addTokens = async () => {
+		const newTokens = await getTokens({ chainId: selectedChain?.id!, offset, limit })
 		const filteredTokens = newTokens.filter((token: Token) => {
 			return !balanceTokens.find(t => t._id === token._id)
 		})
 		setTokens(prevTokens => [...prevTokens, ...filteredTokens])
 	}
 
+	const handleEndReached = async () => {
+		if (!selectedChain) return
+		const newOffset = offset + limit
+		setOffset(newOffset)
+		void addTokens()
+	}
+
 	const handleScroll = (e: UIEvent<HTMLDivElement>) => {
 		const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
 		const heightToBottom = clientHeight - (scrollHeight - scrollTop)
-		if (heightToBottom < 2 && heightToBottom > -2) {
+		if (heightToBottom < 1 && heightToBottom > -1) {
 			void handleEndReached()
 		}
 	}
 
 	async function initialPopulateTokens() {
-		getTokens({ chainId: selectedChain?.id, offset: 0, limit }).then(res => {
-			if (!res.length) {
+		setOffset(0)
+		if (selectedChain) {
+			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit })
+			if (!resToken.length) {
 				setTokens([])
 			} else {
-				setTokens(res)
+				setTokens(resToken)
 			}
-			void getBalanceTokens()
-		})
+		} else {
+			setTokens([])
+		}
+		void getBalanceTokens()
 	}
 
 	const moveToTop = () => {
@@ -92,8 +109,8 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 					icon={<IconSearch size={18} color={colors.text.secondary} />}
 				/>
 				<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
-					{tokens.map((token: Token) => {
-						return <TokenListItem key={token._id} token={token} />
+					{tokens.map((token: Token, index: number) => {
+						return <TokenListItem key={token._id + index.toString()} token={token} />
 					})}
 				</div>
 			</div>
