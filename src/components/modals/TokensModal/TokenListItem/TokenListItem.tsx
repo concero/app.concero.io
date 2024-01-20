@@ -5,10 +5,11 @@ import { getChainLogoURIById } from '../../../cards/RouteCard/getChainLogoURIByI
 import { useContext, useEffect, useState } from 'react'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { TokenAmount } from '../../../../utils/TokenAmount'
+import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 
 interface TokenListItemProps {
 	token: Token
-	isBalanceLoading?: boolean
+	isBalanceLoading: boolean
 }
 
 export function TokenListItem({ token, isBalanceLoading }: TokenListItemProps) {
@@ -32,7 +33,11 @@ export function TokenListItem({ token, isBalanceLoading }: TokenListItemProps) {
 				</div>
 			</div>
 			<div className={classNames.tokenPriceContainer}>
-				{token.balance ? <h4>{new TokenAmount(token.balance, token.decimals).rounded}</h4> : null}
+				{isBalanceLoading ? (
+					<SkeletonLoader className={classNames.balanceSkeleton} />
+				) : token.balance ? (
+					<h4>{new TokenAmount(token.balance, token.decimals).rounded}</h4>
+				) : null}
 			</div>
 		</div>
 	)

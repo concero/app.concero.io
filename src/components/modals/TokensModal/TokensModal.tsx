@@ -40,7 +40,11 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 		}
 
 		const res = await fetchTokensByBalances(selectedChain?.id, address)
-		if (!res) return
+		if (!res) {
+			setIsLoading(false)
+			setIsBalanceLoading(false)
+			return
+		}
 		if (selectedChain) {
 			setBalanceTokens(res[selectedChain.id])
 			setTokens(prevTokens => {
