@@ -1,37 +1,37 @@
-import { type FC, useContext, useEffect, useRef } from 'react'
+import { type FC, type ForwardedRef, useContext, useEffect, useRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
-import { IconChevronDown } from '@tabler/icons-react'
-import classNames from '../SwapCard.module.pcss'
+import classNames from './TokenArea.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { numberToFormatString } from '../../../../utils/formatting'
-import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 import { TextInput } from '../../../input/TextInput'
 import { type TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'
-import { useTokenAreaReducer } from './tokenAreaReducer'
+import { useTokenAreaReducer } from './useTokenAreaReducer/tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
-import { ListModal } from '../../../modals/ListModal/ListModal'
-import { ListEntityButton } from '../../../buttons/ListEntityButton/ListEntityButton'
 import { useTranslation } from 'react-i18next'
 import { TokensModal } from '../../../modals/TokensModal/TokensModal'
+import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, chains }) => {
-	const { getTokens, getChains } = useContext(DataContext)
-	const [state, tokenAreaDispatch] = useTokenAreaReducer(direction, selection)
-	const inputRef = useRef()
+export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
+	const { getTokens } = useContext(DataContext)
+	const [state, tokenAreaDispatch] = useTokenAreaReducer()
+	const inputRef = useRef<ForwardedRef<HTMLInputElement>>()
 	const { t } = useTranslation()
+	const styleClass = direction === 'from' ? classNames.from : classNames.to
 
 	const shakeProps = useSpring({
 		from: { transform: 'translateX(0)' },
 		to: [{ transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0px)' }],
 		config: { duration: 50, mass: 1, tension: 500, friction: 10 },
 		reset: false,
-		onRest: () => state.shake && tokenAreaDispatch({ type: 'SET_SHAKE', payload: false }),
+		onRest: () => {
+			state.shake && tokenAreaDispatch({ type: 'SET_SHAKE', payload: false })
+		},
 	})
 
-	const onChangeText = value => {
+	const onChangeText = (value: string) => {
 		if (value && !isFloatInput(value)) tokenAreaDispatch({ type: 'SET_SHAKE', payload: true })
 		if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
 	}
@@ -65,7 +65,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 	return (
 		<>
 			<animated.div
-				className={`${classNames.tokenContainer} ${state.isFocused ? classNames.inputFocused : ''}`}
+				className={`${classNames.tokenContainer} ${state.isFocused ? classNames.inputFocused : ''} ${styleClass}`}
 				onClick={() => {
 					handleAreaClick({ inputRef })
 				}}
@@ -73,28 +73,24 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 			>
 				<div className={classNames.tokenRow}>
 					<div className={classNames.tokenRowHeader}>
-						<p>{t(`tokenArea.${direction}`)}</p>
-						<Button
-							onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: true })}
-							size="sm"
-							variant="black"
-							rightIcon={<IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
-						>
-							<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
-						</Button>
+						<p className={'body2'}>{t(`tokenArea.${direction}`)}</p>
 					</div>
-					{balance !== null ? (
-						<Button variant={'subtle'} size={'sm'} onClick={handleMaxButtonClick}>
-							<p>{`Max: ${balance.amount.rounded} ${balance.symbol}`}</p>
-						</Button>
-					) : null}
+					{/* {balance !== null ? ( */}
+					{/* 	<Button variant={'subtle'} size={'sm'} onClick={handleMaxButtonClick}> */}
+					{/* 		<p>{`Max: ${balance.amount.rounded} ${balance.symbol}`}</p> */}
+					{/* 	</Button> */}
+					{/* ) : null} */}
 				</div>
 				<div className={classNames.tokenRow}>
 					<div>
 						<TextInput
 							ref={inputRef}
-							onFocus={() => tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: true })}
-							onBlur={() => tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: false })}
+							onFocus={() => {
+								tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: true })
+							}}
+							onBlur={() => {
+								tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: false })
+							}}
 							variant="inline"
 							placeholder={`0.0 ${selection.token.symbol}`}
 							value={selection.amount}
@@ -102,45 +98,29 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 								onChangeText(value)
 							}}
 							isDisabled={direction === 'to'}
+							className={classNames.input}
 						/>
-						<h5>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
+						<h4>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h4>
 					</div>
 					<Button
-						onClick={() => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })}
-						size="sm"
-						variant="black"
-						rightIcon={<IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
+						variant={'convex'}
+						className={classNames.selectTokenButton}
+						onClick={() => {
+							tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })
+						}}
 					>
-						<CryptoSymbol src={selection.token.logoURI} symbol={selection.token.symbol} />
+						<TokenIcon tokenLogoSrc={selection.token.logoURI} chainLogoSrc={selection.chain.logoURI} />
+						<div className={classNames.selectTokenButtonTitle}>
+							<h4>{selection.token.symbol}</h4>
+							<p className={'body2'}>{selection.chain.name}</p>
+						</div>
 					</Button>
 				</div>
 			</animated.div>
-			<ListModal
-				title={t('modal.selectToken')}
-				isOpen={state.showTokensModal}
-				setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: value })}
-				onSelect={token => {
-					handleSelectToken(token)
-				}}
-				getItems={async ({ offset, limit, search }) =>
-					await getTokens({ chainId: selection.chain.id, offset, limit, search })
-				}
-				RenderItem={ListEntityButton}
-			/>
-			{/* <ListModal */}
-			{/* 	title={t('modal.selectChain')} */}
-			{/* 	isOpen={state.showChainsModal} */}
-			{/* 	setIsOpen={value => tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: value })} */}
-			{/* 	onSelect={async chain => { */}
-			{/* 		await handleSelectChain(chain) */}
-			{/* 	}} */}
-			{/* 	getItems={async ({ offset, limit, search }) => await getChains({ offset, limit, search })} */}
-			{/* 	RenderItem={ListEntityButton} */}
-			{/* /> */}
 			<TokensModal
-				isOpen={state.showChainsModal}
+				isOpen={state.showTokensModal}
 				onClose={() => {
-					console.log('test')
+					tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 				}}
 			/>
 		</>

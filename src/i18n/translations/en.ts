@@ -9,6 +9,7 @@ export const en = {
 				contactSupport: 'Contact support',
 			},
 			insurance: 'Insurance',
+			route: 'Route:',
 		},
 		header: {
 			swap: 'Swap',
@@ -80,8 +81,8 @@ export const en = {
 			title: 'Manage position',
 		},
 		tokenArea: {
-			from: 'From',
-			to: 'To',
+			from: 'You pay',
+			to: 'You get',
 		},
 		protocolModal: {
 			title: 'Protocol',

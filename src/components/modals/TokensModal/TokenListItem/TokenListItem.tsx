@@ -1,11 +1,11 @@
 import classNames from './TokenListItem.module.pcss'
 import { type Token } from '../../../../api/concero/types'
-import { Avatar } from '../../../tags/Avatar/Avatar'
 import { getChainLogoURIById } from '../../../cards/RouteCard/getChainLogoURIById'
 import { useContext, useEffect, useState } from 'react'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { TokenAmount } from '../../../../utils/TokenAmount'
 import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
+import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 
 interface TokenListItemProps {
 	token: Token
@@ -23,10 +23,7 @@ export function TokenListItem({ token, isBalanceLoading }: TokenListItemProps) {
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.tokenInfoContainer}>
-				<div className={classNames.tokenImageContainer}>
-					<Avatar src={token.logoURI} />
-					<Avatar src={chainLogoSrc} className={classNames.chainLogo} size={'sm'} />
-				</div>
+				<TokenIcon tokenLogoSrc={token.logoURI} chainLogoSrc={chainLogoSrc} />
 				<div className={classNames.tokenTitleContainer}>
 					<h4>{token.name}</h4>
 					<p className={'body1'}>{token.symbol}</p>

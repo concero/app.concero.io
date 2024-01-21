@@ -14,7 +14,7 @@ export interface Selection {
 }
 
 export interface RouteButtonProps {
-	selectedRoute: StandardRoute
+	selectedRoute: StandardRoute | null
 	onClick: () => void
 }
 

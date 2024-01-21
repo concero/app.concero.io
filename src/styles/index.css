@@ -329,6 +329,19 @@ a {
 	flex: none;
 }
 
+.body2 {
+	color: var(--color-text-secondary);
+	font-size: 0.85rem;
+	flex: none;
+	font-weight: 500;
+}
+
+.body3 {
+	color: var(--color-text-secondary);
+	font-size: 0.95rem;
+	flex: none;
+}
+
 .tagBody {
 	color: var(--color-base-white);
 	font-size: 0.85rem;
@@ -338,7 +351,6 @@ button {
 	border: none;
 	cursor: pointer;
 	font-weight: 500;
-	line-height: 0;
 	outline: none;
 }
 

@@ -1,22 +1,9 @@
-import { type Balance } from '../swapReducer/types'
+import { type Balance, type SwapAction, type SwapStateDirection } from '../swapReducer/types'
+import { type Dispatch } from 'react'
 
 export interface TokenAreaProps {
 	direction: 'to' | 'from'
-	selection: Selection
+	selection: SwapStateDirection
 	balance?: Balance | null
-	swapDispatch: any
-	chains: any[]
-}
-
-interface Selection {
-	chain: {
-		name: string
-		symbol: string
-	}
-	token: {
-		name: string
-		symbol: string
-	}
-	amount: string
-	amount_usd: string
+	swapDispatch: Dispatch<SwapAction>
 }
