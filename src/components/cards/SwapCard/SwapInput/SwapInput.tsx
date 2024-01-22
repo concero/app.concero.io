@@ -50,7 +50,12 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 			<div className={classNames.tokenAreasContainer}>
 				<TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
 				<TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} isLoading={swapState.isLoading} />
-				<div className={classNames.arrowsIcon}>
+				<div
+					className={classNames.arrowsIcon}
+					onClick={() => {
+						swapDispatch({ type: 'SWAP_DIRECTIONS' })
+					}}
+				>
 					<IconArrowsUpDown size={18} />
 				</div>
 			</div>

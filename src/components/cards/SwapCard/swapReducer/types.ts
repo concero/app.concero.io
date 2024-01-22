@@ -121,3 +121,4 @@ export type SwapAction =
 	| { type: 'UPDATE_PREV_RANGO_STEPS'; currentTransactionStatus: TransactionStatus }
 	| { type: SwapActionType.SET_WALLET_BALANCES; balances: ConceroBalanceResponse | null }
 	| { type: 'SET_IS_NO_ROUTES'; status: boolean }
+	| { type: 'SWAP_DIRECTION' }
