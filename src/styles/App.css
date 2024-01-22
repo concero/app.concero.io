@@ -88,6 +88,7 @@ input[type='number']::-webkit-outer-spin-button {
 	border-radius: var(--st-br-md);
 	padding: var(--sp-md);
 	transition: background-position 0.4s;
+	position: relative;
 }
 
 .dark {

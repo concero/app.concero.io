@@ -105,7 +105,7 @@ export const swapActions: SwapAction = {
 	// },
 	SET_WALLET_BALANCES: (state: SwapState, action: SwapAction) => ({ ...state, walletBalances: action.balances }),
 	SET_IS_NO_ROUTES: (state: SwapState, action: SwapAction) => ({ ...state, isNoRoutes: action.status }),
-	SWAP_DIRECTIONS: (state: SwapState, action: SwapAction) => {
+	SWAP_DIRECTIONS: (state: SwapState) => {
 		const { from, to } = state
 		return { ...state, from: to, to: from }
 	},
