@@ -1,4 +1,4 @@
-import { type FC, type ForwardedRef, useContext, useEffect, useRef } from 'react'
+import { type FC, type ForwardedRef, useEffect, useRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import classNames from './TokenArea.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -9,13 +9,18 @@ import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './useTokenAreaReducer/tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
-import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { useTranslation } from 'react-i18next'
 import { TokensModal } from '../../../modals/TokensModal/TokensModal'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
+import { AmountInputSkeleton } from './AmountInputSkleton/AmountInputSkeleton'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null }) => {
-	const { getTokens } = useContext(DataContext)
+export const TokenArea: FC<TokenAreaProps> = ({
+	direction,
+	selection,
+	swapDispatch,
+	balance = null,
+	isLoading = false,
+}) => {
 	const [state, tokenAreaDispatch] = useTokenAreaReducer()
 	const inputRef = useRef<ForwardedRef<HTMLInputElement>>()
 	const { t } = useTranslation()
@@ -36,23 +41,23 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 		if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
 	}
 
-	const handleSelectChain = async chain => {
-		const tokens = await getTokens({ chainId: chain.id, offset: 0, limit: 15 })
-		swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain }, tokens })
-		tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: false })
-	}
-
-	function handleMaxButtonClick() {
-		if (!balance) return
-		const { amount } = balance
-		if (!Number(amount.formatted)) return
-		handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
-	}
-
-	const handleSelectToken = token => {
-		swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
-		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
-	}
+	// const handleSelectChain = async chain => {
+	// 	const tokens = await getTokens({ chainId: chain.id, offset: 0, limit: 15 })
+	// 	swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain }, tokens })
+	// 	tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: false })
+	// }
+	//
+	// function handleMaxButtonClick() {
+	// 	if (!balance) return
+	// 	const { amount } = balance
+	// 	if (!Number(amount.formatted)) return
+	// 	handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
+	// }
+	//
+	// const handleSelectToken = token => {
+	// 	swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
+	// 	tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
+	// }
 
 	useEffect(() => {
 		if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
@@ -82,26 +87,30 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 					{/* ) : null} */}
 				</div>
 				<div className={classNames.tokenRow}>
-					<div>
-						<TextInput
-							ref={inputRef}
-							onFocus={() => {
-								tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: true })
-							}}
-							onBlur={() => {
-								tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: false })
-							}}
-							variant="inline"
-							placeholder={`0.0 ${selection.token.symbol}`}
-							value={selection.amount}
-							onChangeText={value => {
-								onChangeText(value)
-							}}
-							isDisabled={direction === 'to'}
-							className={classNames.input}
-						/>
-						<h4>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h4>
-					</div>
+					{isLoading ? (
+						<AmountInputSkeleton />
+					) : (
+						<div>
+							<TextInput
+								ref={inputRef}
+								onFocus={() => {
+									tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: true })
+								}}
+								onBlur={() => {
+									tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: false })
+								}}
+								variant="inline"
+								placeholder={`0.0 ${selection.token.symbol}`}
+								value={selection.amount}
+								onChangeText={value => {
+									onChangeText(value)
+								}}
+								isDisabled={direction === 'to'}
+								className={classNames.input}
+							/>
+							<h4>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h4>
+						</div>
+					)}
 					<Button
 						variant={'convex'}
 						className={classNames.selectTokenButton}

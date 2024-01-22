@@ -6,4 +6,5 @@ export interface TokenAreaProps {
 	selection: SwapStateDirection
 	balance?: Balance | null
 	swapDispatch: Dispatch<SwapAction>
+	isLoading?: boolean
 }
