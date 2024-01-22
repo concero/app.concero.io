@@ -5,6 +5,6 @@ interface LoadingAnimationProps {
 	size?: number
 }
 
-export function LoadingAnimation({ color = 'var(--color-text-primary)', size = 18 }) {
+export function LoadingAnimation({ color = 'var(--color-primary-to-lightest)', size = 18 }) {
 	return <Ring color={color} size={size} />
 }

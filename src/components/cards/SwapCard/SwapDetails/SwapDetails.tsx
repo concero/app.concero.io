@@ -19,7 +19,7 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute 
 	const containerRef = useRef()
 
 	const containerAnimation = useSpring({
-		height: selectedRoute ? 20 : 0,
+		height: selectedRoute ? 30 : 0,
 		config: { duration: 200, easing: easeQuadInOut },
 	})
 

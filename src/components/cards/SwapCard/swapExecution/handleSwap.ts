@@ -16,7 +16,7 @@ import { action, category } from '../../../../constants/tracking'
 interface HandleSwapProps {
 	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
-	address: string
+	address: string | undefined
 	switchChainHook: SwitchChainHookType
 	getChainByProviderSymbol: GetChainByProviderSymbolI
 	getSigner: () => Promise<providers.JsonRpcSigner>

@@ -3,19 +3,14 @@
 	border-radius: var(--st-br-md);
 	border: 1px solid var(--color-grey-600);
 	padding: var(--sp-md) var(--sp-md);
+	box-shadow: none;
 	transition: border 0.2s ease-in-out;
 }
 
-.tokenContainer:hover {
-	border: 1px solid var(--color-grey-550);
-}
-
 .tokenContainer:focus-within {
-	border: 1px solid var(--color-primary-500);
-}
-
-.inputFocused {
-	border: 1px solid var(--color-primary-500);
+	transition: border 0.2s ease-in-out;
+	border: 1px solid var(--color-primary-650);
+	box-shadow: 0 0 15px 0 rgba(115, 53, 247, 0.1) inset;
 }
 
 .tokenRow {
@@ -43,6 +38,18 @@
 .from {
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
+	transition: border 0.2s ease-in-out;
+}
+
+.from:hover {
+	border: 1px solid var(--color-grey-550);
+	box-shadow: 0 0 15px 0 rgba(172, 172, 172, 0.15) inset;
+}
+
+.from:focus-within {
+	transition: border 0.2s ease-in-out;
+	border: 1px solid var(--color-primary-650);
+	box-shadow: 0 0 15px 0 rgba(115, 53, 247, 0.1) inset;
 }
 
 .to {
@@ -75,5 +82,9 @@
 
 	h4 {
 		color: var(--color-text-primary);
+	}
+
+	p {
+		font-weight: 400;
 	}
 }

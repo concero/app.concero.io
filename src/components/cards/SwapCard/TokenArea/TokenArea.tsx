@@ -65,7 +65,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 	return (
 		<>
 			<animated.div
-				className={`${classNames.tokenContainer} ${state.isFocused ? classNames.inputFocused : ''} ${styleClass}`}
+				className={`${classNames.tokenContainer} ${styleClass}`}
 				onClick={() => {
 					handleAreaClick({ inputRef })
 				}}

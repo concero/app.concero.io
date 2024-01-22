@@ -12,6 +12,7 @@
 	padding: var(--sp-md) var(--sp-md);
 	transform-origin: center;
 	transition: transform 0.2s, background 0.25s, border-color 0.25s, color 0.25s;
+	font-weight: 400;
 }
 
 .button:hover {
@@ -103,14 +104,26 @@
 .isLoading {
 	background-color: var(--color-primary-650);
 	border-color: var(--color-primary-700);
-	pointer-events: none;
+	cursor: wait;
+}
+.isLoading:hover {
+	background-color: var(--color-primary-650);
+	border-color: var(--color-primary-700);
+	cursor: wait;
 }
 
 .isDisabled {
 	background: none;
-	background-color: var(--color-primary-700);
+	background-color: var(--color-primary-750);
 	border-color: var(--color-primary-650);
-	pointer-events: none;
+	cursor: not-allowed;
+}
+
+.isDisabled:hover {
+	background: none;
+	background-color: var(--color-primary-750);
+	border-color: var(--color-primary-650);
+	cursor: not-allowed;
 }
 
 .isDisabled.subtle {

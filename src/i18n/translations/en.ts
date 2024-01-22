@@ -70,6 +70,7 @@ export const en = {
 			mayTakeAWhile: 'Hang tight, this may take a while…',
 			goBack: 'Go back',
 			sendFeedback: 'Send feedback',
+			findingRoutes: 'Finding routes',
 		},
 		contactSupportCard: {
 			contractSupport: 'Contact support',
