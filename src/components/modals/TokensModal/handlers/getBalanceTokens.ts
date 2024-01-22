@@ -11,7 +11,7 @@ export async function getBalanceTokens(
 	if (!address) return
 
 	if (!selectedChain) {
-		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: false })
+		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 	}
 
 	try {

@@ -7,13 +7,14 @@ export enum TokenModalActionType {
 	SET_BALANCE_TOKENS,
 	SET_IS_LOADING,
 	SET_IS_BALANCE_LOADING,
+	UPSERT_TOKENS,
 }
 
 export interface TokensModalState {
 	selectedChain: Chain | null
 	offset: number
 	tokens: Token[]
-	balanceTokens: Token[]
+	balanceTokens: TokenBalance | null
 	isLoading: boolean
 	isBalanceLoading: boolean
 }
@@ -48,6 +49,11 @@ export interface SET_IS_BALANCE_LOADING {
 	isBalanceLoading: boolean
 }
 
+export interface UPSERT_TOKENS {
+	type: TokenModalActionType.UPSERT_TOKENS
+	tokens: Token[]
+}
+
 export type TokensModalAction =
 	| SET_SELECTED_CHAIN
 	| SET_OFFSET
@@ -55,3 +61,4 @@ export type TokensModalAction =
 	| SET_BALANCE_TOKENS
 	| SET_IS_LOADING
 	| SET_IS_BALANCE_LOADING
+	| UPSERT_TOKENS

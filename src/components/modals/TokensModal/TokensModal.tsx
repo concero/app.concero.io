@@ -12,8 +12,8 @@ import { useAccount } from 'wagmi'
 import { TokenListItem } from './TokenListItem/TokenListItem'
 import { TokenSkeletonLoader } from './TokenSkeletonLoader/TokenSkeletonLoader'
 import { useTokensModalReducer } from './useTokensModalReducer/useTokensModalReducer'
-import { getBalanceTokens } from './handlers/getBalanceTokens'
 import { TokenModalActionType } from './useTokensModalReducer/types'
+import { getBalanceTokens } from './handlers/getBalanceTokens'
 
 interface TokensModalProps {
 	isOpen: boolean
@@ -32,7 +32,7 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 	const addTokens = async () => {
 		const newTokens = await getTokens({ chainId: selectedChain?.id!, offset, limit })
 		if (!newTokens.length) return
-		tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: newTokens })
+		tokensModalDispatch({ type: TokenModalActionType.UPSERT_TOKENS, tokens: newTokens })
 	}
 
 	const handleEndReached = async () => {
@@ -52,16 +52,14 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 
 	async function initialPopulateTokens() {
 		tokensModalDispatch({ type: TokenModalActionType.SET_OFFSET, offset: 0 })
+		tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: [] })
+		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 
 		if (selectedChain) {
-			tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
-			tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: [] })
-
 			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit })
 			if (resToken.length > 0) {
 				tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
 			}
-
 			tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: false })
 		}
 		void getBalanceTokens(tokensModalDispatch, address, selectedChain)
@@ -93,7 +91,7 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 					icon={<IconSearch size={18} color={colors.text.secondary} />}
 				/>
 				<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
-					{!isLoading ? (
+					{!isLoading && tokens ? (
 						tokens.map((token: Token, index: number) => {
 							return (
 								<TokenListItem
