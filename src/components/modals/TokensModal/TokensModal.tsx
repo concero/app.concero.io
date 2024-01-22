@@ -24,7 +24,7 @@ interface TokensModalProps {
 export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 	const { t } = useTranslation()
 	const { address } = useAccount()
-	const { getTokens } = useContext(DataContext)
+	const { getTokens, getChains } = useContext(DataContext)
 	const tokenContainerRef = useRef<HTMLDivElement>(null)
 	const limit = 15
 	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer()
@@ -76,8 +76,14 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 		tokensModalDispatch({ type: TokenModalActionType.SET_SELECTED_CHAIN, chain })
 	}
 
-	const handleSelect = (token: Token) => {
-		onSelect(token, selectedChain!)
+	const handleSelect = async (token: Token) => {
+		if (selectedChain) {
+			onSelect(token, selectedChain)
+			return
+		}
+		const chains = await getChains({ offset: 0, limit: 200 })
+		const chain = chains.find((chain: Chain) => chain.id.toString() === token.chain_id.toString())
+		onSelect(token, chain)
 	}
 
 	useEffect(() => {
