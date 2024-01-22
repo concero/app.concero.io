@@ -1,11 +1,11 @@
-import { type Token } from './types'
+import type { TokenBalance } from './types'
 import { config } from '../../constants/config'
 import { get } from '../client'
 
 export async function fetchTokensByBalances(
 	chainId: string | undefined,
 	walletAddress: string,
-): Promise<Record<string, Token[]> | null> {
+): Promise<TokenBalance | null> {
 	try {
 		if (!walletAddress) return null
 

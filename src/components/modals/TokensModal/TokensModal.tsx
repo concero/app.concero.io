@@ -1,5 +1,5 @@
 import { Modal } from '../Modal/Modal'
-import { type UIEvent, useContext, useEffect, useRef, useState } from 'react'
+import { type UIEvent, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from './TokensModal.module.pcss'
 import { TokensModalHeader } from './TokenModalHeader/TokensModalHeader'
@@ -10,8 +10,10 @@ import type { Chain, Token } from '../../../api/concero/types'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
 import { useAccount } from 'wagmi'
 import { TokenListItem } from './TokenListItem/TokenListItem'
-import { fetchTokensByBalances } from '../../../api/concero/fetchTokensByBalances'
 import { TokenSkeletonLoader } from './TokenSkeletonLoader/TokenSkeletonLoader'
+import { useTokensModalReducer } from './useTokensModalReducer/useTokensModalReducer'
+import { getBalanceTokens } from './handlers/getBalanceTokens'
+import { TokenModalActionType } from './useTokensModalReducer/types'
 
 interface TokensModalProps {
 	isOpen: boolean
@@ -22,62 +24,21 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 	const { t } = useTranslation()
 	const { address } = useAccount()
 	const { getTokens } = useContext(DataContext)
-	const [selectedChain, setSelectedChain] = useState<Chain | null>(null)
-	const [offset, setOffset] = useState<number>(0)
-	const [tokens, setTokens] = useState<Token[]>([])
-	const [balanceTokens, setBalanceTokens] = useState<Token[]>([])
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [isBalanceLoading, setIsBalanceLoading] = useState<boolean>(false)
 	const tokenContainerRef = useRef<HTMLDivElement>(null)
 	const limit = 15
-
-	const getBalanceTokens = async () => {
-		if (!address) return
-		setIsBalanceLoading(true)
-
-		if (!selectedChain) {
-			setIsLoading(true)
-		}
-
-		const res = await fetchTokensByBalances(selectedChain?.id, address)
-		if (!res) {
-			setIsLoading(false)
-			setIsBalanceLoading(false)
-			return
-		}
-		if (selectedChain) {
-			setBalanceTokens(res[selectedChain.id])
-			setTokens(prevTokens => {
-				const filteredTokens = prevTokens.filter(token => {
-					return !res[selectedChain.id].find(t => t._id === token._id)
-				})
-				return [...res[selectedChain.id], ...filteredTokens]
-			})
-		} else {
-			// if al chains are selected
-			const tokensToPaste: Token[] = []
-			for (const key in res) {
-				tokensToPaste.push(...res[key])
-			}
-			setBalanceTokens(tokensToPaste)
-			setTokens(tokensToPaste)
-			setIsLoading(false)
-		}
-		setIsBalanceLoading(false)
-	}
+	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer()
+	const { selectedChain, tokens, isLoading, isBalanceLoading, offset } = tokensModalState
 
 	const addTokens = async () => {
 		const newTokens = await getTokens({ chainId: selectedChain?.id!, offset, limit })
-		const filteredTokens = newTokens.filter((token: Token) => {
-			return !balanceTokens.find(t => t._id === token._id)
-		})
-		setTokens(prevTokens => [...prevTokens, ...filteredTokens])
+		if (!newTokens.length) return
+		tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: newTokens })
 	}
 
 	const handleEndReached = async () => {
 		if (!selectedChain) return
 		const newOffset = offset + limit
-		setOffset(newOffset)
+		tokensModalDispatch({ type: TokenModalActionType.SET_OFFSET, offset: newOffset })
 		void addTokens()
 	}
 
@@ -90,26 +51,32 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 	}
 
 	async function initialPopulateTokens() {
-		setOffset(0)
+		tokensModalDispatch({ type: TokenModalActionType.SET_OFFSET, offset: 0 })
+
 		if (selectedChain) {
-			setIsLoading(true)
+			tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
+			tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: [] })
+
 			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit })
-			if (!resToken.length) {
-				setTokens([])
-			} else {
-				setTokens(resToken)
+			if (resToken.length > 0) {
+				tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
 			}
-			setIsLoading(false)
-		} else {
-			setTokens([])
+
+			tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: false })
 		}
-		void getBalanceTokens()
+		void getBalanceTokens(tokensModalDispatch, address, selectedChain)
 	}
 
 	const moveToTop = () => {
 		if (tokenContainerRef.current) {
 			tokenContainerRef.current.scrollTop = 0
 		}
+	}
+
+	const handleSelectToken = (token: Token) => {}
+
+	const handleSelectChain = (chain: Chain | null) => {
+		tokensModalDispatch({ type: TokenModalActionType.SET_SELECTED_CHAIN, chain })
 	}
 
 	useEffect(() => {
@@ -120,7 +87,7 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 	return (
 		<Modal show={isOpen} setShow={onClose} title={t('tokensModal.selectChainToken')}>
 			<div className={classNames.container}>
-				<TokensModalHeader selectedChain={selectedChain} setSelectedChain={setSelectedChain} />
+				<TokensModalHeader selectedChain={selectedChain} setSelectedChain={handleSelectChain} />
 				<TextInput
 					placeholder={t('tokensModal.searchByTokenNameOrAddress')}
 					icon={<IconSearch size={18} color={colors.text.secondary} />}
@@ -128,7 +95,14 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 				<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
 					{!isLoading ? (
 						tokens.map((token: Token, index: number) => {
-							return <TokenListItem key={token._id + index.toString()} token={token} isBalanceLoading={isBalanceLoading} />
+							return (
+								<TokenListItem
+									key={token._id + index.toString()}
+									token={token}
+									isBalanceLoading={isBalanceLoading}
+									onSelect={handleSelectToken}
+								/>
+							)
 						})
 					) : (
 						<TokenSkeletonLoader count={9} />

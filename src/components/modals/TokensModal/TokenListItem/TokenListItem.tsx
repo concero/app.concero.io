@@ -10,9 +10,10 @@ import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 interface TokenListItemProps {
 	token: Token
 	isBalanceLoading: boolean
+	onSelect: (token: Token) => void
 }
 
-export function TokenListItem({ token, isBalanceLoading }: TokenListItemProps) {
+export function TokenListItem({ token, isBalanceLoading, onSelect }: TokenListItemProps) {
 	const [chainLogoSrc, setChainLogoSrc] = useState('')
 	const { getChains } = useContext(DataContext)
 
@@ -21,7 +22,12 @@ export function TokenListItem({ token, isBalanceLoading }: TokenListItemProps) {
 	}, [])
 
 	return (
-		<div className={classNames.container}>
+		<div
+			className={classNames.container}
+			onClick={() => {
+				onSelect(token)
+			}}
+		>
 			<div className={classNames.tokenInfoContainer}>
 				<TokenIcon tokenLogoSrc={token.logoURI} chainLogoSrc={chainLogoSrc} />
 				<div className={classNames.tokenTitleContainer}>

@@ -27,3 +27,5 @@ export interface Chain {
 	providers: Provider[]
 	symbol: string
 }
+
+export type TokenBalance = Record<string, Token[]>

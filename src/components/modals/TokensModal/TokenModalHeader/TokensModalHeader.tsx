@@ -9,7 +9,6 @@ import { IconChevronDown } from '@tabler/icons-react'
 import { animated, useSpring } from '@react-spring/web'
 import { easeQuadInOut } from 'd3-ease'
 import { colors } from '../../../../constants/colors'
-import { useAccount } from 'wagmi'
 
 interface ChainItemProps {
 	chain: Chain
@@ -38,11 +37,9 @@ interface TokensModalHeaderProps {
 
 export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensModalHeaderProps) {
 	const { t } = useTranslation()
-	const { address } = useAccount()
 	const { getChains } = useContext(DataContext)
 	const [chains, setChains] = useState<Chain[]>([])
-	const [offset, setOffset] = useState<number>(0)
-	const [loading, setLoading] = useState<boolean>(false)
+	const [offset] = useState<number>(0)
 	const [isChainsCollapsed, setIsChainsCollapsed] = useState<boolean>(true)
 	const [chainContainerHeight, setChainContainerHeight] = useState<number>(0)
 	const chainsRef = useRef<HTMLDivElement | null>(null)
@@ -65,14 +62,9 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 	}, [chainsRef?.current?.offsetHeight])
 
 	useEffect(() => {
-		setLoading(true)
-		getChains({ offset, limit: 30 })
-			.then(chains => {
-				setChains(chains)
-			})
-			.finally(() => {
-				setLoading(false)
-			})
+		getChains({ offset, limit: 30 }).then(chains => {
+			setChains(chains)
+		})
 	}, [])
 
 	return (
