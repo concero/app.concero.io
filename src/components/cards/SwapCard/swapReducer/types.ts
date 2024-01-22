@@ -1,5 +1,5 @@
 import { type StandardRoute } from '../../../../types/StandardRoute'
-import { type Provider } from '../../../../api/concero/types'
+import { type Chain, type Provider } from '../../../../api/concero/types'
 import { type StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
 import { type TransactionStatus } from 'rango-sdk'
 import { type ButtonType } from '../../../buttons/SwapButton/constants'
@@ -100,7 +100,7 @@ export type SwapAction =
 	| { type: 'SET_BALANCE'; payload: Balance | null }
 	| { type: 'SET_LOADING'; payload: boolean }
 	| { type: 'SET_SELECTED_ROUTE'; payload: any }
-	| { type: 'SET_CHAIN'; direction: ActionDirection; payload: { chain: any; tokens: any[] } }
+	| { type: 'SET_CHAIN'; direction: ActionDirection; payload: { chain: Chain } }
 	| { type: 'SET_TOKEN'; direction: ActionDirection; payload: { token: any } }
 	| {
 			type: 'SET_AMOUNT'

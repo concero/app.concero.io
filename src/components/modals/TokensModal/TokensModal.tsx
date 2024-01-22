@@ -18,9 +18,10 @@ import { getBalanceTokens } from './handlers/getBalanceTokens'
 interface TokensModalProps {
 	isOpen: boolean
 	onClose: () => void
+	onSelect: (token: Token, chain: Chain) => void
 }
 
-export function TokensModal({ isOpen, onClose }: TokensModalProps) {
+export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 	const { t } = useTranslation()
 	const { address } = useAccount()
 	const { getTokens } = useContext(DataContext)
@@ -71,10 +72,12 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 		}
 	}
 
-	const handleSelectToken = (token: Token) => {}
-
 	const handleSelectChain = (chain: Chain | null) => {
 		tokensModalDispatch({ type: TokenModalActionType.SET_SELECTED_CHAIN, chain })
+	}
+
+	const handleSelect = (token: Token) => {
+		onSelect(token, selectedChain!)
 	}
 
 	useEffect(() => {
@@ -98,7 +101,7 @@ export function TokensModal({ isOpen, onClose }: TokensModalProps) {
 									key={token._id + index.toString()}
 									token={token}
 									isBalanceLoading={isBalanceLoading}
-									onSelect={handleSelectToken}
+									onSelect={handleSelect}
 								/>
 							)
 						})

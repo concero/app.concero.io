@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { TokensModal } from '../../../modals/TokensModal/TokensModal'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 import { AmountInputSkeleton } from './AmountInputSkleton/AmountInputSkeleton'
+import { type Chain } from '../../../../api/concero/types'
 
 export const TokenArea: FC<TokenAreaProps> = ({
 	direction,
@@ -41,23 +42,18 @@ export const TokenArea: FC<TokenAreaProps> = ({
 		if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
 	}
 
-	// const handleSelectChain = async chain => {
-	// 	const tokens = await getTokens({ chainId: chain.id, offset: 0, limit: 15 })
-	// 	swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain }, tokens })
-	// 	tokenAreaDispatch({ type: 'SET_SHOW_CHAINS_MODAL', payload: false })
-	// }
-	//
 	// function handleMaxButtonClick() {
 	// 	if (!balance) return
 	// 	const { amount } = balance
 	// 	if (!Number(amount.formatted)) return
 	// 	handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
 	// }
-	//
-	// const handleSelectToken = token => {
-	// 	swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
-	// 	tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
-	// }
+
+	const handleSelectToken = (token: Token, chain: Chain) => {
+		swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain } })
+		swapDispatch({ type: 'SET_TOKEN', direction, payload: { token } })
+		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
+	}
 
 	useEffect(() => {
 		if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
@@ -131,6 +127,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 				onClose={() => {
 					tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 				}}
+				onSelect={handleSelectToken}
 			/>
 		</>
 	)
