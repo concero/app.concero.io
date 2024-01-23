@@ -1,5 +1,5 @@
 import { Modal } from '../Modal/Modal'
-import { type UIEvent, useContext, useEffect, useRef } from 'react'
+import { type ChangeEvent, type UIEvent, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from './TokensModal.module.pcss'
 import { TokensModalHeader } from './TokenModalHeader/TokensModalHeader'
@@ -28,7 +28,7 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 	const tokenContainerRef = useRef<HTMLDivElement>(null)
 	const limit = 15
 	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer()
-	const { selectedChain, tokens, isLoading, isBalanceLoading, offset } = tokensModalState
+	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
 
 	const addTokens = async () => {
 		const newTokens = await getTokens({ chainId: selectedChain?.id!, offset, limit })
@@ -86,6 +86,11 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 		onSelect(token, chain)
 	}
 
+	const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value
+		tokensModalDispatch({ type: TokenModalActionType.SET_SEARCH_VALUE, value })
+	}
+
 	useEffect(() => {
 		void initialPopulateTokens()
 		moveToTop()
@@ -98,6 +103,8 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 				<TextInput
 					placeholder={t('tokensModal.searchByTokenNameOrAddress')}
 					icon={<IconSearch size={18} color={colors.text.secondary} />}
+					value={searchValue}
+					onChange={handleSearch}
 				/>
 				<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
 					{!isLoading && tokens ? (

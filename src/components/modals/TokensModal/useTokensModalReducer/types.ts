@@ -8,6 +8,7 @@ export enum TokenModalActionType {
 	SET_IS_LOADING,
 	SET_IS_BALANCE_LOADING,
 	UPSERT_TOKENS,
+	SET_SEARCH_VALUE,
 }
 
 export interface TokensModalState {
@@ -17,6 +18,7 @@ export interface TokensModalState {
 	balanceTokens: TokenBalance | null
 	isLoading: boolean
 	isBalanceLoading: boolean
+	searchValue: string
 }
 
 export interface SET_SELECTED_CHAIN {

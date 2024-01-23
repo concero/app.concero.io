@@ -62,7 +62,7 @@ export const handleSwap = async ({
 				updateLifiSteps({ swapDispatch, selectedRoute: stdRoute })
 			}
 
-			const signer = await getSigner()
+			const signer = await switchChainHook(Number(from.chain.id))
 			const acceptExchangeRateUpdateHook = async () => true
 
 			const response = await executeLifiRoute(signer, originalRoute, {
