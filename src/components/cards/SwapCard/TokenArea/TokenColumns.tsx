@@ -8,6 +8,8 @@ export const TokenColumns = [
 	},
 	{
 		columnTitle: 'Name',
-		cellComponent: (token: { name: string; symbol: string }) => <p style={{ color: 'var(--color-grey-500' }}>{token.name !== null ? truncate(token.name, 20) : ''}</p>,
+		cellComponent: (token: { name: string; symbol: string }) => (
+			<p style={{ color: 'var(--color-grey-500' }}>{token.name !== null ? truncate(token.name, 20) : ''}</p>
+		),
 	},
 ]

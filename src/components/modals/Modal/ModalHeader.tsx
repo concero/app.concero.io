@@ -10,7 +10,12 @@ export function ModalHeader(props: { title: string; onClick: () => void; isLoadi
 				<h5>{props.title}</h5>
 				{props.isLoading ? <LoadingAnimation size={16} color={'var(--color-grey-600'} /> : null}
 			</div>
-			<Button onClick={props.onClick} variant="black" size="sq-xs" leftIcon={<IconX size={18} color="var(--color-text-secondary)" />} />
+			<Button
+				onClick={props.onClick}
+				variant="black"
+				size="sq-xs"
+				leftIcon={<IconX size={18} color="var(--color-text-secondary)" />}
+			/>
 		</div>
 	)
 }

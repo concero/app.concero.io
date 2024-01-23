@@ -2,7 +2,13 @@ import { config } from '../../constants/config'
 import { get } from '../client'
 import { type EnsoRouteResponse, type FetchEnsoQuoteParams } from './types'
 
-export async function fetchEnsoRoute({ chainId, fromAddress, amountIn, tokenIn, tokenOut }: FetchEnsoQuoteParams): Promise<EnsoRouteResponse | void> {
+export async function fetchEnsoRoute({
+	chainId,
+	fromAddress,
+	amountIn,
+	tokenIn,
+	tokenOut,
+}: FetchEnsoQuoteParams): Promise<EnsoRouteResponse | void> {
 	const headers = {
 		'Content-Type': 'application/json',
 		Authorization: `Bearer ${config.ENSO_API_KEY}`,
@@ -20,7 +26,13 @@ export async function fetchEnsoRoute({ chainId, fromAddress, amountIn, tokenIn, 
 	}
 }
 
-export async function fetchEnsoQuote({ chainId, fromAddress, amountIn, tokenIn, tokenOut }: FetchEnsoQuoteParams): Promise<EnsoRouteResponse | void> {
+export async function fetchEnsoQuote({
+	chainId,
+	fromAddress,
+	amountIn,
+	tokenIn,
+	tokenOut,
+}: FetchEnsoQuoteParams): Promise<EnsoRouteResponse | void> {
 	const headers = {
 		'Content-Type': 'application/json',
 		Authorization: `Bearer ${config.ENSO_API_KEY}`,

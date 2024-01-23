@@ -74,7 +74,8 @@ export const fr = {
 			contractSupport: 'Contacter le support',
 			copyDebugInfo: 'Copier les informations de transaction',
 			dropUsAMessage: 'Laissez-nous un message',
-			apologize: 'Nous nous excusons pour les problèmes rencontrés lors de votre transaction. Nous ferons de notre mieux pour résoudre le problème.',
+			apologize:
+				'Nous nous excusons pour les problèmes rencontrés lors de votre transaction. Nous ferons de notre mieux pour résoudre le problème.',
 		},
 		manageModal: {
 			title: 'Gérer la position',

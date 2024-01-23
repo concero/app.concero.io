@@ -3,7 +3,10 @@ import { providers } from 'ethers'
 import { type SwitchNetworkResult } from '@wagmi/core'
 import { type JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider'
 
-export async function getSigner(requiredChainId: number, switchNetworkAsync: Promise<SwitchNetworkResult> | null = null): Promise<JsonRpcSigner> {
+export async function getSigner(
+	requiredChainId: number,
+	switchNetworkAsync: Promise<SwitchNetworkResult> | null = null,
+): Promise<JsonRpcSigner> {
 	if (parseInt(window.ethereum.chainId) !== parseInt(requiredChainId) && switchNetworkAsync) {
 		await switchNetworkAsync(Number(requiredChainId))
 	}

@@ -24,7 +24,11 @@ export const EarnHeaderCard: FC<EarnHeaderCardProps> = ({ earnState, earnDispatc
 	const stakedAmount = selectedVault?.stakedAmount
 	const { t } = useTranslation()
 
-	const stakeButtonTitle = isConnected ? (stakedAmount ? t('button.menage') : t('button.stake')) : 'Connect wallet to swap'
+	const stakeButtonTitle = isConnected
+		? stakedAmount
+			? t('button.menage')
+			: t('button.stake')
+		: 'Connect wallet to swap'
 
 	function handleManageButtonClick() {
 		setIsManageModalOpen(true)
@@ -38,7 +42,9 @@ export const EarnHeaderCard: FC<EarnHeaderCardProps> = ({ earnState, earnDispatc
 	function InfoCards() {
 		if (!stakedAmount) return null
 		const poolShare = earnState.selectedVault?.poolShare ? `${earnState.selectedVault.poolShare}%` : 'unknown'
-		const amountUsd = earnState.selectedVault?.stakedAmountUsd ? `$${earnState.selectedVault?.stakedAmountUsd}` : 'unknown'
+		const amountUsd = earnState.selectedVault?.stakedAmountUsd
+			? `$${earnState.selectedVault?.stakedAmountUsd}`
+			: 'unknown'
 		return (
 			<div className={classNames.cardsContainer}>
 				<InfoCard title={'Staked'} value={amountUsd} secondaryValue={'usd'} />
@@ -51,7 +57,14 @@ export const EarnHeaderCard: FC<EarnHeaderCardProps> = ({ earnState, earnDispatc
 	return (
 		<>
 			<div className={classNames.wrapper}>
-				{isIpad ? <Button variant={'subtle'} leftIcon={<IconChevronLeft />} className={stakedAmount ? classNames.backButton : ''} onClick={handleGoBackButtonClick} /> : null}
+				{isIpad ? (
+					<Button
+						variant={'subtle'}
+						leftIcon={<IconChevronLeft />}
+						className={stakedAmount ? classNames.backButton : ''}
+						onClick={handleGoBackButtonClick}
+					/>
+				) : null}
 				<div className={classNames.innerContainer}>
 					<div className={`card ${classNames.container} ${stakedAmount ? classNames.staked : ''}`}>
 						<div className={classNames.headerContainer}>
@@ -82,7 +95,12 @@ export const EarnHeaderCard: FC<EarnHeaderCardProps> = ({ earnState, earnDispatc
 			</div>
 			{isIpad ? <InfoCards /> : null}
 			{isIpad ? (
-				<Button leftIcon={<IconArrowsUpDown size={16} color="white" />} variant="primary" onClick={handleManageButtonClick} isDisabled={!earnState.address}>
+				<Button
+					leftIcon={<IconArrowsUpDown size={16} color="white" />}
+					variant="primary"
+					onClick={handleManageButtonClick}
+					isDisabled={!earnState.address}
+				>
 					{stakeButtonTitle}
 				</Button>
 			) : null}

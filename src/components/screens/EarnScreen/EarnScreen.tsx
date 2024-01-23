@@ -36,7 +36,13 @@ export const EarnScreen: FC = () => {
 	)
 
 	const mobileLayout = (
-		<div className={classNames.container}>{earnState.selectedVault ? mobileVaultDetails : <EarnOpportunitiesCard earnState={earnState} earnDispatch={earnDispatch} />}</div>
+		<div className={classNames.container}>
+			{earnState.selectedVault ? (
+				mobileVaultDetails
+			) : (
+				<EarnOpportunitiesCard earnState={earnState} earnDispatch={earnDispatch} />
+			)}
+		</div>
 	)
 
 	const ipadVaultDetails = (
@@ -50,7 +56,11 @@ export const EarnScreen: FC = () => {
 
 	const ipadLayout = (
 		<div className={classNames.container}>
-			{earnState.selectedVault ? ipadVaultDetails : <EarnOpportunitiesCard earnState={earnState} earnDispatch={earnDispatch} />}
+			{earnState.selectedVault ? (
+				ipadVaultDetails
+			) : (
+				<EarnOpportunitiesCard earnState={earnState} earnDispatch={earnDispatch} />
+			)}
 			{earnState.selectedVault ? <Chart selectedVault={earnState.selectedVault} /> : null}
 		</div>
 	)
@@ -75,5 +85,7 @@ export const EarnScreen: FC = () => {
 		</div>
 	)
 
-	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : isIpad ? ipadLayout : desktopLayout}</div>
+	return (
+		<div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : isIpad ? ipadLayout : desktopLayout}</div>
+	)
 }

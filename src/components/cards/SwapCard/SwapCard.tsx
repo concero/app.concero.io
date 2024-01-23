@@ -18,7 +18,7 @@ import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 
 export const SwapCard: FC<SwapCardProps> = () => {
-	const { selection, dispatch } = useContext(SelectionContext)
+	const { selection, selectionDispatch } = useContext(SelectionContext)
 	const [swapState, swapDispatch] = useSwapReducer(selection)
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef(null)
@@ -34,20 +34,32 @@ export const SwapCard: FC<SwapCardProps> = () => {
 	const toggleInsurance = (routeId: string) => {
 		swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
 	}
-	useSwapCardEffects({ swapState, swapDispatch, address, dispatch, typingTimeoutRef, connector })
+	useSwapCardEffects({ swapState, swapDispatch, address, selectionDispatch, typingTimeoutRef, connector })
 
 	function handleContactSupportGoBackClick() {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 	}
 
-	const infoToCopy = { ...swapState.selectedRoute, replay_id: posthog.get_distinct_id(), session_id: posthog.get_session_id() }
+	const infoToCopy = {
+		...swapState.selectedRoute,
+		replay_id: posthog.get_distinct_id(),
+		session_id: posthog.get_session_id(),
+	}
 
 	const renderSwapStage = {
 		[SwapCardStage.input]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
-		[SwapCardStage.progress]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
-		[SwapCardStage.success]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
-		[SwapCardStage.failed]: <SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />,
-		[SwapCardStage.contactSupport]: <ContactSupportCard handleGoBackClick={handleContactSupportGoBackClick} infoToCopy={infoToCopy} />,
+		[SwapCardStage.progress]: (
+			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
+		),
+		[SwapCardStage.success]: (
+			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
+		),
+		[SwapCardStage.failed]: (
+			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
+		),
+		[SwapCardStage.contactSupport]: (
+			<ContactSupportCard handleGoBackClick={handleContactSupportGoBackClick} infoToCopy={infoToCopy} />
+		),
 	}
 
 	return (

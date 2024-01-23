@@ -16,7 +16,10 @@ function earnReducer(state: ManageState, action: ManageAction): ManageState {
 			}
 			return { ...state, modalType: action.payload }
 		case 'SET_CHAIN': {
-			return { ...state, [action.direction]: { ...state[action.direction], chain: action.payload, token: action.tokens[0] } }
+			return {
+				...state,
+				[action.direction]: { ...state[action.direction], chain: action.payload, token: action.tokens[0] },
+			}
 		}
 		case 'SET_TOKEN': {
 			return { ...state, [action.direction]: { ...state[action.direction], token: action.payload } }

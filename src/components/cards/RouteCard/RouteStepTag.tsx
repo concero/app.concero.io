@@ -7,7 +7,13 @@ import { RouteEndPoint } from './RouteEndPoint'
 import { type RouteStepTagProps } from './types'
 import { renderAdditionalInfo } from './renderAdditionalInfo'
 
-export const RouteStepTag: FC<RouteStepTagProps> = ({ step, isRoutesCollapsed, setIsRoutesCollapsed, length, isSelected }) => {
+export const RouteStepTag: FC<RouteStepTagProps> = ({
+	step,
+	isRoutesCollapsed,
+	setIsRoutesCollapsed,
+	length,
+	isSelected,
+}) => {
 	const fullWidthStyle = !isRoutesCollapsed ? classNames.fullWidth : ''
 
 	const getColor = (type: string): undefined | string => {

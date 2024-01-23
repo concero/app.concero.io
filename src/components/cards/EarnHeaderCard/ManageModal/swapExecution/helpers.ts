@@ -12,7 +12,10 @@ export function handleError(error: Error, manageDispatch: Dispatch<ManageAction>
 	if (error.message.includes('INSUFFICIENT_GAS_TOKENS')) {
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Insufficient balance', status: 'error' } })
 	} else if (error.message.toLowerCase().includes('user rejected')) {
-		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Cancelled by user', body: 'Transaction was cancelled', status: 'error' } })
+		manageDispatch({
+			type: 'PUSH_STEP',
+			step: { title: 'Cancelled by user', body: 'Transaction was cancelled', status: 'error' },
+		})
 	} else {
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Something went wrong.', status: 'error' } })
 	}
@@ -25,7 +28,12 @@ interface IApproveToken {
 	fromAmount: string
 }
 
-export async function approveToken({ signer, tokenAddress, receiverAddress, fromAmount }: IApproveToken): Promise<void> {
+export async function approveToken({
+	signer,
+	tokenAddress,
+	receiverAddress,
+	fromAmount,
+}: IApproveToken): Promise<void> {
 	const erc20 = new Contract(tokenAddress, ['function approve(address,uint256)'], signer)
 	return (await erc20.approve(receiverAddress, fromAmount)).wait()
 }
@@ -36,7 +44,12 @@ interface IApproval {
 	token: string
 }
 
-export async function checkIsApproveNeeded(fromChainId: number, fromAddress: string, tokenAddress: string, fromAmount: string): Promise<boolean> {
+export async function checkIsApproveNeeded(
+	fromChainId: number,
+	fromAddress: string,
+	tokenAddress: string,
+	fromAmount: string,
+): Promise<boolean> {
 	const url = `https://api.enso.finance/api/v1/wallet/approvals?chainId=${fromChainId}&fromAddress=${fromAddress}`
 	const response = await get(url)
 	const approval: IApproval | undefined = response.data.find((item: IApproval) => item.token === tokenAddress)

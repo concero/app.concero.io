@@ -137,5 +137,11 @@ export function DataProvider({ children }: DataProviderProps) {
 		initialFetch()
 	}, [])
 
-	return <DataContext.Provider value={{ getTokens, getChains, tokens, chains, setTokens, setChains, getChainByProviderSymbol }}>{children}</DataContext.Provider>
+	return (
+		<DataContext.Provider
+			value={{ getTokens, getChains, tokens, chains, setTokens, setChains, getChainByProviderSymbol }}
+		>
+			{children}
+		</DataContext.Provider>
+	)
 }

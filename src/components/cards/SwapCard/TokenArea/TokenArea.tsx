@@ -130,7 +130,9 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 				onSelect={token => {
 					handleSelectToken(token)
 				}}
-				getItems={async ({ offset, limit, search }) => await getTokens({ chainId: selection.chain.id, offset, limit, search })}
+				getItems={async ({ offset, limit, search }) =>
+					await getTokens({ chainId: selection.chain.id, offset, limit, search })
+				}
 				RenderItem={ListEntityButton}
 			/>
 			<ListModal

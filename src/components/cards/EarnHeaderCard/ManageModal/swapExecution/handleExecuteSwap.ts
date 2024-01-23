@@ -12,7 +12,11 @@ import { approveToken, checkIsApproveNeeded, handleError } from './helpers'
 
 type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<SwitchNetworkResult>
 
-export async function handleExecuteSwap(manageState: ManageState, manageDispatch: Dispatch<ManageAction>, switchNetworkAsync: SwitchChainNetwork): Promise<void> {
+export async function handleExecuteSwap(
+	manageState: ManageState,
+	manageDispatch: Dispatch<ManageAction>,
+	switchNetworkAsync: SwitchChainNetwork,
+): Promise<void> {
 	manageDispatch({ type: 'SET_LOADING', payload: true })
 	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.progress })
 	manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
@@ -22,12 +26,30 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 
 	try {
 		const signer = await getSigner(Number(from.chain.id), switchNetworkAsync)
-		const approvalTx = await fetchApprovalTx(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals)!)
-		const isApproveNeeded = await checkIsApproveNeeded(from.chain.id, address, from.token.address, addingAmountDecimals(from.amount, from.token.decimals)!)
+		const approvalTx = await fetchApprovalTx(
+			from.chain.id,
+			address,
+			from.token.address,
+			addingAmountDecimals(from.amount, from.token.decimals)!,
+		)
+		const isApproveNeeded = await checkIsApproveNeeded(
+			from.chain.id,
+			address,
+			from.token.address,
+			addingAmountDecimals(from.amount, from.token.decimals)!,
+		)
 
 		if (isApproveNeeded) {
-			manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
-			await approveToken({ signer, tokenAddress: from.token.address, receiverAddress: approvalTx.spender, fromAmount: approvalTx.amount })
+			manageDispatch({
+				type: 'PUSH_STEP',
+				step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' },
+			})
+			await approveToken({
+				signer,
+				tokenAddress: from.token.address,
+				receiverAddress: approvalTx.spender,
+				fromAmount: approvalTx.amount,
+			})
 		}
 		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Fetching transaction data', status: 'pending' } })
 		const route = await retryRequest(
@@ -46,7 +68,10 @@ export async function handleExecuteSwap(manageState: ManageState, manageDispatch
 			...route.tx,
 			gasLimit: BigNumber(manageState.route.gas._hex).times(1.8).toFixed(0).toString(),
 		}
-		manageDispatch({ type: 'PUSH_STEP', step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' } })
+		manageDispatch({
+			type: 'PUSH_STEP',
+			step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' },
+		})
 		await signer.sendTransaction(transactionArgs)
 
 		manageDispatch({ type: 'SET_STATUS', payload: Status.success })

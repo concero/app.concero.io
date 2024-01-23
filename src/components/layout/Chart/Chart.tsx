@@ -70,7 +70,8 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 		}
 		window.addEventListener('resize', handleResize)
 		chart.subscribeCrosshairMove(param => {
-			if (tooltipRef.current) updateTooltip(param, seriesRef.current, secondSeries, tooltipRef.current, chartRef.current, '$')
+			if (tooltipRef.current)
+				updateTooltip(param, seriesRef.current, secondSeries, tooltipRef.current, chartRef.current, '$')
 		})
 
 		return () => {

@@ -18,7 +18,17 @@ export interface EntityListModalProps {
 	entitiesVisible?: number
 }
 
-export const EntityListModal: FC<EntityListModalProps> = ({ title, data, columns, show, setShow, onSelect, onEndReached = null, animate = true, entitiesVisible = 20 }) => {
+export const EntityListModal: FC<EntityListModalProps> = ({
+	title,
+	data,
+	columns,
+	show,
+	setShow,
+	onSelect,
+	onEndReached = null,
+	animate = true,
+	entitiesVisible = 20,
+}) => {
 	const [filteredData, setFilteredData] = useState<any[]>([])
 	const [value, setValue] = useState<string>('')
 

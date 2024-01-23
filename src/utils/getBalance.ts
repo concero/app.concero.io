@@ -20,7 +20,7 @@ interface HandleBalanceProps {
 			decimals: number
 		}
 	}
-	address: string | null
+	address: string | null | undefined
 }
 
 const handleError = (dispatch: Dispatch<SwapAction>) => {

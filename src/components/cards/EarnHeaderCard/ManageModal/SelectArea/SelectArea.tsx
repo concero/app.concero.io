@@ -23,11 +23,16 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 	const inputRef = useRef()
 	const [isFocused, setIsFocused] = useState(false)
 	const [currentUsdPrice, setCurrentUsdPrice] = useState<number | null>(null)
-	const isSelectDisabled = (swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
+	const isSelectDisabled =
+		(swapType === SwapType.stake && direction === 'to') || (swapType === SwapType.withdraw && direction === 'from')
 	const { t } = useTranslation()
 
 	function setAmountUsd(value: string): void {
-		dispatch({ type: 'SET_AMOUNT_USD', amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null, direction })
+		dispatch({
+			type: 'SET_AMOUNT_USD',
+			amount: currentUsdPrice ? (Number(value) * currentUsdPrice).toString() : null,
+			direction,
+		})
 	}
 
 	function handleChangeText(value: string) {
@@ -89,10 +94,9 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 						onChangeText={handleChangeText}
 						isDisabled={direction === 'to'}
 					/>
-					<h5 className={selection.amount_usd === null || selection.amount_usd === undefined ? classNames.invisible : ''}>{`$${numberToFormatString(
-						Number(selection.amount_usd),
-						2,
-					)}`}</h5>
+					<h5
+						className={selection.amount_usd === null || selection.amount_usd === undefined ? classNames.invisible : ''}
+					>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
 				</div>
 				<Button
 					onClick={() => {

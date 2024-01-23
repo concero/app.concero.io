@@ -58,7 +58,14 @@ export const ListModal: FC<MultiSelectModalProps> = ({
 		<Modal show={isOpen} setShow={setIsOpen} title={title}>
 			<div className={classNames.container}>
 				<div className={classNames.inputContainer}>
-					{isSearchable ? <TextInput icon={<IconSearch color="var(--color-text-secondary)" size={18} />} placeholder="Search..." value={search} onChangeText={handleSearch} /> : null}
+					{isSearchable ? (
+						<TextInput
+							icon={<IconSearch color="var(--color-text-secondary)" size={18} />}
+							placeholder="Search..."
+							value={search}
+							onChangeText={handleSearch}
+						/>
+					) : null}
 				</div>
 				<div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
 					{items.map((item, index) => {

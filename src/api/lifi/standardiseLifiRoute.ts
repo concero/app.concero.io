@@ -3,15 +3,17 @@ import { standardizeLifiStep } from './standardizeLifiStep'
 import { type Fees, type StandardRoute } from '../../types/StandardRoute'
 import BigNumber from 'bignumber.js'
 import { addingTokenDecimals, roundNumberByDecimals } from '../../utils/formatting'
-import { type FeeCost, type GasCost, type Step } from '@lifi/types/dist/cjs/step'
+import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
 import { type LifiStep } from '@lifi/types/dist/cjs'
 
 function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 	const result: Fees[] = []
 
-	route.steps.forEach((step: Step) => {
+	route.steps.forEach((step: LifiStep) => {
 		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
-			const matchedFeeAsset = result.find((item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString())
+			const matchedFeeAsset = result.find(
+				(item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString(),
+			)
 			if (matchedFeeAsset) {
 				const index = result.findIndex((item: Fees) => item.asset.address === fee.token.address)
 				const normalizedFeeAmount = addingTokenDecimals(fee.amount, fee.token.decimals)
@@ -32,7 +34,11 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 
 	route.steps.forEach((step: LifiStep) => {
 		step.estimate.gasCosts?.forEach((gas: GasCost) => {
-			if (result.find((item: Fees) => item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString())) {
+			if (
+				result.find(
+					(item: Fees) => item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString(),
+				)
+			) {
 				const index = result.findIndex((item: Fees) => item.asset.address === gas.token.address)
 				const normalizedGasAmount = addingTokenDecimals(gas.amount, gas.token.decimals)
 				result[index].amount = new BigNumber(result[index].amount).plus(normalizedGasAmount!).toString()
@@ -51,6 +57,19 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 	})
 
 	return result
+}
+
+function getFeeAmountUsd(route: lifiTypes.Route): number {
+	let amount: number = 0
+
+	route.steps.forEach((step: LifiStep) => {
+		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
+			if (fee.included) return
+			amount += parseFloat(fee.amountUSD)
+		})
+	})
+
+	return amount
 }
 
 export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => ({
@@ -80,30 +99,46 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 			price_usd: route.toToken.priceUSD,
 			amount_usd: route.toAmountUSD,
 			amount: addingTokenDecimals(route.toAmount, route.toToken.decimals),
-			amount_min: route.toAmountMin,
 		},
 		chain: {
 			id: route.toChainId,
 		},
 		address: route.toAddress,
 	},
-	steps: [...route.steps.flatMap(step => step.includedSteps.map(includedStep => standardizeLifiStep(includedStep)))],
+	steps: [
+		...route.steps.flatMap(step =>
+			step.includedSteps.map(includedStep => {
+				return standardizeLifiStep(includedStep)
+			}),
+		),
+	],
 	cost: {
 		total_usd: roundNumberByDecimals(new BigNumber(route.fromAmountUSD).minus(route.toAmountUSD).toString(), 2),
 		total_gas_usd: route.gasCostUSD,
 		total_fee: getTotalFee(route),
+		total_fee_usd: roundNumberByDecimals(getFeeAmountUsd(route) + parseFloat(route.gasCostUSD!), 2)!,
 	},
 	tags: route.tags,
 	insurance: {
 		state: route.insurance.state,
 		fee_amount_usd: route.insurance.feeAmountUsd,
 	},
+
 	slippage_percent: route.steps.reduce(
-		(acc, step) => acc + (step.action.slippage + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + innerStep.action.slippage, 0)),
+		(acc, step) =>
+			acc +
+			(step.action.slippage +
+				step.includedSteps.reduce((innerAcc: number, innerStep) => {
+					return innerAcc + innerStep.action.slippage
+				}, 0)),
 		0,
 	),
 	transaction_time_seconds: route.steps.reduce(
-		(acc: number, step) => acc + step.includedSteps.reduce((innerAcc: number, innerStep) => innerAcc + parseInt(innerStep.estimate.executionDuration), 0),
+		(acc: number, step) =>
+			acc +
+			step.includedSteps.reduce((innerAcc: number, innerStep) => {
+				return innerAcc + innerStep.estimate.executionDuration
+			}, 0),
 		0,
 	),
 	execution: route.steps.map(step => step.execution),

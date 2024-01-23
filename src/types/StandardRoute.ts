@@ -1,3 +1,6 @@
+import { type Execution } from '@lifi/types/dist/step'
+import type * as lifiTypes from '@lifi/sdk/dist/types'
+
 export interface StandardRoute {
 	id: string
 	from: Direction
@@ -7,12 +10,15 @@ export interface StandardRoute {
 		total_usd: string | null | undefined
 		total_gas_usd: string | null | undefined
 		total_fee: Fees[] | []
+		total_fee_usd?: string
 	}
 	tags: Array<'RECOMMENDED' | 'FASTEST' | 'CHEAPEST' | 'SAFEST'> | undefined
 	slippage_percent: number | null
 	transaction_time_seconds: number | null
 	insurance: Insurance | null
 	provider: 'rango' | 'lifi'
+	execution?: Array<Execution | undefined>
+	originalRoute: lifiTypes.Route
 }
 
 export interface Direction {
@@ -29,8 +35,8 @@ export interface Direction {
 		id: number | string
 		providers?: Providers[]
 	}
-	amount: string | null
-	address: string | null
+	amount?: string | null
+	address: string | undefined | null
 }
 
 export interface Providers {

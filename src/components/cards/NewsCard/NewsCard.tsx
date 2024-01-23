@@ -73,7 +73,9 @@ export const NewsCard: FC<NewsCardProps> = () => {
 				onSelect={token => {
 					handleSelectToken(token)
 				}}
-				getItems={async ({ offset, limit, search }) => await getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })}
+				getItems={async ({ offset, limit, search }) =>
+					await getTokens({ chainId: selection.swapCard.to.chain.id, offset, limit, search })
+				}
 				RenderItem={ListEntityButton}
 			/>
 		</>

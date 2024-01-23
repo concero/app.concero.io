@@ -12,8 +12,14 @@ function getSteps(route: BestRouteResponse): Step[] | null {
 }
 
 function getTotalGasUsd(route: BestRouteResponse): string | null {
-	const reduceSwaps = (res: number, swap: SwapResult): number => swap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + res
-	return roundNumberByDecimals(new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0).times(route.result?.swaps[0]?.from.usdPrice ?? 0).toString(), 2)
+	const reduceSwaps = (res: number, swap: SwapResult): number =>
+		swap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + res
+	return roundNumberByDecimals(
+		new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0)
+			.times(route.result?.swaps[0]?.from.usdPrice ?? 0)
+			.toString(),
+		2,
+	)
 }
 
 function getTotalFee(route: BestRouteResponse): Fees[] | [] {
@@ -65,7 +71,9 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 				symbol: route.to.symbol,
 				decimals: to.token.decimals,
 				amount: roundNumberByDecimals(route.result?.outputAmount, 4),
-				amount_usd: new BigNumber(route.result?.outputAmount ?? 0).times(route.result?.swaps[route.result.swaps.length - 1]?.to.usdPrice ?? 0).toString(),
+				amount_usd: new BigNumber(route.result?.outputAmount ?? 0)
+					.times(route.result?.swaps[route.result.swaps.length - 1]?.to.usdPrice ?? 0)
+					.toString(),
 			},
 			chain: {
 				id: route.to.blockchain,
@@ -80,7 +88,9 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 		},
 		tags: [],
 		slippage_percent: null,
-		transaction_time_seconds: route.result?.swaps.reduce((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ?? null,
+		transaction_time_seconds:
+			route.result?.swaps.reduce((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ??
+			null,
 		originalRoute: route,
 	}
 }

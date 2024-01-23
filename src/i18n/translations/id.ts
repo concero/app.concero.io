@@ -73,7 +73,8 @@ export const id = {
 			contractSupport: 'Hubungi dukungan',
 			copyDebugInfo: 'Salin info transaksi',
 			dropUsAMessage: 'Kirimkan pesan kepada kami',
-			txFailedMessage: 'Kami meminta maaf atas masalah yang Anda alami dengan transaksi Anda. Kami akan melakukan yang terbaik untuk menyelesaikan masalah.',
+			txFailedMessage:
+				'Kami meminta maaf atas masalah yang Anda alami dengan transaksi Anda. Kami akan melakukan yang terbaik untuk menyelesaikan masalah.',
 		},
 		manageModal: {
 			title: 'Kelola posisi',

@@ -60,7 +60,12 @@ export const FilteredTags: FC<FilteredTagsProps> = ({ earnDispatch, earnState })
 			resetFilter(earnDispatch)
 		}
 		earnDispatch({ type: 'SET_FILTER', payload: { filter: filterKey, value } })
-		trackEvent({ category: category.StakingScreen, action: action.FilterTagClicked, label: 'Staking filter tag clicked', data: { filterKey } })
+		trackEvent({
+			category: category.StakingScreen,
+			action: action.FilterTagClicked,
+			label: 'Staking filter tag clicked',
+			data: { filterKey },
+		})
 	}
 
 	function setIsChainsModalOpened(value: boolean) {

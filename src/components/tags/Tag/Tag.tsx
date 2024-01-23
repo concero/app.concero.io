@@ -6,7 +6,17 @@ export interface TagProps {
 	leftIcon?: ReactNode
 	rightIcon?: ReactNode
 	onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-	color: 'red' | 'green' | 'grey' | 'main' | 'mainDarker' | 'recommended' | 'cheapest' | 'fastest' | 'transparent' | 'secondary'
+	color:
+		| 'red'
+		| 'green'
+		| 'grey'
+		| 'main'
+		| 'mainDarker'
+		| 'recommended'
+		| 'cheapest'
+		| 'fastest'
+		| 'transparent'
+		| 'secondary'
 	isLoading?: boolean
 	children?: string | JSX.Element[] | JSX.Element
 	size?: 'sm' | 'md' | 'lg' | 'xxs'

@@ -16,7 +16,8 @@ import { type providers } from 'ethers'
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
 	const { address, isConnected } = useAccount()
-	const isInsuranceCardVisible = swapState.selectedRoute?.insurance?.state === 'INSURABLE' || swapState.selectedRoute?.insurance?.state === 'INSURED'
+	const isInsuranceCardVisible =
+		swapState.selectedRoute?.insurance?.state === 'INSURABLE' || swapState.selectedRoute?.insurance?.state === 'INSURED'
 	const walletClient = useWalletClient()
 	const { switchNetworkAsync } = useSwitchNetwork()
 
@@ -48,7 +49,13 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
 	return (
 		<div className={classNames.container}>
-			<TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} chains={swapState.chains} />
+			<TokenArea
+				direction="from"
+				selection={swapState.from}
+				swapDispatch={swapDispatch}
+				balance={swapState.balance}
+				chains={swapState.chains}
+			/>
 			<TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} chains={swapState.chains} />
 			{/* {destinationAddressRequired ? ( */}
 			{/*   <TextInput */}
@@ -60,7 +67,10 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 			{/*   /> */}
 			{/* ) : null} */}
 			{isInsuranceCardVisible ? <InsuranceCard swapState={swapState} swapDispatch={swapDispatch} /> : null}
-			<SwapDetails swapState={swapState} setSelectedRoute={route => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })} />
+			<SwapDetails
+				swapState={swapState}
+				setSelectedRoute={route => swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })}
+			/>
 			<SwapButton
 				swapState={swapState}
 				isConnected={isConnected}

@@ -20,7 +20,10 @@ export const logError = (error: Error, additionalInfo?: any): void => {
  @returns {(...args: TArgs) => TResult | null} - The wrapped function with error handling logic.
  */
 export const withErrorHandling =
-	<TArgs extends any[], TResult>(fn: (...args: TArgs) => TResult, errorMessage: string): ((...args: TArgs) => TResult | null) =>
+	<TArgs extends any[], TResult>(
+		fn: (...args: TArgs) => TResult,
+		errorMessage: string,
+	): ((...args: TArgs) => TResult | null) =>
 	(...args: TArgs): TResult | null => {
 		try {
 			return fn(...args)
@@ -39,7 +42,10 @@ export const withErrorHandling =
  @returns {(...args: TArgs) => Promise<TResult | null>} - The wrapped async function with error handling logic.
  */
 export const withErrorHandlingAsync =
-	<TArgs extends any[], TResult>(fn: (...args: TArgs) => Promise<TResult>, errorMessage: string): ((...args: TArgs) => Promise<TResult | null>) =>
+	<TArgs extends any[], TResult>(
+		fn: (...args: TArgs) => Promise<TResult>,
+		errorMessage: string,
+	): ((...args: TArgs) => Promise<TResult | null>) =>
 	async (...args: TArgs): Promise<TResult | null> => {
 		try {
 			return await fn(...args)
