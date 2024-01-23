@@ -2,7 +2,6 @@ import { type FC, type ForwardedRef, useEffect, useRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import classNames from './TokenArea.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { numberToFormatString } from '../../../../utils/formatting'
 import { TextInput } from '../../../input/TextInput'
 import { type TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'
@@ -14,6 +13,7 @@ import { TokensModal } from '../../../modals/TokensModal/TokensModal'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 import { AmountInputSkeleton } from './AmountInputSkleton/AmountInputSkeleton'
 import { type Chain } from '../../../../api/concero/types'
+import { AmountUsd } from './AmountUsd'
 
 export const TokenArea: FC<TokenAreaProps> = ({
 	direction,
@@ -42,12 +42,12 @@ export const TokenArea: FC<TokenAreaProps> = ({
 		if (direction === 'from') handleAmountChange({ value, state, dispatch: swapDispatch, direction })
 	}
 
-	// function handleMaxButtonClick() {
-	// 	if (!balance) return
-	// 	const { amount } = balance
-	// 	if (!Number(amount.formatted)) return
-	// 	handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
-	// }
+	const handleMaxButtonClick = () => {
+		if (!balance) return
+		const { amount } = balance
+		if (!Number(amount.formatted)) return
+		handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
+	}
 
 	const handleSelectToken = (token: Token, chain: Chain) => {
 		swapDispatch({ type: 'SET_CHAIN', direction, payload: { chain } })
@@ -60,7 +60,9 @@ export const TokenArea: FC<TokenAreaProps> = ({
 	}, [selection.chain, selection.token])
 
 	useEffect(() => {
-		if (selection.amount) handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
+		if (selection.amount) {
+			handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
+		}
 	}, [state.currentTokenPriceUSD])
 
 	return (
@@ -76,11 +78,6 @@ export const TokenArea: FC<TokenAreaProps> = ({
 					<div className={classNames.tokenRowHeader}>
 						<p className={'body2'}>{t(`tokenArea.${direction}`)}</p>
 					</div>
-					{/* {balance !== null ? ( */}
-					{/* 	<Button variant={'subtle'} size={'sm'} onClick={handleMaxButtonClick}> */}
-					{/* 		<p>{`Max: ${balance.amount.rounded} ${balance.symbol}`}</p> */}
-					{/* 	</Button> */}
-					{/* ) : null} */}
 				</div>
 				<div className={classNames.tokenRow}>
 					{isLoading ? (
@@ -104,7 +101,13 @@ export const TokenArea: FC<TokenAreaProps> = ({
 								isDisabled={direction === 'to'}
 								className={classNames.input}
 							/>
-							<h4>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h4>
+							<AmountUsd
+								state={state}
+								balance={balance}
+								selection={selection}
+								direction={direction}
+								handleMaxButtonClick={handleMaxButtonClick}
+							/>
 						</div>
 					)}
 					<Button

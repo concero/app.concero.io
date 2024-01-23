@@ -4,15 +4,14 @@ import { RouteButton } from './RouteButton/RouteButton'
 import { type SwapDetailsProps } from '../types'
 import { action, category } from '../../../../constants/tracking'
 import { trackEvent } from '../../../../hooks/useTracking'
-import { type StandardRoute } from '../../../../types/StandardRoute'
 import { useTranslation } from 'react-i18next'
 import { animated, useSpring } from '@react-spring/web'
 import { easeQuadInOut } from 'd3-ease'
-import { CardModal } from '../../../modals/CardModal/CardModal'
+import { SelectRouteModal } from './SelectRouteModal/SelectRouteModal'
 
-export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute }) => {
+export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, swapDispatch }) => {
 	const { t } = useTranslation()
-	const { routes, selectedRoute } = swapState
+	const { selectedRoute } = swapState
 	const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<true | false>(false)
 	const containerRef = useRef<HTMLDivElement>()
 
@@ -20,16 +19,6 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute 
 		height: selectedRoute ? 30 : 0,
 		config: { duration: 200, easing: easeQuadInOut },
 	})
-
-	const handleSelectRoute = (id: string) => {
-		void trackEvent({
-			action: action.SelectRoute,
-			category: category.SwapCard,
-			label: 'route_selected',
-			data: { routeId: id },
-		})
-		setSelectedRoute(routes.find((route: StandardRoute) => route.id === id))
-	}
 
 	return (
 		<animated.div style={containerAnimation}>
@@ -42,19 +31,12 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, setSelectedRoute 
 						setIsSelectRouteModalVisible(true)
 					}}
 				/>
-				{/* <Modal title="Select route" show={isSelectRouteModalVisible} setShow={setIsSelectRouteModalVisible}> */}
-				{/* 	<div className={classNames.routeCardsContainer}> */}
-				{/* 		{routes?.length */}
-				{/* 			? routes.map((route: StandardRoute) => ( */}
-				{/* 					<div key={route.id}> */}
-				{/* 						<RouteCard route={route} isSelected={selectedRoute.id === route.id} onClick={handleSelectRoute} /> */}
-				{/* 					</div> */}
-				{/* 			  )) */}
-				{/* 			: null} */}
-				{/* 	</div> */}
-				{/* </Modal> */}
-
-				<CardModal isOpen={isSelectRouteModalVisible} setIsOpen={setIsSelectRouteModalVisible} />
+				<SelectRouteModal
+					swapState={swapState}
+					swapDispatch={swapDispatch}
+					isOpen={isSelectRouteModalVisible}
+					setIsOpen={setIsSelectRouteModalVisible}
+				/>
 			</div>
 		</animated.div>
 	)

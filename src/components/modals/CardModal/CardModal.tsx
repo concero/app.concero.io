@@ -29,16 +29,10 @@ export function CardModal({ isOpen, setIsOpen, children, title = '' }: CardModal
 	})
 
 	return (
-		<animated.div
-			className={classNames.overlay}
-			style={overlayAnimation}
-			onClick={e => {
-				e.stopPropagation()
-			}}
-		>
+		<animated.div className={classNames.overlay} style={overlayAnimation}>
 			<animated.div className={classNames.contentContainer} style={contentContainerAnimation} ref={contentContainerRef}>
 				<div className={classNames.header}>
-					<p>{title}</p>
+					<p className={'body2'}>{title}</p>
 					<Button
 						onClick={() => {
 							setIsOpen(false)

@@ -60,12 +60,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 				</div>
 			</div>
 			{isInsuranceCardVisible ? <InsuranceCard swapState={swapState} swapDispatch={swapDispatch} /> : null}
-			<SwapDetails
-				swapState={swapState}
-				setSelectedRoute={route => {
-					swapDispatch({ type: 'SET_SELECTED_ROUTE', payload: route })
-				}}
-			/>
+			<SwapDetails swapState={swapState} swapDispatch={swapDispatch} />
 			<SwapButton
 				swapState={swapState}
 				isConnected={isConnected}

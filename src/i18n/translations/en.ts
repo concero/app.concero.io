@@ -10,6 +10,7 @@ export const en = {
 			},
 			insurance: 'Insurance',
 			route: 'Route:',
+			selectRoute: 'Select route',
 		},
 		header: {
 			swap: 'Swap',
@@ -84,6 +85,7 @@ export const en = {
 		tokenArea: {
 			from: 'You pay',
 			to: 'You get',
+			enterAmount: 'Enter amount',
 		},
 		protocolModal: {
 			title: 'Protocol',
