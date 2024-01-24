@@ -7,50 +7,6 @@ export interface Providers {
 	_id: string
 }
 
-export interface Step {
-	id: string
-	from: {
-		token: {
-			name: string
-			address: string | null
-			symbol: string
-			decimals: number
-			price_usd: string | number | null
-			amount: string
-			amount_usd?: string | null
-			logo_uri: string | null
-		}
-		chain: {
-			id: string
-		}
-	}
-	to: {
-		token: {
-			name: string
-			address: string
-			symbol: string
-			decimals: number
-			price_usd: string | null
-			amount: string
-			amount_usd?: string | null
-			logo_uri: string | null
-		}
-		chain: {
-			id: string
-		}
-	}
-	tool: {
-		name: string
-		estimated_execution_time_seconds: number
-		slippage_limit: number | null
-		fees: Fees[] | []
-		fees_usd: number | null
-		gas: Gas[] | []
-		gas_usd: number | string | null
-		logo_uri: string
-	}
-}
-
 interface Insurance {
 	state: string
 	fee_amount_usd: string
@@ -100,8 +56,9 @@ export interface Direction {
 		symbol: string
 		decimals: number
 		price_usd?: number | string | null
+		logo_uri?: string | null
 		amount: string | null
-		amount_usd: string | null
+		amount_usd: string | null | undefined
 	}
 	chain: {
 		id: number | string
@@ -111,11 +68,35 @@ export interface Direction {
 	address: string | undefined | null
 }
 
+export enum StepTypes {
+	swap = 'swap',
+	cross = 'cross',
+	protocol = 'protocol',
+	custom = 'custom',
+}
+
+export interface Step {
+	id: string
+	type: StepTypes
+	from: Direction
+	to: Direction
+	tool: {
+		name: string
+		estimated_execution_time_seconds: number
+		slippage_limit: number | null
+		fees: Fees[] | []
+		fees_usd: number | null
+		gas: Gas[] | []
+		gas_usd: number | string | null
+		logo_uri: string
+	}
+}
+
 export interface StandardRoute {
 	id: string
 	from: Direction
 	to: Direction
-	steps: Step[] | null
+	steps: Step[][] | null
 	cost: {
 		total_usd: string | null | undefined
 		total_gas_usd: string | null | undefined

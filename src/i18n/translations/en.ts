@@ -8,6 +8,11 @@ export const en = {
 				failed: 'Swap failed',
 				contactSupport: 'Contact support',
 			},
+			routeCard: {
+				swap: 'Swap to',
+				bridge: 'Bridge to',
+				via: 'via',
+			},
 			insurance: 'Insurance',
 			route: 'Route:',
 			selectRoute: 'Select route',

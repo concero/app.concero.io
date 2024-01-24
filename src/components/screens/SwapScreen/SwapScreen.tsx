@@ -17,12 +17,12 @@ export const SwapScreen: FC<ExchangeScreenProps> = () => {
 
 	const desktopLayout = (
 		<div className={`row ${classNames.container}`}>
-			<div className={classNames.mainCardStack}>
-				<Chart />
-			</div>
+			{/* <div className={classNames.mainCardStack}> */}
+			{/* 	<Chart /> */}
+			{/* </div> */}
 			<div className={classNames.secondaryCardStack}>
 				<Swap />
-				<TargetInfoCard />
+				{/* <TargetInfoCard /> */}
 			</div>
 		</div>
 	)

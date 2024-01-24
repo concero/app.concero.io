@@ -3,8 +3,10 @@ import classNames from './RouteCard.module.pcss'
 import { IconChevronDown, IconClock, IconCoins, IconHandClick } from '@tabler/icons-react'
 import { secondsConverter } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { StepCard } from './StepCard/StepCard'
+import { animated, useSpring } from '@react-spring/web'
+import { easeQuadInOut } from 'd3-ease'
 
 interface RouteCardProps {
 	route: StandardRoute
@@ -13,8 +15,19 @@ interface RouteCardProps {
 }
 
 export function RouteCard({ route, isSelected, onSelect }: RouteCardProps) {
-	const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
+	const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
+	const stepsContainerRef = useRef<HTMLDivElement>()
 	const { to, transaction_time_seconds, cost, steps } = route
+
+	const stepsContainerAnimation = useSpring({
+		height: isCollapsed ? 0 : stepsContainerRef.current?.scrollHeight,
+		config: { duration: 200, easing: easeQuadInOut },
+	})
+
+	const chevronAnimation = useSpring({
+		transform: isCollapsed ? 'rotate(0deg)' : 'rotate(180deg)',
+		config: { duration: 200, easing: easeQuadInOut },
+	})
 
 	return (
 		<div
@@ -30,10 +43,15 @@ export function RouteCard({ route, isSelected, onSelect }: RouteCardProps) {
 				</div>
 				<div className={classNames.rowContainer}>
 					<Button
-						leftIcon={<IconChevronDown size={16} color={'var(--color-text-secondary)'} />}
+						leftIcon={
+							<animated.div style={chevronAnimation}>
+								<IconChevronDown size={16} color={'var(--color-text-secondary)'} />
+							</animated.div>
+						}
 						variant={'black'}
 						size={'sq-xs'}
-						onClick={() => {
+						onClick={e => {
+							e.stopPropagation()
 							setIsCollapsed((prev: boolean) => !prev)
 						}}
 					/>
@@ -53,11 +71,13 @@ export function RouteCard({ route, isSelected, onSelect }: RouteCardProps) {
 					<p className={'body1'}>{steps?.length ?? 1}</p>
 				</div>
 			</div>
-			<div>
-				{steps?.map((step: Step) => {
-					return <StepCard key={step.id} steps={steps} isCollapsed={isCollapsed} />
-				})}
-			</div>
+			<animated.div style={stepsContainerAnimation}>
+				<div className={classNames.stepsContainer} ref={stepsContainerRef}>
+					{steps?.map((innerSteps: Step[], index) => {
+						return <StepCard key={index.toString()} innerSteps={innerSteps} index={index} />
+					})}
+				</div>
+			</animated.div>
 		</div>
 	)
 }

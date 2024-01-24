@@ -107,7 +107,7 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 		address: route.toAddress,
 	},
 	steps: [
-		...route.steps.flatMap(step =>
+		...route.steps.map(step =>
 			step.includedSteps.map(includedStep => {
 				return standardizeLifiStep(includedStep)
 			}),
