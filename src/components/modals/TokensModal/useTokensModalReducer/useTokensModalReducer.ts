@@ -9,6 +9,7 @@ const initialState: TokensModalState = {
 	balanceTokens: null,
 	isLoading: false,
 	isBalanceLoading: false,
+	searchValue: '',
 }
 
 function tokensModalReducer(state: TokensModalState, action: TokensModalAction): TokensModalState {
@@ -27,6 +28,8 @@ function tokensModalReducer(state: TokensModalState, action: TokensModalAction):
 			return { ...state, isBalanceLoading: action.isBalanceLoading }
 		case TokenModalActionType.UPSERT_TOKENS:
 			return upsertTokens(state, action)
+		case TokenModalActionType.SET_SEARCH_VALUE:
+			return { ...state, searchValue: action.searchValue }
 		default:
 			throw new Error(`Unhandled action type useTokensModalReducer`)
 	}

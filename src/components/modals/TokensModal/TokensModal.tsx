@@ -31,7 +31,7 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
 
 	const addTokens = async () => {
-		const newTokens = await getTokens({ chainId: selectedChain?.id!, offset, limit })
+		const newTokens = await getTokens({ chainId: selectedChain?.id!, offset, limit, search: searchValue })
 		if (!newTokens.length) return
 		tokensModalDispatch({ type: TokenModalActionType.UPSERT_TOKENS, tokens: newTokens })
 	}
@@ -57,7 +57,7 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 
 		if (selectedChain) {
-			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit })
+			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
 			if (resToken.length > 0) {
 				tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
 			}
@@ -83,18 +83,17 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 		}
 		const chains = await getChains({ offset: 0, limit: 200 })
 		const chain = chains.find((chain: Chain) => chain.id.toString() === token.chain_id.toString())
-		onSelect(token, chain)
+		onSelect(token, chain!)
 	}
 
 	const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value
-		tokensModalDispatch({ type: TokenModalActionType.SET_SEARCH_VALUE, value })
+		tokensModalDispatch({ type: TokenModalActionType.SET_SEARCH_VALUE, searchValue: e.target.value })
 	}
 
 	useEffect(() => {
 		void initialPopulateTokens()
 		moveToTop()
-	}, [selectedChain?.id, address])
+	}, [selectedChain?.id, address, searchValue])
 
 	return (
 		<Modal show={isOpen} setShow={onClose} title={t('tokensModal.selectChainToken')}>

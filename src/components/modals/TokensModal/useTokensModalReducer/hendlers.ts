@@ -6,8 +6,23 @@ export function setBalanceTokens(state: TokensModalState, action: SET_BALANCE_TO
 
 	const { selectedChain } = state
 
+	const searchTokens = (tokens: Token[]) => {
+		if (state.searchValue) {
+			return tokens.filter(
+				(token: Token) =>
+					token.name.toLowerCase().includes(state.searchValue.toLowerCase()) ||
+					token.symbol.toLowerCase().includes(state.searchValue.toLowerCase()) ||
+					token.address.toLowerCase().includes(state.searchValue.toLowerCase()),
+			)
+		}
+		return tokens
+	}
+
 	if (selectedChain) {
-		const balanceTokens = action.balanceTokens[selectedChain.id]
+		let balanceTokens = action.balanceTokens[selectedChain.id]
+		if (state.searchValue) {
+			balanceTokens = searchTokens(balanceTokens ?? [])
+		}
 		const filteredTokens = state.tokens.filter((token: Token) => !balanceTokens?.find((t: Token) => t._id === token._id))
 		return {
 			...state,
@@ -16,10 +31,15 @@ export function setBalanceTokens(state: TokensModalState, action: SET_BALANCE_TO
 		}
 	}
 
-	const tokensToPaste: Token[] = []
+	let tokensToPaste: Token[] = []
 	for (const balanceToken in action.balanceTokens) {
 		tokensToPaste.push(...action.balanceTokens[balanceToken])
 	}
+
+	if (state.searchValue) {
+		tokensToPaste = searchTokens(tokensToPaste)
+	}
+
 	return { ...state, balanceTokens: action.balanceTokens, tokens: tokensToPaste ?? [] }
 }
 

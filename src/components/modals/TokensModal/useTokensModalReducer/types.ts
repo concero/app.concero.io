@@ -56,6 +56,11 @@ export interface UPSERT_TOKENS {
 	tokens: Token[]
 }
 
+export interface SET_SEARCH_VALUE {
+	type: TokenModalActionType.SET_SEARCH_VALUE
+	searchValue: string
+}
+
 export type TokensModalAction =
 	| SET_SELECTED_CHAIN
 	| SET_OFFSET
@@ -64,3 +69,4 @@ export type TokensModalAction =
 	| SET_IS_LOADING
 	| SET_IS_BALANCE_LOADING
 	| UPSERT_TOKENS
+	| SET_SEARCH_VALUE
