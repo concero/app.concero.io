@@ -30,6 +30,10 @@ export function AmountUsd({ state, balance, selection, direction, handleMaxButto
 			</div>
 		)
 	} else {
-		return <h4>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h4>
+		return (
+			<div className={classNames.amountUsdContainer}>
+				<h4>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h4>
+			</div>
+		)
 	}
 }

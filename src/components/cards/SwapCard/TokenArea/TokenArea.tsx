@@ -76,7 +76,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 			>
 				<div className={classNames.tokenRow}>
 					<div className={classNames.tokenRowHeader}>
-						<p className={'body2'}>{t(`tokenArea.${direction}`)}</p>
+						<p className={`body2`}>{t(`tokenArea.${direction}`)}</p>
 					</div>
 				</div>
 				<div className={classNames.tokenRow}>
