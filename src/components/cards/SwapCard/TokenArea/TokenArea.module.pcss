@@ -69,8 +69,17 @@
 }
 
 .selectTokenButton {
+	padding: var(--sp-sm) var(--sp-md);
 	flex-direction: row;
 	border-radius: var(--st-br-md);
+
+	p {
+		line-height: 1rem;
+	}
+
+	h4 {
+		line-height: 1rem;
+	}
 }
 
 .selectTokenButton:hover {
@@ -79,6 +88,7 @@
 
 .selectTokenButtonTitle {
 	align-items: flex-start;
+	gap: var(--sp-xs);
 
 	h4 {
 		color: var(--color-text-primary);
