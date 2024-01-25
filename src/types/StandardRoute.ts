@@ -1,5 +1,6 @@
 import { type Execution } from '@lifi/types/dist/step'
 import type * as lifiTypes from '@lifi/sdk/dist/types'
+import type { BestRouteResponse } from 'rango-types/src/api/main/routing'
 
 export interface Providers {
 	name: string
@@ -65,12 +66,13 @@ export interface Direction {
 		providers?: Providers[]
 	}
 	amount?: string | null
+	amount_usd: string | null | undefined
 	address: string | undefined | null
 }
 
 export enum StepTypes {
 	swap = 'swap',
-	cross = 'cross',
+	bridge = 'bridge',
 	protocol = 'protocol',
 	custom = 'custom',
 }
@@ -106,8 +108,8 @@ export interface StandardRoute {
 	tags: Array<'RECOMMENDED' | 'FASTEST' | 'CHEAPEST' | 'SAFEST'> | undefined
 	slippage_percent: number | null
 	transaction_time_seconds: number | null
-	insurance: Insurance | null
+	insurance?: Insurance | null
 	provider: 'rango' | 'lifi'
 	execution?: Array<Execution | undefined>
-	originalRoute: lifiTypes.Route
+	originalRoute: lifiTypes.Route | BestRouteResponse
 }

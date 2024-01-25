@@ -49,7 +49,7 @@ export function standardizeLifiStep(step: lifiTypes.Step): Step {
 				symbol: step.action.fromToken.symbol,
 				decimals: step.action.fromToken.decimals,
 				price_usd: step.action.fromToken.priceUSD,
-				amount: step.action.fromAmount,
+				amount: addingTokenDecimals(step.action.fromAmount, step.action.fromToken.decimals)!,
 				logo_uri: step.action.fromToken.logoURI ?? null,
 				amount_usd: step.estimate.fromAmountUSD,
 			},

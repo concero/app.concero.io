@@ -1,7 +1,7 @@
 import { type StandardRoute, type Step } from '../../../../../types/StandardRoute'
 import classNames from './RouteCard.module.pcss'
 import { IconChevronDown, IconClock, IconCoins, IconHandClick } from '@tabler/icons-react'
-import { secondsConverter } from '../../../../../utils/formatting'
+import { roundNumberByDecimals, secondsConverter } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import { useRef, useState } from 'react'
 import { StepCard } from './StepCard/StepCard'
@@ -38,7 +38,7 @@ export function RouteCard({ route, isSelected, onSelect }: RouteCardProps) {
 		>
 			<div className={classNames.header}>
 				<div className={classNames.rowContainer}>
-					<h4>${to.token.amount_usd}</h4>
+					<h4>${roundNumberByDecimals(to.token.amount_usd)}</h4>
 					<p className={`body1 ${classNames.tokenAmount}`}>{`${to.token.amount} ${to.token.symbol}`}</p>
 				</div>
 				<div className={classNames.rowContainer}>

@@ -3,7 +3,6 @@ import { type Step, StepTypes } from '../../../../../../../types/StandardRoute'
 import { useTranslation } from 'react-i18next'
 import { CryptoSymbol } from '../../../../../../tags/CryptoSymbol/CryptoSymbol'
 import { IconArrowRight, IconClock, IconCoins, IconGasStation } from '@tabler/icons-react'
-import { TokenAmount } from '../../../../../../../utils/TokenAmount'
 import { roundNumberByDecimals, secondsConverter } from '../../../../../../../utils/formatting'
 
 interface InnerStepCardProps {
@@ -16,7 +15,7 @@ export function InnerStepCard({ step }: InnerStepCardProps) {
 
 	const stepTypeTitles: Record<string, string> = {
 		[StepTypes.swap]: t('swapCard.routeCard.swap'),
-		[StepTypes.cross]: t('swapCard.routeCard.bridge'),
+		[StepTypes.bridge]: t('swapCard.routeCard.bridge'),
 	}
 
 	const stepTypeTitle = stepTypeTitles[step.type] ?? t('swapCard.routeCard.swap')
@@ -34,11 +33,11 @@ export function InnerStepCard({ step }: InnerStepCardProps) {
 			</div>
 			<div className={classNames.tagContainer}>
 				<p className={'body1'}>
-					{new TokenAmount(from.token.amount!, from.token.decimals).rounded} {from.token.symbol}
+					{roundNumberByDecimals(from.token.amount)} {from.token.symbol}
 				</p>
 				<IconArrowRight size={13} color={'var(--color-text-secondary)'} />
 				<p className={'body1'}>
-					{to.token.amount} {to.token.symbol}
+					{roundNumberByDecimals(to.token.amount)} {to.token.symbol}
 				</p>
 			</div>
 			<div className={classNames.rowContainer}>

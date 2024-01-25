@@ -75,7 +75,7 @@ export const getRoutes = async (
 	try {
 		await Promise.all([
 			getLifiRoutes({ routes, from, to, settings, swapDispatch }),
-			// getRangoRoutes({ routes, from, to, settings, swapDispatch }),
+			getRangoRoutes({ routes, from, to, settings, swapDispatch }),
 		])
 
 		if (!routes.length) {

@@ -39,7 +39,6 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 	const { t } = useTranslation()
 	const { getChains } = useContext(DataContext)
 	const [chains, setChains] = useState<Chain[]>([])
-	const [offset] = useState<number>(0)
 	const [isChainsCollapsed, setIsChainsCollapsed] = useState<boolean>(true)
 	const [chainContainerHeight, setChainContainerHeight] = useState<number>(0)
 	const chainsRef = useRef<HTMLDivElement | null>(null)
@@ -62,7 +61,7 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 	}, [chainsRef?.current?.offsetHeight])
 
 	useEffect(() => {
-		getChains({ offset, limit: 30 }).then(chains => {
+		getChains({ offset: 0, limit: 18 }).then((chains: Chain[]) => {
 			setChains(chains)
 		})
 	}, [])
