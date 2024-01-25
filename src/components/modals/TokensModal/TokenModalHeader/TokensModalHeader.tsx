@@ -24,6 +24,7 @@ function ChainItem({ chain, isSelected, onSelect }: ChainItemProps) {
 			onClick={() => {
 				onSelect(chain)
 			}}
+			className={classNames.chainButton}
 		>
 			<CryptoSymbol src={chain.logoURI} size={'md'} />
 		</Button>
