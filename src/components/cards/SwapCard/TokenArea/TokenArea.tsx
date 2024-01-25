@@ -93,7 +93,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 									tokenAreaDispatch({ type: 'SET_IS_FOCUSED', payload: false })
 								}}
 								variant="inline"
-								placeholder={`0.0 ${selection.token.symbol}`}
+								placeholder={'0'}
 								value={selection.amount}
 								onChangeText={value => {
 									onChangeText(value)
