@@ -58,10 +58,12 @@ export function RouteCard({ route, isSelected, onSelect }: RouteCardProps) {
 				</div>
 			</div>
 			<div className={classNames.rowContainer}>
-				<div className={classNames.tagContainer}>
-					<IconCoins size={16} color={'var(--color-text-secondary)'} />
-					<p className={'body3'}>{`$${cost.total_gas_usd}`}</p>
-				</div>
+				{cost.total_gas_usd ? (
+					<div className={classNames.tagContainer}>
+						<IconCoins size={16} color={'var(--color-text-secondary)'} />
+						<p className={'body3'}>{`$${cost.total_gas_usd}`}</p>
+					</div>
+				) : null}
 				<div className={classNames.tagContainer}>
 					<IconClock size={16} color={'var(--color-text-secondary)'} />
 					<p className={'body1'}>{`${secondsConverter(Number(transaction_time_seconds))}`}</p>

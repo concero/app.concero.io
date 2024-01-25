@@ -41,14 +41,18 @@ export function InnerStepCard({ step }: InnerStepCardProps) {
 				</p>
 			</div>
 			<div className={classNames.rowContainer}>
-				<div className={classNames.tagContainer}>
-					<IconGasStation size={13} color={'var(--color-text-secondary)'} />
-					<p className={'body1'}>${roundNumberByDecimals(tool.gas_usd, 2)}</p>
-				</div>
-				<div className={classNames.tagContainer}>
-					<IconCoins size={13} color={'var(--color-text-secondary)'} />
-					<p className={'body1'}>${roundNumberByDecimals(tool.fees_usd, 2)}</p>
-				</div>
+				{tool.gas_usd ? (
+					<div className={classNames.tagContainer}>
+						<IconGasStation size={13} color={'var(--color-text-secondary)'} />
+						<p className={'body1'}>${roundNumberByDecimals(tool.gas_usd, 2)}</p>
+					</div>
+				) : null}
+				{tool.fees_usd ? (
+					<div className={classNames.tagContainer}>
+						<IconCoins size={13} color={'var(--color-text-secondary)'} />
+						<p className={'body1'}>${roundNumberByDecimals(tool.fees_usd, 2)}</p>
+					</div>
+				) : null}
 				<div className={classNames.tagContainer}>
 					<IconClock size={13} color={'var(--color-text-secondary)'} />
 					<p className={'body1'}>{secondsConverter(tool.estimated_execution_time_seconds)}</p>
