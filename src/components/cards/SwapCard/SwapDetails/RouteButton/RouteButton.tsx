@@ -9,17 +9,17 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
 		<div className={classNames.container} onClick={onClick}>
 			{selectedRoute?.cost.total_gas_usd ? (
 				<div className={classNames.routeInfoContainer}>
-					<IconCoins size="0.95rem" color={'var(--color-text-secondary)'} />
-					<p className="body3">{`$${selectedRoute.cost.total_gas_usd}`}</p>
+					<IconCoins size={12} color={'var(--color-text-secondary)'} />
+					<p className="body1">{`$${selectedRoute.cost.total_gas_usd}`}</p>
 				</div>
 			) : null}
 			<div className={classNames.routeInfoContainer}>
-				<IconClockHour3 size="0.95rem" color={'var(--color-text-secondary)'} />
-				<p className="body3">{`${
+				<IconClockHour3 size={13} color={'var(--color-text-secondary)'} />
+				<p className="body1">{`${
 					selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''
 				}`}</p>
 			</div>
-			<IconChevronRight size="0.95rem" color={'var(--color-text-secondary)'} />
+			<IconChevronRight size={13} color={'var(--color-text-secondary)'} />
 		</div>
 	)
 }
