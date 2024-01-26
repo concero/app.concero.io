@@ -60,6 +60,7 @@ export interface SwapState {
 	buttonState: ButtonState
 	balance: Balance
 	walletBalances: ConceroBalanceResponse | null
+	isDestinationAddressVisible: boolean
 }
 
 export interface Settings {
@@ -122,3 +123,4 @@ export type SwapAction =
 	| { type: SwapActionType.SET_WALLET_BALANCES; balances: ConceroBalanceResponse | null }
 	| { type: 'SET_IS_NO_ROUTES'; status: boolean }
 	| { type: 'SWAP_DIRECTIONS' }
+	| { type: 'SET_IS_DESTINATION_ADDRESS_VISIBLE'; status: boolean }

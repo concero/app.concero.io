@@ -79,14 +79,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 				</CardHeader>
 				<div className={classNames.swapContainer}>{renderSwapStage[swapState.stage]}</div>
 			</div>
-			<SwapSettingsModal
-				show={swapState.settingsModalOpen}
-				setShow={() => {
-					swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })
-				}}
-				swapDispatch={swapDispatch}
-				settings={swapState.settings}
-			/>
+			<SwapSettingsModal swapDispatch={swapDispatch} swapState={swapState} />
 		</InsuranceProvider>
 	)
 }

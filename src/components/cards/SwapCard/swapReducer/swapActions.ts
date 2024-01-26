@@ -109,6 +109,9 @@ export const swapActions: SwapAction = {
 		const { from, to } = state
 		return { ...state, from: to, to: from }
 	},
+	SET_IS_DESTINATION_ADDRESS_VISIBLE: (state: SwapState, action: SwapAction) => {
+		return { ...state, isDestinationAddressVisible: action.status }
+	},
 }
 
 function updateLastSwapState(state: SwapState): SwapState {

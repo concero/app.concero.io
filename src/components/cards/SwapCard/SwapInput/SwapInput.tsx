@@ -12,6 +12,7 @@ import { type DataContextValue } from '../../../../hooks/DataContext/types'
 import { getEthersSigner } from '../../../../web3/ethers'
 import { type providers } from 'ethers'
 import { IconArrowsUpDown } from '@tabler/icons-react'
+import { DestinationAddressInput } from './DestinationAddressInput/DestinationAddressInput'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
@@ -60,6 +61,9 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 			</div>
 			{isInsuranceCardVisible ? <InsuranceCard swapState={swapState} swapDispatch={swapDispatch} /> : null}
 			<SwapDetails swapState={swapState} swapDispatch={swapDispatch} />
+			{swapState.isDestinationAddressVisible ? (
+				<DestinationAddressInput swapState={swapState} swapDispatch={swapDispatch} />
+			) : null}
 			<SwapButton
 				swapState={swapState}
 				isConnected={isConnected}

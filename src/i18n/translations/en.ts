@@ -16,6 +16,19 @@ export const en = {
 			insurance: 'Insurance',
 			route: 'Route:',
 			selectRoute: 'Select route',
+			settings: {
+				title: 'Settings',
+				slippage: 'Slippage',
+				custom: 'Custom',
+				gasPrice: 'Gas price',
+				gas: {
+					fast: 'Fast',
+					normal: 'Normal',
+					slow: 'Slow',
+				},
+				showDestinationWallet: 'Show destination wallet',
+			},
+			sendToAddress: 'Send to address',
 		},
 		header: {
 			swap: 'Swap',

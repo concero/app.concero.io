@@ -70,7 +70,11 @@ export const TextInput: FC<TextInputProps & { ref?: MutableRefObject<ForwardedRe
 			}, [isFocused])
 
 			return (
-				<div className={`${inputClass} ${isFocused ? classNames.focused : ''}`} onClick={handleAreaClick}>
+				<div
+					className={`${inputClass} ${isFocused && variant === 'default' ? classNames.focused : ''}`}
+					onClick={handleAreaClick}
+					style={{ width: '100%' }}
+				>
 					{title ? <p className="body1">{title}</p> : null}
 					<input
 						ref={ref ?? inputRef}
