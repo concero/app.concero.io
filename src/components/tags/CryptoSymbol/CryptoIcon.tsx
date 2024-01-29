@@ -1,12 +1,19 @@
 import classNames from './CryptoSymbol.module.pcss'
 
-export function CryptoIcon({ src = null, size = 'sm' }: { src?: string | null; size?: 'sm' | 'md' | 'lg' }) {
+interface CryptoIconProps {
+	src?: string | null
+	size?: 'sm' | 'md' | 'lg'
+	id?: string
+}
+
+export function CryptoIcon({ src = null, size = 'sm', id }: CryptoIconProps) {
 	const sizeClass = size ? classNames[size] : null
 
 	return (
 		<div className={`${classNames.iconContainer} ${sizeClass}`}>
 			{src ? (
 				<img
+					id={id}
 					src={src}
 					onError={e => {
 						e.target.src =

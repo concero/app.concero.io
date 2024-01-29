@@ -156,6 +156,8 @@ export const en = {
 			selectChainToken: 'Select chain & token',
 			allChains: 'All chains',
 			searchByTokenNameOrAddress: 'Search by token name or address...',
+			tokens: 'Tokens',
+			chains: 'Chains',
 		},
 	},
 }

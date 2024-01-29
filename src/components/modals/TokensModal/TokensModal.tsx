@@ -1,8 +1,8 @@
-import { type ChangeEvent, type UIEvent, useContext, useEffect, useRef } from 'react'
+import { type ChangeEvent, type ForwardedRef, type UIEvent, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from './TokensModal.module.pcss'
 import { TextInput } from '../../input/TextInput'
-import { IconSearch } from '@tabler/icons-react'
+import { IconSearch, IconX } from '@tabler/icons-react'
 import { colors } from '../../../constants/colors'
 import type { Chain, Token } from '../../../api/concero/types'
 import { DataContext } from '../../../hooks/DataContext/DataContext'
@@ -14,6 +14,7 @@ import { TokenModalActionType } from './useTokensModalReducer/types'
 import { getBalanceTokens } from './handlers/getBalanceTokens'
 import { ChainsPicker } from './ChainsPicker/ChainsPicker'
 import { Modal } from '../Modal/Modal'
+import { Button } from '../../buttons/Button/Button'
 
 interface TokensModalProps {
 	isOpen: boolean
@@ -26,6 +27,7 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 	const { address } = useAccount()
 	const { getTokens, getChains } = useContext(DataContext)
 	const tokenContainerRef = useRef<HTMLDivElement>(null)
+	const inputRef = useRef<ForwardedRef<HTMLInputElement> | null>(null)
 	const limit = 15
 	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer()
 	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
@@ -96,15 +98,37 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 	}, [selectedChain?.id, address, searchValue])
 
 	return (
-		<Modal show={isOpen} setShow={onClose} title={t('tokensModal.selectChainToken')}>
+		<Modal
+			show={isOpen}
+			setShow={onClose}
+			title={t('tokensModal.selectChainToken')}
+			className={classNames.modal}
+			isHeaderVisible={false}
+		>
 			<div className={classNames.container}>
 				<ChainsPicker selectedChain={selectedChain} setSelectedChain={handleSelectChain} />
 				<div className={classNames.tokensContainer}>
+					<div className={classNames.header}>
+						<p className={'body4'}>{t('tokensModal.tokens')}</p>
+						<Button
+							variant={'black'}
+							size={'sq-xs'}
+							onClick={() => {
+								onClose()
+							}}
+						>
+							<IconX size={14} color={'var(--color-text-secondary)'} />
+						</Button>
+					</div>
 					<TextInput
+						ref={inputRef}
 						placeholder={t('tokensModal.searchByTokenNameOrAddress')}
 						icon={<IconSearch size={18} color={colors.text.secondary} />}
 						value={searchValue}
 						onChange={handleSearch}
+						onClick={() => {
+							inputRef.current?.focus()
+						}}
 					/>
 					<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
 						{!isLoading && tokens ? (

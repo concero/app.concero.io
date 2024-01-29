@@ -340,6 +340,13 @@ a {
 	flex: none;
 }
 
+.body4 {
+	color: var(--color-text-secondary);
+	font-size: 15px;
+	flex: none;
+	font-weight: 500;
+}
+
 .tagBody {
 	color: var(--color-base-white);
 	font-size: 0.85rem;

@@ -10,9 +10,10 @@ interface CardModalProps {
 	setIsOpen: (isOpen: boolean) => void
 	children: ReactNode
 	title?: string
+	className?: string
 }
 
-export function CardModal({ isOpen, setIsOpen, children, title = '' }: CardModalProps) {
+export function CardModal({ isOpen, setIsOpen, children, title = '', className }: CardModalProps) {
 	const contentContainerRef: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null)
 
 	const contentContainerAnimation = useSpring({
@@ -30,7 +31,11 @@ export function CardModal({ isOpen, setIsOpen, children, title = '' }: CardModal
 
 	return (
 		<animated.div className={classNames.overlay} style={overlayAnimation}>
-			<animated.div className={classNames.contentContainer} style={contentContainerAnimation} ref={contentContainerRef}>
+			<animated.div
+				style={contentContainerAnimation}
+				ref={contentContainerRef}
+				className={`${classNames.contentContainer} ${className}`}
+			>
 				<div className={classNames.header}>
 					<p className={'body2'}>{title}</p>
 					<Button
