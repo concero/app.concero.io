@@ -110,6 +110,9 @@ export const swapActions: SwapAction = {
 		return { ...state, from: to, to: from }
 	},
 	SET_IS_DESTINATION_ADDRESS_VISIBLE: (state: SwapState, action: SwapAction) => {
+		if (action.status === false) {
+			return { ...state, isDestinationAddressVisible: action.status, to: { ...state.to, address: state.from.address } }
+		}
 		return { ...state, isDestinationAddressVisible: action.status }
 	},
 }
