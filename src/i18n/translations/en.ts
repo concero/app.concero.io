@@ -158,6 +158,7 @@ export const en = {
 			searchByTokenNameOrAddress: 'Search by token name or address...',
 			tokens: 'Tokens',
 			chains: 'Chains',
+			search: 'Search',
 		},
 	},
 }
