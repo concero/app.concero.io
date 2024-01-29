@@ -3,10 +3,11 @@ import { IconChevronRight, IconClockHour3, IconCoins } from '@tabler/icons-react
 import { type RouteButtonProps } from '../../types'
 import { secondsConverter } from '../../../../../utils/formatting'
 import classNames from './RouteButton.module.pcss'
+import { Button } from '../../../../buttons/Button/Button'
 
 export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) => {
 	return (
-		<div className={classNames.container} onClick={onClick}>
+		<Button variant={'black'} className={classNames.container} size={'xs'} onClick={onClick}>
 			{selectedRoute?.cost.total_gas_usd ? (
 				<div className={classNames.routeInfoContainer}>
 					<IconCoins size={12} color={'var(--color-text-secondary)'} />
@@ -20,6 +21,6 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
 				}`}</p>
 			</div>
 			<IconChevronRight size={13} color={'var(--color-text-secondary)'} />
-		</div>
+		</Button>
 	)
 }

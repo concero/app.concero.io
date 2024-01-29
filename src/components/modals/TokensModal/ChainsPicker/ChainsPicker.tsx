@@ -1,4 +1,4 @@
-import classNames from './TokensModalHeader.module.pcss'
+import classNames from './ChainsPicker.module.pcss'
 import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { Button } from '../../../buttons/Button/Button'
@@ -36,7 +36,7 @@ interface TokensModalHeaderProps {
 	setSelectedChain: (param: Chain | null) => void
 }
 
-export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensModalHeaderProps) {
+export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHeaderProps) {
 	const { t } = useTranslation()
 	const { getChains } = useContext(DataContext)
 	const [chains, setChains] = useState<Chain[]>([])
@@ -44,7 +44,7 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 	const [chainContainerHeight, setChainContainerHeight] = useState<number>(0)
 	const chainsRef = useRef<HTMLDivElement | null>(null)
 
-	const fistLineChains = chains.slice(0, 4)
+	const fistLineChains = chains.slice(0, 7)
 	const restChains = chains.slice(4)
 
 	const chainsBlockAnimation = useSpring({
@@ -70,15 +70,6 @@ export function TokensModalHeader({ selectedChain, setSelectedChain }: TokensMod
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.firsChainsLineContainer}>
-				<Button
-					variant={selectedChain ? 'convex' : 'light'}
-					size={'lg'}
-					onClick={() => {
-						setSelectedChain(null)
-					}}
-				>
-					{t('tokensModal.allChains')}
-				</Button>
 				{fistLineChains.map((chain: Chain) => {
 					const isSelected = selectedChain?._id === chain._id
 					return <ChainItem key={chain._id} chain={chain} isSelected={isSelected} onSelect={setSelectedChain} />

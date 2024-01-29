@@ -1,8 +1,6 @@
-import { Modal } from '../Modal/Modal'
 import { type ChangeEvent, type UIEvent, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from './TokensModal.module.pcss'
-import { TokensModalHeader } from './TokenModalHeader/TokensModalHeader'
 import { TextInput } from '../../input/TextInput'
 import { IconSearch } from '@tabler/icons-react'
 import { colors } from '../../../constants/colors'
@@ -14,6 +12,8 @@ import { TokenSkeletonLoader } from './TokenSkeletonLoader/TokenSkeletonLoader'
 import { useTokensModalReducer } from './useTokensModalReducer/useTokensModalReducer'
 import { TokenModalActionType } from './useTokensModalReducer/types'
 import { getBalanceTokens } from './handlers/getBalanceTokens'
+import { ChainsPicker } from './ChainsPicker/ChainsPicker'
+import { Modal } from '../Modal/Modal'
 
 interface TokensModalProps {
 	isOpen: boolean
@@ -81,7 +81,7 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 			onSelect(token, selectedChain)
 			return
 		}
-		const chains = await getChains({ offset: 0, limit: 200 })
+		const chains = await getChains({ offset: 0, limit: 20 })
 		const chain = chains.find((chain: Chain) => chain.id.toString() === token.chain_id.toString())
 		onSelect(token, chain!)
 	}
@@ -98,28 +98,30 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 	return (
 		<Modal show={isOpen} setShow={onClose} title={t('tokensModal.selectChainToken')}>
 			<div className={classNames.container}>
-				<TokensModalHeader selectedChain={selectedChain} setSelectedChain={handleSelectChain} />
-				<TextInput
-					placeholder={t('tokensModal.searchByTokenNameOrAddress')}
-					icon={<IconSearch size={18} color={colors.text.secondary} />}
-					value={searchValue}
-					onChange={handleSearch}
-				/>
-				<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
-					{!isLoading && tokens ? (
-						tokens.map((token: Token, index: number) => {
-							return (
-								<TokenListItem
-									key={token._id + index.toString()}
-									token={token}
-									isBalanceLoading={isBalanceLoading}
-									onSelect={handleSelect}
-								/>
-							)
-						})
-					) : (
-						<TokenSkeletonLoader count={9} />
-					)}
+				<ChainsPicker selectedChain={selectedChain} setSelectedChain={handleSelectChain} />
+				<div className={classNames.tokensContainer}>
+					<TextInput
+						placeholder={t('tokensModal.searchByTokenNameOrAddress')}
+						icon={<IconSearch size={18} color={colors.text.secondary} />}
+						value={searchValue}
+						onChange={handleSearch}
+					/>
+					<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
+						{!isLoading && tokens ? (
+							tokens.map((token: Token, index: number) => {
+								return (
+									<TokenListItem
+										key={token._id + index.toString()}
+										token={token}
+										isBalanceLoading={isBalanceLoading}
+										onSelect={handleSelect}
+									/>
+								)
+							})
+						) : (
+							<TokenSkeletonLoader count={9} />
+						)}
+					</div>
 				</div>
 			</div>
 		</Modal>
