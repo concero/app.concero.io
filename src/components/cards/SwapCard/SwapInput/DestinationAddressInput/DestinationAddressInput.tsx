@@ -1,5 +1,5 @@
 import classNames from './DestinationAddressInput.module.pcss'
-import { type Dispatch } from 'react'
+import { type ChangeEvent, type Dispatch, useRef } from 'react'
 import { type SwapAction, type SwapState } from '../../swapReducer/types'
 import { TextInput } from '../../../../input/TextInput'
 import { useTranslation } from 'react-i18next'
@@ -12,6 +12,7 @@ interface DestinationAddressInputProps {
 
 export function DestinationAddressInput({ swapState, swapDispatch }: DestinationAddressInputProps) {
 	const { t } = useTranslation()
+	const inputRef = useRef<HTMLInputElement | null>(null)
 
 	const checkAddress = (address: string) => {
 		const regex = /^(0x)[0-9A-Fa-f]{40}$/
@@ -19,14 +20,20 @@ export function DestinationAddressInput({ swapState, swapDispatch }: Destination
 	}
 
 	return (
-		<div className={`card ${classNames.container}`}>
+		<div
+			className={`card ${classNames.container}`}
+			onClick={() => {
+				if (inputRef.current) inputRef.current.focus()
+			}}
+		>
 			<p className={`body2`}>{t('swapCard.sendToAddress')}</p>
 			<div className={classNames.rowContainer}>
 				<TextInput
+					ref={inputRef}
 					variant={'inline'}
 					value={swapState.to.address}
-					onChangeText={(address: string) => {
-						swapDispatch({ type: 'SET_TO_ADDRESS', payload: address })
+					onChange={(event: ChangeEvent<HTMLInputElement>) => {
+						swapDispatch({ type: 'SET_TO_ADDRESS', payload: event.target.value })
 					}}
 					className={classNames.input}
 				/>

@@ -1,4 +1,5 @@
 import React, {
+	type ChangeEvent,
 	type FC,
 	type ForwardedRef,
 	forwardRef,
@@ -19,10 +20,10 @@ export interface TextInputProps {
 	isDisabled?: boolean
 	title?: string
 	type?: string
-	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+	onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const TextInput: FC<TextInputProps & { ref?: MutableRefObject<ForwardedRef<HTMLInputElement> | undefined> }> =
+export const TextInput: FC<TextInputProps & { ref?: MutableRefObject<ForwardedRef<HTMLInputElement> | null> }> =
 	forwardRef<HTMLInputElement, TextInputProps>(
 		(
 			{
@@ -38,7 +39,7 @@ export const TextInput: FC<TextInputProps & { ref?: MutableRefObject<ForwardedRe
 			},
 			ref,
 		) => {
-			const inputRef = useRef()
+			const inputRef = useRef<HTMLInputElement>(null)
 			const [isFocused, setIsFocused] = useState<boolean>(false)
 			const inputClass = variant === 'inline' && !title ? '' : classNames.inputWrapper
 			const handleFocus = () => {
