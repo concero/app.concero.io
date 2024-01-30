@@ -23,10 +23,12 @@ export function InnerStepCard({ step }: InnerStepCardProps) {
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.rowContainer}>
-				<h5>{stepTypeTitle}</h5>
+				<p className={classNames.title}>{stepTypeTitle}</p>
 				<div className={classNames.tagContainer}>
 					<CryptoSymbol src={to.token.logo_uri} />
-					<p className={'body1'}>{to.token.symbol}</p>
+					<p className={classNames.title} style={{ paddingLeft: 2 }}>
+						{to.token.symbol}
+					</p>
 				</div>
 				<p className={'body1'}>{t('swapCard.routeCard.via')}</p>
 				<p className={'body1'}>{tool.name}</p>
