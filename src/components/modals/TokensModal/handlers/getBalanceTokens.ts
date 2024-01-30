@@ -10,10 +10,6 @@ export async function getBalanceTokens(
 ) {
 	if (!address) return
 
-	if (!selectedChain) {
-		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
-	}
-
 	try {
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_BALANCE_LOADING, isBalanceLoading: true })
 		const res = await fetchTokensByBalances(selectedChain?.id, address)

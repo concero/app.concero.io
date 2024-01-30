@@ -60,13 +60,13 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 		tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: [] })
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 
-		if (selectedChain) {
-			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
-			if (resToken.length > 0) {
-				tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
-			}
-			tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: false })
+		const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
+		if (resToken.length > 0) {
+			tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
+			tokensModalDispatch({ type: TokenModalActionType.SET_OFFSET, offset: 15 })
 		}
+		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: false })
+
 		void getBalanceTokens(tokensModalDispatch, address, selectedChain)
 	}
 
