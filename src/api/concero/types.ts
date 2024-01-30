@@ -22,6 +22,7 @@ export interface Chain {
 	_id: string
 	id: string
 	addressPatterns: string[]
+	explorerURI: string
 	logoURI: string
 	name: string
 	providers: Provider[]

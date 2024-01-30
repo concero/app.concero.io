@@ -12,7 +12,7 @@ export enum TokenModalActionType {
 }
 
 export interface TokensModalState {
-	selectedChain: Chain | null
+	selectedChain: Chain
 	offset: number
 	tokens: Token[]
 	balanceTokens: TokenBalance | null

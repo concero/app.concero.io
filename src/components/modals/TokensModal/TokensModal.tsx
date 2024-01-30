@@ -35,7 +35,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
 
 	const addTokens = async () => {
-		const newTokens = await getTokens({ chainId: selectedChain?.id!, offset, limit, search: searchValue })
+		const newTokens = await getTokens({ chainId: selectedChain?.id, offset, limit, search: searchValue })
 		if (!newTokens.length) return
 		tokensModalDispatch({ type: TokenModalActionType.UPSERT_TOKENS, tokens: newTokens })
 	}
@@ -137,6 +137,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 										token={token}
 										isBalanceLoading={isBalanceLoading}
 										onSelect={handleSelect}
+										explorerURI={selectedChain.explorerURI}
 									/>
 								)
 							})
