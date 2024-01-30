@@ -127,6 +127,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 			</animated.div>
 			<TokensModal
 				isOpen={state.showTokensModal}
+				direction={direction}
 				onClose={() => {
 					tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 				}}

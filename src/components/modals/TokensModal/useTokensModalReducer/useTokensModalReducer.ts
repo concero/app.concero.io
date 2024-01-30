@@ -1,16 +1,17 @@
 import { type Dispatch, useReducer } from 'react'
 import { TokenModalActionType, type TokensModalAction, type TokensModalState } from './types'
 import { setBalanceTokens, setTokens, upsertTokens } from './hendlers'
+import { type Chain } from '../../../../api/concero/types'
 
-const initialState: TokensModalState = {
-	selectedChain: null,
+const initialState = (chain: Chain): TokensModalState => ({
+	selectedChain: chain,
 	offset: 0,
 	tokens: [],
 	balanceTokens: null,
 	isLoading: false,
 	isBalanceLoading: false,
 	searchValue: '',
-}
+})
 
 function tokensModalReducer(state: TokensModalState, action: TokensModalAction): TokensModalState {
 	switch (action.type) {
@@ -35,7 +36,7 @@ function tokensModalReducer(state: TokensModalState, action: TokensModalAction):
 	}
 }
 
-export function useTokensModalReducer(): [TokensModalState, Dispatch<TokensModalAction>] {
-	const [tokensModalState, tokensModalDispatch] = useReducer(tokensModalReducer, initialState)
+export function useTokensModalReducer(chain: Chain): [TokensModalState, Dispatch<TokensModalAction>] {
+	const [tokensModalState, tokensModalDispatch] = useReducer(tokensModalReducer, initialState(chain))
 	return [tokensModalState, tokensModalDispatch]
 }

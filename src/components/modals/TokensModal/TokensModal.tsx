@@ -1,4 +1,4 @@
-import { type ChangeEvent, type ForwardedRef, type UIEvent, useContext, useEffect, useRef } from 'react'
+import { type ChangeEvent, type UIEvent, useContext, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import classNames from './TokensModal.module.pcss'
 import { TextInput } from '../../input/TextInput'
@@ -15,21 +15,23 @@ import { getBalanceTokens } from './handlers/getBalanceTokens'
 import { ChainsPicker } from './ChainsPicker/ChainsPicker'
 import { Modal } from '../Modal/Modal'
 import { Button } from '../../buttons/Button/Button'
+import { SelectionContext } from '../../../hooks/SelectionContext'
 
 interface TokensModalProps {
 	isOpen: boolean
 	onClose: () => void
 	onSelect: (token: Token, chain: Chain) => void
+	direction: 'from' | 'to'
 }
 
-export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
+export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModalProps) {
 	const { t } = useTranslation()
 	const { address } = useAccount()
 	const { getTokens, getChains } = useContext(DataContext)
 	const tokenContainerRef = useRef<HTMLDivElement>(null)
-	const inputRef = useRef<ForwardedRef<HTMLInputElement> | null>(null)
 	const limit = 15
-	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer()
+	const { selection } = useContext(SelectionContext)
+	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer(selection.swapCard[direction].chain)
 	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
 
 	const addTokens = async () => {
@@ -121,14 +123,10 @@ export function TokensModal({ isOpen, onClose, onSelect }: TokensModalProps) {
 						</Button>
 					</div>
 					<TextInput
-						ref={inputRef}
 						placeholder={t('tokensModal.searchByTokenNameOrAddress')}
 						icon={<IconSearch size={18} color={colors.text.secondary} />}
 						value={searchValue}
 						onChange={handleSearch}
-						onClick={() => {
-							inputRef.current?.focus()
-						}}
 					/>
 					<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
 						{!isLoading && tokens ? (
