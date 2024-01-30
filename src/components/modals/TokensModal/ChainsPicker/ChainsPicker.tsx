@@ -28,6 +28,11 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 		setSelectedChain(chain)
 	}
 
+	const handleOpenChainsModal = (isOpen: boolean) => {
+		setIsChainsModalOpen(isOpen)
+		setSearchValue('')
+	}
+
 	useEffect(() => {
 		getChains({ offset: 0, limit: 18, search: searchValue }).then((chains: Chain[]) => {
 			setChains(chains)
@@ -45,6 +50,7 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 				<Button
 					variant={'subtle'}
 					size={'md'}
+					className={classNames.moreButton}
 					onClick={() => {
 						setIsChainsModalOpen(true)
 					}}
@@ -52,7 +58,7 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 					+{chains.length - 7}
 				</Button>
 			</div>
-			<CardModal isOpen={isChainsModalOpen} setIsOpen={setIsChainsModalOpen} title={t('tokensModal.chains')}>
+			<CardModal isOpen={isChainsModalOpen} setIsOpen={handleOpenChainsModal} title={t('tokensModal.chains')}>
 				<TextInput
 					value={searchValue}
 					onChangeText={(value: string) => {

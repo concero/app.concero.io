@@ -62,7 +62,10 @@ export const TextInput: FC<TextInputProps & { ref?: MutableRefObject<ForwardedRe
 					inputRef.current.focus()
 				}
 			}
+
 			useEffect(() => {
+				if (!ref) return
+
 				document.addEventListener('keydown', handleKeyDown)
 
 				return () => {
@@ -78,7 +81,7 @@ export const TextInput: FC<TextInputProps & { ref?: MutableRefObject<ForwardedRe
 				>
 					{title ? <p className="body1">{title}</p> : null}
 					<input
-						ref={ref ?? inputRef}
+						ref={ref || inputRef}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 						type={type}
