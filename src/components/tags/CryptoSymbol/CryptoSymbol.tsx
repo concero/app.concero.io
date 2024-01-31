@@ -5,7 +5,7 @@ import { CryptoIcon } from './CryptoIcon'
 export interface CryptoSymbolProps {
 	symbol?: string
 	src?: string | null
-	size?: 'sm' | 'md' | 'lg'
+	size?: 'sm' | 'md' | 'lg' | 'xl'
 	id?: string
 }
 

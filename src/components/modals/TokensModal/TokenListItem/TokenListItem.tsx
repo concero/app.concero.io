@@ -1,15 +1,14 @@
 import classNames from './TokenListItem.module.pcss'
 import { type Token } from '../../../../api/concero/types'
-import { getChainLogoURIById } from '../../../cards/RouteCard/getChainLogoURIById'
-import { useContext, useEffect, useRef, useState } from 'react'
-import { DataContext } from '../../../../hooks/DataContext/DataContext'
+import { useEffect, useRef, useState } from 'react'
 import { TokenAmount } from '../../../../utils/TokenAmount'
 import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 import { animated, useSpring } from '@react-spring/web'
-import { truncateWallet } from '../../../../utils/formatting'
+import { truncate, truncateWallet } from '../../../../utils/formatting'
 import { IconExternalLink } from '@tabler/icons-react'
 import { easeQuadInOut } from 'd3-ease'
+import { config } from '../../../../constants/config'
 
 interface TokenListItemProps {
 	token: Token
@@ -19,20 +18,14 @@ interface TokenListItemProps {
 }
 
 export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }: TokenListItemProps) {
-	const [chainLogoSrc, setChainLogoSrc] = useState('')
 	const [isHovered, setIsHovered] = useState(false)
 	const [addressContainerHeight, setAddressContainerHeight] = useState(0)
-	const { getChains } = useContext(DataContext)
 	const addressContainerRef = useRef<HTMLDivElement | null>(null)
 
 	const tokenAddressAnimation = useSpring({
 		y: isHovered ? -(addressContainerHeight - 19) : 0,
 		config: { duration: 200, easing: easeQuadInOut },
 	})
-
-	useEffect(() => {
-		getChainLogoURIById(Number(token.chain_id), getChains, setChainLogoSrc)
-	}, [])
 
 	useEffect(() => {
 		setAddressContainerHeight(addressContainerRef.current?.scrollHeight || 0)
@@ -52,12 +45,15 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 			}}
 		>
 			<div className={classNames.tokenInfoContainer}>
-				<TokenIcon tokenLogoSrc={token.logoURI} chainLogoSrc={chainLogoSrc} />
+				<TokenIcon
+					tokenLogoSrc={token.logoURI}
+					chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${token.chain_id}.svg`}
+				/>
 				<div className={classNames.tokenTitleContainer}>
-					<h4>{token.name}</h4>
+					<h4>{truncate(token.name, 20)}</h4>
 					<div className={classNames.tokenAddressContainer} ref={addressContainerRef}>
 						<animated.div style={tokenAddressAnimation}>
-							<p className={'body1'}>{token.symbol}</p>
+							<p className={'body1'}>{truncate(token.symbol, 20)}</p>
 							<div
 								className={classNames.tokenAddress}
 								onClick={event => {

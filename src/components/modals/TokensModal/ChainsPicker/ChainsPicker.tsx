@@ -69,7 +69,7 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 				/>
 				<div className={classNames.chainsContainer}>
 					{chains.map((chain: Chain) => {
-						const isSelected = selectedChain?._id === chain._id
+						const isSelected = selectedChain?.id === chain.id
 						return (
 							<ChainListItem
 								key={chain._id}

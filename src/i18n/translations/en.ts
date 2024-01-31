@@ -159,6 +159,7 @@ export const en = {
 			tokens: 'Tokens',
 			chains: 'Chains',
 			search: 'Search',
+			selected: 'Selected',
 		},
 	},
 }

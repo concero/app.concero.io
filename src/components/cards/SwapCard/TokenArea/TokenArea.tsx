@@ -14,6 +14,7 @@ import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 import { AmountInputSkeleton } from './AmountInputSkleton/AmountInputSkeleton'
 import { type Chain } from '../../../../api/concero/types'
 import { AmountUsd } from './AmountUsd'
+import { config } from '../../../../constants/config'
 
 export const TokenArea: FC<TokenAreaProps> = ({
 	direction,
@@ -117,7 +118,10 @@ export const TokenArea: FC<TokenAreaProps> = ({
 							tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })
 						}}
 					>
-						<TokenIcon tokenLogoSrc={selection.token.logoURI} chainLogoSrc={selection.chain.logoURI} />
+						<TokenIcon
+							tokenLogoSrc={selection.token.logoURI}
+							chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${selection.chain.id}.svg`}
+						/>
 						<div className={classNames.selectTokenButtonTitle}>
 							<h4>{selection.token.symbol}</h4>
 							<p className={'body2'}>{selection.chain.name}</p>

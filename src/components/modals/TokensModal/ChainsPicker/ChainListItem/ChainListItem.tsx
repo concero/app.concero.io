@@ -1,7 +1,7 @@
 import type { Chain } from '../../../../../api/concero/types'
-import { Button } from '../../../../buttons/Button/Button'
-import { CryptoSymbol } from '../../../../tags/CryptoSymbol/CryptoSymbol'
 import classNames from './ChainListItem.module.pcss'
+import { config } from '../../../../../constants/config'
+import { useTranslation } from 'react-i18next'
 
 interface ChainItemProps {
 	chain: Chain
@@ -10,20 +10,35 @@ interface ChainItemProps {
 	isCropped?: boolean
 }
 
+function ChainIcon({ src }: { src: string }) {
+	return (
+		<div className={classNames.chainIcon}>
+			<img src={src} crossOrigin="anonymous" />
+		</div>
+	)
+}
+
 export function ChainListItem({ chain, isSelected, onSelect, isCropped = true }: ChainItemProps) {
+	const { t } = useTranslation()
+
 	return (
 		<div
-			className={classNames.container}
+			className={`${classNames.container} ${isCropped ? classNames.cropped : ''}`}
 			onClick={() => {
 				onSelect(chain)
 			}}
 		>
-			<Button variant={isSelected ? 'light' : 'black'} className={classNames.chainButton}>
-				<CryptoSymbol src={chain.logoURI} size={'md'} id={`crypto-symbol-${chain.id}`} />
-			</Button>
+			<div className={`${classNames.chainButton} ${isSelected ? classNames.selected : null}`}>
+				{isSelected ? (
+					<ChainIcon src={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${chain.id}.svg`} />
+				) : (
+					<ChainIcon src={chain.logoURI} />
+				)}
+			</div>
 			{!isCropped ? (
-				<div className={classNames.titleContainer}>
+				<div>
 					<h4>{chain.name}</h4>
+					{isSelected ? <p className={'body1'}>{t('tokensModal.selected')}</p> : null}
 				</div>
 			) : null}
 		</div>

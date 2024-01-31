@@ -36,7 +36,7 @@ export const initialState = {
 			name: 'Ethereum',
 			symbol: 'ETH',
 			addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
-			logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg',
+			logoURI: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/1.svg`,
 			explorerURI: 'https://etherscan.io',
 			providers: [
 				{
@@ -54,7 +54,7 @@ export const initialState = {
 			name: 'Polygon',
 			symbol: 'MATIC',
 			addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
-			logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/polygon.svg',
+			logoURI: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/137.svg`,
 			explorerURI: 'https://polygonscan.com',
 			providers: [
 				{
