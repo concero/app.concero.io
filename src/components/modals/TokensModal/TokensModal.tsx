@@ -119,7 +119,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 								onClose()
 							}}
 						>
-							<IconX size={14} color={'var(--color-text-secondary)'} />
+							<IconX size={18} color={'var(--color-text-secondary)'} />
 						</Button>
 					</div>
 					<TextInput

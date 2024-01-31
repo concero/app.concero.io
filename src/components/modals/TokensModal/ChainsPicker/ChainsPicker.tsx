@@ -41,22 +41,24 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 
 	return (
 		<div className={classNames.container}>
-			<p className={'body4'}>{t('tokensModal.chains')}</p>
+			<p className={`body4 ${classNames.title}`}>{t('tokensModal.chains')}</p>
 			<div className={classNames.firsChainsLineContainer}>
 				{fistLineChains.map((chain: Chain) => {
 					const isSelected = selectedChain?.id === chain.id
 					return <ChainListItem key={chain._id} chain={chain} isSelected={isSelected} onSelect={setSelectedChain} />
 				})}
-				<Button
-					variant={'subtle'}
-					size={'md'}
-					className={classNames.moreButton}
-					onClick={() => {
-						setIsChainsModalOpen(true)
-					}}
-				>
-					+{chains.length - 7}
-				</Button>
+				{chains.length - 7 > 0 ? (
+					<Button
+						variant={'subtle'}
+						size={'md'}
+						className={classNames.moreButton}
+						onClick={() => {
+							setIsChainsModalOpen(true)
+						}}
+					>
+						+{chains.length - 7}
+					</Button>
+				) : null}
 			</div>
 			<CardModal isOpen={isChainsModalOpen} setIsOpen={handleOpenChainsModal} title={t('tokensModal.chains')}>
 				<TextInput
