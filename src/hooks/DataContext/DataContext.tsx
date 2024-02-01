@@ -7,7 +7,7 @@ import { type Chain } from '../../api/concero/types'
 
 export const initialState = {
 	tokens: {
-		1: [
+		'1': [
 			{
 				name: 'Ethereum',
 				symbol: 'ETH',
@@ -18,7 +18,7 @@ export const initialState = {
 				is_popular: true,
 			},
 		],
-		137: [
+		'137': [
 			{
 				name: 'Matic',
 				symbol: 'MATIC',
@@ -92,11 +92,12 @@ export function DataProvider({ children }: DataProviderProps) {
 		if (tokens[chainId]?.length >= offset + limit) {
 			return tokens[chainId].slice(offset, offset + limit)
 		}
-		if (tokens[chainId]?.length < limit) {
-			return tokens[chainId]
-		}
+		// if (tokens[chainId]?.length < limit) {
+		// 	return tokens[chainId]
+		// }
 
 		const response = await fetchTokens({ chainId, offset, limit, search })
+
 		setTokens(prevTokens => {
 			const existingTokens = prevTokens[chainId] || []
 			return { ...prevTokens, [chainId]: [...existingTokens, ...response] }
@@ -129,6 +130,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
 			fetchChains({ offset: 0, limit: 100 }),
 		])
+
 		setTokens({ '1': ethTokens, '137': polygonTokens })
 		setChains(fetchedChains)
 	}
