@@ -48,6 +48,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 
 	const renderSwapStage = {
 		[SwapCardStage.input]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
+		[SwapCardStage.review]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
 		[SwapCardStage.progress]: (
 			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
 		),

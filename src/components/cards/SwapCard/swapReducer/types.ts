@@ -35,6 +35,7 @@ export interface ButtonState {
 export enum SwapCardStage {
 	input = 'input',
 	progress = 'progress',
+	review = 'review',
 	failed = 'failed',
 	success = 'success',
 	contactSupport = 'contactSupport',

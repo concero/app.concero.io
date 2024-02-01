@@ -29,6 +29,7 @@ export const en = {
 				showDestinationWallet: 'Show destination wallet',
 			},
 			sendToAddress: 'Send to address',
+			yourRoute: 'Your route',
 		},
 		header: {
 			swap: 'Swap',
