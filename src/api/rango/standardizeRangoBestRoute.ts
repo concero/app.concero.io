@@ -1,24 +1,31 @@
-import { type Fees, type StandardRoute, type Step } from '../../types/StandardRoute'
+import { type Direction, type Fees, type StandardRoute, type Step } from '../../types/StandardRoute'
 import { type BestRouteResponse } from 'rango-types/src/api/main/routing'
 import BigNumber from 'bignumber.js'
 import { type SwapFee, type SwapResult } from 'rango-types/src/api/main/common'
 import { roundNumberByDecimals } from '../../utils/formatting'
-import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
 import { config } from '../../constants/config'
+import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
 
-function getSteps(route: BestRouteResponse): Step[] | null {
-	const steps = route.result?.swaps.map((swap: SwapResult) => standardizeRangoBestRouteStep(swap)) ?? null
-	return steps ?? null
-}
+// function getTotalGasUsd(route: BestRouteResponse): string | null {
+// 	const reduceSwaps = (res: number, swap: SwapResult): number =>
+// 		swap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + res
+// 	return roundNumberByDecimals(
+// 		new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0)
+// 			.times(route.result?.swaps[0]?.from.usdPrice ?? 0)
+// 			.toString(),
+// 		2,
+// 	)
+// }
 
-function getTotalGasUsd(route: BestRouteResponse): string | null {
-	const reduceSwaps = (res: number, swap: SwapResult): number =>
-		swap.fee.reduce((feeRes: number, feeItem: SwapFee): number => parseFloat(feeItem.amount) + feeRes, 0) + res
-	return roundNumberByDecimals(
-		new BigNumber(route.result?.swaps.reduce(reduceSwaps, 0) ?? 0)
-			.times(route.result?.swaps[0]?.from.usdPrice ?? 0)
-			.toString(),
-		2,
+function getSteps(route: BestRouteResponse): Step[][] | null {
+	return (
+		route.result?.swaps.map((step: SwapResult) => {
+			return (
+				step.internalSwaps?.map((internalStep: SwapResult) => {
+					return standardizeRangoBestRouteStep(internalStep)
+				}) ?? [standardizeRangoBestRouteStep(step)]
+			)
+		}) ?? null
 	)
 }
 
@@ -46,7 +53,11 @@ function getTotalFee(route: BestRouteResponse): Fees[] | [] {
 	return result
 }
 
-export async function standardizeRangoBestRoute(route: BestRouteResponse, from: any, to: any): Promise<StandardRoute> {
+export async function standardizeRangoBestRoute(
+	route: BestRouteResponse,
+	from: Direction,
+	to: Direction,
+): Promise<StandardRoute> {
 	return {
 		id: route.requestId,
 		provider: 'rango',
@@ -56,7 +67,7 @@ export async function standardizeRangoBestRoute(route: BestRouteResponse, from: 
 				address: route.from.address,
 				symbol: route.from.symbol,
 				decimals: from.token.decimals,
-				amount: from.amount,
+				amount: from.amount!,
 				amount_usd: from.amount_usd,
 			},
 			chain: {

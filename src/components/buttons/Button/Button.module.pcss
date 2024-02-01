@@ -11,7 +11,8 @@
 	justify-content: center;
 	padding: var(--sp-md) var(--sp-md);
 	transform-origin: center;
-	transition: transform 0.2s, background 0.25s, border-color 0.25s, color 0.25s;
+	transition: transform 0.2s, 0.25s, border-color 0.25s, color 0.25s;
+	font-weight: 400;
 }
 
 .button:hover {
@@ -103,14 +104,26 @@
 .isLoading {
 	background-color: var(--color-primary-650);
 	border-color: var(--color-primary-700);
-	pointer-events: none;
+	cursor: wait;
+}
+.isLoading:hover {
+	background-color: var(--color-primary-650);
+	border-color: var(--color-primary-700);
+	cursor: wait;
 }
 
 .isDisabled {
 	background: none;
-	background-color: var(--color-primary-700);
+	background-color: var(--color-primary-750);
 	border-color: var(--color-primary-650);
-	pointer-events: none;
+	cursor: not-allowed;
+}
+
+.isDisabled:hover {
+	background: none;
+	background-color: var(--color-primary-750);
+	border-color: var(--color-primary-650);
+	cursor: not-allowed;
 }
 
 .isDisabled.subtle {
@@ -125,16 +138,18 @@
 
 .black {
 	background-color: transparent;
-	border: none;
+	border: 1px solid transparent;
 	color: var(--color-text-primary);
 }
 
 .black:hover {
 	background-color: var(--color-grey-600);
+	border: 1px solid transparent;
 }
 
 .black:active {
 	background-color: var(--color-grey-600);
+	border: 1px solid transparent;
 }
 
 .filled {
@@ -146,6 +161,43 @@
 .secondary:hover {
 	background-color: var(--color-primary-650);
 	border-color: var(--color-primary-500);
+}
+
+.light {
+	border-radius: var(--st-br-xl);
+	border: 1px solid rgb(from var(--color-primary-700) r g b / 0.2);
+	background: var(--color-primary-750);
+	color: var(--color-primary-550);
+}
+
+.light:hover {
+	background: var(--color-primary-750);
+	border: 1px solid rgb(from var(--color-primary-700) r g b / 0.2);
+	border-radius: var(--st-br-xl);
+}
+
+.convex {
+	border-radius: var(--st-br-md);
+	border: 1px solid var(--color-grey-600);
+	background: var(--color-base-white);
+	color: var(--color-text-secondary);
+}
+
+:global(.dark) .convex {
+	background: var(--color-grey-600);
+}
+
+.convex:hover {
+	background: var(--color-base-white);
+	border: 1px solid var(--color-grey-600);
+	color: var(--color-text-secondary);
+	border-radius: var(--st-br-md);
+	box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+	transform: translateY(-2px);
+}
+
+:global(.dark) .convex:hover {
+	background: var(--color-grey-625);
 }
 
 @media (max-width: 768px) {

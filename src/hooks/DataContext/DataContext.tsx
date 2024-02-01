@@ -36,7 +36,8 @@ export const initialState = {
 			name: 'Ethereum',
 			symbol: 'ETH',
 			addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
-			logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg',
+			logoURI: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/1.svg`,
+			explorerURI: 'https://etherscan.io',
 			providers: [
 				{
 					name: 'lifi',
@@ -53,7 +54,8 @@ export const initialState = {
 			name: 'Polygon',
 			symbol: 'MATIC',
 			addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
-			logoURI: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/polygon.svg',
+			logoURI: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/137.svg`,
+			explorerURI: 'https://polygonscan.com',
 			providers: [
 				{
 					name: 'lifi',
@@ -69,34 +71,32 @@ export const initialState = {
 }
 
 export const DataContext = createContext<DataContextValue>({
-	getTokens: async () => await Promise.resolve([]),
-	getChains: async () => await Promise.resolve([]),
+	getTokens: async () => [],
+	getChains: async () => [],
 	tokens: {},
 	chains: [],
 	setTokens: () => {},
 	setChains: () => {},
-	getChainByProviderSymbol: async () => await Promise.resolve(null),
+	getChainByProviderSymbol: async () => null,
 })
 
 export function DataProvider({ children }: DataProviderProps) {
 	const [tokens, setTokens] = useState(initialState.tokens)
 	const [chains, setChains] = useState(initialState.chains)
 
-	const getTokens = async ({ chainId, offset, limit, search }) => {
+	const getTokens = async ({ chainId, offset = 0, limit = 15, search, walletAddress }: GetChainsParams) => {
 		if (search) {
-			return await fetchTokens({ chainId, offset, limit, search })
+			return await fetchTokens({ chainId, offset, limit, search, walletAddress })
 		}
 
-		if (tokens[chainId]) {
-			if (tokens[chainId].length >= offset + limit) {
-				return tokens[chainId].slice(offset, offset + limit)
-			}
-			if (tokens[chainId].length < limit) {
-				return tokens[chainId]
-			}
+		if (tokens[chainId]?.length >= offset + limit) {
+			return tokens[chainId].slice(offset, offset + limit)
+		}
+		if (tokens[chainId]?.length < limit) {
+			return tokens[chainId]
 		}
 
-		const response = await fetchTokens({ chainId, offset, limit, search })
+		const response = await fetchTokens({ chainId, offset, limit, search, walletAddress })
 		setTokens(prevTokens => {
 			const existingTokens = prevTokens[chainId] || []
 			return { ...prevTokens, [chainId]: [...existingTokens, ...response] }
@@ -104,7 +104,7 @@ export function DataProvider({ children }: DataProviderProps) {
 		return response
 	}
 
-	const getChains = async ({ chainId, offset, limit, search }: GetChainsParams): Promise<Chain[]> => {
+	const getChains = async ({ chainId, offset, limit, search, walletAddress }: GetChainsParams): Promise<Chain[]> => {
 		if (search) {
 			return await fetchChains({ search })
 		}
@@ -112,7 +112,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			return chains.slice(offset, offset + limit)
 		}
 
-		const response = await fetchChains({ chainId, offset, limit })
+		const response = await fetchChains({ chainId, offset, limit, walletAddress })
 		setChains(prevChains => [...prevChains, ...response])
 		return response
 	}
@@ -129,12 +129,12 @@ export function DataProvider({ children }: DataProviderProps) {
 			fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
 			fetchChains({ offset: 0, limit: 100 }),
 		])
-		setTokens({ 1: ethTokens, 137: polygonTokens })
+		setTokens({ '1': ethTokens, '137': polygonTokens })
 		setChains(fetchedChains)
 	}
 
 	useEffect(() => {
-		initialFetch()
+		void initialFetch()
 	}, [])
 
 	return (

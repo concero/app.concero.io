@@ -18,7 +18,7 @@ export const swapActions: SwapAction = {
 	/* INPUT_RELATED ACTIONS */
 	SET_CHAIN: (state, action) => {
 		const { chain } = action.payload
-		return { ...state, [action.direction]: { ...state[action.direction], chain, token: action.tokens[0] } }
+		return { ...state, [action.direction]: { ...state[action.direction], chain } }
 	},
 	SET_TOKEN: (state, action) => ({
 		...state,
@@ -55,7 +55,7 @@ export const swapActions: SwapAction = {
 		return { ...state, stage: action.payload }
 	},
 	TOGGLE_SETTINGS_MODAL_OPEN: state => {
-		trackEvent({
+		void trackEvent({
 			category: trackingCategory.SwapCard,
 			action: trackingAction.ToggleSettingsModal,
 			label: 'toggle_settings_modal_open',
@@ -64,7 +64,7 @@ export const swapActions: SwapAction = {
 		return { ...state, settingsModalOpen: !state.settingsModalOpen }
 	},
 	SET_SETTINGS: (state, action) => {
-		trackEvent({
+		void trackEvent({
 			category: trackingCategory.SwapCard,
 			action: trackingAction.ToggleSettingsModal,
 			label: 'set_settings',
@@ -105,6 +105,16 @@ export const swapActions: SwapAction = {
 	// },
 	SET_WALLET_BALANCES: (state: SwapState, action: SwapAction) => ({ ...state, walletBalances: action.balances }),
 	SET_IS_NO_ROUTES: (state: SwapState, action: SwapAction) => ({ ...state, isNoRoutes: action.status }),
+	SWAP_DIRECTIONS: (state: SwapState) => {
+		const { from, to } = state
+		return { ...state, from: to, to: from }
+	},
+	SET_IS_DESTINATION_ADDRESS_VISIBLE: (state: SwapState, action: SwapAction) => {
+		if (action.status === false) {
+			return { ...state, isDestinationAddressVisible: action.status, to: { ...state.to, address: state.from.address } }
+		}
+		return { ...state, isDestinationAddressVisible: action.status }
+	},
 }
 
 function updateLastSwapState(state: SwapState): SwapState {

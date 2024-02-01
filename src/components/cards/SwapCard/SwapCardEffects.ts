@@ -41,7 +41,16 @@ export function useSwapCardEffects({
 		return () => {
 			clearRoutes(typingTimeoutRef, swapDispatch)
 		}
-	}, [from.token, from.amount, from.chain, to.token, to.chain, settings.slippage_percent, settings.allowSwitchChain])
+	}, [
+		from.token,
+		from.amount,
+		from.chain,
+		to.token,
+		to.chain,
+		settings.slippage_percent,
+		settings.allowSwitchChain,
+		to.address,
+	])
 
 	useEffect(() => {
 		if (!selectedRoute) return

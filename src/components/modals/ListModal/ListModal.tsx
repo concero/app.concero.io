@@ -1,4 +1,4 @@
-import { type FC, useEffect, useRef, useState } from 'react'
+import { type FC, useEffect, useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
 import { Modal } from '../Modal/Modal'
 import classNames from './ListModal.module.pcss'
@@ -20,7 +20,6 @@ export const ListModal: FC<MultiSelectModalProps> = ({
 	const [offset, setOffset] = useState<number>(0)
 	const [items, setItems] = useState<any[]>([])
 	const [search, setSearch] = useState<string>('')
-	const itemsContainerRef = useRef(null)
 
 	useEffect(() => {
 		if (!isOpen) return
@@ -45,7 +44,7 @@ export const ListModal: FC<MultiSelectModalProps> = ({
 
 	const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
 		const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
-		if (scrollHeight - scrollTop === clientHeight) handleEndReached()
+		if (scrollHeight - scrollTop === clientHeight) void handleEndReached()
 	}
 
 	const handleSearch = async value => {
@@ -67,7 +66,7 @@ export const ListModal: FC<MultiSelectModalProps> = ({
 						/>
 					) : null}
 				</div>
-				<div className={classNames.itemsContainer} ref={itemsContainerRef} onScroll={handleScroll}>
+				<div className={classNames.itemsContainer} onScroll={handleScroll}>
 					{items.map((item, index) => {
 						const isSelected = selectedItems.includes(item)
 						return <RenderItem key={item._id ?? index} item={item} isSelected={isSelected} onSelect={onSelect} />

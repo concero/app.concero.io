@@ -93,9 +93,9 @@ body::-webkit-scrollbar {
 	--color-primary-750: #f7f3ff;
 
 	/* grey */
-	--color-grey-550: #cbcacf;
-	--color-grey-600: #e5e5e7;
 	--color-grey-650: #f7f7f7;
+	--color-grey-600: #e5e5e7;
+	--color-grey-550: #cbcacf;
 	--color-grey-400: #464646;
 	--color-grey-350: #1c1c1c;
 	--color-grey-300: #131313;
@@ -165,6 +165,7 @@ body::-webkit-scrollbar {
 	/* grey */
 	--color-grey-550: #464646;
 	--color-grey-600: #1c1c1c;
+	--color-grey-625: #272727;
 	--color-grey-650: #131313;
 	--color-grey-400: #cbcacf;
 	--color-grey-350: #e5e5e7;
@@ -327,6 +328,26 @@ a {
 	flex: none;
 }
 
+.body2 {
+	color: var(--color-text-secondary);
+	font-size: 0.85rem;
+	flex: none;
+	font-weight: 500;
+}
+
+.body3 {
+	color: var(--color-text-secondary);
+	font-size: 0.95rem;
+	flex: none;
+}
+
+.body4 {
+	color: var(--color-text-secondary);
+	font-size: 15px;
+	flex: none;
+	font-weight: 500;
+}
+
 .tagBody {
 	color: var(--color-base-white);
 	font-size: 0.85rem;
@@ -336,7 +357,6 @@ button {
 	border: none;
 	cursor: pointer;
 	font-weight: 500;
-	line-height: 0;
 	outline: none;
 }
 

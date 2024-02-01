@@ -6,6 +6,7 @@ interface FetchChains {
 	offset?: number
 	limit?: number
 	search?: string | null
+	walletAddress?: string | null
 }
 
 export const fetchChains = async ({
@@ -13,10 +14,13 @@ export const fetchChains = async ({
 	offset = 0,
 	limit = 15,
 	search = null,
+	walletAddress = null,
 }: FetchChains): Promise<Chain[]> => {
 	const url = `${process.env.CONCERO_API_URL}/chains?offset=${offset}${limit ? `&limit=${limit}` : ''}${
 		chainId ? `&chainId=${chainId}` : ''
-	}${search ? `&search=${search}` : ''}&addressPatterns=^(0x)[0-9A-Fa-f]{40}$`
+	}${search ? `&search=${search}` : ''}&addressPatterns=^(0x)[0-9A-Fa-f]{40}$${
+		walletAddress ? `&wallet_address=${walletAddress}` : ''
+	}`
 	const response = await get(url)
 	if (response.status !== 200) throw new Error('no chains found')
 	return response.data.data

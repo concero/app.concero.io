@@ -1,7 +1,7 @@
-import type * as lifiTypes from '@lifi/sdk/dist/types'
-import { type Fees, type Gas, type Step } from '../../types/StandardRoute'
+import { type Fees, type Gas, type Step, type StepTypes } from '../../types/StandardRoute'
 import { addingTokenDecimals } from '../../utils/formatting'
 import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
+import type * as lifiTypes from '@lifi/sdk/dist/types'
 
 function getFees(step: lifiTypes.Step): Fees[] | [] {
 	const result = step.estimate.feeCosts?.map((fee: FeeCost) => {
@@ -36,11 +36,12 @@ function getGas(step: lifiTypes.Step): Gas[] | [] {
 	return result ?? []
 }
 
-export const standardizeLifiStep = (step: lifiTypes.Step): Step => {
+export function standardizeLifiStep(step: lifiTypes.Step): Step {
 	const toDecimals = step.action.toToken.decimals
 
 	return {
 		id: step.id,
+		type: step.type as StepTypes,
 		from: {
 			token: {
 				name: step.action.fromToken.name,
@@ -48,12 +49,14 @@ export const standardizeLifiStep = (step: lifiTypes.Step): Step => {
 				symbol: step.action.fromToken.symbol,
 				decimals: step.action.fromToken.decimals,
 				price_usd: step.action.fromToken.priceUSD,
-				amount: step.action.fromAmount,
+				amount: addingTokenDecimals(step.action.fromAmount, step.action.fromToken.decimals)!,
 				logo_uri: step.action.fromToken.logoURI ?? null,
+				amount_usd: step.estimate.fromAmountUSD,
 			},
 			chain: {
 				id: step.action.fromChainId.toString(),
 			},
+			address: step.action.fromAddress,
 		},
 		to: {
 			token: {
@@ -64,10 +67,12 @@ export const standardizeLifiStep = (step: lifiTypes.Step): Step => {
 				price_usd: step.action.toToken.priceUSD,
 				logo_uri: step.action.toToken.logoURI ?? null,
 				amount: addingTokenDecimals(step.estimate.toAmount, toDecimals)!,
+				amount_usd: step.estimate.toAmountUSD,
 			},
 			chain: {
 				id: step.action.toChainId.toString(),
 			},
+			address: step.action.toAddress,
 		},
 		tool: {
 			name: step.toolDetails.name,
@@ -75,7 +80,6 @@ export const standardizeLifiStep = (step: lifiTypes.Step): Step => {
 			slippage_limit: step.action.slippage,
 			fees: getFees(step),
 			fees_usd: step.estimate.feeCosts?.reduce((acc: number, fee: FeeCost) => acc + Number(fee.amountUSD), 0) ?? 0,
-			// gas: step.estimate.gasCosts?.reduce((acc: number, gas: GasCost) => acc + Number(gas.amount), 0) ?? 0,
 			gas: getGas(step),
 			gas_usd: step.estimate.gasCosts?.reduce((acc: number, gas: GasCost) => acc + Number(gas.amountUSD), 0) ?? 0,
 			logo_uri: step.toolDetails.logoURI,
