@@ -20,7 +20,7 @@ function ChainIcon({ src }: { src: string }) {
 
 export function ChainListItem({ chain, isSelected, onSelect, isCropped = true }: ChainItemProps) {
 	const { t } = useTranslation()
-	//
+
 	return (
 		<div
 			className={`${classNames.container} ${isCropped ? classNames.cropped : ''}`}
