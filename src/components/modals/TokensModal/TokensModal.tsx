@@ -133,7 +133,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 							tokens.map((token: Token, index: number) => {
 								return (
 									<TokenListItem
-										key={token._id + index.toString()}
+										key={token.address.toLowerCase() + index.toString()}
 										token={token}
 										isBalanceLoading={isBalanceLoading}
 										onSelect={handleSelect}
