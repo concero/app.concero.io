@@ -39,10 +39,6 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 		})
 	}, [searchValue])
 
-	useEffect(() => {
-		console.log('search: ', searchValue)
-	}, [searchValue])
-
 	return (
 		<div className={classNames.container}>
 			<p className={`body4 ${classNames.title}`}>{t('tokensModal.chains')}</p>

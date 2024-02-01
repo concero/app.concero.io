@@ -114,7 +114,8 @@ export const TokenArea: FC<TokenAreaProps> = ({
 					<Button
 						variant={'convex'}
 						className={classNames.selectTokenButton}
-						onClick={() => {
+						onClick={e => {
+							e.stopPropagation()
 							tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })
 						}}
 					>
