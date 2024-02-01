@@ -1,39 +1,45 @@
 import { type Dispatch, type FC } from 'react'
-import { IconPercentage } from '@tabler/icons-react'
+import classNames from './SwapSettingsModal.module.pcss'
 import { Modal } from '../../../modals/Modal/Modal'
-import { TextInput } from '../../../input/TextInput'
-import { type Settings, type SwapAction } from '../swapReducer/types'
-import { isFloatInput } from '../../../../utils/validation'
+import { type SwapAction, type SwapState } from '../swapReducer/types'
+import { useTranslation } from 'react-i18next'
+import { Slippage } from './Slippage'
+import { Toggle } from '../../../layout/Toggle/Toggle'
 
 export interface SwapSettingsModalProps {
-	show: boolean
-	setShow: (value: boolean) => void
-	settings: Settings
+	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
 }
 
-export const SwapSettingsModal: FC<SwapSettingsModalProps> = ({ show, setShow, settings, swapDispatch }) => {
-	const { slippage_percent } = settings
-
-	function handleAmountChange(value: string) {
-		if (value && !isFloatInput(value)) return
-		swapDispatch({ type: 'SET_SETTINGS', payload: { slippage_percent: value } })
-	}
+export const SwapSettingsModal: FC<SwapSettingsModalProps> = ({ swapDispatch, swapState }) => {
+	const { t } = useTranslation()
+	const { settings, settingsModalOpen, isDestinationAddressVisible } = swapState
 
 	return (
-		<Modal title="Swap Settings" show={show} setShow={setShow}>
-			<p className="body1" style={{ marginBottom: 'var(--sp-sm)' }}>
-				Slippage tolerance
-			</p>
-			<TextInput
-				placeholder="Enter slippage percent"
-				onChangeText={(value: string) => {
-					handleAmountChange(value)
-				}}
-				value={slippage_percent}
-				icon={<IconPercentage size={18} color="var(--color-text-secondary)" />}
-				type="number"
-			/>
+		<Modal
+			title={t('swapCard.settings.title')}
+			show={settingsModalOpen}
+			setShow={() => {
+				swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })
+			}}
+		>
+			<div className={classNames.container}>
+				<Slippage settings={settings} swapDispatch={swapDispatch} />
+				{/* <GasPrice settings={settings} swapDispatch={swapDispatch} /> */}
+				<div className={`card ${classNames.cardContainer} ${classNames.toggleButtonContainer}`}>
+					<p className={'body1'}>{t('swapCard.settings.showDestinationWallet')}</p>
+					<Toggle
+						checkedClassName={classNames.toggleButton}
+						isChecked={isDestinationAddressVisible}
+						onChange={(checked: boolean) => {
+							swapDispatch({
+								type: 'SET_IS_DESTINATION_ADDRESS_VISIBLE',
+								status: checked,
+							})
+						}}
+					/>
+				</div>
+			</div>
 		</Modal>
 	)
 }

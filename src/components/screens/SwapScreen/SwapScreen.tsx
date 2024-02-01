@@ -5,11 +5,13 @@ import { SwapCard } from '../../cards/SwapCard/SwapCard'
 import { ChartCard } from '../../cards/ChartCard/ChartCard'
 import classNames from './SwapScreen.module.pcss'
 import { TargetInfoCard } from '../../cards/TargetInfoCard/TargetInfoCard'
+import { NewsCard } from '../../cards/NewsCard/NewsCard'
+import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 
 export interface ExchangeScreenProps {}
-// const History = memo(withErrorBoundary(HistoryCard))
+const History = memo(withErrorBoundary(HistoryCard))
 const Swap = memo(withErrorBoundary(SwapCard))
-// const News = memo(withErrorBoundary(NewsCard))
+const News = memo(withErrorBoundary(NewsCard))
 const Chart = memo(withErrorBoundary(ChartCard))
 
 export const SwapScreen: FC<ExchangeScreenProps> = () => {

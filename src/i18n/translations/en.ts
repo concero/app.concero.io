@@ -8,7 +8,27 @@ export const en = {
 				failed: 'Swap failed',
 				contactSupport: 'Contact support',
 			},
+			routeCard: {
+				swap: 'Swap to',
+				bridge: 'Bridge to',
+				via: 'via',
+			},
 			insurance: 'Insurance',
+			route: 'Route:',
+			selectRoute: 'Select route',
+			settings: {
+				title: 'Settings',
+				slippage: 'Slippage',
+				custom: 'Custom',
+				gasPrice: 'Gas price',
+				gas: {
+					fast: 'Fast',
+					normal: 'Normal',
+					slow: 'Slow',
+				},
+				showDestinationWallet: 'Show destination wallet',
+			},
+			sendToAddress: 'Send to address',
 		},
 		header: {
 			swap: 'Swap',
@@ -69,6 +89,7 @@ export const en = {
 			mayTakeAWhile: 'Hang tight, this may take a while…',
 			goBack: 'Go back',
 			sendFeedback: 'Send feedback',
+			findingRoutes: 'Finding routes',
 		},
 		contactSupportCard: {
 			contractSupport: 'Contact support',
@@ -80,8 +101,9 @@ export const en = {
 			title: 'Manage position',
 		},
 		tokenArea: {
-			from: 'From',
-			to: 'To',
+			from: 'You pay',
+			to: 'You get',
+			enterAmount: 'Enter amount',
 		},
 		protocolModal: {
 			title: 'Protocol',
@@ -129,6 +151,15 @@ export const en = {
 		},
 		languageModal: {
 			title: 'Change language',
+		},
+		tokensModal: {
+			selectChainToken: 'Select chain & token',
+			allChains: 'All chains',
+			searchByTokenNameOrAddress: 'Search by token name or address...',
+			tokens: 'Tokens',
+			chains: 'Chains',
+			search: 'Search',
+			selected: 'Selected',
 		},
 	},
 }

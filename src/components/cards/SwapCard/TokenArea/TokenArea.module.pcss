@@ -1,0 +1,119 @@
+.tokenContainer {
+	background-color: var(--color-grey-650);
+	border-radius: var(--st-br-md);
+	border: 1px solid var(--color-grey-600);
+	padding: var(--sp-md) var(--sp-md);
+	box-shadow: none;
+	transition: border 0.2s ease-in-out;
+}
+
+.from:focus-within {
+	transition: border 0.2s ease-in-out;
+	border: 1px solid var(--color-primary-650);
+	box-shadow: 0 0 15px 0 var(--color-primary-650) inset;
+}
+
+.tokenRow {
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+
+	.tokenRowHeader {
+		align-items: center;
+		flex-direction: row;
+		gap: var(--sp-sm);
+	}
+
+	p {
+		color: var(--color-text-secondary);
+	}
+
+	h3,
+	h4,
+	h5 {
+		color: var(--color-grey-500);
+	}
+}
+
+.from {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	transition: border 0.2s ease-in-out;
+}
+
+.from:hover {
+	border: 1px solid var(--color-grey-550);
+	box-shadow: 0 0 15px 0 rgba(172, 172, 172, 0.15) inset;
+}
+
+.from:focus-within {
+	transition: border 0.2s ease-in-out;
+	border: 1px solid var(--color-primary-650);
+	box-shadow: 0 0 15px 0 rgba(115, 53, 247, 0.1) inset;
+}
+
+.to {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top: unset;
+}
+
+.to:hover {
+	border-top: unset;
+}
+
+.input {
+	font-size: 24px;
+	font-weight: 500;
+	width: 100%;
+}
+
+.selectTokenButton {
+	padding: var(--sp-sm) var(--sp-md);
+	flex-direction: row;
+	align-items: center;
+	border-radius: var(--st-br-md);
+	border: 1px solid var(--color-grey-650);
+
+	p {
+		line-height: 1rem;
+	}
+
+	h4 {
+		line-height: 1rem;
+	}
+}
+
+.selectTokenButton:hover {
+	border-radius: var(--st-br-md);
+	border: 1px solid var(--color-grey-650);
+}
+
+.selectTokenButtonTitle {
+	align-items: flex-start;
+	gap: var(--sp-xs);
+
+	h4 {
+		color: var(--color-text-primary);
+	}
+
+	p {
+		font-weight: 400;
+		color: var(--color-text-secondary);
+	}
+}
+
+.amountUsdContainer {
+	justify-content: flex-start;
+	align-items: flex-start;
+
+	h4 {
+		font-weight: 400;
+		color: var(--color-text-secondary);
+	}
+}
+
+.maxButton:hover {
+	cursor: pointer;
+	color: var(--color-green-350);
+}

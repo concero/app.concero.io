@@ -1,8 +1,10 @@
 import { type providers } from 'ethers'
+import { type SwapAction, type SwapState } from '../swapReducer/types'
+import { type Dispatch } from 'react'
 
 export interface SwapInputProps {
-	swapState: any
-	swapDispatch: any
+	swapState: SwapState
+	swapDispatch: Dispatch<SwapAction>
 }
 
 export type SwitchChainHookType = (requiredChainId: number) => Promise<providers.JsonRpcSigner>

@@ -5,12 +5,15 @@ interface ToggleProps {
 	isChecked: boolean
 	onChange: (checked: boolean) => void
 	className?: string
+	checkedClassName?: string
 }
 
-export const Toggle: FC<ToggleProps> = ({ isChecked, onChange, className }) => {
+export const Toggle: FC<ToggleProps> = ({ isChecked, onChange, className, checkedClassName = '' }) => {
 	return (
 		<div
-			className={`${classNames.toggleContainer} ${isChecked ? classNames.checked : ''} ${className || ''}`}
+			className={`${classNames.toggleContainer} ${isChecked ? `${classNames.checked} ${checkedClassName}` : ''} ${
+				className || ''
+			}`}
 			onClick={() => {
 				onChange(!isChecked)
 			}}

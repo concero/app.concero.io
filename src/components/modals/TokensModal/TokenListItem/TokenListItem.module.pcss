@@ -1,0 +1,48 @@
+.container {
+	width: 100%;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: var(--st-br-sm);
+	padding: var(--sp-xs) var(--sp-sm);
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.container:hover {
+	background-color: var(--color-grey-600);
+}
+
+.tokenInfoContainer {
+	flex-direction: row;
+	align-items: center;
+	gap: var(--sp-md);
+}
+
+.tokenTitleContainer {
+}
+
+.tokenPriceContainer {
+	align-items: flex-end;
+}
+
+.balanceSkeleton {
+	width: 30px;
+	height: 16px;
+	border-radius: var(--st-br-md);
+}
+
+.tokenAddressContainer {
+	height: 16px;
+	overflow: hidden;
+}
+
+.tokenAddress {
+	flex-direction: row;
+	align-items: center;
+	gap: var(--sp-xs);
+}
+
+.linkButton:hover {
+	transform: translateY(-1px);
+}

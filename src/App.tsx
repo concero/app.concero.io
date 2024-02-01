@@ -26,19 +26,19 @@ function App() {
 	return (
 		<PostHogProvider>
 			<I18Provider>
-				<DataProvider>
-					<SelectionProvider>
-						<ThemeProvider>
-							<NotificationsProvider>
-								<Notifications />
-								<WagmiConfig config={wagmiConfig}>
+				<WagmiConfig config={wagmiConfig}>
+					<DataProvider>
+						<SelectionProvider>
+							<ThemeProvider>
+								<NotificationsProvider>
+									<Notifications />
 									<Navigator />
 									<WalletConnectModal />
-								</WagmiConfig>
-							</NotificationsProvider>
-						</ThemeProvider>
-					</SelectionProvider>
-				</DataProvider>
+								</NotificationsProvider>
+							</ThemeProvider>
+						</SelectionProvider>
+					</DataProvider>
+				</WagmiConfig>
 			</I18Provider>
 		</PostHogProvider>
 	)

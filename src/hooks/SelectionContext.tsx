@@ -27,6 +27,7 @@ const selectedTokens = ({ fromTokens, toTokens, chains }) => {
 				name: chains[0].name,
 				symbol: chains[0].symbol,
 				logoURI: chains[0].logoURI,
+				explorerURI: chains[0].explorerURI,
 				providers: chains[0].providers,
 			},
 			token: {
@@ -43,6 +44,7 @@ const selectedTokens = ({ fromTokens, toTokens, chains }) => {
 				name: chains[1].name,
 				symbol: chains[1].symbol,
 				logoURI: chains[1].logoURI,
+				explorerURI: chains[1].explorerURI,
 				providers: chains[1].providers,
 			},
 			token: {

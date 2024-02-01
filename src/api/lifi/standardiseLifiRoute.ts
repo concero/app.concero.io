@@ -11,6 +11,7 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 
 	route.steps.forEach((step: LifiStep) => {
 		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
+			if (fee.included) return
 			const matchedFeeAsset = result.find(
 				(item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString(),
 			)
@@ -106,7 +107,7 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 		address: route.toAddress,
 	},
 	steps: [
-		...route.steps.flatMap(step =>
+		...route.steps.map(step =>
 			step.includedSteps.map(includedStep => {
 				return standardizeLifiStep(includedStep)
 			}),

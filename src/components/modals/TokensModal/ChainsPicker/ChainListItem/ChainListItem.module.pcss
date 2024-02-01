@@ -1,0 +1,44 @@
+.container {
+	border-radius: var(--st-br-md);
+	width: 100%;
+	flex-direction: row;
+	align-items: center;
+	gap: var(--sp-sm);
+	cursor: pointer;
+	padding: var(--sp-sm);
+	transition: 0.2s ease-in-out;
+}
+
+.container:hover:not(.cropped) {
+	background-color: var(--color-grey-600);
+}
+
+.chainButton {
+	border-radius: var(--st-br-sm);
+	transition: 0.2s ease-in-out;
+}
+
+.selected {
+	box-shadow: 0 4px 12px 0 rgba(45, 55, 75, 0.5);
+}
+
+.chainButton:hover {
+	background-color: var(--color-grey-600);
+}
+
+.cropped {
+	justify-content: center;
+	width: unset;
+	padding: var(--sp-sm);
+}
+
+.chainIcon {
+	width: 40px;
+	height: 40px;
+
+	img {
+		border-radius: var(--st-br-sm);
+		width: 100%;
+		height: 100%;
+	}
+}

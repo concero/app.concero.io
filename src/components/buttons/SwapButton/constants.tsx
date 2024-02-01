@@ -13,7 +13,7 @@ export enum ButtonType {
 }
 
 export const buttonText: { [key in ButtonType]: string } = {
-	[ButtonType.LOADING]: '',
+	[ButtonType.LOADING]: 'button.findingRoutes',
 	[ButtonType.SWAP]: 'button.swap',
 	[ButtonType.ENTER_AMOUNT]: 'button.enterAmountToSwap',
 	[ButtonType.LOW_BALANCE]: 'button.insufficientBalance',
