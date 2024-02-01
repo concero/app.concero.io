@@ -61,6 +61,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 
 		const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
+		console.log('resToken: ', resToken)
 		if (resToken.length > 0) {
 			tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
 			tokensModalDispatch({ type: TokenModalActionType.SET_OFFSET, offset: 15 })
