@@ -37,7 +37,6 @@ function tokensModalReducer(state: TokensModalState, action: TokensModalAction):
 }
 
 export function useTokensModalReducer(chain: Chain): [TokensModalState, Dispatch<TokensModalAction>] {
-	console.log('useTokensModalReducer', chain)
 	const [tokensModalState, tokensModalDispatch] = useReducer(tokensModalReducer, initialState(chain))
 	return [tokensModalState, tokensModalDispatch]
 }

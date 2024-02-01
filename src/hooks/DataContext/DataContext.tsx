@@ -84,9 +84,9 @@ export function DataProvider({ children }: DataProviderProps) {
 	const [tokens, setTokens] = useState(initialState.tokens)
 	const [chains, setChains] = useState(initialState.chains)
 
-	const getTokens = async ({ chainId, offset = 0, limit = 15, search, walletAddress }: GetChainsParams) => {
+	const getTokens = async ({ chainId, offset = 0, limit = 15, search }: GetChainsParams) => {
 		if (search) {
-			return await fetchTokens({ chainId, offset, limit, search, walletAddress })
+			return await fetchTokens({ chainId, offset, limit, search })
 		}
 
 		if (tokens[chainId]?.length >= offset + limit) {
@@ -96,7 +96,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			return tokens[chainId]
 		}
 
-		const response = await fetchTokens({ chainId, offset, limit, search, walletAddress })
+		const response = await fetchTokens({ chainId, offset, limit, search })
 		setTokens(prevTokens => {
 			const existingTokens = prevTokens[chainId] || []
 			return { ...prevTokens, [chainId]: [...existingTokens, ...response] }
@@ -104,7 +104,7 @@ export function DataProvider({ children }: DataProviderProps) {
 		return response
 	}
 
-	const getChains = async ({ chainId, offset, limit, search, walletAddress }: GetChainsParams): Promise<Chain[]> => {
+	const getChains = async ({ chainId, offset, limit, search }: GetChainsParams): Promise<Chain[]> => {
 		if (search) {
 			return await fetchChains({ search })
 		}
@@ -112,7 +112,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			return chains.slice(offset, offset + limit)
 		}
 
-		const response = await fetchChains({ chainId, offset, limit, walletAddress })
+		const response = await fetchChains({ chainId, offset, limit })
 		setChains(prevChains => [...prevChains, ...response])
 		return response
 	}
