@@ -25,6 +25,7 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 	const tokenAddressAnimation = useSpring({
 		y: isHovered ? -(addressContainerHeight - 19) : 0,
 		config: { duration: 200, easing: easeQuadInOut },
+		delay: 150,
 	})
 
 	useEffect(() => {
@@ -54,15 +55,18 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 					<div className={classNames.tokenAddressContainer} ref={addressContainerRef}>
 						<animated.div style={tokenAddressAnimation}>
 							<p className={'body1'}>{truncate(token.symbol, 20)}</p>
-							<div
-								className={classNames.tokenAddress}
-								onClick={event => {
-									event.stopPropagation()
-									window.open(`${explorerURI}/address/${token.address}`, '_blank')
-								}}
-							>
+							<div className={classNames.tokenAddress}>
 								<p className={'body1'}>{truncateWallet(token.address)}</p>
-								<IconExternalLink size={12} color={'var(--color-text-secondary)'} />
+								<div className={classNames.linkButton}>
+									<IconExternalLink
+										size={12}
+										color={'var(--color-text-secondary)'}
+										onClick={event => {
+											event.stopPropagation()
+											window.open(`${explorerURI}/address/${token.address}`, '_blank')
+										}}
+									/>
+								</div>
 							</div>
 						</animated.div>
 					</div>

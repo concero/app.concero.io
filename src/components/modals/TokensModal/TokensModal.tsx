@@ -33,6 +33,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 	const { selection } = useContext(SelectionContext)
 	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer(selection.swapCard[direction].chain)
 	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
+	const tokensSearchRef = useRef<HTMLInputElement>(null)
 
 	const addTokens = async () => {
 		const newTokens = await getTokens({ chainId: selectedChain?.id, offset, limit, search: searchValue })
@@ -99,6 +100,12 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 		moveToTop()
 	}, [selectedChain?.id, address, searchValue])
 
+	useEffect(() => {
+		if (isOpen) {
+			tokensSearchRef.current?.focus()
+		}
+	}, [isOpen])
+
 	return (
 		<Modal
 			show={isOpen}
@@ -127,6 +134,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 						icon={<IconSearch size={18} color={colors.text.secondary} />}
 						value={searchValue}
 						onChange={handleSearch}
+						ref={tokensSearchRef}
 					/>
 					<div className={classNames.tokenContainer} onScroll={handleScroll} ref={tokenContainerRef}>
 						{!isLoading && tokens ? (

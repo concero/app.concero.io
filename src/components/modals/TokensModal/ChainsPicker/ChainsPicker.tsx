@@ -23,20 +23,24 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 
 	const fistLineChains = chains.slice(0, 7)
 
-	const handleSelectChain = (chain: Chain) => {
-		setIsChainsModalOpen(false)
-		setSelectedChain(chain)
-	}
-
 	const handleOpenChainsModal = (isOpen: boolean) => {
 		setIsChainsModalOpen(isOpen)
 		setSearchValue('')
+	}
+
+	const handleSelectChain = (chain: Chain) => {
+		handleOpenChainsModal(false)
+		setSelectedChain(chain)
 	}
 
 	useEffect(() => {
 		getChains({ offset: 0, limit: 18, search: searchValue }).then((chains: Chain[]) => {
 			setChains(chains)
 		})
+	}, [searchValue])
+
+	useEffect(() => {
+		console.log('search: ', searchValue)
 	}, [searchValue])
 
 	return (
