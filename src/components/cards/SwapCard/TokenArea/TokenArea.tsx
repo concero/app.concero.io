@@ -15,6 +15,7 @@ import { AmountInputSkeleton } from './AmountInputSkleton/AmountInputSkeleton'
 import { type Chain } from '../../../../api/concero/types'
 import { AmountUsd } from './AmountUsd'
 import { config } from '../../../../constants/config'
+import { SwapCardStage } from '../swapReducer/types'
 
 export const TokenArea: FC<TokenAreaProps> = ({
 	direction,
@@ -22,6 +23,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 	swapDispatch,
 	balance = null,
 	isLoading = false,
+	stage,
 }) => {
 	const [state, tokenAreaDispatch] = useTokenAreaReducer()
 	const inputRef = useRef<ForwardedRef<HTMLInputElement>>()
@@ -69,9 +71,11 @@ export const TokenArea: FC<TokenAreaProps> = ({
 	return (
 		<>
 			<animated.div
-				className={`${classNames.tokenContainer} ${styleClass}`}
+				className={`${classNames.tokenContainer} ${styleClass} ${
+					stage === SwapCardStage.review ? classNames.transparentTokenArea : ''
+				}`}
 				onClick={() => {
-					handleAreaClick({ inputRef })
+					handleAreaClick(inputRef, stage)
 				}}
 				style={state.shake ? shakeProps : {}}
 			>
@@ -114,6 +118,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 					<Button
 						variant={'convex'}
 						className={classNames.selectTokenButton}
+						isDisabled={stage === SwapCardStage.review}
 						onClick={e => {
 							e.stopPropagation()
 							tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })

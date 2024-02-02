@@ -18,7 +18,12 @@ export const Button: FC<ButtonProps> = ({
 	const buttonClasses = getButtonClasses(size, variant, isLoading, isDisabled, className)
 
 	return (
-		<button className={buttonClasses} id={classNames[variant]} onClick={onClick} aria-label={variant + size}>
+		<button
+			className={buttonClasses}
+			id={classNames[variant]}
+			onClick={!isDisabled ? onClick : undefined}
+			aria-label={variant + size}
+		>
 			{isLoading ? <LoadingAnimation /> : leftIcon}
 			{children}
 			{rightIcon}

@@ -57,16 +57,30 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.tokenAreasContainer}>
-				<TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
-				<TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} isLoading={swapState.isLoading} />
-				<div
-					className={classNames.arrowsIcon}
-					onClick={() => {
-						swapDispatch({ type: 'SWAP_DIRECTIONS' })
-					}}
-				>
-					<IconArrowsUpDown size={18} />
-				</div>
+				<TokenArea
+					direction="from"
+					selection={swapState.from}
+					swapDispatch={swapDispatch}
+					balance={swapState.balance}
+					stage={swapState.stage}
+				/>
+				<TokenArea
+					direction="to"
+					selection={swapState.to}
+					swapDispatch={swapDispatch}
+					isLoading={swapState.isLoading}
+					stage={swapState.stage}
+				/>
+				{swapState.stage === SwapCardStage.input ? (
+					<div
+						className={classNames.arrowsIcon}
+						onClick={() => {
+							swapDispatch({ type: 'SWAP_DIRECTIONS' })
+						}}
+					>
+						<IconArrowsUpDown size={18} />
+					</div>
+				) : null}
 			</div>
 			{isInsuranceCardVisible ? <InsuranceCard swapState={swapState} swapDispatch={swapDispatch} /> : null}
 			<SwapDetails swapState={swapState} swapDispatch={swapDispatch} />

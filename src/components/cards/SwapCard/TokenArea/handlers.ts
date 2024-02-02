@@ -1,6 +1,15 @@
 import { isFloatInput } from '../../../../utils/validation'
+import { SwapCardStage } from '../swapReducer/types'
+import type { ForwardedRef, MutableRefObject } from 'react'
 
-export const handleAreaClick = ({ inputRef }) => {
+export const handleAreaClick = (
+	inputRef: MutableRefObject<ForwardedRef<HTMLInputElement> | undefined>,
+	stage: SwapCardStage,
+) => {
+	if (stage === SwapCardStage.review) {
+		return
+	}
+
 	if (inputRef.current) {
 		inputRef.current.focus()
 	}
