@@ -1,13 +1,14 @@
 import { type StandardRoute, type Step } from '../../../../../types/StandardRoute'
 import classNames from './RouteCard.module.pcss'
-import { IconChevronDown, IconClock, IconCoins, IconHandClick } from '@tabler/icons-react'
-import { roundNumberByDecimals, secondsConverter } from '../../../../../utils/formatting'
+import { IconChevronDown } from '@tabler/icons-react'
+import { roundNumberByDecimals } from '../../../../../utils/formatting'
 import { Button } from '../../../../buttons/Button/Button'
 import { useRef, useState } from 'react'
 import { StepCard } from './StepCard/StepCard'
 import { animated, useSpring } from '@react-spring/web'
 import { easeQuadInOut } from 'd3-ease'
 import { Tag } from '../../../../tags/Tag/Tag'
+import { MainRouteInfoTags } from '../../../../tags/MainRouteInfoTags/MainRouteInfoTags'
 
 interface RouteCardProps {
 	route: StandardRoute
@@ -43,7 +44,7 @@ const getTag = (
 
 export function RouteCard({ route, isSelected, onSelect }: RouteCardProps) {
 	const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
-	const stepsContainerRef = useRef<HTMLDivElement>()
+	const stepsContainerRef = useRef<HTMLDivElement | null>(null)
 	const { to, transaction_time_seconds, cost, steps } = route
 
 	const stepsContainerAnimation = useSpring({
@@ -85,22 +86,11 @@ export function RouteCard({ route, isSelected, onSelect }: RouteCardProps) {
 				</div>
 			</div>
 			<div className={classNames.spaceBetweenContainer}>
-				<div className={classNames.rowContainer}>
-					{cost.total_gas_usd ? (
-						<div className={classNames.tagContainer}>
-							<IconCoins size={16} color={'var(--color-text-secondary)'} />
-							<p className={'body3'}>{`$${cost.total_gas_usd}`}</p>
-						</div>
-					) : null}
-					<div className={classNames.tagContainer}>
-						<IconClock size={16} color={'var(--color-text-secondary)'} />
-						<p className={'body1'}>{`${secondsConverter(Number(transaction_time_seconds))}`}</p>
-					</div>
-					<div className={classNames.tagContainer}>
-						<IconHandClick size={16} color={'var(--color-text-secondary)'} />
-						<p className={'body1'}>{steps?.length ?? 1}</p>
-					</div>
-				</div>
+				<MainRouteInfoTags
+					totalGasUsd={cost.total_gas_usd}
+					stepsLength={steps?.length}
+					transactionTimeSeconds={transaction_time_seconds}
+				/>
 				{route.tags?.[0] ? (
 					<Tag color={getTag(route.tags?.[0]).color} size={'sm'}>
 						<p style={{ color: 'inherit' }}>{getTag(route.tags?.[0]).title}</p>
