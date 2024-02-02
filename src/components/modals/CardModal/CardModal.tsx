@@ -1,4 +1,4 @@
-import { type MutableRefObject, type ReactNode, useRef } from 'react'
+import { type MutableRefObject, type ReactNode, useEffect, useRef, useState } from 'react'
 import classNames from './CardModal.module.pcss'
 import { animated, useSpring } from '@react-spring/web'
 import { easeCubicInOut, easeQuadInOut } from 'd3-ease'
@@ -15,11 +15,12 @@ interface CardModalProps {
 
 export function CardModal({ isOpen, setIsOpen, children, title = '', className }: CardModalProps) {
 	const contentContainerRef: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null)
+	const [contentHeight, setContentHeight] = useState<number>(0)
 
 	const contentContainerAnimation = useSpring({
-		transform: isOpen ? 'translateY(0px)' : `translateY(${contentContainerRef.current?.clientHeight}px)`,
+		transform: isOpen ? 'translateY(0px)' : `translateY(${contentHeight}px)`,
 		config: { duration: 200, easing: easeCubicInOut },
-		delay: !isOpen ? 0 : 50,
+		// delay: !isOpen ? 0 : 50,
 	})
 
 	const overlayAnimation = useSpring({
@@ -28,6 +29,12 @@ export function CardModal({ isOpen, setIsOpen, children, title = '', className }
 		config: { duration: 100, easing: easeQuadInOut },
 		delay: !isOpen ? 150 : 0,
 	})
+
+	useEffect(() => {
+		if (contentContainerRef.current) {
+			setContentHeight(contentContainerRef.current.clientHeight)
+		}
+	}, [contentContainerRef.current?.clientHeight])
 
 	return (
 		<animated.div className={classNames.overlay} style={overlayAnimation}>

@@ -31,6 +31,8 @@ export const en = {
 			},
 			sendToAddress: 'Send to address',
 			yourRoute: 'Your route',
+			clickToOpenDetails: 'Click to open details',
+			routeDetails: 'Route details',
 		},
 		header: {
 			swap: 'Swap',

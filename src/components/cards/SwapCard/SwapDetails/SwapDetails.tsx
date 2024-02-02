@@ -10,14 +10,16 @@ import { SelectRouteModal } from './SelectRouteModal/SelectRouteModal'
 import { easeQuadInOut } from 'd3-ease'
 import { ReviewRouteCard } from './ReviewRouteCard/ReviewRouteCard'
 import { SwapCardStage } from '../swapReducer/types'
+import { RouteDetailsModal } from './RouteDetailsModal/RouteDetailsModal'
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, swapDispatch }) => {
-	const { t } = useTranslation()
-	const { selectedRoute } = swapState
 	const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<boolean>(false)
 	const [animatedContainerHeight, setAnimatedContainerHeight] = useState<number>(0)
+	const [isReviewRouteModalVisible, setIsReviewRouteModalVisible] = useState<boolean>(false)
 	const routeContainerRef = useRef<HTMLDivElement>(null)
 	const reviewRouteCardRef = useRef<HTMLDivElement>(null)
+	const { selectedRoute } = swapState
+	const { t } = useTranslation()
 
 	const containerAnimation = useSpring({
 		height: selectedRoute ? animatedContainerHeight : 0,
@@ -62,11 +64,24 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, swapDispatch }) =
 						/>
 					</div>
 				) : (
-					<div className={classNames.reviewContainer} ref={reviewRouteCardRef}>
+					<div
+						className={classNames.reviewContainer}
+						ref={reviewRouteCardRef}
+						onClick={() => {
+							setIsReviewRouteModalVisible(true)
+						}}
+					>
 						<ReviewRouteCard swapState={swapState} />
 					</div>
 				)}
 			</div>
+			{selectedRoute ? (
+				<RouteDetailsModal
+					selectedRoute={selectedRoute}
+					isOpen={isReviewRouteModalVisible}
+					setIsOpen={setIsReviewRouteModalVisible}
+				/>
+			) : null}
 		</animated.div>
 	)
 }

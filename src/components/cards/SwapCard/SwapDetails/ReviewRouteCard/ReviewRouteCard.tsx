@@ -31,12 +31,17 @@ export function ReviewRouteCard({ swapState }: ReviewRouteCardProps) {
 					)
 				})}
 			</div>
-			<div className={classNames.rowContainer}>
-				<MainRouteInfoTags
-					transactionTimeSeconds={selectedRoute?.transaction_time_seconds}
-					totalGasUsd={selectedRoute?.cost.total_gas_usd}
-					stepsLength={selectedRoute?.steps?.length}
-				/>
+			<div className={`${classNames.rowContainer}`}>
+				<div className={classNames.tags}>
+					<MainRouteInfoTags
+						transactionTimeSeconds={selectedRoute?.transaction_time_seconds}
+						totalGasUsd={selectedRoute?.cost.total_gas_usd}
+						stepsLength={selectedRoute?.steps?.length}
+					/>
+				</div>
+				<div className={classNames.footerTitleContainer}>
+					<p className={'body1'}>{t('swapCard.clickToOpenDetails')}</p>
+				</div>
 			</div>
 		</div>
 	)
