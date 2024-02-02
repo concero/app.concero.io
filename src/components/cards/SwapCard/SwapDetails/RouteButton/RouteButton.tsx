@@ -10,7 +10,7 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
 		<Button variant={'black'} className={classNames.container} size={'xs'} onClick={onClick}>
 			{selectedRoute?.cost.total_gas_usd ? (
 				<div className={classNames.routeInfoContainer}>
-					<IconCoins size={12} color={'var(--color-text-secondary)'} />
+					<IconCoins size={13} color={'var(--color-text-secondary)'} />
 					<p className="body1">{`$${selectedRoute.cost.total_gas_usd}`}</p>
 				</div>
 			) : null}

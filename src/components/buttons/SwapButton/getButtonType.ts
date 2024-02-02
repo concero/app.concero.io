@@ -2,7 +2,7 @@ import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
 
 export function getButtonType(swapState: SwapState, isConnected: boolean): ButtonType {
-	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute } = swapState
+	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, stage } = swapState
 
 	if (isLoading) {
 		return ButtonType.LOADING
@@ -18,6 +18,10 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 
 	if (!from.amount || (from.amount && routes.length === 0)) {
 		return ButtonType.ENTER_AMOUNT
+	}
+
+	if (selectedRoute && stage === 'input') {
+		return ButtonType.REVIEW
 	}
 
 	if (balance && Number(from.amount) > Number(balance.amount.formatted)) {

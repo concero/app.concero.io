@@ -5,7 +5,6 @@ import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
 import { type SwapInputProps } from './types'
 import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
-import { handleSwap } from '../swapExecution/handleSwap'
 import { InsuranceCard } from '../InsuranceCard/InsuranceCard'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { type DataContextValue } from '../../../../hooks/DataContext/types'
@@ -13,6 +12,8 @@ import { getEthersSigner } from '../../../../web3/ethers'
 import { type providers } from 'ethers'
 import { IconArrowsUpDown } from '@tabler/icons-react'
 import { DestinationAddressInput } from './DestinationAddressInput/DestinationAddressInput'
+import { handleSwap } from '../swapExecution/handleSwap'
+import { SwapCardStage } from '../swapReducer/types'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
@@ -45,6 +46,14 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 		}
 	}
 
+	const handleSwapButtonClick = async () => {
+		if (swapState.stage === 'input') {
+			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
+		} else {
+			await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
+		}
+	}
+
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.tokenAreasContainer}>
@@ -64,13 +73,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 			{swapState.isDestinationAddressVisible ? (
 				<DestinationAddressInput swapState={swapState} swapDispatch={swapDispatch} />
 			) : null}
-			<SwapButton
-				swapState={swapState}
-				isConnected={isConnected}
-				onClick={async () => {
-					await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
-				}}
-			/>
+			<SwapButton swapState={swapState} isConnected={isConnected} onClick={handleSwapButtonClick} />
 		</div>
 	)
 }

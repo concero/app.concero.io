@@ -1,5 +1,5 @@
 import { type Dispatch, type MutableRefObject } from 'react'
-import { type SwapAction } from '../swapReducer/types'
+import { type SwapAction, SwapCardStage } from '../swapReducer/types'
 
 export const clearRoutes = (
 	typingTimeoutRef: MutableRefObject<number | undefined>,
@@ -9,4 +9,5 @@ export const clearRoutes = (
 	swapDispatch({ type: 'CLEAR_ROUTES' })
 	swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
 	swapDispatch({ type: 'SET_IS_NO_ROUTES', status: false })
+	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.input })
 }

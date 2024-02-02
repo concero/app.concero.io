@@ -91,6 +91,7 @@ export const en = {
 			goBack: 'Go back',
 			sendFeedback: 'Send feedback',
 			findingRoutes: 'Finding routes',
+			reviewSwap: 'Review swap',
 		},
 		contactSupportCard: {
 			contractSupport: 'Contact support',

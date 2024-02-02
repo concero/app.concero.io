@@ -23,7 +23,7 @@ export const swapInitialState = (selection): SwapState => ({
 	selectedRoute: null,
 	typingTimeout: 0,
 	response: null,
-	stage: 'review',
+	stage: 'input',
 	steps: [], // [ { status, title, body, txLink } ]
 	status: 'pending', // success, failure, pending, awaiting
 	settings: {

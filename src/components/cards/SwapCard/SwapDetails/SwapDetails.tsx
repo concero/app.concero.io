@@ -9,29 +9,39 @@ import { animated, useSpring } from '@react-spring/web'
 import { SelectRouteModal } from './SelectRouteModal/SelectRouteModal'
 import { easeQuadInOut } from 'd3-ease'
 import { ReviewRouteCard } from './ReviewRouteCard/ReviewRouteCard'
+import { SwapCardStage } from '../swapReducer/types'
 
 export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, swapDispatch }) => {
 	const { t } = useTranslation()
 	const { selectedRoute } = swapState
 	const [isSelectRouteModalVisible, setIsSelectRouteModalVisible] = useState<boolean>(false)
 	const [animatedContainerHeight, setAnimatedContainerHeight] = useState<number>(0)
-	const containerRef = useRef<HTMLDivElement>()
+	const routeContainerRef = useRef<HTMLDivElement>(null)
+	const reviewRouteCardRef = useRef<HTMLDivElement>(null)
 
 	const containerAnimation = useSpring({
 		height: selectedRoute ? animatedContainerHeight : 0,
-		overflow: 'hidden',
+		opacity: selectedRoute ? 1 : 0,
 		config: { duration: 200, easing: easeQuadInOut },
 	})
 
 	useEffect(() => {
-		setAnimatedContainerHeight(containerRef.current?.scrollHeight ?? 0)
-	}, [containerRef.current?.scrollHeight])
+		if (swapState.stage === SwapCardStage.input) {
+			if (routeContainerRef.current) {
+				setAnimatedContainerHeight(routeContainerRef.current.scrollHeight)
+			}
+		} else if (swapState.stage === SwapCardStage.review) {
+			if (reviewRouteCardRef.current) {
+				setAnimatedContainerHeight(reviewRouteCardRef.current.scrollHeight)
+			}
+		}
+	}, [routeContainerRef.current?.scrollHeight, reviewRouteCardRef.current?.scrollHeight, swapState.stage])
 
 	return (
 		<animated.div style={containerAnimation}>
-			<div className={classNames.swapDetailsContainer} ref={containerRef}>
+			<div className={classNames.swapDetailsContainer}>
 				{swapState.stage === 'input' ? (
-					<>
+					<div className={classNames.selectRouteButtonContainer} ref={routeContainerRef}>
 						<p className={'body1'}>{t('swapCard.route')}</p>
 						<RouteButton
 							selectedRoute={selectedRoute}
@@ -50,9 +60,11 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, swapDispatch }) =
 							isOpen={isSelectRouteModalVisible}
 							setIsOpen={setIsSelectRouteModalVisible}
 						/>
-					</>
+					</div>
 				) : (
-					<ReviewRouteCard swapState={swapState} />
+					<div className={classNames.reviewContainer} ref={reviewRouteCardRef}>
+						<ReviewRouteCard swapState={swapState} />
+					</div>
 				)}
 			</div>
 		</animated.div>

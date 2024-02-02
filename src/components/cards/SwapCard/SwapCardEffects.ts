@@ -32,7 +32,7 @@ export function useSwapCardEffects({
 	}, [from.token.address, to.token.address])
 
 	useEffect(() => {
-		getBalance({ dispatch: swapDispatch, from, address })
+		void getBalance({ dispatch: swapDispatch, from, address })
 	}, [from.token.address, from.chain.id, address])
 
 	useEffect(() => {
