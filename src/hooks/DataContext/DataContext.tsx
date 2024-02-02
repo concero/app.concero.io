@@ -7,7 +7,7 @@ import { type Chain } from '../../api/concero/types'
 
 export const initialState = {
 	tokens: {
-		1: [
+		'1': [
 			{
 				name: 'Ethereum',
 				symbol: 'ETH',
@@ -18,7 +18,7 @@ export const initialState = {
 				is_popular: true,
 			},
 		],
-		137: [
+		'137': [
 			{
 				name: 'Matic',
 				symbol: 'MATIC',
@@ -84,19 +84,20 @@ export function DataProvider({ children }: DataProviderProps) {
 	const [tokens, setTokens] = useState(initialState.tokens)
 	const [chains, setChains] = useState(initialState.chains)
 
-	const getTokens = async ({ chainId, offset = 0, limit = 15, search, walletAddress }: GetChainsParams) => {
+	const getTokens = async ({ chainId, offset = 0, limit = 15, search }: GetChainsParams) => {
 		if (search) {
-			return await fetchTokens({ chainId, offset, limit, search, walletAddress })
+			return await fetchTokens({ chainId, offset, limit, search })
 		}
 
 		if (tokens[chainId]?.length >= offset + limit) {
 			return tokens[chainId].slice(offset, offset + limit)
 		}
-		if (tokens[chainId]?.length < limit) {
-			return tokens[chainId]
-		}
+		// if (tokens[chainId]?.length < limit) {
+		// 	return tokens[chainId]
+		// }
 
-		const response = await fetchTokens({ chainId, offset, limit, search, walletAddress })
+		const response = await fetchTokens({ chainId, offset, limit, search })
+
 		setTokens(prevTokens => {
 			const existingTokens = prevTokens[chainId] || []
 			return { ...prevTokens, [chainId]: [...existingTokens, ...response] }
@@ -104,7 +105,7 @@ export function DataProvider({ children }: DataProviderProps) {
 		return response
 	}
 
-	const getChains = async ({ chainId, offset, limit, search, walletAddress }: GetChainsParams): Promise<Chain[]> => {
+	const getChains = async ({ chainId, offset, limit, search }: GetChainsParams): Promise<Chain[]> => {
 		if (search) {
 			return await fetchChains({ search })
 		}
@@ -112,7 +113,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			return chains.slice(offset, offset + limit)
 		}
 
-		const response = await fetchChains({ chainId, offset, limit, walletAddress })
+		const response = await fetchChains({ chainId, offset, limit })
 		setChains(prevChains => [...prevChains, ...response])
 		return response
 	}
@@ -129,6 +130,7 @@ export function DataProvider({ children }: DataProviderProps) {
 			fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
 			fetchChains({ offset: 0, limit: 100 }),
 		])
+
 		setTokens({ '1': ethTokens, '137': polygonTokens })
 		setChains(fetchedChains)
 	}

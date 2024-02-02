@@ -23,7 +23,9 @@ export function setBalanceTokens(state: TokensModalState, action: SET_BALANCE_TO
 		if (state.searchValue) {
 			balanceTokens = searchTokens(balanceTokens ?? [])
 		}
-		const filteredTokens = state.tokens.filter((token: Token) => !balanceTokens?.find((t: Token) => t._id === token._id))
+		const filteredTokens = state.tokens.filter(
+			(token: Token) => !balanceTokens?.find((t: Token) => t.address.toLowerCase() === token.address.toLowerCase()),
+		)
 		return {
 			...state,
 			balanceTokens: action.balanceTokens,
@@ -54,7 +56,7 @@ export function setTokens(state: TokensModalState, action: SET_TOKENS): TokensMo
 
 	const filteredTokens = action.tokens.filter((token: Token) => {
 		const chainId = state.selectedChain?.id
-		return !state.balanceTokens?.[chainId]?.find((t: Token) => t._id === token._id)
+		return !state.balanceTokens?.[chainId]?.find((t: Token) => t.address.toLowerCase() === token.address.toLowerCase())
 	})
 
 	return { ...state, tokens: filteredTokens }
@@ -67,7 +69,7 @@ export function upsertTokens(state: TokensModalState, action: UPSERT_TOKENS): To
 
 	const filteredTokens = action.tokens.filter((token: Token) => {
 		const chainId = state.selectedChain?.id
-		return !state.balanceTokens?.[chainId]?.find((t: Token) => t._id === token._id)
+		return !state.balanceTokens?.[chainId]?.find((t: Token) => t.address.toLowerCase() === token.address.toLowerCase())
 	})
 
 	return { ...state, tokens: [...state.tokens, ...filteredTokens] }
