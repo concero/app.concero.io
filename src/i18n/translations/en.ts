@@ -7,6 +7,7 @@ export const en = {
 				success: 'Swap successful',
 				failed: 'Swap failed',
 				contactSupport: 'Contact support',
+				review: 'Review swap',
 			},
 			routeCard: {
 				swap: 'Swap to',

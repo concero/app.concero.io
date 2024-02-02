@@ -12,7 +12,7 @@ export const CardHeader: FC<CardHeaderProps> = ({ title = null, children, isLoad
 	<div className={classNames.cardHeader}>
 		{title ? (
 			<div className={classNames.titleContainer}>
-				<h5>{title}</h5>
+				<h5 className={'cardHeaderTitle'}>{title}</h5>
 				<div>{isLoading ? <LoadingAnimation size={13} color={'var(--color-text-secondary)'} /> : null}</div>
 			</div>
 		) : null}

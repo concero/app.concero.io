@@ -365,5 +365,5 @@ button {
 }
 
 .cardHeaderTitle {
-	color: var(--color-grey-500);
+	color: var(--color-text-secondary);
 }

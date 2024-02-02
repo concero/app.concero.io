@@ -1,7 +1,5 @@
-import { type FC, useContext, useRef } from 'react'
+import { type FC, type ReactComponentElement, useContext, useRef } from 'react'
 import { useAccount } from 'wagmi'
-import { IconSettings2 } from '@tabler/icons-react'
-import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
 import { type SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer/swapReducer'
@@ -10,18 +8,17 @@ import { InsuranceProvider } from './InsuranceContext'
 import { useSwapCardEffects } from './SwapCardEffects'
 import { SwapInput } from './SwapInput/SwapInput'
 import { SwapProgress } from './SwapProgress/SwapProgress'
-import { getCardTitleByStatus } from './handlers/getCardTitleByStatus'
 import { SwapSettingsModal } from './SwapSettingsModal/SwapSettingsModal'
-import { Button } from '../../buttons/Button/Button'
 import { SwapCardStage } from './swapReducer/types'
 import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
+import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
 
 export const SwapCard: FC<SwapCardProps> = () => {
 	const { selection, selectionDispatch } = useContext(SelectionContext)
 	const [swapState, swapDispatch] = useSwapReducer(selection)
 	const { address, connector } = useAccount()
-	const typingTimeoutRef = useRef(null)
+	const typingTimeoutRef = useRef<number>()
 
 	const handleGoBack = () => {
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'from' })
@@ -46,7 +43,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 		session_id: posthog.get_session_id(),
 	}
 
-	const renderSwapStage = {
+	const renderSwapStage: Record<SwapCardStage, ReactComponentElement<any>> = {
 		[SwapCardStage.input]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
 		[SwapCardStage.review]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
 		[SwapCardStage.progress]: (
@@ -66,18 +63,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 	return (
 		<InsuranceProvider toggleInsurance={toggleInsurance}>
 			<div className={`card ${classNames.container}`}>
-				<CardHeader title={getCardTitleByStatus(swapState.stage)}>
-					<div className={classNames.cardHeader}>
-						<Button
-							variant="black"
-							size="sq-sm"
-							onClick={() => {
-								swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })
-							}}
-							leftIcon={<IconSettings2 size={16} color={'var(--color-grey-500)'} />}
-						/>
-					</div>
-				</CardHeader>
+				<SwapCardHeader swapState={swapState} swapDispatch={swapDispatch} />
 				<div className={classNames.swapContainer}>{renderSwapStage[swapState.stage]}</div>
 			</div>
 			<SwapSettingsModal swapDispatch={swapDispatch} swapState={swapState} />
