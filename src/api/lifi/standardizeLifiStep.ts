@@ -2,6 +2,7 @@ import { type Fees, type Gas, type Step, type StepTypes } from '../../types/Stan
 import { addingTokenDecimals } from '../../utils/formatting'
 import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
 import type * as lifiTypes from '@lifi/sdk/dist/types'
+import { config } from '../../constants/config'
 
 function getFees(step: lifiTypes.Step): Fees[] | [] {
 	const result = step.estimate.feeCosts?.map((fee: FeeCost) => {
@@ -55,6 +56,7 @@ export function standardizeLifiStep(step: lifiTypes.Step): Step {
 			},
 			chain: {
 				id: step.action.fromChainId.toString(),
+				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${step.action.fromChainId.toString()}.svg`,
 			},
 			address: step.action.fromAddress,
 		},
@@ -71,6 +73,7 @@ export function standardizeLifiStep(step: lifiTypes.Step): Step {
 			},
 			chain: {
 				id: step.action.toChainId.toString(),
+				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${step.action.toChainId.toString()}.svg`,
 			},
 			address: step.action.toAddress,
 		},

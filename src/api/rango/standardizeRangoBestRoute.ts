@@ -5,6 +5,7 @@ import { type SwapFee, type SwapResult } from 'rango-types/src/api/main/common'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { config } from '../../constants/config'
 import { standardizeRangoBestRouteStep } from './standardizeRangoBestRouteStep'
+import { rangoChainsMap } from './rangoChainsMap'
 
 // function getTotalGasUsd(route: BestRouteResponse): string | null {
 // 	const reduceSwaps = (res: number, swap: SwapResult): number =>
@@ -66,12 +67,14 @@ export async function standardizeRangoBestRoute(
 				name: route.from.symbol,
 				address: route.from.address,
 				symbol: route.from.symbol,
+				logo_uri: route.result?.swaps[0]?.from.logo ?? '',
 				decimals: from.token.decimals,
 				amount: from.amount!,
 				amount_usd: from.amount_usd,
 			},
 			chain: {
 				id: route.from.blockchain,
+				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${rangoChainsMap[route.from.blockchain]}.svg`,
 			},
 			address: from.address,
 		},
@@ -88,6 +91,7 @@ export async function standardizeRangoBestRoute(
 			},
 			chain: {
 				id: route.to.blockchain,
+				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${rangoChainsMap[route.to.blockchain]}.svg`,
 			},
 			address: to.address,
 		},

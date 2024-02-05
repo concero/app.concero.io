@@ -63,6 +63,7 @@ export interface Direction {
 	}
 	chain: {
 		id: number | string
+		logo_uri: string
 		providers?: Providers[]
 	}
 	amount?: string | null

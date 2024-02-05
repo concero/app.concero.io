@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import { addingTokenDecimals, roundNumberByDecimals } from '../../utils/formatting'
 import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
 import { type LifiStep } from '@lifi/types/dist/cjs'
+import { config } from '../../constants/config'
 
 function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 	const result: Fees[] = []
@@ -85,9 +86,11 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 			price_usd: route.fromToken.priceUSD,
 			amount_usd: route.fromAmountUSD,
 			amount: route.fromAmount,
+			logo_uri: route.fromToken.logoURI,
 		},
 		chain: {
 			id: route.fromChainId,
+			logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${route.fromChainId}.svg`,
 		},
 		address: route.fromAddress,
 	},
@@ -100,9 +103,11 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 			price_usd: route.toToken.priceUSD,
 			amount_usd: route.toAmountUSD,
 			amount: addingTokenDecimals(route.toAmount, route.toToken.decimals),
+			logo_uri: route.toToken.logoURI,
 		},
 		chain: {
 			id: route.toChainId,
+			logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${route.toChainId}.svg`,
 		},
 		address: route.toAddress,
 	},
