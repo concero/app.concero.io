@@ -17,8 +17,8 @@ export function MainRouteInfoTags({
 		<div className={classNames.container}>
 			{totalGasUsd !== null ? (
 				<div className={classNames.tagContainer}>
-					<IconCoins size={16} color={'var(--color-text-secondary)'} />
-					<p className={'body3'}>{`$${totalGasUsd}`}</p>
+					<IconCoins size={15} color={'var(--color-text-secondary)'} />
+					<p className={'body3'}>{`${totalGasUsd}`}</p>
 				</div>
 			) : null}
 			{transactionTimeSeconds !== null ? (

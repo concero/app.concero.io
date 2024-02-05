@@ -25,8 +25,8 @@ export function ReviewRouteCard({ swapState }: ReviewRouteCardProps) {
 				{swapState.selectedRoute?.steps?.map((steps: Step[], index: number) => {
 					return (
 						<div key={index.toString()} className={classNames.rowContainer}>
+							{index !== 0 ? <IconChevronRight size={18} color={'var(--color-text-secondary)'} /> : null}
 							<ReviewRouteStepCard direction={steps[steps.length - 1].to} />
-							{index < steps.length - 3 ? <IconChevronRight size={18} color={'var(--color-text-secondary)'} /> : null}
 						</div>
 					)
 				})}
