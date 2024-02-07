@@ -1,6 +1,6 @@
 import type * as lifiTypes from '@lifi/sdk/dist/types'
 import { standardizeLifiStep } from './standardizeLifiStep'
-import { type Fees, type StandardRoute } from '../../types/StandardRoute'
+import { type Fees, FeeTypes, type StandardRoute } from '../../types/StandardRoute'
 import BigNumber from 'bignumber.js'
 import { addingTokenDecimals, roundNumberByDecimals } from '../../utils/formatting'
 import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
@@ -24,6 +24,7 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 				const normalizedFeeAmount = addingTokenDecimals(fee.amount, fee.token.decimals)
 				result.push({
 					amount: normalizedFeeAmount!,
+					type: FeeTypes.fee,
 					asset: {
 						chainId: fee.token.chainId.toString(),
 						symbol: fee.token.symbol,
@@ -48,6 +49,7 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 				const normalizedGasAmount = addingTokenDecimals(gas.amount, gas.token.decimals)
 				result.push({
 					amount: normalizedGasAmount!,
+					type: FeeTypes.gas,
 					asset: {
 						chainId: gas.token.chainId.toString(),
 						symbol: gas.token.symbol,

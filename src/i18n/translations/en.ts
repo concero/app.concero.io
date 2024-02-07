@@ -33,6 +33,9 @@ export const en = {
 			yourRoute: 'Your route',
 			clickToOpenDetails: 'Click to open details',
 			routeDetails: 'Route details',
+			message: {
+				lowGas: 'You need at least {{amount}} {{tokenSymbol}} on {{chainName}} to safely proceed with transaction.',
+			},
 		},
 		header: {
 			swap: 'Swap',
@@ -95,6 +98,7 @@ export const en = {
 			sendFeedback: 'Send feedback',
 			findingRoutes: 'Finding routes',
 			reviewSwap: 'Review swap',
+			lowGas: 'Low gas',
 		},
 		contactSupportCard: {
 			contractSupport: 'Contact support',

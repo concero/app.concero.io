@@ -1,4 +1,4 @@
-import { type Direction, type Fees, type StandardRoute, type Step } from '../../types/StandardRoute'
+import { type Direction, type Fees, FeeTypes, type StandardRoute, type Step } from '../../types/StandardRoute'
 import { type BestRouteResponse } from 'rango-types/src/api/main/routing'
 import BigNumber from 'bignumber.js'
 import { type SwapFee, type SwapResult } from 'rango-types/src/api/main/common'
@@ -39,6 +39,7 @@ function getTotalFee(route: BestRouteResponse): Fees[] | [] {
 			if (feeIndex === -1) {
 				result.push({
 					amount: feeItem.amount,
+					type: FeeTypes.fee,
 					asset: {
 						chainId: swap.from.blockchain,
 						symbol: feeItem.asset.symbol,

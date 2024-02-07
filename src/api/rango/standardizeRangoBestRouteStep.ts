@@ -1,21 +1,30 @@
 import { type SwapFee, type SwapResult } from 'rango-types/src/api/main/common'
 import BigNumber from 'bignumber.js'
-import { type Fees, type Gas, type Step, StepTypes } from '../../types/StandardRoute'
+import { type Fees, FeeTypes, type Gas, type Step, StepTypes } from '../../types/StandardRoute'
 import { roundNumberByDecimals } from '../../utils/formatting'
 import { rangoChainsMap } from './rangoChainsMap'
 import { config } from '../../constants/config'
 
 function getFees(step: SwapResult): Fees[] | Gas[] | [] {
-	return step.fee.map((feeItem: SwapFee): Fees => {
-		return {
+	const result: Fees[] = []
+
+	step.fee.forEach((feeItem: SwapFee) => {
+		if (feeItem.expenseType !== 'FROM_SOURCE_WALLET') {
+			return
+		}
+
+		result.push({
 			amount: roundNumberByDecimals(feeItem.amount, 2)!,
+			type: FeeTypes.fee,
 			asset: {
 				chainId: rangoChainsMap[feeItem.asset.blockchain],
 				symbol: feeItem.asset.symbol,
 				address: feeItem.asset.address ?? config.NULL_ADDRESS,
 			},
-		}
+		})
 	})
+
+	return result
 }
 
 export function standardizeRangoBestRouteStep(step: SwapResult): Step {

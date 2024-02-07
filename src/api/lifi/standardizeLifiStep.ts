@@ -1,30 +1,35 @@
-import { type Fees, type Gas, type Step, type StepTypes } from '../../types/StandardRoute'
+import { type Fees, FeeTypes, type Step, type StepTypes } from '../../types/StandardRoute'
 import { addingTokenDecimals } from '../../utils/formatting'
 import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
 import type * as lifiTypes from '@lifi/sdk/dist/types'
 import { config } from '../../constants/config'
 
 function getFees(step: lifiTypes.Step): Fees[] | [] {
-	const result = step.estimate.feeCosts?.map((fee: FeeCost) => {
-		return {
+	const result: Fees[] = []
+
+	step.estimate.feeCosts?.forEach((fee: FeeCost) => {
+		if (fee.included) return
+
+		result.push({
 			amount: addingTokenDecimals(fee.amount, fee.token.decimals)!,
+			type: FeeTypes.fee,
 			asset: {
 				chainId: fee.token.chainId.toString(),
 				symbol: fee.token.symbol,
 				decimals: fee.token.decimals,
 				address: fee.token.address,
 			},
-		}
+		})
 	})
 
-	return result ?? []
+	return result
 }
 
-function getGas(step: lifiTypes.Step): Gas[] | [] {
+function getGas(step: lifiTypes.Step): Fees[] | [] {
 	const result = step.estimate.gasCosts?.map((gas: GasCost) => {
 		return {
 			amount: addingTokenDecimals(gas.amount, gas.token.decimals)!,
-			type: gas.type,
+			type: FeeTypes.gas,
 			asset: {
 				chainId: gas.token.chainId.toString(),
 				symbol: gas.token.symbol,

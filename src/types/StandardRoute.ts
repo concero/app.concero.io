@@ -13,9 +13,14 @@ interface Insurance {
 	fee_amount_usd: string
 }
 
+export enum FeeTypes {
+	gas = 'gas',
+	fee = 'fee',
+}
+
 export interface Fees {
 	amount: string
-	type?: string
+	type?: FeeTypes
 	asset: {
 		chainId: string
 		symbol: string
@@ -89,7 +94,7 @@ export interface Step {
 		slippage_limit: number | null
 		fees: Fees[] | []
 		fees_usd: number | null
-		gas: Gas[] | []
+		gas: Fees[] | []
 		gas_usd: number | string | null
 		logo_uri: string
 	}
