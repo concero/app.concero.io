@@ -1,5 +1,6 @@
 import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
+import BigNumber from 'bignumber.js'
 
 export function getButtonType(swapState: SwapState, isConnected: boolean): ButtonType {
 	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute } = swapState
@@ -20,7 +21,7 @@ export function getButtonType(swapState: SwapState, isConnected: boolean): Butto
 		return ButtonType.ENTER_AMOUNT
 	}
 
-	if (balance && Number(from.amount) > Number(balance.amount.formatted)) {
+	if (balance && new BigNumber(from.amount).gt(balance.amount.formatted)) {
 		return ButtonType.LOW_BALANCE
 	}
 
