@@ -1,4 +1,4 @@
-import { type Fees, type StandardRoute, type Step } from '../../../../types/StandardRoute'
+import { type StandardRoute, type Step } from '../../../../types/StandardRoute'
 import { type Dispatch } from 'react'
 import { type SwapAction, SwapActionType } from '../swapReducer/types'
 import { fetchBalancesByChainIds } from '../../../../api/concero/fetchBalancesByChainIds'
@@ -13,12 +13,11 @@ export async function fetchWalletBalancesOnStepChains(
 	const chainIds: string[] = []
 
 	routes.forEach((route: StandardRoute) => {
-		route.steps?.forEach((step: Step) => {
-			step.tool.fees.forEach((fee: Fees) => {
-				if (fee.asset.chainId && !chainIds.includes(fee.asset.chainId)) {
-					chainIds.push(fee.asset.chainId)
-				}
-			})
+		route.steps?.forEach((steps: Step[]) => {
+			if (chainIds.includes(steps[0].from.chain.id as string)) {
+				return
+			}
+			chainIds.push(steps[0].from.chain.id as string)
 		})
 	})
 

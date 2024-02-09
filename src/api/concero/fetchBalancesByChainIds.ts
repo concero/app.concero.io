@@ -1,14 +1,7 @@
 import { config } from '../../constants/config'
 import { get } from '../client'
 
-export interface TokenBalance {
-	symbol: string
-	chainId: string
-	address: string
-	amount: string
-	decimals: number
-}
-export type ConceroBalanceResponse = Record<string, TokenBalance[]>
+export type ConceroBalanceResponse = Record<string, Token[]>
 
 export async function fetchBalancesByChainIds(
 	chainIds: string[],
@@ -16,7 +9,8 @@ export async function fetchBalancesByChainIds(
 ): Promise<ConceroBalanceResponse | null> {
 	if (!walletAddress || !chainIds) return null
 	try {
-		const url = `${config.baseURL}/balances?chain_id=${chainIds.join(',')}&wallet_address=${walletAddress}`
+		const chainIdsString = chainIds.join(',')
+		const url = `${config.baseURL}/balances?chain_id=${chainIdsString}&wallet_address=${walletAddress}`
 		const response = await get(url)
 		if (!response?.data?.success) return null
 		return response.data.data

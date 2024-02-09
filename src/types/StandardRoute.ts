@@ -40,21 +40,6 @@ export interface Gas {
 	}
 }
 
-export interface Token {
-	name: string
-	symbol: string
-	address: string
-	decimals: number
-	logo_uri?: string
-}
-
-export interface Chain {
-	id: string
-	name: string
-	symbol: string
-	logo_uri?: string
-}
-
 export interface Direction {
 	token: {
 		name: string
