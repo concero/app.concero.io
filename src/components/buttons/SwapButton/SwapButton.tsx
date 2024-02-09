@@ -35,7 +35,7 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 					</div>
 					<p className={'body1'}>
 						{t('swapCard.message.lowGas', {
-							amount: gasSufficiency.insufficientAmount?.formatted,
+							amount: gasSufficiency.insufficientAmount,
 							tokenSymbol: gasSufficiency.token?.symbol ?? '',
 							chainName: gasSufficiency.chain?.name ?? '',
 						})}
