@@ -10,7 +10,6 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 	const { isLoading } = swapState
 	const buttonType = getButtonType(swapState, isConnected)
 	const { t } = useTranslation()
-	// test
 
 	return (
 		<Button
