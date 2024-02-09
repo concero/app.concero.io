@@ -21,8 +21,6 @@ export async function getGasSufficiency(
 ): Promise<GasSufficiency> {
 	const { selectedRoute, walletBalances } = swapState
 
-	console.log(selectedRoute)
-
 	for (const steps of selectedRoute?.steps ?? []) {
 		const isNativeToken = steps[0].from.token.address === config.NULL_ADDRESS
 		let amountToCheck = new BigNumber(0) // gas and non-included fees in native token
