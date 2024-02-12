@@ -14,7 +14,6 @@ import { StakeButton } from '../StakeButton/StakeButton'
 import { getQuote } from './getQuote'
 import { getBalance } from '../../../../utils/getBalance'
 import { type DataContextValue } from '../../../../hooks/DataContext/types'
-
 import { clearRoute } from './clearRoute'
 import { EarnTXProgress } from './EarnTXProgress/EarnTXProgress'
 import { useTranslation } from 'react-i18next'

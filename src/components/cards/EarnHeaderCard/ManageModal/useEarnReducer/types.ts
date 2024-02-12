@@ -1,5 +1,6 @@
 import { type ModalType, type Status } from '../constants'
 import { type EnsoRouteResponse } from '../../../../../api/enso/types'
+import { type TokenAmount } from '../../../../../utils/TokenAmount'
 
 interface Token {
 	name: string
@@ -44,7 +45,7 @@ export interface ManageState {
 	address: string
 	isLoading: boolean
 	status: Status
-	balance: string | null
+	balance: { amount: TokenAmount; symbol: string } | null
 	steps: IStep[]
 }
 
