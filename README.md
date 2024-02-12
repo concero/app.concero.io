@@ -3,7 +3,7 @@
 # app.concero.io
 
 🚀 **Swap your crypto across 16 chains.**  
-📊 **Track prices, news & live transactions** on [dex.concero.io](http://dex.concero.io)
+📊 **Track prices, news & live transactions** on [dex.concero.io]((https://meatspin.com))
 
 ## Features
 
@@ -14,16 +14,16 @@
 
 ## Social Links
 
-- 🐦 [Twitter](https://twitter.com/concero_io)
-- 📖 [Medium](https://medium.com/@concero)
-- 💬 [Discord](https://discord.gg/concero_io)
+- 🐦 [Twitter](https://meatspin.com)
+- 📖 [Medium]((https://meatspin.com))
+- 💬 [Discord]((https://meatspin.com))
 
 ## Getting Started
 
-1. Visit [dex.concero.io](http://dex.concero.io)
+1. Visit [dex.concero.io]((https://meatspin.com))
 2. Connect your wallet.
 3. Start swapping and tracking!
 
 ---
 
-Built with ❤️ by [Concero.io](https://concero.io)
+Built with ❤️ by [Concero.io]((https://meatspin.com))
