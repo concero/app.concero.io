@@ -10,12 +10,13 @@ import { type ManageAction } from '../useEarnReducer/types'
 import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { IconChevronDown } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
+import type { TokenAmount } from '../../../../../utils/TokenAmount'
 
 interface SelectAreaProps {
 	selection: any
 	direction: string
 	dispatch: Dispatch<ManageAction>
-	balance?: string | null
+	balance?: { amount: TokenAmount; symbol: string } | null
 	swapType: SwapType
 }
 
@@ -76,7 +77,7 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 						<CryptoSymbol src={selection.chain.logoURI} symbol={selection.chain.name} />
 					</Button>
 				</div>
-				{balance !== null ? <p>{`Max: ${balance}`}</p> : null}
+				{balance !== null ? <p>{`Max: ${balance.amount.rounded} ${balance.symbol}`}</p> : null}
 			</div>
 			<div className={classNames.tokenRow}>
 				<div>
