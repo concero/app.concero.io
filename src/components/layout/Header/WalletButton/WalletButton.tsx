@@ -32,7 +32,7 @@ export const WalletButton = () => {
 			size="sm"
 			onClick={handleClick}
 		>
-			<p  className={!isConnected ? classNames.buttonText  : 'body1'}> {getStatus()}</p>
+			<p  className={`${ classNames.buttonFont} ${!isConnected ? classNames.buttonText  : 'body1'}`}> {getStatus()}</p>
 		</Button>
 	)
 }
