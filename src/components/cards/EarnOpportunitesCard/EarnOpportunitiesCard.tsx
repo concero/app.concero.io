@@ -28,14 +28,18 @@ export function EarnOpportunitiesCard({ earnState, earnDispatch }: EarnOpportuni
 
 	function handleSelect(vault: Vault) {
 		earnDispatch({ type: 'SET_SELECTED_VAULT', payload: vault })
-		trackEvent({ category: category.StakingScreen, action: action.Click, label: 'Staking opportunities select vault' })
+		void trackEvent({
+			category: category.StakingScreen,
+			action: action.Click,
+			label: 'Staking opportunities select vault',
+		})
 	}
 
 	function handleEndReached() {
 		const newOffset = offset + limit
 		setOffset(newOffset)
-		getMoreVaults(earnDispatch, address, earnState, newOffset, limit)
-		trackEvent({
+		void getMoreVaults(earnDispatch, address, earnState, newOffset, limit)
+		void trackEvent({
 			category: category.StakingScreen,
 			action: action.ScrollToEnd,
 			label: 'Staking opportunities onEndReached',
@@ -53,7 +57,7 @@ export function EarnOpportunitiesCard({ earnState, earnDispatch }: EarnOpportuni
 
 	useEffect(() => {
 		setOffset(0)
-		getVaults(earnDispatch, address as string, earnState, 0, limit, isIpad)
+		void getVaults(earnDispatch, address as string, earnState, 0, limit, isIpad)
 	}, [earnState.filter, earnState.balances])
 
 	return (

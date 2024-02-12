@@ -22,7 +22,7 @@ export const EarnScreen: FC = () => {
 	const Chart = memo(withErrorBoundary(EarnChartCard))
 
 	useEffect(() => {
-		earnDispatch({ type: 'SET_ADDRESS', payload: address })
+		earnDispatch({ type: 'SET_ADDRESS', payload: address! })
 	}, [address])
 
 	const mobileVaultDetails = (
