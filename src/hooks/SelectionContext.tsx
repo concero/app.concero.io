@@ -1,5 +1,6 @@
-import { createContext, type ReactNode, useContext, useReducer } from 'react'
+import { createContext, type ReactNode, useContext, useEffect, useReducer } from 'react'
 import { DataContext } from './DataContext/DataContext'
+import { type Chain, type Token } from '../api/concero/types'
 
 interface SelectionProviderProps {
 	children: ReactNode
@@ -19,50 +20,34 @@ const reducer = (state, action) => {
 	}
 }
 
-const selectedTokens = ({ fromTokens, toTokens, chains }) => {
+const selectedTokens = ({
+	fromTokens,
+	toTokens,
+	chains,
+}: {
+	fromTokens: Token[]
+	toTokens: Token[]
+	chains: Chain[]
+}) => {
 	return {
 		from: {
-			chain: {
-				id: chains[0].id,
-				name: chains[0].name,
-				symbol: chains[0].symbol,
-				logoURI: chains[0].logoURI,
-				explorerURI: chains[0].explorerURI,
-				providers: chains[0].providers,
-			},
-			token: {
-				symbol: fromTokens[0].symbol,
-				address: fromTokens[0].address,
-				decimals: fromTokens[0].decimals,
-				logoURI: fromTokens[0].logoURI,
-				coinGeckoId: fromTokens[0].coinGeckoId,
-			},
+			chain: chains[0],
+			token: fromTokens[0],
 		},
 		to: {
-			chain: {
-				id: chains[1].id,
-				name: chains[1].name,
-				symbol: chains[1].symbol,
-				logoURI: chains[1].logoURI,
-				explorerURI: chains[1].explorerURI,
-				providers: chains[1].providers,
-			},
-			token: {
-				symbol: toTokens[0].symbol,
-				address: toTokens[0].address,
-				decimals: toTokens[0].decimals,
-				logoURI: toTokens[0].logoURI,
-				coinGeckoId: toTokens[0].coinGeckoId,
-			},
+			chain: chains[1],
+			token: toTokens[0],
 		},
 	}
 }
 
-const initArgs = ({ fromTokens, toTokens, chains }) => ({
-	swapCard: selectedTokens({ fromTokens, toTokens, chains }),
-	historyCard: selectedTokens({ fromTokens, toTokens, chains }),
-	newsCard: selectedTokens({ fromTokens, toTokens, chains }),
-})
+const initArgs = ({ fromTokens, toTokens, chains }: { fromTokens: Token[]; toTokens: Token[]; chains: Chain[] }) => {
+	return {
+		swapCard: selectedTokens({ fromTokens, toTokens, chains }),
+		historyCard: selectedTokens({ fromTokens, toTokens, chains }),
+		newsCard: selectedTokens({ fromTokens, toTokens, chains }),
+	}
+}
 
 export const SelectionContext = createContext(null)
 
@@ -72,6 +57,13 @@ export function SelectionProvider({ children }: SelectionProviderProps) {
 		reducer,
 		initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
 	)
+
+	useEffect(() => {
+		selectionDispatch({
+			type: 'SET_SELECTION',
+			payload: initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
+		})
+	}, [tokens])
 
 	return <SelectionContext.Provider value={{ selection, selectionDispatch }}>{children}</SelectionContext.Provider>
 }

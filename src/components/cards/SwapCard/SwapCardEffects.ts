@@ -1,10 +1,10 @@
 import { type Dispatch, type MutableRefObject, useEffect } from 'react'
 import { type Config } from '@wagmi/core'
-import { setHistoryCard } from './handlers/setHistoryCard'
 import { getBalance } from '../../../utils/getBalance'
 import { clearRoutes } from './handlers/handleRoutes'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 import { type SwapAction, type SwapState } from './swapReducer/types'
+import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
 
 interface UseSwapCardEffectsProps {
@@ -32,7 +32,7 @@ export function useSwapCardEffects({
 	}, [from.token.address, to.token.address])
 
 	useEffect(() => {
-		getBalance({ dispatch: swapDispatch, from, address })
+		void getBalance({ dispatch: swapDispatch, from, address })
 	}, [from.token.address, from.chain.id, address])
 
 	useEffect(() => {

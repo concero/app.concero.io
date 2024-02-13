@@ -7,7 +7,6 @@ import { type TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './useTokenAreaReducer/tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
-import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { useTranslation } from 'react-i18next'
 import { TokensModal } from '../../../modals/TokensModal/TokensModal'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
@@ -56,9 +55,9 @@ export const TokenArea: FC<TokenAreaProps> = ({
 		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 	}
 
-	useEffect(() => {
-		if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
-	}, [selection.chain, selection.token])
+	// useEffect(() => {
+	// 	if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
+	// }, [selection.chain, selection.token])
 
 	useEffect(() => {
 		if (selection.amount) {
