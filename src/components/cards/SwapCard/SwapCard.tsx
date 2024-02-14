@@ -1,11 +1,10 @@
-import { type FC, useContext, useRef } from 'react'
+import { type FC, useRef } from 'react'
 import { useAccount } from 'wagmi'
 import { IconSettings2 } from '@tabler/icons-react'
 import { CardHeader } from '../CardHeader/CardHeader'
 import classNames from './SwapCard.module.pcss'
 import { type SwapCardProps } from './types'
 import { useSwapReducer } from './swapReducer/swapReducer'
-import { SelectionContext } from '../../../hooks/SelectionContext'
 import { InsuranceProvider } from './InsuranceContext'
 import { useSwapCardEffects } from './SwapCardEffects'
 import { SwapInput } from './SwapInput/SwapInput'
@@ -18,8 +17,7 @@ import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 
 export const SwapCard: FC<SwapCardProps> = () => {
-	const { selection, selectionDispatch } = useContext(SelectionContext)
-	const [swapState, swapDispatch] = useSwapReducer(selection)
+	const [swapState, swapDispatch] = useSwapReducer()
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef(null)
 
@@ -34,7 +32,6 @@ export const SwapCard: FC<SwapCardProps> = () => {
 	const toggleInsurance = (routeId: string) => {
 		swapDispatch({ type: 'TOGGLE_INSURANCE', payload: routeId })
 	}
-	useSwapCardEffects({ swapState, swapDispatch, address, selectionDispatch, typingTimeoutRef, connector })
 
 	function handleContactSupportGoBackClick() {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
@@ -61,6 +58,8 @@ export const SwapCard: FC<SwapCardProps> = () => {
 			<ContactSupportCard handleGoBackClick={handleContactSupportGoBackClick} infoToCopy={infoToCopy} />
 		),
 	}
+
+	useSwapCardEffects({ swapState, swapDispatch, address, typingTimeoutRef, connector })
 
 	return (
 		<InsuranceProvider toggleInsurance={toggleInsurance}>

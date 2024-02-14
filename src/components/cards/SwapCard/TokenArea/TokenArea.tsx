@@ -1,4 +1,4 @@
-import { type FC, type ForwardedRef, useEffect, useRef } from 'react'
+import { type FC, type ForwardedRef, useRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import classNames from './TokenArea.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -59,11 +59,11 @@ export const TokenArea: FC<TokenAreaProps> = ({
 	// 	if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
 	// }, [selection.chain, selection.token])
 
-	useEffect(() => {
-		if (selection.amount) {
-			handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
-		}
-	}, [state.currentTokenPriceUSD])
+	// useEffect(() => {
+	// 	if (selection.amount) {
+	// 		handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
+	// 	}
+	// }, [state.currentTokenPriceUSD])
 
 	return (
 		<>

@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useContext, useEffect, useReducer } from 'react'
+import { createContext, type ReactNode, useContext, useReducer } from 'react'
 import { DataContext } from './DataContext/DataContext'
 import { type Chain, type Token } from '../api/concero/types'
 
@@ -58,12 +58,12 @@ export function SelectionProvider({ children }: SelectionProviderProps) {
 		initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
 	)
 
-	useEffect(() => {
-		selectionDispatch({
-			type: 'SET_SELECTION',
-			payload: initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
-		})
-	}, [tokens])
+	// useEffect(() => {
+	// 	selectionDispatch({
+	// 		type: 'SET_SELECTION',
+	// 		payload: initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
+	// 	})
+	// }, [tokens])
 
 	return <SelectionContext.Provider value={{ selection, selectionDispatch }}>{children}</SelectionContext.Provider>
 }
