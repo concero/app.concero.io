@@ -88,7 +88,7 @@ export const swapActions: SwapAction = {
 	},
 	UPDATE_LAST_SWAP_STEP: updateLastSwapState,
 	// UPDATE_PREV_RANGO_STEPS: (state: SwapState, action: SwapAction): SwapState => {
-	// 	if  (!state.steps.length) return state
+	// 	if (!state.steps.length) return state
 	// 	if (action.currentTransactionStatus === 'failed') {
 	// 		return updateLastSwapState(state)
 	// 	} else {
