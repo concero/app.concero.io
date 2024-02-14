@@ -16,6 +16,7 @@ export const useSwapReducer = (): [SwapState, Dispatch<SwapAction>] => {
 	const { tokens } = useContext(DataContext)
 	const [state, dispatch] = useReducer(swapReducer, swapInitialState(selection))
 
+	// a crutch that is needed because we initialize swapReducer using selectionContext which has hardcoded tokens
 	useEffect(() => {
 		if (
 			state.from.token.priceUsd === null &&
