@@ -13,7 +13,7 @@ interface ChainItemProps {
 function ChainIcon({ src }: { src: string }) {
 	return (
 		<div className={classNames.chainIcon}>
-			<img src={src} crossOrigin="anonymous" />
+			<img src={src} />
 		</div>
 	)
 }
