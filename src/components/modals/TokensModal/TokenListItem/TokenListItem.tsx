@@ -5,7 +5,7 @@ import { TokenAmount } from '../../../../utils/TokenAmount'
 import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 import { animated, useSpring } from '@react-spring/web'
-import { truncate, truncateWallet } from '../../../../utils/formatting'
+import { truncate, truncateWallet, numberToFormatString } from '../../../../utils/formatting'
 import { IconExternalLink } from '@tabler/icons-react'
 import { easeQuadInOut } from 'd3-ease'
 import { config } from '../../../../constants/config'
@@ -21,7 +21,7 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 	const [isHovered, setIsHovered] = useState(false)
 	const [addressContainerHeight, setAddressContainerHeight] = useState(0)
 	const addressContainerRef = useRef<HTMLDivElement | null>(null)
-
+	const tokenAmount = new TokenAmount(token.balance, token.decimals).rounded
 	const tokenAddressAnimation = useSpring({
 		y: isHovered ? -(addressContainerHeight - 19) : 0,
 		config: { duration: 200, easing: easeQuadInOut },
@@ -76,7 +76,10 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 				{isBalanceLoading ? (
 					<SkeletonLoader className={classNames.balanceSkeleton} />
 				) : token.balance ? (
-					<h4>{new TokenAmount(token.balance, token.decimals).rounded}</h4>
+					<>
+						<h4>{tokenAmount}</h4>
+						<p className={'body1'}>{token.priceUsd ? '$' + numberToFormatString(token.priceUsd * tokenAmount, 2) : null}</p>
+					</>
 				) : null}
 			</div>
 		</div>
