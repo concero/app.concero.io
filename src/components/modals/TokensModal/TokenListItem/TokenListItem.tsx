@@ -75,10 +75,10 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 			<div className={classNames.tokenPriceContainer}>
 				{isBalanceLoading ? (
 					<SkeletonLoader className={classNames.balanceSkeleton} />
-				) : token.balance ? (
+				) : token.balance && token.priceUsd ? (
 					<>
 						<h4>{tokenAmount}</h4>
-						<p className={'body1'}>{token.priceUsd ? '$' + numberToFormatString(token.priceUsd * tokenAmount, 2) : null}</p>
+						<p className={'body1'}>{'$' + numberToFormatString(token.priceUsd * tokenAmount, 2)} </p>
 					</>
 				) : null}
 			</div>
