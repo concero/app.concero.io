@@ -25,7 +25,6 @@ export const useSwapReducer = (): [SwapState, Dispatch<SwapAction>] => {
 			tokens['1'] &&
 			tokens['137']
 		) {
-			console.log('rerender')
 			dispatch({ type: 'SET_TOKEN', payload: { token: tokens['1'][0] }, direction: 'from' })
 			dispatch({ type: 'SET_TOKEN', payload: { token: tokens['137'][0] }, direction: 'to' })
 		}
