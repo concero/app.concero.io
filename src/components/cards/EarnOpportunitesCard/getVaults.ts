@@ -28,7 +28,7 @@ export async function getVaults(
 
 export async function getMoreVaults(
 	earnDispatch: Dispatch<any>,
-	address,
+	address: string,
 	earnState: EarnState,
 	offset: number,
 	limit: number,
