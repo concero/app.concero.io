@@ -1,17 +1,17 @@
-import { type Dispatch, type MutableRefObject, useEffect } from 'react'
+import { type Dispatch, type MutableRefObject, useContext, useEffect } from 'react'
 import { type Config } from '@wagmi/core'
-import { setHistoryCard } from './handlers/setHistoryCard'
 import { getBalance } from '../../../utils/getBalance'
 import { clearRoutes } from './handlers/handleRoutes'
 import { handleFetchRoutes } from './handlers/handleFetchRoutes'
 import { type SwapAction, type SwapState } from './swapReducer/types'
+import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
+import { SelectionContext } from '../../../hooks/SelectionContext'
 
 interface UseSwapCardEffectsProps {
 	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
 	address: string | undefined
-	selectionDispatch: Dispatch<any>
 	typingTimeoutRef: MutableRefObject<number | undefined>
 	connector: NonNullable<Config<TPublicClient>['connector']> | undefined
 }
@@ -20,10 +20,10 @@ export function useSwapCardEffects({
 	swapState,
 	swapDispatch,
 	address,
-	selectionDispatch,
 	typingTimeoutRef,
 	connector,
 }: UseSwapCardEffectsProps) {
+	const { selectionDispatch } = useContext(SelectionContext)
 	const { from, to, settings, selectedRoute } = swapState
 
 	useEffect(() => {

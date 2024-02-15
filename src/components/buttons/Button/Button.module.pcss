@@ -116,7 +116,6 @@
 	background: none;
 	background-color: var(--color-primary-750);
 	border-color: var(--color-primary-650);
-	cursor: not-allowed;
 	pointer-events: none;
 }
 
@@ -124,6 +123,7 @@
 	background: none;
 	background-color: var(--color-primary-750);
 	border-color: var(--color-primary-650);
+	pointer-events: none;
 }
 
 .isDisabled.subtle {
@@ -202,11 +202,4 @@
 
 :global(.dark) .convex:hover {
 	background: var(--color-grey-625);
-}
-
-@media (max-width: 768px) {
-	.button:hover {
-		background-color: unset;
-		border-color: unset;
-	}
 }

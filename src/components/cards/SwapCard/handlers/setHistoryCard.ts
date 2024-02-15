@@ -18,21 +18,11 @@ export const setHistoryCard = (dispatch: Dispatch<any>, from: Direction, to: Dir
 		payload: {
 			from: {
 				chainId: from.chain.id,
-				token: {
-					symbol: from.token.symbol,
-					address: from.token.address,
-					logoURI: from.token.logoURI,
-					decimals: from.token.decimals,
-				},
+				token: from.token,
 			},
 			to: {
 				chainId: to.chain.id,
-				token: {
-					symbol: to.token.symbol,
-					address: to.token.address,
-					logoURI: to.token.logoURI,
-					decimals: to.token.decimals,
-				},
+				token: to.token,
 			},
 		},
 	})

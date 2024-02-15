@@ -16,6 +16,7 @@ export const initialState = {
 				decimals: 18,
 				coinGeckoId: 'ethereum',
 				is_popular: true,
+				priceUsd: null,
 			},
 		],
 		'137': [
@@ -27,6 +28,7 @@ export const initialState = {
 				decimals: 18,
 				coinGeckoId: 'matic-network',
 				is_popular: true,
+				priceUsd: null,
 			},
 		],
 	},
@@ -128,7 +130,7 @@ export function DataProvider({ children }: DataProviderProps) {
 		const [ethTokens, polygonTokens, fetchedChains] = await Promise.all([
 			fetchTokens({ chainId: '1', offset: 0, limit: 15 }),
 			fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
-			fetchChains({ offset: 0, limit: 100 }),
+			fetchChains({ offset: 0, limit: 20 }),
 		])
 
 		setTokens({ '1': ethTokens, '137': polygonTokens })

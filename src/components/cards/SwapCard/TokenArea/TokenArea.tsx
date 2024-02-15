@@ -1,4 +1,4 @@
-import { type FC, type ForwardedRef, useEffect, useRef } from 'react'
+import { type FC, type ForwardedRef, useRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import classNames from './TokenArea.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
@@ -7,7 +7,6 @@ import { type TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './useTokenAreaReducer/tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
-import { getCurrentPriceToken } from './getCurrentPriceToken'
 import { useTranslation } from 'react-i18next'
 import { TokensModal } from '../../../modals/TokensModal/TokensModal'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
@@ -58,15 +57,15 @@ export const TokenArea: FC<TokenAreaProps> = ({
 		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 	}
 
-	useEffect(() => {
-		if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
-	}, [selection.chain, selection.token])
+	// useEffect(() => {
+	// 	if (direction === 'from') void getCurrentPriceToken(selection, tokenAreaDispatch)
+	// }, [selection.chain, selection.token])
 
-	useEffect(() => {
-		if (selection.amount) {
-			handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
-		}
-	}, [state.currentTokenPriceUSD])
+	// useEffect(() => {
+	// 	if (selection.amount) {
+	// 		handleAmountChange({ value: selection.amount, state, dispatch: swapDispatch, direction })
+	// 	}
+	// }, [state.currentTokenPriceUSD])
 
 	return (
 		<>

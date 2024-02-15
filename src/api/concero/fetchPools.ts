@@ -51,6 +51,7 @@ export async function fetchPools(earnState: EarnState, address: string, offset: 
 		'is_outlier=false',
 		`offset=${offset}`,
 		`limit=${limit}`,
+		'sort=tvl',
 	]
 	const filteredUrl = urlParts.filter(part => part !== '')
 	const url = `${filteredUrl.splice(0, 2).join('?')}&${filteredUrl.join('&')}`

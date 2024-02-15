@@ -21,6 +21,7 @@ export interface SwapStateDirection {
 		decimals: number
 		logoURI: string
 		coinGeckoId: string
+		priceUsd: number | null
 	}
 	amount: string
 	amount_usd: number
@@ -103,7 +104,7 @@ export type SwapAction =
 	| { type: 'SET_LOADING'; payload: boolean }
 	| { type: 'SET_SELECTED_ROUTE'; payload: any }
 	| { type: 'SET_CHAIN'; direction: ActionDirection; payload: { chain: Chain } }
-	| { type: 'SET_TOKEN'; direction: ActionDirection; payload: { token: any } }
+	| { type: 'SET_TOKEN'; direction: ActionDirection; payload: { token: Token } }
 	| {
 			type: 'SET_AMOUNT'
 			direction: ActionDirection
