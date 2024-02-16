@@ -6,7 +6,6 @@ import { type Dispatch } from 'react'
 import { type GetLifiRoutes, type GetRangoRoutes, type PopulateRoutes } from './types'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
-import { fetchWalletBalancesOnStepChains } from './fetchWalletBalancesOnStepChains'
 
 const populateRoutes = ({ routes, from, swapDispatch }: PopulateRoutes) => {
 	swapDispatch({
@@ -82,7 +81,7 @@ export const getRoutes = async (
 			swapDispatch({ type: 'SET_IS_NO_ROUTES', status: true })
 		}
 
-		await fetchWalletBalancesOnStepChains(routes, swapDispatch, from.address)
+		// await fetchWalletBalancesOnStepChains(routes, swapDispatch, from.address)
 	} catch (error) {
 		console.error(error)
 	} finally {

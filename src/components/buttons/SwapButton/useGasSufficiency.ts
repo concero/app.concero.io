@@ -1,11 +1,14 @@
 import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
-import { type Fees, type Step } from '../../../types/StandardRoute'
+import { useContext, useEffect, useState } from 'react'
+import { type Fees, type StandardRoute, type Step } from '../../../types/StandardRoute'
 import { TokenAmount } from '../../../utils/TokenAmount'
 import { config } from '../../../constants/config'
 import BigNumber from 'bignumber.js'
-import { type Chain } from '../../../api/concero/types'
+import { type Chain, type TokenBalance } from '../../../api/concero/types'
 import { type GetChainsParams, type GetTokensParams } from '../../../hooks/DataContext/types'
 import { roundNumberByDecimals } from '../../../utils/formatting'
+import { DataContext } from '../../../hooks/DataContext/DataContext'
+import { fetchTokenBalances } from '../../../api/concero/fetchTokenBalances'
 
 export interface GasSufficiency {
 	isInsufficient: boolean
@@ -14,12 +17,14 @@ export interface GasSufficiency {
 	chain?: Chain
 }
 
-export async function getGasSufficiency(
+async function getGasSufficiency(
 	swapState: SwapState,
 	getTokens: (param: GetTokensParams) => Promise<Token[]>,
 	getChains: (param: GetChainsParams) => Promise<Chain[]>,
+	walletBalances: TokenBalance | null,
 ): Promise<GasSufficiency> {
-	const { selectedRoute, walletBalances } = swapState
+	if (!walletBalances) return { isInsufficient: false }
+	const { selectedRoute } = swapState
 
 	for (const steps of selectedRoute?.steps ?? []) {
 		const isNativeToken = steps[0].from.token.address === config.NULL_ADDRESS
@@ -81,4 +86,44 @@ export async function getGasSufficiency(
 	}
 
 	return { isInsufficient: false }
+}
+
+async function getBalances(selectedRoute: StandardRoute, walletAddress: string): Promise<TokenBalance | null> {
+	const dotSeparatedAddresses: Array<`${string}.${string}`> = []
+	const tokensSet = new Set<`${string}.${string}`>()
+
+	selectedRoute.steps?.forEach((steps: Step[]) => {
+		steps.forEach((step: Step) => {
+			step.tool.gas.forEach((gas: Fees) => {
+				const str: `${string}.${string}` = `${gas.asset.chainId}.${gas.asset.address?.toLowerCase()}`
+				if (!tokensSet.has(str)) {
+					tokensSet.add(str)
+					dotSeparatedAddresses.push(str)
+				}
+			})
+		})
+	})
+
+	return await fetchTokenBalances(dotSeparatedAddresses, walletAddress)
+}
+
+export function useGasSufficiency(swapState: SwapState) {
+	const [gasSufficiency, setGasSufficiency] = useState<GasSufficiency | null>(null)
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const { getTokens, getChains } = useContext(DataContext)
+
+	const handleGetGasSufficiency = async () => {
+		if (!swapState.selectedRoute) return
+		setIsLoading(true)
+		const balances = await getBalances(swapState.selectedRoute, swapState.from.address)
+		setGasSufficiency(await getGasSufficiency(swapState, getTokens, getChains, balances))
+		setIsLoading(false)
+	}
+
+	useEffect(() => {
+		if (!swapState.selectedRoute?.id) return
+		void handleGetGasSufficiency()
+	}, [swapState.selectedRoute?.id, swapState.walletBalances])
+
+	return { gasSufficiency, isLoading }
 }

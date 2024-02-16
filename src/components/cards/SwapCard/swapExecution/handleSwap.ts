@@ -43,7 +43,12 @@ export const handleSwap = async ({
 
 	try {
 		if (provider === 'rango') {
-			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'rango_begin_swap', data: originalRoute })
+			void trackEvent({
+				category: category.SwapCard,
+				action: action.BeginSwap,
+				label: 'rango_begin_swap',
+				data: originalRoute,
+			})
 			const response = await executeRangoRoute({
 				route: originalRoute,
 				address,
@@ -53,9 +58,14 @@ export const handleSwap = async ({
 				switchChainHook,
 				getChainByProviderSymbol,
 			})
-			handleRangoResponse(response, swapDispatch)
+			handleRangoResponse(response, swapDispatch, selectedRoute)
 		} else if (provider === 'lifi') {
-			trackEvent({ category: category.SwapCard, action: action.BeginSwap, label: 'lifi_begin_swap', data: originalRoute })
+			void trackEvent({
+				category: category.SwapCard,
+				action: action.BeginSwap,
+				label: 'lifi_begin_swap',
+				data: originalRoute,
+			})
 			updateLifiSteps({ swapDispatch, selectedRoute })
 			const updateRouteHook = (updatedRoute: Route) => {
 				const stdRoute = standardiseLifiRoute(updatedRoute)

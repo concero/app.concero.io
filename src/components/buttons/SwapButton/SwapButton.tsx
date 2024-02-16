@@ -1,4 +1,4 @@
-import { type FC, useContext, useEffect, useState } from 'react'
+import { type FC } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { type SwapButtonProps } from './types'
@@ -6,24 +6,13 @@ import { buttonStyleClass, buttonText, ButtonType, iconComponent, isButtonDisabl
 import { getButtonType } from './getButtonType'
 import { useTranslation } from 'react-i18next'
 import { IconGasStation } from '@tabler/icons-react'
-import { type GasSufficiency, getGasSufficiency } from './getGasSufficiency'
-import { DataContext } from '../../../hooks/DataContext/DataContext'
+import { useGasSufficiency } from './useGasSufficiency'
 
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
-	const { getTokens, getChains } = useContext(DataContext)
-	const [gasSufficiency, setGasSufficiency] = useState<GasSufficiency | null>(null)
 	const { isLoading } = swapState
+	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
 	const buttonType = getButtonType(swapState, isConnected, gasSufficiency?.isInsufficient ?? false)
 	const { t } = useTranslation()
-
-	useEffect(() => {
-		if (!swapState.selectedRoute?.id) {
-			return
-		}
-		getGasSufficiency(swapState, getTokens, getChains).then(res => {
-			setGasSufficiency(res)
-		})
-	}, [swapState.selectedRoute?.id, swapState.walletBalances])
 
 	return (
 		<div className={classNames.container}>

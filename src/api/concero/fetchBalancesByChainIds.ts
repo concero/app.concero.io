@@ -1,12 +1,8 @@
 import { config } from '../../constants/config'
 import { get } from '../client'
+import { type TokenBalance } from './types'
 
-export type ConceroBalanceResponse = Record<string, Token[]>
-
-export async function fetchBalancesByChainIds(
-	chainIds: string[],
-	walletAddress: string,
-): Promise<ConceroBalanceResponse | null> {
+export async function fetchBalancesByChainIds(chainIds: string[], walletAddress: string): Promise<TokenBalance | null> {
 	if (!walletAddress || !chainIds) return null
 	try {
 		const chainIdsString = chainIds.join(',')
