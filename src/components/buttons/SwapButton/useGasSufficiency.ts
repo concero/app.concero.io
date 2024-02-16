@@ -26,6 +26,8 @@ async function getGasSufficiency(
 	if (!walletBalances) return { isInsufficient: false }
 	const { selectedRoute } = swapState
 
+	console.log(walletBalances)
+
 	for (const steps of selectedRoute?.steps ?? []) {
 		const isNativeToken = steps[0].from.token.address === config.NULL_ADDRESS
 		let amountToCheck = new BigNumber(0) // gas and non-included fees in native token
@@ -45,12 +47,14 @@ async function getGasSufficiency(
 		steps.forEach((step: Step) => {
 			step.tool.fees.forEach((fee: Fees) => {
 				if (fee.asset.address?.toLowerCase() === config.NULL_ADDRESS) {
+					console.log(fee)
 					amountToCheck = amountToCheck.plus(fee.amount)
 				}
 			})
 
 			step.tool.gas.forEach((gas: Fees) => {
 				if (gas.asset.address?.toLowerCase() === config.NULL_ADDRESS) {
+					console.log(gas)
 					amountToCheck = amountToCheck.plus(new BigNumber(gas.amount))
 				}
 			})
@@ -70,11 +74,18 @@ async function getGasSufficiency(
 			}
 		}
 
-		const tokenBalanceAmount = new BigNumber(new TokenAmount(tokenBalanceObj.balance, tokenBalanceObj.decimals).formatted)
+		console.log('amountToCheck: ', amountToCheck.toString())
+		console.log('first step amount: ', steps[0].from.token.amount)
+
+		const tokenBalanceAmount = new BigNumber(
+			new TokenAmount(tokenBalanceObj!.balance!, tokenBalanceObj!.decimals).formatted,
+		)
 
 		const insufficientAmount = isNativeToken
 			? amountToCheck.minus(tokenBalanceAmount.minus(steps[0].from.token.amount!))
 			: amountToCheck.minus(tokenBalanceAmount)
+
+		console.log('insufficientAmount: ', insufficientAmount.toString())
 
 		if (insufficientAmount.gt(0)) {
 			return {
@@ -93,15 +104,18 @@ async function getBalances(selectedRoute: StandardRoute, walletAddress: string):
 	const dotSeparatedAddresses: Array<`${string}.${string}`> = []
 	const tokensSet = new Set<`${string}.${string}`>()
 
+	const updateDotSeparatedAddresses = (gas: Fees) => {
+		const str: `${string}.${string}` = `${gas.asset.chainId}.${gas.asset.address?.toLowerCase()}`
+		if (!tokensSet.has(str)) {
+			tokensSet.add(str)
+			dotSeparatedAddresses.push(str)
+		}
+	}
+
 	selectedRoute.steps?.forEach((steps: Step[]) => {
 		steps.forEach((step: Step) => {
-			step.tool.gas.forEach((gas: Fees) => {
-				const str: `${string}.${string}` = `${gas.asset.chainId}.${gas.asset.address?.toLowerCase()}`
-				if (!tokensSet.has(str)) {
-					tokensSet.add(str)
-					dotSeparatedAddresses.push(str)
-				}
-			})
+			step.tool.gas.forEach(updateDotSeparatedAddresses)
+			step.tool.fees.forEach(updateDotSeparatedAddresses)
 		})
 	})
 

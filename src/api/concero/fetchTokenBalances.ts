@@ -20,7 +20,7 @@ export async function fetchTokenBalances(
 			return null
 		}
 
-		return response.data
+		return response.data.data
 	} catch (error) {
 		console.error(error)
 		return null
