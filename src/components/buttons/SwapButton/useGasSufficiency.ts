@@ -37,9 +37,10 @@ async function getGasSufficiency(
 				limit: 1,
 			})
 		).find((token: Token) => token.address.toLowerCase() === config.NULL_ADDRESS)
-		const nativeChain: Chain = (
-			await getChains({ chainId: steps[0].from.chain.id as string, search: '', offset: 0, limit: 1 })
-		)[0]
+
+		const nativeChain: Chain = (await getChains({ offset: 0, limit: 20 })).find((chain: Chain) => {
+			return chain.id === steps[0].from.chain.id
+		})
 
 		steps.forEach((step: Step) => {
 			step.tool.fees.forEach((fee: Fees) => {
@@ -113,7 +114,7 @@ export function useGasSufficiency(swapState: SwapState) {
 	const { getTokens, getChains } = useContext(DataContext)
 
 	const handleGetGasSufficiency = async () => {
-		if (!swapState.selectedRoute) return
+		if (!swapState.selectedRoute || swapState.isLoading) return
 		setIsLoading(true)
 		const balances = await getBalances(swapState.selectedRoute, swapState.from.address)
 		setGasSufficiency(await getGasSufficiency(swapState, getTokens, getChains, balances))
@@ -121,9 +122,8 @@ export function useGasSufficiency(swapState: SwapState) {
 	}
 
 	useEffect(() => {
-		if (!swapState.selectedRoute?.id) return
 		void handleGetGasSufficiency()
-	}, [swapState.selectedRoute?.id, swapState.walletBalances])
+	}, [swapState.selectedRoute?.id])
 
 	return { gasSufficiency, isLoading }
 }

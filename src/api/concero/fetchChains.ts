@@ -17,7 +17,7 @@ export const fetchChains = async ({
 	walletAddress = null,
 }: FetchChains): Promise<Chain[]> => {
 	const url = `${process.env.CONCERO_API_URL}/chains?offset=${offset}${limit ? `&limit=${limit}` : ''}${
-		chainId ? `&chainId=${chainId}` : ''
+		chainId ? `&id=${chainId}` : ''
 	}${search ? `&search=${search}` : ''}&addressPatterns=^(0x)[0-9A-Fa-f]{40}$${
 		walletAddress ? `&wallet_address=${walletAddress}` : ''
 	}`

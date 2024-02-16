@@ -13,7 +13,6 @@ export async function fetchTokenBalances(
 
 		const addresses = dotSeparatedAddresses.join(`&token_address=`)
 		const url = `${config.baseURL}/token_balances?wallet_address=${walletAddress}&token_address=${addresses}`
-		console.log(url)
 		const response = await get(url)
 
 		if (!(response.status === 200)) {
