@@ -1,6 +1,6 @@
 import type * as lifiTypes from '@lifi/sdk/dist/types'
 import { standardizeLifiStep } from './standardizeLifiStep'
-import { type Fees, FeeTypes, type StandardRoute } from '../../types/StandardRoute'
+import { type Fees, FeeTypes, type StandardRoute, type Step } from '../../types/StandardRoute'
 import BigNumber from 'bignumber.js'
 import { addingTokenDecimals, roundNumberByDecimals } from '../../utils/formatting'
 import { type FeeCost, type GasCost } from '@lifi/types/dist/cjs/step'
@@ -114,11 +114,16 @@ export const standardiseLifiRoute = (route: lifiTypes.Route): StandardRoute => (
 		address: route.toAddress,
 	},
 	steps: [
-		...route.steps.map(step =>
-			step.includedSteps.map(includedStep => {
-				return standardizeLifiStep(includedStep)
-			}),
-		),
+		...route.steps.map(step => {
+			const acc: Step[] = []
+			step.includedSteps.forEach((includedStep: lifiTypes.Step) => {
+				const res = standardizeLifiStep(includedStep)
+				if (res) {
+					acc.push(res)
+				}
+			})
+			return acc
+		}),
 	],
 	cost: {
 		total_usd: roundNumberByDecimals(new BigNumber(route.fromAmountUSD).minus(route.toAmountUSD).toString(), 2),

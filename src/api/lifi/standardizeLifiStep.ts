@@ -42,7 +42,11 @@ function getGas(step: lifiTypes.Step): Fees[] | [] {
 	return result ?? []
 }
 
-export function standardizeLifiStep(step: lifiTypes.Step): Step {
+export function standardizeLifiStep(step: lifiTypes.Step): Step | undefined {
+	if (step.type === 'protocol') {
+		return
+	}
+
 	const toDecimals = step.action.toToken.decimals
 
 	return {
