@@ -75,7 +75,9 @@ export async function standardizeRangoBestRoute(
 			},
 			chain: {
 				id: route.from.blockchain,
-				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${rangoChainsMap[route.from.blockchain]}.svg`,
+				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${
+					rangoChainsMap[route.from.blockchain]
+				}.svg`,
 			},
 			address: from.address,
 		},
@@ -105,8 +107,10 @@ export async function standardizeRangoBestRoute(
 		tags: [],
 		slippage_percent: null,
 		transaction_time_seconds:
-			route.result?.swaps.reduce((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ??
-			null,
+			route.result?.swaps.reduce(
+				(result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds,
+				0,
+			) ?? null,
 		originalRoute: route,
 	}
 }

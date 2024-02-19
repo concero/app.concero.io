@@ -32,7 +32,10 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 	}, [containerRef.current?.scrollWidth])
 
 	return (
-		<div className={`${classNames.container} ${isInputStage ? classNames.spaceBetweenContainer : ''}`} ref={containerRef}>
+		<div
+			className={`${classNames.container} ${isInputStage ? classNames.spaceBetweenContainer : ''}`}
+			ref={containerRef}
+		>
 			{isReviewStage ? (
 				<Button
 					variant="black"

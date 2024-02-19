@@ -42,7 +42,11 @@ export async function handleExecuteSwap(
 		if (isApproveNeeded) {
 			manageDispatch({
 				type: 'PUSH_STEP',
-				step: { title: 'Action required', status: 'await', body: 'Please approve the transaction in your wallet' },
+				step: {
+					title: 'Action required',
+					status: 'await',
+					body: 'Please approve the transaction in your wallet',
+				},
 			})
 			await approveToken({
 				signer,

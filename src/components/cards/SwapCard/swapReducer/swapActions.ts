@@ -28,7 +28,8 @@ export const swapActions: SwapAction = {
 		...state,
 		[action.direction]: {
 			...state[action.direction],
-			...(action.payload.amount !== undefined && action.payload.amount !== null && { amount: action.payload.amount }),
+			...(action.payload.amount !== undefined &&
+				action.payload.amount !== null && { amount: action.payload.amount }),
 			...(action.payload.amount_usd !== undefined &&
 				action.payload.amount_usd !== null && { amount_usd: action.payload.amount_usd }),
 		},
@@ -43,7 +44,11 @@ export const swapActions: SwapAction = {
 	}),
 	// SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
 	TOGGLE_INSURANCE: (state, action) => {
-		trackEvent({ category: trackingCategory.SwapCard, action: trackingAction.ToggleInsurance, label: 'toggle_insurance' })
+		trackEvent({
+			category: trackingCategory.SwapCard,
+			action: trackingAction.ToggleInsurance,
+			label: 'toggle_insurance',
+		})
 		return toggleRouteInsurance(state, action.payload)
 	},
 	SET_SWAP_STAGE: (state, action) => {
@@ -111,7 +116,11 @@ export const swapActions: SwapAction = {
 	},
 	SET_IS_DESTINATION_ADDRESS_VISIBLE: (state: SwapState, action: SwapAction) => {
 		if (action.status === false) {
-			return { ...state, isDestinationAddressVisible: action.status, to: { ...state.to, address: state.from.address } }
+			return {
+				...state,
+				isDestinationAddressVisible: action.status,
+				to: { ...state.to, address: state.from.address },
+			}
 		}
 		return { ...state, isDestinationAddressVisible: action.status }
 	},

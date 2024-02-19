@@ -45,7 +45,14 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 			<div className={classNames.firsChainsLineContainer}>
 				{fistLineChains.map((chain: Chain) => {
 					const isSelected = selectedChain?.id === chain.id
-					return <ChainListItem key={chain._id} chain={chain} isSelected={isSelected} onSelect={setSelectedChain} />
+					return (
+						<ChainListItem
+							key={chain._id}
+							chain={chain}
+							isSelected={isSelected}
+							onSelect={setSelectedChain}
+						/>
+					)
 				})}
 				{chains.length - 7 > 0 ? (
 					<Button

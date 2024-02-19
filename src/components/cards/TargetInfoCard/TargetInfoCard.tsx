@@ -38,7 +38,11 @@ export function TargetInfoCard() {
 
 	function WrappedButton() {
 		return (
-			<Button variant={'black'} size={'sm'} rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}>
+			<Button
+				variant={'black'}
+				size={'sm'}
+				rightIcon={<IconChevronDown size={16} color={colors.text.secondary} />}
+			>
 				<p className={'body1'}>{cardTarget}</p>
 			</Button>
 		)

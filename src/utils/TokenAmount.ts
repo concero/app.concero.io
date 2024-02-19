@@ -44,10 +44,14 @@ export class TokenAmount {
 		const decimalsDiff = amount1.decimals - amount2.decimals
 
 		if (decimalsDiff > 0) {
-			amount2.rawAmount = new BigNumber(amount2.rawAmount).multipliedBy(BigNumber(10).pow(decimalsDiff)).toString()
+			amount2.rawAmount = new BigNumber(amount2.rawAmount)
+				.multipliedBy(BigNumber(10).pow(decimalsDiff))
+				.toString()
 			amount2.decimals = amount1.decimals
 		} else if (decimalsDiff < 0) {
-			amount1.rawAmount = new BigNumber(amount1.rawAmount).multipliedBy(BigNumber(10).pow(-decimalsDiff)).toString()
+			amount1.rawAmount = new BigNumber(amount1.rawAmount)
+				.multipliedBy(BigNumber(10).pow(-decimalsDiff))
+				.toString()
 			amount1.decimals = amount2.decimals
 		}
 	}

@@ -46,7 +46,9 @@ export function standardizeRangoBestRouteStep(step: SwapResult): Step {
 			},
 			chain: {
 				id: rangoChainsMap[step.from.blockchain],
-				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${rangoChainsMap[step.from.blockchain]}.svg`,
+				logo_uri: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/${
+					rangoChainsMap[step.from.blockchain]
+				}.svg`,
 			},
 			address: step.from.address,
 		},

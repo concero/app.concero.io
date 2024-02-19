@@ -16,7 +16,9 @@ interface PredictionItemCardProps {
 }
 
 const PredictionItemCard: FC<PredictionItemCardProps> = ({ predictedClass, value }) => {
-	const containerClasses = `${classNames.itemContainer} ${predictedClass === 'Down' ? classNames.down : classNames.up}`
+	const containerClasses = `${classNames.itemContainer} ${
+		predictedClass === 'Down' ? classNames.down : classNames.up
+	}`
 
 	return (
 		<div className={`card ${containerClasses}`}>
@@ -47,7 +49,10 @@ export const PredictionCard: FC<PredictionCardProps> = ({ earnState }) => {
 		<div className={classNames.container}>
 			<CardHeader title="Predictions" />
 			<div className={classNames.innerContainer}>
-				<PredictionItemCard predictedClass={predictions.predictedClass} value={predictions.predictedProbability} />
+				<PredictionItemCard
+					predictedClass={predictions.predictedClass}
+					value={predictions.predictedProbability}
+				/>
 				{earnState.selectedVault.data.il_risk === 'yes' ? <RiskCard /> : null}
 			</div>
 		</div>

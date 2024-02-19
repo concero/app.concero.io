@@ -14,7 +14,12 @@ export function RouteDetailsModal({ isOpen, setIsOpen, selectedRoute }: RouteDet
 	const { t } = useTranslation()
 
 	return (
-		<CardModal isOpen={isOpen} setIsOpen={setIsOpen} title={t('swapCard.routeDetails')} className={classNames.modalBg}>
+		<CardModal
+			isOpen={isOpen}
+			setIsOpen={setIsOpen}
+			title={t('swapCard.routeDetails')}
+			className={classNames.modalBg}
+		>
 			<div className={classNames.container}>
 				{selectedRoute.steps?.map((step, index) => (
 					<StepCard key={index.toString()} innerSteps={step} index={index} />

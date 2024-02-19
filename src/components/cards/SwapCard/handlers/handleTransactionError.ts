@@ -24,7 +24,11 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 	} else if (e.toString().toLowerCase().includes('insufficient')) {
 		swapDispatch({
 			type: 'APPEND_SWAP_STEP',
-			payload: { title: 'Insufficient balance', body: 'Please check your balance and try again', status: 'error' },
+			payload: {
+				title: 'Insufficient balance',
+				body: 'Please check your balance and try again',
+				status: 'error',
+			},
 		})
 		trackEvent({
 			category: category.SwapCard,
@@ -32,7 +36,12 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 			label: 'swap_failed',
 			data: { provider: selectedRoute.provider, selectedRoute },
 		})
-		logTxToDB({ tx_id: selectedRoute.id, status: 'failure', provider: selectedRoute.provider, tx_data: selectedRoute })
+		logTxToDB({
+			tx_id: selectedRoute.id,
+			status: 'failure',
+			provider: selectedRoute.provider,
+			tx_data: selectedRoute,
+		})
 	} else {
 		swapDispatch({
 			type: 'APPEND_SWAP_STEP',
@@ -44,7 +53,12 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 			label: 'swap_failed',
 			data: { provider: selectedRoute.provider, selectedRoute },
 		})
-		logTxToDB({ tx_id: selectedRoute.id, status: 'failure', provider: selectedRoute.provider, tx_data: selectedRoute })
+		logTxToDB({
+			tx_id: selectedRoute.id,
+			status: 'failure',
+			provider: selectedRoute.provider,
+			tx_data: selectedRoute,
+		})
 	}
 
 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })

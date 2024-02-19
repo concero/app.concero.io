@@ -40,7 +40,12 @@ export const NewsCard: FC<NewsCardProps> = () => {
 		dispatch({ type: 'SET_SELECTED_TOKEN', payload: token })
 		dispatch({ type: 'SET_MODAL_VISIBILITY', payload: false })
 		dispatch({ type: 'SET_TIMESTAMP', payload: 0 })
-		trackEvent({ category: category.NewsCard, action: action.SelectToken, label: 'NewsCard select token', data: token })
+		trackEvent({
+			category: category.NewsCard,
+			action: action.SelectToken,
+			label: 'NewsCard select token',
+			data: token,
+		})
 	}
 
 	const handleShowModal = async () => {
@@ -62,7 +67,11 @@ export const NewsCard: FC<NewsCardProps> = () => {
 					isLoading={isLoading}
 					onEndReached={() => {
 						getMoreNews(data, dispatch, selectedToken, timestamp, addNotification)
-						trackEvent({ category: category.NewsCard, action: action.ScrollToEnd, label: 'NewsCard scroll to end' })
+						trackEvent({
+							category: category.NewsCard,
+							action: action.ScrollToEnd,
+							label: 'NewsCard scroll to end',
+						})
 					}}
 				/>
 			</div>

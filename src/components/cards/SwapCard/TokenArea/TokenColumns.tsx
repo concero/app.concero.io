@@ -4,7 +4,9 @@ import { truncate } from '../../../../utils/formatting'
 export const TokenColumns = [
 	{
 		columnTitle: 'Symbol',
-		cellComponent: (token: { name: string; symbol: string; logoURI: string }) => <CryptoSymbol src={token.logoURI} />,
+		cellComponent: (token: { name: string; symbol: string; logoURI: string }) => (
+			<CryptoSymbol src={token.logoURI} />
+		),
 	},
 	{
 		columnTitle: 'Name',

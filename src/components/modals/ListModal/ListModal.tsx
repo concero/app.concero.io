@@ -69,7 +69,14 @@ export const ListModal: FC<MultiSelectModalProps> = ({
 				<div className={classNames.itemsContainer} onScroll={handleScroll}>
 					{items.map((item, index) => {
 						const isSelected = selectedItems.includes(item)
-						return <RenderItem key={item._id ?? index} item={item} isSelected={isSelected} onSelect={onSelect} />
+						return (
+							<RenderItem
+								key={item._id ?? index}
+								item={item}
+								isSelected={isSelected}
+								onSelect={onSelect}
+							/>
+						)
 					})}
 				</div>
 			</div>

@@ -29,7 +29,11 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 
 	const handleHelpButtonClick = () => {
 		setIsFeedbackModalOpened(prev => !prev)
-		trackEvent({ category: category.Header, action: action.ToggleFeedbackModalVisible, label: 'toggle_feedback_modal' })
+		trackEvent({
+			category: category.Header,
+			action: action.ToggleFeedbackModalVisible,
+			label: 'toggle_feedback_modal',
+		})
 	}
 
 	const ComingSoon = WithTooltip({

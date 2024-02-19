@@ -146,7 +146,10 @@ export function BurgerMenu() {
 				</animated.div>
 			</animated.div>
 			<LanguageModal show={isLanguageModalVisible} setShow={setIsLanguageModalVisible} />
-			<ContactSupportModal isShow={isContactSupportModalVisible} setIsShow={setIsModalContactSupportModalVisible} />
+			<ContactSupportModal
+				isShow={isContactSupportModalVisible}
+				setIsShow={setIsModalContactSupportModalVisible}
+			/>
 		</div>
 	)
 }
