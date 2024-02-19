@@ -11,7 +11,12 @@ import { useGasSufficiency } from './useGasSufficiency'
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
 	const { isLoading } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
-	const buttonType = getButtonType(swapState, isConnected, gasSufficiency?.isInsufficient ?? false)
+	const buttonType = getButtonType(
+		swapState,
+		isConnected,
+		gasSufficiency?.isInsufficient ?? false,
+		isFetchBalancesLoading,
+	)
 	const { t } = useTranslation()
 
 	return (
