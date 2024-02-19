@@ -106,7 +106,11 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 				{modalType === ModalType.input ? (
 					<div className={classNames.areaContainer}>
 						<div className={classNames.row}>
-							<Button size="sm" variant={swapType === SwapType.stake ? 'primary' : 'subtle'} onClick={setStakeType}>
+							<Button
+								size="sm"
+								variant={swapType === SwapType.stake ? 'primary' : 'subtle'}
+								onClick={setStakeType}
+							>
 								{t('button.stake')}
 							</Button>
 							<Button
@@ -125,7 +129,12 @@ export function ManageModal({ isOpen, setIsOpen, earnState }: ManageModalProps) 
 							swapType={swapType}
 							balance={manageState.balance}
 						/>
-						<SelectArea selection={manageState.to} direction="to" dispatch={manageDispatch} swapType={swapType} />
+						<SelectArea
+							selection={manageState.to}
+							direction="to"
+							dispatch={manageDispatch}
+							swapType={swapType}
+						/>
 						<Details manageState={manageState} />
 						<StakeButton manageState={manageState} manageDispatch={manageDispatch} />
 					</div>

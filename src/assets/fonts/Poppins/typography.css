@@ -2,8 +2,9 @@
 	font-family: 'Poppins';
 	src: url('Poppins-ExtraLight.eot');
 	src: local('Poppins ExtraLight'), local('Poppins-ExtraLight'),
-		url('Poppins-ExtraLight.eot?#iefix') format('embedded-opentype'), url('Poppins-ExtraLight.woff2') format('woff2'),
-		url('Poppins-ExtraLight.woff') format('woff'), url('Poppins-ExtraLight.ttf') format('truetype');
+		url('Poppins-ExtraLight.eot?#iefix') format('embedded-opentype'),
+		url('Poppins-ExtraLight.woff2') format('woff2'), url('Poppins-ExtraLight.woff') format('woff'),
+		url('Poppins-ExtraLight.ttf') format('truetype');
 	font-weight: 200;
 	font-style: normal;
 }
@@ -22,8 +23,9 @@
 	font-family: 'Poppins';
 	src: url('Poppins-LightItalic.eot');
 	src: local('Poppins Light Italic'), local('Poppins-LightItalic'),
-		url('Poppins-LightItalic.eot?#iefix') format('embedded-opentype'), url('Poppins-LightItalic.woff2') format('woff2'),
-		url('Poppins-LightItalic.woff') format('woff'), url('Poppins-LightItalic.ttf') format('truetype');
+		url('Poppins-LightItalic.eot?#iefix') format('embedded-opentype'),
+		url('Poppins-LightItalic.woff2') format('woff2'), url('Poppins-LightItalic.woff') format('woff'),
+		url('Poppins-LightItalic.ttf') format('truetype');
 	font-weight: 300;
 	font-style: italic;
 }
@@ -42,9 +44,9 @@
 @font-face {
 	font-family: 'Poppins';
 	src: url('Poppins-Regular.eot');
-	src: local('Poppins Regular'), local('Poppins-Regular'), url('Poppins-Regular.eot?#iefix') format('embedded-opentype'),
-		url('Poppins-Regular.woff2') format('woff2'), url('Poppins-Regular.woff') format('woff'),
-		url('Poppins-Regular.ttf') format('truetype');
+	src: local('Poppins Regular'), local('Poppins-Regular'),
+		url('Poppins-Regular.eot?#iefix') format('embedded-opentype'), url('Poppins-Regular.woff2') format('woff2'),
+		url('Poppins-Regular.woff') format('woff'), url('Poppins-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -84,8 +86,9 @@
 	font-family: 'Poppins';
 	src: url('Poppins-MediumItalic.eot');
 	src: local('Poppins Medium Italic'), local('Poppins-MediumItalic'),
-		url('Poppins-MediumItalic.eot?#iefix') format('embedded-opentype'), url('Poppins-MediumItalic.woff2') format('woff2'),
-		url('Poppins-MediumItalic.woff') format('woff'), url('Poppins-MediumItalic.ttf') format('truetype');
+		url('Poppins-MediumItalic.eot?#iefix') format('embedded-opentype'),
+		url('Poppins-MediumItalic.woff2') format('woff2'), url('Poppins-MediumItalic.woff') format('woff'),
+		url('Poppins-MediumItalic.ttf') format('truetype');
 	font-weight: 500;
 	font-style: italic;
 }
@@ -134,8 +137,9 @@
 	font-family: 'Poppins';
 	src: url('Poppins-ThinItalic.eot');
 	src: local('Poppins Thin Italic'), local('Poppins-ThinItalic'),
-		url('Poppins-ThinItalic.eot?#iefix') format('embedded-opentype'), url('Poppins-ThinItalic.woff2') format('woff2'),
-		url('Poppins-ThinItalic.woff') format('woff'), url('Poppins-ThinItalic.ttf') format('truetype');
+		url('Poppins-ThinItalic.eot?#iefix') format('embedded-opentype'),
+		url('Poppins-ThinItalic.woff2') format('woff2'), url('Poppins-ThinItalic.woff') format('woff'),
+		url('Poppins-ThinItalic.ttf') format('truetype');
 	font-weight: 100;
 	font-style: italic;
 }
@@ -144,8 +148,9 @@
 	font-family: 'Poppins';
 	src: url('Poppins-BlackItalic.eot');
 	src: local('Poppins Black Italic'), local('Poppins-BlackItalic'),
-		url('Poppins-BlackItalic.eot?#iefix') format('embedded-opentype'), url('Poppins-BlackItalic.woff2') format('woff2'),
-		url('Poppins-BlackItalic.woff') format('woff'), url('Poppins-BlackItalic.ttf') format('truetype');
+		url('Poppins-BlackItalic.eot?#iefix') format('embedded-opentype'),
+		url('Poppins-BlackItalic.woff2') format('woff2'), url('Poppins-BlackItalic.woff') format('woff'),
+		url('Poppins-BlackItalic.ttf') format('truetype');
 	font-weight: 900;
 	font-style: italic;
 }
@@ -154,8 +159,9 @@
 	font-family: 'Poppins';
 	src: url('Poppins-BoldItalic.eot');
 	src: local('Poppins Bold Italic'), local('Poppins-BoldItalic'),
-		url('Poppins-BoldItalic.eot?#iefix') format('embedded-opentype'), url('Poppins-BoldItalic.woff2') format('woff2'),
-		url('Poppins-BoldItalic.woff') format('woff'), url('Poppins-BoldItalic.ttf') format('truetype');
+		url('Poppins-BoldItalic.eot?#iefix') format('embedded-opentype'),
+		url('Poppins-BoldItalic.woff2') format('woff2'), url('Poppins-BoldItalic.woff') format('woff'),
+		url('Poppins-BoldItalic.ttf') format('truetype');
 	font-weight: bold;
 	font-style: italic;
 }

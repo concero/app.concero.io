@@ -35,7 +35,12 @@ export function SelectRouteModal({ swapState, swapDispatch, isOpen, setIsOpen }:
 			<div className={classNames.routesContainer}>
 				{swapState.routes.map((route: StandardRoute) => {
 					return (
-						<RouteCard key={route.id} route={route} isSelected={selectedRoute?.id === route.id} onSelect={handleSelect} />
+						<RouteCard
+							key={route.id}
+							route={route}
+							isSelected={selectedRoute?.id === route.id}
+							onSelect={handleSelect}
+						/>
 					)
 				})}
 			</div>

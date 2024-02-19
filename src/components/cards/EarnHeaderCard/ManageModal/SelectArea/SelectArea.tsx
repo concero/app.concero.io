@@ -96,7 +96,11 @@ export function SelectArea({ selection, direction, dispatch, balance = null, swa
 						isDisabled={direction === 'to'}
 					/>
 					<h5
-						className={selection.amount_usd === null || selection.amount_usd === undefined ? classNames.invisible : ''}
+						className={
+							selection.amount_usd === null || selection.amount_usd === undefined
+								? classNames.invisible
+								: ''
+						}
 					>{`$${numberToFormatString(Number(selection.amount_usd), 2)}`}</h5>
 				</div>
 				<Button

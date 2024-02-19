@@ -95,7 +95,8 @@ export const en = {
 			contractSupport: 'Contact support',
 			copyDebugInfo: 'Copy debug info',
 			dropUsAMessage: 'Drop us a message',
-			txFailedMessage: 'We apologise that you had issues with your transaction. We will do our best to resolve the issue.',
+			txFailedMessage:
+				'We apologise that you had issues with your transaction. We will do our best to resolve the issue.',
 		},
 		manageModal: {
 			title: 'Manage position',

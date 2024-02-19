@@ -59,8 +59,12 @@ export const TokensCard: FC<TokensCardProps> = ({ earnState }) => {
 		const tokens = []
 		if (input_tokens) {
 			input_tokens.forEach((token, index) => {
-				if (token === null) tokens.push(<TokenCard key={index} name="Unknown" symbol="Unknown" logoURI={null} />)
-				else tokens.push(<TokenCard key={token.name} name={token.name} symbol={token.symbol} logoURI={token.logoURI} />)
+				if (token === null)
+					tokens.push(<TokenCard key={index} name="Unknown" symbol="Unknown" logoURI={null} />)
+				else
+					tokens.push(
+						<TokenCard key={token.name} name={token.name} symbol={token.symbol} logoURI={token.logoURI} />,
+					)
 			})
 		}
 		return tokens

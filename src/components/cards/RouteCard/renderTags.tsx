@@ -43,12 +43,16 @@ export const renderTags = (
 			) : null}
 			{route.transaction_time_seconds ? (
 				<Tag color="transparent" leftIcon={<IconClock size={20} color={getIconColor()} />}>
-					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{secondsConverter(route.transaction_time_seconds)}</h5>
+					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+						{secondsConverter(route.transaction_time_seconds)}
+					</h5>
 				</Tag>
 			) : null}
 			{route.slippage_percent ? (
 				<Tag color="transparent" leftIcon={<IconArrowWaveRightUp size={20} color={getIconColor()} />}>
-					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>{numberToFormatString(route.slippage_percent)}%</h5>
+					<h5 className={`${classNames.bodyColor} ${getTextColor()}`}>
+						{numberToFormatString(route.slippage_percent)}%
+					</h5>
 				</Tag>
 			) : null}
 			{route.cost.total_fee_usd || route.cost.total_fee_usd ? (

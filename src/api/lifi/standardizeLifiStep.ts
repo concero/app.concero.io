@@ -83,7 +83,8 @@ export function standardizeLifiStep(step: lifiTypes.Step): Step | undefined {
 			estimated_execution_time_seconds: step.estimate.executionDuration,
 			slippage_limit: step.action.slippage,
 			fees: getFees(step),
-			fees_usd: step.estimate.feeCosts?.reduce((acc: number, fee: FeeCost) => acc + Number(fee.amountUSD), 0) ?? 0,
+			fees_usd:
+				step.estimate.feeCosts?.reduce((acc: number, fee: FeeCost) => acc + Number(fee.amountUSD), 0) ?? 0,
 			gas: getGas(step),
 			gas_usd: step.estimate.gasCosts?.reduce((acc: number, gas: GasCost) => acc + Number(gas.amountUSD), 0) ?? 0,
 			logo_uri: step.toolDetails.logoURI,

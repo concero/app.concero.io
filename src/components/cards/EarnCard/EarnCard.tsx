@@ -35,7 +35,9 @@ export function EarnCard({ isSelected, vault, onClick }: StakingCardProps) {
 					<div className={classNames.headerSideContainer}>
 						<Avatar src={vault.project?.logoURI} size="md" />
 						<h5>{`${numberToFormatString(vault.data?.apy, 2)}%`}</h5>
-						{vault.data?.category ? <CategoryTag category={vault.data?.category} isSelected={isSelected} /> : null}
+						{vault.data?.category ? (
+							<CategoryTag category={vault.data?.category} isSelected={isSelected} />
+						) : null}
 					</div>
 					{/* <div className={classNames.headerSideContainer}>{renderTags({ vault, isSelected })}</div> */}
 				</div>

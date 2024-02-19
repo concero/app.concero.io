@@ -50,7 +50,12 @@ export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSup
 					<Button
 						leftIcon={<IconBrandDiscord size={16} />}
 						className={classNames.f1}
-						onClick={() => window.open('https://discord.com/channels/1155792755105214535/1156171906228170795', '_blank')}
+						onClick={() =>
+							window.open(
+								'https://discord.com/channels/1155792755105214535/1156171906228170795',
+								'_blank',
+							)
+						}
 						variant="secondary"
 					>
 						{t('socialMedia.discord')}

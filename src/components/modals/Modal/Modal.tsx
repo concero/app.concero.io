@@ -58,7 +58,11 @@ export const Modal: FC<ModalProps> = ({ title = '', show, setShow, children, cla
 			>
 				{transitions((style, item) =>
 					item ? (
-						<animated.div style={style} className={`${classNames.container} ${className}`} onClick={stopPropagation}>
+						<animated.div
+							style={style}
+							className={`${classNames.container} ${className}`}
+							onClick={stopPropagation}
+						>
 							{isHeaderVisible ? (
 								<ModalHeader
 									title={title}

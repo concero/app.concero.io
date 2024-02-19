@@ -79,7 +79,9 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 					<>
 						<h4>{tokenAmount}</h4>
 						{token.priceUsd && token.priceUsd > 0 ? (
-							<p className={'body1'}>{'$' + numberToFormatString(token.priceUsd * Number(tokenAmount), 2, true)} </p>
+							<p className={'body1'}>
+								{'$' + numberToFormatString(token.priceUsd * Number(tokenAmount), 2, true)}{' '}
+							</p>
 						) : null}
 					</>
 				) : null}

@@ -69,8 +69,12 @@ export const Table: FC<TableProps> = ({
 					{isHeaderVisible && <TableHeader columns={columns} />}
 					<tbody className="striped">
 						{animate
-							? transitions((styles, item) => <TableRow style={styles} item={item} columns={columns} onClick={onClick} />)
-							: items.map((item, index) => <TableRow key={index} item={item} columns={columns} onClick={onClick} />)}
+							? transitions((styles, item) => (
+									<TableRow style={styles} item={item} columns={columns} onClick={onClick} />
+							  ))
+							: items.map((item, index) => (
+									<TableRow key={index} item={item} columns={columns} onClick={onClick} />
+							  ))}
 					</tbody>
 				</table>
 			)}

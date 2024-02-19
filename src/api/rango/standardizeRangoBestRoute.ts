@@ -100,8 +100,10 @@ export async function standardizeRangoBestRoute(
 		tags: [],
 		slippage_percent: null,
 		transaction_time_seconds:
-			route.result?.swaps.reduce((result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds, 0) ??
-			null,
+			route.result?.swaps.reduce(
+				(result: number, item: SwapResult): number => result + item.estimatedTimeInSeconds,
+				0,
+			) ?? null,
 		originalRoute: route,
 	}
 }

@@ -56,7 +56,10 @@ function DailyInfo({ protocol }: { protocol: Protocol }) {
 	return (
 		<div className={classNames.dailyContainer}>
 			<InfoCard title={t('protocolModal.dailyFees')} value={formatNumber(protocol.dailyFees)} />
-			<InfoCard title={t('protocolModal.dailySupplyRevenue')} value={formatNumber(protocol.dailySupplySideRevenue)} />
+			<InfoCard
+				title={t('protocolModal.dailySupplyRevenue')}
+				value={formatNumber(protocol.dailySupplySideRevenue)}
+			/>
 		</div>
 	)
 }

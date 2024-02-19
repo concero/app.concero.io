@@ -15,7 +15,11 @@ export const WalletButton = () => {
 
 	function handleClick() {
 		void open()
-		void trackEvent({ category: category.Wallet, action: action.ClickConnectWallet, label: 'Clicked Connect Wallet' })
+		void trackEvent({
+			category: category.Wallet,
+			action: action.ClickConnectWallet,
+			label: 'Clicked Connect Wallet',
+		})
 	}
 
 	const getStatus = () => {
@@ -28,11 +32,16 @@ export const WalletButton = () => {
 	return (
 		<Button
 			variant={isConnected ? 'subtle' : 'primary'}
-			leftIcon={<IconWallet size={16} color={isConnected ? 'var(--color-grey-500)' : 'var(--color-base-white)'} />}
+			leftIcon={
+				<IconWallet size={16} color={isConnected ? 'var(--color-grey-500)' : 'var(--color-base-white)'} />
+			}
 			size="sm"
 			onClick={handleClick}
 		>
-			<p className={`${classNames.buttonFont} ${!isConnected ? classNames.buttonText : 'body1'}`}> {getStatus()}</p>
+			<p className={`${classNames.buttonFont} ${!isConnected ? classNames.buttonText : 'body1'}`}>
+				{' '}
+				{getStatus()}
+			</p>
 		</Button>
 	)
 }

@@ -40,9 +40,15 @@ export function InsuranceCard({ swapState, swapDispatch }) {
 					<Button
 						leftIcon={
 							isInfoVisible ? (
-								<IconChevronUp size={16} color={isChecked ? 'var(--color-green-500)' : 'var(--color-text-secondary)'} />
+								<IconChevronUp
+									size={16}
+									color={isChecked ? 'var(--color-green-500)' : 'var(--color-text-secondary)'}
+								/>
 							) : (
-								<IconChevronDown size={16} color={isChecked ? 'var(--color-green-500)' : 'var(--color-text-secondary)'} />
+								<IconChevronDown
+									size={16}
+									color={isChecked ? 'var(--color-green-500)' : 'var(--color-text-secondary)'}
+								/>
 							)
 						}
 						variant="black"
@@ -54,7 +60,12 @@ export function InsuranceCard({ swapState, swapDispatch }) {
 			<animated.div className={classNames.stepsContainer} style={springProps} ref={infoContainerRef}>
 				<p className={`body1 ${classNames.infoText}`}>
 					{'Insure your assets with '}
-					<a href="https://www.insurace.io" target="_blank" style={{ textDecoration: 'underline' }} rel="noreferrer">
+					<a
+						href="https://www.insurace.io"
+						target="_blank"
+						style={{ textDecoration: 'underline' }}
+						rel="noreferrer"
+					>
 						InsurAce
 					</a>
 					.

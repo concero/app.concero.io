@@ -74,7 +74,8 @@ export const tr = {
 			contractSupport: 'Destekle iletişime geç',
 			copyDebugInfo: 'İşlem bilgisini kopyala',
 			dropUsAMessage: 'Bize bir mesaj bırakın',
-			txFailedMessage: 'İşleminizde sorun yaşadığınız için özür dileriz. Sorunu çözmek için elimizden geleni yapacağız.',
+			txFailedMessage:
+				'İşleminizde sorun yaşadığınız için özür dileriz. Sorunu çözmek için elimizden geleni yapacağız.',
 		},
 		manageModal: {
 			title: 'Pozisyon yönetimi',

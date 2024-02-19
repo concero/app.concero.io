@@ -3,7 +3,9 @@ import { CryptoSymbol } from '../../../tags/CryptoSymbol/CryptoSymbol'
 export const ChainColumns = [
 	{
 		columnTitle: 'Symbol',
-		cellComponent: (chain: { name: string; symbol: string }) => <CryptoSymbol src={chain.logoURI} symbol={chain.coin} />,
+		cellComponent: (chain: { name: string; symbol: string }) => (
+			<CryptoSymbol src={chain.logoURI} symbol={chain.coin} />
+		),
 	},
 	{
 		columnTitle: 'Name',

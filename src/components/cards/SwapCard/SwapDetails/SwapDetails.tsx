@@ -33,7 +33,11 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, swapDispatch }) =
 				<RouteButton
 					selectedRoute={selectedRoute}
 					onClick={() => {
-						void trackEvent({ action: action.OpenRoutesModal, category: category.SwapCard, label: 'route_modal_opened' })
+						void trackEvent({
+							action: action.OpenRoutesModal,
+							category: category.SwapCard,
+							label: 'route_modal_opened',
+						})
 						setIsSelectRouteModalVisible(true)
 					}}
 				/>

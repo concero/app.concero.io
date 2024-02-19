@@ -18,7 +18,8 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
 	const { address, isConnected } = useAccount()
 	const isInsuranceCardVisible =
-		swapState.selectedRoute?.insurance?.state === 'INSURABLE' || swapState.selectedRoute?.insurance?.state === 'INSURED'
+		swapState.selectedRoute?.insurance?.state === 'INSURABLE' ||
+		swapState.selectedRoute?.insurance?.state === 'INSURED'
 	const walletClient = useWalletClient()
 	const { switchNetworkAsync } = useSwitchNetwork()
 
@@ -48,8 +49,18 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.tokenAreasContainer}>
-				<TokenArea direction="from" selection={swapState.from} swapDispatch={swapDispatch} balance={swapState.balance} />
-				<TokenArea direction="to" selection={swapState.to} swapDispatch={swapDispatch} isLoading={swapState.isLoading} />
+				<TokenArea
+					direction="from"
+					selection={swapState.from}
+					swapDispatch={swapDispatch}
+					balance={swapState.balance}
+				/>
+				<TokenArea
+					direction="to"
+					selection={swapState.to}
+					swapDispatch={swapDispatch}
+					isLoading={swapState.isLoading}
+				/>
 				<div
 					className={classNames.arrowsIcon}
 					onClick={() => {
@@ -68,7 +79,14 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 				swapState={swapState}
 				isConnected={isConnected}
 				onClick={async () => {
-					await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
+					await handleSwap({
+						swapState,
+						swapDispatch,
+						address,
+						switchChainHook,
+						getChainByProviderSymbol,
+						getSigner,
+					})
 				}}
 			/>
 		</div>

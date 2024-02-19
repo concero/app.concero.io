@@ -53,8 +53,9 @@
 	font-family: 'Axiforma';
 	src: url('Axiforma-BlackItalic.eot');
 	src: local('Axiforma Black Italic'), local('Axiforma-BlackItalic'),
-		url('Axiforma-BlackItalic.eot?#iefix') format('embedded-opentype'), url('Axiforma-BlackItalic.woff2') format('woff2'),
-		url('Axiforma-BlackItalic.woff') format('woff'), url('Axiforma-BlackItalic.ttf') format('truetype');
+		url('Axiforma-BlackItalic.eot?#iefix') format('embedded-opentype'),
+		url('Axiforma-BlackItalic.woff2') format('woff2'), url('Axiforma-BlackItalic.woff') format('woff'),
+		url('Axiforma-BlackItalic.ttf') format('truetype');
 	font-weight: 900;
 	font-style: italic;
 }
@@ -72,9 +73,9 @@
 @font-face {
 	font-family: 'Axiforma';
 	src: url('Axiforma-Medium.eot');
-	src: local('Axiforma Medium'), local('Axiforma-Medium'), url('Axiforma-Medium.eot?#iefix') format('embedded-opentype'),
-		url('Axiforma-Medium.woff2') format('woff2'), url('Axiforma-Medium.woff') format('woff'),
-		url('Axiforma-Medium.ttf') format('truetype');
+	src: local('Axiforma Medium'), local('Axiforma-Medium'),
+		url('Axiforma-Medium.eot?#iefix') format('embedded-opentype'), url('Axiforma-Medium.woff2') format('woff2'),
+		url('Axiforma-Medium.woff') format('woff'), url('Axiforma-Medium.ttf') format('truetype');
 	font-weight: 500;
 	font-style: normal;
 }
@@ -83,8 +84,9 @@
 	font-family: 'Axiforma';
 	src: url('Axiforma-BoldItalic.eot');
 	src: local('Axiforma Bold Italic'), local('Axiforma-BoldItalic'),
-		url('Axiforma-BoldItalic.eot?#iefix') format('embedded-opentype'), url('Axiforma-BoldItalic.woff2') format('woff2'),
-		url('Axiforma-BoldItalic.woff') format('woff'), url('Axiforma-BoldItalic.ttf') format('truetype');
+		url('Axiforma-BoldItalic.eot?#iefix') format('embedded-opentype'),
+		url('Axiforma-BoldItalic.woff2') format('woff2'), url('Axiforma-BoldItalic.woff') format('woff'),
+		url('Axiforma-BoldItalic.ttf') format('truetype');
 	font-weight: bold;
 	font-style: italic;
 }
@@ -124,8 +126,9 @@
 	font-family: 'Axiforma';
 	src: url('Axiforma-ThinItalic.eot');
 	src: local('Axiforma Thin Italic'), local('Axiforma-ThinItalic'),
-		url('Axiforma-ThinItalic.eot?#iefix') format('embedded-opentype'), url('Axiforma-ThinItalic.woff2') format('woff2'),
-		url('Axiforma-ThinItalic.woff') format('woff'), url('Axiforma-ThinItalic.ttf') format('truetype');
+		url('Axiforma-ThinItalic.eot?#iefix') format('embedded-opentype'),
+		url('Axiforma-ThinItalic.woff2') format('woff2'), url('Axiforma-ThinItalic.woff') format('woff'),
+		url('Axiforma-ThinItalic.ttf') format('truetype');
 	font-weight: 100;
 	font-style: italic;
 }
@@ -144,8 +147,9 @@
 	font-family: 'Axiforma';
 	src: url('Axiforma-LightItalic.eot');
 	src: local('Axiforma Light Italic'), local('Axiforma-LightItalic'),
-		url('Axiforma-LightItalic.eot?#iefix') format('embedded-opentype'), url('Axiforma-LightItalic.woff2') format('woff2'),
-		url('Axiforma-LightItalic.woff') format('woff'), url('Axiforma-LightItalic.ttf') format('truetype');
+		url('Axiforma-LightItalic.eot?#iefix') format('embedded-opentype'),
+		url('Axiforma-LightItalic.woff2') format('woff2'), url('Axiforma-LightItalic.woff') format('woff'),
+		url('Axiforma-LightItalic.ttf') format('truetype');
 	font-weight: 300;
 	font-style: italic;
 }
@@ -164,9 +168,9 @@
 @font-face {
 	font-family: 'Axiforma';
 	src: url('Axiforma-Italic.eot');
-	src: local('Axiforma Italic'), local('Axiforma-Italic'), url('Axiforma-Italic.eot?#iefix') format('embedded-opentype'),
-		url('Axiforma-Italic.woff2') format('woff2'), url('Axiforma-Italic.woff') format('woff'),
-		url('Axiforma-Italic.ttf') format('truetype');
+	src: local('Axiforma Italic'), local('Axiforma-Italic'),
+		url('Axiforma-Italic.eot?#iefix') format('embedded-opentype'), url('Axiforma-Italic.woff2') format('woff2'),
+		url('Axiforma-Italic.woff') format('woff'), url('Axiforma-Italic.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
 }
@@ -175,8 +179,9 @@
 	font-family: 'Axiforma';
 	src: url('Axiforma-BookItalic.eot');
 	src: local('Axiforma Book Italic'), local('Axiforma-BookItalic'),
-		url('Axiforma-BookItalic.eot?#iefix') format('embedded-opentype'), url('Axiforma-BookItalic.woff2') format('woff2'),
-		url('Axiforma-BookItalic.woff') format('woff'), url('Axiforma-BookItalic.ttf') format('truetype');
+		url('Axiforma-BookItalic.eot?#iefix') format('embedded-opentype'),
+		url('Axiforma-BookItalic.woff2') format('woff2'), url('Axiforma-BookItalic.woff') format('woff'),
+		url('Axiforma-BookItalic.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
 }
@@ -185,8 +190,9 @@
 	font-family: 'Axiforma';
 	src: url('Axiforma-ExtraBold.eot');
 	src: local('Axiforma ExtraBold'), local('Axiforma-ExtraBold'),
-		url('Axiforma-ExtraBold.eot?#iefix') format('embedded-opentype'), url('Axiforma-ExtraBold.woff2') format('woff2'),
-		url('Axiforma-ExtraBold.woff') format('woff'), url('Axiforma-ExtraBold.ttf') format('truetype');
+		url('Axiforma-ExtraBold.eot?#iefix') format('embedded-opentype'),
+		url('Axiforma-ExtraBold.woff2') format('woff2'), url('Axiforma-ExtraBold.woff') format('woff'),
+		url('Axiforma-ExtraBold.ttf') format('truetype');
 	font-weight: 800;
 	font-style: normal;
 }
@@ -195,8 +201,9 @@
 	font-family: 'Axiforma';
 	src: url('Axiforma-HeavyItalic.eot');
 	src: local('Axiforma Heavy Italic'), local('Axiforma-HeavyItalic'),
-		url('Axiforma-HeavyItalic.eot?#iefix') format('embedded-opentype'), url('Axiforma-HeavyItalic.woff2') format('woff2'),
-		url('Axiforma-HeavyItalic.woff') format('woff'), url('Axiforma-HeavyItalic.ttf') format('truetype');
+		url('Axiforma-HeavyItalic.eot?#iefix') format('embedded-opentype'),
+		url('Axiforma-HeavyItalic.woff2') format('woff2'), url('Axiforma-HeavyItalic.woff') format('woff'),
+		url('Axiforma-HeavyItalic.ttf') format('truetype');
 	font-weight: 900;
 	font-style: italic;
 }

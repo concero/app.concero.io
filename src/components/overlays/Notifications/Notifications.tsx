@@ -47,7 +47,11 @@ export function Notifications() {
 						<div className="row ac">
 							<Beacon isOn color={item.color} />
 							{item.title}
-							<Button variant="black" onClick={() => removeNotification(item.id)} leftIcon={<IconX size={18} />} />
+							<Button
+								variant="black"
+								onClick={() => removeNotification(item.id)}
+								leftIcon={<IconX size={18} />}
+							/>
 						</div>
 						<p className="body1">{item.message}</p>
 					</div>

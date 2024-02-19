@@ -68,7 +68,12 @@ export const EarnChartCard: FC<EarnChartCardProps> = ({ selectedVault }) => {
 			<div className={classNames.headerContainer}>
 				<CardHeader tiztle="Chart" isLoading={chartState.isLoading} />
 				<div className={classNames.tagsContainer}>
-					<Button variant="subtle" size="sm" rightIcon={<IconChevronDown size={16} />} onClick={handleTypeButtonClick}>
+					<Button
+						variant="subtle"
+						size="sm"
+						rightIcon={<IconChevronDown size={16} />}
+						onClick={handleTypeButtonClick}
+					>
 						{buttonsData[chartType].title}
 					</Button>
 				</div>

@@ -24,7 +24,8 @@ export const initialState = {
 				name: 'Matic',
 				symbol: 'MATIC',
 				address: config.NULL_ADDRESS,
-				logoURI: 'https://static.debank.com/image/matic_token/logo_url/matic/6f5a6b6f0732a7a235131bd7804d357c.png',
+				logoURI:
+					'https://static.debank.com/image/matic_token/logo_url/matic/6f5a6b6f0732a7a235131bd7804d357c.png',
 				decimals: 18,
 				coinGeckoId: 'matic-network',
 				is_popular: true,
@@ -122,7 +123,9 @@ export function DataProvider({ children }: DataProviderProps) {
 
 	async function getChainByProviderSymbol(providerSymbol: string): Promise<Chain | null> {
 		const chains = await getChains({})
-		const index = chains.findIndex((chain: Chain) => chain.providers.some(provider => provider.symbol === providerSymbol))
+		const index = chains.findIndex((chain: Chain) =>
+			chain.providers.some(provider => provider.symbol === providerSymbol),
+		)
 		return index !== -1 ? chains[index] : null
 	}
 

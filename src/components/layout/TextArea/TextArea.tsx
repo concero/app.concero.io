@@ -10,7 +10,13 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>((props, r
 
 	return (
 		<div className={classNames.container}>
-			<textarea ref={ref} onChange={onChange} className={classNames.textarea} placeholder="Enter text here..." {...rest} />
+			<textarea
+				ref={ref}
+				onChange={onChange}
+				className={classNames.textarea}
+				placeholder="Enter text here..."
+				{...rest}
+			/>
 		</div>
 	)
 })

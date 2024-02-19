@@ -17,7 +17,9 @@ export const RouteButton: FC<RouteButtonProps> = ({ selectedRoute, onClick }) =>
 			<div className={classNames.routeInfoContainer}>
 				<IconClockHour3 size={13} color={'var(--color-text-secondary)'} />
 				<p className="body1">{`${
-					selectedRoute?.transaction_time_seconds ? secondsConverter(selectedRoute.transaction_time_seconds) : ''
+					selectedRoute?.transaction_time_seconds
+						? secondsConverter(selectedRoute.transaction_time_seconds)
+						: ''
 				}`}</p>
 			</div>
 			<IconChevronRight size={13} color={'var(--color-text-secondary)'} />

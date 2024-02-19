@@ -13,7 +13,8 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 		step.estimate.feeCosts?.forEach((fee: FeeCost) => {
 			if (fee.included) return
 			const matchedFeeAsset = result.find(
-				(item: Fees) => item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString(),
+				(item: Fees) =>
+					item.asset.address === fee.token.address && item.asset.chainId === fee.token.chainId.toString(),
 			)
 			if (matchedFeeAsset) {
 				const index = result.findIndex((item: Fees) => item.asset.address === fee.token.address)
@@ -37,7 +38,8 @@ function getTotalFee(route: lifiTypes.Route): Fees[] | [] {
 		step.estimate.gasCosts?.forEach((gas: GasCost) => {
 			if (
 				result.find(
-					(item: Fees) => item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString(),
+					(item: Fees) =>
+						item.asset.address === gas.token.address && item.asset.chainId === gas.token.chainId.toString(),
 				)
 			) {
 				const index = result.findIndex((item: Fees) => item.asset.address === gas.token.address)
