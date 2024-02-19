@@ -26,8 +26,6 @@ async function getGasSufficiency(
 	if (!walletBalances) return { isInsufficient: false }
 	const { selectedRoute } = swapState
 
-	console.log(walletBalances)
-
 	for (const steps of selectedRoute?.steps ?? []) {
 		const isNativeToken = steps[0].from.token.address === config.NULL_ADDRESS
 		let amountToCheck = new BigNumber(0) // gas and non-included fees in native token
@@ -74,9 +72,6 @@ async function getGasSufficiency(
 			}
 		}
 
-		console.log('amountToCheck: ', amountToCheck.toString())
-		console.log('first step amount: ', steps[0].from.token.amount)
-
 		const tokenBalanceAmount = new BigNumber(
 			new TokenAmount(tokenBalanceObj!.balance!, tokenBalanceObj!.decimals).formatted,
 		)
@@ -84,8 +79,6 @@ async function getGasSufficiency(
 		const insufficientAmount = isNativeToken
 			? amountToCheck.minus(tokenBalanceAmount.minus(steps[0].from.token.amount!))
 			: amountToCheck.minus(tokenBalanceAmount)
-
-		console.log('insufficientAmount: ', insufficientAmount.toString())
 
 		if (insufficientAmount.gt(0)) {
 			return {
