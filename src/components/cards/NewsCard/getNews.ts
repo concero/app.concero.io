@@ -33,6 +33,10 @@ export const getNews = async (data, dispatch, selectedToken, timestamp, addNotif
 	function on_ok(res) {
 		const news = res.data.Data
 
+		if (res.data.Response === 'Error') {
+			return
+		}
+
 		dispatch({
 			type: 'SET_LOADING',
 			payload: false,
