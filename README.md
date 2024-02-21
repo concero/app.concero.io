@@ -3,7 +3,7 @@
 # app.concero.io
 
 🚀 **Swap your crypto across 16 chains.**  
-📊 **Track prices, news & live transactions** on [dex.concero.io](http://dex.concero.io)
+📊 **Track prices, news & live transactions** on [app.concero.io](http://dex.concero.io)
 
 ## Features
 
@@ -20,7 +20,7 @@
 
 ## Getting Started
 
-1. Visit [dex.concero.io](http://dex.concero.io)
+1. Visit [app.concero.io](http://app.concero.io)
 2. Connect your wallet.
 3. Start swapping and tracking!
 
