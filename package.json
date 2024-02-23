@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npx vite",
     "dev": "npx vite",
+    "dev-host": "npx vite --host",
     "build": "npx vite build",
     "lint": "npx eslint src --ext ts,tsx",
     "lint:fix": "npx eslint src --ext ts,tsx --fix",
