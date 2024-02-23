@@ -29,7 +29,6 @@ export const getMoreNews = async (data, dispatch, selectedToken, timestamp, addN
 }
 
 export const getNews = async (data, dispatch, selectedToken, timestamp, addNotification) => {
-	// not parsing data further, because of the newsColumns
 	function on_ok(res) {
 		const news = res.data.Data
 
@@ -64,6 +63,7 @@ export const getNews = async (data, dispatch, selectedToken, timestamp, addNotif
 	}
 
 	const url = `https://min-api.cryptocompare.com/data/v2/news/?lang=EN&categories=${selectedToken.symbol}&lTs=${timestamp}`
+
 	dispatch({
 		type: 'SET_LOADING',
 		payload: true,
