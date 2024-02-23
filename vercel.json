@@ -5,7 +5,7 @@
       "destination": "https://eu.posthog.com/:path*"
     },
     {
-      "source": "/:path([^.\\n]*)",
+      "source": "/:path([^.\n]*)",
       "destination": "/:path"
     }
   ],
