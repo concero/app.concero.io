@@ -4,7 +4,7 @@ import { config } from '../constants/config'
 export function initPosthog() {
 	if (process.env.DEVELOPMENT !== 'true') {
 		posthog.init(config.POSTHOG_API_KEY, {
-			api_host: `${config.baseURL}/ingest`,
+			api_host: `${config.baseURL}/posthog`,
 			autocapture: false,
 		})
 
