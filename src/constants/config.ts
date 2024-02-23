@@ -12,4 +12,5 @@ export const config = {
 	NULL_E_ADDRESS: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
 	WEB3_MODAL_PROJECT_ID: process.env.WEB3_MODAL_PROJECT_ID!,
 	CONCERO_ASSETS_URI: process.env.CONCERO_ASSETS_URI!,
+	CONCERO_DOMAIN_URL: process.env.CONCERO_DOMAIN_URL!,
 }
