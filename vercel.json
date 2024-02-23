@@ -1,9 +1,3 @@
 {
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }],
-  "rewrites": [
-    {
-      "source": "/ingest/:path(.*)",
-      "destination": "https://eu.posthog.com/:path*"
-    }
-  ]
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }
