@@ -2,9 +2,9 @@ import posthog from 'posthog-js'
 import { config } from '../constants/config'
 
 export function initPosthog() {
-	if (!process.env.DEVELOPMENT) {
+	if (process.env.DEVELOPMENT !== 'true') {
 		posthog.init(config.POSTHOG_API_KEY, {
-			api_host: config.POSTHOG_HOST,
+			api_host: `${config.baseURL}/posthog`,
 			autocapture: false,
 		})
 
