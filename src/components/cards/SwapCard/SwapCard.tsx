@@ -39,7 +39,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 		replay_id: posthog.get_distinct_id(),
 		session_id: posthog.get_session_id(),
 	}
-
+	//
 	const renderSwapStage: Record<SwapCardStage, ReactComponentElement<any>> = {
 		[SwapCardStage.input]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
 		[SwapCardStage.review]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
