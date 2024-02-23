@@ -3,7 +3,10 @@
     {
       "source": "/posthog/:path(.*)",
       "destination": "https://eu.posthog.com/:path*"
+    },
+    {
+      "source": "/[^.]+",
+      "destination": "/"
     }
-  ],
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+  ]
 }
