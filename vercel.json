@@ -8,5 +8,5 @@
       "source": "/:path([^.\n]*)",
       "destination": "/:path"
     }
-  ],
+  ]
 }
