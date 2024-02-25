@@ -62,6 +62,7 @@ export const Navigator: FC<NavigatorProps> = () => {
 						}
 					/>
 					<Route path={routes.root} element={<Navigate to={routes.swap} />} />
+					<Route path={'/*'} element={<Navigate to={routes.swap} />} />
 				</Routes>
 			</AppScreen>
 		</BrowserRouter>
