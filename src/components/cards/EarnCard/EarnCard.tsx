@@ -1,7 +1,7 @@
 import classNames from './EarnCard.module.pcss'
 import { Avatar } from '../../tags/Avatar/Avatar'
 import { type Vault } from '../../screens/EarnScreen/earnReducer/types'
-import { numberToFormatString, truncate } from '../../../utils/formatting'
+import { roundNumberByDecimals, truncate } from '../../../utils/formatting'
 import { CategoryTag } from '../../tags/CategoryTag/CategoryTag'
 import { IconCurrencyDollar } from '@tabler/icons-react'
 
@@ -34,7 +34,7 @@ export function EarnCard({ isSelected, vault, onClick }: StakingCardProps) {
 				<div className={classNames.headerContainer}>
 					<div className={classNames.headerSideContainer}>
 						<Avatar src={vault.project?.logoURI} size="md" />
-						<h5>{`${numberToFormatString(vault.data?.apy, 2)}%`}</h5>
+						<h5>{`${roundNumberByDecimals(vault.data?.apy, 2)}%`}</h5>
 						{vault.data?.category ? (
 							<CategoryTag category={vault.data?.category} isSelected={isSelected} />
 						) : null}
