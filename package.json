@@ -29,9 +29,7 @@
     "@react-spring/web": "^9.7.3",
     "@tabler/icons-react": "^2.34.0",
     "@uiball/loaders": "^1.3.0",
-    "@wagmi/core": "^1.4.2",
-    "@web3modal/ethereum": "^2.7.1",
-    "@web3modal/react": "^2.7.1",
+    "@web3modal/wagmi": "^4.0.11",
     "axios": "^1.5.0",
     "bignumber": "^1.1.0",
     "dayjs": "^1.11.10",
@@ -46,8 +44,8 @@
     "react-router-dom": "^6.16.0",
     "react-ts-tradingview-widgets": "^1.2.0",
     "recharts": "^2.8.0",
-    "viem": "^1.11.1",
-    "wagmi": "^1.4.2"
+    "viem": "^2.7.16",
+    "wagmi": "^2.5.7"
   },
   "devDependencies": {
     "@lifi/types": "^10.1.0",
@@ -82,7 +80,7 @@
     "stylelint-config-standard": "^33.0.0",
     "typescript": "^5.2.2",
     "typescript-plugin-css-modules": "^5.0.1",
-    "vite": "^4.4.9",
+    "vite": "^5.1.4",
     "vite-plugin-environment": "^1.1.3",
     "vite-plugin-stylelint": "^4.3.0",
     "vitest": "^0.30.1"

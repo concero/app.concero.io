@@ -1,26 +1,30 @@
 import './styles/App.css'
-import { WagmiConfig } from 'wagmi'
-import { wagmiConfig } from './web3/wagmi'
-import { lazy, useEffect } from 'react'
-import { initPosthog } from './utils/initPosthog'
-import { bigNumberSettings } from './utils/bigNumberSettings'
-import { EthersTest } from './components/screens/EthersTest'
 
-const WalletConnectModal = lazy(
-	async () => await import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })),
-)
+import { WagmiProvider } from 'wagmi'
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiTest } from './components/screens/WagmiTest'
+import { config } from './web3/wagmi'
+
+// const WalletConnectModal = lazy(
+// 	async () => await import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })),
+// )
 
 function App() {
-	useEffect(() => {
-		initPosthog()
-		bigNumberSettings()
-	}, [])
+	// useEffect(() => {
+	// 	initPosthog()
+	// 	bigNumberSettings()
+	// }, [])
+
+	// 0. Setup queryClient
+	const queryClient = new QueryClient()
 
 	return (
-		<WagmiConfig config={wagmiConfig}>
-			<EthersTest />
-		</WagmiConfig>
+		<WagmiProvider config={config}>
+			<QueryClientProvider client={queryClient}>
+				<WagmiTest />
+			</QueryClientProvider>
+		</WagmiProvider>
 	)
 }
-
 export default App
