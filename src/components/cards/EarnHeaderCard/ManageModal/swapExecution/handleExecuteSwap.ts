@@ -48,6 +48,7 @@ export async function handleExecuteSwap(
 					body: 'Please approve the transaction in your wallet',
 				},
 			})
+			// replaceable with wagmi writeContract - its an abi call, signer not needed
 			await approveToken({
 				signer,
 				tokenAddress: from.token.address,

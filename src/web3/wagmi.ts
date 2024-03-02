@@ -1,4 +1,5 @@
 import { createConfig, http } from 'wagmi'
+import { createPublicClient, createWalletClient, custom } from 'viem' // VIEM
 import {
 	arbitrum,
 	aurora,
@@ -120,3 +121,19 @@ createWeb3Modal({
 	projectId,
 	enableAnalytics: true, // Optional - defaults to your Cloud configuration
 })
+
+// VIEM
+
+export const publicClient = createPublicClient({
+	chain: mainnet,
+	transport: http(),
+})
+
+// eg: Metamask
+export const walletClient = createWalletClient({
+	chain: mainnet,
+	transport: custom(window.ethereum),
+})
+
+// JSON-RPC Account
+export const [account] = await walletClient.getAddresses()
