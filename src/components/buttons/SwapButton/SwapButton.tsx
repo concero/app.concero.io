@@ -8,19 +8,21 @@ import { useTranslation } from 'react-i18next'
 import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
 import { useFeatureFlag } from '../../../hooks/useFeatureFlag'
+import { useWeb3Modal } from '@web3modal/react'
 
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
 	const { isLoading } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
-	const flag = useFeatureFlag()
+	const { open } = useWeb3Modal()
+	const featureFlag = useFeatureFlag()
+	const { t } = useTranslation()
 	const buttonType = getButtonType(
 		swapState,
 		isConnected,
 		gasSufficiency?.isInsufficient ?? false,
 		isFetchBalancesLoading,
-		flag,
+		featureFlag,
 	)
-	const { t } = useTranslation()
 
 	return (
 		<div className={classNames.container}>
@@ -44,7 +46,7 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 					leftIcon={iconComponent[buttonType]}
 					isDisabled={isButtonDisabled[buttonType]}
 					isLoading={isLoading}
-					onClick={onClick}
+					onClick={buttonType === ButtonType.CONNECT_WALLET_BRIGHT ? open : onClick}
 					className={`${classNames.swapButton} ${classNames[buttonStyleClass[buttonType]]}`}
 				>
 					{t(buttonText[buttonType])}

@@ -1,13 +1,14 @@
 import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
 import BigNumber from 'bignumber.js'
+import { FeatureFlags } from '../../../hooks/useFeatureFlag'
 
 export function getButtonType(
 	swapState: SwapState,
 	isConnected: boolean,
 	isInsufficientGas: boolean,
 	isFetchBalancesLoading: boolean,
-	flag: string,
+	featureFlag: string,
 ): ButtonType {
 	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, stage } = swapState
 
@@ -20,8 +21,8 @@ export function getButtonType(
 	}
 
 	if (!isConnected) {
-		if (flag === 'Orange_button') {
-			return ButtonType.SWAP
+		if (featureFlag === FeatureFlags.brighterConnectWalletButton) {
+			return ButtonType.CONNECT_WALLET_BRIGHT
 		}
 		return ButtonType.CONNECT_WALLET
 	}

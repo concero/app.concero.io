@@ -39,7 +39,6 @@ export const WalletButton = () => {
 			onClick={handleClick}
 		>
 			<p className={`${classNames.buttonFont} ${!isConnected ? classNames.buttonText : 'body1'}`}>
-				{' '}
 				{getStatus()}
 			</p>
 		</Button>
