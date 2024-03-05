@@ -7,6 +7,7 @@ export function getButtonType(
 	isConnected: boolean,
 	isInsufficientGas: boolean,
 	isFetchBalancesLoading: boolean,
+	flag: string,
 ): ButtonType {
 	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, stage } = swapState
 
@@ -19,6 +20,9 @@ export function getButtonType(
 	}
 
 	if (!isConnected) {
+		if (flag === 'Orange_button') {
+			return ButtonType.SWAP
+		}
 		return ButtonType.CONNECT_WALLET
 	}
 

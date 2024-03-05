@@ -7,15 +7,18 @@ import { getButtonType } from './getButtonType'
 import { useTranslation } from 'react-i18next'
 import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
+import { useFeatureFlag } from '../../../hooks/useFeatureFlag'
 
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
 	const { isLoading } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
+	const flag = useFeatureFlag()
 	const buttonType = getButtonType(
 		swapState,
 		isConnected,
 		gasSufficiency?.isInsufficient ?? false,
 		isFetchBalancesLoading,
+		flag,
 	)
 	const { t } = useTranslation()
 
