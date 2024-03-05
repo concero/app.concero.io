@@ -10,7 +10,7 @@ export function useFeatureFlag() {
 	const [flag, setFlag] = useState<FeatureFlags>(FeatureFlags.default)
 
 	useEffect(() => {
-		if (posthog.isFeatureEnabled(FeatureFlags.brighterConnectWalletButton)) {
+		if (posthog.getFeatureFlag('brighter_connect_wallet_button_ab') === 'brighter_button') {
 			setFlag(FeatureFlags.brighterConnectWalletButton)
 		}
 	}, [posthog])
