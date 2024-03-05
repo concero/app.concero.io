@@ -1,6 +1,9 @@
 @font-face {
 	font-family: 'Poppins';
-	src: local('Poppins ExtraLight'), local('Poppins-ExtraLight'), url('Poppins-ExtraLight.woff2') format('woff2');
+	src:
+		local('Poppins ExtraLight'),
+		local('Poppins-ExtraLight'),
+		url('Poppins-ExtraLight.woff2') format('woff2');
 	font-weight: 200;
 	font-style: normal;
 	font-display: swap;
@@ -8,7 +11,10 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: local('Poppins Medium'), local('Poppins-Medium'), url('Poppins-Medium.woff2') format('woff2');
+	src:
+		local('Poppins Medium'),
+		local('Poppins-Medium'),
+		url('Poppins-Medium.woff2') format('woff2');
 	font-weight: 500;
 	font-style: normal;
 	font-display: swap;
@@ -16,7 +22,10 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: local('Poppins Regular'), local('Poppins-Regular'), url('Poppins-Regular.woff2') format('woff2');
+	src:
+		local('Poppins Regular'),
+		local('Poppins-Regular'),
+		url('Poppins-Regular.woff2') format('woff2');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -24,7 +33,10 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: local('Poppins SemiBold'), local('Poppins-SemiBold'), url('Poppins-SemiBold.woff2') format('woff2');
+	src:
+		local('Poppins SemiBold'),
+		local('Poppins-SemiBold'),
+		url('Poppins-SemiBold.woff2') format('woff2');
 	font-weight: 600;
 	font-style: normal;
 	font-display: swap;
@@ -32,7 +44,10 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: local('Poppins Light'), local('Poppins-Light'), url('Poppins-Light.woff2') format('woff2');
+	src:
+		local('Poppins Light'),
+		local('Poppins-Light'),
+		url('Poppins-Light.woff2') format('woff2');
 	font-weight: 300;
 	font-style: normal;
 	font-display: swap;
@@ -40,7 +55,10 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: local('Poppins Bold'), local('Poppins-Bold'), url('Poppins-Bold.woff2') format('woff2');
+	src:
+		local('Poppins Bold'),
+		local('Poppins-Bold'),
+		url('Poppins-Bold.woff2') format('woff2');
 	font-weight: bold;
 	font-style: normal;
 	font-display: swap;
@@ -48,7 +66,10 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: local('Poppins Thin'), local('Poppins-Thin'), url('Poppins-Thin.woff2') format('woff2');
+	src:
+		local('Poppins Thin'),
+		local('Poppins-Thin'),
+		url('Poppins-Thin.woff2') format('woff2');
 	font-weight: 100;
 	font-style: normal;
 	font-display: swap;

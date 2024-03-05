@@ -1,5 +1,5 @@
 import { type FC, useContext } from 'react'
-import { useAccount, useSwitchNetwork, useWalletClient } from 'wagmi'
+import { useAccount, useSwitchChain, useWalletClient } from 'wagmi'
 import { TokenArea } from '../TokenArea/TokenArea'
 import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
@@ -9,7 +9,7 @@ import { InsuranceCard } from '../InsuranceCard/InsuranceCard'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { type DataContextValue } from '../../../../hooks/DataContext/types'
 import { getEthersSigner } from '../../../../web3/ethers'
-import { type providers } from 'ethers'
+import { type JsonRpcSigner } from 'ethers'
 import { IconArrowsUpDown } from '@tabler/icons-react'
 import { DestinationAddressInput } from './DestinationAddressInput/DestinationAddressInput'
 import { handleSwap } from '../swapExecution/handleSwap'
@@ -18,30 +18,34 @@ import { SwapCardStage } from '../swapReducer/types'
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
 	const { address, isConnected } = useAccount()
+
+	// todo: this is a bit of a mess
 	const isInsuranceCardVisible =
 		swapState.selectedRoute?.insurance?.state === 'INSURABLE' ||
 		swapState.selectedRoute?.insurance?.state === 'INSURED'
-	const walletClient = useWalletClient()
-	const { switchNetworkAsync } = useSwitchNetwork()
 
-	async function switchChainHook(requiredChainId: number): Promise<providers.JsonRpcSigner> {
+	const walletClient = useWalletClient()
+	const { switchChainAsync } = useSwitchChain()
+
+	// todo: why do we have a switchChainHook here? its a generic utility
+	async function switchChainHook(requiredChainId: number): Promise<JsonRpcSigner> {
 		const currentChainId = walletClient.data?.chain.id
 		if (currentChainId !== requiredChainId) {
-			if (switchNetworkAsync) {
-				const chain = await switchNetworkAsync(requiredChainId)
+			if (switchChainAsync) {
+				const chain = await switchChainAsync({ chainId: requiredChainId })
 				if (!chain) throw new Error('Failed to switch to the required network')
-				return (await getEthersSigner(chain.id)) as providers.JsonRpcSigner
+				return (await getEthersSigner(chain.id))!
 			} else {
 				throw new Error('Failed to switch to the required network')
 			}
 		}
-		return (await getEthersSigner(requiredChainId)) as providers.JsonRpcSigner
+		return (await getEthersSigner(requiredChainId))!
 	}
 
-	async function getSigner(): Promise<providers.JsonRpcSigner> {
+	async function getSigner(): Promise<JsonRpcSigner> {
 		const currentChainId = walletClient.data?.chain.id
 		if (currentChainId) {
-			return (await getEthersSigner(currentChainId)) as providers.JsonRpcSigner
+			return (await getEthersSigner(currentChainId))!
 		} else {
 			throw new Error('Failed to get signer')
 		}
@@ -51,6 +55,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 		if (swapState.stage === 'input') {
 			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
 		} else {
+			// todo: why do we pass a hook as a parameter?
 			await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
 		}
 	}

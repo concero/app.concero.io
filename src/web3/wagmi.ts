@@ -122,14 +122,12 @@ createWeb3Modal({
 	enableAnalytics: true, // Optional - defaults to your Cloud configuration
 })
 
-// VIEM
-
 export const publicClient = createPublicClient({
 	chain: mainnet,
 	transport: http(),
 })
 
-// eg: Metamask
+// walletClient has similar methods to Ethers.js Signer
 export const walletClient = createWalletClient({
 	chain: mainnet,
 	transport: custom(window.ethereum),

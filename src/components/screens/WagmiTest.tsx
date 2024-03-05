@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Button } from '../buttons/Button/Button'
 import { WalletButton } from '../layout/Header/WalletButton/WalletButton'
-import { useAccount } from 'wagmi'
+import { useAccount, useWalletClient } from 'wagmi'
 import { account, config, walletClient } from '../../web3/wagmi'
 import { UNISWAP_ROUTER_ABI } from './uniswap_router_abi'
 import { simulateContract } from 'viem/actions'
 
 export const WagmiTest = () => {
 	const [route, setRoute] = useState<any>()
+	const wc = useWalletClient()
+	console.log('wc', wc)
 	const { isConnected } = useAccount()
 	console.log(account)
 	// const contract = getContract({

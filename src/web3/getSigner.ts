@@ -1,14 +1,14 @@
 import { createWalletClient, custom } from 'viem'
 import { providers } from 'ethers'
-import { type SwitchNetworkResult } from '@wagmi/core'
+import { type SwitchChainReturnType } from '@wagmi/core'
 import { type JsonRpcSigner } from '@ethersproject/providers/src.ts/json-rpc-provider'
 
 export async function getSigner(
 	requiredChainId: number,
-	switchNetworkAsync: Promise<SwitchNetworkResult> | null = null,
+	switchChainAsync: Promise<SwitchChainReturnType> | null = null,
 ): Promise<JsonRpcSigner> {
-	if (parseInt(window.ethereum.chainId) !== parseInt(requiredChainId) && switchNetworkAsync) {
-		await switchNetworkAsync(Number(requiredChainId))
+	if (parseInt(window.ethereum.chainId) !== parseInt(requiredChainId) && switchChainAsync) {
+		await switchChainAsync(Number(requiredChainId))
 	}
 	const client0 = createWalletClient({
 		transport: custom(window.ethereum),

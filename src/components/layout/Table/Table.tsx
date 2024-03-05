@@ -71,10 +71,10 @@ export const Table: FC<TableProps> = ({
 						{animate
 							? transitions((styles, item) => (
 									<TableRow style={styles} item={item} columns={columns} onClick={onClick} />
-							  ))
+								))
 							: items.map((item, index) => (
 									<TableRow key={index} item={item} columns={columns} onClick={onClick} />
-							  ))}
+								))}
 					</tbody>
 				</table>
 			)}
