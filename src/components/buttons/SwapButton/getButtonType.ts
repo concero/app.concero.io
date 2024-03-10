@@ -1,7 +1,7 @@
 import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
 import BigNumber from 'bignumber.js'
-import { FeatureFlags } from '../../../hooks/useFeatureFlag'
+import { FeatureFlags } from '../../../hooks/FeatureFlagContext'
 
 export function getButtonType(
 	swapState: SwapState,

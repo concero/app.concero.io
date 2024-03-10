@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { type FC, useContext } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { type SwapButtonProps } from './types'
@@ -7,14 +7,14 @@ import { getButtonType } from './getButtonType'
 import { useTranslation } from 'react-i18next'
 import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
-import { useFeatureFlag } from '../../../hooks/useFeatureFlag'
 import { useWeb3Modal } from '@web3modal/react'
+import { FeatureFlagContext, type FeatureFlags } from '../../../hooks/FeatureFlagContext'
 
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
 	const { isLoading } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
 	const { open } = useWeb3Modal()
-	const featureFlag = useFeatureFlag()
+	const featureFlag = useContext<FeatureFlags>(FeatureFlagContext)
 	const { t } = useTranslation()
 	const buttonType = getButtonType(
 		swapState,
