@@ -27,6 +27,7 @@ export function FeatureFlagProvider({ children }: { children: ReactNode }) {
 	flags[FeatureFlagKeys.brighterConnectWalletButton] = useFeatureFlagVariantKey(
 		FeatureFlagKeys.brighterConnectWalletButton,
 	)
+	flags[FeatureFlagKeys.newSwapScreenLayout] = FeatureFlagVariants.newSwapCard
 
 	return <FeatureFlagContext.Provider value={flags}>{children}</FeatureFlagContext.Provider>
 }
