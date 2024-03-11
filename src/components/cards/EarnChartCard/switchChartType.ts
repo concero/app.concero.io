@@ -44,7 +44,7 @@ export const switchChartType = ({ response, chartType, setData }) => {
 				const standardized = standardizeItem(item, type.secondary)
 				if (standardized) acc.push(standardized)
 				return acc
-		  }, [])
+			}, [])
 		: null
 
 	setData({

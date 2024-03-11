@@ -73,5 +73,3 @@ dist-ssr
 
 .stylelintcache
 .env
-
-*.lockb
