@@ -13,20 +13,20 @@ export enum FeatureFlagVariants {
 }
 
 export const FeatureFlagContext = createContext<FeatureFlags>({
-	[FeatureFlagKeys.brighterConnectWalletButton]: FeatureFlagVariants.default,
-	[FeatureFlagKeys.newSwapScreenLayout]: FeatureFlagVariants.default,
+	[FeatureFlagKeys.brighterConnectWalletButton]: undefined,
+	[FeatureFlagKeys.newSwapScreenLayout]: undefined,
 })
 
 export function FeatureFlagProvider({ children }: { children: ReactNode }) {
-	const flag: FeatureFlags = {
-		[FeatureFlagKeys.brighterConnectWalletButton]: FeatureFlagVariants.default,
-		[FeatureFlagKeys.newSwapScreenLayout]: FeatureFlagVariants.default,
+	const flags: FeatureFlags = {
+		[FeatureFlagKeys.brighterConnectWalletButton]: undefined,
+		[FeatureFlagKeys.newSwapScreenLayout]: undefined,
 	}
 
-	flag[FeatureFlagKeys.newSwapScreenLayout] = useFeatureFlagVariantKey(FeatureFlagKeys.newSwapScreenLayout)
-	flag[FeatureFlagKeys.brighterConnectWalletButton] = useFeatureFlagVariantKey(
+	flags[FeatureFlagKeys.newSwapScreenLayout] = useFeatureFlagVariantKey(FeatureFlagKeys.newSwapScreenLayout)
+	flags[FeatureFlagKeys.brighterConnectWalletButton] = useFeatureFlagVariantKey(
 		FeatureFlagKeys.brighterConnectWalletButton,
 	)
 
-	return <FeatureFlagContext.Provider value={flag}>{children}</FeatureFlagContext.Provider>
+	return <FeatureFlagContext.Provider value={flags}>{children}</FeatureFlagContext.Provider>
 }

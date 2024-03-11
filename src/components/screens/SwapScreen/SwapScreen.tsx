@@ -26,7 +26,7 @@ export const SwapScreen = () => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		if (featureFlags[FeatureFlagKeys.newSwapScreenLayout] !== FeatureFlagVariants.default) {
+		if (featureFlags[FeatureFlagKeys.newSwapScreenLayout] !== undefined) {
 			setIsLoading(false)
 		}
 	}, [featureFlags[FeatureFlagKeys.newSwapScreenLayout]])
