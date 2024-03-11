@@ -8,20 +8,20 @@ import { useTranslation } from 'react-i18next'
 import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
 import { useWeb3Modal } from '@web3modal/react'
-import { FeatureFlagContext, type FeatureFlags } from '../../../hooks/FeatureFlagContext'
+import { FeatureFlagContext, FeatureFlagKeys, type FeatureFlags } from '../../../hooks/FeatureFlagContext'
 
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
 	const { isLoading } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
 	const { open } = useWeb3Modal()
-	const featureFlag = useContext<FeatureFlags>(FeatureFlagContext)
+	const featureFlags = useContext<FeatureFlags>(FeatureFlagContext)
 	const { t } = useTranslation()
 	const buttonType = getButtonType(
 		swapState,
 		isConnected,
 		gasSufficiency?.isInsufficient ?? false,
 		isFetchBalancesLoading,
-		featureFlag,
+		featureFlags[FeatureFlagKeys.brighterConnectWalletButton] as boolean,
 	)
 
 	return (

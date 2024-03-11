@@ -1,4 +1,4 @@
-import { type FC, memo, useContext } from 'react'
+import { memo, useContext } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
@@ -7,15 +7,19 @@ import classNames from './SwapScreen.module.pcss'
 import { TargetInfoCard } from '../../cards/TargetInfoCard/TargetInfoCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
-import { FeatureFlagContext, FeatureFlags } from '../../../hooks/FeatureFlagContext'
+import {
+	FeatureFlagContext,
+	FeatureFlagKeys,
+	type FeatureFlags,
+	FeatureFlagVariants,
+} from '../../../hooks/FeatureFlagContext'
 
-export interface ExchangeScreenProps {}
 const History = memo(withErrorBoundary(HistoryCard))
 const Swap = memo(withErrorBoundary(SwapCard))
 const News = memo(withErrorBoundary(NewsCard))
 const Chart = memo(withErrorBoundary(ChartCard))
 
-export const SwapScreen: FC<ExchangeScreenProps> = () => {
+export const SwapScreen = () => {
 	const isMobile = useMediaQuery('mobile')
 	const featureFlag = useContext<FeatureFlags>(FeatureFlagContext)
 
@@ -47,7 +51,7 @@ export const SwapScreen: FC<ExchangeScreenProps> = () => {
 		</div>
 	)
 
-	if (featureFlag === FeatureFlags.newSwapScreenLayout) {
+	if (featureFlag[FeatureFlagKeys.newSwapScreenLayout] === FeatureFlagVariants.newSwapCard) {
 		return <div className={classNames.newSwapScreenContainer}>{newSwapScreenLayout}</div>
 	}
 

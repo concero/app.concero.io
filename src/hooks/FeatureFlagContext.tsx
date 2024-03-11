@@ -1,27 +1,32 @@
 import { createContext, type ReactNode } from 'react'
 import { useFeatureFlagVariantKey } from 'posthog-js/react'
 
-export enum FeatureFlags {
+export type FeatureFlags = Record<FeatureFlagKeys, string | boolean | undefined>
+export enum FeatureFlagKeys {
 	brighterConnectWalletButton = 'brighter_connect_wallet_button',
-	newSwapScreenLayout = 'new_swap_screen_layout',
+	newSwapScreenLayout = 'new_swap_card',
+}
+export enum FeatureFlagVariants {
 	default = 'default',
+	control = 'control',
+	newSwapCard = 'new_swap_card',
 }
 
-export const FeatureFlagContext = createContext<FeatureFlags>(FeatureFlags.default as FeatureFlags)
+export const FeatureFlagContext = createContext<FeatureFlags>({
+	[FeatureFlagKeys.brighterConnectWalletButton]: FeatureFlagVariants.default,
+	[FeatureFlagKeys.newSwapScreenLayout]: FeatureFlagVariants.default,
+})
 
 export function FeatureFlagProvider({ children }: { children: ReactNode }) {
-	let flag: FeatureFlags = FeatureFlags.default
-	const isBrighterButton = useFeatureFlagVariantKey(FeatureFlags.brighterConnectWalletButton)
-
-	if (isBrighterButton === true) {
-		flag = FeatureFlags.brighterConnectWalletButton
+	const flag: FeatureFlags = {
+		[FeatureFlagKeys.brighterConnectWalletButton]: FeatureFlagVariants.default,
+		[FeatureFlagKeys.newSwapScreenLayout]: FeatureFlagVariants.default,
 	}
 
-	// const payload = useActiveFeatureFlags()
-	//
-	// useEffect(() => {
-	// 	console.log('Feature flag payload:', payload)
-	// }, [payload])
+	flag[FeatureFlagKeys.newSwapScreenLayout] = useFeatureFlagVariantKey(FeatureFlagKeys.newSwapScreenLayout)
+	flag[FeatureFlagKeys.brighterConnectWalletButton] = useFeatureFlagVariantKey(
+		FeatureFlagKeys.brighterConnectWalletButton,
+	)
 
 	return <FeatureFlagContext.Provider value={flag}>{children}</FeatureFlagContext.Provider>
 }
