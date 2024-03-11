@@ -1,4 +1,4 @@
-import { memo, useContext } from 'react'
+import { memo, useContext, useEffect, useState } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
@@ -13,6 +13,7 @@ import {
 	type FeatureFlags,
 	FeatureFlagVariants,
 } from '../../../hooks/FeatureFlagContext'
+import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
 
 const History = memo(withErrorBoundary(HistoryCard))
 const Swap = memo(withErrorBoundary(SwapCard))
@@ -21,7 +22,14 @@ const Chart = memo(withErrorBoundary(ChartCard))
 
 export const SwapScreen = () => {
 	const isMobile = useMediaQuery('mobile')
-	const featureFlag = useContext<FeatureFlags>(FeatureFlagContext)
+	const featureFlags = useContext<FeatureFlags>(FeatureFlagContext)
+	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		if (featureFlags[FeatureFlagKeys.newSwapScreenLayout] !== FeatureFlagVariants.default) {
+			setIsLoading(false)
+		}
+	}, [featureFlags[FeatureFlagKeys.newSwapScreenLayout]])
 
 	const desktopLayout = (
 		<div className={`row ${classNames.container}`}>
@@ -51,7 +59,11 @@ export const SwapScreen = () => {
 		</div>
 	)
 
-	if (featureFlag[FeatureFlagKeys.newSwapScreenLayout] === FeatureFlagVariants.newSwapCard) {
+	if (isLoading) {
+		return <FullScreenLoader />
+	}
+
+	if (featureFlags[FeatureFlagKeys.newSwapScreenLayout] === FeatureFlagVariants.newSwapCard) {
 		return <div className={classNames.newSwapScreenContainer}>{newSwapScreenLayout}</div>
 	}
 
