@@ -134,4 +134,4 @@ export const walletClient = createWalletClient({
 })
 
 // JSON-RPC Account
-export const [account] = await walletClient.getAddresses()
+// export const [account] = await walletClient.getAddresses()
