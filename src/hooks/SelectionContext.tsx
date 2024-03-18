@@ -55,7 +55,7 @@ export function SelectionProvider({ children }: SelectionProviderProps) {
 	const { tokens, chains } = useContext(DataContext)
 	const [selection, selectionDispatch] = useReducer(
 		reducer,
-		initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
+		initArgs({ fromTokens: tokens['11155111'], toTokens: tokens['421614'], chains }),
 	)
 
 	// useEffect(() => {

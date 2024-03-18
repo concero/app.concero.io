@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useState } from 'react'
 import { fetchTokens } from '../../api/concero/fetchTokens'
 import { fetchChains } from '../../api/concero/fetchChains'
 import { config } from '../../constants/config'
@@ -7,25 +7,26 @@ import { type Chain } from '../../api/concero/types'
 
 export const initialState = {
 	tokens: {
-		'1': [
+		'11155111': [
 			{
-				name: 'Ethereum',
-				symbol: 'ETH',
-				address: config.NULL_ADDRESS,
-				logoURI: 'https://static.debank.com/image/token/logo_url/eth/935ae4e4d1d12d59a99717a24f2540b5.png',
+				name: 'USDC',
+				symbol: 'USDC',
+				address: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
+				logoURI:
+					'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
 				decimals: 18,
 				coinGeckoId: 'ethereum',
 				is_popular: true,
 				priceUsd: null,
 			},
 		],
-		'137': [
+		'421614': [
 			{
-				name: 'Matic',
-				symbol: 'MATIC',
-				address: config.NULL_ADDRESS,
+				name: 'USDC',
+				symbol: 'USDC',
+				address: '0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d',
 				logoURI:
-					'https://static.debank.com/image/matic_token/logo_url/matic/6f5a6b6f0732a7a235131bd7804d357c.png',
+					'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
 				decimals: 18,
 				coinGeckoId: 'matic-network',
 				is_popular: true,
@@ -35,8 +36,8 @@ export const initialState = {
 	},
 	chains: [
 		{
-			id: '1',
-			name: 'Ethereum',
+			id: '11155111 ',
+			name: 'Sepolia',
 			symbol: 'ETH',
 			addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
 			logoURI: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/1.svg`,
@@ -53,11 +54,11 @@ export const initialState = {
 			],
 		},
 		{
-			id: '137',
-			name: 'Polygon',
-			symbol: 'MATIC',
+			id: '421614',
+			name: 'Arb Sepolia',
+			symbol: 'ETH',
 			addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
-			logoURI: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/137.svg`,
+			logoURI: `${config.CONCERO_ASSETS_URI}/icons/chains/filled/42161.svg`,
 			explorerURI: 'https://polygonscan.com',
 			providers: [
 				{
@@ -129,20 +130,20 @@ export function DataProvider({ children }: DataProviderProps) {
 		return index !== -1 ? chains[index] : null
 	}
 
-	const initialFetch = async () => {
-		const [ethTokens, polygonTokens, fetchedChains] = await Promise.all([
-			fetchTokens({ chainId: '1', offset: 0, limit: 15 }),
-			fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
-			fetchChains({ offset: 0, limit: 20 }),
-		])
-
-		setTokens({ '1': ethTokens, '137': polygonTokens })
-		setChains(fetchedChains)
-	}
-
-	useEffect(() => {
-		void initialFetch()
-	}, [])
+	// const initialFetch = async () => {
+	// 	const [ethTokens, polygonTokens, fetchedChains] = await Promise.all([
+	// 		fetchTokens({ chainId: '1', offset: 0, limit: 15 }),
+	// 		fetchTokens({ chainId: '137', offset: 0, limit: 15 }),
+	// 		fetchChains({ offset: 0, limit: 20 }),
+	// 	])
+	//
+	// 	setTokens({ '1': ethTokens, '137': polygonTokens })
+	// 	setChains(fetchedChains)
+	// }
+	//
+	// useEffect(() => {
+	// 	void initialFetch()
+	// }, [])
 
 	return (
 		<DataContext.Provider

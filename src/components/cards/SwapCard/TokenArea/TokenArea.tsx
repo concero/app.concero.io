@@ -8,7 +8,6 @@ import { handleAmountChange, handleAreaClick } from './handlers'
 import { useTokenAreaReducer } from './useTokenAreaReducer/tokenAreaReducer'
 import { isFloatInput } from '../../../../utils/validation'
 import { useTranslation } from 'react-i18next'
-import { TokensModal } from '../../../modals/TokensModal/TokensModal'
 import { TokenIcon } from '../../../layout/TokenIcon/TokenIcon'
 import { AmountInputSkeleton } from './AmountInputSkleton/AmountInputSkeleton'
 import { type Chain } from '../../../../api/concero/types'
@@ -118,10 +117,6 @@ export const TokenArea: FC<TokenAreaProps> = ({
 						variant={'convex'}
 						className={classNames.selectTokenButton}
 						isDisabled={stage === SwapCardStage.review}
-						onClick={e => {
-							e.stopPropagation()
-							tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })
-						}}
 					>
 						<TokenIcon
 							tokenLogoSrc={selection.token.logoURI}
@@ -134,14 +129,14 @@ export const TokenArea: FC<TokenAreaProps> = ({
 					</Button>
 				</div>
 			</animated.div>
-			<TokensModal
-				isOpen={state.showTokensModal}
-				direction={direction}
-				onClose={() => {
-					tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
-				}}
-				onSelect={handleSelectToken}
-			/>
+			{/* <TokensModal */}
+			{/*	isOpen={state.showTokensModal} */}
+			{/*	direction={direction} */}
+			{/*	onClose={() => { */}
+			{/*		tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false }) */}
+			{/*	}} */}
+			{/*	onSelect={handleSelectToken} */}
+			{/* /> */}
 		</>
 	)
 }
