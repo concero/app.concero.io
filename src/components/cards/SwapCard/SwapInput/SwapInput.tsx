@@ -52,12 +52,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	}
 
 	const handleSwapButtonClick = async () => {
-		if (swapState.stage === 'input') {
-			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
-		} else {
-			// todo: why do we pass a hook as a parameter?
-			await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
-		}
+		await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
 	}
 
 	return (

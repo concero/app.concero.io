@@ -8,6 +8,8 @@ export function getButtonType(
 	isInsufficientGas: boolean,
 	isFetchBalancesLoading: boolean,
 ): ButtonType {
+	return ButtonType.SWAP
+
 	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, stage } = swapState
 
 	if (isLoading) {
