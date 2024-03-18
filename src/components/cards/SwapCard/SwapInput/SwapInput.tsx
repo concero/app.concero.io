@@ -1,5 +1,5 @@
 import { type FC, useContext } from 'react'
-import { useAccount, useSwitchChain, useWalletClient } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import { TokenArea } from '../TokenArea/TokenArea'
 import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
@@ -12,20 +12,36 @@ import { getEthersSigner } from '../../../../web3/ethers'
 import { type JsonRpcSigner } from 'ethers'
 import { IconArrowsUpDown } from '@tabler/icons-react'
 import { DestinationAddressInput } from './DestinationAddressInput/DestinationAddressInput'
-import { handleSwap } from '../swapExecution/handleSwap'
 import { SwapCardStage } from '../swapReducer/types'
+import { walletClient } from '../../../../web3/wagmi'
+import { arbitrumSepolia } from 'wagmi/chains'
+import { ccipABI } from './ccipABI'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
-	const { address, isConnected } = useAccount()
+	const { address, isConnected, chainId } = useAccount()
 
 	// todo: this is a bit of a mess
 	const isInsuranceCardVisible =
 		swapState.selectedRoute?.insurance?.state === 'INSURABLE' ||
 		swapState.selectedRoute?.insurance?.state === 'INSURED'
 
-	const walletClient = useWalletClient()
 	const { switchChainAsync } = useSwitchChain()
+
+	async function sendMessage({ receiver, text, token, amount, feeTokenAddress }) {
+		const abi = ['function buildCCIPMessage(address,string,address,uint256,address) returns (bytes memory)']
+
+		const result = await walletClient.writeContract({
+			chain: arbitrumSepolia,
+			address: '0x720780b200847eF8E8026D12335813890b77deeE', // Contract address
+			abi: ccipABI, // Contract ABI
+			functionName: '_buildCCIPMessage', // Function name to call
+			account: address,
+			args: [receiver, text, token, amount, feeTokenAddress], // Arguments to pass to the function
+		})
+		console.log('result', result)
+		return result // Contains the transaction details
+	}
 
 	// todo: why do we have a switchChainHook here? its a generic utility
 	async function switchChainHook(requiredChainId: number): Promise<JsonRpcSigner> {
@@ -52,7 +68,13 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	}
 
 	const handleSwapButtonClick = async () => {
-		await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
+		sendMessage({
+			receiver: '0x70E73f067a1fC9FE6D53151bd271715811746d3a',
+			text: 'Hello, World',
+			token: '0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d', // usdc
+			amount: 1000000,
+			feeTokenAddress: '0xb1D4538B4571d411F07960EF2838Ce337FE1E80E', // link
+		})
 	}
 
 	return (

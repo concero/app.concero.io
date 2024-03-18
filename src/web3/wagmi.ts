@@ -2,6 +2,7 @@ import { createConfig, http } from 'wagmi'
 import { createPublicClient, createWalletClient, custom } from 'viem' // VIEM
 import {
 	arbitrum,
+	arbitrumSepolia,
 	aurora,
 	avalanche,
 	base,
@@ -60,6 +61,7 @@ const metadata = {
 
 export const config = createConfig({
 	chains: [
+		arbitrumSepolia,
 		mainnet,
 		polygon,
 		sepolia,
@@ -104,6 +106,7 @@ export const config = createConfig({
 		[cronos.id]: http(),
 		[linea.id]: http(),
 		[evmos.id]: http(),
+		[arbitrumSepolia.id]: http(),
 	},
 	connectors: [
 		walletConnect({ projectId, metadata, showQrModal: false }),

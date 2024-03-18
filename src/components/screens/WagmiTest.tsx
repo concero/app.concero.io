@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Button } from '../buttons/Button/Button'
 import { WalletButton } from '../layout/Header/WalletButton/WalletButton'
 import { useAccount, useWalletClient } from 'wagmi'
@@ -7,7 +6,6 @@ import { UNISWAP_ROUTER_ABI } from './uniswap_router_abi'
 import { simulateContract } from 'viem/actions'
 
 export const WagmiTest = () => {
-	const [route, setRoute] = useState<any>()
 	const wc = useWalletClient()
 	console.log('wc', wc)
 	const { isConnected } = useAccount()
@@ -29,7 +27,7 @@ export const WagmiTest = () => {
 
 		try {
 			const result = await walletClient.writeContract({
-				address: '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45', // Uniswap V3 Swap Router address
+				address: '0x7388365d49049164B6aBF3218c8cbA67A51580EF',
 				abi: UNISWAP_ROUTER_ABI,
 				functionName: 'exactInputSingle',
 				account,
