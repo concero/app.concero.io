@@ -4,7 +4,7 @@ import { type SwitchChainHookType } from '../SwapInput/types'
 import { type Dispatch } from 'react'
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { type providers } from 'ethers'
-import { executeConceroRoute } from './swapExecution'
+import { executeConceroRoute } from './executeConceroRoute'
 
 interface HandleSwapProps {
 	swapState: SwapState
