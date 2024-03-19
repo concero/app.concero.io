@@ -72,7 +72,7 @@
     "husky": "^8.0.3",
     "jest-mock": "^29.7.0",
     "jsdom": "^21.1.2",
-    "postcss": "^7.0.39",
+    "postcss": "^8.0.0",
     "precss": "^4.0.0",
     "prettier": "^2.8.8",
     "source-map-explorer": "^2.5.3",
