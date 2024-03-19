@@ -77,7 +77,9 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .fade-in-out {
-	transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+	transition:
+		opacity 0.25s ease-in-out,
+		transform 0.25s ease-in-out;
 }
 
 .card {
