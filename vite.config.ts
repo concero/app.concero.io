@@ -13,7 +13,7 @@ export default defineConfig({
 			configFile: './.stylelintrc.json',
 			emitErrorAsWarning: true,
 		}),
-		EnvironmentPlugin(['postcss-preset-env']),
+		EnvironmentPlugin('all'),
 	],
 	css: {
 		postcss: {
