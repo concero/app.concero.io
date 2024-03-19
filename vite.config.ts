@@ -5,23 +5,23 @@ import precss from 'precss'
 import EnvironmentPlugin from 'vite-plugin-environment'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    stylelint({
-      fix: true,
-      include: ['./src/**/*.css', './src/**/*.pcss'],
-      configFile: './.stylelintrc.json',
-      emitErrorAsWarning: true,
-    }),
-    EnvironmentPlugin('all'),
-  ],
-  css: {
-    postcss: {
-      plugins: [precss()],
-    },
-  },
-  build: {
-    outDir: './dist',
-    emptyOutDir: true,
-  },
+	plugins: [
+		react(),
+		stylelint({
+			fix: true,
+			include: ['./src/**/*.css', './src/**/*.pcss'],
+			configFile: './.stylelintrc.json',
+			emitErrorAsWarning: true,
+		}),
+		EnvironmentPlugin('all'),
+	],
+	css: {
+		postcss: {
+			plugins: [precss],
+		},
+	},
+	build: {
+		outDir: './dist',
+		emptyOutDir: true,
+	},
 })
