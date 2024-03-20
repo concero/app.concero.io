@@ -39,7 +39,6 @@
   "include": [
     "src",
     "node_modules/eslint-plugin-react/lib/types.d.ts",
-    "precss.d.ts"
   ],
   "references": [
     {

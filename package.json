@@ -3,9 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "engines": {
-    "node": ">=21"
-  },
   "scripts": {
     "start": "npx vite",
     "dev": "npx vite",
@@ -75,8 +72,8 @@
     "husky": "^8.0.3",
     "jest-mock": "^29.7.0",
     "jsdom": "^21.1.2",
-    "postcss-preset-env": "^7.2.3",
-    "postcss": "^8.0.0",
+    "postcss-preset-env": "^9.5.2",
+    "postcss": "^8.4.37",
     "precss": "^4.0.0",
     "prettier": "^2.8.8",
     "source-map-explorer": "^2.5.3",
