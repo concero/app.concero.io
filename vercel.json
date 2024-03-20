@@ -5,8 +5,8 @@
       "destination": "https://eu.posthog.com/:path*"
     },
     {
-      "source": "/signup/:path(.*)",
-      "destination": "https://send.concero.io/:path*"
+      "source": "/signup",
+      "destination": "https://concero.io/prototypes"
     },
     {
       "source": "/([^.\n]*)",
