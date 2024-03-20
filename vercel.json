@@ -6,7 +6,7 @@
     },
     {
       "source": "/signup/:path(.*)",
-      "destination": "https://send.concero.io/s/cltmyjoyw000eswvuni9rxhfs/:path*"
+      "destination": "https://send.concero.io/s/:path*"
     },
     {
       "source": "/([^.\n]*)",
