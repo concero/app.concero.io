@@ -6,7 +6,7 @@
     },
     {
       "source": "/signup/:path*",
-      "destination": "https://send.concero.io/"
+      "destination": "https://send.concero.io/:path*"
     },
     {
       "source": "/([^.\n]*)",
