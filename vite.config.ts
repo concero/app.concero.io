@@ -17,7 +17,7 @@ export default defineConfig({
 	],
 	css: {
 		postcss: {
-			plugins: [precss()],
+			plugins: [precss],
 		},
 	},
 	build: {
