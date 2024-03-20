@@ -5,12 +5,14 @@
       "destination": "https://eu.posthog.com/:path*"
     },
     {
-      "source": "/signup",
-      "destination": "https://www.concero.io/prototypes"
-    },
-    {
       "source": "/([^.\n]*)",
       "destination": "/"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/signup/:path*",
+      "destination": "https://send.concero.io/:path*"
     }
   ]
 }
