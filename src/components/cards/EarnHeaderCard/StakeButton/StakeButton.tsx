@@ -24,7 +24,7 @@ export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 
 	return (
 		<Button
-			leftIcon={buttonIcons[status as Status]}
+			leftIcon={buttonIcons[status]}
 			size="lg"
 			isLoading={manageState.isLoading}
 			className={classNames[buttonClassNames(status)]}
@@ -33,7 +33,7 @@ export function StakeButton({ manageState, manageDispatch }: StakeButtonProps) {
 			}}
 			isDisabled={isDisabled}
 		>
-			{t(buttonMessages[status as Status])}
+			{t(buttonMessages[status])}
 		</Button>
 	)
 }
