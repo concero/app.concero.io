@@ -1,10 +1,10 @@
 import { createWalletClient, custom } from 'viem'
 import { providers } from 'ethers'
-import { useSwitchNetwork } from 'wagmi'
+import { useSwitchChain } from 'wagmi'
 
 export const switchChain = async requiredChainId => {
-	const { switchNetworkAsync } = useSwitchNetwork()
-	if (switchNetworkAsync) await switchNetworkAsync(requiredChainId)
+	const { switchChainAsync } = useSwitchChain()
+	if (switchChainAsync) await switchChainAsync(requiredChainId)
 	const client0 = createWalletClient({
 		transport: custom(window.ethereum),
 	})

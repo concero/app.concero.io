@@ -8,6 +8,9 @@ export function initPosthog() {
 			autocapture: false,
 		})
 
+		posthog.identify()
+		posthog.setPersonProperties()
+
 		localStorage.setItem('app-concero-session-id', posthog.get_session_id())
 		localStorage.setItem('app-concero-replay-id', posthog.get_distinct_id())
 
