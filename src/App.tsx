@@ -14,9 +14,6 @@ import { Navigator } from './Navigator'
 import { useEffect } from 'react'
 import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
-// const WalletConnectModal = lazy(
-// 	async () => await import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })),
-// )
 
 function App() {
 	useEffect(() => {
@@ -24,7 +21,6 @@ function App() {
 		bigNumberSettings()
 	}, [])
 
-	// 0. Setup queryClient
 	const queryClient = new QueryClient()
 
 	return (
@@ -42,7 +38,6 @@ function App() {
 								</ThemeProvider>
 							</SelectionProvider>
 						</DataProvider>
-						{/* <WagmiTest /> */}
 					</QueryClientProvider>
 				</WagmiProvider>
 			</I18Provider>

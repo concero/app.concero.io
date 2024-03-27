@@ -1,5 +1,5 @@
 import { createConfig, http } from 'wagmi'
-import { createPublicClient, createWalletClient, custom } from 'viem' // VIEM
+import { createPublicClient } from 'viem'
 import {
 	arbitrum,
 	aurora,
@@ -25,8 +25,9 @@ import {
 } from 'wagmi/chains'
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
 import { createWeb3Modal } from '@web3modal/wagmi/react'
+import { config as appConfig } from '../constants/config'
 
-export const projectId = process.env.WEB3_MODAL_PROJECT_ID
+export const projectId = appConfig.WEB3_MODAL_PROJECT_ID
 export const chains = [
 	mainnet,
 	polygon,
@@ -52,9 +53,9 @@ export const chains = [
 
 // 2. Create wagmiConfig
 const metadata = {
-	name: 'Web3Modal',
-	description: 'Web3Modal Example',
-	url: 'https://web3modal.com', // origin must match your domain & subdomain
+	name: 'Concero',
+	description: 'Concero',
+	url: appConfig.CONCERO_DOMAIN_URL,
 	icons: ['https://avatars.githubusercontent.com/u/37784886'],
 }
 
@@ -120,6 +121,7 @@ createWeb3Modal({
 	wagmiConfig: config,
 	projectId,
 	enableAnalytics: true, // Optional - defaults to your Cloud configuration
+	defaultChain: mainnet,
 })
 
 export const publicClient = createPublicClient({
@@ -128,10 +130,10 @@ export const publicClient = createPublicClient({
 })
 
 // walletClient has similar methods to Ethers.js Signer
-export const walletClient = createWalletClient({
-	chain: mainnet,
-	transport: custom(window.ethereum),
-})
+// export const walletClient = createWalletClient({
+// 	chain: mainnet,
+// 	transport: custom(window.ethereum),
+// })
 
 // JSON-RPC Account
 // export const [account] = await walletClient.getAddresses()
