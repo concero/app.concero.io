@@ -28,6 +28,7 @@ interface IApproveToken {
 	fromAmount: string
 }
 
+// replaceable with wagmi writeContract - its an abi call
 export async function approveToken({
 	signer,
 	tokenAddress,

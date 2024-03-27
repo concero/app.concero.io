@@ -1,5 +1,5 @@
-import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
-import { configureChains, createConfig } from 'wagmi'
+import { createConfig, http } from 'wagmi'
+import { createPublicClient, createWalletClient, custom } from 'viem' // VIEM
 import {
 	arbitrum,
 	aurora,
@@ -20,8 +20,11 @@ import {
 	optimism,
 	polygon,
 	polygonZkEvm,
+	sepolia,
 	zkSync,
-} from 'viem/chains'
+} from 'wagmi/chains'
+import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
+import { createWeb3Modal } from '@web3modal/wagmi/react'
 
 export const projectId = process.env.WEB3_MODAL_PROJECT_ID
 export const chains = [
@@ -46,11 +49,89 @@ export const chains = [
 	linea,
 	evmos,
 ]
-export const { publicClient, webSocketPublicClient } = configureChains(chains, [w3mProvider({ projectId })])
-export const wagmiConfig = createConfig({
-	autoConnect: true,
-	connectors: w3mConnectors({ chains, projectId }),
-	publicClient,
-	webSocketPublicClient,
+
+// 2. Create wagmiConfig
+const metadata = {
+	name: 'Web3Modal',
+	description: 'Web3Modal Example',
+	url: 'https://web3modal.com', // origin must match your domain & subdomain
+	icons: ['https://avatars.githubusercontent.com/u/37784886'],
+}
+
+export const config = createConfig({
+	chains: [
+		mainnet,
+		polygon,
+		sepolia,
+		polygonZkEvm,
+		arbitrum,
+		aurora,
+		zkSync,
+		moonriver,
+		moonbeam,
+		boba,
+		optimism,
+		fuse,
+		bsc,
+		avalanche,
+		gnosis,
+		base,
+		fantom,
+		okc,
+		cronos,
+		linea,
+		evmos,
+	],
+	transports: {
+		[mainnet.id]: http(),
+		[sepolia.id]: http(),
+		[polygon.id]: http(),
+		[polygonZkEvm.id]: http(),
+		[arbitrum.id]: http(),
+		[aurora.id]: http(),
+		[zkSync.id]: http(),
+		[moonriver.id]: http(),
+		[moonbeam.id]: http(),
+		[boba.id]: http(),
+		[optimism.id]: http(),
+		[fuse.id]: http(),
+		[bsc.id]: http(),
+		[avalanche.id]: http(),
+		[gnosis.id]: http(),
+		[base.id]: http(),
+		[fantom.id]: http(),
+		[okc.id]: http(),
+		[cronos.id]: http(),
+		[linea.id]: http(),
+		[evmos.id]: http(),
+	},
+	connectors: [
+		walletConnect({ projectId, metadata, showQrModal: false }),
+		injected({ shimDisconnect: true }),
+		coinbaseWallet({
+			appName: metadata.name,
+			appLogoUrl: metadata.icons[0],
+		}),
+	],
 })
-export const ethereumClient = new EthereumClient(wagmiConfig, chains)
+
+// 3. Create modal
+createWeb3Modal({
+	wagmiConfig: config,
+	projectId,
+	enableAnalytics: true, // Optional - defaults to your Cloud configuration
+})
+
+export const publicClient = createPublicClient({
+	chain: mainnet,
+	transport: http(),
+})
+
+// walletClient has similar methods to Ethers.js Signer
+export const walletClient = createWalletClient({
+	chain: mainnet,
+	transport: custom(window.ethereum),
+})
+
+// JSON-RPC Account
+// export const [account] = await walletClient.getAddresses()

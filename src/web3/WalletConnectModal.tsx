@@ -1,25 +1,33 @@
-import { useContext } from 'react'
-import { Web3Modal } from '@web3modal/react'
-import { ethereumClient, projectId } from './wagmi'
-import walletLogoDark from '../assets/branding/walletConnectLogoDark.png'
-import walletLogoLight from '../assets/branding/walletConnectLogoLight.png'
-import { ThemeContext } from '../hooks/themeContext'
-
-export function WalletConnectModal() {
-	const { theme, colors } = useContext(ThemeContext)
-
-	return (
-		<Web3Modal
-			themeMode={theme}
-			themeVariables={{
-				'--w3m-accent-color': colors.primary.main,
-				'--w3m-background-color': theme === 'light' ? 'rgb(255,255,255)' : colors.grey.darkest,
-				'--w3m-logo-image-url': theme === 'light' ? walletLogoLight : walletLogoDark,
-				'--w3m-overlay-backdrop-filter': 'blur(10px)',
-				'--w3m-color-overlay': 'transparent',
-			}}
-			projectId={projectId!}
-			ethereumClient={ethereumClient}
-		/>
-	)
-}
+// import { useContext } from 'react'
+// import { createWeb3Modal, defaultConfig } from '@web3modal/wagmi/react'
+// import { projectId } from './wagmi'
+// import { ThemeContext } from '../hooks/themeContext'
+//
+// export function WalletConnectModal() {
+// 	const { theme, colors } = useContext(ThemeContext)
+// 	// 2. Set chains
+// 	const mainnet = {
+// 		chainId: 1,
+// 		name: 'Ethereum',
+// 		currency: 'ETH',
+// 		explorerUrl: 'https://etherscan.io',
+// 		rpcUrl: 'https://cloudflare-eth.com',
+// 	}
+//
+// 	// 3. Create modal
+// 	const metadata = {
+// 		name: 'My Website',
+// 		description: 'My Website description',
+// 		url: 'https://mywebsite.com', // origin must match your domain & subdomain
+// 		icons: ['https://avatars.mywebsite.com/'],
+// 	}
+//
+// 	createWeb3Modal({
+// 		ethersConfig: defaultConfig({ metadata }),
+// 		chains: [mainnet],
+// 		projectId,
+// 		enableAnalytics: true, // Optional - defaults to your Cloud configuration
+// 	})
+//
+// 	return null
+// }

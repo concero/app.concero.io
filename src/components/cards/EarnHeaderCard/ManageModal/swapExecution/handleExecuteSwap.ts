@@ -2,20 +2,18 @@ import { type Dispatch } from 'react'
 import { type ManageAction, type ManageState } from '../useEarnReducer/types'
 import { ModalType, Status } from '../constants'
 import { getSigner } from '../../../../../web3/getSigner'
-import { type SwitchNetworkArgs, type SwitchNetworkResult } from '@wagmi/core'
 import BigNumber from 'bignumber.js'
 import { addingAmountDecimals } from '../../../../../utils/formatting'
 import { fetchApprovalTx } from '../../../../../api/enso/approvalTx'
 import { retryRequest } from '../../../../../utils/retryRequest'
 import { fetchEnsoRoute } from '../../../../../api/enso/fetchEnsoQuote'
 import { approveToken, checkIsApproveNeeded, handleError } from './helpers'
-
-type SwitchChainNetwork = (chainId_?: SwitchNetworkArgs['chainId']) => Promise<SwitchNetworkResult>
+import { type SwitchChain } from '../../StakeButton/StakeButton'
 
 export async function handleExecuteSwap(
 	manageState: ManageState,
 	manageDispatch: Dispatch<ManageAction>,
-	switchNetworkAsync: SwitchChainNetwork,
+	switchChainAsync: SwitchChain,
 ): Promise<void> {
 	manageDispatch({ type: 'SET_LOADING', payload: true })
 	manageDispatch({ type: 'SET_MODAL_TYPE', payload: ModalType.progress })
@@ -25,7 +23,7 @@ export async function handleExecuteSwap(
 	const { from, address, to } = manageState
 
 	try {
-		const signer = await getSigner(Number(from.chain.id), switchNetworkAsync)
+		const signer = await getSigner(Number(from.chain.id), switchChainAsync)
 		const approvalTx = await fetchApprovalTx(
 			from.chain.id,
 			address,
@@ -48,6 +46,7 @@ export async function handleExecuteSwap(
 					body: 'Please approve the transaction in your wallet',
 				},
 			})
+			// replaceable with wagmi writeContract - its an abi call, signer not needed
 			await approveToken({
 				signer,
 				tokenAddress: from.token.address,

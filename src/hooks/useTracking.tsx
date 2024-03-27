@@ -7,6 +7,7 @@ export const trackTransaction = () => {
 }
 
 // Standalone function for trackEvent
+// todo: why async?
 export const trackEvent = async ({ category, action, label, data }: TrackEventProps) => {
 	try {
 		// console.log('trackEvent', action, label, category, data)
