@@ -12,6 +12,7 @@ export enum ButtonType {
 	NO_ROUTES = 8,
 	REVIEW = 9,
 	FETCH_BALANCES_LOADING = 10,
+	CONNECT_WALLET_BRIGHT = 11,
 }
 
 export const buttonText: { [key in ButtonType]: string } = {
@@ -25,6 +26,7 @@ export const buttonText: { [key in ButtonType]: string } = {
 	[ButtonType.NO_ROUTES]: 'button.noRoutesFound',
 	[ButtonType.REVIEW]: 'button.reviewSwap',
 	[ButtonType.FETCH_BALANCES_LOADING]: '',
+	[ButtonType.CONNECT_WALLET_BRIGHT]: 'button.connectWalletToSwap',
 }
 
 export const isButtonDisabled: { [key in ButtonType]: boolean } = {
@@ -38,6 +40,7 @@ export const isButtonDisabled: { [key in ButtonType]: boolean } = {
 	[ButtonType.NO_ROUTES]: true,
 	[ButtonType.REVIEW]: false,
 	[ButtonType.FETCH_BALANCES_LOADING]: true,
+	[ButtonType.CONNECT_WALLET_BRIGHT]: false,
 }
 
 export const buttonStyleClass: { [key in ButtonType]: string } = {
@@ -51,6 +54,7 @@ export const buttonStyleClass: { [key in ButtonType]: string } = {
 	[ButtonType.NO_ROUTES]: 'disabled',
 	[ButtonType.REVIEW]: 'swap',
 	[ButtonType.FETCH_BALANCES_LOADING]: 'loading',
+	[ButtonType.CONNECT_WALLET_BRIGHT]: 'swap',
 }
 
 export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
@@ -64,4 +68,5 @@ export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
 	[ButtonType.NO_ROUTES]: null,
 	[ButtonType.REVIEW]: <IconArrowsUpDown size={18} color="white" />,
 	[ButtonType.FETCH_BALANCES_LOADING]: null,
+	[ButtonType.CONNECT_WALLET_BRIGHT]: <IconWallet size={18} color="white" />,
 }
