@@ -16,6 +16,7 @@ import { ChainsPicker } from './ChainsPicker/ChainsPicker'
 import { Modal } from '../Modal/Modal'
 import { Button } from '../../buttons/Button/Button'
 import { SelectionContext } from '../../../hooks/SelectionContext'
+import { testnetTokens } from './testnetTokens'
 
 interface TokensModalProps {
 	isOpen: boolean
@@ -34,7 +35,13 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer(selection.swapCard[direction].chain)
 	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
 
+	const isTestnet = true
+
 	const addTokens = async () => {
+		if (isTestnet) {
+			tokensModalDispatch({ type: TokenModalActionType.UPSERT_TOKENS, tokens: [] })
+			return
+		}
 		const newTokens = await getTokens({ chainId: selectedChain?.id, offset, limit, search: searchValue })
 		if (!newTokens.length) return
 		tokensModalDispatch({ type: TokenModalActionType.UPSERT_TOKENS, tokens: newTokens })
@@ -60,11 +67,16 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 		tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: [] })
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 
-		const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
-		if (resToken.length > 0) {
-			tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
-			tokensModalDispatch({ type: TokenModalActionType.SET_OFFSET, offset: 15 })
+		if (isTestnet) {
+			tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: testnetTokens[selectedChain.id] })
+		} else {
+			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
+			if (resToken.length > 0) {
+				tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: resToken })
+				tokensModalDispatch({ type: TokenModalActionType.SET_OFFSET, offset: 15 })
+			}
 		}
+
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: false })
 
 		void getBalanceTokens(tokensModalDispatch, address, selectedChain)

@@ -8,6 +8,7 @@ import { CardModal } from '../../CardModal/CardModal'
 import { ChainListItem } from './ChainListItem/ChainListItem'
 import { TextInput } from '../../../input/TextInput'
 import { IconSearch } from '@tabler/icons-react'
+import { testnetChains } from './testnetChains'
 
 interface TokensModalHeaderProps {
 	selectedChain: Chain | null
@@ -20,6 +21,8 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 	const [chains, setChains] = useState<Chain[]>([])
 	const [isChainsModalOpen, setIsChainsModalOpen] = useState<boolean>(false)
 	const { t } = useTranslation()
+
+	const isTestnet = true
 
 	const fistLineChains = chains.slice(0, 7)
 
@@ -34,9 +37,13 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 	}
 
 	useEffect(() => {
-		getChains({ offset: 0, limit: 18, search: searchValue }).then((chains: Chain[]) => {
-			setChains(chains)
-		})
+		if (isTestnet) {
+			setChains(testnetChains)
+		} else {
+			getChains({ offset: 0, limit: 18, search: searchValue }).then((chains: Chain[]) => {
+				setChains(chains)
+			})
+		}
 	}, [searchValue])
 
 	return (
