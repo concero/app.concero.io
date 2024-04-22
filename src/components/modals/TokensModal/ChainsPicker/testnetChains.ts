@@ -33,7 +33,7 @@ export const testnetChains = [
 	},
 	{
 		addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
-		explorerURI: 'https://basescan.org',
+		explorerURI: 'https://sepolia.basescan.org',
 		id: '84532',
 		logoURI: 'https://api.concero.io/static/icons/chains/8453.svg',
 		name: 'BASE sepolia',

@@ -68,7 +68,10 @@ export function TokensModal({ isOpen, onClose, onSelect, direction, isTestnet }:
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 
 		if (isTestnet) {
-			tokensModalDispatch({ type: TokenModalActionType.SET_TOKENS, tokens: testnetTokens[selectedChain.id] })
+			tokensModalDispatch({
+				type: TokenModalActionType.SET_TOKENS,
+				tokens: testnetTokens[testnetChains[direction === 'from' ? 2 : 1].id],
+			})
 		} else {
 			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
 			if (resToken.length > 0) {
@@ -113,7 +116,10 @@ export function TokensModal({ isOpen, onClose, onSelect, direction, isTestnet }:
 
 	useEffect(() => {
 		if (isTestnet) {
-			tokensModalDispatch({ type: TokenModalActionType.SET_SELECTED_CHAIN, chain: testnetChains[1] })
+			tokensModalDispatch({
+				type: TokenModalActionType.SET_SELECTED_CHAIN,
+				chain: testnetChains[direction === 'from' ? 2 : 1],
+			})
 		}
 	}, [isTestnet])
 
