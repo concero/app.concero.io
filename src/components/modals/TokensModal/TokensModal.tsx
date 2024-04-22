@@ -17,15 +17,17 @@ import { Modal } from '../Modal/Modal'
 import { Button } from '../../buttons/Button/Button'
 import { SelectionContext } from '../../../hooks/SelectionContext'
 import { testnetTokens } from './testnetTokens'
+import { testnetChains } from './ChainsPicker/testnetChains'
 
 interface TokensModalProps {
 	isOpen: boolean
 	onClose: () => void
 	onSelect: (token: Token, chain: Chain) => void
 	direction: 'from' | 'to'
+	isTestnet: boolean
 }
 
-export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModalProps) {
+export function TokensModal({ isOpen, onClose, onSelect, direction, isTestnet }: TokensModalProps) {
 	const { t } = useTranslation()
 	const { address } = useAccount()
 	const { getTokens, getChains } = useContext(DataContext)
@@ -34,8 +36,6 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 	const { selection } = useContext(SelectionContext)
 	const [tokensModalState, tokensModalDispatch] = useTokensModalReducer(selection.swapCard[direction].chain)
 	const { selectedChain, tokens, isLoading, isBalanceLoading, offset, searchValue } = tokensModalState
-
-	const isTestnet = true
 
 	const addTokens = async () => {
 		if (isTestnet) {
@@ -109,7 +109,13 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 	useEffect(() => {
 		void initialPopulateTokens()
 		moveToTop()
-	}, [selectedChain?.id, address, searchValue])
+	}, [selectedChain?.id, address, searchValue, isTestnet])
+
+	useEffect(() => {
+		if (isTestnet) {
+			tokensModalDispatch({ type: TokenModalActionType.SET_SELECTED_CHAIN, chain: testnetChains[1] })
+		}
+	}, [isTestnet])
 
 	return (
 		<Modal
@@ -120,7 +126,11 @@ export function TokensModal({ isOpen, onClose, onSelect, direction }: TokensModa
 			isHeaderVisible={false}
 		>
 			<div className={classNames.container}>
-				<ChainsPicker selectedChain={selectedChain} setSelectedChain={handleSelectChain} />
+				<ChainsPicker
+					selectedChain={selectedChain}
+					setSelectedChain={handleSelectChain}
+					isTestnet={isTestnet}
+				/>
 				<div className={classNames.tokensContainer}>
 					<div className={classNames.header}>
 						<p className={'body4'}>{t('tokensModal.tokens')}</p>

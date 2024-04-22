@@ -124,6 +124,10 @@ export const swapActions: SwapAction = {
 		}
 		return { ...state, isDestinationAddressVisible: action.status }
 	},
+	TOGGLE_TESTNET: (state: SwapState) => {
+		const isTestnet = !state.isTestnet
+		return { ...state, isTestnet }
+	},
 }
 
 function updateLastSwapState(state: SwapState): SwapState {

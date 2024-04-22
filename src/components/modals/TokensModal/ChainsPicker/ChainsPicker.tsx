@@ -13,16 +13,15 @@ import { testnetChains } from './testnetChains'
 interface TokensModalHeaderProps {
 	selectedChain: Chain | null
 	setSelectedChain: (param: Chain | null) => void
+	isTestnet: boolean
 }
 
-export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHeaderProps) {
+export function ChainsPicker({ selectedChain, setSelectedChain, isTestnet }: TokensModalHeaderProps) {
 	const { getChains } = useContext(DataContext)
 	const [searchValue, setSearchValue] = useState<string>('')
 	const [chains, setChains] = useState<Chain[]>([])
 	const [isChainsModalOpen, setIsChainsModalOpen] = useState<boolean>(false)
 	const { t } = useTranslation()
-
-	const isTestnet = true
 
 	const fistLineChains = chains.slice(0, 7)
 

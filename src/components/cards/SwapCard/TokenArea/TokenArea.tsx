@@ -23,6 +23,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 	balance = null,
 	isLoading = false,
 	stage,
+	isTestnet,
 }) => {
 	const [state, tokenAreaDispatch] = useTokenAreaReducer()
 	const inputRef = useRef<ForwardedRef<HTMLInputElement>>()
@@ -141,6 +142,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 					tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 				}}
 				onSelect={handleSelectToken}
+				isTestnet={isTestnet}
 			/>
 		</>
 	)

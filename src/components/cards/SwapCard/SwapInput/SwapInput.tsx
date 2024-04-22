@@ -64,6 +64,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 					swapDispatch={swapDispatch}
 					balance={swapState.balance}
 					stage={swapState.stage}
+					isTestnet={swapState.isTestnet}
 				/>
 				<TokenArea
 					direction="to"
@@ -71,6 +72,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 					swapDispatch={swapDispatch}
 					isLoading={swapState.isLoading}
 					stage={swapState.stage}
+					isTestnet={swapState.isTestnet}
 				/>
 				{swapState.stage === SwapCardStage.input ? (
 					<div

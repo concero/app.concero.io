@@ -1,4 +1,4 @@
-import { type FC, useRef } from 'react'
+import { type FC, type ReactComponentElement, useRef } from 'react'
 import { useAccount } from 'wagmi'
 import classNames from './SwapCard.module.pcss'
 import { type SwapCardProps } from './types'

@@ -7,6 +7,8 @@ import { type SwapAction, type SwapState } from './swapReducer/types'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
 import { SelectionContext } from '../../../hooks/SelectionContext'
+import { testnetTokens } from '../../modals/TokensModal/testnetTokens'
+import { testnetChains } from '../../modals/TokensModal/ChainsPicker/testnetChains'
 
 interface UseSwapCardEffectsProps {
 	swapState: SwapState
@@ -74,4 +76,27 @@ export function useSwapCardEffects({
 		swapDispatch({ type: 'SET_ADDRESS', direction: 'from', payload: address })
 		swapDispatch({ type: 'SET_ADDRESS', direction: 'to', payload: address })
 	}, [address])
+
+	// testnet useEffects
+
+	useEffect(() => {
+		if (swapState.isTestnet) {
+			swapDispatch({ type: 'SET_TOKEN', payload: { token: testnetTokens['84532'][0] }, direction: 'from' })
+			swapDispatch({ type: 'SET_TOKEN', payload: { token: testnetTokens['11155420'][0] }, direction: 'to' })
+			swapDispatch({
+				type: 'SET_CHAIN',
+				payload: {
+					chain: testnetChains[2],
+				},
+				direction: 'from',
+			})
+			swapDispatch({
+				type: 'SET_CHAIN',
+				payload: {
+					chain: testnetChains[1],
+				},
+				direction: 'to',
+			})
+		}
+	}, [swapState.isTestnet])
 }

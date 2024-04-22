@@ -6,6 +6,7 @@ import { type Dispatch, useLayoutEffect, useRef, useState } from 'react'
 import { getCardTitleByStatus } from '../handlers/getCardTitleByStatus'
 import { animated, useSpring } from '@react-spring/web'
 import { easeQuadInOut } from 'd3-ease'
+import { Toggle } from '../../../layout/Toggle/Toggle'
 
 interface SwapCardHeaderProps {
 	swapState: SwapState
@@ -13,7 +14,7 @@ interface SwapCardHeaderProps {
 }
 
 export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps) {
-	const { stage } = swapState
+	const { stage, isTestnet } = swapState
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const [titleAnimationWidth, setTitleAnimationWidth] = useState<number>(0)
 	const isReviewStage = stage === SwapCardStage.review
@@ -50,14 +51,25 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 				<h5 className={'cardHeaderTitle'}>{getCardTitleByStatus(swapState.stage)}</h5>
 			</animated.div>
 			{isInputStage ? (
-				<Button
-					variant="black"
-					size="sq-xs"
-					onClick={() => {
-						swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })
-					}}
-					leftIcon={<IconDots size={16} color={'var(--color-text-secondary)'} />}
-				/>
+				<div className={classNames.settingsContainer}>
+					<div className={classNames.toggleTestnetContainer}>
+						<h5>Testnet</h5>
+						<Toggle
+							isChecked={isTestnet}
+							onChange={() => {
+								swapDispatch({ type: 'TOGGLE_TESTNET' })
+							}}
+						/>
+					</div>
+					<Button
+						variant="black"
+						size="sq-xs"
+						onClick={() => {
+							swapDispatch({ type: 'TOGGLE_SETTINGS_MODAL_OPEN' })
+						}}
+						leftIcon={<IconDots size={16} color={'var(--color-text-secondary)'} />}
+					/>
+				</div>
 			) : null}
 		</div>
 	)
