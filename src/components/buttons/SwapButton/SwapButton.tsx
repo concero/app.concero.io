@@ -12,7 +12,7 @@ import { useWeb3Modal } from '@web3modal/react'
 import { TestnetCheckButtons } from './TestnetCheckButtons/TestnetCheckButtons'
 import { checkTestnetBalanceSufficiency } from './checkTestnetBalanceSufficiency'
 
-export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
+export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick, switchChainHook }) => {
 	const { isLoading, isTestnet } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
 	const [testnetBalances, setTestnetBalances] = useState<{
@@ -46,7 +46,11 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 	return (
 		<div className={classNames.container}>
 			{isTestnet && (!testnetBalances?.bnmBalanceSufficient || !testnetBalances?.linkBalanceSufficient) ? (
-				<TestnetCheckButtons swapState={swapState} testnetBalances={testnetBalances} />
+				<TestnetCheckButtons
+					swapState={swapState}
+					testnetBalances={testnetBalances}
+					switchChainHook={switchChainHook}
+				/>
 			) : (
 				<>
 					{buttonType === ButtonType.LOW_GAS && gasSufficiency ? (
