@@ -14,6 +14,7 @@ import { IconArrowsUpDown } from '@tabler/icons-react'
 import { DestinationAddressInput } from './DestinationAddressInput/DestinationAddressInput'
 import { handleSwap } from '../swapExecution/handleSwap'
 import { SwapCardStage } from '../swapReducer/types'
+import { executeConceroRoute } from '../swapExecution/executeConceroRoute'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
@@ -49,6 +50,11 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	}
 
 	const handleSwapButtonClick = async () => {
+		if (swapState.isTestnet) {
+			await executeConceroRoute(swapState, switchChainHook)
+			return
+		}
+
 		if (swapState.stage === 'input') {
 			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
 		} else {

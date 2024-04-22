@@ -39,7 +39,7 @@ export function useSwapCardEffects({
 
 	useEffect(() => {
 		clearRoutes(typingTimeoutRef, swapDispatch)
-		void handleFetchRoutes(from, to, settings, swapDispatch, typingTimeoutRef)
+		void handleFetchRoutes(swapState, swapDispatch, typingTimeoutRef)
 		return () => {
 			clearRoutes(typingTimeoutRef, swapDispatch)
 		}
