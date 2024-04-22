@@ -68,9 +68,10 @@ export function TokensModal({ isOpen, onClose, onSelect, direction, isTestnet }:
 		tokensModalDispatch({ type: TokenModalActionType.SET_IS_LOADING, isLoading: true })
 
 		if (isTestnet) {
+			const tokensOnTargetChain = testnetTokens[selectedChain.id] ?? []
 			tokensModalDispatch({
 				type: TokenModalActionType.SET_TOKENS,
-				tokens: testnetTokens[testnetChains[direction === 'from' ? 2 : 1].id],
+				tokens: tokensOnTargetChain,
 			})
 		} else {
 			const resToken = await getTokens({ chainId: selectedChain.id, offset: 0, limit, search: searchValue })
