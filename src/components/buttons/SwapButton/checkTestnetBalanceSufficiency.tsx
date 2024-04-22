@@ -4,19 +4,10 @@ import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
 import ERC20 from '../../../abi/ERC20.json'
 import { linkAddressesMap } from './linkAddressesMap'
 
-const clientsMap: Record<string, any> = {
-	'84532': createPublicClient({
-		chain: baseSepolia,
-		transport: http(),
-	}),
-	'11155420': createPublicClient({
-		chain: optimismSepolia,
-		transport: http(),
-	}),
-	'421614': createPublicClient({
-		chain: arbitrumSepolia,
-		transport: http(),
-	}),
+const viemChainsMap: Record<string, any> = {
+	'84532': baseSepolia,
+	'11155420': optimismSepolia,
+	'421614': arbitrumSepolia,
 }
 
 export async function checkTestnetBalanceSufficiency(
@@ -27,7 +18,10 @@ export async function checkTestnetBalanceSufficiency(
 	}
 
 	try {
-		const viemClient = clientsMap[swapState.from.chain.id]
+		const viemClient = createPublicClient({
+			chain: viemChainsMap[swapState.from.chain.id],
+			transport: http(),
+		})
 
 		const bnmContract = getContract({
 			address: swapState.from.token.address as `0x${string}`,
