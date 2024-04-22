@@ -45,14 +45,9 @@ export async function checkTestnetBalanceSufficiency(
 			linkContract.read.balanceOf([swapState.from.address]),
 		])
 
-		// return {
-		// 	linkBalanceSufficient: linkBalance.gte(0),
-		// 	bnmBalanceSufficient: bnmBalance.gte(0),
-		// }
-
 		return {
-			linkBalanceSufficient: false,
-			bnmBalanceSufficient: false,
+			linkBalanceSufficient: linkBalance.gte(0),
+			bnmBalanceSufficient: bnmBalance.gte(0),
 		}
 	} catch (error) {
 		console.error(error)
