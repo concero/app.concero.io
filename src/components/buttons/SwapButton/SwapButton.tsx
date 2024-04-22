@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { type FC, useEffect, useState } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { type SwapButtonProps } from './types'
@@ -9,10 +9,16 @@ import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
 import { useFeatureFlag } from '../../../hooks/useFeatureFlag'
 import { useWeb3Modal } from '@web3modal/react'
+import { TestnetCheckButtons } from './TestnetCheckButtons/TestnetCheckButtons'
+import { checkTestnetBalanceSufficiency } from './checkTestnetBalanceSufficiency'
 
 export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
-	const { isLoading } = swapState
+	const { isLoading, isTestnet } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
+	const [testnetBalances, setTestnetBalances] = useState<{
+		linkBalanceSufficient: boolean
+		bnmBalanceSufficient: boolean
+	} | null>(null)
 	const { open } = useWeb3Modal()
 	const featureFlag = useFeatureFlag()
 	const { t } = useTranslation()
@@ -24,33 +30,52 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 		featureFlag,
 	)
 
+	useEffect(() => {
+		if (!isTestnet) return
+
+		checkTestnetBalanceSufficiency(swapState)
+			.then(result => {
+				setTestnetBalances(result)
+			})
+			.catch(error => {
+				console.error(error)
+				setTestnetBalances({ linkBalanceSufficient: true, bnmBalanceSufficient: true })
+			})
+	}, [isTestnet, swapState.from.chain.id])
+
 	return (
 		<div className={classNames.container}>
-			{buttonType === ButtonType.LOW_GAS && gasSufficiency ? (
-				<div className={classNames.messageContainer}>
-					<div className={classNames.titleContainer}>
-						<IconGasStation size={17} color="var(--color-red-450)" />
-						<p className={'body1'}>{t('button.lowGas')}</p>
-					</div>
-					<p className={'body1'}>
-						{t('swapCard.message.lowGas', {
-							amount: gasSufficiency.insufficientAmount,
-							tokenSymbol: gasSufficiency.token?.symbol ?? '',
-							chainName: gasSufficiency.chain?.name ?? '',
-						})}
-					</p>
-				</div>
+			{isTestnet && (!testnetBalances?.bnmBalanceSufficient || !testnetBalances?.linkBalanceSufficient) ? (
+				<TestnetCheckButtons swapState={swapState} testnetBalances={testnetBalances} />
 			) : (
-				<Button
-					size="lg"
-					leftIcon={iconComponent[buttonType]}
-					isDisabled={isButtonDisabled[buttonType]}
-					isLoading={isLoading}
-					onClick={buttonType === ButtonType.CONNECT_WALLET_BRIGHT ? open : onClick}
-					className={`${classNames.swapButton} ${classNames[buttonStyleClass[buttonType]]}`}
-				>
-					{t(buttonText[buttonType])}
-				</Button>
+				<>
+					{buttonType === ButtonType.LOW_GAS && gasSufficiency ? (
+						<div className={classNames.messageContainer}>
+							<div className={classNames.titleContainer}>
+								<IconGasStation size={17} color="var(--color-red-450)" />
+								<p className={'body1'}>{t('button.lowGas')}</p>
+							</div>
+							<p className={'body1'}>
+								{t('swapCard.message.lowGas', {
+									amount: gasSufficiency.insufficientAmount,
+									tokenSymbol: gasSufficiency.token?.symbol ?? '',
+									chainName: gasSufficiency.chain?.name ?? '',
+								})}
+							</p>
+						</div>
+					) : (
+						<Button
+							size="lg"
+							leftIcon={iconComponent[buttonType]}
+							isDisabled={isButtonDisabled[buttonType]}
+							isLoading={isLoading}
+							onClick={buttonType === ButtonType.CONNECT_WALLET_BRIGHT ? open : onClick}
+							className={`${classNames.swapButton} ${classNames[buttonStyleClass[buttonType]]}`}
+						>
+							{t(buttonText[buttonType])}
+						</Button>
+					)}
+				</>
 			)}
 		</div>
 	)

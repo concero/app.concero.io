@@ -83,11 +83,11 @@ export function ChainsPicker({ selectedChain, setSelectedChain, isTestnet }: Tok
 					icon={<IconSearch size={18} color={'var(--color-text-secondary'} />}
 				/>
 				<div className={classNames.chainsContainer}>
-					{chains.map((chain: Chain) => {
+					{chains.map((chain: Chain, index) => {
 						const isSelected = selectedChain?.id === chain.id
 						return (
 							<ChainListItem
-								key={chain._id}
+								key={index.toString()}
 								chain={chain}
 								isSelected={isSelected}
 								onSelect={handleSelectChain}
