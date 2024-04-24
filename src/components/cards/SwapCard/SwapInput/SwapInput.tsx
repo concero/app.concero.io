@@ -51,7 +51,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
 	const handleSwapButtonClick = async () => {
 		if (swapState.isTestnet) {
-			await executeConceroRoute(swapState, switchChainHook)
+			await executeConceroRoute(swapState, swapDispatch, switchChainHook)
 			return
 		}
 
