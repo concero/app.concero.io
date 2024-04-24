@@ -216,6 +216,10 @@ export async function executeConceroRoute(
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+		swapDispatch({
+			type: 'SET_SWAP_STEPS',
+			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
+		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
