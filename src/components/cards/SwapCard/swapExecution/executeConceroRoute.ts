@@ -30,20 +30,25 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 	const bnmContract = new ethers.Contract(swapState.from.token.address, ERC20, signer)
 	const linkContract = new ethers.Contract(linkAddressesMap[swapState.from.chain.id], ERC20, signer)
 
-	const bnmAllowance = await bnmContract.allowance(signer._address, conceroAddressesMap[swapState.from.chain.id])
-	const linkAllowance = await linkContract.allowance(signer._address, conceroAddressesMap[swapState.from.chain.id])
+	const [bnmAllowance, linkAllowance] = await Promise.all([
+		bnmContract.allowance(signer._address, conceroAddressesMap[swapState.from.chain.id]),
+		linkContract.allowance(signer._address, conceroAddressesMap[swapState.from.chain.id]),
+	])
 
 	let bnmApproveTx = null
 	let linkApproveTx = null
 
-	if (bnmAllowance.lt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals))) {
+	console.log(bnmAllowance)
+	console.log(linkAllowance)
+
+	if (bnmAllowance < Number(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals))) {
 		bnmApproveTx = await bnmContract.approve(
 			conceroAddressesMap[swapState.from.chain.id],
 			addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals),
 		)
 	}
 
-	if (linkAllowance.lt(addingAmountDecimals('3', 18))) {
+	if (linkAllowance < Number(addingAmountDecimals('3', 18))) {
 		linkApproveTx = await linkContract.approve(
 			conceroAddressesMap[swapState.from.chain.id],
 			addingAmountDecimals('3', 18),

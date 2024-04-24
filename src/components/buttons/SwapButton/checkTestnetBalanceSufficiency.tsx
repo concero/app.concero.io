@@ -40,8 +40,8 @@ export async function checkTestnetBalanceSufficiency(
 		])
 
 		return {
-			linkBalanceSufficient: linkBalance.gte(0),
-			bnmBalanceSufficient: bnmBalance.gte(0),
+			linkBalanceSufficient: linkBalance > 0,
+			bnmBalanceSufficient: bnmBalance > 0,
 		}
 	} catch (error) {
 		console.error(error)
