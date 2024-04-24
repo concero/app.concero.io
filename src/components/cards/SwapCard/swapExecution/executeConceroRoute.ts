@@ -108,42 +108,46 @@ async function checkTransactionStatus(
 	const latestDstChainBlock = await publicClient.getBlockNumber()
 	const sleep = async (ms: number) => await new Promise(resolve => setTimeout(resolve, ms))
 
-	while (true) {
-		const logs = await publicClient.getLogs({
-			address: conceroAddressesMap[swapState.to.chain.id] as `0x${string}`,
-			abi: ConceroAbi,
-			eventName: 'UnconfirmedTXAdded',
-			fromBlock: latestDstChainBlock,
-			toBlock: 'latest',
-		})
+	const checkLogByName = async (eventName: string) => {
+		while (true) {
+			let isBreakNeeded = false
 
-		let isBreakNeeded = false
-
-		logs.forEach(log => {
-			const dcodedLog = decodeEventLog({
+			const logs = await publicClient.getLogs({
+				address: conceroAddressesMap[swapState.to.chain.id] as `0x${string}`,
 				abi: ConceroAbi,
-				data: log.data,
-				topics: log.topics,
+				eventName,
+				fromBlock: latestDstChainBlock,
+				toBlock: 'latest',
 			})
 
-			if (dcodedLog.eventName === 'UnconfirmedTXAdded') {
-				const { args } = dcodedLog
-				if (
-					args.sender.toLowerCase() === signer._address.toLowerCase() &&
-					args.amount.toString() ===
-						addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)
-				) {
-					isBreakNeeded = true
+			logs.forEach(log => {
+				const dcodedLog = decodeEventLog({
+					abi: ConceroAbi,
+					data: log.data,
+					topics: log.topics,
+				})
+
+				if (dcodedLog.eventName === eventName) {
+					const { args } = dcodedLog
+					if (
+						args.sender.toLowerCase() === signer._address.toLowerCase() &&
+						args.amount.toString() ===
+							addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)
+					) {
+						isBreakNeeded = true
+					}
 				}
-			}
 
-			console.log(dcodedLog)
-		})
+				console.log(dcodedLog)
+			})
 
-		if (isBreakNeeded) break
+			if (isBreakNeeded) break
 
-		await sleep(3000)
+			await sleep(3000)
+		}
 	}
+
+	await checkLogByName('UnconfirmedTXAdded')
 
 	swapDispatch({
 		type: 'SET_SWAP_STEPS',
@@ -156,42 +160,7 @@ async function checkTransactionStatus(
 		],
 	})
 
-	while (true) {
-		const logs = await publicClient.getLogs({
-			address: conceroAddressesMap[swapState.to.chain.id] as `0x${string}`,
-			abi: ConceroAbi,
-			eventName: 'TXReleased',
-			fromBlock: latestDstChainBlock,
-			toBlock: 'latest',
-		})
-
-		let isBreakNeeded = false
-
-		logs.forEach(log => {
-			const dcodedLog = decodeEventLog({
-				abi: ConceroAbi,
-				data: log.data,
-				topics: log.topics,
-			})
-
-			if (dcodedLog.eventName === 'TXReleased') {
-				const { args } = dcodedLog
-				if (
-					args.sender.toLowerCase() === signer._address.toLowerCase() &&
-					args.amount.toString() ===
-						addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)
-				) {
-					isBreakNeeded = true
-				}
-			}
-
-			console.log(dcodedLog)
-		})
-
-		if (isBreakNeeded) break
-
-		await sleep(3000)
-	}
+	await checkLogByName('TXReleased')
 
 	swapDispatch({
 		type: 'SET_SWAP_STEPS',
@@ -237,8 +206,11 @@ export async function executeConceroRoute(
 		})
 
 		await checkTransactionStatus(tx, signer, swapDispatch, swapState)
+
+		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 	} catch (error) {
 		console.error('Error executing concero route', error)
+		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
