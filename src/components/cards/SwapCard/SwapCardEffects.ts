@@ -18,6 +18,8 @@ interface UseSwapCardEffectsProps {
 	connector: NonNullable<Config<TPublicClient>['connector']> | undefined
 }
 
+let mainnetPrevSelection: SwapState | null = null
+
 export function useSwapCardEffects({
 	swapState,
 	swapDispatch,
@@ -26,7 +28,7 @@ export function useSwapCardEffects({
 	connector,
 }: UseSwapCardEffectsProps) {
 	const { selectionDispatch } = useContext(SelectionContext)
-	const { from, to, settings, selectedRoute } = swapState
+	const { from, to, settings, selectedRoute, isTestnet } = swapState
 
 	useEffect(() => {
 		setHistoryCard(selectionDispatch, from, to)
@@ -34,6 +36,7 @@ export function useSwapCardEffects({
 	}, [from.token.address, to.token.address])
 
 	useEffect(() => {
+		if (isTestnet) return
 		void getBalance({ dispatch: swapDispatch, from, address })
 	}, [from.token.address, from.chain.id, address])
 
@@ -52,6 +55,7 @@ export function useSwapCardEffects({
 		settings.slippage_percent,
 		settings.allowSwitchChain,
 		to.address,
+		isTestnet,
 	])
 
 	useEffect(() => {
@@ -64,7 +68,7 @@ export function useSwapCardEffects({
 				amount_usd: selectedRoute.to.token.amount_usd,
 			},
 		})
-	}, [selectedRoute])
+	}, [selectedRoute, isTestnet])
 
 	useEffect(() => {
 		if (!connector) return
@@ -81,6 +85,7 @@ export function useSwapCardEffects({
 
 	useEffect(() => {
 		if (swapState.isTestnet) {
+			mainnetPrevSelection = swapState
 			swapDispatch({ type: 'SET_TOKEN', payload: { token: testnetTokens['84532'][0] }, direction: 'from' })
 			swapDispatch({ type: 'SET_TOKEN', payload: { token: testnetTokens['11155420'][0] }, direction: 'to' })
 			swapDispatch({
@@ -97,6 +102,23 @@ export function useSwapCardEffects({
 				},
 				direction: 'to',
 			})
+		} else {
+			console.log(mainnetPrevSelection)
+			if (mainnetPrevSelection !== null) {
+				swapDispatch({
+					type: 'SET_TOKEN',
+					payload: { token: mainnetPrevSelection.from.token },
+					direction: 'from',
+				})
+				swapDispatch({ type: 'SET_TOKEN', payload: { token: mainnetPrevSelection.to.token }, direction: 'to' })
+				swapDispatch({
+					type: 'SET_CHAIN',
+					payload: { chain: mainnetPrevSelection.from.chain },
+					direction: 'from',
+				})
+				swapDispatch({ type: 'SET_CHAIN', payload: { chain: mainnetPrevSelection.to.chain }, direction: 'to' })
+				mainnetPrevSelection = null
+			}
 		}
 	}, [swapState.isTestnet])
 }
