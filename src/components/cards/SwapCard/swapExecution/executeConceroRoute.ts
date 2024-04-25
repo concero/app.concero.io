@@ -142,8 +142,6 @@ async function checkTransactionStatus(
 						isBreakNeeded = true
 					}
 				}
-
-				console.log(dcodedLog)
 			})
 
 			if (isBreakNeeded) break
