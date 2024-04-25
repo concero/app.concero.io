@@ -10,9 +10,9 @@ import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
 import ConceroAbi from '../../../../abi/Concero.json'
 
 const conceroAddressesMap: Record<string, string> = {
-	'421614': '0xf829e29b4fba5c66b7718ea4ad1271000210570f',
-	'11155420': '0xd309f39Ec4b2773DEf530071c70c1710060324d9',
-	'84532': '0xCD3308B0911423E7CBcB0C30907655752d355991',
+	'421614': '0x8103bf53334f2840da7bec87d8657b492d870479',
+	'11155420': '0xba4Ecdc2b9025a727973aB497CD8DB350CC958cA',
+	'84532': '0xA1758baD18b1D3F7ebBB1498EB2faA73aeFEdd56',
 }
 
 const chainSelectorsMap: Record<string, string> = {

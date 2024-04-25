@@ -167,6 +167,7 @@ export function TokensModal({ isOpen, onClose, onSelect, direction, isTestnet }:
 										isBalanceLoading={isBalanceLoading}
 										onSelect={handleSelect}
 										explorerURI={selectedChain.explorerURI}
+										isTestnet={isTestnet}
 									/>
 								)
 							})

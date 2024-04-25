@@ -57,6 +57,7 @@ export function ChainsPicker({ selectedChain, setSelectedChain, isTestnet }: Tok
 							chain={chain}
 							isSelected={isSelected}
 							onSelect={setSelectedChain}
+							isTestnet={isTestnet}
 						/>
 					)
 				})}
@@ -92,6 +93,7 @@ export function ChainsPicker({ selectedChain, setSelectedChain, isTestnet }: Tok
 								isSelected={isSelected}
 								onSelect={handleSelectChain}
 								isCropped={false}
+								isTestnet={isTestnet}
 							/>
 						)
 					})}
