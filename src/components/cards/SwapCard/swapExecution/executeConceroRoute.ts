@@ -10,9 +10,9 @@ import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
 import ConceroAbi from '../../../../abi/Concero.json'
 
 const conceroAddressesMap: Record<string, string> = {
-	'421614': '0x8103bf53334f2840da7bec87d8657b492d870479',
-	'11155420': '0xba4Ecdc2b9025a727973aB497CD8DB350CC958cA',
-	'84532': '0xA1758baD18b1D3F7ebBB1498EB2faA73aeFEdd56',
+	'421614': '0x54FB518991DFd48c4E281544bdDb257E8B738A7E',
+	'11155420': '0xce18421b879E8B5d76DC7fbaD3984525F5f7fE3B',
+	'84532': '0xE29582Fabd7B0C7Ed428EEdf314e1bED6765262D',
 }
 
 const chainSelectorsMap: Record<string, string> = {
@@ -38,9 +38,6 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 	let bnmApproveTx = null
 	let linkApproveTx = null
 
-	console.log(bnmAllowance)
-	console.log(linkAllowance)
-
 	if (bnmAllowance < Number(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals))) {
 		bnmApproveTx = await bnmContract.approve(
 			conceroAddressesMap[swapState.from.chain.id],
@@ -61,7 +58,7 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 
 async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSigner) {
 	const gasPrice = await signer.provider.getGasPrice()
-	const value = gasPrice.mul(3000000000).toString()
+	const value = gasPrice.mul(1_500_000).toString()
 
 	const conceroContract = new ethers.Contract(
 		conceroAddressesMap[swapState.from.chain.id],
@@ -78,6 +75,7 @@ async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSi
 		chainSelectorsMap[swapState.to.chain.id],
 		swapState.to.address,
 		{
+			gasPrice,
 			gasLimit: 2000000,
 			value,
 		},
