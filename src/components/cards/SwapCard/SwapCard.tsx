@@ -41,8 +41,12 @@ export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps
 	}
 
 	const renderSwapStage: Record<SwapCardStage, ReactComponentElement<any>> = {
-		[SwapCardStage.input]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
-		[SwapCardStage.review]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
+		[SwapCardStage.input]: (
+			<SwapInput swapState={swapState} swapDispatch={swapDispatch} isNewSwapCardMode={isNewSwapCardMode} />
+		),
+		[SwapCardStage.review]: (
+			<SwapInput swapState={swapState} swapDispatch={swapDispatch} isNewSwapCardMode={isNewSwapCardMode} />
+		),
 		[SwapCardStage.progress]: (
 			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
 		),
