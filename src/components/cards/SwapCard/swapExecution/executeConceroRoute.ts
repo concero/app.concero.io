@@ -10,9 +10,9 @@ import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
 import ConceroAbi from '../../../../abi/Concero.json'
 
 const conceroAddressesMap: Record<string, string> = {
-	'421614': '0x54FB518991DFd48c4E281544bdDb257E8B738A7E',
-	'11155420': '0xce18421b879E8B5d76DC7fbaD3984525F5f7fE3B',
-	'84532': '0xE29582Fabd7B0C7Ed428EEdf314e1bED6765262D',
+	'421614': '0x54FB518991DFd48c4E281544bdDb257E8B738A7E', // arb
+	'11155420': '0xce18421b879E8B5d76DC7fbaD3984525F5f7fE3B', // opt
+	'84532': '0xE29582Fabd7B0C7Ed428EEdf314e1bED6765262D', // base
 }
 
 const chainSelectorsMap: Record<string, string> = {
@@ -38,6 +38,9 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 	let bnmApproveTx = null
 	let linkApproveTx = null
 
+	console.log(bnmAllowance)
+	console.log(linkAllowance)
+
 	if (bnmAllowance < Number(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals))) {
 		bnmApproveTx = await bnmContract.approve(
 			conceroAddressesMap[swapState.from.chain.id],
@@ -59,6 +62,14 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSigner) {
 	const gasPrice = await signer.provider.getGasPrice()
 	const value = gasPrice.mul(1_500_000).toString()
+	// let { maxFeePerGas, maxPriorityFeePerGas, gasPrice } = await signer.provider.getFeeData()
+	// const totalGas = maxFeePerGas.add(maxPriorityFeePerGas)
+	// console.log('Gas price', gasPrice.toString())
+	// console.log('Max fee per gas', maxFeePerGas.toString())
+	// console.log('Max priority fee per gas', maxPriorityFeePerGas.toString())
+	// console.log('Total gas', totalGas.toString())
+	// const value = totalGas.mul(1_500_000).toString()
+	// console.log('Value', value)
 
 	const conceroContract = new ethers.Contract(
 		conceroAddressesMap[swapState.from.chain.id],
@@ -140,6 +151,8 @@ async function checkTransactionStatus(
 						isBreakNeeded = true
 					}
 				}
+
+				console.log(dcodedLog)
 			})
 
 			if (isBreakNeeded) break

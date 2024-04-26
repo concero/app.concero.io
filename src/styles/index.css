@@ -93,14 +93,15 @@ body::-webkit-scrollbar {
 	--color-primary-750: #f7f3ff;
 
 	/* grey */
+	--color-grey-700: #ffffff;
 	--color-grey-650: #f7f7f7;
 	--color-grey-600: #e5e5e7;
 	--color-grey-550: #cbcacf;
+	--color-grey-500: #b0afb5;
+	--color-grey-450: #98959e;
 	--color-grey-400: #464646;
 	--color-grey-350: #1c1c1c;
 	--color-grey-300: #131313;
-	--color-grey-500: #b0afb5;
-	--color-grey-450: #98959e;
 
 	/* green */
 	--color-green-550: #abedd5;
@@ -163,15 +164,16 @@ body::-webkit-scrollbar {
 	--color-primary-250: #f7f3ff;
 
 	/* grey */
-	--color-grey-550: #464646;
-	--color-grey-600: #1c1c1c;
-	--color-grey-625: #272727;
+	--color-grey-700: #0d0d0d;
 	--color-grey-650: #131313;
+	--color-grey-625: #272727;
+	--color-grey-600: #1c1c1c;
+	--color-grey-500: #98959e;
+	--color-grey-550: #464646;
+	--color-grey-450: #b0afb5;
 	--color-grey-400: #cbcacf;
 	--color-grey-350: #e5e5e7;
 	--color-grey-300: #f7f7f7;
-	--color-grey-500: #98959e;
-	--color-grey-450: #b0afb5;
 
 	/* green */
 	--color-green-550: #20a273;
