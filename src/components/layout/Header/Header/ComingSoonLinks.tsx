@@ -8,6 +8,9 @@ export function ComingSoonLinks() {
 	return (
 		<div className={classNames.comingSoonContainer}>
 			<Link className={classNames.comingSoon} to="#">
+				{t('header.earn')}
+			</Link>
+			<Link className={classNames.comingSoon} to="#">
 				{t('header.portfolio')}
 			</Link>
 			<Link className={classNames.comingSoon} to="#">

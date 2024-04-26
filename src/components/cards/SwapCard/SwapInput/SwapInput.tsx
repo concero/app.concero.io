@@ -14,8 +14,11 @@ import { IconArrowsUpDown } from '@tabler/icons-react'
 import { DestinationAddressInput } from './DestinationAddressInput/DestinationAddressInput'
 import { handleSwap } from '../swapExecution/handleSwap'
 import { SwapCardStage } from '../swapReducer/types'
+import { executeConceroRoute } from '../swapExecution/executeConceroRoute'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
-export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
+export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
 	const { address, isConnected } = useAccount()
 	const isInsuranceCardVisible =
@@ -26,6 +29,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 
 	async function switchChainHook(requiredChainId: number): Promise<providers.JsonRpcSigner> {
 		const currentChainId = walletClient.data?.chain.id
+
 		if (currentChainId !== requiredChainId) {
 			if (switchNetworkAsync) {
 				const chain = await switchNetworkAsync(requiredChainId)
@@ -48,10 +52,29 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 	}
 
 	const handleSwapButtonClick = async () => {
+		if (swapState.isTestnet) {
+			void trackEvent({
+				category: category.SwapCard,
+				action: action.BeginSwap,
+				label: 'concero_begin_swap',
+				data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
+			})
+			await executeConceroRoute(swapState, swapDispatch, switchChainHook)
+			return
+		}
+
 		if (swapState.stage === 'input') {
 			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
 		} else {
-			await handleSwap({ swapState, swapDispatch, address, switchChainHook, getChainByProviderSymbol, getSigner })
+			await handleSwap({
+				swapState,
+				swapDispatch,
+				address,
+				switchChainHook,
+				getChainByProviderSymbol,
+				getSigner,
+				isNewSwapCardMode,
+			})
 		}
 	}
 
@@ -64,6 +87,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 					swapDispatch={swapDispatch}
 					balance={swapState.balance}
 					stage={swapState.stage}
+					isTestnet={swapState.isTestnet}
 				/>
 				<TokenArea
 					direction="to"
@@ -71,6 +95,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 					swapDispatch={swapDispatch}
 					isLoading={swapState.isLoading}
 					stage={swapState.stage}
+					isTestnet={swapState.isTestnet}
 				/>
 				{swapState.stage === SwapCardStage.input ? (
 					<div
@@ -88,7 +113,12 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch }) => {
 			{swapState.isDestinationAddressVisible ? (
 				<DestinationAddressInput swapState={swapState} swapDispatch={swapDispatch} />
 			) : null}
-			<SwapButton swapState={swapState} isConnected={isConnected} onClick={handleSwapButtonClick} />
+			<SwapButton
+				swapState={swapState}
+				isConnected={isConnected}
+				onClick={handleSwapButtonClick}
+				switchChainHook={switchChainHook}
+			/>
 		</div>
 	)
 }

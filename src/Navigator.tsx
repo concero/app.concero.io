@@ -1,4 +1,4 @@
-import { type FC, lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppScreen } from './components/screens/AppScreen/AppScreen'
 import { Header } from './components/layout/Header/Header/Header'
@@ -22,10 +22,9 @@ const EarnScreen = lazy(
 		await import('./components/screens/EarnScreen/EarnScreen').then(module => ({ default: module.EarnScreen })),
 )
 
-export interface NavigatorProps {}
-
-export const Navigator: FC<NavigatorProps> = () => {
+export const Navigator = () => {
 	const { address } = useAccount()
+	const [isNewSwapCardMode, setIsNewSwapCardMode] = useState(true)
 
 	useEffect(() => {
 		if (!address) return
@@ -35,13 +34,16 @@ export const Navigator: FC<NavigatorProps> = () => {
 	return (
 		<BrowserRouter>
 			<AppScreen>
-				<Header />
+				<Header isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
 				<Routes>
 					<Route
 						path={routes.swap}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
-								<SwapScreen />
+								<SwapScreen
+									isNewSwapCardMode={isNewSwapCardMode}
+									setIsNewSwapCardMode={setIsNewSwapCardMode}
+								/>
 							</Suspense>
 						}
 					/>

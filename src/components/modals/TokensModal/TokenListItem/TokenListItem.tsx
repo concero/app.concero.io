@@ -9,15 +9,17 @@ import { numberToFormatString, truncate, truncateWallet } from '../../../../util
 import { IconExternalLink } from '@tabler/icons-react'
 import { easeQuadInOut } from 'd3-ease'
 import { config } from '../../../../constants/config'
+import { testnetToMainnetChainsMap } from '../../../../constants/testnetToMainnetChainsMap'
 
 interface TokenListItemProps {
 	token: Token
 	isBalanceLoading: boolean
 	onSelect: (token: Token) => void
 	explorerURI: string
+	isTestnet: boolean
 }
 
-export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }: TokenListItemProps) {
+export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI, isTestnet }: TokenListItemProps) {
 	const [isHovered, setIsHovered] = useState(false)
 	const [addressContainerHeight, setAddressContainerHeight] = useState(0)
 	const addressContainerRef = useRef<HTMLDivElement | null>(null)
@@ -48,7 +50,7 @@ export function TokenListItem({ token, isBalanceLoading, onSelect, explorerURI }
 			<div className={classNames.tokenInfoContainer}>
 				<TokenIcon
 					tokenLogoSrc={token.logoURI}
-					chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${token.chain_id}.svg`}
+					chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${isTestnet ? testnetToMainnetChainsMap[token.chain_id] : token.chain_id}.svg`}
 				/>
 				<div className={classNames.tokenTitleContainer}>
 					<h4>{truncate(token.name, 20)}</h4>

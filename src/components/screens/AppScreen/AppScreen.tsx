@@ -5,4 +5,6 @@ export interface AppScreenProps {
 	children?: ReactNode
 }
 
-export const AppScreen: FC<AppScreenProps> = ({ children }) => <div className={classNames.container}>{children}</div>
+export const AppScreen: FC<AppScreenProps> = ({ children }) => {
+	return <div className={`${classNames.container} ${classNames.abTestNewSwapCardLayoutContainer}`}>{children}</div>
+}

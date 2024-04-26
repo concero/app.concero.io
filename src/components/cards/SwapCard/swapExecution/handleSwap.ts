@@ -20,6 +20,7 @@ interface HandleSwapProps {
 	switchChainHook: SwitchChainHookType
 	getChainByProviderSymbol: GetChainByProviderSymbolI
 	getSigner: () => Promise<providers.JsonRpcSigner>
+	isNewSwapCardMode: boolean
 }
 
 export const handleSwap = async ({
@@ -29,6 +30,7 @@ export const handleSwap = async ({
 	switchChainHook,
 	getChainByProviderSymbol,
 	getSigner,
+	isNewSwapCardMode,
 }: HandleSwapProps): Promise<void> => {
 	const { from, settings, selectedRoute } = swapState
 	const { originalRoute, provider } = selectedRoute
@@ -47,7 +49,7 @@ export const handleSwap = async ({
 				category: category.SwapCard,
 				action: action.BeginSwap,
 				label: 'rango_begin_swap',
-				data: originalRoute,
+				data: { originalRoute, isNewSwapCardMode },
 			})
 			const response = await executeRangoRoute({
 				route: originalRoute,
@@ -64,7 +66,7 @@ export const handleSwap = async ({
 				category: category.SwapCard,
 				action: action.BeginSwap,
 				label: 'lifi_begin_swap',
-				data: originalRoute,
+				data: { originalRoute, isNewSwapCardMode },
 			})
 			updateLifiSteps({ swapDispatch, selectedRoute })
 			const updateRouteHook = (updatedRoute: Route) => {

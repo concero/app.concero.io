@@ -1,4 +1,4 @@
-import { type FC, memo } from 'react'
+import { memo } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
@@ -8,13 +8,17 @@ import { TargetInfoCard } from '../../cards/TargetInfoCard/TargetInfoCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
 
-export interface ExchangeScreenProps {}
 const History = memo(withErrorBoundary(HistoryCard))
 const Swap = memo(withErrorBoundary(SwapCard))
 const News = memo(withErrorBoundary(NewsCard))
 const Chart = memo(withErrorBoundary(ChartCard))
 
-export const SwapScreen: FC<ExchangeScreenProps> = () => {
+interface SwapScreenProps {
+	isNewSwapCardMode: boolean
+	setIsNewSwapCardMode: (isNewSwapCardMode: boolean) => void
+}
+
+export const SwapScreen = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapScreenProps) => {
 	const isMobile = useMediaQuery('mobile')
 
 	const desktopLayout = (
@@ -23,7 +27,7 @@ export const SwapScreen: FC<ExchangeScreenProps> = () => {
 				<Chart />
 			</div>
 			<div className={classNames.secondaryCardStack}>
-				<Swap />
+				<Swap isNewSwapCardMode={isNewSwapCardMode} />
 				<TargetInfoCard />
 			</div>
 		</div>
@@ -32,12 +36,34 @@ export const SwapScreen: FC<ExchangeScreenProps> = () => {
 	const mobileLayout = (
 		<div className={classNames.container}>
 			<div className={classNames.mainCardStack}>
-				<Swap />
+				<Swap isNewSwapCardMode={isNewSwapCardMode} />
 				<Chart />
 				<TargetInfoCard />
 			</div>
 		</div>
 	)
+
+	const newSwapScreenLayout = (
+		<div className={classNames.newSwapCardContainer}>
+			<div className={classNames.newSwapCardInnerContainer}>
+				<Swap isNewSwapCardMode={isNewSwapCardMode} />
+			</div>
+			<div className={classNames.switchToOldVersionButtonContainer}>
+				<h5
+					className={classNames.switchToOldVersionButton}
+					onClick={() => {
+						setIsNewSwapCardMode(false)
+					}}
+				>
+					Switch back to old version
+				</h5>
+			</div>
+		</div>
+	)
+
+	if (isNewSwapCardMode) {
+		return <div className={classNames.newSwapScreenContainer}>{newSwapScreenLayout}</div>
+	}
 
 	return <div style={{ width: '100%', height: '100%' }}>{isMobile ? mobileLayout : desktopLayout}</div>
 }

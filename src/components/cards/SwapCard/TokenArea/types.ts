@@ -8,4 +8,5 @@ export interface TokenAreaProps {
 	swapDispatch: Dispatch<SwapAction>
 	isLoading?: boolean
 	stage: SwapCardStage
+	isTestnet: boolean
 }

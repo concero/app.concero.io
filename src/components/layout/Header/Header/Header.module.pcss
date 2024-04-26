@@ -16,7 +16,7 @@ ul {
 	gap: var(--sp-sm);
 
 	a {
-		border: 1px solid var(--color-base-black);
+		border: 1px solid transparent;
 		border-radius: 6px;
 		padding: var(--sp-sm) var(--sp-md);
 	}
@@ -37,7 +37,10 @@ ul {
 }
 
 a {
-	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+	transition:
+		color 0.2s ease-in-out,
+		background-color 0.2s ease-in-out,
+		transform 0.2s ease-in-out;
 }
 
 a:hover {
