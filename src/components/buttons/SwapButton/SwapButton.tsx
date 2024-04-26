@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react'
+import { type FC, useContext , useEffect, useState } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { type SwapButtonProps } from './types'
@@ -7,8 +7,8 @@ import { getButtonType } from './getButtonType'
 import { useTranslation } from 'react-i18next'
 import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
-import { useFeatureFlag } from '../../../hooks/useFeatureFlag'
 import { useWeb3Modal } from '@web3modal/react'
+import { FeatureFlagContext, FeatureFlagKeys, type FeatureFlags } from '../../../hooks/FeatureFlagContext'
 import { TestnetCheckButtons } from './TestnetCheckButtons/TestnetCheckButtons'
 import { checkTestnetBalanceSufficiency } from './checkTestnetBalanceSufficiency'
 
@@ -20,14 +20,14 @@ export const SwapButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 		bnmBalanceSufficient: boolean
 	} | null>(null)
 	const { open } = useWeb3Modal()
-	const featureFlag = useFeatureFlag()
+	const featureFlags = useContext<FeatureFlags>(FeatureFlagContext)
 	const { t } = useTranslation()
 	const buttonType = getButtonType(
 		swapState,
 		isConnected,
 		gasSufficiency?.isInsufficient ?? false,
 		isFetchBalancesLoading,
-		featureFlag,
+		featureFlags[FeatureFlagKeys.brighterConnectWalletButton] as boolean,
 	)
 
 	useEffect(() => {
