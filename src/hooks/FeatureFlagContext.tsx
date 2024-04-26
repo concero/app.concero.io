@@ -26,6 +26,7 @@ export function FeatureFlagProvider({ children }: { children: ReactNode }) {
 	flags[FeatureFlagKeys.brighterConnectWalletButton] = useFeatureFlagVariantKey(
 		FeatureFlagKeys.brighterConnectWalletButton,
 	)
+	flags[FeatureFlagKeys.testnetEnabled] = useFeatureFlagVariantKey(FeatureFlagKeys.testnetEnabled)
 
 	return <FeatureFlagContext.Provider value={flags}>{children}</FeatureFlagContext.Provider>
 }

@@ -2,11 +2,12 @@ import classNames from './SwapCardHeader.module.pcss'
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { IconChevronLeft, IconDots } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
-import { type Dispatch, useLayoutEffect, useRef, useState } from 'react'
+import { type Dispatch, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { getCardTitleByStatus } from '../handlers/getCardTitleByStatus'
 import { animated, useSpring } from '@react-spring/web'
 import { easeQuadInOut } from 'd3-ease'
 import { Toggle } from '../../../layout/Toggle/Toggle'
+import { FeatureFlagContext } from '../../../../hooks/FeatureFlagContext'
 
 interface SwapCardHeaderProps {
 	swapState: SwapState
@@ -17,6 +18,8 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 	const { stage, isTestnet } = swapState
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const [titleAnimationWidth, setTitleAnimationWidth] = useState<number>(0)
+	const featureFlags = useContext(FeatureFlagContext)
+	console.log(featureFlags)
 	const isReviewStage = stage === SwapCardStage.review
 	const isInputStage = stage === SwapCardStage.input
 
@@ -31,6 +34,10 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 			setTitleAnimationWidth(containerRef.current.scrollWidth / 2 - 74)
 		}
 	}, [containerRef.current?.scrollWidth])
+
+	useEffect(() => {
+		swapDispatch({ type: 'TOGGLE_TESTNET' })
+	}, [])
 
 	return (
 		<div
