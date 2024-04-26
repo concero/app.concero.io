@@ -2,12 +2,14 @@ import type { Chain } from '../../../../../api/concero/types'
 import classNames from './ChainListItem.module.pcss'
 import { config } from '../../../../../constants/config'
 import { useTranslation } from 'react-i18next'
+import { testnetToMainnetChainsMap } from '../../../../../constants/testnetToMainnetChainsMap'
 
 interface ChainItemProps {
 	chain: Chain
 	isSelected: boolean
 	onSelect: (param: Chain) => void
 	isCropped?: boolean
+	isTestnet: boolean
 }
 
 function ChainIcon({ src }: { src: string }) {
@@ -18,7 +20,7 @@ function ChainIcon({ src }: { src: string }) {
 	)
 }
 
-export function ChainListItem({ chain, isSelected, onSelect, isCropped = true }: ChainItemProps) {
+export function ChainListItem({ chain, isSelected, onSelect, isCropped = true, isTestnet }: ChainItemProps) {
 	const { t } = useTranslation()
 
 	return (
@@ -30,7 +32,9 @@ export function ChainListItem({ chain, isSelected, onSelect, isCropped = true }:
 		>
 			<div className={`${classNames.chainButton} ${isSelected ? classNames.selected : null}`}>
 				{isSelected ? (
-					<ChainIcon src={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${chain.id}.svg`} />
+					<ChainIcon
+						src={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${isTestnet ? testnetToMainnetChainsMap[chain.id] : chain.id}.svg`}
+					/>
 				) : (
 					<ChainIcon src={chain.logoURI} />
 				)}

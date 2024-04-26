@@ -63,6 +63,7 @@ export interface SwapState {
 	balance: Balance
 	walletBalances: ConceroBalanceResponse | null
 	isDestinationAddressVisible: boolean
+	isTestnet: boolean
 }
 
 export interface Settings {
@@ -126,3 +127,4 @@ export type SwapAction =
 	| { type: 'SET_IS_NO_ROUTES'; status: boolean }
 	| { type: 'SWAP_DIRECTIONS' }
 	| { type: 'SET_IS_DESTINATION_ADDRESS_VISIBLE'; status: boolean }
+	| { type: 'TOGGLE_TESTNET' }

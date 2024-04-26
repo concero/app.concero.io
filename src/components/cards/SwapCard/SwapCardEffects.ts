@@ -7,6 +7,8 @@ import { type SwapAction, type SwapState } from './swapReducer/types'
 import { setHistoryCard } from './handlers/setHistoryCard'
 import { setSwapCard } from './handlers/setSwapCard'
 import { SelectionContext } from '../../../hooks/SelectionContext'
+import { testnetTokens } from '../../modals/TokensModal/testnetTokens'
+import { testnetChains } from '../../modals/TokensModal/ChainsPicker/testnetChains'
 
 interface UseSwapCardEffectsProps {
 	swapState: SwapState
@@ -16,6 +18,8 @@ interface UseSwapCardEffectsProps {
 	connector: NonNullable<Config<TPublicClient>['connector']> | undefined
 }
 
+let mainnetPrevSelection: SwapState | null = null
+
 export function useSwapCardEffects({
 	swapState,
 	swapDispatch,
@@ -24,7 +28,7 @@ export function useSwapCardEffects({
 	connector,
 }: UseSwapCardEffectsProps) {
 	const { selectionDispatch } = useContext(SelectionContext)
-	const { from, to, settings, selectedRoute } = swapState
+	const { from, to, settings, selectedRoute, isTestnet } = swapState
 
 	useEffect(() => {
 		setHistoryCard(selectionDispatch, from, to)
@@ -32,12 +36,17 @@ export function useSwapCardEffects({
 	}, [from.token.address, to.token.address])
 
 	useEffect(() => {
+		if (isTestnet) return
 		void getBalance({ dispatch: swapDispatch, from, address })
 	}, [from.token.address, from.chain.id, address])
 
 	useEffect(() => {
+		if (isTestnet) {
+			swapDispatch({ type: 'SET_AMOUNT', direction: 'to', payload: { amount: from.amount, amount_usd: '' } })
+			return
+		}
 		clearRoutes(typingTimeoutRef, swapDispatch)
-		void handleFetchRoutes(from, to, settings, swapDispatch, typingTimeoutRef)
+		void handleFetchRoutes(swapState, swapDispatch, typingTimeoutRef)
 		return () => {
 			clearRoutes(typingTimeoutRef, swapDispatch)
 		}
@@ -50,6 +59,7 @@ export function useSwapCardEffects({
 		settings.slippage_percent,
 		settings.allowSwitchChain,
 		to.address,
+		isTestnet,
 	])
 
 	useEffect(() => {
@@ -62,7 +72,7 @@ export function useSwapCardEffects({
 				amount_usd: selectedRoute.to.token.amount_usd,
 			},
 		})
-	}, [selectedRoute])
+	}, [selectedRoute, isTestnet])
 
 	useEffect(() => {
 		if (!connector) return
@@ -74,4 +84,45 @@ export function useSwapCardEffects({
 		swapDispatch({ type: 'SET_ADDRESS', direction: 'from', payload: address })
 		swapDispatch({ type: 'SET_ADDRESS', direction: 'to', payload: address })
 	}, [address])
+
+	// testnet useEffects
+
+	useEffect(() => {
+		if (swapState.isTestnet) {
+			mainnetPrevSelection = swapState
+			swapDispatch({ type: 'SET_TOKEN', payload: { token: testnetTokens['84532'][0] }, direction: 'from' })
+			swapDispatch({ type: 'SET_TOKEN', payload: { token: testnetTokens['11155420'][0] }, direction: 'to' })
+			swapDispatch({
+				type: 'SET_CHAIN',
+				payload: {
+					chain: testnetChains[2],
+				},
+				direction: 'from',
+			})
+			swapDispatch({
+				type: 'SET_CHAIN',
+				payload: {
+					chain: testnetChains[1],
+				},
+				direction: 'to',
+			})
+		} else {
+			if (mainnetPrevSelection !== null) {
+				swapDispatch({
+					type: 'SET_TOKEN',
+					payload: { token: mainnetPrevSelection.from.token },
+					direction: 'from',
+				})
+				swapDispatch({ type: 'SET_TOKEN', payload: { token: mainnetPrevSelection.to.token }, direction: 'to' })
+				swapDispatch({
+					type: 'SET_CHAIN',
+					payload: { chain: mainnetPrevSelection.from.chain },
+					direction: 'from',
+				})
+				swapDispatch({ type: 'SET_CHAIN', payload: { chain: mainnetPrevSelection.to.chain }, direction: 'to' })
+
+				mainnetPrevSelection = null
+			}
+		}
+	}, [swapState.isTestnet])
 }

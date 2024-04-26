@@ -2,9 +2,11 @@ import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { configureChains, createConfig } from 'wagmi'
 import {
 	arbitrum,
+	arbitrumSepolia,
 	aurora,
 	avalanche,
 	base,
+	baseSepolia,
 	boba,
 	bsc,
 	cronos,
@@ -18,6 +20,7 @@ import {
 	moonriver,
 	okc,
 	optimism,
+	optimismSepolia,
 	polygon,
 	polygonZkEvm,
 	zkSync,
@@ -45,6 +48,9 @@ export const chains = [
 	cronos,
 	linea,
 	evmos,
+	baseSepolia,
+	arbitrumSepolia,
+	optimismSepolia,
 ]
 export const { publicClient, webSocketPublicClient } = configureChains(chains, [w3mProvider({ projectId })])
 export const wagmiConfig = createConfig({

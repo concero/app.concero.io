@@ -15,6 +15,7 @@ import { type Chain } from '../../../../api/concero/types'
 import { AmountUsd } from './AmountUsd'
 import { config } from '../../../../constants/config'
 import { SwapCardStage } from '../swapReducer/types'
+import { testnetToMainnetChainsMap } from '../../../../constants/testnetToMainnetChainsMap'
 
 export const TokenArea: FC<TokenAreaProps> = ({
 	direction,
@@ -23,6 +24,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 	balance = null,
 	isLoading = false,
 	stage,
+	isTestnet,
 }) => {
 	const [state, tokenAreaDispatch] = useTokenAreaReducer()
 	const inputRef = useRef<ForwardedRef<HTMLInputElement>>()
@@ -125,7 +127,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 					>
 						<TokenIcon
 							tokenLogoSrc={selection.token.logoURI}
-							chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${selection.chain.id}.svg`}
+							chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${isTestnet ? testnetToMainnetChainsMap[selection.chain.id] : selection.chain.id}.svg`}
 						/>
 						<div className={classNames.selectTokenButtonTitle}>
 							<h4>{selection.token.symbol}</h4>
@@ -141,6 +143,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 					tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: false })
 				}}
 				onSelect={handleSelectToken}
+				isTestnet={isTestnet}
 			/>
 		</>
 	)

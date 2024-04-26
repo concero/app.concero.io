@@ -18,18 +18,19 @@ import { Button } from '../../../buttons/Button/Button'
 interface HeaderProps {
 	style?: CSSProperties
 	children?: ReactNode
+	setIsNewSwapCardMode: (isNewSwapCardMode: boolean) => void
+	isNewSwapCardMode: boolean
 }
 
-export const Header: FC<HeaderProps> = ({ children }) => {
+export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewSwapCardMode }) => {
 	const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
 	const isMobile = useMediaQuery('mobile')
 	const matchSwap = useMatch(routes.swap)
-	const matchEarn = useMatch(routes.earn)
 	const { t } = useTranslation()
 
 	const handleHelpButtonClick = () => {
 		setIsFeedbackModalOpened(prev => !prev)
-		trackEvent({
+		void trackEvent({
 			category: category.Header,
 			action: action.ToggleFeedbackModalVisible,
 			label: 'toggle_feedback_modal',
@@ -53,10 +54,18 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 						<Link className={matchSwap ? classNames.active : classNames.link} to={routes.swap}>
 							{t('header.swap')}
 						</Link>
-						<Link className={matchEarn ? classNames.active : classNames.link} to={routes.earn}>
-							{t('header.earn')}
-						</Link>
 						{ComingSoon}
+					</ul>
+				) : null}
+				{!isNewSwapCardMode ? (
+					<ul
+						onClick={() => {
+							setIsNewSwapCardMode(true)
+						}}
+					>
+						<Link className={classNames.active} to={routes.swap}>
+							Switch to new version
+						</Link>
 					</ul>
 				) : null}
 			</div>

@@ -8,13 +8,15 @@ import { CardModal } from '../../CardModal/CardModal'
 import { ChainListItem } from './ChainListItem/ChainListItem'
 import { TextInput } from '../../../input/TextInput'
 import { IconSearch } from '@tabler/icons-react'
+import { testnetChains } from './testnetChains'
 
 interface TokensModalHeaderProps {
 	selectedChain: Chain | null
 	setSelectedChain: (param: Chain | null) => void
+	isTestnet: boolean
 }
 
-export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHeaderProps) {
+export function ChainsPicker({ selectedChain, setSelectedChain, isTestnet }: TokensModalHeaderProps) {
 	const { getChains } = useContext(DataContext)
 	const [searchValue, setSearchValue] = useState<string>('')
 	const [chains, setChains] = useState<Chain[]>([])
@@ -34,9 +36,13 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 	}
 
 	useEffect(() => {
-		getChains({ offset: 0, limit: 18, search: searchValue }).then((chains: Chain[]) => {
-			setChains(chains)
-		})
+		if (isTestnet) {
+			setChains(testnetChains)
+		} else {
+			getChains({ offset: 0, limit: 18, search: searchValue }).then((chains: Chain[]) => {
+				setChains(chains)
+			})
+		}
 	}, [searchValue])
 
 	return (
@@ -51,6 +57,7 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 							chain={chain}
 							isSelected={isSelected}
 							onSelect={setSelectedChain}
+							isTestnet={isTestnet}
 						/>
 					)
 				})}
@@ -77,15 +84,16 @@ export function ChainsPicker({ selectedChain, setSelectedChain }: TokensModalHea
 					icon={<IconSearch size={18} color={'var(--color-text-secondary'} />}
 				/>
 				<div className={classNames.chainsContainer}>
-					{chains.map((chain: Chain) => {
+					{chains.map((chain: Chain, index) => {
 						const isSelected = selectedChain?.id === chain.id
 						return (
 							<ChainListItem
-								key={chain._id}
+								key={index.toString()}
 								chain={chain}
 								isSelected={isSelected}
 								onSelect={handleSelectChain}
 								isCropped={false}
+								isTestnet={isTestnet}
 							/>
 						)
 					})}

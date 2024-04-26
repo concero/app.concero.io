@@ -1,4 +1,4 @@
-import { type FC, useRef } from 'react'
+import { type FC, type ReactComponentElement, useRef } from 'react'
 import { useAccount } from 'wagmi'
 import classNames from './SwapCard.module.pcss'
 import { type SwapCardProps } from './types'
@@ -13,7 +13,7 @@ import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
 
-export const SwapCard: FC<SwapCardProps> = () => {
+export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps) => {
 	const [swapState, swapDispatch] = useSwapReducer()
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef<number>()
@@ -41,8 +41,12 @@ export const SwapCard: FC<SwapCardProps> = () => {
 	}
 
 	const renderSwapStage: Record<SwapCardStage, ReactComponentElement<any>> = {
-		[SwapCardStage.input]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
-		[SwapCardStage.review]: <SwapInput swapState={swapState} swapDispatch={swapDispatch} />,
+		[SwapCardStage.input]: (
+			<SwapInput swapState={swapState} swapDispatch={swapDispatch} isNewSwapCardMode={isNewSwapCardMode} />
+		),
+		[SwapCardStage.review]: (
+			<SwapInput swapState={swapState} swapDispatch={swapDispatch} isNewSwapCardMode={isNewSwapCardMode} />
+		),
 		[SwapCardStage.progress]: (
 			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
 		),
@@ -61,7 +65,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 
 	return (
 		<InsuranceProvider toggleInsurance={toggleInsurance}>
-			<div className={`card ${classNames.container}`}>
+			<div className={`card ${classNames.container} ${isNewSwapCardMode ? classNames.abTestStyles : ''}`}>
 				<SwapCardHeader swapState={swapState} swapDispatch={swapDispatch} />
 				<div className={classNames.swapContainer}>{renderSwapStage[swapState.stage]}</div>
 			</div>
