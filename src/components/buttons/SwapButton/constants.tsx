@@ -13,6 +13,7 @@ export enum ButtonType {
 	REVIEW = 9,
 	FETCH_BALANCES_LOADING = 10,
 	CONNECT_WALLET_BRIGHT = 11,
+	TESTNET_AMOUNT_TOO_HIGH = 12,
 }
 
 export const buttonText: { [key in ButtonType]: string } = {
@@ -27,6 +28,7 @@ export const buttonText: { [key in ButtonType]: string } = {
 	[ButtonType.REVIEW]: 'button.reviewSwap',
 	[ButtonType.FETCH_BALANCES_LOADING]: '',
 	[ButtonType.CONNECT_WALLET_BRIGHT]: 'button.connectWalletToSwap',
+	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: 'Amount should not be greater than 0.1',
 }
 
 export const isButtonDisabled: { [key in ButtonType]: boolean } = {
@@ -41,6 +43,7 @@ export const isButtonDisabled: { [key in ButtonType]: boolean } = {
 	[ButtonType.REVIEW]: false,
 	[ButtonType.FETCH_BALANCES_LOADING]: true,
 	[ButtonType.CONNECT_WALLET_BRIGHT]: false,
+	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: true,
 }
 
 export const buttonStyleClass: { [key in ButtonType]: string } = {
@@ -55,6 +58,7 @@ export const buttonStyleClass: { [key in ButtonType]: string } = {
 	[ButtonType.REVIEW]: 'swap',
 	[ButtonType.FETCH_BALANCES_LOADING]: 'loading',
 	[ButtonType.CONNECT_WALLET_BRIGHT]: 'swap',
+	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: 'wrong',
 }
 
 export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
@@ -69,4 +73,5 @@ export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
 	[ButtonType.REVIEW]: <IconArrowsUpDown size={18} color="white" />,
 	[ButtonType.FETCH_BALANCES_LOADING]: null,
 	[ButtonType.CONNECT_WALLET_BRIGHT]: <IconWallet size={18} color="white" />,
+	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: <IconWallet size={18} color="white" />,
 }

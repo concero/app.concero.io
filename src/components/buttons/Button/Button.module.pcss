@@ -116,6 +116,27 @@
 	cursor: wait;
 }
 
+.isDisabled {
+	background: none;
+	background-color: var(--color-primary-750);
+	border-color: var(--color-primary-650);
+	color: var(--color-primary-500);
+	pointer-events: none;
+}
+
+.isDisabled:hover {
+	background: none;
+	background-color: var(--color-primary-750);
+	border-color: var(--color-primary-650);
+	pointer-events: none;
+}
+
+.isDisabled.subtle {
+	background-color: var(--color-grey-650);
+	border-color: var(--color-grey-600);
+	color: var(--color-grey-550);
+}
+
 .pressable-down:active {
 	transform: translateY(2px);
 }
@@ -186,25 +207,4 @@
 
 :global(.dark) .convex:hover {
 	background: var(--color-grey-625);
-}
-
-.isDisabled {
-	background: none;
-	background-color: var(--color-primary-750);
-	border-color: var(--color-primary-650);
-	color: var(--color-primary-500);
-	pointer-events: none;
-}
-
-.isDisabled:hover {
-	background: none;
-	background-color: var(--color-primary-750);
-	border-color: var(--color-primary-650);
-	pointer-events: none;
-}
-
-.isDisabled.subtle {
-	background-color: var(--color-grey-650);
-	border-color: var(--color-grey-600);
-	color: var(--color-grey-550);
 }
