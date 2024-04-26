@@ -211,6 +211,13 @@ export async function executeConceroRoute(
 		await checkTransactionStatus(tx, signer, swapDispatch, swapState)
 
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
+
+		void trackEvent({
+			category: category.SwapCard,
+			action: action.SwapSuccess,
+			label: 'swap_success',
+			data: { provider: 'concero', from: swapState.from, to: swapState.to },
+		})
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
@@ -222,7 +229,7 @@ export async function executeConceroRoute(
 			category: category.SwapCard,
 			action: action.SwapFailed,
 			label: 'swap_failed',
-			data: { provider: 'concero', from: swapState.from, to: swapState.to },
+			data: { provider: 'concero', from: swapState.from, to: swapState.to, error },
 		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
