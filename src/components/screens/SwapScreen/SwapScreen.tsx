@@ -27,7 +27,7 @@ export const SwapScreen = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapScre
 				<Chart />
 			</div>
 			<div className={classNames.secondaryCardStack}>
-				<Swap isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
+				<Swap isNewSwapCardMode={isNewSwapCardMode} />
 				<TargetInfoCard />
 			</div>
 		</div>
@@ -36,7 +36,7 @@ export const SwapScreen = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapScre
 	const mobileLayout = (
 		<div className={classNames.container}>
 			<div className={classNames.mainCardStack}>
-				<Swap isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
+				<Swap isNewSwapCardMode={isNewSwapCardMode} />
 				<Chart />
 				<TargetInfoCard />
 			</div>
@@ -46,7 +46,7 @@ export const SwapScreen = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapScre
 	const newSwapScreenLayout = (
 		<div className={classNames.newSwapCardContainer}>
 			<div className={classNames.newSwapCardInnerContainer}>
-				<Swap isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
+				<Swap isNewSwapCardMode={isNewSwapCardMode} />
 			</div>
 			<div className={classNames.switchToOldVersionButtonContainer}>
 				<h5

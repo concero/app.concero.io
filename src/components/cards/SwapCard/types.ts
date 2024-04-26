@@ -5,7 +5,6 @@ import { type SwapAction, type SwapState } from './swapReducer/types'
 
 export interface SwapCardProps {
 	isNewSwapCardMode: boolean
-	setIsNewSwapCardMode: (arg: boolean) => void
 }
 
 export interface SwapDetailsProps {

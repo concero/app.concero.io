@@ -13,7 +13,7 @@ import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
 
-export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapCardProps) => {
+export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps) => {
 	const [swapState, swapDispatch] = useSwapReducer()
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef<number>()
