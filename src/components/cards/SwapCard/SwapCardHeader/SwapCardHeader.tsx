@@ -2,12 +2,12 @@ import classNames from './SwapCardHeader.module.pcss'
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { IconChevronLeft, IconDots } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
-import { type Dispatch, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { type Dispatch, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { getCardTitleByStatus } from '../handlers/getCardTitleByStatus'
 import { animated, useSpring } from '@react-spring/web'
 import { easeQuadInOut } from 'd3-ease'
 import { Toggle } from '../../../layout/Toggle/Toggle'
-import { FeatureFlagContext } from '../../../../hooks/FeatureFlagContext'
+import { useFeatureFlagVariantKey } from 'posthog-js/react'
 
 interface SwapCardHeaderProps {
 	swapState: SwapState
@@ -18,8 +18,8 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 	const { stage, isTestnet } = swapState
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const [titleAnimationWidth, setTitleAnimationWidth] = useState<number>(0)
-	const featureFlags = useContext(FeatureFlagContext)
-	console.log(featureFlags)
+	const variant = useFeatureFlagVariantKey('ccip-testnet-whitelist')
+	const isToggleTestnetButtonVisible = variant === 'whitelisted'
 	const isReviewStage = stage === SwapCardStage.review
 	const isInputStage = stage === SwapCardStage.input
 
@@ -36,8 +36,9 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 	}, [containerRef.current?.scrollWidth])
 
 	useEffect(() => {
+		if (!isToggleTestnetButtonVisible) return
 		swapDispatch({ type: 'TOGGLE_TESTNET' })
-	}, [])
+	}, [isToggleTestnetButtonVisible])
 
 	return (
 		<div
@@ -59,15 +60,17 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 			</animated.div>
 			{isInputStage ? (
 				<div className={classNames.settingsContainer}>
-					<div className={classNames.toggleTestnetContainer}>
-						<h5>Testnet</h5>
-						<Toggle
-							isChecked={isTestnet}
-							onChange={() => {
-								swapDispatch({ type: 'TOGGLE_TESTNET' })
-							}}
-						/>
-					</div>
+					{isToggleTestnetButtonVisible ? (
+						<div className={classNames.toggleTestnetContainer}>
+							<h5>Testnet</h5>
+							<Toggle
+								isChecked={isTestnet}
+								onChange={() => {
+									swapDispatch({ type: 'TOGGLE_TESTNET' })
+								}}
+							/>
+						</div>
+					) : null}
 					<Button
 						variant="black"
 						size="sq-xs"

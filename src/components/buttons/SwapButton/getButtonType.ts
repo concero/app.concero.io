@@ -7,7 +7,6 @@ export function getButtonType(
 	isConnected: boolean,
 	isInsufficientGas: boolean,
 	isFetchBalancesLoading: boolean,
-	featureFlag: boolean,
 ): ButtonType {
 	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, stage, isTestnet } = swapState
 
@@ -20,10 +19,7 @@ export function getButtonType(
 	}
 
 	if (!isConnected) {
-		if (featureFlag) {
-			return ButtonType.CONNECT_WALLET_BRIGHT
-		}
-		return ButtonType.CONNECT_WALLET
+		return ButtonType.CONNECT_WALLET_BRIGHT
 	}
 
 	if (from.amount && isTestnet) {
