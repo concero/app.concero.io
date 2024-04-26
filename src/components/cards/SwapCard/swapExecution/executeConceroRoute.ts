@@ -8,6 +8,8 @@ import { type Dispatch } from 'react'
 import { createPublicClient, decodeEventLog, http } from 'viem'
 import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
 import ConceroAbi from '../../../../abi/Concero.json'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 const conceroAddressesMap: Record<string, string> = {
 	'421614': '0x54FB518991DFd48c4E281544bdDb257E8B738A7E', // arb
@@ -209,12 +211,25 @@ export async function executeConceroRoute(
 		await checkTransactionStatus(tx, signer, swapDispatch, swapState)
 
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
+
+		void trackEvent({
+			category: category.SwapCard,
+			action: action.SwapSuccess,
+			label: 'swap_success',
+			data: { provider: 'concero', from: swapState.from, to: swapState.to },
+		})
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		swapDispatch({
 			type: 'SET_SWAP_STEPS',
 			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
+		})
+		void trackEvent({
+			category: category.SwapCard,
+			action: action.SwapFailed,
+			label: 'swap_failed',
+			data: { provider: 'concero', from: swapState.from, to: swapState.to, error },
 		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
