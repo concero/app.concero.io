@@ -1,4 +1,4 @@
-import { type FC, type ReactComponentElement, useRef , useContext} from 'react'
+import { type FC, type ReactComponentElement, useRef } from 'react'
 import { useAccount } from 'wagmi'
 import classNames from './SwapCard.module.pcss'
 import { type SwapCardProps } from './types'
@@ -12,20 +12,11 @@ import { SwapCardStage } from './swapReducer/types'
 import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
-import {
-	FeatureFlagContext,
-	FeatureFlagKeys,
-	type FeatureFlags,
-	FeatureFlagVariants,
-} from '../../../hooks/FeatureFlagContext'
 
-export const SwapCard: FC<SwapCardProps> = () => {
+export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapCardProps) => {
 	const [swapState, swapDispatch] = useSwapReducer()
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef<number>()
-	const featureFlags = useContext<FeatureFlags>(FeatureFlagContext)
-	const isNewSwapCardLayoutEnabled =
-		featureFlags[FeatureFlagKeys.newSwapScreenLayout] === FeatureFlagVariants.newSwapCard
 
 	const handleGoBack = () => {
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'from' })
@@ -70,9 +61,7 @@ export const SwapCard: FC<SwapCardProps> = () => {
 
 	return (
 		<InsuranceProvider toggleInsurance={toggleInsurance}>
-			<div
-				className={`card ${classNames.container} ${isNewSwapCardLayoutEnabled ? classNames.abTestStyles : ''}`}
-			>
+			<div className={`card ${classNames.container} ${isNewSwapCardMode ? classNames.abTestStyles : ''}`}>
 				<SwapCardHeader swapState={swapState} swapDispatch={swapDispatch} />
 				<div className={classNames.swapContainer}>{renderSwapStage[swapState.stage]}</div>
 			</div>

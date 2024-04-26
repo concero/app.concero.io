@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useState } from 'react'
+import { memo } from 'react'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { SwapCard } from '../../cards/SwapCard/SwapCard'
@@ -7,29 +7,19 @@ import classNames from './SwapScreen.module.pcss'
 import { TargetInfoCard } from '../../cards/TargetInfoCard/TargetInfoCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
-import {
-	FeatureFlagContext,
-	FeatureFlagKeys,
-	type FeatureFlags,
-	FeatureFlagVariants,
-} from '../../../hooks/FeatureFlagContext'
-import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
 
 const History = memo(withErrorBoundary(HistoryCard))
 const Swap = memo(withErrorBoundary(SwapCard))
 const News = memo(withErrorBoundary(NewsCard))
 const Chart = memo(withErrorBoundary(ChartCard))
 
-export const SwapScreen = () => {
-	const isMobile = useMediaQuery('mobile')
-	const featureFlags = useContext<FeatureFlags>(FeatureFlagContext)
-	const [isLoading, setIsLoading] = useState(true)
+interface SwapScreenProps {
+	isNewSwapCardMode: boolean
+	setIsNewSwapCardMode: (isNewSwapCardMode: boolean) => void
+}
 
-	useEffect(() => {
-		if (featureFlags[FeatureFlagKeys.newSwapScreenLayout] !== undefined) {
-			setIsLoading(false)
-		}
-	}, [featureFlags[FeatureFlagKeys.newSwapScreenLayout]])
+export const SwapScreen = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapScreenProps) => {
+	const isMobile = useMediaQuery('mobile')
 
 	const desktopLayout = (
 		<div className={`row ${classNames.container}`}>
@@ -37,7 +27,7 @@ export const SwapScreen = () => {
 				<Chart />
 			</div>
 			<div className={classNames.secondaryCardStack}>
-				<Swap />
+				<Swap isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
 				<TargetInfoCard />
 			</div>
 		</div>
@@ -46,7 +36,7 @@ export const SwapScreen = () => {
 	const mobileLayout = (
 		<div className={classNames.container}>
 			<div className={classNames.mainCardStack}>
-				<Swap />
+				<Swap isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
 				<Chart />
 				<TargetInfoCard />
 			</div>
@@ -55,15 +45,23 @@ export const SwapScreen = () => {
 
 	const newSwapScreenLayout = (
 		<div className={classNames.newSwapCardContainer}>
-			<Swap />
+			<div className={classNames.newSwapCardInnerContainer}>
+				<Swap isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
+			</div>
+			<div className={classNames.switchToOldVersionButtonContainer}>
+				<h5
+					className={classNames.switchToOldVersionButton}
+					onClick={() => {
+						setIsNewSwapCardMode(false)
+					}}
+				>
+					Switch back to old version
+				</h5>
+			</div>
 		</div>
 	)
 
-	if (isLoading) {
-		return <FullScreenLoader />
-	}
-
-	if (featureFlags[FeatureFlagKeys.newSwapScreenLayout] === FeatureFlagVariants.newSwapCard) {
+	if (isNewSwapCardMode) {
 		return <div className={classNames.newSwapScreenContainer}>{newSwapScreenLayout}</div>
 	}
 

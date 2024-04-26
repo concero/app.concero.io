@@ -4,30 +4,28 @@ import { useFeatureFlagVariantKey } from 'posthog-js/react'
 export type FeatureFlags = Record<FeatureFlagKeys, string | boolean | undefined>
 export enum FeatureFlagKeys {
 	brighterConnectWalletButton = 'brighter_connect_wallet_button',
-	newSwapScreenLayout = 'new_swap_card',
+	testnetEnabled = 'testnet_enabled',
 }
 export enum FeatureFlagVariants {
 	default = 'default',
 	control = 'control',
-	newSwapCard = 'new_swap_card',
+	testnet = 'testnet_enabled',
 }
 
 export const FeatureFlagContext = createContext<FeatureFlags>({
 	[FeatureFlagKeys.brighterConnectWalletButton]: undefined,
-	[FeatureFlagKeys.newSwapScreenLayout]: undefined,
+	[FeatureFlagKeys.testnetEnabled]: undefined,
 })
 
 export function FeatureFlagProvider({ children }: { children: ReactNode }) {
 	const flags: FeatureFlags = {
 		[FeatureFlagKeys.brighterConnectWalletButton]: undefined,
-		[FeatureFlagKeys.newSwapScreenLayout]: undefined,
+		[FeatureFlagKeys.testnetEnabled]: undefined,
 	}
 
-	flags[FeatureFlagKeys.newSwapScreenLayout] = useFeatureFlagVariantKey(FeatureFlagKeys.newSwapScreenLayout)
 	flags[FeatureFlagKeys.brighterConnectWalletButton] = useFeatureFlagVariantKey(
 		FeatureFlagKeys.brighterConnectWalletButton,
 	)
-	flags[FeatureFlagKeys.newSwapScreenLayout] = FeatureFlagVariants.newSwapCard
 
 	return <FeatureFlagContext.Provider value={flags}>{children}</FeatureFlagContext.Provider>
 }

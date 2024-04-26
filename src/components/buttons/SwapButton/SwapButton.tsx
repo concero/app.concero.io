@@ -1,4 +1,4 @@
-import { type FC, useContext , useEffect, useState } from 'react'
+import { type FC, useContext, useEffect, useState } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { Button } from '../Button/Button'
 import { type SwapButtonProps } from './types'

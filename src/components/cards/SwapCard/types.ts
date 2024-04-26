@@ -3,7 +3,10 @@ import { type Chain, type Token } from '../../../api/concero/types'
 import { type Dispatch } from 'react'
 import { type SwapAction, type SwapState } from './swapReducer/types'
 
-export interface SwapCardProps {}
+export interface SwapCardProps {
+	isNewSwapCardMode: boolean
+	setIsNewSwapCardMode: (arg: boolean) => void
+}
 
 export interface SwapDetailsProps {
 	swapState: SwapState
