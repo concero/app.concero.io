@@ -60,7 +60,7 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 
 async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSigner) {
 	const gasPrice = await signer.provider.getGasPrice()
-	const value = gasPrice.mul(1_500_000).toString()
+	const value = gasPrice.mul(1_500_000).mul(10).toString()
 
 	const conceroContract = new ethers.Contract(
 		conceroAddressesMap[swapState.from.chain.id],
