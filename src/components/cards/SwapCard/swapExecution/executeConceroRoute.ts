@@ -187,6 +187,15 @@ export async function executeConceroRoute(
 	switchChainHook: SwitchChainHookType,
 ): Promise<any> {
 	try {
+		if (swapState.from.token.address === swapState.to.token.address) {
+			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+			swapDispatch({
+				type: 'SET_SWAP_STEPS',
+				payload: [{ title: 'Transaction failed', body: 'Tokens are the same', status: 'error' }],
+			})
+			return
+		}
+
 		swapDispatch({ type: 'SET_LOADING', payload: true })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
 		swapDispatch({

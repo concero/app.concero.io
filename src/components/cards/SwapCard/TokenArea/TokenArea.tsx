@@ -113,6 +113,7 @@ export const TokenArea: FC<TokenAreaProps> = ({
 								selection={selection}
 								direction={direction}
 								handleMaxButtonClick={handleMaxButtonClick}
+								isTestnet={isTestnet}
 							/>
 						</div>
 					)}

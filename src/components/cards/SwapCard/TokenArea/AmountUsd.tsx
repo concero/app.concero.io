@@ -10,15 +10,16 @@ interface AmountUsdProps {
 	selection: SwapStateDirection
 	direction: 'from' | 'to'
 	handleMaxButtonClick: () => void
+	isTestnet: boolean
 }
 
-export function AmountUsd({ state, balance, selection, direction, handleMaxButtonClick }: AmountUsdProps) {
+export function AmountUsd({ state, balance, selection, direction, handleMaxButtonClick, isTestnet }: AmountUsdProps) {
 	const { t } = useTranslation()
 
 	if (direction === 'from') {
 		return (
 			<div className={classNames.amountUsdContainer}>
-				{state.isFocused && !selection.amount && balance ? (
+				{state.isFocused && !selection.amount && balance && !isTestnet ? (
 					<h4 className={classNames.maxButton} onMouseDown={handleMaxButtonClick}>
 						Max: {balance?.amount.rounded}
 					</h4>
