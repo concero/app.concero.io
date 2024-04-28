@@ -13,6 +13,12 @@ interface TestnetCheckButtonsProps {
 	switchChainHook: (requiredChainId: number) => Promise<providers.JsonRpcSigner>
 }
 
+const faucetChainsStrMap: Record<string, string> = {
+	'421614': 'arbitrum-sepolia',
+	'11155420': 'optimism-sepolia',
+	'84532': 'base-sepolia',
+}
+
 export function TestnetCheckButtons({ swapState, testnetBalances, switchChainHook }: TestnetCheckButtonsProps) {
 	const dripBnmToken = async () => {
 		try {
@@ -38,7 +44,7 @@ export function TestnetCheckButtons({ swapState, testnetBalances, switchChainHoo
 				isDisabled={!!testnetBalances?.linkBalanceSufficient}
 				leftIcon={testnetBalances?.linkBalanceSufficient ? <IconCheck size={17} /> : null}
 				onClick={() => {
-					window.open('https://faucets.chain.link/', '_blank')
+					window.open(`https://faucets.chain.link/${faucetChainsStrMap[swapState.from.chain.id]}`, '_blank')
 				}}
 			>
 				Get testnet ETH & LINK
