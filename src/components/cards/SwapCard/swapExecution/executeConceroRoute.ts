@@ -28,6 +28,8 @@ const viemChainsMap: Record<string, any> = {
 	'421614': arbitrumSepolia,
 }
 
+const sleep = async (ms: number) => await new Promise(resolve => setTimeout(resolve, ms))
+
 async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.JsonRpcSigner) {
 	const bnmContract = new ethers.Contract(swapState.from.token.address, ERC20, signer)
 	const linkContract = new ethers.Contract(linkAddressesMap[swapState.from.chain.id], ERC20, signer)
@@ -84,6 +86,56 @@ async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSi
 	)
 }
 
+const setError = (swapDispatch: Dispatch<SwapAction>, swapState: SwapState, error: any) => {
+	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+	swapDispatch({
+		type: 'SET_SWAP_STEPS',
+		payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
+	})
+	void trackEvent({
+		category: category.SwapCard,
+		action: action.SwapFailed,
+		label: 'swap_failed',
+		data: { provider: 'concero', from: swapState.from, to: swapState.to, error },
+	})
+}
+
+const getLogByName = async (
+	id: string,
+	eventName: string,
+	contractAddress: string,
+	viemPublicClient: any,
+	fromBlock: string,
+): Promise<any | null> => {
+	const logs = await viemPublicClient.getLogs({
+		address: contractAddress,
+		abi: ConceroAbi,
+		fromBlock,
+		toBlock: 'latest',
+	})
+
+	const filteredLog = logs.find((log: any) => {
+		const decodedLog: any = decodeEventLog({
+			abi: ConceroAbi,
+			data: log.data,
+			topics: log.topics,
+		})
+
+		const logId = eventName === 'CCIPSent' ? log.transactionHash : decodedLog.args.ccipMessageId
+		return logId?.toLowerCase() === id.toLowerCase() && decodedLog.eventName === eventName
+	})
+
+	if (!filteredLog) {
+		return null
+	}
+
+	return decodeEventLog({
+		abi: ConceroAbi,
+		data: filteredLog.data,
+		topics: filteredLog.topics,
+	})
+}
+
 async function checkTransactionStatus(
 	tx: providers.TransactionResponse,
 	signer: providers.JsonRpcSigner,
@@ -92,65 +144,59 @@ async function checkTransactionStatus(
 ) {
 	const receipt = await tx.wait()
 	if (receipt.status === 0) {
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-		swapDispatch({
-			type: 'APPEND_SWAP_STEP',
-			payload: {
-				title: 'Transaction failed',
-				body: 'The transaction has failed. Please try again',
-				status: 'failed',
-				txLink: null,
-			},
-		})
+		setError(swapDispatch, swapState, `Transaction reverted: ${tx.hash}`)
 		return
 	}
 
-	const publicClient = createPublicClient({
+	const dstPublicClient = createPublicClient({
 		chain: viemChainsMap[swapState.to.chain.id],
 		transport: http(),
 	})
+	const srcPublicClient = createPublicClient({
+		chain: viemChainsMap[swapState.from.chain.id],
+		transport: http(),
+	})
+	const latestDstChainBlock = (await dstPublicClient.getBlockNumber()) - 100n
+	const latestSrcChainBlock = (await srcPublicClient.getBlockNumber()) - 100n
 
-	const latestDstChainBlock = await publicClient.getBlockNumber()
-	const sleep = async (ms: number) => await new Promise(resolve => setTimeout(resolve, ms))
+	const ccipMessageId = (
+		await getLogByName(
+			tx.hash,
+			'CCIPSent',
+			conceroAddressesMap[swapState.from.chain.id],
+			srcPublicClient,
+			'0x' + latestSrcChainBlock.toString(16),
+		)
+	).args.ccipMessageId
 
-	const checkLogByName = async (eventName: string) => {
-		while (true) {
-			let isBreakNeeded = false
+	let dstLog = null
+	let srcFailLog = null
 
-			const logs = await publicClient.getLogs({
-				address: conceroAddressesMap[swapState.to.chain.id] as `0x${string}`,
-				abi: ConceroAbi,
-				eventName,
-				fromBlock: latestDstChainBlock,
-				toBlock: 'latest',
-			})
+	while (dstLog === null && srcFailLog === null) {
+		;[dstLog, srcFailLog] = await Promise.all([
+			getLogByName(
+				ccipMessageId,
+				'UnconfirmedTXAdded',
+				conceroAddressesMap[swapState.to.chain.id],
+				dstPublicClient,
+				'0x' + latestDstChainBlock.toString(16),
+			),
+			getLogByName(
+				ccipMessageId,
+				'FunctionsRequestError',
+				conceroAddressesMap[swapState.from.chain.id],
+				srcPublicClient,
+				'0x' + latestSrcChainBlock.toString(16),
+			),
+		])
 
-			logs.forEach(log => {
-				const dcodedLog = decodeEventLog({
-					abi: ConceroAbi,
-					data: log.data,
-					topics: log.topics,
-				})
-
-				if (dcodedLog.eventName === eventName) {
-					const { args } = dcodedLog
-					if (
-						args.sender.toLowerCase() === signer._address.toLowerCase() &&
-						args.amount.toString() ===
-							addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)
-					) {
-						isBreakNeeded = true
-					}
-				}
-			})
-
-			if (isBreakNeeded) break
-
-			await sleep(3000)
-		}
+		await sleep(3000)
 	}
 
-	await checkLogByName('UnconfirmedTXAdded')
+	if (srcFailLog) {
+		setError(swapDispatch, swapState, srcFailLog)
+		return
+	}
 
 	swapDispatch({
 		type: 'SET_SWAP_STEPS',
@@ -163,7 +209,34 @@ async function checkTransactionStatus(
 		],
 	})
 
-	await checkLogByName('TXReleased')
+	let dstLog2 = null
+	let dstFailLog = null
+
+	while (dstLog2 === null && dstFailLog === null) {
+		;[dstFailLog, dstLog2] = await Promise.all([
+			getLogByName(
+				ccipMessageId,
+				'FunctionsRequestError',
+				conceroAddressesMap[swapState.to.chain.id],
+				dstPublicClient,
+				'0x' + latestDstChainBlock.toString(16),
+			),
+			getLogByName(
+				ccipMessageId,
+				'TXReleased',
+				conceroAddressesMap[swapState.to.chain.id],
+				dstPublicClient,
+				'0x' + latestDstChainBlock.toString(16),
+			),
+		])
+
+		await sleep(3000)
+	}
+
+	if (dstFailLog) {
+		setError(swapDispatch, swapState, dstFailLog)
+		return
+	}
 
 	swapDispatch({
 		type: 'SET_SWAP_STEPS',
@@ -229,17 +302,7 @@ export async function executeConceroRoute(
 		})
 	} catch (error) {
 		console.error('Error executing concero route', error)
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-		swapDispatch({
-			type: 'SET_SWAP_STEPS',
-			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
-		})
-		void trackEvent({
-			category: category.SwapCard,
-			action: action.SwapFailed,
-			label: 'swap_failed',
-			data: { provider: 'concero', from: swapState.from, to: swapState.to, error },
-		})
+		setError(swapDispatch, swapState, error)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
