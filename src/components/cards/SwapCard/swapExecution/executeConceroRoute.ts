@@ -12,9 +12,9 @@ import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
 const conceroAddressesMap: Record<string, string> = {
-	'421614': '0xFFaBf8dEe5e26270d5128d0E48CDBa5eCe3108F5', // arb
-	'11155420': '0xd5f01E04A875632F627FAB869BcDD7E119cf2C82', // opt
-	'84532': '0xf1a35837c4612D15fB07fca217Ff616f4Aa81201', // base
+	'421614': '0x0A020fC00c8D222eA171CC2dD23a025c801525c4', // arb
+	'11155420': '0xA33409a80c5f68a1827D199bBd13D1888C8FB1C1', // opt
+	'84532': '0x732575027A40b191769A10e918D4D4725Cf4476F', // base
 }
 
 const chainSelectorsMap: Record<string, string> = {
@@ -80,7 +80,7 @@ async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSi
 		swapState.to.address,
 		{
 			gasPrice,
-			gasLimit: 2000000,
+			gasLimit: 3000000,
 			value,
 		},
 	)
@@ -141,8 +141,10 @@ async function checkTransactionStatus(
 	signer: providers.JsonRpcSigner,
 	swapDispatch: Dispatch<SwapAction>,
 	swapState: SwapState,
-) {
+): Promise<number | undefined> {
 	const receipt = await tx.wait()
+	const txStart = new Date().getTime()
+
 	if (receipt.status === 0) {
 		setError(swapDispatch, swapState, `Transaction reverted: ${tx.hash}`)
 		return
@@ -159,15 +161,15 @@ async function checkTransactionStatus(
 	const latestDstChainBlock = (await dstPublicClient.getBlockNumber()) - 100n
 	const latestSrcChainBlock = (await srcPublicClient.getBlockNumber()) - 100n
 
-	const ccipMessageId = (
-		await getLogByName(
-			tx.hash,
-			'CCIPSent',
-			conceroAddressesMap[swapState.from.chain.id],
-			srcPublicClient,
-			'0x' + latestSrcChainBlock.toString(16),
-		)
-	).args.ccipMessageId
+	const txLog = await getLogByName(
+		tx.hash,
+		'CCIPSent',
+		conceroAddressesMap[swapState.from.chain.id],
+		srcPublicClient,
+		'0x' + latestSrcChainBlock.toString(16),
+	)
+
+	const ccipMessageId = txLog.args.ccipMessageId
 
 	let dstLog = null
 	let srcFailLog = null
@@ -252,13 +254,15 @@ async function checkTransactionStatus(
 			},
 		],
 	})
+
+	return txStart
 }
 
 export async function executeConceroRoute(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
 	switchChainHook: SwitchChainHookType,
-): Promise<any> {
+): Promise<number | undefined> {
 	try {
 		if (swapState.from.token.address === swapState.to.token.address) {
 			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
@@ -282,6 +286,7 @@ export async function executeConceroRoute(
 		})
 
 		const signer = await switchChainHook(Number(swapState.from.chain.id))
+
 		await checkAllowanceAndApprove(swapState, signer)
 		const tx = await sendTransaction(swapState, signer)
 
@@ -290,7 +295,7 @@ export async function executeConceroRoute(
 			payload: [{ status: 'pending', title: 'Sending transaction' }],
 		})
 
-		await checkTransactionStatus(tx, signer, swapDispatch, swapState)
+		const txStart = await checkTransactionStatus(tx, signer, swapDispatch, swapState)
 
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 
@@ -300,6 +305,10 @@ export async function executeConceroRoute(
 			label: 'swap_success',
 			data: { provider: 'concero', from: swapState.from, to: swapState.to },
 		})
+
+		if (!txStart) return
+
+		return (new Date().getTime() - txStart) / 1000
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		setError(swapDispatch, swapState, error)
