@@ -12,9 +12,9 @@ import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
 const conceroAddressesMap: Record<string, string> = {
-	'421614': '0x0A020fC00c8D222eA171CC2dD23a025c801525c4', // arb
-	'11155420': '0xA33409a80c5f68a1827D199bBd13D1888C8FB1C1', // opt
-	'84532': '0x732575027A40b191769A10e918D4D4725Cf4476F', // base
+	'421614': '0xFFaBf8dEe5e26270d5128d0E48CDBa5eCe3108F5', // arb
+	'11155420': '0xd5f01E04A875632F627FAB869BcDD7E119cf2C82', // opt
+	'84532': '0xf1a35837c4612D15fB07fca217Ff616f4Aa81201', // base
 }
 
 const chainSelectorsMap: Record<string, string> = {
