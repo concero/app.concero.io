@@ -76,8 +76,6 @@ async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSi
 	const dstLastGasPrice = (await conceroContract.lastGasPrices(chainSelectorsMap[swapState.to.chain.id])).mul(750000)
 	const value = ethers.BigNumber.from(dstLastGasPrice).add(srcLastGasPrice)
 
-	console.log(value.toString())
-
 	const gasPrice = await signer.getGasPrice()
 
 	return conceroContract.startTransaction(
