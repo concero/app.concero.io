@@ -49,11 +49,11 @@ export function ChainsPicker({ selectedChain, setSelectedChain, isTestnet }: Tok
 		<div className={classNames.container}>
 			<p className={`body4 ${classNames.title}`}>{t('tokensModal.chains')}</p>
 			<div className={classNames.firsChainsLineContainer}>
-				{fistLineChains.map((chain: Chain) => {
+				{fistLineChains.map((chain: Chain, index) => {
 					const isSelected = selectedChain?.id === chain.id
 					return (
 						<ChainListItem
-							key={chain._id}
+							key={index.toString()}
 							chain={chain}
 							isSelected={isSelected}
 							onSelect={setSelectedChain}

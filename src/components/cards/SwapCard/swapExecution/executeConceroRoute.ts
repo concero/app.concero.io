@@ -12,9 +12,9 @@ import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
 const conceroAddressesMap: Record<string, string> = {
-	'421614': '0xFFaBf8dEe5e26270d5128d0E48CDBa5eCe3108F5', // arb
-	'11155420': '0xd5f01E04A875632F627FAB869BcDD7E119cf2C82', // opt
-	'84532': '0xf1a35837c4612D15fB07fca217Ff616f4Aa81201', // base
+	'421614': '0x646e93db0b93f70A2feC79cf45dF6dF62b0331CF', // arb
+	'11155420': '0x896F7Eccf939E5B79938228Cc2C5fE77D6363DDF', // opt
+	'84532': '0x4E19030A8d7667712bdC6eB9814d10C159f09044', // base
 }
 
 const chainSelectorsMap: Record<string, string> = {
@@ -61,16 +61,24 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 }
 
 async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSigner) {
-	const gasPrice = await signer.provider.getGasPrice()
-	const value = gasPrice.mul(1_500_000).mul(10).toString()
-
 	const conceroContract = new ethers.Contract(
 		conceroAddressesMap[swapState.from.chain.id],
 		[
 			'function startTransaction(address _token, uint8 _tokenType, uint256 _amount, uint64 _destinationChainSelector, address _receiver) external payable',
+			'function lastGasPrices(uint64 _chainSelector) view returns (uint256)',
 		],
 		signer,
 	)
+
+	const srcLastGasPrice = (await conceroContract.lastGasPrices(chainSelectorsMap[swapState.from.chain.id])).mul(
+		750000,
+	)
+	const dstLastGasPrice = (await conceroContract.lastGasPrices(chainSelectorsMap[swapState.to.chain.id])).mul(750000)
+	const value = ethers.BigNumber.from(dstLastGasPrice).add(srcLastGasPrice)
+
+	console.log(value.toString())
+
+	const gasPrice = await signer.getGasPrice()
 
 	return conceroContract.startTransaction(
 		swapState.from.token.address,
@@ -142,8 +150,8 @@ async function checkTransactionStatus(
 	swapDispatch: Dispatch<SwapAction>,
 	swapState: SwapState,
 ): Promise<number | undefined> {
-	const receipt = await tx.wait()
 	const txStart = new Date().getTime()
+	const receipt = await tx.wait()
 
 	if (receipt.status === 0) {
 		setError(swapDispatch, swapState, `Transaction reverted: ${tx.hash}`)
