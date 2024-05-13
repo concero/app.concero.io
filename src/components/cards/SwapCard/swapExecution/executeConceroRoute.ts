@@ -12,9 +12,9 @@ import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
 const conceroAddressesMap: Record<string, string> = {
-	'421614': '0xFFaBf8dEe5e26270d5128d0E48CDBa5eCe3108F5', // arb
-	'11155420': '0xd5f01E04A875632F627FAB869BcDD7E119cf2C82', // opt
-	'84532': '0xf1a35837c4612D15fB07fca217Ff616f4Aa81201', // base
+	'421614': '0x646e93db0b93f70A2feC79cf45dF6dF62b0331CF', // arb
+	'11155420': '0x896F7Eccf939E5B79938228Cc2C5fE77D6363DDF', // opt
+	'84532': '0x4E19030A8d7667712bdC6eB9814d10C159f09044', // base
 }
 
 const chainSelectorsMap: Record<string, string> = {
@@ -61,16 +61,22 @@ async function checkAllowanceAndApprove(swapState: SwapState, signer: providers.
 }
 
 async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSigner) {
-	const gasPrice = await signer.provider.getGasPrice()
-	const value = gasPrice.mul(1_500_000).mul(10).toString()
-
 	const conceroContract = new ethers.Contract(
 		conceroAddressesMap[swapState.from.chain.id],
 		[
 			'function startTransaction(address _token, uint8 _tokenType, uint256 _amount, uint64 _destinationChainSelector, address _receiver) external payable',
+			'function lastGasPrices(uint64 _chainSelector) view returns (uint256)',
 		],
 		signer,
 	)
+
+	const srcLastGasPrice = (await conceroContract.lastGasPrices(chainSelectorsMap[swapState.from.chain.id])).mul(
+		750000,
+	)
+	const dstLastGasPrice = (await conceroContract.lastGasPrices(chainSelectorsMap[swapState.to.chain.id])).mul(750000)
+	const value = ethers.BigNumber.from(dstLastGasPrice).add(srcLastGasPrice)
+
+	const gasPrice = await signer.getGasPrice()
 
 	return conceroContract.startTransaction(
 		swapState.from.token.address,
@@ -80,7 +86,7 @@ async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSi
 		swapState.to.address,
 		{
 			gasPrice,
-			gasLimit: 2000000,
+			gasLimit: 3000000,
 			value,
 		},
 	)
@@ -141,8 +147,10 @@ async function checkTransactionStatus(
 	signer: providers.JsonRpcSigner,
 	swapDispatch: Dispatch<SwapAction>,
 	swapState: SwapState,
-) {
+): Promise<number | undefined> {
+	const txStart = new Date().getTime()
 	const receipt = await tx.wait()
+
 	if (receipt.status === 0) {
 		setError(swapDispatch, swapState, `Transaction reverted: ${tx.hash}`)
 		return
@@ -159,15 +167,15 @@ async function checkTransactionStatus(
 	const latestDstChainBlock = (await dstPublicClient.getBlockNumber()) - 100n
 	const latestSrcChainBlock = (await srcPublicClient.getBlockNumber()) - 100n
 
-	const ccipMessageId = (
-		await getLogByName(
-			tx.hash,
-			'CCIPSent',
-			conceroAddressesMap[swapState.from.chain.id],
-			srcPublicClient,
-			'0x' + latestSrcChainBlock.toString(16),
-		)
-	).args.ccipMessageId
+	const txLog = await getLogByName(
+		tx.hash,
+		'CCIPSent',
+		conceroAddressesMap[swapState.from.chain.id],
+		srcPublicClient,
+		'0x' + latestSrcChainBlock.toString(16),
+	)
+
+	const ccipMessageId = txLog.args.ccipMessageId
 
 	let dstLog = null
 	let srcFailLog = null
@@ -252,13 +260,15 @@ async function checkTransactionStatus(
 			},
 		],
 	})
+
+	return txStart
 }
 
 export async function executeConceroRoute(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
 	switchChainHook: SwitchChainHookType,
-): Promise<any> {
+): Promise<number | undefined> {
 	try {
 		if (swapState.from.token.address === swapState.to.token.address) {
 			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
@@ -282,6 +292,7 @@ export async function executeConceroRoute(
 		})
 
 		const signer = await switchChainHook(Number(swapState.from.chain.id))
+
 		await checkAllowanceAndApprove(swapState, signer)
 		const tx = await sendTransaction(swapState, signer)
 
@@ -290,7 +301,7 @@ export async function executeConceroRoute(
 			payload: [{ status: 'pending', title: 'Sending transaction' }],
 		})
 
-		await checkTransactionStatus(tx, signer, swapDispatch, swapState)
+		const txStart = await checkTransactionStatus(tx, signer, swapDispatch, swapState)
 
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 
@@ -300,6 +311,10 @@ export async function executeConceroRoute(
 			label: 'swap_success',
 			data: { provider: 'concero', from: swapState.from, to: swapState.to },
 		})
+
+		if (!txStart) return
+
+		return (new Date().getTime() - txStart) / 1000
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		setError(swapDispatch, swapState, error)

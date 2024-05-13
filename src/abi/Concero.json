@@ -782,6 +782,25 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "",
+				"type": "uint64"
+			}
+		],
+		"name": "lastGasPrices",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -899,7 +918,7 @@
 			},
 			{
 				"internalType": "uint64",
-				"name": "_destinationChainSelector",
+				"name": "_dstChainSelector",
 				"type": "uint64"
 			},
 			{

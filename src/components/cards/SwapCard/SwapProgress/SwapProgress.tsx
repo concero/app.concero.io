@@ -12,9 +12,16 @@ interface SwapProgressProps {
 	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
 	handleGoBack: () => void
+	txDuration: number | undefined
 }
 
-export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, swapDispatch }) => {
+const testnetChainsTwitterMap: Record<string, string> = {
+	'421614': 'arbitrum',
+	'84532': 'base',
+	'11155420': 'Optimism',
+}
+
+export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, swapDispatch, txDuration }) => {
 	const { from, to, steps, stage } = swapState
 	const { t } = useTranslation()
 
@@ -27,9 +34,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 			<div className={classNames.buttonsContainer}>
 				<Button
 					leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />}
-					onClick={() => {
-						handleGoBack()
-					}}
+					onClick={handleGoBack}
 					variant="secondary"
 				>
 					{t('button.goBack')}
@@ -45,15 +50,28 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 			</div>
 		),
 		[SwapCardStage.success]: (
-			<Button
-				leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />}
-				onClick={() => {
-					handleGoBack()
-				}}
-				variant="secondary"
-			>
-				{t('button.goBack')}
-			</Button>
+			<div className={classNames.successButtonsContainer}>
+				{/* {swapState.isTestnet && txDuration !== undefined ? ( */}
+				{/*	<Button */}
+				{/*		leftIcon={<IconBrandTwitter size={18} />} */}
+				{/*		onClick={() => { */}
+				{/*			window.open( */}
+				{/*				`https://twitter.com/intent/tweet?text=Just%20swapped%20${swapState.from.amount}%20CCIP-BnM%20on%20%40concero_io%20from%20%40${testnetChainsTwitterMap[swapState.from.chain.id]}%20to%20%40${testnetChainsTwitterMap[swapState.to.chain.id]}%20in%20just%20${txDuration} sec!%0A%0ABreak%20my%20record%20👉%20app.concero.io&media=https%3A%2F%2Fexample.com%2Fimage.jpg`, */}
+				{/*				'_blank', */}
+				{/*			) */}
+				{/*		}} */}
+				{/*	> */}
+				{/*		Share on Twitter */}
+				{/*	</Button> */}
+				{/* ) : null} */}
+				<Button
+					leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />}
+					onClick={handleGoBack}
+					variant="secondary"
+				>
+					{t('button.goBack')}
+				</Button>
+			</div>
 		),
 	}
 

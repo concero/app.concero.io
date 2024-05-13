@@ -1,4 +1,4 @@
-import { type FC, type ReactComponentElement, useRef } from 'react'
+import { type FC, type ReactComponentElement, useRef, useState } from 'react'
 import { useAccount } from 'wagmi'
 import classNames from './SwapCard.module.pcss'
 import { type SwapCardProps } from './types'
@@ -15,6 +15,7 @@ import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
 
 export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps) => {
 	const [swapState, swapDispatch] = useSwapReducer()
+	const [txDuration, setTxDuration] = useState<number | undefined>(undefined)
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef<number>()
 
@@ -42,19 +43,44 @@ export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps
 
 	const renderSwapStage: Record<SwapCardStage, ReactComponentElement<any>> = {
 		[SwapCardStage.input]: (
-			<SwapInput swapState={swapState} swapDispatch={swapDispatch} isNewSwapCardMode={isNewSwapCardMode} />
+			<SwapInput
+				swapState={swapState}
+				swapDispatch={swapDispatch}
+				isNewSwapCardMode={isNewSwapCardMode}
+				setTxDuration={setTxDuration}
+			/>
 		),
 		[SwapCardStage.review]: (
-			<SwapInput swapState={swapState} swapDispatch={swapDispatch} isNewSwapCardMode={isNewSwapCardMode} />
+			<SwapInput
+				swapState={swapState}
+				swapDispatch={swapDispatch}
+				isNewSwapCardMode={isNewSwapCardMode}
+				setTxDuration={setTxDuration}
+			/>
 		),
 		[SwapCardStage.progress]: (
-			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
+			<SwapProgress
+				swapState={swapState}
+				handleGoBack={handleGoBack}
+				swapDispatch={swapDispatch}
+				txDuration={txDuration}
+			/>
 		),
 		[SwapCardStage.success]: (
-			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
+			<SwapProgress
+				swapState={swapState}
+				handleGoBack={handleGoBack}
+				swapDispatch={swapDispatch}
+				txDuration={txDuration}
+			/>
 		),
 		[SwapCardStage.failed]: (
-			<SwapProgress swapState={swapState} handleGoBack={handleGoBack} swapDispatch={swapDispatch} />
+			<SwapProgress
+				swapState={swapState}
+				handleGoBack={handleGoBack}
+				swapDispatch={swapDispatch}
+				txDuration={txDuration}
+			/>
 		),
 		[SwapCardStage.contactSupport]: (
 			<ContactSupportCard handleGoBackClick={handleContactSupportGoBackClick} infoToCopy={infoToCopy} />
