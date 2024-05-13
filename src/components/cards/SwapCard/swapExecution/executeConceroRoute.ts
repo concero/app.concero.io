@@ -98,6 +98,12 @@ const setError = (swapDispatch: Dispatch<SwapAction>, swapState: SwapState, erro
 		type: 'SET_SWAP_STEPS',
 		payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
 	})
+
+	if (error?.message.includes('user rejected transaction')) {
+		console.log('User rejected transaction')
+		return
+	}
+
 	void trackEvent({
 		category: category.SwapCard,
 		action: action.SwapFailed,
