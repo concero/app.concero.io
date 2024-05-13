@@ -1,5 +1,5 @@
 import { type Dispatch, type FC } from 'react'
-import { IconArrowLeft, IconBrandTwitter, IconUser } from '@tabler/icons-react'
+import { IconArrowLeft, IconUser } from '@tabler/icons-react'
 import classNames from './SwapProgress.module.pcss'
 import { TokenInfo } from './TokenInfo'
 import { TransactionStep } from '../../../layout/TransactionStep/TransactionStep'
@@ -51,19 +51,19 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 		),
 		[SwapCardStage.success]: (
 			<div className={classNames.successButtonsContainer}>
-				{swapState.isTestnet && txDuration !== undefined ? (
-					<Button
-						leftIcon={<IconBrandTwitter size={18} />}
-						onClick={() => {
-							window.open(
-								`https://twitter.com/intent/tweet?text=Just%20swapped%20${swapState.from.amount}%20CCIP-BnM%20on%20%40concero_io%20from%20%40${testnetChainsTwitterMap[swapState.from.chain.id]}%20to%20%40${testnetChainsTwitterMap[swapState.to.chain.id]}%20in%20just%20${txDuration} sec!%0A%0ABreak%20my%20record%20👉%20app.concero.io&media=https%3A%2F%2Fexample.com%2Fimage.jpg`,
-								'_blank',
-							)
-						}}
-					>
-						Share on Twitter
-					</Button>
-				) : null}
+				{/* {swapState.isTestnet && txDuration !== undefined ? ( */}
+				{/*	<Button */}
+				{/*		leftIcon={<IconBrandTwitter size={18} />} */}
+				{/*		onClick={() => { */}
+				{/*			window.open( */}
+				{/*				`https://twitter.com/intent/tweet?text=Just%20swapped%20${swapState.from.amount}%20CCIP-BnM%20on%20%40concero_io%20from%20%40${testnetChainsTwitterMap[swapState.from.chain.id]}%20to%20%40${testnetChainsTwitterMap[swapState.to.chain.id]}%20in%20just%20${txDuration} sec!%0A%0ABreak%20my%20record%20👉%20app.concero.io&media=https%3A%2F%2Fexample.com%2Fimage.jpg`, */}
+				{/*				'_blank', */}
+				{/*			) */}
+				{/*		}} */}
+				{/*	> */}
+				{/*		Share on Twitter */}
+				{/*	</Button> */}
+				{/* ) : null} */}
 				<Button
 					leftIcon={<IconArrowLeft size={20} color={'var(--color-primary-400)'} />}
 					onClick={handleGoBack}
