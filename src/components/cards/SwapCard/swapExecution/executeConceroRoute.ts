@@ -273,7 +273,7 @@ export async function executeConceroRoute(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
 	switchChainHook: SwitchChainHookType,
-): Promise<number | undefined> {
+): Promise<{ duration: number; hash: string } | undefined> {
 	try {
 		if (swapState.from.token.address === swapState.to.token.address) {
 			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
@@ -319,7 +319,7 @@ export async function executeConceroRoute(
 
 		if (!txStart) return
 
-		return (new Date().getTime() - txStart) / 1000
+		return { duration: (new Date().getTime() - txStart) / 1000, hash: tx.hash }
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		setError(swapDispatch, swapState, error)

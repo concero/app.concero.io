@@ -18,7 +18,7 @@ import { executeConceroRoute } from '../swapExecution/executeConceroRoute'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 
-export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode, setTxDuration }) => {
+export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode, setTxInfo }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
 	const { address, isConnected } = useAccount()
 	const isInsuranceCardVisible =
@@ -60,7 +60,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 				data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
 			})
 			const time = await executeConceroRoute(swapState, swapDispatch, switchChainHook)
-			setTxDuration(time)
+			setTxInfo(time)
 			return
 		}
 
