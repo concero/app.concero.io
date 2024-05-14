@@ -56,7 +56,7 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack, s
 						leftIcon={<IconBrandTwitter size={18} />}
 						onClick={() => {
 							window.open(
-								`https://twitter.com/intent/tweet?text=Just%20performed%20a%20fully%20decentralised%20swap%20from%20%40${testnetChainsTwitterMap[swapState.from.chain.id]}%20to%20%40${testnetChainsTwitterMap[swapState.to.chain.id]}%20in%20just%20${txDuration}%20sec%20on%20%40concero_io%20testnet.%20%0A%0ATry%20to%20break%20my%20record%20on%20app.concero.io`,
+								`https://twitter.com/intent/tweet?text=Just%20performed%20a%20fully%20decentralised%20swap%20from%20%40${testnetChainsTwitterMap[swapState.from.chain.id]}%20to%20%40${testnetChainsTwitterMap[swapState.to.chain.id]}%20in%20just%20${txDuration}%20sec%20on%20%40concero_io%20testnet.%20%0A%0ATry%20to%20break%20my%20record%20on%20app.concero.io 👇`,
 								'_blank',
 							)
 						}}
