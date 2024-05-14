@@ -6,7 +6,7 @@ export interface SwapInputProps {
 	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
 	isNewSwapCardMode: boolean
-	setTxDuration: (time: number | undefined) => void
+	setTxInfo: (info: { duration: number; hash: string } | undefined) => void
 }
 
 export type SwitchChainHookType = (requiredChainId: number) => Promise<providers.JsonRpcSigner>

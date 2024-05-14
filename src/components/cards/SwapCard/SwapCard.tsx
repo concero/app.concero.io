@@ -15,7 +15,7 @@ import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
 
 export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps) => {
 	const [swapState, swapDispatch] = useSwapReducer()
-	const [txDuration, setTxDuration] = useState<number | undefined>(undefined)
+	const [txInfo, setTxInfo] = useState<{ duration: number; hash: string } | undefined>(undefined)
 	const { address, connector } = useAccount()
 	const typingTimeoutRef = useRef<number>()
 
@@ -47,7 +47,7 @@ export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps
 				swapState={swapState}
 				swapDispatch={swapDispatch}
 				isNewSwapCardMode={isNewSwapCardMode}
-				setTxDuration={setTxDuration}
+				setTxInfo={setTxInfo}
 			/>
 		),
 		[SwapCardStage.review]: (
@@ -55,7 +55,7 @@ export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps
 				swapState={swapState}
 				swapDispatch={swapDispatch}
 				isNewSwapCardMode={isNewSwapCardMode}
-				setTxDuration={setTxDuration}
+				setTxInfo={setTxInfo}
 			/>
 		),
 		[SwapCardStage.progress]: (
@@ -63,7 +63,7 @@ export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps
 				swapState={swapState}
 				handleGoBack={handleGoBack}
 				swapDispatch={swapDispatch}
-				txDuration={txDuration}
+				txDuration={txInfo}
 			/>
 		),
 		[SwapCardStage.success]: (
@@ -71,7 +71,7 @@ export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps
 				swapState={swapState}
 				handleGoBack={handleGoBack}
 				swapDispatch={swapDispatch}
-				txDuration={txDuration}
+				txInfo={txInfo}
 			/>
 		),
 		[SwapCardStage.failed]: (
@@ -79,7 +79,7 @@ export const SwapCard: FC<SwapCardProps> = ({ isNewSwapCardMode }: SwapCardProps
 				swapState={swapState}
 				handleGoBack={handleGoBack}
 				swapDispatch={swapDispatch}
-				txDuration={txDuration}
+				txInfo={txInfo}
 			/>
 		),
 		[SwapCardStage.contactSupport]: (
