@@ -39,9 +39,11 @@ export async function checkTestnetBalanceSufficiency(
 			linkContract.read.balanceOf([swapState.from.address]),
 		])
 
+		console.log(bnmBalance, linkBalance)
+
 		return {
-			linkBalanceSufficient: linkBalance > 0,
-			bnmBalanceSufficient: bnmBalance > 0,
+			linkBalanceSufficient: linkBalance >= 1000000000000000000n,
+			bnmBalanceSufficient: bnmBalance >= 1000000000000000000n,
 		}
 	} catch (error) {
 		console.error(error)
