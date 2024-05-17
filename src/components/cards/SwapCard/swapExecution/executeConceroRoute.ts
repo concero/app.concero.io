@@ -86,7 +86,7 @@ async function sendTransaction(swapState: SwapState, signer: providers.JsonRpcSi
 		swapState.to.address,
 		{
 			gasPrice,
-			gasLimit: 3000000,
+			gasLimit: 4000000,
 			value,
 		},
 	)
