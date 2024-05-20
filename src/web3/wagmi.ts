@@ -52,7 +52,10 @@ export const chains = [
 	arbitrumSepolia,
 	optimismSepolia,
 ]
-export const { publicClient, webSocketPublicClient } = configureChains(chains, [w3mProvider({ projectId })])
+export const { publicClient, webSocketPublicClient } = configureChains(chains, [w3mProvider({ projectId })], {
+	retryCount: 5,
+	retryDelay: 1000,
+})
 export const wagmiConfig = createConfig({
 	autoConnect: true,
 	connectors: w3mConnectors({ chains, projectId }),
