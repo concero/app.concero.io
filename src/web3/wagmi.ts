@@ -26,7 +26,7 @@ import {
 	zkSync,
 } from 'viem/chains'
 
-export const projectId = process.env.WEB3_MODAL_PROJECT_ID
+export const projectId = process.env.WEB3_MODAL_PROJECT_ID!
 export const chains = [
 	mainnet,
 	polygon,
