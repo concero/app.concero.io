@@ -25,7 +25,9 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 		swapState.selectedRoute?.insurance?.state === 'INSURABLE' ||
 		swapState.selectedRoute?.insurance?.state === 'INSURED'
 	const walletClient = useWalletClient()
-	const { switchNetworkAsync } = useSwitchNetwork()
+	const { switchNetworkAsync } = useSwitchNetwork({
+		chainId: Number(swapState.from.chain.id),
+	})
 
 	async function switchChainHook(requiredChainId: number): Promise<providers.JsonRpcSigner> {
 		const currentChainId = walletClient.data?.chain.id
