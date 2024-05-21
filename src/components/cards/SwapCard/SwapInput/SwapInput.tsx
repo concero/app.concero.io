@@ -1,5 +1,5 @@
 import { type FC, useContext } from 'react'
-import { useAccount, useSwitchNetwork, useWalletClient } from 'wagmi'
+import { useAccount, useSwitchChain, useWalletClient } from 'wagmi'
 import { TokenArea } from '../TokenArea/TokenArea'
 import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
@@ -25,13 +25,9 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 		swapState.selectedRoute?.insurance?.state === 'INSURABLE' ||
 		swapState.selectedRoute?.insurance?.state === 'INSURED'
 	const walletClient = useWalletClient()
-	const { switchNetworkAsync } = useSwitchNetwork()
+	const { switchChainAsync } = useSwitchChain()
 
-	async function switchChainHook(requiredChainId: number): Promise<providers.JsonRpcSigner> {
-		if (walletClient.isLoading) {
-			throw new Error('Wallet client is loading')
-		}
-
+	async function switchChainHook(requiredChainId: number) {
 		if (!walletClient.data) {
 			throw new Error('Wallet client data is not available')
 		}
@@ -39,15 +35,13 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 		const currentChainId = walletClient.data.chain.id
 
 		if (currentChainId !== requiredChainId) {
-			if (switchNetworkAsync) {
-				const chain = await switchNetworkAsync(requiredChainId)
+			if (switchChainAsync) {
+				const chain = await switchChainAsync({ chainId: requiredChainId })
 				if (!chain) throw new Error('Failed to switch to the required network')
-				return (await getEthersSigner(chain.id)) as providers.JsonRpcSigner
 			} else {
 				throw new Error('switchNetworkAsync is not available')
 			}
 		}
-		return (await getEthersSigner(requiredChainId)) as providers.JsonRpcSigner
 	}
 
 	async function getSigner(): Promise<providers.JsonRpcSigner> {

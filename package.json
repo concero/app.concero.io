@@ -29,9 +29,10 @@
 		"@react-spring/web": "^9.7.3",
 		"@tabler/icons-react": "^2.34.0",
 		"@uiball/loaders": "^1.3.0",
-		"@wagmi/core": "^1.4.13",
-		"@web3modal/ethereum": "^2.7.1",
+		"@web3modal/core": "^4.1.1",
 		"@web3modal/react": "^2.7.1",
+		"@web3modal/ui": "^4.1.1",
+		"@web3modal/wagmi": "^4.0.11",
 		"axios": "^1.5.0",
 		"bignumber": "^1.1.0",
 		"dayjs": "^1.11.10",
@@ -47,7 +48,7 @@
 		"react-ts-tradingview-widgets": "^1.2.0",
 		"recharts": "^2.8.0",
 		"viem": "^2.11.0",
-		"wagmi": "^1.4.13"
+		"wagmi": "^2.9.2"
 	},
 	"devDependencies": {
 		"@lifi/types": "^10.1.0",
