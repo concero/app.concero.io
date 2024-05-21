@@ -2,7 +2,7 @@ import classNames from './SwapCardHeader.module.pcss'
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { IconChevronLeft, IconDots } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
-import { type Dispatch, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { type Dispatch, useLayoutEffect, useRef, useState } from 'react'
 import { getCardTitleByStatus } from '../handlers/getCardTitleByStatus'
 import { animated, useSpring } from '@react-spring/web'
 import { easeQuadInOut } from 'd3-ease'
@@ -33,9 +33,9 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 		}
 	}, [containerRef.current?.scrollWidth])
 
-	useEffect(() => {
-		swapDispatch({ type: 'TOGGLE_TESTNET' })
-	}, [])
+	// useEffect(() => {
+	// 	swapDispatch({ type: 'TOGGLE_TESTNET' })
+	// }, [])
 
 	return (
 		<div
@@ -59,12 +59,7 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 				<div className={classNames.settingsContainer}>
 					<div className={classNames.toggleTestnetContainer}>
 						<h5>Testnet</h5>
-						<Toggle
-							isChecked={isTestnet}
-							onChange={() => {
-								swapDispatch({ type: 'TOGGLE_TESTNET' })
-							}}
-						/>
+						<Toggle isChecked={isTestnet} className={classNames.disabledTestnetButton} />
 					</div>
 					<Button
 						variant="black"

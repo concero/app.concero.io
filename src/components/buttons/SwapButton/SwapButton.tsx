@@ -7,7 +7,7 @@ import { getButtonType } from './getButtonType'
 import { useTranslation } from 'react-i18next'
 import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
-import { useWeb3Modal } from '@web3modal/react'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { TestnetCheckButtons } from './TestnetCheckButtons/TestnetCheckButtons'
 import { checkTestnetBalanceSufficiency } from './checkTestnetBalanceSufficiency'
 

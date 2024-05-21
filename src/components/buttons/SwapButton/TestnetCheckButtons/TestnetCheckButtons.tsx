@@ -2,7 +2,11 @@ import classNames from './TestnetCheckButtons.module.pcss'
 import { Button } from '../../Button/Button'
 import { type SwapState } from '../../../cards/SwapCard/swapReducer/types'
 import { IconCheck } from '@tabler/icons-react'
-import { ethers, type providers } from 'ethers'
+import { type providers } from 'ethers'
+import { getWalletClient } from '@wagmi/core'
+import { config } from '../../../../web3/wagmi'
+import { parseAbi } from 'viem'
+import { writeContract } from 'viem/actions'
 
 interface TestnetCheckButtonsProps {
 	swapState: SwapState
@@ -22,15 +26,15 @@ const faucetChainsStrMap: Record<string, string> = {
 export function TestnetCheckButtons({ swapState, testnetBalances, switchChainHook }: TestnetCheckButtonsProps) {
 	const dripBnmToken = async () => {
 		try {
-			const signer = await switchChainHook(parseInt(swapState.from.chain.id))
+			const walletClient = await getWalletClient(config, { chainId: Number(swapState.from.chain.id) })
+			const bnmAbi = parseAbi(['function drip(address to) external'])
 
-			const bnmContract = new ethers.Contract(
-				swapState.from.token.address,
-				['function drip(address to) external'],
-				signer,
-			)
-
-			await bnmContract.drip(swapState.from.address)
+			await writeContract(walletClient, {
+				abi: bnmAbi,
+				address: swapState.from.token.address as `0x${string}`,
+				functionName: 'drip',
+				args: [swapState.from.address],
+			})
 		} catch (error) {
 			console.error(error)
 		}
