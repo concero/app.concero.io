@@ -36,5 +36,5 @@ export const swapInitialState = (selection): SwapState => ({
 	walletBalances: null,
 	isDestinationAddressVisible: false,
 	settingsModalOpen: false,
-	isTestnet: false,
+	isTestnet: true,
 })
