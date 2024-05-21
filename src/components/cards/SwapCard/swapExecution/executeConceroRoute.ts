@@ -1,15 +1,15 @@
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
-import type { SwitchChainHookType } from '../SwapInput/types'
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
 import { decodeEventLog, erc20Abi, parseAbi, type WalletClient } from 'viem'
 import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
+import { getPublicClient, getWalletClient, switchChain } from '@wagmi/core'
+
 import ConceroAbi from '../../../../abi/Concero.json'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { linkAddressesMap } from '../../../buttons/SwapButton/linkAddressesMap'
 import { readContract, writeContract } from 'viem/actions'
-import { getPublicClient, getWalletClient } from '@wagmi/core'
 import { config } from '../../../../web3/wagmi'
 import { type PublicClient } from 'viem/clients/createPublicClient'
 
@@ -317,7 +317,6 @@ async function checkTransactionStatus(
 export async function executeConceroRoute(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
-	switchChainHook: SwitchChainHookType,
 ): Promise<{ duration: number; hash: string } | undefined> {
 	try {
 		if (swapState.from.token.address === swapState.to.token.address) {
@@ -341,20 +340,20 @@ export async function executeConceroRoute(
 			},
 		})
 
-		await switchChainHook(Number(swapState.from.chain.id))
+		await switchChain(config, { chainId: Number(swapState.from.chain.id) })
 
 		const srcPublicClient = getPublicClient(config, { chainId: Number(swapState.from.chain.id) })
 		const walletClient = await getWalletClient(config, { chainId: Number(swapState.from.chain.id) })
 
 		await checkAllowanceAndApprove(swapState, srcPublicClient, walletClient)
-		const tx = await sendTransaction(swapState, srcPublicClient, walletClient)
+		const hash = await sendTransaction(swapState, srcPublicClient, walletClient)
 
 		swapDispatch({
 			type: 'SET_SWAP_STEPS',
 			payload: [{ status: 'pending', title: 'Sending transaction' }],
 		})
 
-		const txStart = await checkTransactionStatus(tx, srcPublicClient, swapDispatch, swapState)
+		const txStart = await checkTransactionStatus(hash, srcPublicClient, swapDispatch, swapState)
 
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 
@@ -367,7 +366,7 @@ export async function executeConceroRoute(
 
 		if (!txStart) return
 
-		return { duration: (new Date().getTime() - txStart) / 1000, hash: tx.hash }
+		return { duration: (new Date().getTime() - txStart) / 1000, hash }
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		setError(swapDispatch, swapState, error)

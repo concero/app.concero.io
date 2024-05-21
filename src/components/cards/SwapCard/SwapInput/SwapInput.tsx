@@ -12,7 +12,6 @@ import { getEthersSigner } from '../../../../web3/ethers'
 import { type providers } from 'ethers'
 import { IconArrowsUpDown } from '@tabler/icons-react'
 import { DestinationAddressInput } from './DestinationAddressInput/DestinationAddressInput'
-import { handleSwap } from '../swapExecution/handleSwap'
 import { SwapCardStage } from '../swapReducer/types'
 import { executeConceroRoute } from '../swapExecution/executeConceroRoute'
 import { trackEvent } from '../../../../hooks/useTracking'
@@ -61,24 +60,23 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 				label: 'concero_begin_swap',
 				data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
 			})
-			const time = await executeConceroRoute(swapState, swapDispatch, switchChainHook)
+			const time = await executeConceroRoute(swapState, swapDispatch)
 			setTxInfo(time)
-			return
 		}
 
-		if (swapState.stage === 'input') {
-			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
-		} else {
-			await handleSwap({
-				swapState,
-				swapDispatch,
-				address,
-				switchChainHook,
-				getChainByProviderSymbol,
-				getSigner,
-				isNewSwapCardMode,
-			})
-		}
+		// if (swapState.stage === 'input') {
+		// 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
+		// } else {
+		// 	await handleSwap({
+		// 		swapState,
+		// 		swapDispatch,
+		// 		address,
+		// 		switchChainHook,
+		// 		getChainByProviderSymbol,
+		// 		getSigner,
+		// 		isNewSwapCardMode,
+		// 	})
+		// }
 	}
 
 	return (
