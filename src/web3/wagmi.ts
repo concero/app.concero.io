@@ -134,8 +134,7 @@ export const config = createConfig({
 createWeb3Modal({
 	wagmiConfig: config,
 	projectId,
-	enableAnalytics: true, // Optional - defaults to your Cloud configuration
-	defaultChain: mainnet,
+	enableAnalytics: true,
 })
 
 export const publicClient = createPublicClient({
