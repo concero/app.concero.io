@@ -100,7 +100,7 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 		args: [chainSelectorsMap[swapState.to.chain.id]],
 	})
 
-	const value = srcLastGasPrice * 750_000n + dstLastGasPrice * 750_000n - 1000n
+	const value = srcLastGasPrice * 750_000n + dstLastGasPrice * 750_000n
 	const gasPrice = await srcPublicClient.getGasPrice()
 
 	return await writeContract(walletClient, {
