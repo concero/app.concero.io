@@ -100,7 +100,7 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 		args: [chainSelectorsMap[swapState.to.chain.id]],
 	})
 
-	const value = srcLastGasPrice * 750_000n + dstLastGasPrice * 750_000n
+	const value = srcLastGasPrice * 750_000n + dstLastGasPrice * 750_000n - 1000n
 	const gasPrice = await srcPublicClient.getGasPrice()
 
 	return await writeContract(walletClient, {
@@ -146,11 +146,17 @@ const setError = (swapDispatch: Dispatch<SwapAction>, swapState: SwapState, erro
 		return
 	}
 
+	let type: string = 'frontend'
+
+	if (error.status === 'reverted' || error.eventName === 'FunctionsRequestError') {
+		type = 'infrastructure'
+	}
+
 	void trackEvent({
 		category: category.SwapCard,
 		action: action.SwapFailed,
 		label: 'swap_failed',
-		data: { provider: 'concero', from: swapState.from, to: swapState.to, error },
+		data: { provider: 'concero', from: swapState.from, to: swapState.to, error, type },
 	})
 }
 
@@ -197,9 +203,14 @@ async function checkTransactionStatus(
 	swapState: SwapState,
 ): Promise<number | undefined> {
 	const txStart = new Date().getTime()
-	await srcPublicClient.waitForTransactionReceipt({
+	const tx = await srcPublicClient.waitForTransactionReceipt({
 		hash: txHash as `0x${string}`,
 	})
+
+	if (tx.status === 'reverted') {
+		setError(swapDispatch, swapState, tx)
+		return
+	}
 
 	const dstPublicClient = getPublicClient(config, { chainId: Number(swapState.to.chain.id) })
 
