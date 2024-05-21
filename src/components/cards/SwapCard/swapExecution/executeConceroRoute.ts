@@ -40,15 +40,15 @@ async function checkAllowanceAndApprove(
 	const [bnmAllowance, linkAllowance] = await Promise.all([
 		srcPublicClient.readContract({
 			abi: erc20Abi,
-			functionName: 'balanceOf',
+			functionName: 'allowance',
 			address: swapState.from.token.address as `0x${string}`,
-			args: [swapState.from.address as `0x${string}`],
+			args: [swapState.from.address as `0x${string}`, conceroAddressesMap[swapState.from.chain.id]],
 		}),
 		srcPublicClient.readContract({
 			abi: erc20Abi,
-			functionName: 'balanceOf',
+			functionName: 'allowance',
 			address: linkAddressesMap[swapState.from.chain.id] as `0x${string}`,
-			args: [swapState.from.address as `0x${string}`],
+			args: [swapState.from.address as `0x${string}`, conceroAddressesMap[swapState.from.chain.id]],
 		}),
 	])
 
@@ -116,10 +116,9 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 		],
 		value,
 		gasPrice,
-		gasLimit: 4_000_000n,
+		gas: 4_000_000n,
 	})
 
-	// console.log('simulateContract')
 	// const { request } = await srcPublicClient.simulateContract({
 	// 	abi: conceroAbi,
 	// 	functionName: 'startTransaction',
@@ -133,9 +132,6 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 	// 	],
 	// 	value,
 	// })
-	//
-	// console.log('writeContract')
-	//
 	// return await writeContract(walletClient, request)
 }
 
