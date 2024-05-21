@@ -347,14 +347,14 @@ export async function executeConceroRoute(
 		const walletClient = await getWalletClient(config, { chainId: Number(swapState.from.chain.id) })
 
 		await checkAllowanceAndApprove(swapState, srcPublicClient, walletClient)
-		const tx = await sendTransaction(swapState, srcPublicClient, walletClient)
+		const hash = await sendTransaction(swapState, srcPublicClient, walletClient)
 
 		swapDispatch({
 			type: 'SET_SWAP_STEPS',
 			payload: [{ status: 'pending', title: 'Sending transaction' }],
 		})
 
-		const txStart = await checkTransactionStatus(tx, srcPublicClient, swapDispatch, swapState)
+		const txStart = await checkTransactionStatus(hash, srcPublicClient, swapDispatch, swapState)
 
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 
@@ -367,7 +367,7 @@ export async function executeConceroRoute(
 
 		if (!txStart) return
 
-		return { duration: (new Date().getTime() - txStart) / 1000, hash: tx.hash }
+		return { duration: (new Date().getTime() - txStart) / 1000, hash }
 	} catch (error) {
 		console.error('Error executing concero route', error)
 		setError(swapDispatch, swapState, error)
