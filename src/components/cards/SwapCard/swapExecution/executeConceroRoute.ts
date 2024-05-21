@@ -1,15 +1,15 @@
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
-import type { SwitchChainHookType } from '../SwapInput/types'
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
 import { decodeEventLog, erc20Abi, parseAbi, type WalletClient } from 'viem'
 import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
+import { getPublicClient, getWalletClient, switchChain } from '@wagmi/core'
+
 import ConceroAbi from '../../../../abi/Concero.json'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { linkAddressesMap } from '../../../buttons/SwapButton/linkAddressesMap'
 import { readContract, writeContract } from 'viem/actions'
-import { getPublicClient, getWalletClient } from '@wagmi/core'
 import { config } from '../../../../web3/wagmi'
 import { type PublicClient } from 'viem/clients/createPublicClient'
 
@@ -317,7 +317,6 @@ async function checkTransactionStatus(
 export async function executeConceroRoute(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
-	switchChainHook: SwitchChainHookType,
 ): Promise<{ duration: number; hash: string } | undefined> {
 	try {
 		if (swapState.from.token.address === swapState.to.token.address) {
@@ -341,7 +340,7 @@ export async function executeConceroRoute(
 			},
 		})
 
-		await switchChainHook(Number(swapState.from.chain.id))
+		await switchChain(config, { chainId: Number(swapState.from.chain.id) })
 
 		const srcPublicClient = getPublicClient(config, { chainId: Number(swapState.from.chain.id) })
 		const walletClient = await getWalletClient(config, { chainId: Number(swapState.from.chain.id) })
