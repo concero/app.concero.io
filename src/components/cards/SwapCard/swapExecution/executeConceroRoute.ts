@@ -55,19 +55,19 @@ async function checkAllowanceAndApprove(
 	let bnmApproveTxHash = null
 	let linkApproveTxHash = null
 
-	if (bnmAllowance < Number(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals))) {
+	if (bnmAllowance < BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)) {
 		bnmApproveTxHash = await writeContract(walletClient, {
 			abi: erc20Abi,
 			functionName: 'approve',
 			address: swapState.from.token.address as `0x${string}`,
 			args: [
-				swapState.from.address as `0x${string}`,
+				conceroAddressesMap[swapState.from.chain.id],
 				BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!),
 			],
 		})
 	}
 
-	if (linkAllowance < Number(addingAmountDecimals('3', 18))) {
+	if (linkAllowance < BigInt(addingAmountDecimals('3', 18)!)) {
 		linkApproveTxHash = await writeContract(walletClient, {
 			abi: erc20Abi,
 			functionName: 'approve',
@@ -76,8 +76,12 @@ async function checkAllowanceAndApprove(
 		})
 	}
 
-	if (bnmApproveTxHash) await srcPublicClient.waitForTransactionReceipt({ hash: bnmApproveTxHash })
-	if (linkApproveTxHash) await srcPublicClient.waitForTransactionReceipt({ hash: linkApproveTxHash })
+	if (bnmApproveTxHash) {
+		const status = await srcPublicClient.waitForTransactionReceipt({ hash: bnmApproveTxHash })
+	}
+	if (linkApproveTxHash) {
+		await srcPublicClient.waitForTransactionReceipt({ hash: linkApproveTxHash })
+	}
 }
 
 async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
@@ -136,6 +140,8 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 }
 
 const setError = (swapDispatch: Dispatch<SwapAction>, swapState: SwapState, error: any) => {
+	console.error('Error executing concero route', error)
+
 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 	swapDispatch({
 		type: 'SET_SWAP_STEPS',
@@ -368,7 +374,6 @@ export async function executeConceroRoute(
 
 		return { duration: (new Date().getTime() - txStart) / 1000, hash }
 	} catch (error) {
-		console.error('Error executing concero route', error)
 		setError(swapDispatch, swapState, error)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
