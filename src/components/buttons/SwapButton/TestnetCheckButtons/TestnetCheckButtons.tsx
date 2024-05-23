@@ -51,7 +51,7 @@ export function TestnetCheckButtons({ swapState, testnetBalances, switchChainHoo
 					window.open(`https://faucets.chain.link/${faucetChainsStrMap[swapState.from.chain.id]}`, '_blank')
 				}}
 			>
-				Get testnet ETH & LINK
+				Get testnet ETH
 			</Button>
 			<Button
 				variant={'primary'}

@@ -2,32 +2,25 @@ import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/t
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
 import { decodeEventLog, erc20Abi, parseAbi, type WalletClient } from 'viem'
-import { arbitrumSepolia, baseSepolia, optimismSepolia } from 'viem/chains'
 import { getPublicClient, getWalletClient, switchChain } from '@wagmi/core'
 
 import ConceroAbi from '../../../../abi/Concero.json'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
-import { linkAddressesMap } from '../../../buttons/SwapButton/linkAddressesMap'
-import { readContract, writeContract } from 'viem/actions'
+import { writeContract } from 'viem/actions'
 import { config } from '../../../../web3/wagmi'
 import { type PublicClient } from 'viem/clients/createPublicClient'
 
-const conceroAddressesMap: Record<string, `0x${string}`> = {
-	'421614': '0x646e93db0b93f70A2feC79cf45dF6dF62b0331CF', // arb
-	'11155420': '0x896F7Eccf939E5B79938228Cc2C5fE77D6363DDF', // opt
-	'84532': '0x4E19030A8d7667712bdC6eB9814d10C159f09044', // base
+export const conceroAddressesMap: Record<string, `0x${string}`> = {
+	'421614': '0x89C31B6adc5F666a4F9186Ed79bfD9db670d2194', // arb
+	'11155420': '0x63ead22D19041E51819b5f4a47fc79EB4a34c383', // opt
+	'84532': '0xBA04D4FbF023b7Cae3B334BfBe3Eb535Ba50e5D8', // base
 }
 
-const chainSelectorsMap: Record<string, string> = {
+export const chainSelectorsMap: Record<string, string> = {
 	'421614': '3478487238524512106',
 	'11155420': '5224473277236331295',
 	'84532': '10344971235874465080',
-}
-const viemChainsMap: Record<string, any> = {
-	'84532': baseSepolia,
-	'11155420': optimismSepolia,
-	'421614': arbitrumSepolia,
 }
 
 const sleep = async (ms: number) => await new Promise(resolve => setTimeout(resolve, ms))
@@ -37,23 +30,14 @@ async function checkAllowanceAndApprove(
 	srcPublicClient: PublicClient,
 	walletClient: WalletClient,
 ) {
-	const [bnmAllowance, linkAllowance] = await Promise.all([
-		srcPublicClient.readContract({
-			abi: erc20Abi,
-			functionName: 'allowance',
-			address: swapState.from.token.address as `0x${string}`,
-			args: [swapState.from.address as `0x${string}`, conceroAddressesMap[swapState.from.chain.id]],
-		}),
-		srcPublicClient.readContract({
-			abi: erc20Abi,
-			functionName: 'allowance',
-			address: linkAddressesMap[swapState.from.chain.id] as `0x${string}`,
-			args: [swapState.from.address as `0x${string}`, conceroAddressesMap[swapState.from.chain.id]],
-		}),
-	])
+	const bnmAllowance = await srcPublicClient.readContract({
+		abi: erc20Abi,
+		functionName: 'allowance',
+		address: swapState.from.token.address as `0x${string}`,
+		args: [swapState.from.address as `0x${string}`, conceroAddressesMap[swapState.from.chain.id]],
+	})
 
 	let bnmApproveTxHash = null
-	let linkApproveTxHash = null
 
 	if (bnmAllowance < BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)) {
 		bnmApproveTxHash = await writeContract(walletClient, {
@@ -67,20 +51,8 @@ async function checkAllowanceAndApprove(
 		})
 	}
 
-	if (linkAllowance < BigInt(addingAmountDecimals('3', 18)!)) {
-		linkApproveTxHash = await writeContract(walletClient, {
-			abi: erc20Abi,
-			functionName: 'approve',
-			address: linkAddressesMap[swapState.from.chain.id] as `0x${string}`,
-			args: [conceroAddressesMap[swapState.from.chain.id], BigInt(addingAmountDecimals('3', 18)!)],
-		})
-	}
-
 	if (bnmApproveTxHash) {
-		const status = await srcPublicClient.waitForTransactionReceipt({ hash: bnmApproveTxHash })
-	}
-	if (linkApproveTxHash) {
-		await srcPublicClient.waitForTransactionReceipt({ hash: linkApproveTxHash })
+		await srcPublicClient.waitForTransactionReceipt({ hash: bnmApproveTxHash })
 	}
 }
 
@@ -90,21 +62,6 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 		'function startTransaction(address _token, uint8 _tokenType, uint256 _amount, uint64 _destinationChainSelector, address _receiver) external payable',
 	])
 
-	const srcLastGasPrice = await readContract(walletClient, {
-		abi: conceroAbi,
-		functionName: 'lastGasPrices',
-		address: conceroAddressesMap[swapState.from.chain.id],
-		args: [chainSelectorsMap[swapState.from.chain.id]],
-	})
-
-	const dstLastGasPrice = await readContract(walletClient, {
-		abi: conceroAbi,
-		functionName: 'lastGasPrices',
-		address: conceroAddressesMap[swapState.from.chain.id],
-		args: [chainSelectorsMap[swapState.to.chain.id]],
-	})
-
-	const value = srcLastGasPrice * 750_000n + dstLastGasPrice * 750_000n
 	const gasPrice = await srcPublicClient.getGasPrice()
 
 	return await writeContract(walletClient, {
@@ -118,7 +75,6 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 			BigInt(chainSelectorsMap[swapState.to.chain.id]),
 			swapState.to.address as `0x${string}`,
 		],
-		value,
 		gasPrice,
 		gas: 4_000_000n,
 	})
@@ -134,7 +90,6 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 	// 		BigInt(chainSelectorsMap[swapState.to.chain.id]),
 	// 		swapState.to.address as `0x${string}`,
 	// 	],
-	// 	value,
 	// })
 	// return await writeContract(walletClient, request)
 }
@@ -325,6 +280,10 @@ export async function executeConceroRoute(
 	swapDispatch: Dispatch<SwapAction>,
 ): Promise<{ duration: number; hash: string } | undefined> {
 	try {
+		if (swapState.to.amount === '0' || swapState.to.amount === '') {
+			return
+		}
+
 		if (swapState.from.token.address === swapState.to.token.address) {
 			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 			swapDispatch({
