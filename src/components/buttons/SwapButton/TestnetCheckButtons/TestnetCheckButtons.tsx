@@ -7,6 +7,7 @@ import { getWalletClient } from '@wagmi/core'
 import { config } from '../../../../web3/wagmi'
 import { parseAbi } from 'viem'
 import { writeContract } from 'viem/actions'
+import { useSwitchChain } from 'wagmi'
 
 interface TestnetCheckButtonsProps {
 	swapState: SwapState
@@ -24,8 +25,13 @@ const faucetChainsStrMap: Record<string, string> = {
 }
 
 export function TestnetCheckButtons({ swapState, testnetBalances, switchChainHook }: TestnetCheckButtonsProps) {
+	const { switchChainAsync } = useSwitchChain()
+
 	const dripBnmToken = async () => {
 		try {
+			if (!switchChainAsync) return
+			await switchChainAsync({ chainId: Number(swapState.from.chain.id) })
+
 			const walletClient = await getWalletClient(config, { chainId: Number(swapState.from.chain.id) })
 			const bnmAbi = parseAbi(['function drip(address to) external'])
 
