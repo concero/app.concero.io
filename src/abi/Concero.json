@@ -17,6 +17,11 @@
 				"type": "bytes32"
 			},
 			{
+				"internalType": "uint8",
+				"name": "_donHostedSecretsSlotId",
+				"type": "uint8"
+			},
+			{
 				"internalType": "uint64",
 				"name": "_subscriptionId",
 				"type": "uint64"
@@ -40,6 +45,50 @@
 				"internalType": "address",
 				"name": "_ccipRouter",
 				"type": "address"
+			},
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "linkToUsdPriceFeeds",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "usdcToUsdPriceFeeds",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "nativeToUsdPriceFeeds",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "linkToNativePriceFeeds",
+						"type": "address"
+					}
+				],
+				"internalType": "struct Concero.PriceFeeds",
+				"name": "priceFeeds",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "bytes32",
+						"name": "src",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "dst",
+						"type": "bytes32"
+					}
+				],
+				"internalType": "struct ConceroFunctions.JsCodeHashSum",
+				"name": "jsCodeHashSum",
+				"type": "tuple"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -90,6 +139,22 @@
 	{
 		"inputs": [],
 		"name": "InsufficientFee",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "fee",
+				"type": "uint256"
+			}
+		],
+		"name": "InsufficientFundsForFees",
 		"type": "error"
 	},
 	{
@@ -645,6 +710,32 @@
 	},
 	{
 		"inputs": [],
+		"name": "CL_FUNCTIONS_CALLBACK_GAS_LIMIT",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "CL_FUNCTIONS_GAS_OVERHEAD",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "acceptOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -746,6 +837,166 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "",
+				"type": "uint64"
+			}
+		],
+		"name": "clfPremiumFees",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "enum IConceroCommon.CCIPToken",
+				"name": "tokenType",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint64",
+				"name": "dstChainSelector",
+				"type": "uint64"
+			}
+		],
+		"name": "getCCIPFeeInLink",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "enum IConceroCommon.CCIPToken",
+				"name": "tokenType",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint64",
+				"name": "dstChainSelector",
+				"type": "uint64"
+			}
+		],
+		"name": "getCCIPFeeInUsdc",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "getDstTotalFeeInUsdc",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "dstChainSelector",
+				"type": "uint64"
+			}
+		],
+		"name": "getFunctionsFeeInLink",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "dstChainSelector",
+				"type": "uint64"
+			}
+		],
+		"name": "getFunctionsFeeInUsdc",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLinkToUsdcRate",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getNativeToUsdcRate",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "getRouter",
 		"outputs": [
@@ -753,6 +1004,35 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "enum IConceroCommon.CCIPToken",
+				"name": "tokenType",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint64",
+				"name": "dstChainSelector",
+				"type": "uint64"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "getSrcTotalFeeInUsdc",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -795,6 +1075,45 @@
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "linkToNativePriceFeeds",
+		"outputs": [
+			{
+				"internalType": "contract AggregatorV3Interface",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "linkToUsdPriceFeeds",
+		"outputs": [
+			{
+				"internalType": "contract AggregatorV3Interface",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "nativeToUsdPriceFeeds",
+		"outputs": [
+			{
+				"internalType": "contract AggregatorV3Interface",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -856,6 +1175,37 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "s_linkToken",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "chainSelector",
+				"type": "uint64"
+			},
+			{
+				"internalType": "uint256",
+				"name": "feeAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "setClfPremiumFees",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint64",
@@ -889,12 +1239,51 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint8",
+				"name": "_donHostedSecretsSlotId",
+				"type": "uint8"
+			}
+		],
+		"name": "setDonHostedSecretsSlotID",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint64",
 				"name": "_version",
 				"type": "uint64"
 			}
 		],
 		"name": "setDonHostedSecretsVersion",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "hashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "setDstJsHashSum",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "hashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "setSrcJsHashSum",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -1011,6 +1400,19 @@
 		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "usdcToUsdPriceFeeds",
+		"outputs": [
+			{
+				"internalType": "contract AggregatorV3Interface",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
