@@ -1,9 +1,8 @@
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
-import { decodeEventLog, erc20Abi, parseAbi, type WalletClient } from 'viem'
+import { decodeEventLog, erc20Abi, type WalletClient } from 'viem'
 import { getPublicClient, getWalletClient, switchChain } from '@wagmi/core'
-
 import ConceroAbi from '../../../../abi/Concero.json'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
@@ -12,9 +11,9 @@ import { config } from '../../../../web3/wagmi'
 import { type PublicClient } from 'viem/clients/createPublicClient'
 
 export const conceroAddressesMap: Record<string, `0x${string}`> = {
-	'421614': '0x89C31B6adc5F666a4F9186Ed79bfD9db670d2194', // arb
-	'11155420': '0x63ead22D19041E51819b5f4a47fc79EB4a34c383', // opt
-	'84532': '0xBA04D4FbF023b7Cae3B334BfBe3Eb535Ba50e5D8', // base
+	'421614': '0xe040812bFB023f53AE928647635a863d8309C7ec', // arb
+	'11155420': '0x3055cC530B8cF18fD996545EC025C4e677a1dAa3', // opt
+	'84532': '0x68bF17c2c22A90489163c9717ae2ad8eAa9d43aE', // base
 }
 
 export const chainSelectorsMap: Record<string, string> = {
@@ -57,41 +56,24 @@ async function checkAllowanceAndApprove(
 }
 
 async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
-	const conceroAbi = parseAbi([
-		'function lastGasPrices(uint64 _chainSelector) view returns (uint256)',
-		'function startTransaction(address _token, uint8 _tokenType, uint256 _amount, uint64 _destinationChainSelector, address _receiver) external payable',
-	])
-
 	const gasPrice = await srcPublicClient.getGasPrice()
 
+	const bridgeData = {
+		tokenType: 0,
+		amount: BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!),
+		minAmount: 0n,
+		dstChainSelector: BigInt(chainSelectorsMap[swapState.to.chain.id]),
+		receiver: swapState.to.address as `0x${string}`,
+	}
+
 	return await writeContract(walletClient, {
-		abi: conceroAbi,
-		functionName: 'startTransaction',
+		abi: ConceroAbi,
+		functionName: 'bridge',
 		address: conceroAddressesMap[swapState.from.chain.id],
-		args: [
-			swapState.from.token.address as `0x${string}`,
-			0,
-			BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!),
-			BigInt(chainSelectorsMap[swapState.to.chain.id]),
-			swapState.to.address as `0x${string}`,
-		],
+		args: [bridgeData, []],
 		gasPrice,
 		gas: 4_000_000n,
 	})
-
-	// const { request } = await srcPublicClient.simulateContract({
-	// 	abi: conceroAbi,
-	// 	functionName: 'startTransaction',
-	// 	address: conceroAddressesMap[swapState.from.chain.id],
-	// 	args: [
-	// 		swapState.from.token.address as `0x${string}`,
-	// 		0,
-	// 		BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!),
-	// 		BigInt(chainSelectorsMap[swapState.to.chain.id]),
-	// 		swapState.to.address as `0x${string}`,
-	// 	],
-	// })
-	// return await writeContract(walletClient, request)
 }
 
 const setError = (swapDispatch: Dispatch<SwapAction>, swapState: SwapState, error: any) => {

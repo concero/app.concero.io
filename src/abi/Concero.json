@@ -47,31 +47,9 @@
 				"type": "address"
 			},
 			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "linkToUsdPriceFeeds",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "usdcToUsdPriceFeeds",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "nativeToUsdPriceFeeds",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "linkToNativePriceFeeds",
-						"type": "address"
-					}
-				],
-				"internalType": "struct Concero.PriceFeeds",
-				"name": "priceFeeds",
-				"type": "tuple"
+				"internalType": "address",
+				"name": "_dexSwap",
+				"type": "address"
 			},
 			{
 				"components": [
@@ -86,23 +64,48 @@
 						"type": "bytes32"
 					}
 				],
-				"internalType": "struct ConceroFunctions.JsCodeHashSum",
+				"internalType": "struct IFunctions.JsCodeHashSum",
 				"name": "jsCodeHashSum",
 				"type": "tuple"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "ethersHashSum",
+				"type": "bytes32"
 			}
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
 	{
+		"inputs": [],
+		"name": "AddressAlreadyAllowlisted",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "AddressNotSet",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "ChainIndexOutOfBounds",
+		"type": "error"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint64",
-				"name": "_ChainSelector",
+				"name": "ChainSelector",
 				"type": "uint64"
 			}
 		],
 		"name": "ChainNotAllowed",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "Concero_FoTNotAllowedYet",
 		"type": "error"
 	},
 	{
@@ -137,8 +140,45 @@
 		"type": "error"
 	},
 	{
-		"inputs": [],
-		"name": "InsufficientFee",
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "token",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "balanceBefore",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "balanceAfter",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "FundsLost",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "balance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "InsufficientBalance",
 		"type": "error"
 	},
 	{
@@ -159,18 +199,32 @@
 	},
 	{
 		"inputs": [],
+		"name": "InvalidAddress",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "InvalidAmount",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "InvalidBridgeData",
+		"type": "error"
+	},
+	{
+		"inputs": [],
 		"name": "InvalidReceiverAddress",
 		"type": "error"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "router",
-				"type": "address"
-			}
-		],
-		"name": "InvalidRouter",
+		"inputs": [],
+		"name": "InvalidSwapData",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "NativeTokenIsNotERC20",
 		"type": "error"
 	},
 	{
@@ -179,41 +233,24 @@
 		"type": "error"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "NotCCIPContract",
+		"inputs": [],
+		"name": "NotAllowlistedOrAlreadyRemoved",
 		"type": "error"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_fees",
+				"name": "fees",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "_feeToken",
+				"name": "feeToken",
 				"type": "uint256"
 			}
 		],
-		"name": "NotEnoughBalance",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_sender",
-				"type": "address"
-			}
-		],
-		"name": "NotFunctionContract",
+		"name": "NotEnoughLinkBalance",
 		"type": "error"
 	},
 	{
@@ -240,34 +277,8 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "ccipMessageId",
-				"type": "bytes32"
-			},
-			{
 				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "recipient",
-				"type": "address"
-			}
-		],
-		"name": "SendTokenFailed",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_sender",
+				"name": "sender",
 				"type": "address"
 			}
 		],
@@ -278,7 +289,7 @@
 		"inputs": [
 			{
 				"internalType": "uint64",
-				"name": "_sourceChainSelector",
+				"name": "sourceChainSelector",
 				"type": "uint64"
 			}
 		],
@@ -303,7 +314,22 @@
 	},
 	{
 		"inputs": [],
-		"name": "TransferFailed",
+		"name": "TokenTypeOutOfBounds",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "TransferToNullAddress",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "TxAlreadyConfirmed",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "TxDoesNotExist",
 		"type": "error"
 	},
 	{
@@ -316,49 +342,6 @@
 		],
 		"name": "UnexpectedRequestID",
 		"type": "error"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "bytes32",
-				"name": "ccipMessageId",
-				"type": "bytes32"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint64",
-				"name": "srcChainSelector",
-				"type": "uint64"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "sender",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "receiver",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "token",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "CCIPReceived",
-		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -401,6 +384,164 @@
 			}
 		],
 		"name": "CCIPSent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint64",
+				"name": "chainSelector",
+				"type": "uint64"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "previousValue",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "feeAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "CLFPremiumFeeUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint64",
+				"name": "chainSelector",
+				"type": "uint64"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "conceroContract",
+				"type": "address"
+			}
+		],
+		"name": "ConceroContractUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "previousAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "pool",
+				"type": "address"
+			}
+		],
+		"name": "ConceroPoolAddressUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint64",
+				"name": "chainSelector",
+				"type": "uint64"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "conceroPool",
+				"type": "address"
+			}
+		],
+		"name": "ConceroPoolUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "previousDstHashSum",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "newDstHashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "DestinationJsHashSumUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint64",
+				"name": "previousDonSecretVersion",
+				"type": "uint64"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint64",
+				"name": "newDonSecretVersion",
+				"type": "uint64"
+			}
+		],
+		"name": "DonSecretVersionUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint8",
+				"name": "previousDonSlot",
+				"type": "uint8"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint8",
+				"name": "newDonSlot",
+				"type": "uint8"
+			}
+		],
+		"name": "DonSlotIdUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "previousEthersHashSum",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "newEthersHashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "EthersHashSumUpdated",
 		"type": "event"
 	},
 	{
@@ -509,6 +650,25 @@
 			}
 		],
 		"name": "RequestSent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "previousSrcHashSum",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"internalType": "bytes32",
+				"name": "newSrcHashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "SourceJsHashSumUpdated",
 		"type": "event"
 	},
 	{
@@ -710,32 +870,6 @@
 	},
 	{
 		"inputs": [],
-		"name": "CL_FUNCTIONS_CALLBACK_GAS_LIMIT",
-		"outputs": [
-			{
-				"internalType": "uint32",
-				"name": "",
-				"type": "uint32"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "CL_FUNCTIONS_GAS_OVERHEAD",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "acceptOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -789,51 +923,81 @@
 			{
 				"components": [
 					{
-						"internalType": "bytes32",
-						"name": "messageId",
-						"type": "bytes32"
+						"internalType": "enum IConceroCommon.CCIPToken",
+						"name": "tokenType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minAmount",
+						"type": "uint256"
 					},
 					{
 						"internalType": "uint64",
-						"name": "sourceChainSelector",
+						"name": "dstChainSelector",
 						"type": "uint64"
 					},
 					{
-						"internalType": "bytes",
-						"name": "sender",
-						"type": "bytes"
-					},
-					{
-						"internalType": "bytes",
-						"name": "data",
-						"type": "bytes"
-					},
-					{
-						"components": [
-							{
-								"internalType": "address",
-								"name": "token",
-								"type": "address"
-							},
-							{
-								"internalType": "uint256",
-								"name": "amount",
-								"type": "uint256"
-							}
-						],
-						"internalType": "struct Client.EVMTokenAmount[]",
-						"name": "destTokenAmounts",
-						"type": "tuple[]"
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
 					}
 				],
-				"internalType": "struct Client.Any2EVMMessage",
-				"name": "message",
+				"internalType": "struct ICCIP.BridgeData",
+				"name": "bridgeData",
 				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "enum IDexSwap.DexType",
+						"name": "dexType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "fromToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fromAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "toToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmountMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "dexData",
+						"type": "bytes"
+					}
+				],
+				"internalType": "struct IDexSwap.SwapData[]",
+				"name": "dstSwapData",
+				"type": "tuple[]"
 			}
 		],
-		"name": "ccipReceive",
+		"name": "bridge",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -961,55 +1125,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getLinkToUsdcRate",
-		"outputs": [
-			{
-				"internalType": "int256",
-				"name": "",
-				"type": "int256"
-			},
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getNativeToUsdcRate",
-		"outputs": [
-			{
-				"internalType": "int256",
-				"name": "",
-				"type": "int256"
-			},
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getRouter",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "enum IConceroCommon.CCIPToken",
@@ -1062,64 +1177,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint64",
-				"name": "",
-				"type": "uint64"
-			}
-		],
-		"name": "lastGasPrices",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "linkToNativePriceFeeds",
-		"outputs": [
-			{
-				"internalType": "contract AggregatorV3Interface",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "linkToUsdPriceFeeds",
-		"outputs": [
-			{
-				"internalType": "contract AggregatorV3Interface",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "nativeToUsdPriceFeeds",
-		"outputs": [
-			{
-				"internalType": "contract AggregatorV3Interface",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -1148,12 +1205,70 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint64",
+				"name": "",
+				"type": "uint64"
+			}
+		],
+		"name": "s_lastGasPrices",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "s_latestLinkNativeRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "s_latestLinkUsdcRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "s_latestNativeUsdcRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "bytes32",
 				"name": "",
 				"type": "bytes32"
 			}
 		],
-		"name": "requests",
+		"name": "s_requests",
 		"outputs": [
 			{
 				"internalType": "enum IFunctions.RequestType",
@@ -1175,172 +1290,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "s_linkToken",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint64",
-				"name": "chainSelector",
-				"type": "uint64"
-			},
-			{
-				"internalType": "uint256",
-				"name": "feeAmount",
-				"type": "uint256"
-			}
-		],
-		"name": "setClfPremiumFees",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint64",
-				"name": "_chainSelector",
-				"type": "uint64"
-			},
-			{
-				"internalType": "address",
-				"name": "_conceroContract",
-				"type": "address"
-			}
-		],
-		"name": "setConceroContract",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_walletAddress",
-				"type": "address"
-			}
-		],
-		"name": "setConceroMessenger",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint8",
-				"name": "_donHostedSecretsSlotId",
-				"type": "uint8"
-			}
-		],
-		"name": "setDonHostedSecretsSlotID",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint64",
-				"name": "_version",
-				"type": "uint64"
-			}
-		],
-		"name": "setDonHostedSecretsVersion",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "hashSum",
-				"type": "bytes32"
-			}
-		],
-		"name": "setDstJsHashSum",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "hashSum",
-				"type": "bytes32"
-			}
-		],
-		"name": "setSrcJsHashSum",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_token",
-				"type": "address"
-			},
-			{
-				"internalType": "enum IConceroCommon.CCIPToken",
-				"name": "_tokenType",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint64",
-				"name": "_dstChainSelector",
-				"type": "uint64"
-			},
-			{
-				"internalType": "address",
-				"name": "_receiver",
-				"type": "address"
-			}
-		],
-		"name": "startTransaction",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes4",
-				"name": "interfaceId",
-				"type": "bytes4"
-			}
-		],
-		"name": "supportsInterface",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "bytes32",
@@ -1348,7 +1297,7 @@
 				"type": "bytes32"
 			}
 		],
-		"name": "transactions",
+		"name": "s_transactions",
 		"outputs": [
 			{
 				"internalType": "bytes32",
@@ -1392,6 +1341,325 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint64",
+				"name": "_chainSelector",
+				"type": "uint64"
+			},
+			{
+				"internalType": "uint256",
+				"name": "feeAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "setClfPremiumFees",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "_chainSelector",
+				"type": "uint64"
+			},
+			{
+				"internalType": "address",
+				"name": "_conceroContract",
+				"type": "address"
+			}
+		],
+		"name": "setConceroContract",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_walletAddress",
+				"type": "address"
+			}
+		],
+		"name": "setConceroMessenger",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "_chainSelector",
+				"type": "uint64"
+			},
+			{
+				"internalType": "address",
+				"name": "_conceroPool",
+				"type": "address"
+			}
+		],
+		"name": "setConceroPool",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_dexSwap",
+				"type": "address"
+			}
+		],
+		"name": "setDexSwap",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_donHostedSecretsSlotId",
+				"type": "uint8"
+			}
+		],
+		"name": "setDonHostedSecretsSlotID",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint64",
+				"name": "_version",
+				"type": "uint64"
+			}
+		],
+		"name": "setDonHostedSecretsVersion",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "setDstJsHashSum",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "setEthersHashSum",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hashSum",
+				"type": "bytes32"
+			}
+		],
+		"name": "setSrcJsHashSum",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "enum IDexSwap.DexType",
+						"name": "dexType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "fromToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fromAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "toToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmountMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "dexData",
+						"type": "bytes"
+					}
+				],
+				"internalType": "struct IDexSwap.SwapData[]",
+				"name": "swapData",
+				"type": "tuple[]"
+			}
+		],
+		"name": "swap",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "enum IConceroCommon.CCIPToken",
+						"name": "tokenType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint64",
+						"name": "dstChainSelector",
+						"type": "uint64"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					}
+				],
+				"internalType": "struct ICCIP.BridgeData",
+				"name": "bridgeData",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "enum IDexSwap.DexType",
+						"name": "dexType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "fromToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fromAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "toToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmountMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "dexData",
+						"type": "bytes"
+					}
+				],
+				"internalType": "struct IDexSwap.SwapData[]",
+				"name": "srcSwapData",
+				"type": "tuple[]"
+			},
+			{
+				"components": [
+					{
+						"internalType": "enum IDexSwap.DexType",
+						"name": "dexType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "fromToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fromAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "toToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "toAmountMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "dexData",
+						"type": "bytes"
+					}
+				],
+				"internalType": "struct IDexSwap.SwapData[]",
+				"name": "dstSwapData",
+				"type": "tuple[]"
+			}
+		],
+		"name": "swapAndBridge",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "to",
 				"type": "address"
@@ -1400,19 +1668,6 @@
 		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "usdcToUsdPriceFeeds",
-		"outputs": [
-			{
-				"internalType": "contract AggregatorV3Interface",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
