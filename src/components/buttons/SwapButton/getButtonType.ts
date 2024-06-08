@@ -23,7 +23,7 @@ export function getButtonType(
 	}
 
 	if (from.amount && isTestnet) {
-		if (BigNumber(from.amount).gt(10)) return ButtonType.TESTNET_AMOUNT_TOO_HIGH
+		if (BigNumber(from.amount).gt(20)) return ButtonType.TESTNET_AMOUNT_TOO_HIGH
 		if (BigNumber(to.amount).eq(0)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
 		return ButtonType.SWAP
 	}
