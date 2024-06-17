@@ -1,0 +1,457 @@
+{
+	"success": true,
+	"data": {
+		"_id": "666605d00ca6b02bba034798",
+		"from": {
+			"token": {
+				"_id": "65f30c00eee6498fad49a108",
+				"address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+				"chainId": "1",
+				"decimals": 6,
+				"name": "Tether USD",
+				"price": "2.233260156633671686433292024032636",
+				"symbol": "USDT",
+				"totalValueLocked": "204018418.027987",
+				"totalValueLockedUsd": "204018418.027987",
+				"volume": "229807760807.667391",
+				"volumeUsd": "230130911623.6637663392248577210873"
+			},
+			"chain": {
+				"_id": "65ba54ee748cee74a1f41ecb",
+				"id": "1",
+				"__v": 0,
+				"addressPatterns": ["^(0x)[0-9A-Fa-f]{40}$"],
+				"explorerURI": "https://etherscan.io",
+				"logoURI": "https://api.concero.io/static/icons/chains/1.svg",
+				"name": "Ethereum",
+				"providers": [
+					{
+						"name": "lifi",
+						"symbol": "ETH",
+						"_id": "65fdb084d43825d3d960626f"
+					}
+				],
+				"symbol": "ETH",
+				"tokens": []
+			},
+			"amount": "10",
+			"amount_usd": "22.33260156633672"
+		},
+		"to": {
+			"token": {
+				"_id": "65f30bdfeee6498fad494b32",
+				"address": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+				"chainId": "42161",
+				"decimals": 18,
+				"name": "SushiToken",
+				"price": null,
+				"symbol": "SUSHI",
+				"totalValueLocked": "9631391236257745420083",
+				"totalValueLockedUsd": "0",
+				"volume": "9631391236257745420083",
+				"volumeUsd": "0"
+			},
+			"chain": {
+				"_id": "65ba54ee748cee74a1f41ecc",
+				"id": "42161",
+				"__v": 0,
+				"addressPatterns": ["^(0x)[0-9A-Fa-f]{40}$"],
+				"explorerURI": "https://arbiscan.io",
+				"logoURI": "https://api.concero.io/static/icons/chains/42161.svg",
+				"name": "Arbitrum",
+				"providers": [
+					{
+						"name": "lifi",
+						"symbol": "ETH",
+						"_id": "65fdb084d43825d3d9606270"
+					}
+				],
+				"symbol": "ETH",
+				"tokens": []
+			},
+			"amount": "10",
+			"amount_usd": "0"
+		},
+		"gas": {
+			"amount": "0",
+			"amount_usd": "0",
+			"type": "gas",
+			"token": {
+				"_id": "65f00dd59feaaecf28054ad6",
+				"chain_id": "1",
+				"address": "0x0000000000000000000000000000000000000000",
+				"__v": 0,
+				"decimals": 18,
+				"is_popular": true,
+				"logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+				"name": "ETH",
+				"priceUsd": 3349.3,
+				"providers": [
+					{
+						"name": "lifi",
+						"symbol": "ETH",
+						"_id": "65fdb085d43825d3d960bf55"
+					},
+					{
+						"name": "rango",
+						"symbol": "ETH",
+						"_id": "65fdb086d43825d3d9610268"
+					}
+				],
+				"symbol": "ETH",
+				"chainid": "43114",
+				"ispopular": true,
+				"logouri": "https://rango.vip/i/FHj2LZ",
+				"priceusd": "0",
+				"coinGeckoId": "the-infinite-garden"
+			}
+		},
+		"fees": [
+			{
+				"amount": "0",
+				"amount_usd": "0",
+				"type": "fee",
+				"token": {
+					"_id": "65f30c00eee6498fad49a108",
+					"address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+					"chainId": "1",
+					"decimals": 6,
+					"name": "Tether USD",
+					"price": "2.233260156633671686433292024032636",
+					"symbol": "USDT",
+					"totalValueLocked": "204018418.027987",
+					"totalValueLockedUsd": "204018418.027987",
+					"volume": "229807760807.667391",
+					"volumeUsd": "230130911623.6637663392248577210873"
+				}
+			}
+		],
+		"steps": [
+			{
+				"from": {
+					"token": {
+						"_id": "65f30c00eee6498fad49a108",
+						"address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+						"chainId": "1",
+						"decimals": 6,
+						"name": "Tether USD",
+						"price": "2.233260156633671686433292024032636",
+						"symbol": "USDT",
+						"totalValueLocked": "204018418.027987",
+						"totalValueLockedUsd": "204018418.027987",
+						"volume": "229807760807.667391",
+						"volumeUsd": "230130911623.6637663392248577210873"
+					},
+					"chainId": "1",
+					"amount": "10",
+					"amount_usd": "22.33260156633672"
+				},
+				"to": {
+					"token": {
+						"_id": "65f30c01eee6498fad49a45e",
+						"chainId": "1",
+						"address": "0xd533a949740bb3306d119cc777fa900ba034cd52",
+						"decimals": 18,
+						"name": "Curve DAO Token",
+						"price": "1.08878444215000399773293876268161",
+						"symbol": "CRV",
+						"totalValueLocked": "7626772.86661196054001778",
+						"totalValueLockedUsd": "5662485.533322330508605198052700304",
+						"volume": "1113468706.381213397854709808",
+						"volumeUsd": "1298640036.049824131306849748097154"
+					},
+					"chainId": "1",
+					"amount": "10",
+					"amount_usd": "10.88784442150004"
+				},
+				"tool": {
+					"type": "swap",
+					"name": "uniswap",
+					"logo_url": "https://docs.uniswap.org/img/uni_dark_icon.svg",
+					"execution_time_seconds": 0,
+					"address": "0x451347a522faf90482ecacd58847139d092117ab",
+					"fees": [
+						{
+							"amount": "0.001",
+							"amount_usd": "0.002233260156633671686433292024032636",
+							"type": "fee",
+							"token": {
+								"_id": "65f30c00eee6498fad49a108",
+								"address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+								"chainId": "1",
+								"decimals": 6,
+								"name": "Tether USD",
+								"price": "2.233260156633671686433292024032636",
+								"symbol": "USDT",
+								"totalValueLocked": "204018418.027987",
+								"totalValueLockedUsd": "204018418.027987",
+								"volume": "229807760807.667391",
+								"volumeUsd": "230130911623.6637663392248577210873"
+							}
+						}
+					]
+				}
+			},
+			{
+				"from": {
+					"token": {
+						"_id": "65f30c01eee6498fad49a45e",
+						"chainId": "1",
+						"address": "0xd533a949740bb3306d119cc777fa900ba034cd52",
+						"decimals": 18,
+						"name": "Curve DAO Token",
+						"price": "1.08878444215000399773293876268161",
+						"symbol": "CRV",
+						"totalValueLocked": "7626772.86661196054001778",
+						"totalValueLockedUsd": "5662485.533322330508605198052700304",
+						"volume": "1113468706.381213397854709808",
+						"volumeUsd": "1298640036.049824131306849748097154"
+					},
+					"chainId": "1",
+					"amount": "10",
+					"amount_usd": "10.88784442150004"
+				},
+				"to": {
+					"token": {
+						"_id": "65f30c00eee6498fad49a111",
+						"chainId": "1",
+						"address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+						"decimals": 6,
+						"name": "USD Coin",
+						"price": "1.021130254520643840663011927153944",
+						"symbol": "USDC",
+						"totalValueLocked": "572649282.069735",
+						"totalValueLockedUsd": "572649282.0697349999999999999999999",
+						"volume": "710790751174.775174",
+						"volumeUsd": "710637646282.2997052382444624510712"
+					},
+					"chainId": "1",
+					"amount": "10",
+					"amount_usd": "10.211302545206438"
+				},
+				"tool": {
+					"type": "swap",
+					"name": "uniswap",
+					"logo_url": "https://docs.uniswap.org/img/uni_dark_icon.svg",
+					"execution_time_seconds": 0,
+					"address": "0x09622b458f27c6f394455b9c0fb404ffac05e37a",
+					"fees": [
+						{
+							"amount": "0.005",
+							"amount_usd": "0.00544392221075001998866469381340805",
+							"type": "fee",
+							"token": {
+								"_id": "65f30c01eee6498fad49a45e",
+								"chainId": "1",
+								"address": "0xd533a949740bb3306d119cc777fa900ba034cd52",
+								"decimals": 18,
+								"name": "Curve DAO Token",
+								"price": "1.08878444215000399773293876268161",
+								"symbol": "CRV",
+								"totalValueLocked": "7626772.86661196054001778",
+								"totalValueLockedUsd": "5662485.533322330508605198052700304",
+								"volume": "1113468706.381213397854709808",
+								"volumeUsd": "1298640036.049824131306849748097154"
+							}
+						}
+					]
+				}
+			},
+			{
+				"from": {
+					"token": {
+						"_id": "65f30c00eee6498fad49a111",
+						"chainId": "1",
+						"address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+						"decimals": 6,
+						"name": "USD Coin",
+						"price": "1.021130254520643840663011927153944",
+						"symbol": "USDC",
+						"totalValueLocked": "572649282.069735",
+						"totalValueLockedUsd": "572649282.0697349999999999999999999",
+						"volume": "710790751174.775174",
+						"volumeUsd": "710637646282.2997052382444624510712"
+					},
+					"chainId": "1",
+					"amount": "10",
+					"amount_usd": "10.211302545206438"
+				},
+				"to": {
+					"token": {
+						"_id": "65f30bdfeee6498fad494946",
+						"address": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+						"chainId": "42161",
+						"decimals": 6,
+						"name": "USD Coin",
+						"price": null,
+						"symbol": "USDC",
+						"totalValueLocked": "11558368901312",
+						"totalValueLockedUsd": "0",
+						"volume": "11558368901312",
+						"volumeUsd": "0"
+					},
+					"chainId": "42161",
+					"amount": "10",
+					"amount_usd": "0"
+				},
+				"tool": {
+					"type": "bridge",
+					"name": "uniswap",
+					"logo_url": "https://docs.uniswap.org/img/uni_dark_icon.svg",
+					"execution_time_seconds": 0,
+					"address": "0x09622b458f27c6f394455b9c0fb404ffac05e37a",
+					"fees": [
+						{
+							"amount": "0.005",
+							"amount_usd": "0.00544392221075001998866469381340805",
+							"type": "fee",
+							"token": {
+								"_id": "65f30c00eee6498fad49a111",
+								"chainId": "1",
+								"address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+								"decimals": 6,
+								"name": "USD Coin",
+								"price": "1.021130254520643840663011927153944",
+								"symbol": "USDC",
+								"totalValueLocked": "572649282.069735",
+								"totalValueLockedUsd": "572649282.0697349999999999999999999",
+								"volume": "710790751174.775174",
+								"volumeUsd": "710637646282.2997052382444624510712"
+							}
+						}
+					]
+				}
+			},
+			{
+				"from": {
+					"token": {
+						"_id": "65f30bdfeee6498fad494946",
+						"address": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+						"chainId": "42161",
+						"decimals": 6,
+						"name": "USD Coin",
+						"price": null,
+						"symbol": "USDC",
+						"totalValueLocked": "11558368901312",
+						"totalValueLockedUsd": "0",
+						"volume": "11558368901312",
+						"volumeUsd": "0"
+					},
+					"chainId": "42161",
+					"amount": "10",
+					"amount_usd": "0"
+				},
+				"to": {
+					"token": {
+						"_id": "65f30bdfeee6498fad4950fc",
+						"address": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+						"chainId": "42161",
+						"decimals": 18,
+						"name": "Frax Share",
+						"price": null,
+						"symbol": "FXS",
+						"totalValueLocked": "13528147465103869048522",
+						"totalValueLockedUsd": "0",
+						"volume": "13528147465103869048522",
+						"volumeUsd": "0"
+					},
+					"chainId": "42161",
+					"amount": "10",
+					"amount_usd": "0"
+				},
+				"tool": {
+					"type": "swap",
+					"name": "uniswap",
+					"logo_url": "https://docs.uniswap.org/img/uni_dark_icon.svg",
+					"execution_time_seconds": 0,
+					"address": "0x674ad9cbb2402cd87bf14d28c210520a6acb421e",
+					"fees": [
+						{
+							"amount": "0.01",
+							"amount_usd": "0",
+							"type": "fee",
+							"token": {
+								"_id": "65f30bdfeee6498fad4950fc",
+								"address": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+								"chainId": "42161",
+								"decimals": 18,
+								"name": "Frax Share",
+								"price": null,
+								"symbol": "FXS",
+								"totalValueLocked": "13528147465103869048522",
+								"totalValueLockedUsd": "0",
+								"volume": "13528147465103869048522",
+								"volumeUsd": "0"
+							}
+						}
+					]
+				}
+			},
+			{
+				"from": {
+					"token": {
+						"_id": "65f30bdfeee6498fad4950fc",
+						"address": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+						"chainId": "42161",
+						"decimals": 18,
+						"name": "Frax Share",
+						"price": null,
+						"symbol": "FXS",
+						"totalValueLocked": "13528147465103869048522",
+						"totalValueLockedUsd": "0",
+						"volume": "13528147465103869048522",
+						"volumeUsd": "0"
+					},
+					"chainId": "42161",
+					"amount": "10",
+					"amount_usd": "0"
+				},
+				"to": {
+					"token": {
+						"_id": "65f30bdfeee6498fad494b32",
+						"address": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+						"chainId": "42161",
+						"decimals": 18,
+						"name": "SushiToken",
+						"price": null,
+						"symbol": "SUSHI",
+						"totalValueLocked": "9631391236257745420083",
+						"totalValueLockedUsd": "0",
+						"volume": "9631391236257745420083",
+						"volumeUsd": "0"
+					},
+					"chainId": "42161",
+					"amount": "10",
+					"amount_usd": "0"
+				},
+				"tool": {
+					"type": "swap",
+					"name": "uniswap",
+					"logo_url": "https://docs.uniswap.org/img/uni_dark_icon.svg",
+					"execution_time_seconds": 0,
+					"address": "0x27dcd528c01f0563416e294e7d5dfa5d7a7ff253",
+					"fees": [
+						{
+							"amount": "0.06",
+							"amount_usd": "0",
+							"type": "fee",
+							"token": {
+								"_id": "65f30bdfeee6498fad4950fc",
+								"address": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+								"chainId": "42161",
+								"decimals": 18,
+								"name": "Frax Share",
+								"price": null,
+								"symbol": "FXS",
+								"totalValueLocked": "13528147465103869048522",
+								"totalValueLockedUsd": "0",
+								"volume": "13528147465103869048522",
+								"volumeUsd": "0"
+							}
+						}
+					]
+				}
+			}
+		]
+	}
+}
