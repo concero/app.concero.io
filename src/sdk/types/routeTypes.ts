@@ -1,4 +1,3 @@
-import { extend } from 'dayjs'
 import { type Address } from 'viem'
 
 export interface Token {

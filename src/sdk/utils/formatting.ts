@@ -19,3 +19,7 @@ export function addingAmountDecimals(number: number | string, decimals: number):
 
 	return bNumber.toString() + '0'.repeat(decimals)
 }
+
+export const createBigIntAmount = (amount: string, decimals: number) => {
+	return BigInt(addingAmountDecimals(amount, decimals)!)
+}

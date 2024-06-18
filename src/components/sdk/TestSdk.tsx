@@ -1,9 +1,10 @@
 import { type Address, createWalletClient, custom } from 'viem'
 import { findRoute } from '../../sdk/findRoute'
 import { Button } from '../buttons/Button/Button'
-import { mainnet } from 'viem/chains'
+import { arbitrumSepolia, baseSepolia, mainnet } from 'viem/chains'
 import { executeRoute } from '../../sdk/executeRoute'
-import { type Route } from '../../sdk/types'
+import { type Route } from '../../sdk/types/routeTypes'
+import { type ExecutionConfigs, type ExecutionState } from '../../sdk/types/executeSettingsTypes'
 
 const routeRequest = {
 	fromChainId: '1',
@@ -20,13 +21,20 @@ export const TestSdk = () => {
 		const route = (await findRoute(routeRequest)) as Route
 
 		const walletClient = createWalletClient({
-			chain: mainnet,
+			chain: arbitrumSepolia,
 			transport: custom(window.ethereum),
 		})
 
-		await executeRoute(walletClient, route, (state: any) => {
+		const addExecutionListener = (state: ExecutionState) => {
 			console.log(state)
-		})
+		}
+
+		const executionConfig: ExecutionConfigs = {
+			switchChainHook: async (id: number) => { await walletClient.switchChain({ id }); },
+			executionStateUpdateHook: addExecutionListener,
+		}
+
+		await executeRoute(walletClient, route, executionConfig)
 	}
 
 	return <Button onClick={startSwap}>Start swap (test)</Button>

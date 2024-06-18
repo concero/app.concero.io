@@ -1,26 +1,24 @@
 import { type Address, createPublicClient, type PublicClient, http, type WalletClient, erc20Abi } from 'viem'
+import { type Route, type RouteData, type SwapDirectionData } from './types/routeTypes'
+import { type InputSwapData, type BridgeData, type InputRouteData, type TxName, type SwapArgs } from './types/contractInputTypes'
 
-import { type Route, Step, type RouteData, type SwapDirectionData } from './types'
 import ConceroJson from './assets/contractsData/Concero.json'
-import { addingAmountDecimals } from '../utils/formatting'
+
 import { viemChains } from './configs/chainsConfig'
+import { conceroAddressesMap } from './configs/conceroAddressesMap'
+import { chainSelectorsMap } from './configs/chainSelectorsMap'
 
-export const conceroAddressesMap: Record<string, `0x${string}`> = {
-	'421614': '0xe040812bFB023f53AE928647635a863d8309C7ec', // arb
-	'11155420': '0x3055cC530B8cF18fD996545EC025C4e677a1dAa3', // opt
-	'84532': '0x68bF17c2c22A90489163c9717ae2ad8eAa9d43aE', // base
-}
+import { createBigIntAmount } from './utils/formatting'
+import { ExecuteRouteStage, type ExecutionConfigs, type ExecutionState } from './types/executeSettingsTypes'
 
-export const chainSelectorsMap: Record<string, string> = {
-	'421614': '3478487238524512106',
-	'11155420': '5224473277236331295',
-	'84532': '10344971235874465080',
-}
+const useSendStateHook = (executionConfigs: ExecutionConfigs) => {
+	const { executionStateUpdateHook, executeInBackground } = executionConfigs
 
-type TxName = 'swap' | 'bridge' | 'swapAndBridge'
-
-const createBigIntAmount = (amount: string, decimals: number) => {
-	return BigInt(addingAmountDecimals(amount, decimals)!)
+	return (state: ExecutionState) => {
+		if (!executeInBackground && executionStateUpdateHook) {
+			executionStateUpdateHook(state)
+		}
+	}
 }
 
 const checkAllowanceAndApprove = async (
@@ -31,11 +29,13 @@ const checkAllowanceAndApprove = async (
 ) => {
 	const { token, amount, chain } = txData
 
+	const conceroAddress = conceroAddressesMap[chain.id] ?? conceroAddressesMap['421614'] // TODO change mock dst chain
+
 	const allowance = await publicClient.readContract({
 		abi: erc20Abi,
 		functionName: 'allowance',
 		address: token.address,
-		args: [clientAddress, conceroAddressesMap[chain.id]],
+		args: [clientAddress, conceroAddress],
 	})
 
 	console.log('allowance: ', allowance)
@@ -50,10 +50,7 @@ const checkAllowanceAndApprove = async (
 			address: token.address,
 			abi: erc20Abi,
 			functionName: 'approve',
-			args: [
-				conceroAddressesMap[chain.id] ?? conceroAddressesMap['421614'], // TODO change mock dst chain
-				amountInDecimals,
-			],
+			args: [conceroAddress, amountInDecimals],
 		})
 
 		approveTxHash = await walletClient.writeContract(request)
@@ -69,9 +66,9 @@ const checkAllowanceAndApprove = async (
 const buildRouteData = (routeData: RouteData, clientAddress: Address) => {
 	const { steps } = routeData
 
-	let bridgeData = null
-	const srcSwapData = []
-	const dstSwapData = []
+	let bridgeData: BridgeData | null = null
+	const srcSwapData: InputSwapData[] = []
+	const dstSwapData: InputSwapData[] = []
 
 	for (let i = 0; i < steps.length; i++) {
 		const currentStep = steps[i]
@@ -114,41 +111,17 @@ const buildRouteData = (routeData: RouteData, clientAddress: Address) => {
 	return { srcSwapData, bridgeData, dstSwapData }
 }
 
-// const sendTransaction = () => {
-
-// }
-
-const executeRouteBase = async (walletClient: WalletClient, route: Route, callbackFn: Function) => {
-	if (!route) {
-		throw new Error('Route is not passed!')
-	}
-
-	console.log('route: ', route)
-
-	const { data } = route
-
-	if (data.to.amount === '0' || data.to.amount === '') {
-		throw new Error('Amount is empty!')
-	}
-
-	if (data.from.token.address === data.to.token.address) {
-		throw new Error('Tokens are the same!')
-	}
-
-	await walletClient.switchChain({ id: Number(data.from.chain.id) })
-
-	const [clientAddress] = await walletClient.requestAddresses()
-
-	const publicClient = createPublicClient({
-		chain: viemChains[data.from.chain.id].chain,
-		transport: http(viemChains[data.from.chain.id].transport),
-	})
-
-	const { srcSwapData, bridgeData, dstSwapData } = buildRouteData(data, clientAddress)
-	await checkAllowanceAndApprove(walletClient, publicClient, data.from, clientAddress)
+const sendTransaction = async (
+	txArgs: InputRouteData,
+	publicClient: PublicClient,
+	walletClient: WalletClient,
+	conceroAddress: Address,
+	clientAddress: Address,
+) => {
+	const { srcSwapData, bridgeData, dstSwapData } = txArgs
 
 	let txName: TxName = 'swap'
-	let args = [srcSwapData]
+	let args: SwapArgs = [srcSwapData]
 
 	if (srcSwapData.length > 0 && bridgeData) {
 		txName = 'swapAndBridge'
@@ -160,31 +133,124 @@ const executeRouteBase = async (walletClient: WalletClient, route: Route, callba
 	}
 
 	console.log('txName: ', txName)
+	console.log('args: ', args)
 
-	const gasPrice = await publicClient.getGasPrice()
-
-	// TODO refactor it
 	const { request } = await publicClient.simulateContract({
+		account: clientAddress,
 		abi: ConceroJson.abi,
 		functionName: txName,
-		address: conceroAddressesMap[data.from.chain.id],
+		address: conceroAddress,
 		args,
-		gasPrice,
-		gas: 4_000_000n,
 	})
 
 	const approveTxHash = await walletClient.writeContract(request)
-	console.log('approve tx: ', approveTxHash)
+	console.log('approve swap tx: ', approveTxHash)
 }
 
-// TODO add switchChain arg
-// TODO rewirte status on web sockets (chqeck safely)
+const executeRouteBase = async (walletClient: WalletClient, route: Route, executionConfigs: ExecutionConfigs) => {
+	if (!walletClient) throw new Error('walletClient is not passed!')
 
-export const executeRoute = async (wallectClient: WalletClient, route: Route, callbackFn: Function) => {
+	if (!route) throw new Error('Route is not passed!')
+
+	console.log('route: ', route)
+
+	const { data } = route
+	const { switchChainHook } = executionConfigs
+	const sendState = useSendStateHook(executionConfigs)
+
+	if (data.to.amount === '0' || data.to.amount === '') throw new Error('Amount is empty!')
+	if (data.from.token.address === data.to.token.address) throw new Error('Tokens are the same!')
+
+	sendState({
+		stage: ExecuteRouteStage.setChain,
+		payload: {
+			title: 'Switch chain',
+			body: 'Please switch chain in your wallet',
+			status: 'await',
+			txLink: null,
+		},
+	})
+
+	if (!switchChainHook) {
+		await walletClient.switchChain({ id: Number(data.from.chain.id) })
+	} else {
+		await switchChainHook(Number(data.from.chain.id))
+	}
+
+	sendState({
+		stage: ExecuteRouteStage.setAddress,
+		payload: {
+			title: 'Get client address',
+			body: 'Please get access to your address in your wallet',
+			status: 'await',
+			txLink: null,
+		},
+	})
+
+	const [clientAddress] = await walletClient.requestAddresses()
+
+	const publicClient = createPublicClient({
+		chain: viemChains[data.from.chain.id].chain,
+		transport: http(viemChains[data.from.chain.id].transport),
+	})
+
+	const inputRouteData: InputRouteData = buildRouteData(data, clientAddress)
+	const conceroAddress = conceroAddressesMap[data.from.chain.id]
+
+	console.log(inputRouteData)
+
+	sendState({
+		stage: ExecuteRouteStage.checkAllowance,
+		payload: {
+			title: 'Check allowance',
+			body: 'Please input allowance and approve the transaction in your wallet',
+			status: 'await',
+			txLink: null,
+		},
+	})
+
+	await checkAllowanceAndApprove(walletClient, publicClient, data.from, clientAddress)
+
+	sendState({
+		stage: ExecuteRouteStage.pendingTransaction,
+		payload: {
+			title: 'Swap in progress',
+			body: 'Please check info and approve the transaction in your wallet',
+			status: 'await',
+			txLink: null,
+		},
+	})
+
+	await sendTransaction(inputRouteData, publicClient, walletClient, conceroAddress, clientAddress)
+
+	sendState({
+		stage: ExecuteRouteStage.successTransaction,
+		payload: {
+			title: 'Swap execute succesfully!',
+			body: 'Check your ballance',
+			status: 'success',
+			txLink: null,
+		},
+	})
+}
+
+// test bridge and allowance (1 hour)
+export const executeRoute = async (signer: WalletClient, route: Route, executionConfigs: ExecutionConfigs) => {
+	const sendState = useSendStateHook(executionConfigs)
+
 	try {
-		await executeRouteBase(wallectClient, route, callbackFn)
+		await executeRouteBase(signer, route, executionConfigs)
 	} catch (error) {
-		console.log(error)
+		sendState({
+			stage: ExecuteRouteStage.internalError,
+			payload: {
+				title: 'Internal error',
+				body: String(error),
+				status: 'failed',
+				txLink: null,
+			},
+		})
+
 		throw new Error(String(error))
 	}
 }

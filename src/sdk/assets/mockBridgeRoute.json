@@ -1,0 +1,197 @@
+{
+	"success": true,
+	"data": {
+		"_id": "666605d00ca6b02bba034798",
+		"from": {
+			"token": {
+				"_id": "65f30bdfeee6498fad494b32",
+				"address": "0xA8C0c11bf64AF62CDCA6f93D3769B88BdD7cb93D",
+				"chainId": "421614",
+				"decimals": 18,
+				"name": "CCIP-BnM",
+				"price": null,
+				"symbol": "BnM",
+				"totalValueLocked": "9631391236257745420083",
+				"totalValueLockedUsd": "0",
+				"volume": "9631391236257745420083",
+				"volumeUsd": "0"
+			},
+			"chain": {
+				"_id": "65ba54ee748cee74a1f41ecc",
+				"id": "84532",
+				"__v": 0,
+				"addressPatterns": ["^(0x)[0-9A-Fa-f]{40}$"],
+				"explorerURI": "https://arbiscan.io",
+				"logoURI": "https://api.concero.io/static/icons/chains/42161.svg",
+				"name": "Base Sepolia",
+				"providers": [
+					{
+						"name": "lifi",
+						"symbol": "ETH",
+						"_id": "65fdb084d43825d3d9606270"
+					}
+				],
+				"symbol": "ETH",
+				"tokens": []
+			},
+			"amount": "1",
+			"amount_usd": "1"
+		},
+		"to": {
+			"token": {
+				"_id": "65f30c00eee6498fad49a108",
+				"address": "0x88A2d74F47a237a62e7A51cdDa67270CE381555e",
+				"chainId": "84532",
+				"decimals": 18,
+				"name": "CCIP-BnM",
+				"price": "2.233260156633671686433292024032636",
+				"symbol": "BnM",
+				"totalValueLocked": "204018418.027987",
+				"totalValueLockedUsd": "204018418.027987",
+				"volume": "229807760807.667391",
+				"volumeUsd": "230130911623.6637663392248577210873"
+			},
+			"chain": {
+				"_id": "65ba54ee748cee74a1f41ecb",
+				"id": "84532",
+				"__v": 0,
+				"addressPatterns": ["^(0x)[0-9A-Fa-f]{40}$"],
+				"explorerURI": "https://etherscan.io",
+				"logoURI": "https://api.concero.io/static/icons/chains/1.svg",
+				"name": "Ethereum",
+				"providers": [
+					{
+						"name": "lifi",
+						"symbol": "ETH",
+						"_id": "65fdb084d43825d3d960626f"
+					}
+				],
+				"symbol": "ETH",
+				"tokens": []
+			},
+			"amount": "1",
+			"amount_usd": "1"
+		},
+		"gas": {
+			"amount": "0",
+			"amount_usd": "0",
+			"type": "gas",
+			"token": {
+				"_id": "65f00dd59feaaecf28054ad6",
+				"chain_id": "1",
+				"address": "0x0000000000000000000000000000000000000000",
+				"__v": 0,
+				"decimals": 18,
+				"is_popular": true,
+				"logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+				"name": "ETH",
+				"priceUsd": 3349.3,
+				"providers": [
+					{
+						"name": "lifi",
+						"symbol": "ETH",
+						"_id": "65fdb085d43825d3d960bf55"
+					},
+					{
+						"name": "rango",
+						"symbol": "ETH",
+						"_id": "65fdb086d43825d3d9610268"
+					}
+				],
+				"symbol": "ETH",
+				"chainid": "43114",
+				"ispopular": true,
+				"logouri": "https://rango.vip/i/FHj2LZ",
+				"priceusd": "0",
+				"coinGeckoId": "the-infinite-garden"
+			}
+		},
+		"fees": [
+			{
+				"amount": "0",
+				"amount_usd": "0",
+				"type": "fee",
+				"token": {
+					"_id": "65f30c00eee6498fad49a108",
+					"address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+					"chainId": "1",
+					"decimals": 6,
+					"name": "Tether USD",
+					"price": "2.233260156633671686433292024032636",
+					"symbol": "USDT",
+					"totalValueLocked": "204018418.027987",
+					"totalValueLockedUsd": "204018418.027987",
+					"volume": "229807760807.667391",
+					"volumeUsd": "230130911623.6637663392248577210873"
+				}
+			}
+		],
+		"steps": [
+			{
+				"from": {
+					"token": {
+						"_id": "65f30bdfeee6498fad494b32",
+						"address": "0xA8C0c11bf64AF62CDCA6f93D3769B88BdD7cb93D",
+						"chainId": "421614",
+						"decimals": 18,
+						"name": "CCIP-BnM",
+						"price": null,
+						"symbol": "BnM",
+						"totalValueLocked": "9631391236257745420083",
+						"totalValueLockedUsd": "0",
+						"volume": "9631391236257745420083",
+						"volumeUsd": "0"
+					},
+					"chainId": "421614",
+					"amount": "1",
+					"amount_usd": "1"
+				},
+				"to": {
+					"token": {
+						"_id": "65f30c00eee6498fad49a108",
+						"address": "0x88A2d74F47a237a62e7A51cdDa67270CE381555e",
+						"chainId": "84532",
+						"decimals": 18,
+						"name": "CCIP-BnM",
+						"price": "2.233260156633671686433292024032636",
+						"symbol": "BnM",
+						"totalValueLocked": "204018418.027987",
+						"totalValueLockedUsd": "204018418.027987",
+						"volume": "229807760807.667391",
+						"volumeUsd": "230130911623.6637663392248577210873"
+					},
+					"chainId": "84532",
+					"amount": "1",
+					"amount_usd": "1"
+				},
+				"tool": {
+					"type": "bridge",
+					"name": "uniswap",
+					"logo_url": "https://docs.uniswap.org/img/uni_dark_icon.svg",
+					"execution_time_seconds": 0,
+					"address": "0x451347a522faf90482ecacd58847139d092117ab",
+					"fees": [
+						{
+							"amount": "0.001",
+							"amount_usd": "0.002233260156633671686433292024032636",
+							"type": "fee",
+							"token": {
+								"_id": "65f30c00eee6498fad49a108",
+								"address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+								"chainId": "1",
+								"decimals": 6,
+								"name": "Tether USD",
+								"price": "2.233260156633671686433292024032636",
+								"symbol": "USDT",
+								"totalValueLocked": "204018418.027987",
+								"totalValueLockedUsd": "204018418.027987",
+								"volume": "229807760807.667391",
+								"volumeUsd": "230130911623.6637663392248577210873"
+							}
+						}
+					]
+				}
+			}
+		]
+	}
+}
