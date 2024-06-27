@@ -1,7 +1,7 @@
 import { type Address, createWalletClient, custom } from 'viem'
 import { findRoute } from '../../sdk/findRoute'
 import { Button } from '../buttons/Button/Button'
-import { arbitrumSepolia, baseSepolia, mainnet } from 'viem/chains'
+import { arbitrumSepolia, baseSepolia, mainnet, optimismSepolia } from 'viem/chains'
 import { executeRoute } from '../../sdk/executeRoute'
 import { type Route } from '../../sdk/types/routeTypes'
 import { type ExecutionConfigs, type ExecutionState } from '../../sdk/types/executeSettingsTypes'
@@ -21,7 +21,7 @@ export const TestSdk = () => {
 		const route = (await findRoute(routeRequest)) as Route
 
 		const walletClient = createWalletClient({
-			chain: arbitrumSepolia,
+			chain: optimismSepolia,
 			transport: custom(window.ethereum),
 		})
 
@@ -30,7 +30,6 @@ export const TestSdk = () => {
 		}
 
 		const executionConfig: ExecutionConfigs = {
-			switchChainHook: async (id: number) => { await walletClient.switchChain({ id }); },
 			executionStateUpdateHook: addExecutionListener,
 		}
 

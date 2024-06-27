@@ -5,8 +5,8 @@
 		"from": {
 			"token": {
 				"_id": "65f30bdfeee6498fad494b32",
-				"address": "0xA8C0c11bf64AF62CDCA6f93D3769B88BdD7cb93D",
-				"chainId": "421614",
+				"address": "0x8aF4204e30565DF93352fE8E1De78925F6664dA7",
+				"chainId": "11155420",
 				"decimals": 18,
 				"name": "CCIP-BnM",
 				"price": null,
@@ -18,7 +18,7 @@
 			},
 			"chain": {
 				"_id": "65ba54ee748cee74a1f41ecc",
-				"id": "84532",
+				"id": "11155420",
 				"__v": 0,
 				"addressPatterns": ["^(0x)[0-9A-Fa-f]{40}$"],
 				"explorerURI": "https://arbiscan.io",
@@ -131,8 +131,8 @@
 				"from": {
 					"token": {
 						"_id": "65f30bdfeee6498fad494b32",
-						"address": "0xA8C0c11bf64AF62CDCA6f93D3769B88BdD7cb93D",
-						"chainId": "421614",
+						"address": "0x8aF4204e30565DF93352fE8E1De78925F6664dA7",
+						"chainId": "11155420",
 						"decimals": 18,
 						"name": "CCIP-BnM",
 						"price": null,
@@ -142,7 +142,7 @@
 						"volume": "9631391236257745420083",
 						"volumeUsd": "0"
 					},
-					"chainId": "421614",
+					"chainId": "11155420",
 					"amount": "1",
 					"amount_usd": "1"
 				},

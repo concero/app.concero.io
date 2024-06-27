@@ -1,6 +1,12 @@
 import { type Address, createPublicClient, type PublicClient, http, type WalletClient, erc20Abi } from 'viem'
 import { type Route, type RouteData, type SwapDirectionData } from './types/routeTypes'
-import { type InputSwapData, type BridgeData, type InputRouteData, type TxName, type SwapArgs } from './types/contractInputTypes'
+import {
+	type InputSwapData,
+	type BridgeData,
+	type InputRouteData,
+	type TxName,
+	type SwapArgs,
+} from './types/contractInputTypes'
 
 import ConceroJson from './assets/contractsData/Concero.json'
 
@@ -29,7 +35,7 @@ const checkAllowanceAndApprove = async (
 ) => {
 	const { token, amount, chain } = txData
 
-	const conceroAddress = conceroAddressesMap[chain.id] ?? conceroAddressesMap['421614'] // TODO change mock dst chain
+	const conceroAddress = conceroAddressesMap[chain.id] // TODO change mock dst chain
 
 	const allowance = await publicClient.readContract({
 		abi: erc20Abi,
@@ -172,6 +178,8 @@ const executeRouteBase = async (walletClient: WalletClient, route: Route, execut
 	})
 
 	if (!switchChainHook) {
+		console.log('CHAIN: ', data.from.chain.id)
+
 		await walletClient.switchChain({ id: Number(data.from.chain.id) })
 	} else {
 		await switchChainHook(Number(data.from.chain.id))
