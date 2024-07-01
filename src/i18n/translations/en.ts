@@ -37,6 +37,19 @@ export const en = {
 				lowGas: 'You need at least {{amount}} {{tokenSymbol}} on {{chainName}} to safely proceed with transaction.',
 			},
 		},
+		poolCard: {
+			deposit: {
+				headerTitle: {
+					deposit: 'Deposit',
+					withdraw: 'Withdraw',
+					progress: 'In progress',
+					success: 'Deposit successful',
+					failed: 'Deposit failed',
+					contactSupport: 'Contact support',
+					review: 'Review deposit',
+				},
+			},
+		},
 		header: {
 			swap: 'Swap',
 			earn: 'Earn',
@@ -170,6 +183,9 @@ export const en = {
 			chains: 'Chains',
 			search: 'Search',
 			selected: 'Selected',
+		},
+		liquidityCap: {
+			title: 'Liquidity cap',
 		},
 	},
 }

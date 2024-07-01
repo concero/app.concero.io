@@ -1,5 +1,5 @@
-import React, { type FC, useContext, useEffect, useRef } from 'react'
-import { createChart } from 'lightweight-charts'
+import { type FC, useContext, useEffect, useRef } from 'react'
+import { type IChartApi, createChart } from 'lightweight-charts'
 import { animated, useSpring } from '@react-spring/web'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
@@ -79,12 +79,9 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 		}
 	}, [colors, data])
 
-	const setupChartStyles = (chart, colors) => {
-		chart.timeScale().applyOptions({ borderColor: 'transparent' })
-		chart.priceScale('right').applyOptions({
-			borderColor: 'transparent',
-			textColor: colors.text.secondary,
-		})
+	const setupChartStyles = (chart: IChartApi) => {
+		chart.timeScale().applyOptions({ visible: false })
+		chart.priceScale('right').applyOptions({ visible: false })
 	}
 
 	const addSecondSeries = (chart, secondData, colors, theme) => {

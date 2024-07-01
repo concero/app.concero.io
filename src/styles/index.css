@@ -140,6 +140,8 @@ body::-webkit-scrollbar {
 
 	/* gradients */
 	--color-main-card-gradient: rgba(40, 40, 40, 0.06);
+	--color-convex-card-gradient: rgba(0, 0, 0, 0.03);
+	--color-pool-card-gradient: rgba(115, 53, 247, 0.15);
 	--color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0);
 	--color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0);
 }
@@ -212,6 +214,8 @@ body::-webkit-scrollbar {
 
 	/* gradients */
 	--color-main-card-gradient: rgba(40, 40, 40, 0.5);
+	--color-convex-card-gradient: rgba(0, 0, 0, 0.02);
+	--color-pool-card-gradient: rgba(115, 53, 247, 0.15);
 	--color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0.2);
 	--color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0.2);
 }

@@ -131,5 +131,8 @@ export const vi = {
 		languageModal: {
 			title: 'Thay đổi ngôn ngữ',
 		},
+		liquidityCap: {
+			title: 'Vốn thanh khoản',
+		},
 	},
 }

@@ -1,0 +1,55 @@
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: var(--sp-md) 0;
+	margin-bottom: var(--sp-sm);
+
+	h4 {
+		color: var(--color-grey-450);
+	}
+}
+
+.actionsCard {
+	gap: var(--sp-lg);
+	height: 256px;
+	overflow: scroll;
+}
+
+.action {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--sp-md);
+}
+
+.leftSide {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: var(--sp-md);
+
+	img {
+		border-radius: 50%;
+	}
+}
+
+.rightSide {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: var(--st-br-xl);
+}
+
+.statusTag {
+	background-color: var(--color-primary-750);
+	border-radius: var(--sp-sm);
+	padding: var(--sp-sm);
+
+	p {
+		color: var(--color-primary-500);
+		line-height: 0.875rem;
+	}
+}
