@@ -1,19 +1,19 @@
 import { type Address, createWalletClient, custom } from 'viem'
 import { findRoute } from '../../sdk/findRoute'
 import { Button } from '../buttons/Button/Button'
-import { arbitrumSepolia, baseSepolia, mainnet, optimismSepolia } from 'viem/chains'
-import { executeRoute } from '../../sdk/executeRoute'
+import { executeRoute } from '../../sdk/executeRoute/executeRoute'
 import { type Route } from '../../sdk/types/routeTypes'
 import { type ExecutionConfigs, type ExecutionState } from '../../sdk/types/executeSettingsTypes'
+import { polygon } from 'wagmi/chains'
 
 const routeRequest = {
-	fromChainId: '1',
-	fromAmount: '10',
-	fromTokenAddress: '0xd2Cb8786C0Ec3680C55C9256371F3577fE1C6A9e' as Address,
-	fromAddress: '0xd2Cb8786C0Ec3680C55C9256371F3577fE1C6A9e' as Address,
-	toChainId: '10',
-	toTokenAddress: '0xd2Cb8786C0Ec3680C55C9256371F3577fE1C6A9e' as Address,
-	toAddress: '0xd2Cb8786C0Ec3680C55C9256371F3577fE1C6A9e' as Address,
+	fromChainId: '137',
+	fromAmount: '1',
+	fromTokenAddress: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' as Address,
+	fromAddress: '0xDddDDb8a8E41C194ac6542a0Ad7bA663A72741E0' as Address,
+	toChainId: '137',
+	toTokenAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359' as Address,
+	toAddress: '0xDddDDb8a8E41C194ac6542a0Ad7bA663A72741E0' as Address,
 }
 
 export const TestSdk = () => {
@@ -21,13 +21,11 @@ export const TestSdk = () => {
 		const route = (await findRoute(routeRequest)) as Route
 
 		const walletClient = createWalletClient({
-			chain: optimismSepolia,
+			chain: polygon,
 			transport: custom(window.ethereum),
 		})
 
-		const addExecutionListener = (state: ExecutionState) => {
-			console.log(state)
-		}
+		const addExecutionListener = (state: ExecutionState) => {}
 
 		const executionConfig: ExecutionConfigs = {
 			executionStateUpdateHook: addExecutionListener,

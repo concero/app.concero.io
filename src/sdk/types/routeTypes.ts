@@ -41,6 +41,7 @@ export interface SwapDirectionData {
 
 export interface SwapStepDirectionData extends Omit<SwapDirectionData, 'chain'> {
 	chainId: string
+	address: Address
 }
 
 export interface Fee {
@@ -62,6 +63,7 @@ export interface Step {
 		execution_time_seconds: string
 		address: Address
 		fees: Fee[]
+		additional_info: any
 	}
 }
 
