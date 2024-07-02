@@ -7,6 +7,7 @@ import classNames from './SwapScreen.module.pcss'
 import { TargetInfoCard } from '../../cards/TargetInfoCard/TargetInfoCard'
 import { NewsCard } from '../../cards/NewsCard/NewsCard'
 import { HistoryCard } from '../../cards/HistoryCard/HistoryCard'
+import { TestSdk } from '../../sdk/TestSdk'
 
 const History = memo(withErrorBoundary(HistoryCard))
 const Swap = memo(withErrorBoundary(SwapCard))
@@ -45,6 +46,9 @@ export const SwapScreen = ({ isNewSwapCardMode, setIsNewSwapCardMode }: SwapScre
 
 	const newSwapScreenLayout = (
 		<div className={classNames.newSwapCardContainer}>
+			<div>
+				<TestSdk />
+			</div>
 			<div className={classNames.newSwapCardInnerContainer}>
 				<Swap isNewSwapCardMode={isNewSwapCardMode} />
 			</div>
