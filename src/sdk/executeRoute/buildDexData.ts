@@ -7,13 +7,20 @@ const uniswapV3RouterAddressesMap: Record<string, string> = {
 }
 
 export function buildDexData(step: Step, recipient: Address) {
-	return encodeAbiParameters(
-		[{ type: 'address' }, { type: 'uint24' }, { type: 'address' }, { type: 'uint160' }],
-		[
-			uniswapV3RouterAddressesMap[step.from.chainId],
-			step.tool.additional_info.fee,
-			recipient,
-			step.tool.additional_info.sqrtPriceX96,
-		],
-	)
+	if (step.tool.type === 'uniswapV3Multi') {
+		return encodeAbiParameters(
+			[{ type: 'address' }, { type: 'bytes' }, { type: 'address' }],
+			[uniswapV3RouterAddressesMap[step.from.chainId], step.tool.additional_info.tokenPath, recipient],
+		)
+	} else {
+		return encodeAbiParameters(
+			[{ type: 'address' }, { type: 'uint24' }, { type: 'address' }, { type: 'uint160' }],
+			[
+				uniswapV3RouterAddressesMap[step.from.chainId],
+				step.tool.additional_info.fee,
+				recipient,
+				step.tool.additional_info.sqrtPriceX96,
+			],
+		)
+	}
 }

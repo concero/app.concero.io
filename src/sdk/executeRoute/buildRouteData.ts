@@ -5,6 +5,11 @@ import { createBigIntAmount } from '../utils/formatting'
 import { chainSelectorsMap } from '../configs/chainSelectorsMap'
 import { buildDexData } from './buildDexData'
 
+const dexTypesMap: Record<string, number> = {
+	uniswapV3Single: 3,
+	uniswapV3Multi: 5,
+}
+
 export const buildRouteData = (routeData: RouteData, clientAddress: Address) => {
 	const { steps } = routeData
 
@@ -37,7 +42,7 @@ export const buildRouteData = (routeData: RouteData, clientAddress: Address) => 
 			const dexData = buildDexData(currentStep, clientAddress)
 
 			const swapData = {
-				dexType: 3, // UniswapV3Single
+				dexType: dexTypesMap[tool.name],
 				fromToken: from.token.address,
 				fromAmount,
 				toToken: to.token.address,

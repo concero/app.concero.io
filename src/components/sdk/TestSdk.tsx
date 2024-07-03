@@ -8,11 +8,11 @@ import { polygon } from 'wagmi/chains'
 
 const routeRequest = {
 	fromChainId: '137',
-	fromAmount: '1',
-	fromTokenAddress: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270' as Address,
+	fromAmount: '0.003793952',
+	fromTokenAddress: '0xd93f7E271cB87c23AaA73edC008A79646d1F9912' as Address,
 	fromAddress: '0xDddDDb8a8E41C194ac6542a0Ad7bA663A72741E0' as Address,
 	toChainId: '137',
-	toTokenAddress: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359' as Address,
+	toTokenAddress: '0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F' as Address,
 	toAddress: '0xDddDDb8a8E41C194ac6542a0Ad7bA663A72741E0' as Address,
 }
 

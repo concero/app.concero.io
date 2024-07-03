@@ -57,7 +57,7 @@ export interface Step {
 	from: SwapStepDirectionData
 	to: SwapStepDirectionData
 	tool: {
-		type: SwapType
+		type: string
 		name: string
 		logo_url: string
 		execution_time_seconds: string
