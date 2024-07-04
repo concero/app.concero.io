@@ -24,7 +24,9 @@ export const TabBar = ({ items, changeTab, activeTab }: NavbarProps) => {
 					<button
 						key={item.title}
 						className={`${classNames.menuItem} ${activeClass}`}
-						onClick={() => { changeTab(item); }}
+						onClick={() => {
+							changeTab(item)
+						}}
 					>
 						{item.title}
 						<div className={classNames.line} />

@@ -1,0 +1,78 @@
+.container {
+	width: 100%;
+}
+
+.swapButton {
+	height: 45px;
+	color: var(--color-button-text-primary);
+	border-radius: var(--st-br-xl);
+	border: none;
+}
+
+.loading {
+	background-color: var(--color-primary-750);
+	color: var(--color-primary-to-lightest);
+	pointer-events: none;
+	cursor: wait;
+}
+
+.disabled {
+	background-color: var(--color-primary-750);
+	color: var(--color-primary-to-lightest);
+	pointer-events: none;
+
+	svg {
+		stroke: var(--color-button-text-primary);
+	}
+}
+
+.wrong {
+	background-color: var(--color-red-700);
+	color: var(--color-red-400);
+	pointer-events: none;
+
+	svg {
+		stroke: var(--color-red-450);
+	}
+}
+
+.wrong:hover {
+	background-color: var(--color-red-700);
+	color: var(--color-red-400);
+
+	svg {
+		stroke: var(--color-red-450);
+	}
+}
+
+.success {
+	background-color: var(--color-green-650);
+	color: var(--color-green-500);
+
+	svg {
+		stroke: var(--color-green-500);
+	}
+}
+
+.messageContainer {
+	background-color: var(--color-red-700);
+	padding: var(--sp-md);
+	border-radius: var(--st-br-md);
+	border: 1px solid rgb(from var(--color-red-650) r g b / 0.4);
+	gap: var(--sp-sm);
+
+	p {
+		color: var(--color-red-400);
+	}
+
+	.titleContainer {
+		width: 100%;
+		gap: var(--sp-sm);
+		flex-direction: row;
+		align-items: center;
+
+		p {
+			font-size: 15px;
+		}
+	}
+}

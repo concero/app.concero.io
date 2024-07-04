@@ -4,7 +4,8 @@ import { BarChartCard } from '../../../../cards/BarChartCard/BarChartCard'
 import { Card } from '../../../../cards/Card/Card'
 import classNames from './DetailsTab.module.pcss'
 import { LineChartCard } from '../../../../cards/LineChartCard/LineChartCard'
-import Dropdown, { type SelectItem } from '../../../../layout/DropdownSelect/DropdownSelect'
+import Dropdown from '../../../../layout/DropdownSelect/DropdownSelect'
+import { timeFilters } from '../../../../../constants/timeFilters'
 
 interface Link {
 	title: string
@@ -14,25 +15,6 @@ interface Link {
 interface ExternalLinkProps {
 	link: Link
 }
-
-const filterItems: SelectItem[] = [
-	{
-		title: 'Today',
-		value: 'today',
-	},
-	{
-		title: 'This mounth',
-		value: 'this mounth',
-	},
-	{
-		title: 'This week',
-		value: 'this week',
-	},
-	{
-		title: 'All-time',
-		value: 'all-time',
-	},
-]
 
 const auditsLinks: Link[] = [
 	{
@@ -83,7 +65,9 @@ const TotalVolumeCard = () => {
 	return (
 		<LineChartCard
 			className={classNames.totalVolumeCard}
-			filterItems={filterItems}
+			filterItems={timeFilters}
+			activeItem={timeFilters[0]}
+			setActiveItem={() => {}}
 			titleCard="Total Volume"
 			commonValue="1.5M USDC"
 		/>
@@ -122,7 +106,7 @@ const TotalFeesCard = () => {
 					<h4 className="body4">Total fees</h4>
 					<h2>$15,000 USDC</h2>
 				</div>
-				<Dropdown items={filterItems} />
+				<Dropdown setActiveItem={() => {}} activeItem={timeFilters[0]} items={timeFilters} />
 			</div>
 		</Card>
 	)
@@ -136,7 +120,7 @@ const TotalTransactionCard = () => {
 					<h4 className="body4">Total Transactions</h4>
 					<h2>1 500 953</h2>
 				</div>
-				<Dropdown variant="simple" items={filterItems} />
+				<Dropdown variant="simple" setActiveItem={() => {}} activeItem={timeFilters[0]} items={timeFilters} />
 			</div>
 		</Card>
 	)

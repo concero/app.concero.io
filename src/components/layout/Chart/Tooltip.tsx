@@ -1,4 +1,4 @@
-import { formatNumber, unixTimeFormat } from '../../../utils/formatting'
+import { formatNumber, formatTime } from '../../../utils/formatting'
 import classNames from '../../cards/ChartCard/ChartCard.module.pcss'
 
 function isOutsideBounds(point, chartElement) {
@@ -60,7 +60,7 @@ export function updateTooltip(param, mainSeries, secondarySeries, toolTip, chart
   `
 
 	content += `
-  <span style='font-size: 0.875rem; font-weight: 400; color: var(--color-grey-500);'>${unixTimeFormat(
+  <span style='font-size: 0.875rem; font-weight: 400; color: var(--color-grey-500);'>${formatTime(
 		param.time,
 		'MMM DD, hh:mm',
   )}</span>

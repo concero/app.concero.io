@@ -1,33 +1,33 @@
-import { type SelectItem } from '../../layout/DropdownSelect/DropdownSelect'
+import { useState } from 'react'
+import { timeFilters } from '../../../constants/timeFilters'
 import { LineChartCard } from '../LineChartCard/LineChartCard'
 import classNames from './AverageApyCard.module.pcss'
+import { getAverageApy, mockDataForWeek } from '../../screens/PoolScreen/poolScripts/getAverageApy'
 
-const filterItems: SelectItem[] = [
-	{
-		title: 'Today',
-		value: 'today',
-	},
-	{
-		title: 'This mounth',
-		value: 'this mounth',
-	},
-	{
-		title: 'This week',
-		value: 'this week',
-	},
-	{
-		title: 'All-time',
-		value: 'all-time',
-	},
-]
+// const mockUserUsdc = 1000
+// const mockTotalSupplyUsdc = 3000
+const mockNominalRate = 3
 
-export function AverageApyCard() {
+export const AverageApyCard = () => {
+	const [activeFilter, setActiveFilter] = useState(timeFilters[0])
+
+	const nominalRate = mockNominalRate
+	const averageApy = (1 + nominalRate / 365) ** 365 - 1
+	const commonAvgValue = `${averageApy.toFixed(2)} %`
+
+	const getAveragePerWeek = getAverageApy(mockDataForWeek)
+
+	console.log(getAveragePerWeek)
+
 	return (
 		<LineChartCard
 			className={classNames.averageApyCard}
 			titleCard="Average APY"
-			filterItems={filterItems}
-			commonValue="25 %"
+			filterItems={timeFilters}
+			activeItem={activeFilter}
+			setActiveItem={setActiveFilter}
+			data={getAveragePerWeek}
+			showCommonValue={true}
 		/>
 	)
 }

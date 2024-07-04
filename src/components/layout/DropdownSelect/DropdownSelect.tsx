@@ -4,37 +4,34 @@ import { Button } from '../../buttons/Button/Button'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from './DropdownSelect.module.pcss'
 import { useSpring, animated } from '@react-spring/web'
-
-export interface SelectItem {
-	title: string
-	value: string
-}
+import { type SelectItem } from '../../../constants/timeFilters'
 
 export interface DropdownSelectProps {
 	items: SelectItem[]
+	activeItem: SelectItem
+	setActiveItem: (item: SelectItem) => void
 	variant?: 'fill' | 'simple'
 }
 
-export default function Dropdown({ items, variant = 'fill' }: DropdownSelectProps) {
-	const [isOpen, setIsopen] = useState(false)
-	const [activeItem, setActiveItem] = useState<SelectItem>(items[0])
+export default function Dropdown({ activeItem, setActiveItem, items, variant = 'fill' }: DropdownSelectProps) {
+	const [isOpen, setIsOpen] = useState(false)
 
 	const fadeAnimation = useSpring({
 		opacity: isOpen ? 1 : 0,
 		translateY: isOpen ? 0 : -20,
 		zIndex: 3,
-		config: { easing: 'spring', mass: 1, tension: 600, friction: 30 },
+		config: { mass: 1, tension: 600, friction: 30 },
 		pointerEvents: isOpen ? 'auto' : 'none',
 		from: { opacity: 0, pointerEvents: 'none' },
 	})
 
 	const toggleOptions = () => {
-		setIsopen(prev => !prev)
+		setIsOpen(prev => !prev)
 	}
 
 	const selectOption = (option: SelectItem) => {
 		setActiveItem(option)
-		setIsopen(false)
+		setIsOpen(false)
 	}
 
 	return (
@@ -52,7 +49,13 @@ export default function Dropdown({ items, variant = 'fill' }: DropdownSelectProp
 				<Card className={`cardConvex ${classNames.selectOptions}`}>
 					{items.map(item => {
 						return (
-							<Button variant="black" onClick={() => { selectOption(item); }}>
+							<Button
+								key={item.title}
+								variant="black"
+								onClick={() => {
+									selectOption(item)
+								}}
+							>
 								<span className="body4">{item.title}</span>
 							</Button>
 						)

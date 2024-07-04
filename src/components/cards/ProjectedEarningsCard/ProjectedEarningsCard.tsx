@@ -15,7 +15,9 @@ export const ProjectedEarningsCard = () => {
 			</div>
 
 			<ReactSlider
-				onChange={(value: number) => { setThumbState(value); }}
+				onChange={(value: number) => {
+					setThumbState(value)
+				}}
 				className={classNames.slider}
 				marks
 				min={1}

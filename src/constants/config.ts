@@ -1,6 +1,7 @@
 export const config = {
 	baseURL: process.env.CONCERO_API_URL!,
 	headers: { 'Content-Type': 'application/json' },
+	PARENT_POOL_CONTRACT: '0x4f4549e3349144C1eFD843f778FDcAaAbc65C9E3', // TODO change to mainnet
 	CRYPTOPANIC_API_KEY: process.env.CRYPTOPANIC_API_KEY!,
 	LIFI_INTEGRATOR: process.env.LIFI_INTEGRATOR!,
 	LIFI_FEES: process.env.LIFI_FEES!,

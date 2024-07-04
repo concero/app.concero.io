@@ -1,29 +1,10 @@
+import { timeFilters } from '../../../../../constants/timeFilters'
 import { Card } from '../../../../cards/Card/Card'
 import { LineChartCard } from '../../../../cards/LineChartCard/LineChartCard'
 import { ProjectedEarningsCard } from '../../../../cards/ProjectedEarningsCard/ProjectedEarningsCard'
 import { UserActionsCard, type UserTransaction } from '../../../../cards/UserActionsCard/UserActionsCard'
-import { type SelectItem } from '../../../../layout/DropdownSelect/DropdownSelect'
 import { ProgressBar } from '../../../../layout/progressBar/ProgressBar'
 import classNames from './EarningsTab.module.pcss'
-
-const filterItems: SelectItem[] = [
-	{
-		title: 'Today',
-		value: 'today',
-	},
-	{
-		title: 'This mounth',
-		value: 'this mounth',
-	},
-	{
-		title: 'This week',
-		value: 'this week',
-	},
-	{
-		title: 'All-time',
-		value: 'all-time',
-	},
-]
 
 const userActions: UserTransaction[] = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(item => {
 	return {
@@ -55,7 +36,9 @@ const EarningsCard = () => (
 	<LineChartCard
 		className={classNames.earnings}
 		titleCard="Earnings"
-		filterItems={filterItems}
+		activeItem={timeFilters[0]}
+		setActiveItem={() => {}}
+		filterItems={timeFilters}
 		commonValue="15 USDC"
 	/>
 )

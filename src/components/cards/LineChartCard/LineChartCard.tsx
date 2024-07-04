@@ -1,63 +1,41 @@
 import classNames from './LineChartCard.module.pcss'
 import { Card } from '../Card/Card'
 import { Chart } from '../../layout/Chart/Chart'
-import Dropdown, { type SelectItem } from '../../layout/DropdownSelect/DropdownSelect'
-
-const mockData = [
-	{
-		time: '2024-09-20',
-		value: 2000,
-	},
-	{
-		time: '2024-09-21',
-		value: 5000,
-	},
-	{
-		time: '2024-09-22',
-		value: 7200,
-	},
-	{
-		time: '2024-09-23',
-		value: 23243,
-	},
-	{
-		time: '2024-09-24',
-		value: 434,
-	},
-	{
-		time: '2024-09-25',
-		value: 34324,
-	},
-	{
-		time: '2024-09-26',
-		value: 14,
-	},
-	{
-		time: '2024-09-27',
-		value: 25,
-	},
-	{
-		time: '2024-09-28',
-		value: 18,
-	},
-]
+import Dropdown from '../../layout/DropdownSelect/DropdownSelect'
+import { type SelectItem } from '../../../constants/timeFilters'
+import { type ChartData } from '../../../types/utils'
 
 export interface BarChartCardProps {
 	titleCard: string
-	filterItems?: SelectItem[]
-	commonValue?: string
+	filterItems: SelectItem[]
+	activeItem: SelectItem
+	setActiveItem: (item: SelectItem) => void
+	showCommonValue: boolean
+	data: ChartData[]
 	className?: string
 }
 
-export const LineChartCard = ({ titleCard, filterItems, commonValue, className = '' }: BarChartCardProps) => (
-	<Card className={`${classNames.container} ${className} cardConvex`}>
-		<div className={classNames.header}>
-			<div>
-				<h4 className="body4">{titleCard}</h4>
-				{commonValue && <h2>{commonValue}</h2>}
+export const LineChartCard = ({
+	titleCard,
+	activeItem,
+	setActiveItem,
+	filterItems,
+	showCommonValue,
+	data,
+	className,
+}: BarChartCardProps) => {
+	return (
+		<Card className={`${classNames.container} ${className} cardConvex`}>
+			<div className={classNames.header}>
+				<div>
+					<h4 className="body4">{titleCard}</h4>
+					{showCommonValue && <h2>0</h2>}
+				</div>
+				{filterItems && filterItems.length > 0 && (
+					<Dropdown activeItem={activeItem} setActiveItem={setActiveItem} items={filterItems} />
+				)}
 			</div>
-			{filterItems && filterItems.length > 0 && <Dropdown items={filterItems} />}
-		</div>
-		<Chart data={mockData} />
-	</Card>
-)
+			<Chart data={data} />
+		</Card>
+	)
+}

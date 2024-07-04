@@ -17,6 +17,7 @@ export const fetchChartData = async (
 
 	try {
 		const response = await axios.get(url)
+
 		const data = response.data.prices.map((item: [number, number]) => ({
 			time: item[0] / 1000, // Divide by 1000 to convert to milliseconds
 			value: item[1],

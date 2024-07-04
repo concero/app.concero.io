@@ -4,15 +4,11 @@ import { animated, useSpring } from '@react-spring/web'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
-
-interface DataPoint {
-	time: string
-	value: number
-}
+import { type ChartData } from '../../../types/utils'
 
 interface ChartProps {
-	data: DataPoint[]
-	secondData?: DataPoint[] | null
+	data: ChartData[]
+	secondData?: ChartData[] | null
 }
 
 const useFadeInAnimation = () =>
@@ -23,8 +19,8 @@ const useFadeInAnimation = () =>
 		reset: true,
 	})
 
-const averageData = (data: DataPoint[], interval: number): DataPoint[] => {
-	const result: DataPoint[] = []
+const averageData = (data: ChartData[], interval: number): ChartData[] => {
+	const result: ChartData[] = []
 	let sum = 0
 	let count = 0
 
@@ -34,7 +30,7 @@ const averageData = (data: DataPoint[], interval: number): DataPoint[] => {
 
 		if (count === interval || i === data.length - 1) {
 			result.push({
-				time: data[i].time,
+				date: data[i].date,
 				value: sum / count,
 			})
 			sum = 0
