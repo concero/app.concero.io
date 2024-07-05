@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { type Dispatch, type SetStateAction, useState } from 'react'
 import { Card } from '../../cards/Card/Card'
 import { Button } from '../../buttons/Button/Button'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from './DropdownSelect.module.pcss'
 import { useSpring, animated } from '@react-spring/web'
-import { type SelectItem } from '../../../constants/timeFilters'
+import { type SelectItem } from '../../../utils/chartTimeFilters'
 
 export interface DropdownSelectProps {
 	items: SelectItem[]
 	activeItem: SelectItem
-	setActiveItem: (item: SelectItem) => void
+	setActiveItem: (item: Dispatch<SetStateAction<SelectItem>>) => void
 	variant?: 'fill' | 'simple'
 }
 

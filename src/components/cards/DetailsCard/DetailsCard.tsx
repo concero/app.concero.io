@@ -3,7 +3,7 @@ import classNames from './DetailsCard.module.pcss'
 
 const items = [
 	{
-		title: 'Your pool share',
+		title: 'Your conceroPool share',
 		value: '0.05%',
 	},
 	{

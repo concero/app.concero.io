@@ -3,14 +3,21 @@ import { Card } from '../Card/Card'
 import classNames from './ProjectedEarningsCard.module.pcss'
 import ReactSlider from 'react-slider'
 
-export const ProjectedEarningsCard = () => {
+interface ProjectedEarningsProps {
+	rate: number
+	deposit: number
+}
+
+export const ProjectedEarningsCard = ({ rate, deposit }: ProjectedEarningsProps) => {
 	const [thumbState, setThumbState] = useState(1)
+
+	const earnValue = deposit * (1 + rate) * (thumbState * 7)
 
 	return (
 		<Card className={`cardConvex ${classNames.projectedEarningsCard}`}>
 			<div>
 				<h4 className="body4">Projected earnings</h4>
-				<h2>{thumbState * 500} USDC</h2>
+				<h2>{earnValue.toFixed(2)} USDC</h2>
 				<p className="body1">{thumbState === 1 ? 'Current total' : `${thumbState} week`}</p>
 			</div>
 

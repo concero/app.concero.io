@@ -1,9 +1,10 @@
-import { type Address, createPublicClient, http } from 'viem'
+import { type Address, createPublicClient, http, formatUnits } from 'viem'
 import { baseSepolia } from 'viem/chains'
-import { config } from '../../../constants/config'
 import { abi } from '../../../abi/ParentPool.json'
 
-export const getLiquidityCap = async () => {
+const usdcDecimals = 6
+
+export const getMaxCap = async () => {
 	try {
 		const client = createPublicClient({
 			chain: baseSepolia,
@@ -11,12 +12,12 @@ export const getLiquidityCap = async () => {
 		})
 
 		const liquidityCap = await client.readContract({
-			address: config.PARENT_POOL_CONTRACT as Address,
+			address: '0x3997e8Fc5C47AFE6B298E8eB7d030e96Eb7c4b0d' as Address,
 			abi,
 			functionName: 'getMaxCap',
 		})
 
-		return liquidityCap
+		return Number(formatUnits(BigInt(liquidityCap as number), usdcDecimals))
 	} catch (error) {
 		console.error(error)
 	}

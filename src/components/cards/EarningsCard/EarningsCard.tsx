@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react'
-import { createTimeFilters } from '../../../utils/chartTimeFilters'
 import { LineChartCard } from '../LineChartCard/LineChartCard'
-import classNames from './AverageApyCard.module.pcss'
+import classNames from './EarningsCard.module.pcss'
+import { useEffect, useState } from 'react'
 import type { ChartData } from '../../../types/utils'
 import { fetchFees } from '../../../api/concero/fetchFees'
-import { getUniqueChatData } from '../../../utils/charts'
+import { createTimeFilters } from '../../../utils/chartTimeFilters'
 
 const timeFilters = createTimeFilters()
 
-export const AverageApyCard = () => {
-	const [apyData, setApyData] = useState<ChartData[]>([])
-	const [commonApyValue, setCommonApyValue] = useState<number>(0)
+export const EarningsCard = () => {
+	const [earningsData, setEarningsData] = useState<ChartData[]>([])
+	const [commonValue, setCommonValue] = useState<number>(0)
 	const [activeFilter, setActiveFilter] = useState(timeFilters[0])
 
 	const getTotalVolume = async () => {
@@ -21,18 +20,19 @@ export const AverageApyCard = () => {
 			return acc + fee.percentReturned
 		}, 0)
 
-		setCommonApyValue((totalApy * 365.25) / 100)
+		setCommonValue(totalApy)
 
 		const chartData = fees.map(fee => {
-			const apyOnFeeFormula = (1 + fee.percentReturned / 365.25) ** 365.25 - 1
-
 			return {
 				time: fee.timestamp * 1000,
-				value: apyOnFeeFormula * 100,
+				value: fee.percentReturned,
 			}
 		})
 
-		setApyData(getUniqueChatData(chartData))
+		const table = {}
+		const uniqueChatData = chartData.filter(({ time }) => !table[time] && (table[time] = 1))
+
+		setEarningsData(uniqueChatData)
 	}
 
 	useEffect(() => {
@@ -41,13 +41,13 @@ export const AverageApyCard = () => {
 
 	return (
 		<LineChartCard
-			className={classNames.averageApyCard}
-			titleCard="Average APY"
+			className={classNames.earnings}
+			titleCard="Earnings"
 			filterItems={timeFilters}
 			activeItem={activeFilter}
 			setActiveItem={setActiveFilter}
-			data={apyData}
-			commonValue={`${commonApyValue.toFixed(1)}%`}
+			data={earningsData}
+			commonValue={`${commonValue.toFixed(1)} USDC`}
 		/>
 	)
 }

@@ -3,27 +3,22 @@ import { Card } from '../Card/Card'
 import classNames from './LiquidityCapCard.module.pcss'
 import { ProgressBar } from '../../layout/progressBar/ProgressBar'
 import { useEffect, useState } from 'react'
-import { getLiquidityCap } from './getLiquidityCap'
+import { getMaxCap } from './getLiquidityCap'
+import { fetchLastFee } from '../../../api/concero/fetchFees'
 
-export interface LiquidityInfo {
-	maxCapValue: string
-}
-
-const extractToNumber = (stringNum: string) => {
-	const result = parseFloat(stringNum.replace(/[\s,]/g, ''))
-
-	return result
-}
-
-export const LiquidityCapCard = ({ maxCapValue }: LiquidityInfo) => {
-	const [liquidityCap, setLiquidityCap] = useState<number>(0)
+export const LiquidityCapCard = () => {
+	const [maxCap, setMaxCap] = useState<number>(0)
+	const [poolLiquidity, setPoolLiquidity] = useState<number>(0)
 	const { t } = useTranslation()
 
-	const percentage = (liquidityCap / extractToNumber(maxCapValue)) * 100
+	const percentage = (poolLiquidity / maxCap) * 100 * 100
 
 	const setCap = async () => {
-		const cap = await getLiquidityCap()
-		setLiquidityCap(Number(cap))
+		const cap = await getMaxCap()
+		const lastFee = await fetchLastFee()
+
+		setPoolLiquidity(Number(lastFee.poolLiquidity))
+		setMaxCap(Number(cap))
 	}
 
 	useEffect(() => {
@@ -34,9 +29,9 @@ export const LiquidityCapCard = ({ maxCapValue }: LiquidityInfo) => {
 		<Card className={`${classNames.liquidityCapCard} cardConvex`}>
 			<h4 className={classNames.title}>{t('liquidityCap.title')}</h4>
 			<h2>
-				${liquidityCap} <span className={classNames.maxValue}>/ ${maxCapValue}</span>
+				${poolLiquidity} <span className={classNames.maxValue}>/ ${maxCap}</span>
 			</h2>
-			<ProgressBar percentage={percentage} />
+			<ProgressBar percentage={percentage || 0} />
 		</Card>
 	)
 }

@@ -7,5 +7,5 @@ export type Optional<T> = T | undefined
 
 export interface ChartData {
 	value: number
-	date: number
+	time: number
 }

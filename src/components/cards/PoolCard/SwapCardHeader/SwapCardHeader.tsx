@@ -42,7 +42,9 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 				<h4
 					key={title}
 					className={swapState.poolMode === value ? classNames.titleModeActive : classNames.titleMode}
-					onClick={() => { changeMode(value); }}
+					onClick={() => {
+						changeMode(value)
+					}}
 				>
 					{title}
 				</h4>

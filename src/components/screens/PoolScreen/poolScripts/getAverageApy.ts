@@ -8,7 +8,7 @@ export const mockDataForWeek = [
 		time: new Date('2024-06-24').getTime(),
 	},
 	{
-		value: 2,
+		value: 2.2,
 		time: new Date('2024-06-25').getTime(),
 	},
 	{

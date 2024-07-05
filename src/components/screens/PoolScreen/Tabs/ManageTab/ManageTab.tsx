@@ -7,7 +7,7 @@ export const ManageTab = () => {
 	return (
 		<div className={classNames.depositTab}>
 			<div className={classNames.statisticBlock}>
-				<LiquidityCapCard maxCapValue="100,000" />
+				<LiquidityCapCard />
 				<AverageApyCard />
 			</div>
 			<PoolCard />
