@@ -42,7 +42,7 @@ const testnetTokens = {
 	mainToken: {
 		address: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
 		chain_id: '84532',
-		decimals: 18,
+		decimals: 6,
 		is_popular: true,
 		logoURI: 'https://sepolia.basescan.org/images/main/empty-token.png',
 		name: 'Base Sepolia USDC',

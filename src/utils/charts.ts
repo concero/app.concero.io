@@ -13,35 +13,35 @@ export const getUniqueChatData = (chartData: ChartData[]) => {
 }
 
 const groupByDays = (data: ChartData[]) => {
-	return data.reduce((acc: Record<string, ChartData[]>, item) => {
+	return data.reduce((acc: Record<string, ChartData>, item) => {
 		const day = dayjs(item.time).format('YYYY-MM-DD')
 		if (!acc[day]) {
-			acc[day] = []
+			acc[day] = item
 		}
-		acc[day].push(item)
+		acc[day].value += item.value
 		return acc
 	}, {})
 }
 
 const groupByWeeks = (data: ChartData[]) => {
-	return data.reduce((acc: Record<string, ChartData[]>, item) => {
+	return data.reduce((acc: Record<string, ChartData>, item) => {
 		const week = dayjs(item.time).weekYear()
 		const year = dayjs(item.time).year()
 		const weekKey = `${year}-W${week}`
 		if (!acc[weekKey]) {
-			acc[weekKey] = []
+			acc[weekKey] = item
 		}
-		acc[weekKey].push(item)
+		acc[weekKey].value += item.value
 		return acc
 	}, {})
 }
 
-const convertGroupedToArray = (groupedData: Record<string, ChartData[]>, timeFormat: string) => {
+const convertGroupedToArray = (groupedData: Record<string, ChartData>, timeFormat: string) => {
 	return Object.keys(groupedData).map(key => {
-		const timestamp = dayjs(key, timeFormat).valueOf()
+		const time = dayjs(key, timeFormat).valueOf()
 		return {
-			timestamp,
-			values: groupedData[key],
+			time,
+			value: groupedData[key].value,
 		}
 	})
 }

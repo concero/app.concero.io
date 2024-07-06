@@ -33,6 +33,8 @@ export function SwapCardHeader({ swapState, swapDispatch }: SwapCardHeaderProps)
 	}, [containerRef.current?.scrollWidth])
 
 	const changeMode = (value: 'deposit' | 'withdraw') => {
+		if (swapState.poolMode === value) return
+
 		swapDispatch({ type: 'SWITCH_POOL_MODE', payload: value })
 	}
 

@@ -4,7 +4,8 @@ import { Chart } from '../../layout/Chart/Chart'
 import Dropdown from '../../layout/DropdownSelect/DropdownSelect'
 import { type SelectItem } from '../../../utils/chartTimeFilters'
 import { type ChartData } from '../../../types/utils'
-import { type Dispatch, type SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
+import { groupDataByDays, groupDataByWeeks } from '../../../utils/charts'
 
 export interface BarChartCardProps {
 	titleCard: string
@@ -25,7 +26,17 @@ export const LineChartCard = ({
 	data,
 	className,
 }: BarChartCardProps) => {
-	// TODO do groped Data
+	const [convertedData, setConvertedData] = useState<ChartData[]>(data)
+
+	useEffect(() => {
+		let newData: ChartData[] = data
+
+		if (activeItem.value === 'this week' || activeItem.value === 'this month' || activeItem.value === 'all-time') {
+			newData = groupDataByDays(data)
+		}
+
+		setConvertedData(newData)
+	}, [data, activeItem])
 
 	return (
 		<Card className={`${classNames.container} ${className} cardConvex`}>
@@ -38,7 +49,7 @@ export const LineChartCard = ({
 					<Dropdown activeItem={activeItem} setActiveItem={setActiveItem} items={filterItems} />
 				)}
 			</div>
-			<Chart data={data} />
+			<Chart data={convertedData} />
 		</Card>
 	)
 }

@@ -6,7 +6,7 @@ import classNames from './SwapInput.module.pcss'
 import { type SwapInputProps } from './types'
 import { IconArrowsUpDown } from '@tabler/icons-react'
 import { SwapCardStage } from '../swapReducer/types'
-import { executeConceroRoute } from '../swapExecution/executeConceroRoute'
+import { executeDeposit } from '../swapExecution/executeDeposit'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { PoolButton } from '../PoolButton/PoolButton'
@@ -43,7 +43,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 				label: 'concero_begin_swap',
 				data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
 			})
-			const time = await executeConceroRoute(swapState, swapDispatch)
+			const time = await executeDeposit(swapState, swapDispatch)
 			setTxInfo(time)
 		}
 	}

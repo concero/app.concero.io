@@ -21,9 +21,11 @@ const getStartOfThisMonth = () => {
 	return dayjs().startOf('month').subtract(1, 'day').valueOf() / 1000
 }
 
+type TimeOption = 'today' | 'this week' | 'this month' | 'all-time'
+
 export interface SelectItem {
 	title: string
-	value: string
+	value: TimeOption
 	startTime: number | null
 	endTime: number | null
 }

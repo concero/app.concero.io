@@ -5,6 +5,7 @@ import { type TransactionStatus } from 'rango-sdk'
 import { type ButtonType } from '../../../buttons/SwapButton/constants'
 import { type ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'
 import { type TokenAmount } from '../../../../utils/TokenAmount'
+import { type Address } from 'viem'
 
 export interface SwapStateDirection {
 	chain: {
@@ -25,7 +26,7 @@ export interface SwapStateDirection {
 	}
 	amount: string
 	amount_usd: number
-	address: string
+	address: Address
 }
 
 export interface ButtonState {

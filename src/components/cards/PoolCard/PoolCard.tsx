@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import classNames from './SwapCard.module.pcss'
 import { useSwapReducer } from './swapReducer/swapReducer'

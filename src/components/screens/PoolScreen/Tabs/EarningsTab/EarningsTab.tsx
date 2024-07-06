@@ -16,7 +16,7 @@ interface UserBalance {
 
 const userActions: UserTransaction[] = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(item => {
 	return {
-		id: String(item),
+		id: String(item) + Math.random().toString(),
 		name: 'Withdrawal Complete',
 		date: 'Today, 12:50',
 		value: String(Math.floor(Math.random() * 10000)),
