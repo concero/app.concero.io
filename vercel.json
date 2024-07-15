@@ -5,8 +5,8 @@
       "destination": "https://eu.posthog.com/:path*"
     },
     {
-      "source": "/([^.\n]*)",
-      "destination": "/"
+      "source": "*",
+      "destination": "https://lanca.io"
     }
   ]
 }
