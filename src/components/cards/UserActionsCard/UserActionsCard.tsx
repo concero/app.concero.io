@@ -2,9 +2,8 @@ import { Card } from '../Card/Card'
 import classNames from './UserActionsCard.module.pcss'
 import { useEffect, useState } from 'react'
 import { watchUserActions } from './getUserActions'
-import { set } from 'husky'
-import { ac } from 'vitest/dist/types-e3c9754d'
 import dayjs from 'dayjs'
+import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
 
 export interface UserTransaction {
 	eventName: string
@@ -27,8 +26,10 @@ export function UserActionsCard() {
 	}
 
 	useEffect(() => {
+		if (actions.length !== 0) return
+
 		watchActions()
-	}, [])
+	}, [actions])
 
 	const header = (
 		<div className={classNames.header}>
@@ -54,7 +55,7 @@ export function UserActionsCard() {
 				/>
 				<div>
 					<h5>{action.eventName === 'ParentPool_SuccessfulDeposited' ? 'Liquidity provided' : 'Untitled'}</h5>
-					<p className="body1">{dayjs(action.time).format('YYYY-MM-DD mm:ss')}</p>
+					<p className="body1">{dayjs(action.time).format('D MMMM, HH:mm, YYYY')}</p>
 				</div>
 			</div>
 			<div className={classNames.rightSide}>
@@ -68,7 +69,7 @@ export function UserActionsCard() {
 		<div>
 			{header}
 			<Card className={`${classNames.actionsCard} cardConvex`}>
-				{actions.map(action => renderAction(action))}
+				{actions.length === 0 ? <FullScreenLoader /> : actions.map(action => renderAction(action))}
 			</Card>
 		</div>
 	)

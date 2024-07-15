@@ -16,11 +16,11 @@ export const EarningsCard = () => {
 		const { startTime, endTime } = activeFilter
 		const fees = await fetchFees(startTime, endTime)
 
-		const totalApy = fees.reduce((acc, fee) => {
+		const totalFees = fees.reduce((acc, fee) => {
 			return acc + fee.percentReturned
 		}, 0)
 
-		setCommonValue(totalApy)
+		setCommonValue(totalFees)
 
 		const chartData = fees.map(fee => {
 			return {

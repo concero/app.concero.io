@@ -1,6 +1,7 @@
 import { type Address, createPublicClient, http, formatUnits } from 'viem'
 import { baseSepolia } from 'viem/chains'
 import { abi } from '../../../abi/ParentPool.json'
+import { config } from '../../../constants/config'
 
 const usdcDecimals = 6
 
@@ -12,7 +13,7 @@ export const getMaxCap = async () => {
 		})
 
 		const liquidityCap = await client.readContract({
-			address: '0x3997e8Fc5C47AFE6B298E8eB7d030e96Eb7c4b0d' as Address,
+			address: config.PARENT_POOL_CONTRACT,
 			abi,
 			functionName: 'getMaxCap',
 		})

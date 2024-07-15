@@ -1,6 +1,6 @@
 import { Card } from '../../../../cards/Card/Card'
 import { ProjectedEarningsCard } from '../../../../cards/ProjectedEarningsCard/ProjectedEarningsCard'
-import { UserActionsCard, type UserTransaction } from '../../../../cards/UserActionsCard/UserActionsCard'
+import { UserActionsCard } from '../../../../cards/UserActionsCard/UserActionsCard'
 import { ProgressBar } from '../../../../layout/progressBar/ProgressBar'
 import classNames from './EarningsTab.module.pcss'
 import { EarningsCard } from '../../../../cards/EarningsCard/EarningsCard'
@@ -14,21 +14,11 @@ interface UserBalance {
 	userBalanceUsdc: number
 }
 
-const userActions: UserTransaction[] = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(item => {
-	return {
-		id: String(item) + Math.random().toString(),
-		name: 'Withdrawal Complete',
-		date: 'Today, 12:50',
-		value: String(Math.floor(Math.random() * 10000)),
-		status: item % 2 === 0 ? 'Available' : null,
-	}
-})
-
 const PoolShareCard = ({ userPoolShare }: { userPoolShare: number }) => (
 	<Card className={`${classNames.poolShare} cardConvex`}>
 		<h4 className="body4">Your pool share</h4>
 		<h2>{userPoolShare.toFixed(1)} %</h2>
-		<ProgressBar percentage={userPoolShare} width={137} />
+		<ProgressBar percentage={userPoolShare} />
 	</Card>
 )
 
@@ -58,6 +48,7 @@ export const EarningsTab = () => {
 
 		const ratio = totalSupply / poolLiquidity
 		const balanceUsdc = ratio * balanceLp
+
 		const poolShare = (balanceUsdc / poolLiquidity) * 100
 
 		setUserPoolShare(poolShare)
@@ -85,7 +76,7 @@ export const EarningsTab = () => {
 	return (
 		<div className={classNames.earningsTab}>
 			{statisticBlock}
-			<UserActionsCard actions={userActions} />
+			<UserActionsCard />
 		</div>
 	)
 }

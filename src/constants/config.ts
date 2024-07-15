@@ -1,7 +1,8 @@
+import { type Address } from 'viem'
+
 export const config = {
 	baseURL: process.env.CONCERO_API_URL!,
 	headers: { 'Content-Type': 'application/json' },
-	PARENT_POOL_CONTRACT: '0x3997e8Fc5C47AFE6B298E8eB7d030e96Eb7c4b0d', // TODO change to mainnet
 	CRYPTOPANIC_API_KEY: process.env.CRYPTOPANIC_API_KEY!,
 	LIFI_INTEGRATOR: process.env.LIFI_INTEGRATOR!,
 	LIFI_FEES: process.env.LIFI_FEES!,
@@ -14,4 +15,10 @@ export const config = {
 	WEB3_MODAL_PROJECT_ID: process.env.WEB3_MODAL_PROJECT_ID!,
 	CONCERO_ASSETS_URI: process.env.CONCERO_ASSETS_URI!,
 	CONCERO_DOMAIN_URL: process.env.CONCERO_DOMAIN_URL!,
+
+	// POOLS TESTNET
+	LPTOKEN: process.env.CONCERO_LPTOKEN_BASE_SEPOLIA! as Address,
+	PARENT_POOL_CONTRACT: process.env.CONCERO_PARENT_POOL_SEPOLIA! as Address,
+	CHILD_POOL_ARBITRUM: process.env.CONCERO_CHILD_POOL_ARBITRUM_SEPOLIA! as Address,
+	CHILD_POOL_OPTIMISM: process.env.CONCERO_CHILD_POOL_OPTIMISM_SEPOLIA! as Address,
 }

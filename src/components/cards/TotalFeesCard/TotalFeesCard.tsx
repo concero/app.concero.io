@@ -15,7 +15,7 @@ export const TotalFeesCard = () => {
 		const fees = await fetchFees(startTime, endTime)
 
 		const result = fees.reduce((acc, fee) => {
-			return acc + fee.percentReturned
+			return acc + fee.feeMade
 		}, 0)
 
 		setTotalFees(result.toFixed(2))

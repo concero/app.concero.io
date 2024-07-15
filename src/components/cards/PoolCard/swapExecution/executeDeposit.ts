@@ -2,6 +2,7 @@ import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/t
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
 import {
+	type Address,
 	createPublicClient,
 	createWalletClient,
 	custom,
@@ -15,8 +16,9 @@ import { action, category } from '../../../../constants/tracking'
 import { baseSepolia } from 'wagmi/chains'
 import { http } from 'wagmi'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
+import { config } from '../../../../constants/config'
 
-export const parentPoolAddress = '0x3997e8Fc5C47AFE6B298E8eB7d030e96Eb7c4b0d'
+export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 
 async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
 	const depositAmount = BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)

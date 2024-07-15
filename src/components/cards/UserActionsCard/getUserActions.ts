@@ -4,6 +4,11 @@ import { http } from 'wagmi'
 import { abi } from '../../../abi/ParentPool.json'
 import { type DecodeEventLogReturnType } from 'viem/utils/abi/decodeEventLog'
 import { type UserTransaction } from './UserActionsCard'
+import { config } from '../../../constants/config'
+import dayjs from 'dayjs'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+
+dayjs.extend(isSameOrBefore)
 
 const publicClient = createPublicClient({
 	chain: baseSepolia,
@@ -19,9 +24,22 @@ export const watchUserActions = async (onGetActions: (logs: DecodeEventLogReturn
 		let toBlock = blockNumber
 		let fromBlock = blockNumber - blockRange
 
-		while (Number(toBlock) >= Number(firstBlockNumber)) {
+		let countTx = 0
+
+		while (Number(toBlock) >= Number(firstBlockNumber) || countTx <= 30) {
+			const currentBlock = await publicClient.getBlock({
+				blockNumber: toBlock,
+			})
+
+			const date = dayjs(Number(currentBlock.timestamp) * 1000)
+			const now = dayjs()
+			const oneWeekAgo = now.subtract(1, 'week')
+			const isMoreThanWeekAgo = date.isSameOrBefore(oneWeekAgo)
+
+			console.log('isMoreThanAWeekAgo', isMoreThanWeekAgo)
+
 			const logs = await publicClient.getLogs({
-				address: '0x3997e8Fc5C47AFE6B298E8eB7d030e96Eb7c4b0d',
+				address: config.PARENT_POOL_CONTRACT,
 				event: parseAbiItem(
 					'event ParentPool_SuccessfulDeposited(address liquidityProvider, uint256 _amount, address _token)',
 				),
@@ -56,6 +74,7 @@ export const watchUserActions = async (onGetActions: (logs: DecodeEventLogReturn
 			}
 
 			onGetActions(decodedLogs)
+			countTx++
 
 			toBlock -= blockRange
 			fromBlock -= blockRange

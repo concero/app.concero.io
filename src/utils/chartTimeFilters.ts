@@ -9,7 +9,7 @@ dayjs.extend(isSameOrAfter)
 dayjs.extend(weekday)
 dayjs.extend(isSameOrBefore)
 
-const getStartOfToday = () => {
+export const getStartOfToday = () => {
 	return dayjs().startOf('day').subtract(1, 'day').valueOf() / 1000
 }
 

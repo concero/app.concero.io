@@ -16,6 +16,7 @@ import { SwapCardStage } from '../swapReducer/types'
 import { executeConceroRoute } from '../swapExecution/executeConceroRoute'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { handleSwap } from '../swapExecution/handleSwap'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode, setTxInfo }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
@@ -64,19 +65,19 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 			setTxInfo(time)
 		}
 
-		// if (swapState.stage === 'input') {
-		// 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
-		// } else {
-		// 	await handleSwap({
-		// 		swapState,
-		// 		swapDispatch,
-		// 		address,
-		// 		switchChainHook,
-		// 		getChainByProviderSymbol,
-		// 		getSigner,
-		// 		isNewSwapCardMode,
-		// 	})
-		// }
+		if (swapState.stage === 'input') {
+			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
+		} else {
+			await handleSwap({
+				swapState,
+				swapDispatch,
+				address,
+				switchChainHook,
+				getChainByProviderSymbol,
+				getSigner,
+				isNewSwapCardMode,
+			})
+		}
 	}
 
 	return (
