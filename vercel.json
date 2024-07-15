@@ -3,9 +3,11 @@
     {
       "source": "/posthog/:path(.*)",
       "destination": "https://eu.posthog.com/:path*"
-    },
+    }
+  ],
+  "redirects": [
     {
-      "source": "/(.*)",
+      "source": "(.*)",
       "destination": "https://lanca.io"
     }
   ]
