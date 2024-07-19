@@ -25,7 +25,7 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 	return await walletClient.writeContract({
 		account: swapState.from.address,
 		abi: ParentPool,
-		functionName: 'depositLiquidity',
+		functionName: 'startWithdrawal',
 		address: parentPoolAddress,
 		args: [depositAmount],
 		gas: 4_000_000n,
@@ -39,8 +39,6 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 		pollingInterval: 3_000,
 		retryCount: 30,
 	})
-
-	console.log(receipt)
 
 	if (receipt.status === 'reverted') {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
@@ -109,6 +107,7 @@ export async function executeDeposit(
 			payload: [{ status: 'pending', title: 'Sending transaction' }],
 		})
 
+		await checkAllowanceAndApprove(swapState, publicClient, walletClient)
 		const hash = await sendTransaction(swapState, publicClient, walletClient)
 
 		await checkTransactionStatus(hash, publicClient, swapDispatch)

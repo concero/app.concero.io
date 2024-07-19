@@ -3,9 +3,10 @@ import { BarChartCard, type ReChartsData } from '../BarChartCard/BarChartCard'
 import { fetchFees } from '../../../api/concero/fetchFees'
 
 const chainsMap = {
-	84532: 'BASE',
-	421614: 'ARB',
-	11155420: 'OPT',
+	8453: 'BASE',
+	42161: 'ARB',
+	137: 'POL',
+	43114: 'AVAX',
 }
 
 export const VolumeByChainCard = () => {

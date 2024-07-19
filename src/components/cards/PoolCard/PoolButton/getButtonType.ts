@@ -22,18 +22,17 @@ export function getButtonType(
 		return ButtonType.CONNECT_WALLET_BRIGHT
 	}
 
-	if (from.amount && isTestnet) {
-		if (BigNumber(from.amount).gt(20)) return ButtonType.TESTNET_AMOUNT_TOO_HIGH
-		if (BigNumber(to.amount).eq(0)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
+	if (balance && new BigNumber(from.amount).gt(balance.amount.formatted)) {
+		return ButtonType.LOW_BALANCE
+	}
+
+	if (from.amount) {
+		if (BigNumber(from.amount).lt(0.1)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
 		return ButtonType.SWAP
 	}
 
 	if (!from.amount || (from.amount && routes.length === 0)) {
 		return ButtonType.ENTER_AMOUNT
-	}
-
-	if (balance && new BigNumber(from.amount).gt(balance.amount.formatted)) {
-		return ButtonType.LOW_BALANCE
 	}
 
 	if (selectedRoute && stage === 'input') {

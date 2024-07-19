@@ -1,22 +1,16 @@
-import { type FC, useEffect, useState } from 'react'
+import { type FC } from 'react'
 import classNames from './SwapButton.module.pcss'
 import { type SwapButtonProps } from './types'
 import { buttonStyleClass, buttonText, ButtonType, iconComponent, isButtonDisabled } from './constants'
 import { getButtonType } from './getButtonType'
 import { useTranslation } from 'react-i18next'
-import { IconGasStation } from '@tabler/icons-react'
 import { useGasSufficiency } from './useGasSufficiency'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
-import { checkTestnetBalanceSufficiency } from './checkTestnetBalanceSufficiency'
 import { Button } from '../../../buttons/Button/Button'
 
-export const PoolButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick, switchChainHook }) => {
-	const { isLoading, isTestnet } = swapState
+export const PoolButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClick }) => {
+	const { isLoading } = swapState
 	const { isLoading: isFetchBalancesLoading, gasSufficiency } = useGasSufficiency(swapState)
-	const [testnetBalances, setTestnetBalances] = useState<{
-		linkBalanceSufficient: boolean
-		bnmBalanceSufficient: boolean
-	} | null>(null)
 	const { open } = useWeb3Modal()
 	const { t } = useTranslation()
 	const buttonType = getButtonType(
@@ -26,49 +20,18 @@ export const PoolButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 		isFetchBalancesLoading,
 	)
 
-	useEffect(() => {
-		if (!isTestnet) return
-
-		checkTestnetBalanceSufficiency(swapState)
-			.then(result => {
-				setTestnetBalances(result)
-			})
-			.catch(error => {
-				console.error(error)
-				setTestnetBalances({ linkBalanceSufficient: true, bnmBalanceSufficient: true })
-			})
-	}, [isTestnet, swapState.from.chain.id])
-
 	return (
 		<div className={classNames.container}>
-			<>
-				{buttonType === ButtonType.LOW_GAS && gasSufficiency ? (
-					<div className={classNames.messageContainer}>
-						<div className={classNames.titleContainer}>
-							<IconGasStation size={17} color="var(--color-red-450)" />
-							<p className={'body1'}>{t('button.lowGas')}</p>
-						</div>
-						<p className={'body1'}>
-							{t('swapCard.message.lowGas', {
-								amount: gasSufficiency.insufficientAmount,
-								tokenSymbol: gasSufficiency.token?.symbol ?? '',
-								chainName: gasSufficiency.chain?.name ?? '',
-							})}
-						</p>
-					</div>
-				) : (
-					<Button
-						size="lg"
-						leftIcon={iconComponent[buttonType]}
-						isDisabled={isButtonDisabled[buttonType]}
-						isLoading={isLoading}
-						onClick={buttonType === ButtonType.CONNECT_WALLET_BRIGHT ? open : onClick}
-						className={`${classNames.swapButton} ${classNames[buttonStyleClass[buttonType]]}`}
-					>
-						{t(buttonText[buttonType])}
-					</Button>
-				)}
-			</>
+			<Button
+				size="lg"
+				leftIcon={iconComponent[buttonType]}
+				isDisabled={isButtonDisabled[buttonType]}
+				isLoading={isLoading}
+				onClick={buttonType === ButtonType.CONNECT_WALLET_BRIGHT ? open : onClick}
+				className={`${classNames.swapButton} ${classNames[buttonStyleClass[buttonType]]}`}
+			>
+				{t(buttonText[buttonType])}
+			</Button>
 		</div>
 	)
 }

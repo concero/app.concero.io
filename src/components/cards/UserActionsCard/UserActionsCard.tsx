@@ -25,11 +25,11 @@ export function UserActionsCard() {
 		})
 	}
 
-	useEffect(() => {
-		if (actions.length !== 0) return
-
-		watchActions()
-	}, [actions])
+	// useEffect(() => {
+	// 	if (actions.length !== 0) return
+	//
+	// 	// watchActions()
+	// }, [actions])
 
 	const header = (
 		<div className={classNames.header}>

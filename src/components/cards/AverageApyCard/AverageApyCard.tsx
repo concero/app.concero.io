@@ -24,8 +24,6 @@ export const AverageApyCard = () => {
 		const apy = (totalFeesSum * 365.25) / 100
 		setCommonApyValue(apy)
 
-		// const unit = SUM(unit * 365.25 / 1000)
-
 		const chartData = fees.map(fee => {
 			const apyOnFeeFormula = (fee.percentReturned * 365.25) / 100
 
@@ -50,7 +48,7 @@ export const AverageApyCard = () => {
 			activeItem={activeFilter}
 			setActiveItem={setActiveFilter}
 			data={apyData}
-			commonValue={`${commonApyValue.toFixed(1)}%`}
+			commonValue={`${commonApyValue.toFixed(4)}%`}
 		/>
 	)
 }

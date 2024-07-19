@@ -36,16 +36,14 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 	}
 
 	const handleSwapButtonClick = async () => {
-		if (swapState.isTestnet) {
-			void trackEvent({
-				category: category.SwapCard,
-				action: action.BeginSwap,
-				label: 'concero_begin_swap',
-				data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
-			})
-			const time = await executeDeposit(swapState, swapDispatch)
-			setTxInfo(time)
-		}
+		void trackEvent({
+			category: category.SwapCard,
+			action: action.BeginSwap,
+			label: 'concero_begin_swap',
+			data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
+		})
+		const time = await executeDeposit(swapState, swapDispatch)
+		setTxInfo(time)
 	}
 
 	return (

@@ -100,18 +100,10 @@ export const TokenArea: FC<TokenAreaProps> = ({
 							/>
 						</div>
 					)}
-					<Button
-						variant={'convex'}
-						className={classNames.selectTokenButton}
-						isDisabled={true}
-						onClick={e => {
-							e.stopPropagation()
-							tokenAreaDispatch({ type: 'SET_SHOW_TOKENS_MODAL', payload: true })
-						}}
-					>
+					<Button variant={'convex'} className={classNames.selectTokenButton} isDisabled={true}>
 						<TokenIcon
 							tokenLogoSrc={selection.token.logoURI}
-							chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/${isTestnet ? testnetToMainnetChainsMap[selection.chain.id] : selection.chain.id}.svg`}
+							chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/8453.svg`}
 						/>
 						<div className={classNames.selectTokenButtonTitle}>
 							<h4>{selection.token.symbol}</h4>

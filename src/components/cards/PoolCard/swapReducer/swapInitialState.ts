@@ -1,15 +1,15 @@
-import { SwapCardStage, type SwapState } from './types'
-import { ButtonType } from '../../../buttons/SwapButton/constants'
+import { SwapCardStage } from './types'
+import { ButtonType } from '../PoolButton/constants'
 import { config } from '../../../../constants/config'
 
-// TODO change to mainnet on release
 const mainnetTokens = {
+	contractAddress: config.PARENT_POOL_CONTRACT,
 	chain: {
 		addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
 		explorerURI: 'https://basescan.org',
 		id: '8453',
 		logoURI: 'https://api.concero.io/static/icons/chains/8453.svg',
-		name: 'Base Mainnet',
+		name: 'Base',
 		symbol: 'ETH',
 		tokens: [],
 		providers: [],
@@ -17,18 +17,28 @@ const mainnetTokens = {
 	mainToken: {
 		address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
 		chain_id: '8453',
-		decimals: 18,
+		decimals: 6,
 		is_popular: true,
-		logoURI: 'https://basescan.org/token/images/centre-usdc_28.png',
-		name: 'USDC',
-		priceUsd: null,
+		logoURI:
+			'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
+		name: 'USD Coin',
+		priceUsd: 1,
 		symbol: 'USDC',
 	},
-	lpToken: null,
+	lpToken: {
+		address: config.LPTOKEN,
+		chain_id: '8453',
+		decimals: 18,
+		is_popular: true,
+		logoURI: null,
+		name: 'Concero LP',
+		priceUsd: null,
+		symbol: 'CLP',
+	},
 }
 
 const testnetTokens = {
-	contractAddress: config.PARENT_POOL_CONTRACT,
+	contractAddress: '0x42b40f42f28178998b2a4A8e5fe725F65403Ed24',
 	chain: {
 		addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
 		explorerURI: 'https://sepolia.basescan.org',
@@ -46,11 +56,11 @@ const testnetTokens = {
 		is_popular: true,
 		logoURI: 'https://sepolia.basescan.org/images/main/empty-token.png',
 		name: 'Base Sepolia USDC',
-		priceUsd: null,
+		priceUsd: 1,
 		symbol: 'USDC',
 	},
 	lpToken: {
-		address: '0x7BC475A2E15Bc4DBB5c9307c9Cd20e54cfc35A68',
+		address: '0x459FDd324126aE6f4F4d7dE8616867f33DF0d4f6',
 		chain_id: '84532',
 		decimals: 18,
 		is_popular: true,
@@ -97,5 +107,5 @@ export const swapInitialState = () => ({
 	walletBalances: null,
 	isDestinationAddressVisible: false,
 	settingsModalOpen: false,
-	isTestnet: true,
+	isTestnet: false,
 })

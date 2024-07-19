@@ -11,7 +11,7 @@ export const LiquidityCapCard = () => {
 	const [poolLiquidity, setPoolLiquidity] = useState<number>(0)
 	const { t } = useTranslation()
 
-	const percentage = (poolLiquidity / maxCap) * 100 * 100
+	const percentage = (poolLiquidity / maxCap) * 100
 
 	const setCap = async () => {
 		const cap = await getMaxCap()
@@ -29,7 +29,7 @@ export const LiquidityCapCard = () => {
 		<Card className={`${classNames.liquidityCapCard} cardConvex`}>
 			<h4 className={classNames.title}>{t('liquidityCap.title')}</h4>
 			<h2>
-				${poolLiquidity} <span className={classNames.maxValue}>/ ${maxCap}</span>
+				${poolLiquidity.toFixed(0)} <span className={classNames.maxValue}>/ ${maxCap}</span>
 			</h2>
 			<ProgressBar percentage={percentage || 0} />
 		</Card>

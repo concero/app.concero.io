@@ -33,7 +33,17 @@ export const PoolScreen = () => {
 
 	return (
 		<div className={classNames.poolWrapper}>
-			<div className={classNames.poolContainer}>{activeTab.component}</div>
+			<div className={classNames.poolContainer}>
+				{menuItems.map(item => (
+					<div
+						key={item.value}
+						className={item.value === activeTab.value ? classNames.activeTab : classNames.inactiveTab}
+					>
+						{item.component}
+					</div>
+				))}
+			</div>
+
 			<TabBar items={menuItems} changeTab={changeTab} activeTab={activeTab} />
 		</div>
 	)

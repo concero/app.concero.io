@@ -13,21 +13,29 @@ interface AmountUsdProps {
 	isTestnet: boolean
 }
 
-export function AmountUsd({ state, balance, selection, direction, handleMaxButtonClick, isTestnet }: AmountUsdProps) {
+export function AmountUsd({ state, balance, selection, direction, handleMaxButtonClick }: AmountUsdProps) {
 	const { t } = useTranslation()
+
+	const maxButton = (
+		<h4 className={classNames.maxButton} onMouseDown={handleMaxButtonClick}>
+			Max: {balance?.amount.rounded}
+		</h4>
+	)
+
+	const enterAmountField = <h4>{t('tokenArea.enterAmount')}</h4>
+
+	const amountUsd = (
+		<h4>{`$${numberToFormatString((selection.token.priceUsd ?? 0) * Number(selection.amount), 2)}`}</h4>
+	)
 
 	if (direction === 'from') {
 		return (
 			<div className={classNames.amountUsdContainer}>
-				{state.isFocused && !selection.amount && balance && isTestnet ? (
-					<h4 className={classNames.maxButton} onMouseDown={handleMaxButtonClick}>
-						Max: {balance?.amount.rounded}
-					</h4>
-				) : !state.isFocused && selection.amount === '' ? (
-					<h4>{t('tokenArea.enterAmount')}</h4>
-				) : (
-					<h4>{`$${numberToFormatString((selection.token.priceUsd ?? 0) * Number(selection.amount), 2)}`}</h4>
-				)}
+				{state.isFocused && !selection.amount && balance
+					? maxButton
+					: !state.isFocused && selection.amount === ''
+						? enterAmountField
+						: amountUsd}
 			</div>
 		)
 	} else {

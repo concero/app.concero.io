@@ -1,14 +1,14 @@
-import { type Address, createPublicClient, http, formatUnits } from 'viem'
-import { baseSepolia } from 'viem/chains'
+import { createPublicClient, http, formatUnits } from 'viem'
 import { abi } from '../../../abi/ParentPool.json'
 import { config } from '../../../constants/config'
+import { base } from 'wagmi/chains'
 
 const usdcDecimals = 6
 
 export const getMaxCap = async () => {
 	try {
 		const client = createPublicClient({
-			chain: baseSepolia,
+			chain: base,
 			transport: http(),
 		})
 
