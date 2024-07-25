@@ -13,7 +13,6 @@ import { AmountInputSkeleton } from './AmountInputSkleton/AmountInputSkeleton'
 import { AmountUsd } from './AmountUsd'
 import { config } from '../../../../constants/config'
 import { SwapCardStage } from '../swapReducer/types'
-import { testnetToMainnetChainsMap } from '../../../../constants/testnetToMainnetChainsMap'
 
 export const TokenArea: FC<TokenAreaProps> = ({
 	direction,

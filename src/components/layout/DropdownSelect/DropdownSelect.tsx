@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { Card } from '../../cards/Card/Card'
 import { Button } from '../../buttons/Button/Button'
 import { IconChevronDown } from '@tabler/icons-react'
@@ -16,6 +16,18 @@ export interface DropdownSelectProps {
 export default function Dropdown({ activeItem, setActiveItem, items, variant = 'fill' }: DropdownSelectProps) {
 	const [isOpen, setIsOpen] = useState(false)
 
+	useEffect(() => {
+		document.addEventListener('click', () => {
+			setIsOpen(false)
+		})
+
+		return () => {
+			document.removeEventListener('click', () => {
+				setIsOpen(false)
+			})
+		}
+	}, [])
+
 	const fadeAnimation = useSpring({
 		opacity: isOpen ? 1 : 0,
 		translateY: isOpen ? 0 : -20,
@@ -25,7 +37,8 @@ export default function Dropdown({ activeItem, setActiveItem, items, variant = '
 		from: { opacity: 0, pointerEvents: 'none' },
 	})
 
-	const toggleOptions = () => {
+	const toggleOptions = e => {
+		e.stopPropagation()
 		setIsOpen(prev => !prev)
 	}
 

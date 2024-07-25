@@ -6,21 +6,10 @@ import { routes } from './constants/routes'
 import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
-import { PoolScreen } from './components/screens/PoolScreen/PoolScreen'
 
-const SwapScreen = lazy(
+const PoolScreen = lazy(
 	async () =>
-		await import('./components/screens/SwapScreen/SwapScreen').then(module => ({ default: module.SwapScreen })),
-)
-const PortfolioScreen = lazy(
-	async () =>
-		await import('./components/screens/PortfolioScreen/PortfolioScreen').then(module => ({
-			default: module.PortfolioScreen,
-		})),
-)
-const EarnScreen = lazy(
-	async () =>
-		await import('./components/screens/EarnScreen/EarnScreen').then(module => ({ default: module.EarnScreen })),
+		await import('./components/screens/PoolScreen/PoolScreen').then(module => ({ default: module.PoolScreen })),
 )
 
 export const Navigator = () => {
@@ -38,33 +27,6 @@ export const Navigator = () => {
 				<Header isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
 				<Routes>
 					<Route
-						path={routes.swap}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<SwapScreen
-									isNewSwapCardMode={isNewSwapCardMode}
-									setIsNewSwapCardMode={setIsNewSwapCardMode}
-								/>
-							</Suspense>
-						}
-					/>
-					<Route
-						path={routes.portfolio}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<PortfolioScreen />
-							</Suspense>
-						}
-					/>
-					<Route
-						path={routes.earn}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<EarnScreen />
-							</Suspense>
-						}
-					/>
-					<Route
 						path={routes.pool}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
@@ -72,8 +34,8 @@ export const Navigator = () => {
 							</Suspense>
 						}
 					/>
-					<Route path={routes.root} element={<Navigate to={routes.swap} />} />
-					<Route path={'/*'} element={<Navigate to={routes.swap} />} />
+					<Route path={routes.root} element={<Navigate to={routes.pool} />} />
+					<Route path={'/*'} element={<Navigate to={routes.pool} />} />
 				</Routes>
 			</AppScreen>
 		</BrowserRouter>
