@@ -25,7 +25,7 @@ export const VolumeByChainCard = () => {
 		const data = Object.entries(chainsDataMap).map(([chainId, amount]) => {
 			return {
 				name: chainsMap[Number(chainId)],
-				amount: amount.toFixed(2),
+				amount: Number(amount.toFixed(2)),
 			}
 		})
 
