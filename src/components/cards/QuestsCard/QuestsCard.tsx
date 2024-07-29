@@ -94,7 +94,7 @@ export const QuestsCard = () => {
 				)}
 			</div>
 			<QuestCard quest={quests[0]} />
-			<div className="row gap-md">
+			<div className={classNames.otherQuestsWrap}>
 				<QuestCard quest={quests[1]} variant="normal" />
 				<div className={classNames.smallCardsContainer}>
 					<QuestCard quest={quests[2]} variant="small" />

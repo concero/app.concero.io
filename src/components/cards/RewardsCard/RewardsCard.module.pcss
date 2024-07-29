@@ -23,6 +23,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	gap: var(--sp-lg);
 }
 
 .avatar {
@@ -51,13 +52,16 @@
 }
 
 .connectSocialNetworkButton {
+	cursor: pointer;
 	gap: 6px;
 	border-radius: 12px;
 	text-align: start;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	width: fit-content;
+	background: var(--color-primary-750);
+	border: 1px solid #f7f3ff40;
+	padding: 10px var(--sp-md);
 
 	h4 {
 		color: var(--color-primary-500);
@@ -78,4 +82,18 @@
 
 .achievementButton {
 	color: var(--color-grey-450);
+}
+
+@media (max-width: 768px) {
+	.connectSocialNetworkButton {
+		gap: 6px;
+
+		h4 {
+			font-size: 12px;
+		}
+
+		span {
+			font-size: 12px;
+		}
+	}
 }

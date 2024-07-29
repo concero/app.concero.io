@@ -10,8 +10,6 @@ import LegoIcon from '../../../assets/icons/achievements/lego.svg'
 import CrownIcon from '../../../assets/icons/achievements/crown.svg'
 import RobotIcon from '../../../assets/icons/achievements/robot.svg'
 import AlienIcon from '../../../assets/icons/achievements/alien.svg'
-import { TooltipComingSoonContent } from '../../layout/Header/Header/TooltipContent'
-import { WithTooltip } from '../../wrappers/WithTooltip'
 
 const RewardsHeader = () => {
 	const { address } = useAccount()
@@ -39,15 +37,15 @@ const RewardsHeader = () => {
 
 const SocialNetworkChecks = () => {
 	return (
-		<div className="row gap-md wrap">
-			<Button className={classNames.connectSocialNetworkButton} variant="light">
+		<div className="row gap-md">
+			<a className={classNames.connectSocialNetworkButton}>
 				<h4>Connect Discord</h4>
 				<span className="body1">+5 points</span>
-			</Button>
-			<Button className={classNames.connectSocialNetworkButton} variant="light">
+			</a>
+			<a className={classNames.connectSocialNetworkButton}>
 				<h4>Connect Twitter</h4>
 				<span className="body1">+5 points</span>
-			</Button>
+			</a>
 		</div>
 	)
 }
@@ -55,32 +53,23 @@ const SocialNetworkChecks = () => {
 const AchievementsPreview = () => {
 	const achievements = [AlienIcon, CrownIcon, RobotIcon, LegoIcon, RobotIcon, CrownIcon, AlienIcon]
 
-	const OpenAchievementsButton = () => (
-		<Button
-			className={classNames.achievementButton}
-			size="xs"
-			variant="black"
-			rightIcon={<IconChevronRight width={16} height={16} stroke={2} color={'var(--color-grey-550)'} />}
-		>
-			See all achievements
-		</Button>
-	)
-
-	const ComingSoon = WithTooltip({
-		WrappedComponent: OpenAchievementsButton,
-		Tooltip: TooltipComingSoonContent,
-	})
-
 	return (
 		<div>
 			<span className={classNames.separator} />
-			<div className="row jsb ac wrap">
+			<div className="row jsb ac wrap gap-md">
 				<div className="row gap-md">
 					{achievements.map(achievement => (
 						<img width={24} height={24} src={achievement} alt="achievement" />
 					))}
 				</div>
-				{ComingSoon}
+				<Button
+					className={classNames.achievementButton}
+					size="xs"
+					variant="black"
+					rightIcon={<IconChevronRight width={16} height={16} stroke={2} color={'var(--color-grey-550)'} />}
+				>
+					See all achievements
+				</Button>
 			</div>
 		</div>
 	)
