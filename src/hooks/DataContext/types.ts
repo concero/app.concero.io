@@ -7,8 +7,8 @@ export interface DataProviderProps {
 
 export interface GetTokensParams {
 	chainId?: string
-	offset: number
-	limit: number
+	offset?: number
+	limit?: number
 	search?: string
 	walletAddress?: string
 }

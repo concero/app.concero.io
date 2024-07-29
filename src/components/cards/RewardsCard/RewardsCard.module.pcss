@@ -1,22 +1,81 @@
 .container {
 	width: 100%;
+	gap: var(--st-br-md);
+	overflow: hidden;
+
+	&:before {
+		content: ' ';
+		position: absolute;
+		right: -15px;
+		top: -15px;
+		width: 50px;
+		height: 80px;
+		border-radius: 50%;
+		z-index: 0;
+		background: var(--color-primary-600);
+		filter: blur(60px);
+	}
 }
 
-.rewardsItemContainer {
-	width: 100%;
+.header {
+	display: flex;
+	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--color-primary-700);
-	border: 1px solid var(--color-primary-600);
+}
 
-	.valueContainer {
-		flex-direction: row;
-		align-items: center;
-		gap: var(--sp-sm);
+.avatar {
+	border-radius: 50%;
+	width: 32px;
+	height: 32px;
+}
 
-		p {
-			color: var(--color-primary-500);
-		}
+.pointsButton {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	flex-direction: row;
+	background: none;
+	gap: var(--st-br-xs);
+	z-index: 1;
+
+	h4 {
+		color: var(--color-primary-500);
 	}
+
+	span {
+		font-weight: normal;
+		color: var(--color-primary-650);
+	}
+}
+
+.connectSocialNetworkButton {
+	gap: 6px;
+	border-radius: 12px;
+	text-align: start;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: fit-content;
+
+	h4 {
+		color: var(--color-primary-500);
+	}
+
+	span {
+		font-weight: normal;
+		color: var(--color-primary-600);
+	}
+}
+
+.separator {
+	height: 1px;
+	margin-bottom: var(--sp-md);
+	width: 100%;
+	background: var(--color-grey-600);
+}
+
+.achievementButton {
+	color: var(--color-grey-450);
 }
