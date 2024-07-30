@@ -1,6 +1,5 @@
 import classNames from './RewardsCard.module.pcss'
 import { Card } from '../Card/Card'
-import { useAccount } from 'wagmi'
 import BlockiesSvg from 'blockies-react-svg'
 import { truncateWallet } from '../../../utils/formatting'
 import { IconChevronRight } from '@tabler/icons-react'
@@ -10,14 +9,19 @@ import LegoIcon from '../../../assets/icons/achievements/lego.svg'
 import CrownIcon from '../../../assets/icons/achievements/crown.svg'
 import RobotIcon from '../../../assets/icons/achievements/robot.svg'
 import AlienIcon from '../../../assets/icons/achievements/alien.svg'
+import { type IUser } from '../../../api/concero/userType'
 
-const RewardsHeader = () => {
-	const { address } = useAccount()
+interface RewardsCardProps {
+	user: IUser
+}
+
+const RewardsHeader = ({ user }: RewardsCardProps) => {
+	const { address } = user
 
 	return (
 		<div className={classNames.header}>
 			<div className="row gap-md ac">
-				<BlockiesSvg address={address!} className={classNames.avatar} />
+				<BlockiesSvg address={address} className={classNames.avatar} />
 				<div className="afs">
 					<h3>concero.eth</h3>
 					<p className="body1">{address ? truncateWallet(address) : 'Connect your wallet'}</p>
@@ -26,7 +30,7 @@ const RewardsHeader = () => {
 
 			<button className={classNames.pointsButton}>
 				<div>
-					<h4>1589 points</h4>
+					<h4>{user.points} points</h4>
 					<span className="body1">2x multiplier</span>
 				</div>
 				<IconChevronRight width={16} height={16} stroke={2} color={'var(--color-primary-650)'} />
@@ -75,10 +79,10 @@ const AchievementsPreview = () => {
 	)
 }
 
-export const RewardsCard = () => {
+export const RewardsCard = ({ user }: RewardsCardProps) => {
 	return (
 		<Card className={classNames.container}>
-			<RewardsHeader />
+			<RewardsHeader user={user} />
 			<SocialNetworkChecks />
 			<AchievementsPreview />
 		</Card>
