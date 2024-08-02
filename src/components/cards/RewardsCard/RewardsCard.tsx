@@ -10,46 +10,61 @@ import CrownIcon from '../../../assets/icons/achievements/crown.svg'
 import RobotIcon from '../../../assets/icons/achievements/robot.svg'
 import AlienIcon from '../../../assets/icons/achievements/alien.svg'
 import { type IUser } from '../../../api/concero/userType'
+import { useEffect, useState } from 'react'
+import { type Address, createPublicClient } from 'viem'
+import { SocialNetworkButtons } from './SocialNetworkButtons'
+import { mainnet } from 'wagmi/chains'
+import { http } from 'wagmi'
 
 interface RewardsCardProps {
-	user: IUser
+	user: IUser | null | undefined
 }
 
+export const publicClient = createPublicClient({
+	chain: mainnet,
+	transport: http(),
+})
+
 const RewardsHeader = ({ user }: RewardsCardProps) => {
-	const { address } = user
+	const [ensName, setEnsName] = useState<string | null>('')
+
+	const handleGetEnsName = async () => {
+		if (user?.address) {
+			const ensName = await publicClient.getEnsName({
+				address: user.address as Address,
+			})
+
+			setEnsName(ensName)
+		}
+	}
+
+	useEffect(() => {
+		void handleGetEnsName()
+	}, [])
 
 	return (
 		<div className={classNames.header}>
 			<div className="row gap-md ac">
-				<BlockiesSvg address={address} className={classNames.avatar} />
+				{user && <BlockiesSvg address={user.address} className={classNames.avatar} />}
 				<div className="afs">
-					<h3>concero.eth</h3>
-					<p className="body1">{address ? truncateWallet(address) : 'Connect your wallet'}</p>
+					{ensName ? (
+						<>
+							<h3>concero.eth</h3>
+							<p className="body1">{truncateWallet(user.address)}</p>
+						</>
+					) : (
+						<h3>{user?.address ? truncateWallet(user.address) : 'Connect your wallet'}</h3>
+					)}
 				</div>
 			</div>
 
 			<button className={classNames.pointsButton}>
-				<div>
-					<h4>{user.points} points</h4>
-					<span className="body1">2x multiplier</span>
+				<div className="afs">
+					<h4>{user?.points.toFixed(4) ?? '0'} points</h4>
+					<span className="body1">{user && `${user.multiplier}x multiplier`}</span>
 				</div>
 				<IconChevronRight width={16} height={16} stroke={2} color={'var(--color-primary-650)'} />
 			</button>
-		</div>
-	)
-}
-
-const SocialNetworkChecks = () => {
-	return (
-		<div className="row gap-md">
-			<a className={classNames.connectSocialNetworkButton}>
-				<h4>Connect Discord</h4>
-				<span className="body1">+5 points</span>
-			</a>
-			<a className={classNames.connectSocialNetworkButton}>
-				<h4>Connect Twitter</h4>
-				<span className="body1">+5 points</span>
-			</a>
 		</div>
 	)
 }
@@ -83,7 +98,7 @@ export const RewardsCard = ({ user }: RewardsCardProps) => {
 	return (
 		<Card className={classNames.container}>
 			<RewardsHeader user={user} />
-			<SocialNetworkChecks />
+			<SocialNetworkButtons user={user} />
 			<AchievementsPreview />
 		</Card>
 	)

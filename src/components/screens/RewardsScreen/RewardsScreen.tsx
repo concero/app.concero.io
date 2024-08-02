@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { fetchUserByAddress } from '../../../api/concero/user/fetchUserByAddress'
 import { useAccount } from 'wagmi'
 import { type IUser } from '../../../api/concero/userType'
+import { createUser } from '../../../api/concero/user/createUser'
 
 const InfoTitle = () => {
 	return (
@@ -21,8 +22,15 @@ export const RewardsScreen = () => {
 	const [user, setUser] = useState<IUser>()
 
 	const handleFetchUser = async () => {
-		const newUser = await fetchUserByAddress(address!)
-		setUser(newUser)
+		const currentUser = await fetchUserByAddress(address!)
+
+		if (!currentUser) {
+			const newUser = await createUser(address!)
+			setUser(newUser)
+			return
+		}
+
+		setUser(currentUser)
 	}
 
 	useEffect(() => {
@@ -36,7 +44,7 @@ export const RewardsScreen = () => {
 			<div className={classNames.rewardsWrap}>
 				<RewardsCard user={user} />
 				<QuestsCard />
-				<LeaderboardCard />
+				<LeaderboardCard user={user} />
 			</div>
 
 			<InfoTitle />

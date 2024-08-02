@@ -10,7 +10,7 @@ export interface IUserTier {
 	bonuses: string[]
 }
 
-export enum PointsBoosters {
+export enum PointsBooster {
 	MultiplyX2 = 2,
 	MultiplyX5 = 5,
 	MultiplyX10 = 10,
@@ -18,15 +18,26 @@ export enum PointsBoosters {
 }
 
 export interface IUser {
+	_id: string
 	address: string
 	tier: IUserTier
 	points: number
 	passedQuests: IPassedQuest[]
-	multipliers: {
-		boosters: PointsBoosters[]
-	}
+	multiplier: PointsBooster
 	subscriptions: {
-		twitter: boolean
-		discord: boolean
+		twitter: {
+			id: string
+			username: string
+			email: string
+			avatar: string
+			locale: string
+		} | null
+		discord: {
+			id: string
+			username: string
+			email: string
+			avatar: string
+			locale: string
+		} | null
 	}
 }

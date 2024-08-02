@@ -32,3 +32,11 @@ export const post = async (url: string, data: any, headers?: any): Promise<any> 
 		data,
 		headers,
 	})
+
+export const patch = async (url: string, data: any, headers?: any): Promise<any> =>
+	await request({
+		url,
+		method: 'PATCH',
+		data,
+		headers,
+	})

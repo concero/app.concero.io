@@ -14,10 +14,44 @@ export enum DexType {
 	UnwrapWNative = 10,
 }
 
+interface IConceroInfraChain {
+	id: string
+	name: string
+	symbol: string
+	logoURI: string
+	addressPatterns: string[]
+	explorerURI: string
+	providers: [
+		{
+			name: string
+			symbol: string
+		},
+	]
+	tokens: string[]
+}
+
+interface IConceroInfraToken {
+	name: string
+	chain_id: string
+	symbol: string
+	address: string
+	decimals: number
+	logoURI: string
+	is_popular?: boolean
+	coinGeckoId: string
+	priceUsd: number | null
+	providers: [
+		{
+			name: string
+			symbol: string
+		},
+	]
+}
+
 export interface ISwapDirectionData {
 	address: Address
-	tokenAddress: Address
-	chainId: number
+	token: IConceroInfraToken
+	chain: IConceroInfraChain
 	amount: number
 }
 

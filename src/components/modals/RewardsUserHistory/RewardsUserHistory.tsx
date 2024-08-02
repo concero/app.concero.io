@@ -23,8 +23,10 @@ export const UserHistory = ({ isOpen, setIsOpen }: UserHistoryProps) => {
 	}
 
 	useEffect(() => {
-		void fetchAndSetUserTransactions()
-	}, [])
+		if (address) {
+			void fetchAndSetUserTransactions()
+		}
+	}, [address])
 
 	return (
 		<Modal show={isOpen} setShow={setIsOpen} title="History" className={classNames.historyModal}>
