@@ -15,7 +15,7 @@ export const getMaxCap = async () => {
 		const liquidityCap = await client.readContract({
 			address: config.PARENT_POOL_CONTRACT,
 			abi,
-			functionName: 'getMaxCap',
+			functionName: 'getMaxDeposit',
 		})
 
 		return Number(formatUnits(BigInt(liquidityCap as number), usdcDecimals))

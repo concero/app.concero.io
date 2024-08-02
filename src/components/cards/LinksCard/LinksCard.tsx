@@ -14,7 +14,7 @@ interface ExternalLinkProps {
 
 const auditsLinks: Link[] = [
 	{
-		title: 'Deadub',
+		title: 'Dedaub',
 		url: 'https://dedaub.com',
 	},
 	{

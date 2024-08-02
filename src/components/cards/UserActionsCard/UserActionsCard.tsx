@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react'
 import { watchUserActions } from './getUserActions'
 import dayjs from 'dayjs'
 import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
+import { useAccount } from 'wagmi'
 
 export interface UserTransaction {
 	eventName: string
 	time: number
-	amount: number
+	amount: string
 	status: string | null
+	transactionHash: string
+	address: string
 }
 
 export interface UserActionsCardProps {
@@ -17,19 +20,20 @@ export interface UserActionsCardProps {
 }
 
 export function UserActionsCard() {
+	const { address } = useAccount()
 	const [actions, setActions] = useState<UserTransaction[]>([])
 
 	const watchActions = async () => {
-		await watchUserActions(actions => {
+		await watchUserActions(address, actions => {
 			setActions(prev => [...prev, ...actions])
 		})
 	}
 
-	// useEffect(() => {
-	// 	if (actions.length !== 0) return
-	//
-	// 	// watchActions()
-	// }, [actions])
+	useEffect(() => {
+		if (actions.length !== 0 || !address) return
+
+		void watchActions()
+	}, [address])
 
 	const header = (
 		<div className={classNames.header}>

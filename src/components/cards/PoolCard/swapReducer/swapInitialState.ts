@@ -73,18 +73,18 @@ const testnetTokens = {
 
 export const swapInitialState = () => ({
 	from: {
-		chain: testnetTokens.chain,
-		token: testnetTokens.mainToken,
+		chain: mainnetTokens.chain,
+		token: mainnetTokens.mainToken,
 		amount: '',
 		amount_usd: 0.0,
 		address: '',
 	},
 	to: {
-		chain: testnetTokens.chain,
-		token: testnetTokens.lpToken,
+		chain: mainnetTokens.chain,
+		token: mainnetTokens.lpToken,
 		amount: '',
 		amount_usd: 0.0,
-		address: testnetTokens.contractAddress,
+		address: mainnetTokens.contractAddress,
 	},
 	poolMode: 'deposit',
 	balance: null,

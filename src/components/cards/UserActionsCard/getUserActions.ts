@@ -1,8 +1,7 @@
-import { createPublicClient, decodeEventLog, formatUnits, parseAbiItem } from 'viem'
-import { baseSepolia } from 'wagmi/chains'
+import { type Address, createPublicClient, fallback, formatUnits } from 'viem'
+import { base } from 'wagmi/chains'
 import { http } from 'wagmi'
 import { abi } from '../../../abi/ParentPool.json'
-import { type DecodeEventLogReturnType } from 'viem/utils/abi/decodeEventLog'
 import { type UserTransaction } from './UserActionsCard'
 import { config } from '../../../constants/config'
 import dayjs from 'dayjs'
@@ -11,78 +10,61 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 
 const publicClient = createPublicClient({
-	chain: baseSepolia,
-	transport: http(),
+	chain: base,
+	transport: fallback([http('https://base-rpc.publicnode.com'), http('https://base.drpc.org')]),
 })
 
-export const watchUserActions = async (onGetActions: (logs: DecodeEventLogReturnType[]) => any) => {
-	try {
-		const blockNumber = await publicClient.getBlockNumber()
-		const firstBlockNumber = 12132922n
+export const watchUserActions = async (address: Address, onGetActions: (logs: UserTransaction[]) => any) => {
+	const blockNumber = await publicClient.getBlockNumber()
+	const firstBlockNumber = 17868906n
 
-		const blockRange = 1999n
-		let toBlock = blockNumber
-		let fromBlock = blockNumber - blockRange
+	const blockRange = 50_000n
+	let toBlock = blockNumber
+	let fromBlock = blockNumber - blockRange
 
-		let countTx = 0
+	let countTx = 0
 
-		while (Number(toBlock) >= Number(firstBlockNumber) || countTx <= 30) {
-			const currentBlock = await publicClient.getBlock({
-				blockNumber: toBlock,
+	while (toBlock >= firstBlockNumber) {
+		countTx++
+
+		const events = await publicClient.getContractEvents({
+			address: config.PARENT_POOL_CONTRACT,
+			abi,
+			eventName: 'ConceroParentPool_DepositCompleted',
+			args: {
+				lpAddress: address,
+			},
+			toBlock,
+			fromBlock,
+		})
+
+		const userActions: UserTransaction[] = []
+
+		console.log(events)
+		for (const event of events) {
+			const block = await publicClient.getBlock({
+				blockNumber: event.blockNumber,
 			})
 
-			const date = dayjs(Number(currentBlock.timestamp) * 1000)
-			const now = dayjs()
-			const oneWeekAgo = now.subtract(1, 'week')
-			const isMoreThanWeekAgo = date.isSameOrBefore(oneWeekAgo)
-
-			console.log('isMoreThanAWeekAgo', isMoreThanWeekAgo)
-
-			const logs = await publicClient.getLogs({
-				address: config.PARENT_POOL_CONTRACT,
-				event: parseAbiItem(
-					'event ParentPool_SuccessfulDeposited(address liquidityProvider, uint256 _amount, address _token)',
-				),
-				toBlock,
-				fromBlock,
-			})
-
-			const decodedLogs = []
-			for (const log of logs) {
-				try {
-					const decodedLog = decodeEventLog({
-						abi,
-						data: log.data,
-						topics: log.topics,
-					})
-
-					const block = await publicClient.getBlock({
-						blockHash: log.blockHash,
-					})
-
-					const result: UserTransaction = {
-						time: Number(block.timestamp) * 1000,
-						amount: formatUnits(decodedLog.args!._amount, 6),
-						eventName: decodedLog.eventName!,
-						status: null,
-					}
-
-					decodedLogs.push(result)
-				} catch (err) {
-					continue
-				}
+			const result: UserTransaction = {
+				time: Number(block.timestamp) * 1000,
+				amount: formatUnits(event.args!.usdcAmount, 6),
+				eventName: event.eventName,
+				status: null,
+				transactionHash: event.transactionHash,
+				address: '',
 			}
 
-			onGetActions(decodedLogs)
-			countTx++
-
-			toBlock -= blockRange
-			fromBlock -= blockRange
+			userActions.push(result)
 		}
-	} catch (err) {
-		console.error(err)
-		console.error(err.message)
 
-		return []
+		onGetActions(
+			userActions.sort((a, b) => {
+				return b.time - a.time
+			}),
+		)
+
+		toBlock -= blockRange
+		fromBlock -= blockRange
 	}
 }
