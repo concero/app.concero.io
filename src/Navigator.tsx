@@ -6,6 +6,8 @@ import { routes } from './constants/routes'
 import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
+import { RewardsScreen } from './components/screens/RewardsScreen/RewardsScreen'
+import { handleCreateUser } from './web3/handleCreateUser'
 
 const PoolScreen = lazy(
 	async () =>
@@ -18,6 +20,8 @@ export const Navigator = () => {
 
 	useEffect(() => {
 		if (!address) return
+
+		void handleCreateUser(address)
 		posthog.identify(address)
 	}, [address])
 
@@ -31,6 +35,14 @@ export const Navigator = () => {
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
 								<PoolScreen />
+							</Suspense>
+						}
+					/>
+					<Route
+						path={routes.rewards}
+						element={
+							<Suspense fallback={<FullScreenLoader />}>
+								<RewardsScreen />
 							</Suspense>
 						}
 					/>

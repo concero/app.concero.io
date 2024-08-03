@@ -2,7 +2,7 @@
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: var(--sp-screen-h) 60px var(--sp-md);
+	margin: var(--sp-screen-h) 60px var(--sp-xxl);
 }
 
 .comingSoonContainer {
@@ -61,4 +61,10 @@ a:hover {
 	flex-direction: row;
 	align-items: center;
 	gap: var(--sp-sm);
+}
+
+@media (max-width: 768px) {
+	.header {
+		margin: var(--sp-screen-h) 10px var(--sp-xxl);
+	}
 }

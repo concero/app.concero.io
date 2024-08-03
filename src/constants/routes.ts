@@ -2,6 +2,7 @@ export const routes = {
 	home: '/',
 	root: '/',
 	pool: '/pool',
+	rewards: '/rewards',
 	swap: '/swap',
 	auth: '/auth',
 	login: '/login',
