@@ -131,5 +131,8 @@ export const tr = {
 		languageModal: {
 			title: 'Dil değiştir',
 		},
+		liquidityCap: {
+			title: 'Likidite sermayesi',
+		},
 	},
 }

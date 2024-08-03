@@ -13,9 +13,9 @@ export interface MenuPopoverProps {
 
 export const MenuPopover: FC<MenuPopoverProps> = ({ items }) => (
 	<div className={styles.container}>
-		{items.map((item, index) => (
+		{items.map(item => (
 			<div
-				key={index}
+				key={item}
 				className={styles.menuItem}
 				onClick={() => {
 					item.onClick && item.onClick()

@@ -4,3 +4,8 @@ export type NestedObj<TObj, TKey extends keyof TObj> = {
 
 export type Nullable<T> = T | null
 export type Optional<T> = T | undefined
+
+export interface ChartData {
+	value: number
+	time: number
+}

@@ -1,18 +1,14 @@
-import React, { type FC, useContext, useEffect, useRef } from 'react'
-import { createChart } from 'lightweight-charts'
+import { type FC, useContext, useEffect, useRef } from 'react'
+import { type IChartApi, createChart } from 'lightweight-charts'
 import { animated, useSpring } from '@react-spring/web'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
-
-interface DataPoint {
-	time: string
-	value: number
-}
+import { type ChartData } from '../../../types/utils'
 
 interface ChartProps {
-	data: DataPoint[]
-	secondData?: DataPoint[] | null
+	data: ChartData[]
+	secondData?: ChartData[] | null
 }
 
 const useFadeInAnimation = () =>
@@ -23,8 +19,8 @@ const useFadeInAnimation = () =>
 		reset: true,
 	})
 
-const averageData = (data: DataPoint[], interval: number): DataPoint[] => {
-	const result: DataPoint[] = []
+const averageData = (data: ChartData[], interval: number): ChartData[] => {
+	const result: ChartData[] = []
 	let sum = 0
 	let count = 0
 
@@ -34,7 +30,7 @@ const averageData = (data: DataPoint[], interval: number): DataPoint[] => {
 
 		if (count === interval || i === data.length - 1) {
 			result.push({
-				time: data[i].time,
+				date: data[i].date,
 				value: sum / count,
 			})
 			sum = 0
@@ -79,12 +75,9 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 		}
 	}, [colors, data])
 
-	const setupChartStyles = (chart, colors) => {
-		chart.timeScale().applyOptions({ borderColor: 'transparent' })
-		chart.priceScale('right').applyOptions({
-			borderColor: 'transparent',
-			textColor: colors.text.secondary,
-		})
+	const setupChartStyles = (chart: IChartApi) => {
+		chart.timeScale().applyOptions({ visible: false })
+		chart.priceScale('right').applyOptions({ visible: false })
 	}
 
 	const addSecondSeries = (chart, secondData, colors, theme) => {

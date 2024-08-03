@@ -131,5 +131,8 @@ export const ua = {
 		languageModal: {
 			title: 'Змінити мову',
 		},
+		liquidityCap: {
+			title: 'Ліквідний капітал',
+		},
 	},
 }

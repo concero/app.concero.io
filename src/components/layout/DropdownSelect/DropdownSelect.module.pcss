@@ -1,0 +1,37 @@
+.dropdownSelect {
+	position: relative;
+}
+
+.dropdownButton {
+	border: none;
+	background: var(--color-grey-650);
+
+	&:hover {
+		background: var(--color-grey-650);
+		border: none;
+	}
+}
+
+.dropdownButtonSimple {
+	border: none;
+	background: none;
+
+	&:hover {
+		background: none;
+		border: none;
+	}
+}
+
+.selectOptions {
+	position: absolute;
+	right: 0;
+	min-width: 140px;
+
+	button {
+		justify-content: flex-start;
+	}
+
+	button:hover {
+		transform: translateY(-2px);
+	}
+}

@@ -1,5 +1,5 @@
 import { type SwapState } from './types'
-import { ButtonType } from '../../../buttons/SwapButton/constants'
+import { ButtonType } from '../../PoolCard/SwapButton/constants'
 
 export const swapInitialState = (selection): SwapState => ({
 	from: {
@@ -36,5 +36,5 @@ export const swapInitialState = (selection): SwapState => ({
 	walletBalances: null,
 	isDestinationAddressVisible: false,
 	settingsModalOpen: false,
-	isTestnet: true,
+	isTestnet: false,
 })

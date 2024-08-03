@@ -130,5 +130,8 @@ export const th = {
 		languageModal: {
 			title: 'เปลี่ยนภาษา',
 		},
+		liquidityCap: {
+			title: 'ทุนสภาพคล่อง',
+		},
 	},
 }

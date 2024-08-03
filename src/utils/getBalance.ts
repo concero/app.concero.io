@@ -1,8 +1,9 @@
 import { type Dispatch } from 'react'
-import { fetchTokenBalance } from '../api/rango/fetchTokenBalance'
 import { type SwapAction } from '../components/cards/SwapCard/swapReducer/types'
-import { reverseRangoChainsMap } from '../api/rango/rangoChainsMap'
 import { TokenAmount } from './TokenAmount'
+import { createPublicClient, erc20Abi, getContract } from 'viem'
+import { baseSepolia } from 'wagmi/chains'
+import { http } from 'wagmi'
 
 interface HandleBalanceProps {
 	dispatch: Dispatch<SwapAction>
@@ -23,6 +24,11 @@ interface HandleBalanceProps {
 	address: string | null | undefined
 }
 
+const publicClient = createPublicClient({
+	chain: baseSepolia, // TODO change to mainnet
+	transport: http(),
+})
+
 const handleError = (dispatch: Dispatch<SwapAction>) => {
 	dispatch({ type: 'SET_BALANCE', payload: null })
 }
@@ -33,22 +39,23 @@ export async function getBalance({ dispatch, from, address }: HandleBalanceProps
 		return
 	}
 
-	const rangoChainSymbol = reverseRangoChainsMap[String(from.chain.id)]
-	if (!rangoChainSymbol) {
-		handleError(dispatch)
-		return
-	}
+	try {
+		const tokenFromContract = getContract({
+			address: from.token.address as `0x${string}`,
+			abi: erc20Abi,
+			client: publicClient,
+		})
 
-	const response = await fetchTokenBalance(rangoChainSymbol, from.token.address, address, from.token.symbol)
-	if (!response) {
+		const userBalanceAmount = await tokenFromContract.read.balanceOf([address])
+
+		dispatch({
+			type: 'SET_BALANCE',
+			payload: {
+				amount: new TokenAmount(String(userBalanceAmount), from.token.decimals),
+				symbol: from.token.symbol,
+			},
+		})
+	} catch (err) {
 		handleError(dispatch)
-		return
 	}
-	dispatch({
-		type: 'SET_BALANCE',
-		payload: {
-			amount: new TokenAmount(response.data, from.token.decimals),
-			symbol: from.token.symbol,
-		},
-	})
 }

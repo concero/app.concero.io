@@ -4,7 +4,7 @@ import { TokenArea } from '../TokenArea/TokenArea'
 import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
 import { type SwapInputProps } from './types'
-import { SwapButton } from '../../../buttons/SwapButton/SwapButton'
+import { SwapButton } from '../../PoolCard/SwapButton/SwapButton'
 import { InsuranceCard } from '../InsuranceCard/InsuranceCard'
 import { DataContext } from '../../../../hooks/DataContext/DataContext'
 import { type DataContextValue } from '../../../../hooks/DataContext/types'
@@ -16,6 +16,7 @@ import { SwapCardStage } from '../swapReducer/types'
 import { executeConceroRoute } from '../swapExecution/executeConceroRoute'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { handleSwap } from '../swapExecution/handleSwap'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode, setTxInfo }) => {
 	const { getChainByProviderSymbol } = useContext<DataContextValue>(DataContext)
@@ -64,19 +65,19 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 			setTxInfo(time)
 		}
 
-		// if (swapState.stage === 'input') {
-		// 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
-		// } else {
-		// 	await handleSwap({
-		// 		swapState,
-		// 		swapDispatch,
-		// 		address,
-		// 		switchChainHook,
-		// 		getChainByProviderSymbol,
-		// 		getSigner,
-		// 		isNewSwapCardMode,
-		// 	})
-		// }
+		if (swapState.stage === 'input') {
+			swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.review })
+		} else {
+			await handleSwap({
+				swapState,
+				swapDispatch,
+				address,
+				switchChainHook,
+				getChainByProviderSymbol,
+				getSigner,
+				isNewSwapCardMode,
+			})
+		}
 	}
 
 	return (

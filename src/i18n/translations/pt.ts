@@ -131,5 +131,8 @@ export const pt = {
 		languageModal: {
 			title: 'Mudar idioma',
 		},
+		liquidityCap: {
+			title: 'Capital de liquidez',
+		},
 	},
 }

@@ -30,4 +30,14 @@ export interface Chain {
 	symbol: string
 }
 
+export interface Fee {
+	poolLiquidity: number
+	loanGivenOut: number
+	feeMade: number
+	percentReturned: number
+	timestamp: number
+	chainId: number
+	blockNumber: number
+}
+
 export type TokenBalance = Record<string, Token[]>

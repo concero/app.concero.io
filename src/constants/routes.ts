@@ -1,6 +1,7 @@
 export const routes = {
 	home: '/',
 	root: '/',
+	pool: '/pool',
 	swap: '/swap',
 	auth: '/auth',
 	login: '/login',

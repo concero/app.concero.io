@@ -130,5 +130,8 @@ export const zh = {
 		languageModal: {
 			title: '更改语言',
 		},
+		liquidityCap: {
+			title: '流动资本',
+		},
 	},
 }

@@ -130,5 +130,8 @@ export const id = {
 		languageModal: {
 			title: 'Ganti bahasa',
 		},
+		liquidityCap: {
+			title: 'Modal likuiditas',
+		},
 	},
 }
