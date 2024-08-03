@@ -9,15 +9,29 @@ import {
 	type Hash,
 	type PublicClient,
 	type WalletClient,
+	http,
 } from 'viem'
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
-import { baseSepolia } from 'wagmi/chains'
-import { http } from 'wagmi'
+import { base } from 'viem/chains'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
+import { config } from '../../../../constants/config'
+import { getWithdrawStatus } from '../../../../api/concero/getUserActions'
+import { useAccount } from 'wagmi'
 
-// export const parentPoolAddress = config.PARENT_POOL_CONTRACT
-export const parentPoolAddress = '0x42b40f42f28178998b2a4A8e5fe725F65403Ed24' // TODO change to mainnet
-const chain = baseSepolia
+export type WithdrawType = 'completeWithdrawal' | 'startWithdraw'
+
+export const parentPoolAddress = config.PARENT_POOL_CONTRACT
+const chain = base
+
+const publicClient = createPublicClient({
+	chain,
+	transport: http(),
+})
+
+const walletClient = createWalletClient({
+	chain,
+	transport: custom(window && window.ethereum!),
+})
 
 async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
 	const depositAmount = BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)
@@ -58,7 +72,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 
 			console.log(decodedLog.eventName)
 
-			if (decodedLog.eventName === 'ParentPool_SuccessfulDeposited') {
+			if (decodedLog.eventName === 'ConceroParentPool_WithdrawRequestInitiated') {
 				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 				swapDispatch({
 					type: 'SET_SWAP_STEPS',
@@ -69,7 +83,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 	}
 }
 
-export async function executeDeposit(
+export async function startWithdrawal(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
 ): Promise<{ duration: number; hash: string } | undefined> {
@@ -88,16 +102,6 @@ export async function executeDeposit(
 				status: 'await',
 				txLink: null,
 			},
-		})
-
-		const publicClient = createPublicClient({
-			chain,
-			transport: http(),
-		})
-
-		const walletClient = createWalletClient({
-			chain,
-			transport: custom(window && window.ethereum!),
 		})
 
 		await walletClient.switchChain({ id: chain.id })
@@ -119,5 +123,76 @@ export async function executeDeposit(
 		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
+	}
+}
+
+export const completeWithdrawal = async (swapState: SwapState, swapDispatch: Dispatch<SwapAction>) => {
+	const hash = await walletClient.writeContract({
+		account: swapState.from.address,
+		abi: ParentPool,
+		functionName: 'completeWithdrawal',
+		args: [],
+		address: parentPoolAddress,
+		gas: 4_000_000n,
+	})
+
+	const receipt = await publicClient.waitForTransactionReceipt({
+		hash,
+		timeout: 300_000,
+		pollingInterval: 3_000,
+		retryCount: 30,
+	})
+
+	if (receipt.status === 'reverted') {
+		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+		swapDispatch({
+			type: 'SET_SWAP_STEPS',
+			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
+		})
+	}
+
+	for (const log of receipt.logs) {
+		try {
+			const decodedLog = decodeEventLog({
+				abi: ParentPool,
+				data: log.data,
+				topics: log.topics,
+			})
+
+			if (decodedLog.eventName === 'ConceroParentPool_Withdrawn') {
+				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
+				swapDispatch({
+					type: 'SET_SWAP_STEPS',
+					payload: [{ status: 'success', title: 'Sending transaction' }],
+				})
+			}
+			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
+				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
+				swapDispatch({
+					type: 'SET_SWAP_STEPS',
+					payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
+				})
+			}
+		} catch (err) {
+			console.error(err)
+		}
+	}
+}
+
+export const withdraw = async (swapState: SwapState, swapDispatch: Dispatch<SwapAction>) => {
+	swapDispatch({ type: 'SET_LOADING', payload: true })
+	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
+	swapDispatch({
+		type: 'SET_SWAP_STEPS',
+		payload: [{ status: 'pending', title: 'Sending transaction' }],
+	})
+
+	const withdrawStatus: WithdrawType = await getWithdrawStatus(swapState.from.address)
+
+	if (withdrawStatus === 'completeWithdrawal') {
+		void completeWithdrawal(swapState, swapDispatch)
+	}
+	if (withdrawStatus === 'startWithdraw') {
+		void startWithdrawal(swapState, swapDispatch)
 	}
 }

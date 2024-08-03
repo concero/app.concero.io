@@ -47,5 +47,6 @@ export function useSwapCardEffects({ swapState, swapDispatch, address }: UseSwap
 
 	useEffect(() => {
 		swapDispatch({ type: 'SET_ADDRESS', direction: 'from', payload: address })
+		swapDispatch({ type: 'SET_ADDRESS', direction: 'to', payload: address })
 	}, [address])
 }

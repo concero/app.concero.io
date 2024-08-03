@@ -1,7 +1,7 @@
 import { Card } from '../Card/Card'
 import classNames from './UserActionsCard.module.pcss'
 import { useEffect, useState } from 'react'
-import { watchUserActions } from './getUserActions'
+import { watchUserActions } from '../../../api/concero/getUserActions'
 import dayjs from 'dayjs'
 import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'

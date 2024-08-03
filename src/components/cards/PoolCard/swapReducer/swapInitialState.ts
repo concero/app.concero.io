@@ -84,7 +84,7 @@ export const swapInitialState = () => ({
 		token: mainnetTokens.lpToken,
 		amount: '',
 		amount_usd: 0.0,
-		address: mainnetTokens.contractAddress,
+		address: '',
 	},
 	poolMode: 'deposit',
 	balance: null,

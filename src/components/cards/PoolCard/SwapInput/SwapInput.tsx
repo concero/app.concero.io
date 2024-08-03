@@ -10,6 +10,7 @@ import { executeDeposit } from '../swapExecution/executeDeposit'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { PoolButton } from '../PoolButton/PoolButton'
+import { startWithdrawal, withdraw } from '../swapExecution/requestWithdraw'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode, setTxInfo }) => {
 	const { isConnected } = useAccount()
@@ -42,8 +43,13 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 			label: 'concero_begin_swap',
 			data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
 		})
-		const time = await executeDeposit(swapState, swapDispatch)
-		setTxInfo(time)
+
+		console.log(swapState)
+		if (swapState.poolMode === 'deposit') {
+			await executeDeposit(swapState, swapDispatch)
+		} else {
+			await withdraw(swapState, swapDispatch)
+		}
 	}
 
 	return (
