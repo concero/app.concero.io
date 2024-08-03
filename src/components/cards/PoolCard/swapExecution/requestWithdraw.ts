@@ -16,9 +16,11 @@ import { base } from 'viem/chains'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
 import { config } from '../../../../constants/config'
 import { getWithdrawStatus } from '../../../../api/concero/getUserActions'
-import { useAccount } from 'wagmi'
 
-export type WithdrawType = 'completeWithdrawal' | 'startWithdraw'
+export enum WithdrawStatus {
+	completeWithdrawal = 'completeWithdrawal',
+	startWithdraw = 'startWithdraw',
+}
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = base
@@ -187,7 +189,7 @@ export const withdraw = async (swapState: SwapState, swapDispatch: Dispatch<Swap
 		payload: [{ status: 'pending', title: 'Sending transaction' }],
 	})
 
-	const withdrawStatus: WithdrawType = await getWithdrawStatus(swapState.from.address)
+	const withdrawStatus: WithdrawStatus = await getWithdrawStatus(swapState.from.address)
 
 	if (withdrawStatus === 'completeWithdrawal') {
 		void completeWithdrawal(swapState, swapDispatch)

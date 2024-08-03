@@ -6,6 +6,7 @@ import { type UserTransaction } from '../../components/cards/UserActionsCard/Use
 import { config } from '../../constants/config'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import { WithdrawStatus } from '../../components/cards/PoolCard/swapExecution/requestWithdraw'
 
 dayjs.extend(isSameOrBefore)
 
@@ -14,13 +15,18 @@ const publicClient = createPublicClient({
 	transport: fallback([http('https://base-rpc.publicnode.com'), http('https://base.drpc.org')]),
 })
 
-export const getWithdrawStatus = async (address: Address) => {
-	const blockNumber = await publicClient.getBlockNumber()
+const sortByBlockNumber = events => {
+	return events.sort((a, b) => {
+		return Number(b.blockNumber) - Number(a.blockNumber)
+	})
+}
+
+export const getWithdrawStatus = async (address: Address): Promise<WithdrawStatus> => {
 	const firstBlockNumber = 17868906n
 
 	const blockRange = 50_000n
-	let toBlock = blockNumber
-	let fromBlock = blockNumber - blockRange
+	let toBlock = await publicClient.getBlockNumber()
+	let fromBlock = toBlock - blockRange
 
 	while (toBlock >= firstBlockNumber) {
 		const eventsWithdrawComplete = await publicClient.getContractEvents({
@@ -34,12 +40,6 @@ export const getWithdrawStatus = async (address: Address) => {
 			fromBlock,
 		})
 
-		for (const event of eventsWithdrawComplete) {
-			if (event.args.to.toLowerCase() === address.toLowerCase()) {
-				return 'startWithdraw'
-			}
-		}
-
 		const eventsWithdrawRequest = await publicClient.getContractEvents({
 			address: config.PARENT_POOL_CONTRACT,
 			abi,
@@ -51,22 +51,43 @@ export const getWithdrawStatus = async (address: Address) => {
 			fromBlock,
 		})
 
-		for (const event of eventsWithdrawRequest) {
-			if (event.args.caller.toLowerCase() === address.toLowerCase()) {
-				// const block = await publicClient.getBlock({
-				// 	blockNumber: event.blockNumber,
-				// })
+		const lastCompleteEvent = sortByBlockNumber(eventsWithdrawComplete).find(
+			event => event.args.to.toLowerCase() === address.toLowerCase(),
+		)
+		const lastRequestEvent = sortByBlockNumber(eventsWithdrawRequest).find(
+			event => event.args.caller.toLowerCase() === address.toLowerCase(),
+		)
 
-				// TODO: add date logic
-				return 'completeWithdrawal'
+		if (lastRequestEvent && lastCompleteEvent) {
+			const blockRequestEvent = await publicClient.getBlock({
+				blockNumber: lastRequestEvent.blockNumber,
+			})
+
+			const blockCompleteEvent = await publicClient.getBlock({
+				blockNumber: lastCompleteEvent.blockNumber,
+			})
+
+			console.log('blockCompleteEvent', new Date(Number(blockCompleteEvent.timestamp) * 1000))
+			console.log('blockRequestEvent', new Date(Number(blockRequestEvent.timestamp) * 1000))
+
+			console.log(blockCompleteEvent.timestamp, blockRequestEvent.timestamp)
+
+			if (blockCompleteEvent.timestamp > blockRequestEvent.timestamp) {
+				return WithdrawStatus.startWithdraw
+			} else {
+				return WithdrawStatus.completeWithdrawal
 			}
+		}
+
+		if (lastRequestEvent && !lastCompleteEvent) {
+			return WithdrawStatus.completeWithdrawal
 		}
 
 		toBlock -= blockRange
 		fromBlock -= blockRange
 	}
 
-	return 'startWithdraw'
+	return WithdrawStatus.startWithdraw
 }
 
 export const watchUserActions = async (address: Address, onGetActions: (logs: UserTransaction[]) => any) => {
@@ -127,8 +148,6 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 			const block = await publicClient.getBlock({
 				blockNumber: event.blockNumber,
 			})
-
-			console.log(event)
 
 			const result: UserTransaction = {
 				time: Number(block.timestamp) * 1000,

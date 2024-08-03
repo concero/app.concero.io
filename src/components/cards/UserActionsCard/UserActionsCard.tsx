@@ -58,13 +58,13 @@ export function UserActionsCard() {
 					src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
 				/>
 				<div>
-					<h5>{action.eventName === 'ParentPool_SuccessfulDeposited' ? 'Liquidity provided' : 'Untitled'}</h5>
+					<h5>{action.eventName}</h5>
 					<p className="body1">{dayjs(action.time).format('D MMMM, HH:mm, YYYY')}</p>
 				</div>
 			</div>
 			<div className={classNames.rightSide}>
 				{action.status && renderStatusTag(action.status)}
-				<h4>{action.amount} USDC</h4>
+				{action.amount ? <h4>{action.amount} USDC</h4> : null}
 			</div>
 		</div>
 	)
