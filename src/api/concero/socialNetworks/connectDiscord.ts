@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { updateUser } from '../user/updateUser'
-import { type IUser } from '../userType'
+import { type IUser } from '../user/userType'
 
 export const getToken = async (code: string) => {
 	const request = await axios({

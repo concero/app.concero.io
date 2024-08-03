@@ -1,4 +1,4 @@
-import type { IUser } from '../userType'
+import type { IUser } from './userType'
 import { get } from '../../client'
 
 export interface FetchUserResponse {

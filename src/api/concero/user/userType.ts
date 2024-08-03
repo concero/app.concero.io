@@ -27,10 +27,8 @@ export interface IUser {
 	subscriptions: {
 		twitter: {
 			id: string
-			username: string
-			email: string
-			avatar: string
-			locale: string
+			screen_name: string
+			name: string
 		} | null
 		discord: {
 			id: string

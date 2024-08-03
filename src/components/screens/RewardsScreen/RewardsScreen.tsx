@@ -5,7 +5,7 @@ import { LeaderboardCard } from '../../cards/LeaderboardCard/LeaderboardCard'
 import { useEffect, useState } from 'react'
 import { fetchUserByAddress } from '../../../api/concero/user/fetchUserByAddress'
 import { useAccount } from 'wagmi'
-import { type IUser } from '../../../api/concero/userType'
+import { type IUser } from '../../../api/concero/user/userType'
 import { createUser } from '../../../api/concero/user/createUser'
 
 const InfoTitle = () => {

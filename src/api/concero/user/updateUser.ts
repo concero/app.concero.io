@@ -1,4 +1,4 @@
-import type { IUser } from '../userType'
+import type { IUser } from './userType'
 import { patch } from '../../client'
 
 export const updateUser = async (userId: string, data: any): Promise<IUser> => {

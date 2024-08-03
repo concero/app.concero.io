@@ -1,5 +1,5 @@
 import classNames from './RewardsCard.module.pcss'
-import type { IUser } from '../../../api/concero/userType'
+import type { IUser } from '../../../api/concero/user/userType'
 import { useEffect, useState } from 'react'
 import { connectDiscord } from '../../../api/concero/socialNetworks/connectDiscord'
 import { connectTwitter, getRequestToken } from '../../../api/concero/socialNetworks/connectTwitter'
@@ -28,11 +28,11 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 	const handleConnectTwitter = async () => {
 		const params = new URL(document.location.href).searchParams
 		const twitterCode = params.get('oauth_token')
-		const twitterVerifyCode = params.get('oauth_token_secret')
+		const twitterVerifyCode = params.get('oauth_verifier')
 
-		if (twitterCode && twitterVerifyCode && user && !user.subscriptions.twitter?.username) {
+		if (twitterCode && twitterVerifyCode && user && !user.subscriptions.twitter?.screen_name) {
 			const fetchedNickname = await connectTwitter(twitterCode, twitterVerifyCode, user)
-			setDiscordNickname(fetchedNickname)
+			setTwitterNickname(fetchedNickname)
 		}
 	}
 
@@ -44,14 +44,14 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 		}
 
 		if (user?.subscriptions?.twitter) {
-			setTwitterNickname(user.subscriptions?.twitter?.username)
+			setTwitterNickname(user.subscriptions?.twitter?.screen_name)
 		} else {
 			void handleConnectTwitter()
 		}
 	}, [user])
 
 	const discordConnected = user?.subscriptions?.discord ? classNames.socialNetworkConnected : ''
-	const twitterConnected = user?.subscriptions?.twitter ? classNames.socialNetworkConnected : ''
+	const twitterConnected = twitterNickname ? classNames.socialNetworkConnected : ''
 	const buttonDisabled = !user ? classNames.connectSocialNetworkButtonDisabled : ''
 
 	return (

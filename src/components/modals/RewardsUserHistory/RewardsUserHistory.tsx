@@ -17,8 +17,6 @@ export const UserHistory = ({ isOpen, setIsOpen }: UserHistoryProps) => {
 
 	const fetchAndSetUserTransactions = async () => {
 		const response = await fetchUserTransactions(address!)
-
-		console.log('user txs: ', response)
 		setTransactions(response)
 	}
 
