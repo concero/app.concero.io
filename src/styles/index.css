@@ -56,7 +56,6 @@ body {
 	box-sizing: border-box;
 	display: flex;
 	margin: 0;
-	overflow: hidden;
 	padding: 0;
 	scrollbar-width: none;
 }
@@ -132,6 +131,10 @@ body::-webkit-scrollbar {
 	--color-blue-lighter: #1f9fff;
 	--color-blue-lightest: #0c7dcc;
 
+	/* pink */
+	--color-pink-500: #f735a9;
+	--color-pink-600: #fee8f7;
+
 	/* text */
 	--color-text-primary: #131313;
 	--color-button-text-primary: #fbfbfb;
@@ -205,6 +208,10 @@ body::-webkit-scrollbar {
 	--color-blue-light: #8ec7ff;
 	--color-blue-lighter: #b3d3ff;
 	--color-blue-lightest: #d9efff;
+
+	/* pink */
+	--color-pink-500: #f735a9;
+	--color-pink-600: #fee8f7;
 
 	/* text */
 	--color-text-primary: #f7f7f7;

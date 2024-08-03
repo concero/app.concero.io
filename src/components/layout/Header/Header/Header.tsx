@@ -5,12 +5,8 @@ import { routes } from '../../../../constants/routes'
 import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
-import { useTranslation } from 'react-i18next'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 import { FeedbackModal } from '../../../modals/FeedbackModal/FeedbackModal'
-import { trackEvent } from '../../../../hooks/useTracking'
-import { action, category } from '../../../../constants/tracking'
-import { Button } from '../../../buttons/Button/Button'
 
 interface HeaderProps {
 	style?: CSSProperties
@@ -22,17 +18,8 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewSwapCardMode }) => {
 	const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
 	const isMobile = useMediaQuery('mobile')
-	const matchSwap = useMatch(routes.pool)
-	const { t } = useTranslation()
-
-	const handleHelpButtonClick = () => {
-		setIsFeedbackModalOpened(prev => !prev)
-		void trackEvent({
-			category: category.Header,
-			action: action.ToggleFeedbackModalVisible,
-			label: 'toggle_feedback_modal',
-		})
-	}
+	const matchSwapPool = useMatch(routes.pool)
+	const matchSwapRewards = useMatch(routes.rewards)
 
 	return (
 		<header className={classNames.header}>
@@ -46,8 +33,11 @@ export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewS
 						<a className={classNames.link} target="_blank" href="http://lanca.io" rel="noreferrer">
 							Swap
 						</a>
-						<Link className={matchSwap ? classNames.active : classNames.link} to={routes.pool}>
+						<Link className={matchSwapPool ? classNames.active : classNames.link} to={routes.pool}>
 							Provide liquidity
+						</Link>
+						<Link className={matchSwapRewards ? classNames.active : classNames.link} to={routes.rewards}>
+							Rewards
 						</Link>
 					</ul>
 				) : null}
