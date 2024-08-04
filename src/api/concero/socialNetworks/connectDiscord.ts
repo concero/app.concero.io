@@ -10,11 +10,11 @@ export const getToken = async (code: string) => {
 		},
 		method: 'post',
 		data: {
-			client_id: '1267215033025429595',
-			client_secret: 'h2iFhXdlW38sQS9Khm9mbxVM-4MQ4Efr',
+			client_id: process.env.DISCORD_API_KEY,
+			client_secret: process.env.DISCORD_API_SECRET_KEY,
 			grant_type: 'authorization_code',
 			code,
-			redirect_uri: 'http://localhost:5173/rewards', // TODO: change real link
+			redirect_uri: process.env.DISCORD_CALLBACK_URL, // TODO: change real link
 		},
 	})
 
