@@ -73,8 +73,8 @@ export const CLinksCard = () => {
 			<span className="body4">Resources</span>
 
 			<div className={classNames.linksList}>
-				{resorcesLinks.map(link => (
-					<ExternalLink link={link} />
+				{resorcesLinks.map((link, index: number) => (
+					<ExternalLink key={index.toString()} link={link} />
 				))}
 			</div>
 		</Card>

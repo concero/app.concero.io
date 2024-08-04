@@ -49,8 +49,8 @@ export function UserActionsCard() {
 		</div>
 	)
 
-	const renderAction = (action: UserTransaction) => (
-		<div className={classNames.action} key={action.id}>
+	const renderAction = (action: UserTransaction, index: number) => (
+		<div className={classNames.action} key={index.toString()}>
 			<div className={classNames.leftSide}>
 				<BlockiesSvg className={classNames.avatar} address={action.address} width={32} height={32} />
 				<div>
@@ -69,7 +69,11 @@ export function UserActionsCard() {
 		<div>
 			{header}
 			<Card className={`${classNames.actionsCard} cardConvex`}>
-				{actions.length === 0 ? <FullScreenLoader /> : actions.map(action => renderAction(action))}
+				{actions.length === 0 ? (
+					<FullScreenLoader />
+				) : (
+					actions.map((action, index: number) => renderAction(action, index))
+				)}
 			</Card>
 		</div>
 	)

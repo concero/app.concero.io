@@ -1,5 +1,5 @@
 import { createConfig, http } from 'wagmi'
-import { createPublicClient } from 'viem'
+import { createPublicClient, fallback } from 'viem'
 import {
 	arbitrum,
 	arbitrumSepolia,
@@ -109,14 +109,18 @@ export const config = createConfig({
 		[bsc.id]: http(),
 		[avalanche.id]: http(),
 		[gnosis.id]: http(),
-		[base.id]: http(),
+		[base.id]: fallback([
+			http('https://base-rpc.publicnode.com'),
+			http('https://base.blockpi.network/v1/rpc/public'),
+			http(),
+		]),
 		[fantom.id]: http(),
 		[okc.id]: http(),
 		[cronos.id]: http(),
 		[linea.id]: http(),
 		[evmos.id]: http(),
 		[sepolia.id]: http(),
-		[baseSepolia.id]: http('https://base-sepolia-rpc.publicnode.com'),
+		[baseSepolia.id]: http(),
 		[arbitrumSepolia.id]: http('https://arbitrum-sepolia-rpc.publicnode.com'),
 		[optimismSepolia.id]: http(),
 	},

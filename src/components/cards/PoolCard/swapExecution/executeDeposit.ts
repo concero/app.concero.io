@@ -1,153 +1,107 @@
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
-import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
-import {
-	createPublicClient,
-	createWalletClient,
-	custom,
-	decodeEventLog,
-	type Hash,
-	type PublicClient,
-	type WalletClient,
-	http,
-} from 'viem'
+import { decodeEventLog, type Hash, parseUnits, type PublicClient, type WalletClient } from 'viem'
 import { base } from 'viem/chains'
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
 import { config } from '../../../../constants/config'
+import { sleep } from '../../../../utils/sleep'
+import { getPublicClient } from '@wagmi/core'
+import { config as wagmiConfig } from '../../../../web3/wagmi'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = base
 
-const publicClient = createPublicClient({
-	chain,
-	transport: http(),
-})
+const completeDeposit = async (
+	swapState: SwapState,
+	depositRequestId: string,
+	walletClient: WalletClient,
+	publicClient: PublicClient,
+) => {
+	console.log('requestID', depositRequestId)
 
-const walletClient = createWalletClient({
-	chain,
-	transport: custom(window && window.ethereum!),
-})
-
-async function requestDeposit(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
-	const depositAmount = BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)
-
-	return await walletClient.writeContract({
-		account: swapState.from.address,
-		abi: ParentPool,
-		functionName: 'startDeposit',
-		address: parentPoolAddress,
-		args: [depositAmount],
-		gas: 4_000_000n,
-	})
-}
-
-const completeDeposit = async (swapState: SwapState, depositRequestId: string) => {
-	return await walletClient.writeContract({
-		account: swapState.from.address,
+	const txHash = await walletClient.writeContract({
 		abi: ParentPool,
 		functionName: 'completeDeposit',
 		address: parentPoolAddress,
 		args: [depositRequestId],
 		gas: 4_000_000n,
 	})
-}
 
-const checkDepositStatus = async (txHash: Hash, publicClient: PublicClient, swapDispatch: Dispatch<SwapAction>) => {
 	const receipt = await publicClient.waitForTransactionReceipt({
 		hash: txHash,
-		timeout: 300_000,
-		pollingInterval: 3_000,
-		retryCount: 30,
 		confirmations: 5,
 	})
 
 	if (receipt.status === 'reverted') {
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-		swapDispatch({
-			type: 'SET_SWAP_STEPS',
-			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
-		})
-	}
-
-	for (const log of receipt.logs) {
-		try {
-			const decodedLog = decodeEventLog({
-				abi: ParentPool,
-				data: log.data,
-				topics: log.topics,
-			})
-
-			if (decodedLog.eventName === 'ConceroParentPool_DepositCompleted') {
-				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
-				swapDispatch({
-					type: 'SET_SWAP_STEPS',
-					payload: [
-						{ status: 'success', title: 'Sending transaction' },
-						{
-							status: 'success',
-							title: 'Complete',
-						},
-					],
-				})
-			}
-		} catch (err) {}
+		throw new Error('Transaction reverted')
 	}
 }
 
 const handleDepositTransaction = async (
 	txHash: Hash,
 	publicClient: PublicClient,
+	walletClient: WalletClient,
 	swapDispatch: Dispatch<SwapAction>,
 	swapState: SwapState,
 ) => {
 	const receipt = await publicClient.waitForTransactionReceipt({
 		hash: txHash,
-		timeout: 300_000,
-		pollingInterval: 3_000,
-		retryCount: 30,
 		confirmations: 5,
 	})
 
+	console.log(receipt)
+
 	if (receipt.status === 'reverted') {
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-		swapDispatch({
-			type: 'SET_SWAP_STEPS',
-			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
-		})
+		throw new Error('Transaction reverted')
 	}
 
-	for (const log of receipt.logs) {
+	const depositInitiatedLog = receipt.logs.find(log => {
 		try {
+			if (!log.topics.length) return false
+
 			const decodedLog = decodeEventLog({
 				abi: ParentPool,
 				data: log.data,
 				topics: log.topics,
 			})
 
-			if (decodedLog.eventName === 'ConceroParentPool_DepositInitiated') {
-				return await completeDeposit(swapState, decodedLog.args.requestId)
-			}
+			return decodedLog.eventName === 'ConceroParentPool_DepositInitiated'
+		} catch (error) {
+			return false
+		}
+	})
 
-			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
-				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-				swapDispatch({
-					type: 'SET_SWAP_STEPS',
-					payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
-				})
-			}
-		} catch (err) {}
+	if (!depositInitiatedLog) {
+		throw new Error('Deposit initiation log not found')
 	}
+
+	const decodedLog = decodeEventLog({
+		abi: ParentPool,
+		data: depositInitiatedLog.data,
+		topics: depositInitiatedLog.topics,
+	})
+
+	console.log(decodedLog)
+
+	const depositRequestId = decodedLog.args.requestId
+
+	await sleep(50_000)
+
+	await completeDeposit(swapState, depositRequestId, walletClient, publicClient);
 }
 
 export async function executeDeposit(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
+	walletClient: WalletClient,
 ): Promise<{ duration: number; hash: string } | undefined> {
 	try {
 		if (swapState.to.amount === '0' || swapState.to.amount === '') {
 			return
 		}
+
+		const publicClient = getPublicClient(wagmiConfig, { chainId: Number(swapState.from.chain.id) })
 
 		swapDispatch({ type: 'SET_LOADING', payload: true })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
@@ -169,16 +123,23 @@ export async function executeDeposit(
 		})
 
 		await checkAllowanceAndApprove(swapState, publicClient, walletClient)
-		const hash = await requestDeposit(swapState, publicClient, walletClient)
 
-		const depositTxHash = await handleDepositTransaction(hash, publicClient, swapDispatch, swapState)
-		await checkDepositStatus(depositTxHash, publicClient, swapDispatch)
+		const hash = await walletClient.writeContract({
+			abi: ParentPool,
+			functionName: 'startDeposit',
+			address: parentPoolAddress,
+			args: [parseUnits(swapState.from.amount, swapState.from.token.decimals)],
+			gas: 2_000_000n,
+		})
+
+		await handleDepositTransaction(hash, publicClient, walletClient, swapDispatch, swapState)
 	} catch (error) {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		swapDispatch({
 			type: 'SET_SWAP_STEPS',
 			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
 		})
+		console.error(error)
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
