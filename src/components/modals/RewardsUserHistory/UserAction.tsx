@@ -33,6 +33,8 @@ export const UserAction = ({ transaction, type }: UserActionProps) => {
 		}
 	}, [])
 
+	if (value.includes('n/a')) return null
+
 	return (
 		<div className={classNames.userAction}>
 			<div className="row jsb ac">

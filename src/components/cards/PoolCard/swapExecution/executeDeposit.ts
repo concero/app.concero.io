@@ -79,6 +79,7 @@ const checkDepositStatus = async (txHash: Hash, publicClient: PublicClient, swap
 			})
 
 			if (decodedLog.eventName === 'ConceroParentPool_DepositCompleted') {
+				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 				swapDispatch({
 					type: 'SET_SWAP_STEPS',
 					payload: [
@@ -105,7 +106,7 @@ const handleDepositTransaction = async (
 		timeout: 300_000,
 		pollingInterval: 3_000,
 		retryCount: 30,
-		confirmations: 3,
+		confirmations: 5,
 	})
 
 	if (receipt.status === 'reverted') {

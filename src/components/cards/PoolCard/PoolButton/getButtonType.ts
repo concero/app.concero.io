@@ -1,6 +1,6 @@
-import { type SwapState } from '../../cards/SwapCard/swapReducer/types'
 import { ButtonType } from './constants'
 import BigNumber from 'bignumber.js'
+import { type SwapState } from '../swapReducer/types'
 
 export function getButtonType(
 	swapState: SwapState,
@@ -28,7 +28,11 @@ export function getButtonType(
 
 	if (from.amount) {
 		if (BigNumber(from.amount).lt(0.1)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
-		return ButtonType.SWAP
+		if (swapState.poolMode === 'deposit') {
+			return ButtonType.DEPOSIT
+		} else {
+			return ButtonType.WITHDRAW
+		}
 	}
 
 	if (!from.amount || (from.amount && routes.length === 0)) {

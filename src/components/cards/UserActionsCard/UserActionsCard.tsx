@@ -1,10 +1,11 @@
 import { Card } from '../Card/Card'
 import classNames from './UserActionsCard.module.pcss'
 import { useEffect, useState } from 'react'
-import { watchUserActions } from '../../../api/concero/getUserActions'
+import { poolEventNamesMap, watchUserActions } from '../../../api/concero/getUserActions'
 import dayjs from 'dayjs'
 import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'
+import BlockiesSvg from 'blockies-react-svg'
 
 export interface UserTransaction {
 	eventName: string
@@ -51,14 +52,9 @@ export function UserActionsCard() {
 	const renderAction = (action: UserTransaction) => (
 		<div className={classNames.action} key={action.id}>
 			<div className={classNames.leftSide}>
-				<img
-					width={32}
-					height={32}
-					alt="User avatar"
-					src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
-				/>
+				<BlockiesSvg className={classNames.avatar} address={action.address} width={32} height={32} />
 				<div>
-					<h5>{action.eventName}</h5>
+					<h5>{poolEventNamesMap[action.eventName]}</h5>
 					<p className="body1">{dayjs(action.time).format('D MMMM, HH:mm, YYYY')}</p>
 				</div>
 			</div>

@@ -57,7 +57,7 @@ const ExternalLink = ({ link }: ExternalLinkProps) => {
 	)
 }
 
-export const LinksCard = () => {
+export const CLinksCard = () => {
 	return (
 		<Card className={`${classNames.linksCard} cardConvex`}>
 			<span className="body4">Audits</span>

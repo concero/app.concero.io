@@ -1,6 +1,8 @@
 import { type Address, createPublicClient, http, erc20Abi, formatUnits } from 'viem'
 import { base } from 'viem/chains'
 import { config } from '../../constants/config'
+import { getChildPoolsBalance } from './getPoolLiquidity'
+import { abi as ParentPool } from '../../abi/ParentPool.json'
 
 const client = createPublicClient({
 	chain: base,
@@ -28,4 +30,26 @@ export const getLpTotalSupply = async () => {
 	})
 
 	return Number(formatUnits(totalSupply, lpTokenDecimals))
+}
+
+export const calculateLpAmount = async (amountToDeposit: bigint) => {
+	const childPoolsBalance = await getChildPoolsBalance()
+
+	return await client.readContract({
+		address: config.PARENT_POOL_CONTRACT,
+		abi: ParentPool,
+		functionName: 'calculateLpAmount',
+		args: [childPoolsBalance, amountToDeposit],
+	})
+}
+
+export const calculateWithdrawableAmount = async (clpAmount: bigint) => {
+	const childPoolsBalance = await getChildPoolsBalance()
+
+	return await client.readContract({
+		address: config.PARENT_POOL_CONTRACT,
+		abi: ParentPool,
+		functionName: 'calculateWithdrawableAmount',
+		args: [childPoolsBalance, clpAmount],
+	})
 }

@@ -89,6 +89,11 @@ export const QuestsCard = () => {
 					</Button>
 				)}
 			</div>
+			{quests.length === 0 && (
+				<Card className="row jc">
+					<h4 className="body4">There are no quests yet.</h4>
+				</Card>
+			)}
 			{quests[0] && <QuestCard quest={quests[0]} />}
 			<div className={classNames.otherQuestsWrap}>
 				{quests[1] && <QuestCard quest={quests[1]} variant="normal" />}

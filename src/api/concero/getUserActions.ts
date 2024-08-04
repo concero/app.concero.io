@@ -6,7 +6,7 @@ import { type UserTransaction } from '../../components/cards/UserActionsCard/Use
 import { config } from '../../constants/config'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import { WithdrawStatus } from '../../components/cards/PoolCard/swapExecution/requestWithdraw'
+import { completeWithdrawal, WithdrawStatus } from '../../components/cards/PoolCard/swapExecution/requestWithdraw'
 
 dayjs.extend(isSameOrBefore)
 
@@ -67,11 +67,6 @@ export const getWithdrawStatus = async (address: Address): Promise<WithdrawStatu
 				blockNumber: lastCompleteEvent.blockNumber,
 			})
 
-			console.log('blockCompleteEvent', new Date(Number(blockCompleteEvent.timestamp) * 1000))
-			console.log('blockRequestEvent', new Date(Number(blockRequestEvent.timestamp) * 1000))
-
-			console.log(blockCompleteEvent.timestamp, blockRequestEvent.timestamp)
-
 			if (blockCompleteEvent.timestamp > blockRequestEvent.timestamp) {
 				return WithdrawStatus.startWithdraw
 			} else {
@@ -90,6 +85,12 @@ export const getWithdrawStatus = async (address: Address): Promise<WithdrawStatu
 	return WithdrawStatus.startWithdraw
 }
 
+export const poolEventNamesMap = {
+	ConceroParentPool_DepositCompleted: 'Liquidity provided',
+	ConceroParentPool_WithdrawRequestInitiated: 'Withdrawal Submitted',
+	ConceroParentPool_Withdrawn: 'Withdrawal Complete',
+}
+
 export const watchUserActions = async (address: Address, onGetActions: (logs: UserTransaction[]) => any) => {
 	const blockNumber = await publicClient.getBlockNumber()
 	const firstBlockNumber = 17868906n
@@ -98,18 +99,11 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 	let toBlock = blockNumber
 	let fromBlock = blockNumber - blockRange
 
-	let countTx = 0
-
 	while (toBlock >= firstBlockNumber) {
-		countTx++
-
 		const eventsDeposit = await publicClient.getContractEvents({
 			address: config.PARENT_POOL_CONTRACT,
 			abi,
 			eventName: 'ConceroParentPool_DepositCompleted',
-			args: {
-				lpAddress: address,
-			},
 			toBlock,
 			fromBlock,
 		})
@@ -118,9 +112,14 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 			address: config.PARENT_POOL_CONTRACT,
 			abi,
 			eventName: 'ConceroParentPool_WithdrawRequestInitiated',
-			args: {
-				lpAddress: address,
-			},
+			toBlock,
+			fromBlock,
+		})
+
+		const eventsCompleteWithdraw = await publicClient.getContractEvents({
+			address: config.PARENT_POOL_CONTRACT,
+			abi,
+			eventName: 'ConceroParentPool_Withdrawn',
 			toBlock,
 			fromBlock,
 		})
@@ -132,13 +131,17 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 				blockNumber: event.blockNumber,
 			})
 
+			const receipt = await publicClient.getTransactionReceipt({
+				hash: event.transactionHash,
+			})
+
 			const result: UserTransaction = {
 				time: Number(block.timestamp) * 1000,
 				amount: formatUnits(event.args!.usdcAmount, 6),
 				eventName: event.eventName,
 				status: null,
 				transactionHash: event.transactionHash,
-				address: '',
+				address: receipt.from,
 			}
 
 			userActions.push(result)
@@ -149,22 +152,51 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 				blockNumber: event.blockNumber,
 			})
 
+			const receipt = await publicClient.getTransactionReceipt({
+				hash: event.transactionHash,
+			})
+
 			const result: UserTransaction = {
 				time: Number(block.timestamp) * 1000,
 				amount: 0,
 				eventName: event.eventName,
 				status: null,
 				transactionHash: event.transactionHash,
-				address: '',
+				address: receipt.from,
+			}
+
+			userActions.push(result)
+		}
+
+		for (const event of eventsCompleteWithdraw) {
+			const block = await publicClient.getBlock({
+				blockNumber: event.blockNumber,
+			})
+
+			const receipt = await publicClient.getTransactionReceipt({
+				hash: event.transactionHash,
+			})
+
+			console.log(event)
+
+			const result: UserTransaction = {
+				time: Number(block.timestamp) * 1000,
+				amount: formatUnits(event.args!.amount, 6),
+				eventName: event.eventName,
+				status: null,
+				transactionHash: event.transactionHash,
+				address: receipt.from,
 			}
 
 			userActions.push(result)
 		}
 
 		onGetActions(
-			userActions.sort((a, b) => {
-				return b.time - a.time
-			}),
+			userActions
+				.filter(event => event.address.toLowerCase() === address.toLowerCase())
+				.sort((a, b) => {
+					return b.time - a.time
+				}),
 		)
 
 		toBlock -= blockRange

@@ -3,7 +3,7 @@ import { type ReactNode } from 'react'
 
 export enum ButtonType {
 	LOADING = 1,
-	SWAP = 2,
+	DEPOSIT = 2,
 	ENTER_AMOUNT = 3,
 	LOW_BALANCE = 4,
 	LOW_GAS = 5,
@@ -15,11 +15,13 @@ export enum ButtonType {
 	CONNECT_WALLET_BRIGHT = 11,
 	TESTNET_AMOUNT_TOO_HIGH = 12,
 	TESTNET_AMOUNT_TOO_LOW = 13,
+	WITHDRAW = 14,
 }
 
 export const buttonText: { [key in ButtonType]: string } = {
 	[ButtonType.LOADING]: 'button.findingRoutes',
-	[ButtonType.SWAP]: 'button.swap',
+	[ButtonType.WITHDRAW]: 'Request withdraw',
+	[ButtonType.DEPOSIT]: 'Deposit',
 	[ButtonType.ENTER_AMOUNT]: 'button.enterAmountToSwap',
 	[ButtonType.LOW_BALANCE]: 'button.insufficientBalance',
 	[ButtonType.LOW_GAS]: 'button.insufficientGas',
@@ -35,7 +37,8 @@ export const buttonText: { [key in ButtonType]: string } = {
 
 export const isButtonDisabled: { [key in ButtonType]: boolean } = {
 	[ButtonType.LOADING]: true,
-	[ButtonType.SWAP]: false,
+	[ButtonType.WITHDRAW]: false,
+	[ButtonType.DEPOSIT]: false,
 	[ButtonType.ENTER_AMOUNT]: true,
 	[ButtonType.LOW_BALANCE]: true,
 	[ButtonType.LOW_GAS]: true,
@@ -51,7 +54,8 @@ export const isButtonDisabled: { [key in ButtonType]: boolean } = {
 
 export const buttonStyleClass: { [key in ButtonType]: string } = {
 	[ButtonType.LOADING]: 'loading',
-	[ButtonType.SWAP]: 'swap',
+	[ButtonType.WITHDRAW]: 'swap',
+	[ButtonType.DEPOSIT]: 'swap',
 	[ButtonType.ENTER_AMOUNT]: 'disabled',
 	[ButtonType.LOW_BALANCE]: 'wrong',
 	[ButtonType.LOW_GAS]: 'wrong',
@@ -67,7 +71,8 @@ export const buttonStyleClass: { [key in ButtonType]: string } = {
 
 export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
 	[ButtonType.LOADING]: null,
-	[ButtonType.SWAP]: <IconArrowsUpDown size={18} color="white" />,
+	[ButtonType.WITHDRAW]: <IconArrowsUpDown size={18} color="white" />,
+	[ButtonType.DEPOSIT]: <IconArrowsUpDown size={18} color="white" />,
 	[ButtonType.ENTER_AMOUNT]: null,
 	[ButtonType.LOW_BALANCE]: <IconWallet size={18} color="white" />,
 	[ButtonType.LOW_GAS]: <IconGasStation size={18} color="white" />,

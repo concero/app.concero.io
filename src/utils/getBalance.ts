@@ -2,7 +2,7 @@ import { type Dispatch } from 'react'
 import { type SwapAction } from '../components/cards/SwapCard/swapReducer/types'
 import { TokenAmount } from './TokenAmount'
 import { createPublicClient, erc20Abi, getContract } from 'viem'
-import { baseSepolia } from 'wagmi/chains'
+import { base, baseSepolia } from 'wagmi/chains'
 import { http } from 'wagmi'
 
 interface HandleBalanceProps {
@@ -25,7 +25,7 @@ interface HandleBalanceProps {
 }
 
 const publicClient = createPublicClient({
-	chain: baseSepolia, // TODO change to mainnet
+	chain: base,
 	transport: http(),
 })
 

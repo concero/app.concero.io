@@ -6,8 +6,9 @@ import classNames from './EarningsTab.module.pcss'
 import { EarningsCard } from '../../../../cards/EarningsCard/EarningsCard'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { getLpTotalSupply, getUserLpTokens } from '../../../../../api/concero/poolLpTokens'
+import { calculateWithdrawableAmount, getLpTotalSupply, getUserLpTokens } from '../../../../../api/concero/poolLpTokens'
 import { fetchLastFee } from '../../../../../api/concero/fetchFees'
+import { formatUnits, parseUnits } from 'viem'
 
 interface UserBalance {
 	userBalanceLp: number
@@ -27,7 +28,7 @@ const UserLpCard = ({ userBalanceLp, userBalanceUsdc }: UserBalance) => {
 		<Card className={`${classNames.userLp} f1 cardConvex`}>
 			<p className="body4">Your LPs</p>
 			<h2>{userBalanceUsdc.toFixed(2)} USDC</h2>
-			<h4>{userBalanceLp.toFixed(2)} LPt</h4>
+			<h4>{userBalanceLp.toFixed(2)} CLP-USDC</h4>
 		</Card>
 	)
 }
@@ -47,12 +48,14 @@ export const EarningsTab = () => {
 		const { poolLiquidity } = await fetchLastFee()
 
 		const ratio = totalSupply / poolLiquidity
-		const balanceUsdc = ratio * balanceLp
+		const lpDecimals = parseUnits(String(balanceLp), 18)
+		const balanceUsdc = await calculateWithdrawableAmount(lpDecimals)
+		const balancaUsdcFormated = Number(formatUnits(balanceUsdc, 6))
 
-		const poolShare = (balanceUsdc / poolLiquidity) * 100
+		const poolShare = (balancaUsdcFormated / poolLiquidity) * 100
 
 		setUserPoolShare(poolShare)
-		setUserBalanceUsdc(balanceUsdc)
+		setUserBalanceUsdc(balancaUsdcFormated)
 		setRate(ratio)
 	}
 

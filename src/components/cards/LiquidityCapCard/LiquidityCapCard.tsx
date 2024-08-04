@@ -4,7 +4,7 @@ import classNames from './LiquidityCapCard.module.pcss'
 import { ProgressBar } from '../../layout/progressBar/ProgressBar'
 import { useEffect, useState } from 'react'
 import { getMaxCap } from './getLiquidityCap'
-import { fetchLastFee } from '../../../api/concero/fetchFees'
+import { getPoolLiquidity } from '../../../api/concero/getPoolLiquidity'
 
 export const LiquidityCapCard = () => {
 	const [maxCap, setMaxCap] = useState<number>(0)
@@ -15,9 +15,9 @@ export const LiquidityCapCard = () => {
 
 	const setCap = async () => {
 		const cap = await getMaxCap()
-		const lastFee = await fetchLastFee()
+		const newPoolLiquidity = await getPoolLiquidity()
 
-		setPoolLiquidity(Number(lastFee.poolLiquidity))
+		setPoolLiquidity(Number(newPoolLiquidity))
 		setMaxCap(Number(cap))
 	}
 

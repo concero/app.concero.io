@@ -54,6 +54,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 		timeout: 300_000,
 		pollingInterval: 3_000,
 		retryCount: 30,
+		confirmations: 5,
 	})
 
 	if (receipt.status === 'reverted') {
@@ -90,9 +91,9 @@ export async function startWithdrawal(
 	swapDispatch: Dispatch<SwapAction>,
 ): Promise<{ duration: number; hash: string } | undefined> {
 	try {
-		// if (swapState.to.amount === '0' || swapState.to.amount === '') {
-		// 	return
-		// }
+		if (swapState.to.amount === '0' || swapState.to.amount === '') {
+			return
+		}
 
 		swapDispatch({ type: 'SET_LOADING', payload: true })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
@@ -143,6 +144,7 @@ export const completeWithdrawal = async (swapState: SwapState, swapDispatch: Dis
 		timeout: 300_000,
 		pollingInterval: 3_000,
 		retryCount: 30,
+		confirmations: 5,
 	})
 
 	if (receipt.status === 'reverted') {
