@@ -23,8 +23,8 @@ export async function checkAllowanceAndApprove(
 		const approveTx = await walletClient.writeContract({
 			abi: erc20Abi,
 			functionName: 'approve',
-			address: from.address,
-			args: [to.address, parsedFromAmount],
+			address: from.token.address,
+			args: [config.PARENT_POOL_CONTRACT, parsedFromAmount],
 			gas: 100_000n,
 		})
 

@@ -88,7 +88,7 @@ const handleDepositTransaction = async (
 
 	await sleep(50_000)
 
-	await completeDeposit(swapState, depositRequestId, walletClient, publicClient);
+	await completeDeposit(swapState, depositRequestId, walletClient, publicClient)
 }
 
 export async function executeDeposit(
