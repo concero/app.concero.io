@@ -1,5 +1,12 @@
 {
   "rewrites": [
-
+    {
+      "source": "/posthog/:path(.*)",
+      "destination": "https://eu.posthog.com/:path*"
+    },
+    {
+      "source": "/([^.\n]*)",
+      "destination": "/"
+    }
   ]
 }
