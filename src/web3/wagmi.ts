@@ -1,5 +1,5 @@
 import { createConfig, http } from 'wagmi'
-import { createPublicClient } from 'viem'
+import { createPublicClient, fallback } from 'viem'
 import {
 	arbitrum,
 	arbitrumSepolia,
@@ -96,9 +96,19 @@ export const config = createConfig({
 	transports: {
 		[mainnet.id]: http(),
 		[sepolia.id]: http(),
-		[polygon.id]: http(),
+		[polygon.id]: fallback([
+			http('https://polygon.publicnode.com'),
+			http('https://polygon.drpc.org'),
+			http('https://rpc.ankr.com/polygon'),
+			http('https://public.stackup.sh/api/v1/node/polygon-mainnet'),
+		]),
 		[polygonZkEvm.id]: http(),
-		[arbitrum.id]: http(),
+		[arbitrum.id]: fallback([
+			http('https://arb1.arbitrum.io/rpc'),
+			http('https://arbitrum.public-rpc.com'),
+			http('https://arb1.arbitrum.io/rpc'),
+			http(),
+		]),
 		[aurora.id]: http(),
 		[zkSync.id]: http(),
 		[moonriver.id]: http(),
@@ -107,16 +117,27 @@ export const config = createConfig({
 		[optimism.id]: http(),
 		[fuse.id]: http(),
 		[bsc.id]: http(),
-		[avalanche.id]: http(),
+		[avalanche.id]: fallback([
+			http('https://api.avax.network/ext/bc/C/rpc'),
+			http('https://rpc.ankr.com/avalanche'),
+			http('https://avalanche.public-rpc.com'),
+			http(),
+		]),
 		[gnosis.id]: http(),
-		[base.id]: http(),
+		[base.id]: fallback([
+			http('https://base-rpc.publicnode.com'),
+			http('https://base.blockpi.network/v1/rpc/public'),
+			http('https://public.stackup.sh/api/v1/node/base-mainnet'),
+			http(),
+			http('https://mainnet.base.org'),
+		]),
 		[fantom.id]: http(),
 		[okc.id]: http(),
 		[cronos.id]: http(),
 		[linea.id]: http(),
 		[evmos.id]: http(),
 		[sepolia.id]: http(),
-		[baseSepolia.id]: http('https://base-sepolia-rpc.publicnode.com'),
+		[baseSepolia.id]: http(),
 		[arbitrumSepolia.id]: http('https://arbitrum-sepolia-rpc.publicnode.com'),
 		[optimismSepolia.id]: http(),
 	},

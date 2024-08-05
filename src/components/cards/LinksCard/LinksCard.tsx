@@ -64,7 +64,7 @@ export const LinksCard = () => {
 
 			<div className={classNames.linksList}>
 				{auditsLinks.map(link => (
-					<ExternalLink link={link} />
+					<ExternalLink key={link.title} link={link} />
 				))}
 			</div>
 
@@ -74,7 +74,7 @@ export const LinksCard = () => {
 
 			<div className={classNames.linksList}>
 				{resorcesLinks.map(link => (
-					<ExternalLink link={link} />
+					<ExternalLink key={link.title} link={link} />
 				))}
 			</div>
 		</Card>

@@ -10,6 +10,7 @@ import {
 	type PublicClient,
 	type WalletClient,
 	http,
+	type Address,
 } from 'viem'
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { base } from 'viem/chains'
@@ -54,6 +55,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 		timeout: 300_000,
 		pollingInterval: 3_000,
 		retryCount: 30,
+		confirmations: 5,
 	})
 
 	if (receipt.status === 'reverted') {
@@ -90,9 +92,9 @@ export async function startWithdrawal(
 	swapDispatch: Dispatch<SwapAction>,
 ): Promise<{ duration: number; hash: string } | undefined> {
 	try {
-		// if (swapState.to.amount === '0' || swapState.to.amount === '') {
-		// 	return
-		// }
+		if (swapState.to.amount === '0' || swapState.to.amount === '') {
+			return
+		}
 
 		swapDispatch({ type: 'SET_LOADING', payload: true })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
@@ -128,9 +130,16 @@ export async function startWithdrawal(
 	}
 }
 
-export const completeWithdrawal = async (swapState: SwapState, swapDispatch: Dispatch<SwapAction>) => {
+export enum TransactionStatus {
+	SUCCESS = 'SUCCESS',
+	FAILED = 'FAILED',
+	PENDING = 'PENDING',
+	IDLE = 'IDLE',
+}
+
+export const completeWithdrawal = async (address: Address): Promise<TransactionStatus> => {
 	const hash = await walletClient.writeContract({
-		account: swapState.from.address,
+		account: address,
 		abi: ParentPool,
 		functionName: 'completeWithdrawal',
 		args: [],
@@ -143,14 +152,11 @@ export const completeWithdrawal = async (swapState: SwapState, swapDispatch: Dis
 		timeout: 300_000,
 		pollingInterval: 3_000,
 		retryCount: 30,
+		confirmations: 5,
 	})
 
 	if (receipt.status === 'reverted') {
-		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-		swapDispatch({
-			type: 'SET_SWAP_STEPS',
-			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
-		})
+		return TransactionStatus.FAILED
 	}
 
 	for (const log of receipt.logs) {
@@ -162,39 +168,16 @@ export const completeWithdrawal = async (swapState: SwapState, swapDispatch: Dis
 			})
 
 			if (decodedLog.eventName === 'ConceroParentPool_Withdrawn') {
-				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
-				swapDispatch({
-					type: 'SET_SWAP_STEPS',
-					payload: [{ status: 'success', title: 'Sending transaction' }],
-				})
+				return TransactionStatus.SUCCESS
 			}
 			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
-				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
-				swapDispatch({
-					type: 'SET_SWAP_STEPS',
-					payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
-				})
+				return TransactionStatus.FAILED
 			}
 		} catch (err) {
 			console.error(err)
+			return TransactionStatus.FAILED
 		}
 	}
-}
 
-export const withdraw = async (swapState: SwapState, swapDispatch: Dispatch<SwapAction>) => {
-	swapDispatch({ type: 'SET_LOADING', payload: true })
-	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.progress })
-	swapDispatch({
-		type: 'SET_SWAP_STEPS',
-		payload: [{ status: 'pending', title: 'Sending transaction' }],
-	})
-
-	const withdrawStatus: WithdrawStatus = await getWithdrawStatus(swapState.from.address)
-
-	if (withdrawStatus === 'completeWithdrawal') {
-		void completeWithdrawal(swapState, swapDispatch)
-	}
-	if (withdrawStatus === 'startWithdraw') {
-		void startWithdrawal(swapState, swapDispatch)
-	}
+	return TransactionStatus.FAILED
 }

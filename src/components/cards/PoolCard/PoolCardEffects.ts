@@ -3,6 +3,8 @@ import { type Config } from '@wagmi/core'
 import { getBalance } from '../../../utils/getBalance'
 import { type SwapAction, type SwapState } from './swapReducer/types'
 import { getLpRatio } from '../../screens/PoolScreen/poolScripts/getLpRatio'
+import { calculateLpAmount, calculateWithdrawableAmount } from '../../../api/concero/poolLpTokens'
+import { formatUnits, parseUnits } from 'viem'
 
 interface UseSwapCardEffectsProps {
 	swapState: SwapState
@@ -15,13 +17,15 @@ const setLpBalance = async (swapState: SwapState, swapDispatch: Dispatch<SwapAct
 	const { poolMode, from, to } = swapState
 
 	let currentBalance = 0
-	const rate = await getLpRatio()
+	const amountInDecimals = parseUnits(from.amount, from.token.decimals)
 
 	if (poolMode === 'deposit') {
-		currentBalance = Number(from.amount) / rate // balance lp
+		const lpAmount = await calculateLpAmount(amountInDecimals)
+		currentBalance = Number(formatUnits(lpAmount, to.token.decimals))
 	}
 	if (poolMode === 'withdraw') {
-		currentBalance = Number(from.amount) * rate // balance usdc
+		const usdcAmount = await calculateWithdrawableAmount(amountInDecimals)
+		currentBalance = Number(formatUnits(usdcAmount, to.token.decimals))
 	}
 
 	swapDispatch({

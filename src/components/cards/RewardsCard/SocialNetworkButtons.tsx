@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import { connectDiscord } from '../../../api/concero/socialNetworks/connectDiscord'
 import { connectTwitter, getRequestToken } from '../../../api/concero/socialNetworks/connectTwitter'
 
-const discordLink =
-	'https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Frewards&scope=identify+guilds+email+guilds.join+connections+guilds.members.read+gdm.join+role_connections.write'
+const discordLink = `https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=${process.env.DISCORD_CALLBACK_URL}&scope=identify+guilds+email+guilds.join+connections+guilds.members.read+gdm.join+role_connections.write`
 
 interface Props {
 	user: IUser | null | undefined

@@ -1,36 +1,39 @@
 import type { SwapState } from '../swapReducer/types'
-import { type Address, erc20Abi, type PublicClient, type WalletClient } from 'viem'
-import { addingAmountDecimals } from '../../../../utils/formatting'
-import { parentPoolAddress } from './executeDeposit'
+import { erc20Abi, parseUnits, type PublicClient, type WalletClient } from 'viem'
+import { config } from '../../../../constants/config'
 
 export async function checkAllowanceAndApprove(
 	swapState: SwapState,
-	srcPublicClient: PublicClient,
+	publicClient: PublicClient,
 	walletClient: WalletClient,
 ) {
-	const allowance = await srcPublicClient.readContract({
+	const { from, to } = swapState
+	const { token } = from
+
+	const allowance = await publicClient.readContract({
 		abi: erc20Abi,
 		functionName: 'allowance',
-		address: swapState.from.token.address as Address,
-		args: [swapState.from.address, parentPoolAddress],
+		address: from.token.address,
+		args: [from.address, config.PARENT_POOL_CONTRACT],
 	})
 
-	let approveTxHash = null
-	const amountInDecimals = BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)
+	const parsedFromAmount = parseUnits(from.amount, token.decimals)
 
-	if (allowance < amountInDecimals) {
-		const { request } = await srcPublicClient.simulateContract({
-			account: swapState.from.address,
-			address: swapState.from.token.address as Address,
+	if (allowance < parsedFromAmount) {
+		const approveTx = await walletClient.writeContract({
 			abi: erc20Abi,
 			functionName: 'approve',
-			args: [parentPoolAddress, amountInDecimals],
+			address: from.token.address,
+			args: [config.PARENT_POOL_CONTRACT, parsedFromAmount],
+			gas: 100_000n,
 		})
 
-		approveTxHash = await walletClient.writeContract(request)
-	}
+		const { status } = await publicClient.waitForTransactionReceipt({
+			hash: approveTx,
+		})
 
-	if (approveTxHash) {
-		await srcPublicClient.waitForTransactionReceipt({ hash: approveTxHash })
+		if (status === 'reverted') {
+			throw new Error('Approve transaction reverted')
+		}
 	}
 }

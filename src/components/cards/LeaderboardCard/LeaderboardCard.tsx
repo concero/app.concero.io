@@ -42,7 +42,7 @@ const Member = ({ user, place }: MemberProps) => {
 				{ensName && <h5>{ensName}</h5>}
 				{isCurrentUser ? <div className={classNames.youTag}>You</div> : walletAddress}
 			</div>
-			<h5>{points}</h5>
+			<h5>{points.toFixed(4)}</h5>
 		</div>
 	)
 }
