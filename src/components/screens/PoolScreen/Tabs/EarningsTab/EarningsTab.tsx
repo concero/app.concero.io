@@ -27,7 +27,7 @@ const UserLpCard = ({ userBalanceLp, userBalanceUsdc }: UserBalance) => {
 	return (
 		<Card className={`${classNames.userLp} f1 cardConvex`}>
 			<p className="body4">Your LPs</p>
-			<h2>{userBalanceUsdc.toFixed(2)} USDC</h2>
+			<h3>{userBalanceUsdc.toFixed(1)} USDC</h3>
 			<h4>{userBalanceLp.toFixed(2)} CLP-USDC</h4>
 		</Card>
 	)

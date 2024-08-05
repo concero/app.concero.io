@@ -39,7 +39,7 @@ export const UserAction = ({ transaction, type }: UserActionProps) => {
 		<div className={classNames.userAction}>
 			<div className="row jsb ac">
 				<p className="body4">{type ? 'Swap' : 'Quest complete'}</p>
-				<span className={classNames.userTag}>+5 xp</span>
+				{/* <span className={classNames.userTag}>+5 xp</span> */}
 			</div>
 			<div className="row jsb ac">
 				<span className={classNames.titleUserAction}>{value}</span>
