@@ -14,6 +14,7 @@ const chain = base
 
 const completeDeposit = async (
 	swapState: SwapState,
+	swapDispatch: Dispatch<SwapAction>,
 	depositRequestId: string,
 	walletClient: WalletClient,
 	publicClient: PublicClient,
@@ -35,6 +36,29 @@ const completeDeposit = async (
 
 	if (receipt.status === 'reverted') {
 		throw new Error('Transaction reverted')
+	}
+
+	for (const log of receipt.logs) {
+		try {
+			const decodedLog = decodeEventLog({
+				abi: ParentPool,
+				data: log.data,
+				topics: log.topics,
+			})
+
+			if (decodedLog.eventName === 'ConceroParentPool_DepositCompleted') {
+				swapDispatch({
+					type: 'SET_SWAP_STEPS',
+					payload: [
+						{ status: 'success', title: 'Sending transaction' },
+						{
+							status: 'success',
+							title: 'Complete',
+						},
+					],
+				})
+			}
+		} catch (err) {}
 	}
 }
 
@@ -88,7 +112,7 @@ const handleDepositTransaction = async (
 
 	await sleep(50_000)
 
-	await completeDeposit(swapState, depositRequestId, walletClient, publicClient)
+	await completeDeposit(swapState, swapDispatch, depositRequestId, walletClient, publicClient)
 }
 
 export async function executeDeposit(
