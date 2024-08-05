@@ -99,7 +99,7 @@ export const RewardsCard = ({ user }: RewardsCardProps) => {
 		<Card className={classNames.container}>
 			<RewardsHeader user={user} />
 			<SocialNetworkButtons user={user} />
-			<AchievementsPreview />
+			{/* <AchievementsPreview /> */}
 		</Card>
 	)
 }
