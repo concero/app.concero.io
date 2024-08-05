@@ -30,7 +30,7 @@ const mainnetTokens = {
 		chain_id: '8453',
 		decimals: 18,
 		is_popular: true,
-		logoURI: null,
+		logoURI: './conceroToken.svg',
 		name: 'Concero LP',
 		priceUsd: null,
 		symbol: 'CLP',

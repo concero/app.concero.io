@@ -119,7 +119,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 					</div>
 				) : null}
 			</div>
-			{swapState.from.amount && Number(swapState.from.amount) !== 0 && (
+			{swapState.from.amount && Number(swapState.from.amount) !== 0 ? (
 				<Card className={classNames.warningCard}>
 					<div className="row gap-sm">
 						<IconCoins width={18} height={18} color={'var(--color-yellow-warning-text)'} />
@@ -127,7 +127,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 					</div>
 					<p>Your funds will be available for withdrawal after 7 days</p>
 				</Card>
-			)}
+			) : null}
 			<PoolButton
 				swapState={swapState}
 				isConnected={isConnected}
