@@ -31,26 +31,19 @@ export const getLiquidityOnChain = async (poolConfig: IPoolConfig) => {
 	}, 0)
 }
 
-export const getPoolLiquidity = async () => {
+export const getPoolLiquidity = async (childrenOnly = false) => {
 	let totalLiquidity = 0
 
-	for (const poolConfig of poolConfigs) {
+	const formattedPoolConfigs = poolConfigs.filter(poolConfig => (childrenOnly ? !poolConfig.isParent : true))
+
+	for (const poolConfig of formattedPoolConfigs) {
 		const totalOnChain = await getLiquidityOnChain(poolConfig)
 		totalLiquidity += totalOnChain
+	}
+
+	if (childrenOnly) {
+		return BigInt(totalLiquidity)
 	}
 
 	return Number(formatUnits(BigInt(totalLiquidity), usdcDecimals))
-}
-
-export const getChildPoolsBalance = async () => {
-	let totalLiquidity = 0
-
-	const chlidPools = poolConfigs.filter(poolConfig => !poolConfig.isParent)
-
-	for (const poolConfig of chlidPools) {
-		const totalOnChain = await getLiquidityOnChain(poolConfig)
-		totalLiquidity += totalOnChain
-	}
-
-	return BigInt(totalLiquidity)
 }

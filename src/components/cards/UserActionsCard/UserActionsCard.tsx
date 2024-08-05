@@ -1,11 +1,17 @@
 import { Card } from '../Card/Card'
 import classNames from './UserActionsCard.module.pcss'
 import { useEffect, useState } from 'react'
-import { poolEventNamesMap, watchUserActions } from '../../../api/concero/getUserActions'
-import dayjs from 'dayjs'
+import { handleDepositRequestActions, watchUserActions } from '../../../api/concero/getUserActions'
 import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'
-import BlockiesSvg from 'blockies-react-svg'
+import { UserAction } from './UserAction'
+
+export enum UserActionStatus {
+	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
+	CompleteRequestWithdraw = 'CompleteRequestWithdraw',
+	CompleteWithdraw = 'CompleteWithdraw',
+	CompleteDeposit = 'CompleteDeposit',
+}
 
 export interface UserTransaction {
 	eventName: string
@@ -14,10 +20,8 @@ export interface UserTransaction {
 	status: string | null
 	transactionHash: string
 	address: string
-}
-
-export interface UserActionsCardProps {
-	actions: UserTransaction[]
+	isActiveWithdraw?: boolean
+	deadline?: number | null
 }
 
 export function UserActionsCard() {
@@ -36,43 +40,22 @@ export function UserActionsCard() {
 		void watchActions()
 	}, [address])
 
-	const header = (
-		<div className={classNames.header}>
-			<h4>Your actions</h4>
-			<h4>Type</h4>
-		</div>
-	)
-
-	const renderStatusTag = (status: string) => (
-		<div className={classNames.statusTag}>
-			<p className="body1">{status}</p>
-		</div>
-	)
-
-	const renderAction = (action: UserTransaction, index: number) => (
-		<div className={classNames.action} key={index.toString()}>
-			<div className={classNames.leftSide}>
-				<BlockiesSvg className={classNames.avatar} address={action.address} width={32} height={32} />
-				<div>
-					<h5>{poolEventNamesMap[action.eventName]}</h5>
-					<p className="body1">{dayjs(action.time).format('D MMMM, HH:mm, YYYY')}</p>
-				</div>
-			</div>
-			<div className={classNames.rightSide}>
-				{action.status && renderStatusTag(action.status)}
-				{action.amount ? <h4>{action.amount} USDC</h4> : null}
-			</div>
-		</div>
-	)
+	useEffect(() => {
+		const newActions = handleDepositRequestActions(actions)
+		setActions(newActions)
+	}, [actions])
 
 	return (
 		<div>
-			{header}
+			<div className={classNames.header}>
+				<h4>Your actions</h4>
+				<h4>Type</h4>
+			</div>
 			<Card className={`${classNames.actionsCard} cardConvex`}>
 				{actions.length === 0 ? (
 					<FullScreenLoader />
 				) : (
-					actions.map((action, index: number) => renderAction(action, index))
+					actions.map(action => <UserAction key={action.transactionHash} action={action} />)
 				)}
 			</Card>
 		</div>

@@ -57,14 +57,14 @@ const ExternalLink = ({ link }: ExternalLinkProps) => {
 	)
 }
 
-export const CLinksCard = () => {
+export const LinksCard = () => {
 	return (
 		<Card className={`${classNames.linksCard} cardConvex`}>
 			<span className="body4">Audits</span>
 
 			<div className={classNames.linksList}>
 				{auditsLinks.map(link => (
-					<ExternalLink link={link} />
+					<ExternalLink key={link.title} link={link} />
 				))}
 			</div>
 
@@ -73,8 +73,8 @@ export const CLinksCard = () => {
 			<span className="body4">Resources</span>
 
 			<div className={classNames.linksList}>
-				{resorcesLinks.map((link, index: number) => (
-					<ExternalLink key={index.toString()} link={link} />
+				{resorcesLinks.map(link => (
+					<ExternalLink key={link.title} link={link} />
 				))}
 			</div>
 		</Card>

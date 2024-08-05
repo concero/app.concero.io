@@ -2,11 +2,11 @@ import { type Address, createPublicClient, fallback, formatUnits } from 'viem'
 import { base } from 'wagmi/chains'
 import { http } from 'wagmi'
 import { abi } from '../../abi/ParentPool.json'
-import { type UserTransaction } from '../../components/cards/UserActionsCard/UserActionsCard'
+import { UserActionStatus, type UserTransaction } from '../../components/cards/UserActionsCard/UserActionsCard'
 import { config } from '../../constants/config'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import { completeWithdrawal, WithdrawStatus } from '../../components/cards/PoolCard/swapExecution/requestWithdraw'
+import { WithdrawStatus } from '../../components/cards/PoolCard/swapExecution/requestWithdraw'
 
 dayjs.extend(isSameOrBefore)
 
@@ -67,6 +67,8 @@ export const getWithdrawStatus = async (address: Address): Promise<WithdrawStatu
 				blockNumber: lastCompleteEvent.blockNumber,
 			})
 
+			console.log('blockRequestEvent', blockRequestEvent.timestamp)
+
 			if (blockCompleteEvent.timestamp > blockRequestEvent.timestamp) {
 				return WithdrawStatus.startWithdraw
 			} else {
@@ -108,7 +110,7 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 			fromBlock,
 		})
 
-		const eventsWithdraw = await publicClient.getContractEvents({
+		const eventsRequestWithdraw = await publicClient.getContractEvents({
 			address: config.PARENT_POOL_CONTRACT,
 			abi,
 			eventName: 'ConceroParentPool_WithdrawRequestInitiated',
@@ -139,7 +141,7 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 				time: Number(block.timestamp) * 1000,
 				amount: formatUnits(event.args!.usdcAmount, 6),
 				eventName: event.eventName,
-				status: null,
+				status: UserActionStatus.CompleteDeposit,
 				transactionHash: event.transactionHash,
 				address: receipt.from,
 			}
@@ -147,7 +149,7 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 			userActions.push(result)
 		}
 
-		for (const event of eventsWithdraw) {
+		for (const event of eventsRequestWithdraw) {
 			const block = await publicClient.getBlock({
 				blockNumber: event.blockNumber,
 			})
@@ -156,13 +158,16 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 				hash: event.transactionHash,
 			})
 
+			console.log(event, receipt.from)
+
 			const result: UserTransaction = {
 				time: Number(block.timestamp) * 1000,
-				amount: 0,
+				amount: '0',
 				eventName: event.eventName,
-				status: null,
+				status: UserActionStatus.CompleteRequestWithdraw,
 				transactionHash: event.transactionHash,
 				address: receipt.from,
+				deadline: event.args.deadline ? Number(event.args.deadline) : null,
 			}
 
 			userActions.push(result)
@@ -177,13 +182,11 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 				hash: event.transactionHash,
 			})
 
-			console.log(event)
-
 			const result: UserTransaction = {
 				time: Number(block.timestamp) * 1000,
 				amount: formatUnits(event.args!.amount, 6),
 				eventName: event.eventName,
-				status: null,
+				status: UserActionStatus.CompleteWithdraw,
 				transactionHash: event.transactionHash,
 				address: receipt.from,
 			}
@@ -191,15 +194,34 @@ export const watchUserActions = async (address: Address, onGetActions: (logs: Us
 			userActions.push(result)
 		}
 
-		onGetActions(
-			userActions
-				.filter(event => event.address.toLowerCase() === address.toLowerCase())
-				.sort((a, b) => {
-					return b.time - a.time
-				}),
-		)
+		const sortedUserActions = userActions
+			.filter(event => event.address.toLowerCase() === address.toLowerCase())
+			.sort((a, b) => {
+				return b.time - a.time
+			})
+
+		onGetActions(sortedUserActions)
 
 		toBlock -= blockRange
 		fromBlock -= blockRange
 	}
+}
+
+export const handleDepositRequestActions = (actions: UserTransaction[]) => {
+	let isAddClaim = false
+
+	for (const action of actions) {
+		if (action.eventName === 'ConceroParentPool_Withdrawn') {
+			break
+		}
+
+		if (action.eventName === 'ConceroParentPool_WithdrawRequestInitiated' && !isAddClaim) {
+			isAddClaim = true
+
+			action.status = UserActionStatus.ActiveRequestWithdraw
+			break
+		}
+	}
+
+	return actions
 }

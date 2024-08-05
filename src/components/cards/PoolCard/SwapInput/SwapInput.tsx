@@ -69,15 +69,14 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 	if (swapState.poolMode === 'withdraw' && withdrawStatus === 'completeWithdrawal') {
 		return (
 			<div className={classNames.container}>
-				<PoolButton
-					swapState={swapState}
-					isConnected={isConnected}
+				<h4>You may withdraw your funds</h4>
+				<Button
 					onClick={async () => {
 						await completeWithdrawal(swapState, swapDispatch)
 					}}
-					switchChainHook={switchChainHook}
-				/>
-				<Button>Withdraw funds</Button>
+				>
+					Withdraw funds
+				</Button>
 			</div>
 		)
 	}
