@@ -18,7 +18,7 @@ interface UserBalance {
 const PoolShareCard = ({ userPoolShare }: { userPoolShare: number }) => (
 	<Card className={`${classNames.poolShare} cardConvex`}>
 		<h4 className="body4">Your pool share</h4>
-		<h2>{userPoolShare.toFixed(1)} %</h2>
+		<h2>{!isNaN(userPoolShare) ? userPoolShare.toFixed(1) : 'n/a'} %</h2>
 		<ProgressBar percentage={userPoolShare} />
 	</Card>
 )

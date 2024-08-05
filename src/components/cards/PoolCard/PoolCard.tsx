@@ -9,6 +9,7 @@ import { SwapCardStage } from './swapReducer/types'
 import { ContactSupportCard } from '../ContactSupportCard/ContactSupportCard'
 import posthog from 'posthog-js'
 import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
+import { Card } from '../Card/Card'
 
 export const PoolCard = () => {
 	const [swapState, swapDispatch] = useSwapReducer()

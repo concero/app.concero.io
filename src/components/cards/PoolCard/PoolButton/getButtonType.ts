@@ -27,8 +27,9 @@ export function getButtonType(
 	}
 
 	if (from.amount) {
-		if (BigNumber(from.amount).lt(0.1)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
 		if (swapState.poolMode === 'deposit') {
+			if (BigNumber(from.amount).lt(100)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
+
 			return ButtonType.DEPOSIT
 		} else {
 			return ButtonType.WITHDRAW

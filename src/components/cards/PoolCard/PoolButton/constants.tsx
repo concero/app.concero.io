@@ -32,7 +32,7 @@ export const buttonText: { [key in ButtonType]: string } = {
 	[ButtonType.FETCH_BALANCES_LOADING]: '',
 	[ButtonType.CONNECT_WALLET_BRIGHT]: 'button.connectWalletToSwap',
 	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: 'Amount should not be greater than 10',
-	[ButtonType.TESTNET_AMOUNT_TOO_LOW]: 'From amount is too low',
+	[ButtonType.TESTNET_AMOUNT_TOO_LOW]: 'Minimum deposit is $100',
 }
 
 export const isButtonDisabled: { [key in ButtonType]: boolean } = {

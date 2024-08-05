@@ -131,6 +131,10 @@ body::-webkit-scrollbar {
 	--color-blue-lighter: #1f9fff;
 	--color-blue-lightest: #0c7dcc;
 
+	/* yellow */
+	--color-yellow-warning: #ffebcd;
+	--color-yellow-warning-text: #d59261;
+
 	/* pink */
 	--color-pink-500: #f735a9;
 	--color-pink-600: #fee8f7;
@@ -208,6 +212,10 @@ body::-webkit-scrollbar {
 	--color-blue-light: #8ec7ff;
 	--color-blue-lighter: #b3d3ff;
 	--color-blue-lightest: #d9efff;
+
+	/* yellow */
+	--color-yellow-warning: #ffebcd;
+	--color-yellow-warning-text: #d59261;
 
 	/* pink */
 	--color-pink-500: #f735a9;

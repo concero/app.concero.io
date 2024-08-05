@@ -3,12 +3,10 @@ import { base } from 'viem/chains'
 import { config } from '../../constants/config'
 import { getPoolLiquidity } from './getPoolLiquidity'
 import { abi as ParentPool } from '../../abi/ParentPool.json'
+import { getPublicClient } from '@wagmi/core'
+import { config as wagmiConfig } from '../../web3/wagmi'
 
-const client = createPublicClient({
-	chain: base,
-	transport: http(),
-})
-
+const client = getPublicClient(wagmiConfig, { chainId: base.id })
 const lpTokenDecimals = 18
 
 export const getUserLpTokens = async (userAddress: Address): Promise<number> => {

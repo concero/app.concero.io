@@ -91,7 +91,7 @@ export const QuestsCard = () => {
 			</div>
 			{quests.length === 0 && (
 				<Card className="row jc">
-					<h4 className="body4">There are no quests yet.</h4>
+					<h4 className="body4">Coming Soon</h4>
 				</Card>
 			)}
 			{quests[0] && <QuestCard quest={quests[0]} />}

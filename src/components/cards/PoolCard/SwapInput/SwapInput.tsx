@@ -4,7 +4,7 @@ import { TokenArea } from '../TokenArea/TokenArea'
 import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
 import { type SwapInputProps } from './types'
-import { IconArrowsUpDown } from '@tabler/icons-react'
+import { IconArrowsUpDown, IconCoins } from '@tabler/icons-react'
 import { SwapCardStage } from '../swapReducer/types'
 import { executeDeposit } from '../swapExecution/executeDeposit'
 import { trackEvent } from '../../../../hooks/useTracking'
@@ -15,6 +15,9 @@ import { Button } from '../../../buttons/Button/Button'
 import { getWithdrawStatus } from '../../../../api/concero/getUserActions'
 import { getWalletClient } from '@wagmi/core'
 import { config } from '../../../../web3/wagmi'
+import { Card } from '../../Card/Card'
+import { useSpring } from '@react-spring/web'
+import { easeQuadInOut } from 'd3-ease'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode }) => {
 	const [withdrawStatus, setWithdrawStatus] = useState<WithdrawStatus>('startWithdraw')
@@ -116,7 +119,15 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 					</div>
 				) : null}
 			</div>
-			<SwapDetails swapState={swapState} swapDispatch={swapDispatch} />
+			{swapState.from.amount && Number(swapState.from.amount) !== 0 && (
+				<Card className={classNames.warningCard}>
+					<div className="row gap-sm">
+						<IconCoins width={18} height={18} color={'var(--color-yellow-warning-text)'} />
+						<p>Withdrawal limitations</p>
+					</div>
+					<p>Your funds will be available for withdrawal after 7 days</p>
+				</Card>
+			)}
 			<PoolButton
 				swapState={swapState}
 				isConnected={isConnected}
