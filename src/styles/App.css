@@ -1,3 +1,15 @@
+.w-full {
+	width: 100%;
+}
+
+.h-full {
+	height: 100%;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
 .row {
 	flex-direction: row;
 }
@@ -92,6 +104,12 @@ input[type='number']::-webkit-outer-spin-button {
 	padding: var(--sp-md);
 	transition: background-position 0.4s;
 	position: relative;
+}
+
+.cardConvex {
+	border: none;
+	box-shadow: 0 12px 12px 0 var(--color-convex-card-gradient);
+	padding: var(--st-br-lg);
 }
 
 .dark {

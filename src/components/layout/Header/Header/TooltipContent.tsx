@@ -2,7 +2,7 @@ import { IconSettings } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
 import { useTranslation } from 'react-i18next'
 
-export function TooltipContent() {
+export function TooltipComingSoonContent() {
 	const { t } = useTranslation()
 
 	return (

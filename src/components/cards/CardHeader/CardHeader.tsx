@@ -6,10 +6,11 @@ interface CardHeaderProps {
 	title?: string
 	children?: ReactNode
 	isLoading?: boolean
+	className?: string
 }
 
-export const CardHeader: FC<CardHeaderProps> = ({ title = null, children, isLoading = false }) => (
-	<div className={classNames.cardHeader}>
+export const CardHeader: FC<CardHeaderProps> = ({ title = null, children, isLoading = false, className = '' }) => (
+	<div className={`${classNames.cardHeader} ${className}`}>
 		{title ? (
 			<div className={classNames.titleContainer}>
 				<h5 className={'cardHeaderTitle'}>{title}</h5>

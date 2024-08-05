@@ -1,0 +1,48 @@
+.questsHeader {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-left: var(--sp-screen-h);
+	margin-right: var(--sp-sm);
+
+	h4 {
+		color: var(--color-grey-450);
+	}
+
+	button {
+		color: var(--color-text-secondary);
+	}
+}
+
+.smallCardsContainer {
+	min-width: 242px;
+	gap: var(--sp-md);
+	flex-wrap: wrap;
+}
+
+.otherQuestsWrap {
+	flex-direction: row;
+	gap: var(--sp-md);
+}
+
+.questCard {
+	transition:
+		color 0.2s ease-in-out,
+		background-color 0.2s ease-in-out,
+		transform 0.2s ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		transform: translateY(-2px);
+	}
+}
+
+.questImage {
+	object-fit: cover;
+}
+
+@media (max-width: 768px) {
+	.otherQuestsWrap {
+		flex-direction: column;
+	}
+}

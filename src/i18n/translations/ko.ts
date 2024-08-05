@@ -130,5 +130,8 @@ export const ko = {
 		languageModal: {
 			title: '언어 변경',
 		},
+		liquidityCap: {
+			title: '유동 자본',
+		},
 	},
 }

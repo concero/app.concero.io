@@ -7,6 +7,8 @@ export interface TagProps {
 	rightIcon?: ReactNode
 	onClick?: (event: MouseEvent<HTMLButtonElement>) => void
 	color:
+		| 'blue'
+		| 'pink'
 		| 'red'
 		| 'green'
 		| 'grey'

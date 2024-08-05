@@ -131,5 +131,8 @@ export const ru = {
 		languageModal: {
 			title: 'Изменить язык',
 		},
+		liquidityCap: {
+			title: 'Ликвидный капитал',
+		},
 	},
 }

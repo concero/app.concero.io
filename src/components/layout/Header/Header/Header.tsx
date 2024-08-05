@@ -5,15 +5,8 @@ import { routes } from '../../../../constants/routes'
 import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
-import { WithTooltip } from '../../../wrappers/WithTooltip'
-import { TooltipContent } from './TooltipContent'
-import { ComingSoonLinks } from './ComingSoonLinks'
-import { useTranslation } from 'react-i18next'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 import { FeedbackModal } from '../../../modals/FeedbackModal/FeedbackModal'
-import { trackEvent } from '../../../../hooks/useTracking'
-import { action, category } from '../../../../constants/tracking'
-import { Button } from '../../../buttons/Button/Button'
 
 interface HeaderProps {
 	style?: CSSProperties
@@ -25,22 +18,8 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewSwapCardMode }) => {
 	const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
 	const isMobile = useMediaQuery('mobile')
-	const matchSwap = useMatch(routes.swap)
-	const { t } = useTranslation()
-
-	const handleHelpButtonClick = () => {
-		setIsFeedbackModalOpened(prev => !prev)
-		void trackEvent({
-			category: category.Header,
-			action: action.ToggleFeedbackModalVisible,
-			label: 'toggle_feedback_modal',
-		})
-	}
-
-	const ComingSoon = WithTooltip({
-		WrappedComponent: ComingSoonLinks,
-		Tooltip: TooltipContent,
-	})
+	const matchSwapPool = useMatch(routes.pool)
+	const matchSwapRewards = useMatch(routes.rewards)
 
 	return (
 		<header className={classNames.header}>
@@ -51,10 +30,15 @@ export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewS
 				</div>
 				{!isMobile ? (
 					<ul>
-						<Link className={matchSwap ? classNames.active : classNames.link} to={routes.swap}>
-							{t('header.swap')}
+						<a className={classNames.link} target="_blank" href="http://lanca.io" rel="noreferrer">
+							Swap
+						</a>
+						<Link className={matchSwapPool ? classNames.active : classNames.link} to={routes.pool}>
+							Provide liquidity
 						</Link>
-						{ComingSoon}
+						<Link className={matchSwapRewards ? classNames.active : classNames.link} to={routes.rewards}>
+							Rewards
+						</Link>
 					</ul>
 				) : null}
 				{!isNewSwapCardMode ? (
@@ -70,18 +54,18 @@ export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewS
 				) : null}
 			</div>
 			<div className={classNames.headerButtonsContainer}>
-				{!isMobile ? (
-					<Button
-						variant="subtle"
-						size="sm"
-						className={classNames.helpButton}
-						onClick={() => {
-							handleHelpButtonClick()
-						}}
-					>
-						{t('modal.helpUsImprove')}
-					</Button>
-				) : null}
+				{/* {!isMobile ? ( */}
+				{/*	<Button */}
+				{/*		variant="subtle" */}
+				{/*		size="sm" */}
+				{/*		className={classNames.helpButton} */}
+				{/*		onClick={() => { */}
+				{/*			handleHelpButtonClick() */}
+				{/*		}} */}
+				{/*	> */}
+				{/*		{t('modal.helpUsImprove')} */}
+				{/*	</Button> */}
+				{/* ) : null} */}
 				<WalletButton />
 				<BurgerMenu />
 			</div>

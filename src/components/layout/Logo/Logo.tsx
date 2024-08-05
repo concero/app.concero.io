@@ -21,7 +21,7 @@ export const Logo: FC<LogoProps> = ({ width = 100, height = 30 }) => (
           fill: var(--color-primary-500);
         }
           .cls-2 {
-          fill: var(--color-text-primary);
+          fill: var(--color-primary-500);
         } 
           `}
 			</style>
