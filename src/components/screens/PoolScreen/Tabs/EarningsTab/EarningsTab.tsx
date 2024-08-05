@@ -7,8 +7,8 @@ import { EarningsCard } from '../../../../cards/EarningsCard/EarningsCard'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { calculateWithdrawableAmount, getLpTotalSupply, getUserLpTokens } from '../../../../../api/concero/poolLpTokens'
-import { fetchLastFee } from '../../../../../api/concero/fetchFees'
 import { formatUnits, parseUnits } from 'viem'
+import { getPoolLiquidity } from '../../../../../api/concero/getPoolLiquidity'
 
 interface UserBalance {
 	userBalanceLp: number
@@ -45,7 +45,7 @@ export const EarningsTab = () => {
 		setUserBalance(balanceLp)
 
 		const totalSupply = await getLpTotalSupply()
-		const { poolLiquidity } = await fetchLastFee()
+		const poolLiquidity = await getPoolLiquidity()
 
 		const ratio = totalSupply / poolLiquidity
 		const lpDecimals = parseUnits(String(balanceLp), 18)

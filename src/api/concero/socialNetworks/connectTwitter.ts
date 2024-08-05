@@ -7,7 +7,7 @@ export const getRequestToken = async () => {
 	const request = await get(`${config.baseURL}/twitter_token`)
 	const link = request.data.data
 
-	console.log(link)
+	console.log('twitter_token', link)
 	window.location.href = link
 }
 

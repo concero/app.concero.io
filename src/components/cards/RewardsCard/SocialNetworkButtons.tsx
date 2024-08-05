@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { connectDiscord } from '../../../api/concero/socialNetworks/connectDiscord'
 import { connectTwitter, getRequestToken } from '../../../api/concero/socialNetworks/connectTwitter'
 
-const discordLink = `https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=${process.env.DISCORD_CALLBACK_URL}&scope=identify+guilds+email+guilds.join+connections+guilds.members.read+gdm.join+role_connections.write`
+const discordLink = `https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=https%3A%2F%2Fapp.concero.io%2Frewards&scope=identify+guilds+email`
 
 interface Props {
 	user: IUser | null | undefined
@@ -18,7 +18,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 		const params = new URL(document.location.href).searchParams
 		const discordCode = params.get('code')
 
-		if (discordCode && user && !user.subscriptions.discord?.username) {
+		if (discordCode && user) {
 			const fetchedNickname = await connectDiscord(discordCode, user)
 			setDiscordNickname(fetchedNickname)
 		}
@@ -29,7 +29,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 		const twitterCode = params.get('oauth_token')
 		const twitterVerifyCode = params.get('oauth_verifier')
 
-		if (twitterCode && twitterVerifyCode && user && !user.subscriptions.twitter?.screen_name) {
+		if (twitterCode && twitterVerifyCode && user) {
 			const fetchedNickname = await connectTwitter(twitterCode, twitterVerifyCode, user)
 			setTwitterNickname(fetchedNickname)
 		}
