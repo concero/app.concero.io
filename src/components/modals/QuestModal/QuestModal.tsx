@@ -1,4 +1,4 @@
-import { Modal } from '../../modals/Modal/Modal'
+import { Modal } from '../Modal/Modal'
 import { Tag } from '../../tags/Tag/Tag'
 import { Button } from '../../buttons/Button/Button'
 import { type Dispatch, type SetStateAction, useState } from 'react'

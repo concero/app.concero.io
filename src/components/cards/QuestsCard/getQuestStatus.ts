@@ -13,7 +13,7 @@ export const getQuestStatus = (dateStart: Date, dateEnd: Date) => {
 	const now = dayjs()
 	const start = dayjs(dateStart)
 	const end = dayjs(dateEnd)
-	let status = ''
+	let status: string = ''
 	let typeStatus = QuestStatus.LAUNCH
 	const duration = end.diff(start, 'hour')
 
