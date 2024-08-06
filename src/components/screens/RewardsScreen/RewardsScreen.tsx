@@ -43,7 +43,7 @@ export const RewardsScreen = () => {
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrap}>
 				<RewardsCard user={user} />
-				<QuestsCard />
+				<QuestsCard user={user} />
 				<LeaderboardCard user={user} />
 			</div>
 

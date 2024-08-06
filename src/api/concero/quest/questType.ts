@@ -1,6 +1,7 @@
 import { type PointsBooster } from '../user/userType'
 
 export enum QuestConditionType {
+	ProvideLiquidity = 'ProvideLiquidity',
 	ExecuteTransactions = 'ExecuteTransactions',
 	ExecuteBridgeTransactions = 'ExecuteBridgeTransactions',
 	SubscribeOnSocialNetwork = 'SubscribeOnSocialNetwork',
@@ -16,6 +17,7 @@ export interface QuestCondition {
 }
 
 export interface IQuest {
+	_id: string
 	name: string
 	description: string
 	image: string

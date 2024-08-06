@@ -4,9 +4,10 @@ import { poolEventNamesMap } from '../../../api/concero/getUserActions'
 import dayjs from 'dayjs'
 import { UserActionStatus, type UserTransaction } from './UserActionsCard'
 import { Button } from '../../buttons/Button/Button'
-import { completeWithdrawal, TransactionStatus } from '../PoolCard/swapExecution/requestWithdraw'
+import { completeWithdrawal } from '../PoolCard/swapExecution/requestWithdraw'
 import { useAccount } from 'wagmi'
 import { type ReactNode, useState } from 'react'
+import { TransactionStatus } from '../../../api/concero/types'
 
 const renderStatusTag = (action: UserTransaction) => {
 	const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.IDLE)
@@ -25,8 +26,6 @@ const renderStatusTag = (action: UserTransaction) => {
 			}
 		}
 	}
-
-	console.log(status)
 
 	const stageButtonsMap: Record<TransactionStatus, ReactNode> = {
 		[TransactionStatus.IDLE]: (

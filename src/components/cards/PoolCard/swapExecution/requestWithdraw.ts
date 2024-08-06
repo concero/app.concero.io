@@ -16,7 +16,7 @@ import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { base } from 'viem/chains'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
 import { config } from '../../../../constants/config'
-import { getWithdrawStatus } from '../../../../api/concero/getUserActions'
+import { TransactionStatus } from '../../../../api/concero/types'
 
 export enum WithdrawStatus {
 	completeWithdrawal = 'completeWithdrawal',
@@ -128,13 +128,6 @@ export async function startWithdrawal(
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
-}
-
-export enum TransactionStatus {
-	SUCCESS = 'SUCCESS',
-	FAILED = 'FAILED',
-	PENDING = 'PENDING',
-	IDLE = 'IDLE',
 }
 
 export const completeWithdrawal = async (address: Address): Promise<TransactionStatus> => {

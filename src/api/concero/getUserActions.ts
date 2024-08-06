@@ -1,27 +1,17 @@
-import { type Address, createPublicClient, fallback, formatUnits } from 'viem'
+import { type Address, formatUnits, type Log } from 'viem'
 import { base } from 'wagmi/chains'
-import { http } from 'wagmi'
 import { abi } from '../../abi/ParentPool.json'
 import { UserActionStatus, type UserTransaction } from '../../components/cards/UserActionsCard/UserActionsCard'
 import { config } from '../../constants/config'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import { WithdrawStatus } from '../../components/cards/PoolCard/swapExecution/requestWithdraw'
+import { getPublicClient } from '@wagmi/core'
+import { config as wagmiConfig } from '../../web3/wagmi'
 
 dayjs.extend(isSameOrBefore)
+const publicClient = getPublicClient(wagmiConfig, { chainId: base.id })
 
-const publicClient = createPublicClient({
-	chain: base,
-	transport: fallback([http('https://base-rpc.publicnode.com'), http('https://base.drpc.org')]),
-})
-
-const sortByBlockNumber = events => {
-	return events.sort((a, b) => {
-		return Number(b.blockNumber) - Number(a.blockNumber)
-	})
-}
-
-export const getWithdrawStatus = async (address: Address): Promise<WithdrawStatus> => {
+export const getLastDeposit = async (address: Address): Promise<Log | null> => {
 	const firstBlockNumber = 17868906n
 
 	const blockRange = 50_000n
@@ -29,62 +19,33 @@ export const getWithdrawStatus = async (address: Address): Promise<WithdrawStatu
 	let fromBlock = toBlock - blockRange
 
 	while (toBlock >= firstBlockNumber) {
-		const eventsWithdrawComplete = await publicClient.getContractEvents({
+		const eventsDeposit = await publicClient.getContractEvents({
 			address: config.PARENT_POOL_CONTRACT,
 			abi,
-			eventName: 'ConceroParentPool_Withdrawn',
+			eventName: 'ConceroParentPool_DepositCompleted',
 			args: {
-				to: address,
+				lpAddress: address,
 			},
 			toBlock,
 			fromBlock,
 		})
 
-		const eventsWithdrawRequest = await publicClient.getContractEvents({
-			address: config.PARENT_POOL_CONTRACT,
-			abi,
-			eventName: 'ConceroParentPool_WithdrawRequestInitiated',
-			args: {
-				caller: address,
-			},
-			toBlock,
-			fromBlock,
-		})
-
-		const lastCompleteEvent = sortByBlockNumber(eventsWithdrawComplete).find(
-			event => event.args.to.toLowerCase() === address.toLowerCase(),
-		)
-		const lastRequestEvent = sortByBlockNumber(eventsWithdrawRequest).find(
-			event => event.args.caller.toLowerCase() === address.toLowerCase(),
-		)
-
-		if (lastRequestEvent && lastCompleteEvent) {
-			const blockRequestEvent = await publicClient.getBlock({
-				blockNumber: lastRequestEvent.blockNumber,
+		for (const event of eventsDeposit) {
+			const receipt = await publicClient.getTransactionReceipt({
+				hash: event.transactionHash,
 			})
 
-			const blockCompleteEvent = await publicClient.getBlock({
-				blockNumber: lastCompleteEvent.blockNumber,
-			})
-
-			console.log('blockRequestEvent', blockRequestEvent.timestamp)
-
-			if (blockCompleteEvent.timestamp > blockRequestEvent.timestamp) {
-				return WithdrawStatus.startWithdraw
-			} else {
-				return WithdrawStatus.completeWithdrawal
+			console.log(receipt.from)
+			if (receipt.from.toLowerCase() === address.toLowerCase()) {
+				return event
 			}
-		}
-
-		if (lastRequestEvent && !lastCompleteEvent) {
-			return WithdrawStatus.completeWithdrawal
 		}
 
 		toBlock -= blockRange
 		fromBlock -= blockRange
 	}
 
-	return WithdrawStatus.startWithdraw
+	return null
 }
 
 export const poolEventNamesMap = {

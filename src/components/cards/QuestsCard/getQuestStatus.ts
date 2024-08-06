@@ -3,19 +3,25 @@ import duration from 'dayjs/plugin/duration'
 
 dayjs.extend(duration)
 
+export enum QuestStatus {
+	LAUNCH = 'LAUNCH',
+	GOING = 'GOING',
+	FINISHED = 'FINISHED',
+}
+
 export const getQuestStatus = (dateStart: Date, dateEnd: Date) => {
 	const now = dayjs()
 	const start = dayjs(dateStart)
 	const end = dayjs(dateEnd)
 	let status = ''
-	let isLaunched = false
+	let typeStatus = QuestStatus.LAUNCH
 	const duration = end.diff(start, 'hour')
 
 	if (now.isBefore(start)) {
 		status = 'Upcoming'
 	} else if (now.isSame(start, 'day') && duration > 72) {
 		status = 'Just launched'
-		isLaunched = true
+		typeStatus = QuestStatus.GOING
 	} else if (now.isAfter(start) && now.isBefore(end)) {
 		const daysLeft = end.diff(now, 'day')
 		const hoursLeft = end.diff(now, 'hour')
@@ -32,6 +38,8 @@ export const getQuestStatus = (dateStart: Date, dateEnd: Date) => {
 				status = `Ends in ${minutesLeft}min`
 			}
 		}
+
+		typeStatus = QuestStatus.GOING
 	} else {
 		const daysAgo = now.diff(end, 'day')
 		const hoursAgo = now.diff(end, 'hour') % 24
@@ -44,7 +52,9 @@ export const getQuestStatus = (dateStart: Date, dateEnd: Date) => {
 		} else {
 			status = `Ended ${minutesAgo}min ago`
 		}
+
+		typeStatus = QuestStatus.FINISHED
 	}
 
-	return { status, isLaunched }
+	return { status, typeStatus }
 }

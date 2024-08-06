@@ -1,5 +1,5 @@
 import { createConfig, http } from 'wagmi'
-import { createPublicClient, fallback } from 'viem'
+import { fallback } from 'viem'
 import {
 	arbitrum,
 	arbitrumSepolia,
@@ -156,9 +156,4 @@ createWeb3Modal({
 	wagmiConfig: config,
 	projectId,
 	enableAnalytics: true,
-})
-
-export const publicClient = createPublicClient({
-	chain: mainnet,
-	transport: http(),
 })

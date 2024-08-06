@@ -29,6 +29,7 @@ export const UserHistory = ({ isOpen, setIsOpen }: UserHistoryProps) => {
 	return (
 		<Modal show={isOpen} setShow={setIsOpen} title="History" className={classNames.historyModal}>
 			<div className={classNames.historyWrapper}>
+				{!address && <h4>Connect wallet to see your history</h4>}
 				{transactions.map(transaction => (
 					<UserAction key={transaction.srcTxHash} transaction={transaction} type="swap" />
 				))}

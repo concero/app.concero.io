@@ -41,3 +41,10 @@ export interface Fee {
 }
 
 export type TokenBalance = Record<string, Token[]>
+
+export enum TransactionStatus {
+	SUCCESS = 'SUCCESS',
+	FAILED = 'FAILED',
+	PENDING = 'PENDING',
+	IDLE = 'IDLE',
+}

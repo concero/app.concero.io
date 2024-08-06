@@ -5,25 +5,35 @@ import { IconArrowUpRight } from '@tabler/icons-react'
 import { Button } from '../../buttons/Button/Button'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { getQuestStatus } from './getQuestStatus'
+import { getQuestStatus, QuestStatus } from './getQuestStatus'
 import { UserHistory } from '../../modals/RewardsUserHistory/RewardsUserHistory'
 import { type IQuest } from '../../../api/concero/quest/questType'
 import { fetchQuests } from '../../../api/concero/quest/fetchQuests'
 import { QuestModal } from '../../modals/QuestModal/QuestModal'
+import type { IUser } from '../../../api/concero/user/userType'
 
-interface QuestsCardProps {
+interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
 	quest: IQuest
+	user: IUser | null | undefined
 }
 
-const QuestCard = ({ variant = 'big', quest }: QuestsCardProps) => {
+interface QuestsCardProps {
+	user: IUser | null | undefined
+}
+
+const QuestCard = ({ variant = 'big', quest, user }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const { name, startDate, endDate, image } = quest
 
-	const { status, isLaunched } = getQuestStatus(startDate, endDate)
+	const { status, typeStatus } = getQuestStatus(startDate, endDate)
 
 	const imgWidth = variant === 'big' ? 124 : 115
 	const imgHeight = variant === 'big' ? 163 : 143
+
+	const questImage = quest.image ? (
+		<img className={classNames.questImage} width={imgWidth} height={imgHeight} src={image} alt="Quest image" />
+	) : null
 
 	return (
 		<>
@@ -35,7 +45,7 @@ const QuestCard = ({ variant = 'big', quest }: QuestsCardProps) => {
 			>
 				<Card className={`row jsb h-full ${variant === 'small' ? 'ac' : ''}`} key={variant}>
 					<div className="jsb h-full gap-md">
-						<Tag size="sm" color={isLaunched ? 'blue' : 'pink'}>
+						<Tag size="sm" color={typeStatus === QuestStatus.LAUNCH ? 'pink' : 'blue'}>
 							{status}
 						</Tag>
 						{variant === 'big' ? <h2>{name}</h2> : <h4>{name}</h4>}
@@ -43,22 +53,23 @@ const QuestCard = ({ variant = 'big', quest }: QuestsCardProps) => {
 					{variant === 'small' ? (
 						<IconArrowUpRight width={33} height={33} stroke={2} color={'var(--color-primary-650)'} />
 					) : (
-						<img
-							className={classNames.questImage}
-							width={imgWidth}
-							height={imgHeight}
-							src={image}
-							alt="Quest image"
-						/>
+						questImage
 					)}
 				</Card>
 			</div>
-			<QuestModal isOpen={isOpen} setIsOpen={setIsOpen} quest={quest} status={status} isLaunched={isLaunched} />
+			<QuestModal
+				user={user}
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				quest={quest}
+				status={status}
+				typeStatus={typeStatus}
+			/>
 		</>
 	)
 }
 
-export const QuestsCard = () => {
+export const QuestsCard = ({ user }: QuestsCardProps) => {
 	const { address } = useAccount()
 	const [isOpen, setIsOpen] = useState(false)
 	const [quests, setQuests] = useState<IQuest[]>([])
@@ -94,12 +105,12 @@ export const QuestsCard = () => {
 					<h4 className="body4">Coming Soon</h4>
 				</Card>
 			)}
-			{quests[0] && <QuestCard quest={quests[0]} />}
+			{quests[0] && <QuestCard quest={quests[0]} user={user} />}
 			<div className={classNames.otherQuestsWrap}>
-				{quests[1] && <QuestCard quest={quests[1]} variant="normal" />}
+				{quests[1] && <QuestCard quest={quests[1]} user={user} variant="normal" />}
 				<div className={classNames.smallCardsContainer}>
-					{quests[2] && <QuestCard quest={quests[2]} variant="small" />}
-					{quests[3] && <QuestCard quest={quests[3]} variant="small" />}
+					{quests[2] && <QuestCard quest={quests[2]} user={user} variant="small" />}
+					{quests[3] && <QuestCard quest={quests[3]} user={user} variant="small" />}
 				</div>
 			</div>
 

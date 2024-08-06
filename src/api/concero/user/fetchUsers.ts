@@ -7,7 +7,7 @@ export interface FetchUserResponse {
 }
 
 export const fetchUsers = async (userPoints: number | null | undefined): Promise<FetchUserResponse> => {
-	const userPointsQuery = userPoints ? `userPoints=${userPoints}` : null
+	const userPointsQuery = userPoints !== null || userPoints !== undefined ? `userPoints=${userPoints}` : null
 	const url = `${process.env.CONCERO_API_URL}/users?${userPointsQuery}`
 
 	const response = await get(url)

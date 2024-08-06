@@ -1,7 +1,6 @@
-import { type FC, useEffect, useState } from 'react'
+import { type FC } from 'react'
 import { useAccount, useSwitchChain, useWalletClient } from 'wagmi'
 import { TokenArea } from '../TokenArea/TokenArea'
-import { SwapDetails } from '../SwapDetails/SwapDetails'
 import classNames from './SwapInput.module.pcss'
 import { type SwapInputProps } from './types'
 import { IconArrowsUpDown, IconCoins } from '@tabler/icons-react'
@@ -10,31 +9,17 @@ import { executeDeposit } from '../swapExecution/executeDeposit'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { PoolButton } from '../PoolButton/PoolButton'
-import { completeWithdrawal, startWithdrawal, type WithdrawStatus } from '../swapExecution/requestWithdraw'
-import { Button } from '../../../buttons/Button/Button'
-import { getWithdrawStatus } from '../../../../api/concero/getUserActions'
+import { startWithdrawal } from '../swapExecution/requestWithdraw'
 import { getWalletClient } from '@wagmi/core'
 import { config } from '../../../../web3/wagmi'
 import { Card } from '../../Card/Card'
-import { useSpring } from '@react-spring/web'
-import { easeQuadInOut } from 'd3-ease'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode }) => {
-	const [withdrawStatus, setWithdrawStatus] = useState<WithdrawStatus>('startWithdraw')
 	const { isConnected } = useAccount()
 	const { poolMode } = swapState
 
 	const walletClient = useWalletClient()
 	const { switchChainAsync } = useSwitchChain()
-
-	useEffect(() => {
-		const handleGetWithdrawStatus = async () => {
-			const withdrawStatus: WithdrawStatus = await getWithdrawStatus(swapState.from.address)
-			setWithdrawStatus(withdrawStatus)
-		}
-
-		void handleGetWithdrawStatus()
-	}, [])
 
 	async function switchChainHook(requiredChainId: number) {
 		if (!walletClient.data) {
@@ -67,21 +52,6 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 		} else {
 			await startWithdrawal(swapState, swapDispatch)
 		}
-	}
-
-	if (swapState.poolMode === 'withdraw' && withdrawStatus === 'completeWithdrawal') {
-		return (
-			<div className={classNames.container}>
-				<h4>You may withdraw your funds</h4>
-				<Button
-					onClick={async () => {
-						await completeWithdrawal(swapState, swapDispatch)
-					}}
-				>
-					Withdraw funds
-				</Button>
-			</div>
-		)
 	}
 
 	return (
