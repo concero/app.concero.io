@@ -21,11 +21,11 @@ export const AverageApyCard = () => {
 			return acc + fee.percentReturned
 		}, 0)
 
-		const apy = (totalFeesSum * 365.25) / 100
+		const apy = totalFeesSum * 365.25
 		setCommonApyValue(apy)
 
 		const chartData = fees.map(fee => {
-			const apyOnFeeFormula = (fee.percentReturned * 365.25) / 100
+			const apyOnFeeFormula = fee.percentReturned * 365.25
 
 			return {
 				time: fee.timestamp * 1000,
