@@ -49,6 +49,7 @@ export const QuestCondition = ({ quest, index, condition, user }: QuestModalCond
 				setTxStatus(TransactionStatus.FAILED)
 			}
 		} catch (error) {
+			console.error(error)
 			setTxStatus(TransactionStatus.FAILED)
 		}
 	}
@@ -132,7 +133,7 @@ export const QuestModal = ({ quest, isOpen, setIsOpen, status, typeStatus, user 
 				quest.conditions.map((condition, index) => {
 					return <QuestCondition key={index} quest={quest} index={index} condition={condition} user={user} />
 				})}
-			{passedQuest && <Button isDisabled={true}>{passedQuest.points.toFixed(1)} CERs claimed</Button>}
+			{passedQuest ? <Button isDisabled={true}>{passedQuest.points.toFixed(1)} CERs claimed</Button> : null}
 			{!user && <h4 className={classNames.warning}>Connect your wallet to claim the rewards</h4>}
 		</Modal>
 	)

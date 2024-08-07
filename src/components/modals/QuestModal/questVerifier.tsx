@@ -13,7 +13,14 @@ export enum QuestStatus {
 	ALREADY_DONE = 'already done',
 }
 
-const passUserQuest = async (quest: IQuest, user: IUser, points: number) => {
+const passUserQuest = async (quest: IQuest, user: IUser, points: number | null) => {
+	if (points === null) {
+		return null
+	}
+
+	console.log('user', user)
+	console.log('points', points)
+
 	const passedQuest = {
 		id: quest._id,
 		points,
@@ -83,14 +90,16 @@ const verifyCommunityRewards = async (
 ): Promise<{ status: QuestStatus; points: number | null; message?: string }> => {
 	const airdropWallet = await getAirdropWallet(user.address as Address)
 
-	const airdropPoints = airdropWallet.roles.reduce((acc, role) => {
-		const currentPoints = role === 'Early supporters' ? 250 : 25
-		return acc + currentPoints
-	}, 0)
+	const airdropPoints =
+		airdropWallet?.roles.reduce((acc, role) => {
+			if (!role) return acc
+			const currentPoints = role === 'Early supporters' ? 250 : 25
+			return acc + currentPoints
+		}, 0) ?? 0
 
 	const { roles: discordRoles, points: discordPoints } = await getRewardsByDiscordRole(user)
 
-	const userRewardsPointsText = airdropWallet.roles
+	const userRewardsPointsText = airdropWallet?.roles
 		.reduce((acc, role) => {
 			return acc + `, ${role}`
 		}, '')
@@ -107,14 +116,14 @@ const verifyCommunityRewards = async (
 			? `You got ${airdropPoints} CERs for being in these communities: ${userRewardsPointsText}`
 			: 'You are not a member of any community'
 
-	const discrodRewardsMessage =
+	const discordRewardsMessage =
 		discordPoints > 0
 			? `You ${discordPoints} got CERs for these discord roles: ${userDiscordRolesNames}. \n`
 			: "You don't have any roles in our Discord. \n"
 
 	const passUserResult = await passUserQuest(quest, user, airdropPoints + discordPoints)
 
-	return { ...passUserResult, message: discrodRewardsMessage + communityRewardsMessage }
+	return { ...passUserResult, message: discordRewardsMessage + communityRewardsMessage }
 }
 
 export const verifyQuest = async (
