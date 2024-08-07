@@ -50,7 +50,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 		if (swapState.poolMode === 'deposit') {
 			await executeDeposit(swapState, swapDispatch, walletClient)
 		} else {
-			await startWithdrawal(swapState, swapDispatch)
+			await startWithdrawal(swapState, swapDispatch, walletClient)
 		}
 	}
 

@@ -8,16 +8,20 @@ import { completeWithdrawal } from '../PoolCard/swapExecution/requestWithdraw'
 import { useAccount } from 'wagmi'
 import { type ReactNode, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
+import { getWalletClient } from '@wagmi/core'
+import { config } from '../../../web3/wagmi'
 
 const renderStatusTag = (action: UserTransaction) => {
 	const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.IDLE)
-	const { address } = useAccount()
+	const { address, chainId } = useAccount()
 
 	const handleCompleteWithdrawal = async () => {
 		if (status === TransactionStatus.IDLE || status === TransactionStatus.FAILED) {
 			try {
 				setStatus(TransactionStatus.PENDING)
-				const txStatus = await completeWithdrawal(address!)
+
+				const walletClient = await getWalletClient(config, { chainId })
+				const txStatus = await completeWithdrawal(address!, walletClient)
 
 				setStatus(txStatus)
 			} catch (error) {

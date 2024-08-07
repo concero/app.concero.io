@@ -2,15 +2,13 @@ import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/t
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
 import {
+	type Address,
 	createPublicClient,
-	createWalletClient,
-	custom,
 	decodeEventLog,
 	type Hash,
+	http,
 	type PublicClient,
 	type WalletClient,
-	http,
-	type Address,
 } from 'viem'
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { base } from 'viem/chains'
@@ -29,11 +27,6 @@ const chain = base
 const publicClient = createPublicClient({
 	chain,
 	transport: http(),
-})
-
-const walletClient = createWalletClient({
-	chain,
-	transport: custom(window && window.ethereum!),
 })
 
 async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
@@ -90,6 +83,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 export async function startWithdrawal(
 	swapState: SwapState,
 	swapDispatch: Dispatch<SwapAction>,
+	walletClient: WalletClient,
 ): Promise<{ duration: number; hash: string } | undefined> {
 	try {
 		if (swapState.to.amount === '0' || swapState.to.amount === '') {
@@ -130,7 +124,7 @@ export async function startWithdrawal(
 	}
 }
 
-export const completeWithdrawal = async (address: Address): Promise<TransactionStatus> => {
+export const completeWithdrawal = async (address: Address, walletClient: WalletClient): Promise<TransactionStatus> => {
 	const hash = await walletClient.writeContract({
 		account: address,
 		abi: ParentPool,
