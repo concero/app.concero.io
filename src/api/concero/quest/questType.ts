@@ -2,13 +2,12 @@ import { type PointsBooster } from '../user/userType'
 
 export enum QuestConditionType {
 	ProvideLiquidity = 'ProvideLiquidity',
-	ExecuteTransactions = 'ExecuteTransactions',
-	ExecuteBridgeTransactions = 'ExecuteBridgeTransactions',
-	SubscribeOnSocialNetwork = 'SubscribeOnSocialNetwork',
-	RepostOnSocialNetwork = 'RepostOnSocialNetwork',
+	ConnectDiscord = 'ConnectDiscord',
+	ConnectTwitter = 'ConnectTwitter',
+	CommunityRewards = 'CommunityRewards',
 }
 
-export interface QuestCondition {
+export interface IQuestCondition {
 	type: QuestConditionType
 	description: string
 	targetNumber?: number
@@ -23,7 +22,7 @@ export interface IQuest {
 	image: string
 	startDate: number
 	endDate: number
-	conditions: QuestCondition[]
+	conditions: IQuestCondition[]
 	rewards: {
 		points: number
 		booster?: PointsBooster

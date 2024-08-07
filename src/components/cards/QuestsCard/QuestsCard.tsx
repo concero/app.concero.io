@@ -16,13 +16,14 @@ interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
 	quest: IQuest
 	user: IUser | null | undefined
+	className?: string
 }
 
 interface QuestsCardProps {
 	user: IUser | null | undefined
 }
 
-const QuestCard = ({ variant = 'big', quest, user }: QuestCardProps) => {
+const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const { name, startDate, endDate, image } = quest
 
@@ -38,7 +39,7 @@ const QuestCard = ({ variant = 'big', quest, user }: QuestCardProps) => {
 	return (
 		<>
 			<div
-				className={classNames.questCard}
+				className={`${classNames.questCard} ${className}`}
 				onClick={() => {
 					setIsOpen(true)
 				}}
@@ -105,12 +106,14 @@ export const QuestsCard = ({ user }: QuestsCardProps) => {
 					<h4 className="body4">Coming Soon</h4>
 				</Card>
 			)}
-			{quests[0] && <QuestCard quest={quests[0]} user={user} />}
 			<div className={classNames.otherQuestsWrap}>
-				{quests[1] && <QuestCard quest={quests[1]} user={user} variant="normal" />}
 				<div className={classNames.smallCardsContainer}>
-					{quests[2] && <QuestCard quest={quests[2]} user={user} variant="small" />}
-					{quests[3] && <QuestCard quest={quests[3]} user={user} variant="small" />}
+					{quests[0] && <QuestCard quest={quests[0]} user={user} variant="big" />}
+					{quests[1] && <QuestCard quest={quests[1]} user={user} variant="big" />}
+				</div>
+				<div className={classNames.smallCardsContainer}>
+					{quests[2] && <QuestCard quest={quests[2]} user={user} variant="big" />}
+					{quests[3] && <QuestCard quest={quests[3]} user={user} variant="big" />}
 				</div>
 			</div>
 

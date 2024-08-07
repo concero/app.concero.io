@@ -10,7 +10,7 @@ import { createUser } from '../../../api/concero/user/createUser'
 
 const InfoTitle = () => {
 	return (
-		<a className={classNames.infoTitle} href="/">
+		<a className={classNames.infoTitle} target="_blank" href="https://concero.io/" rel="noreferrer">
 			<h5>Build the next big thing with Concero</h5>
 			<span className="body3">Click here to learn the benefits</span>
 		</a>

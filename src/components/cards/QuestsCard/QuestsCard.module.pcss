@@ -15,9 +15,10 @@
 }
 
 .smallCardsContainer {
-	min-width: 242px;
 	gap: var(--sp-md);
 	flex-wrap: wrap;
+	flex-direction: column;
+	width: 50%;
 }
 
 .otherQuestsWrap {
@@ -25,9 +26,16 @@
 	gap: var(--sp-md);
 }
 
-.questCard {
-	height: 169px;
+.halfQuest {
+	width: 50%;
+}
 
+.bigQuestCard {
+	height: 170px;
+}
+
+.questCard {
+	height: 170px;
 	transition:
 		color 0.2s ease-in-out,
 		background-color 0.2s ease-in-out,

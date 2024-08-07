@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { connectDiscord } from '../../../api/concero/socialNetworks/connectDiscord'
 import { connectTwitter, getRequestToken } from '../../../api/concero/socialNetworks/connectTwitter'
 
-const discordLink = `https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=https%3A%2F%2Fapp.concero.io%2Frewards&scope=identify+guilds+email`
+export const discordLink = `https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=https%3A%2F%2Fapp.concero.io%2Frewards&scope=identify+guilds+email`
 
 interface Props {
 	user: IUser | null | undefined
@@ -60,14 +60,14 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 				className={`${classNames.connectSocialNetworkButton} ${discordConnected} ${buttonDisabled}`}
 			>
 				<h4>{discordNickname || 'Connect Discord'}</h4>
-				<span className="body1">+5 points {discordNickname ? 'claimed' : ''}</span>
+				<span className="body1">+5 CERs {discordNickname ? 'claimed' : ''}</span>
 			</a>
 			<a
 				onClick={getRequestToken}
 				className={`${classNames.connectSocialNetworkButton} ${twitterConnected} ${buttonDisabled}`}
 			>
 				<h4>{twitterNickname || 'Connect Twitter'}</h4>
-				<span className="body1">+5 points {twitterNickname ? 'claimed' : ''}</span>
+				<span className="body1">+5 CERs {twitterNickname ? 'claimed' : ''}</span>
 			</a>
 		</div>
 	)
