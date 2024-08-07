@@ -8,7 +8,7 @@ const timeFilters = createTimeFilters()
 
 export const TotalTransactionsCard = () => {
 	const [totalTransactions, setTotalTransactions] = useState(0)
-	const [activeFilter, setActiveFilter] = useState(timeFilters[0])
+	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 
 	const getTotalTransactions = async () => {
 		const { startTime, endTime } = activeFilter
@@ -28,7 +28,7 @@ export const TotalTransactionsCard = () => {
 					<h2>{totalTransactions}</h2>
 				</div>
 				<Dropdown
-					variant="simple"
+					variant="fill"
 					setActiveItem={setActiveFilter}
 					activeItem={activeFilter}
 					items={timeFilters}

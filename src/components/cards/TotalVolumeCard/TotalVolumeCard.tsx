@@ -9,7 +9,7 @@ const timeFilters = createTimeFilters()
 
 export const TotalVolumeCard = () => {
 	const [volumeData, setVolumeData] = useState<ChartData[]>([])
-	const [activeFilter, setActiveFilter] = useState(timeFilters[0])
+	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 	const [commonValue, setCommonValue] = useState<string>()
 
 	useEffect(() => {

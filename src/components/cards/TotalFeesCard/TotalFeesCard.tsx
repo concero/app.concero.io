@@ -7,7 +7,7 @@ import { fetchFees } from '../../../api/concero/fetchFees'
 const timeFilters = createTimeFilters()
 
 export const TotalFeesCard = () => {
-	const [activeFilter, setActiveFilter] = useState(timeFilters[0])
+	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 	const [totalFees, setTotalFees] = useState<string>('0')
 
 	const getTotalFees = async () => {
