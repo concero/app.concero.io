@@ -100,7 +100,7 @@ export const QuestModal = ({ quest, isOpen, setIsOpen, status, typeStatus, user 
 						)}
 						{!!rewards?.points && (
 							<Tag size="sm" color={'recommended'}>
-								+{String(rewards.points)} xp
+								+{String(rewards.points)} CERs
 							</Tag>
 						)}
 						{quest.conditions[0].type === QuestConditionType.ProvideLiquidity && (
