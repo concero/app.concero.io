@@ -33,6 +33,11 @@ const resorcesLinks: Link[] = [
 		isDisable: false,
 	},
 	{
+		title: 'Terms of service',
+		url: 'https://concero.io',
+		isDisable: true,
+	},
+	{
 		title: 'Whitepaper',
 		url: 'https://www.trailofbits.com',
 		isDisable: true,
