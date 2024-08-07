@@ -11,7 +11,7 @@ const timeFilters = createTimeFilters()
 export const AverageApyCard = () => {
 	const [apyData, setApyData] = useState<ChartData[]>([])
 	const [commonApyValue, setCommonApyValue] = useState<number>(0)
-	const [activeFilter, setActiveFilter] = useState(timeFilters[0])
+	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 
 	const getTotalVolume = async () => {
 		const { startTime, endTime } = activeFilter

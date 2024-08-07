@@ -53,7 +53,7 @@ export const createTimeFilters = () => {
 			endTime: now,
 		},
 		{
-			title: 'All-time',
+			title: 'All time',
 			value: 'all-time',
 			startTime: null,
 			endTime: null,
