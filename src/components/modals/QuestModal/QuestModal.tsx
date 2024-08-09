@@ -37,14 +37,14 @@ export const QuestCondition = ({ quest, index, condition, user }: QuestModalCond
 		try {
 			setTxStatus(TransactionStatus.PENDING)
 
-			const currentPoints = await verifyQuest(quest, condition, user)
-			if (currentPoints) {
+			const questRes = await verifyQuest(quest, condition, user)
+			if (questRes) {
 				setTxStatus(TransactionStatus.SUCCESS)
-				setPoints(currentPoints.points!)
+				setPoints(questRes.points)
 
-				if (currentPoints.message) {
-					setMessage(currentPoints.message)
-				}
+				// if (questRes.message) {
+				// 	setMessage(questRes.message)
+				// }
 			} else {
 				setTxStatus(TransactionStatus.FAILED)
 			}
