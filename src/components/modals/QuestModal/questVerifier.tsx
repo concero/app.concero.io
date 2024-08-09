@@ -14,12 +14,6 @@ export enum QuestStatus {
 }
 
 const passUserQuest = async (quest: IQuest, user: IUser, points: number) => {
-	const passedQuest = {
-		id: quest._id,
-		points,
-		date: new Date().valueOf(),
-	}
-
 	// await updateUser(user._id, {
 	// 	passedQuests: [...user.passedQuests, passedQuest],
 	// })

@@ -18,9 +18,9 @@ export const updateUserTwitter = async (data: any): Promise<IUser> => {
 }
 
 export const verifyUserQuest = async (questId: string, userId: string): Promise<IUser> => {
-	const url = `${process.env.CONCERO_API_URL}/quests/${questId}/verify`
+	const url = `${process.env.CONCERO_API_URL}/quests/verify`
 
-	const response = await post(url, { userId })
+	const response = await post(url, { userId, questId })
 	if (response.status !== 200) throw new Error('Something went wrong')
 	return response.data.data
 }
