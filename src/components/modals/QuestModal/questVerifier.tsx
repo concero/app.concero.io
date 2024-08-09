@@ -1,6 +1,5 @@
 import { type IQuest, type IQuestCondition, QuestConditionType } from '../../../api/concero/quest/questType'
-import { type Address, formatUnits } from 'viem'
-import { getLastDeposit } from '../../../api/concero/getUserActions'
+import { type Address } from 'viem'
 import { verifyUserQuest } from '../../../api/concero/user/updateUser'
 import { type IUser } from '../../../api/concero/user/userType'
 import { getDiscordRole } from '../../../api/concero/socialNetworks/getDiscordRole'
@@ -14,10 +13,6 @@ export enum QuestStatus {
 }
 
 const passUserQuest = async (quest: IQuest, user: IUser, points: number) => {
-	// await updateUser(user._id, {
-	// 	passedQuests: [...user.passedQuests, passedQuest],
-	// })
-
 	await verifyUserQuest(quest._id, user._id)
 	return { status: QuestStatus.FAILED, points }
 }
@@ -26,16 +21,7 @@ const verifyProvideLiquidity = async (
 	user: IUser,
 	quest: IQuest,
 ): Promise<{ status: QuestStatus; points: number | null }> => {
-	const lastUserDeposit = await getLastDeposit(user.address as Address)
-
-	if (!lastUserDeposit) {
-		return { status: QuestStatus.FAILED, points: null }
-	}
-
-	const amount = formatUnits(lastUserDeposit.args.usdcAmount, 6)
-	const points = Number(amount) * 0.05
-
-	return await passUserQuest(quest, user, points)
+	await verifyUserQuest(quest._id, user._id)
 }
 
 const verifyConnectDiscord = async (user: IUser) => {
