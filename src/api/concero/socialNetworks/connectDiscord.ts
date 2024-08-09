@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { updateUser } from '../user/updateUser'
+import { updateUserDiscord } from '../user/updateUser'
 import { type IUser } from '../user/userType'
 
 export const getToken = async (code: string) => {
@@ -32,20 +32,11 @@ export const connectDiscord = async (code: string, user: IUser) => {
 	})
 
 	if (userData) {
-		const { id, username, email, avatar, locale } = userData.data
+		const { username } = userData.data
 
-		await updateUser(user._id, {
-			points: user.points + 5,
-			subscriptions: {
-				discord: {
-					id,
-					avatar,
-					username,
-					email,
-					locale,
-				},
-				twitter: user?.subscriptions?.twitter || null,
-			},
+		await updateUserDiscord({
+			_id: user._id,
+			token,
 		})
 
 		return username
