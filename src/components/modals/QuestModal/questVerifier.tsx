@@ -1,7 +1,7 @@
 import { type IQuest, type IQuestCondition, QuestConditionType } from '../../../api/concero/quest/questType'
 import { type Address, formatUnits } from 'viem'
 import { getLastDeposit } from '../../../api/concero/getUserActions'
-import { updateUser } from '../../../api/concero/user/updateUser'
+import { verifyUserQuest } from '../../../api/concero/user/updateUser'
 import { type IUser } from '../../../api/concero/user/userType'
 import { getDiscordRole } from '../../../api/concero/socialNetworks/getDiscordRole'
 import { discordRoleNamesMap, rewardsRolesMap } from './questVerifierConfig'
@@ -20,11 +20,11 @@ const passUserQuest = async (quest: IQuest, user: IUser, points: number) => {
 		date: new Date().valueOf(),
 	}
 
-	await updateUser(user._id, {
-		passedQuests: [...user.passedQuests, passedQuest],
-		points: user.points + points,
-	})
+	// await updateUser(user._id, {
+	// 	passedQuests: [...user.passedQuests, passedQuest],
+	// })
 
+	await verifyUserQuest(quest._id, user._id)
 	return { status: QuestStatus.FAILED, points }
 }
 
