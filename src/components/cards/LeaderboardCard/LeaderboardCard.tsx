@@ -57,7 +57,6 @@ export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 
 	const handleFetchUsers = async () => {
 		const { users, currentUserPosition } = await fetchUsers(user?.points)
-		console.log({ users, currentUserPosition })
 
 		setUsers(users)
 		setCurrentUserPosition(currentUserPosition)
