@@ -34,8 +34,8 @@ const resorcesLinks: Link[] = [
 	},
 	{
 		title: 'Terms of service',
-		url: 'https://concero.io',
-		isDisable: true,
+		url: 'https://app.concero.io/terms-of-use.pdf',
+		isDisable: false,
 	},
 	{
 		title: 'Whitepaper',
