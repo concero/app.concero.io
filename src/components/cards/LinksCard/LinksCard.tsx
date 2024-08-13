@@ -39,7 +39,7 @@ const resorcesLinks: Link[] = [
 	},
 	{
 		title: 'Whitepaper',
-		url: 'https://app.concero.io/whitepaper.pdf',
+		url: 'https://concero.io/whitepaper.pdf',
 		isDisable: false,
 	},
 	{
