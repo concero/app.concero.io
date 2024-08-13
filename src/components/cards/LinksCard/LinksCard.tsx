@@ -39,8 +39,8 @@ const resorcesLinks: Link[] = [
 	},
 	{
 		title: 'Whitepaper',
-		url: 'https://www.trailofbits.com',
-		isDisable: true,
+		url: 'https://app.concero.io/whitepaper.pdf',
+		isDisable: false,
 	},
 	{
 		title: 'Twitter',
