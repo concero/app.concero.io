@@ -16,7 +16,7 @@ const verifyProvideLiquidity = async (
 	user: IUser,
 	quest: IQuest,
 ): Promise<{ status: QuestStatus; points: number | null }> => {
-	await verifyUserQuest(quest._id, user._id)
+	return await verifyUserQuest(quest._id, user._id)
 }
 
 const verifyConnectDiscord = async (user: IUser) => {
@@ -43,7 +43,13 @@ export const verifyQuest = async (
 	quest: IQuest,
 	condition: IQuestCondition,
 	user: IUser,
-): Promise<{ status: QuestStatus; points: number | null; message?: string }> => {
+): Promise<{
+	status: QuestStatus
+	points: number | null
+	message?: string
+	discordRewardsMessage?: string
+	communityRewardsMessage?: string
+}> => {
 	const { type } = condition
 
 	if (type === QuestConditionType.ProvideLiquidity) {
