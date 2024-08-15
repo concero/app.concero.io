@@ -60,7 +60,7 @@ const RewardsHeader = ({ user }: RewardsCardProps) => {
 
 			<button className={classNames.pointsButton}>
 				<div className="afs">
-					<h4>{user?.points.toFixed(4) ?? '0'} CERs</h4>
+					<h4>{user?.points?.toFixed(4) ?? '0'} CERs</h4>
 					<span className="body1">{user && `${user.multiplier}x multiplier`}</span>
 				</div>
 				<IconChevronRight width={16} height={16} stroke={2} color={'var(--color-primary-650)'} />

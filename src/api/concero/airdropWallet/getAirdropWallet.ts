@@ -6,7 +6,7 @@ export interface AirdropWallet {
 	roles: string[]
 }
 
-export const getAirdropWallet = async (address: Address): Promise<AirdropWallet> => {
+export const getAirdropWallet = async (address: Address): Promise<AirdropWallet | null> => {
 	const url = `${process.env.CONCERO_API_URL}/airdrop_wallets/${address}`
 
 	const response = await get(url)

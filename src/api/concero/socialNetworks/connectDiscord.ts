@@ -4,7 +4,7 @@ import { type IUser } from '../user/userType'
 export const connectDiscord = async (code: string, user: IUser): Promise<string> => {
 	const response = await updateUserDiscord({
 		_id: user._id,
-		token: code,
+		code,
 	})
 
 	return response.username

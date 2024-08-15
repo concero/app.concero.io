@@ -34,13 +34,13 @@ const resorcesLinks: Link[] = [
 	},
 	{
 		title: 'Terms of service',
-		url: 'https://concero.io',
-		isDisable: true,
+		url: 'https://app.concero.io/terms-of-use.pdf',
+		isDisable: false,
 	},
 	{
 		title: 'Whitepaper',
-		url: 'https://www.trailofbits.com',
-		isDisable: true,
+		url: 'https://concero.io/whitepaper.pdf',
+		isDisable: false,
 	},
 	{
 		title: 'Twitter',
