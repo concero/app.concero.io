@@ -53,7 +53,6 @@ interface LeaderboardCardProps {
 
 export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 	const [users, setUsers] = useState<IUser[]>([])
-	const [currentUserPosition, setCurrentUserPosition] = useState<number | null>(null)
 
 	const handleFetchUsers = async (userAddress: string) => {
 		const { users } = await fetchLeaderboard(userAddress)
@@ -74,7 +73,7 @@ export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 			</div>
 			<Card className="gap-md">
 				{users.map((user, i) => (
-					<Member key={user.address} place={i + 1} user={user} />
+					<Member key={user.address} place={user.position} user={user} />
 				))}
 			</Card>
 		</div>
