@@ -4,7 +4,7 @@ import { truncateWallet } from '../../../utils/formatting'
 import BlockiesSvg from 'blockies-react-svg'
 import { useEffect, useState } from 'react'
 import { type IUser } from '../../../api/concero/user/userType'
-import { fetchUsers } from '../../../api/concero/user/fetchUsers'
+import { fetchLeaderboard } from '../../../api/concero/user/fetchLeaderboard'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
 import { publicClient } from '../RewardsCard/RewardsCard'
@@ -22,17 +22,17 @@ const Member = ({ user, place }: MemberProps) => {
 	const walletAddress = <span className="body1">{address && truncateWallet(address)}</span>
 	const isCurrentUser = currentUserAddress?.toLowerCase() === address.toLowerCase()
 
-	const getEnsName = async () => {
-		const name = await publicClient.getEnsName({
-			address: address as Address,
-		})
-
-		setEnsName(name)
-	}
-
-	useEffect(() => {
-		getEnsName()
-	}, [])
+	// const getEnsName = async () => {
+	// 	const name = await publicClient.getEnsName({
+	// 		address: address as Address,
+	// 	})
+	//
+	// 	setEnsName(name)
+	// }
+	//
+	// useEffect(() => {
+	// 	getEnsName()
+	// }, [])
 
 	return (
 		<div className="row jsb ac">
@@ -55,15 +55,16 @@ export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 	const [users, setUsers] = useState<IUser[]>([])
 	const [currentUserPosition, setCurrentUserPosition] = useState<number | null>(null)
 
-	const handleFetchUsers = async () => {
-		const { users, currentUserPosition } = await fetchUsers(user?.points)
+	const handleFetchUsers = async (userAddress: string) => {
+		const { users } = await fetchLeaderboard(userAddress)
 
 		setUsers(users)
-		setCurrentUserPosition(currentUserPosition)
 	}
 
 	useEffect(() => {
-		void handleFetchUsers()
+		if (user?.address) {
+			void handleFetchUsers(user.address)
+		}
 	}, [user])
 
 	return (
@@ -75,9 +76,6 @@ export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 				{users.map((user, i) => (
 					<Member key={user.address} place={i + 1} user={user} />
 				))}
-				{currentUserPosition && user && currentUserPosition > 4 && (
-					<Member user={user} place={currentUserPosition} />
-				)}
 			</Card>
 		</div>
 	)

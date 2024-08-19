@@ -6,9 +6,9 @@ export interface FetchUserResponse {
 	currentUserPosition: number
 }
 
-export const fetchUsers = async (userPoints: number | null | undefined): Promise<FetchUserResponse> => {
-	const userPointsQuery = !isNaN(userPoints) ? `userPoints=${userPoints}` : null
-	const url = `${process.env.CONCERO_API_URL}/users?${userPointsQuery}`
+export const fetchLeaderboard = async (userAddress: string | undefined): Promise<FetchUserResponse> => {
+	const userAddressQuery = userAddress ? `userAddress=${userAddress}` : ''
+	const url = `${process.env.CONCERO_API_URL}/users?${userAddressQuery}`
 
 	const response = await get(url)
 	if (response.status !== 200) throw new Error('Something went wrong')
