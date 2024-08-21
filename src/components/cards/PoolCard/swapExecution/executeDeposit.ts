@@ -8,6 +8,8 @@ import { config } from '../../../../constants/config'
 import { sleep } from '../../../../utils/sleep'
 import { getPublicClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = base
@@ -157,6 +159,13 @@ export async function executeDeposit(
 		})
 
 		await handleDepositTransaction(hash, publicClient, walletClient, swapDispatch, swapState)
+		// posthog event success deposit
+		await trackEvent({
+			category: category.SwapCard,
+			action: action.SuccessDeposit,
+			label: 'concero_success_deposit',
+			data: { from: swapState.from, to: swapState.to },
+		})
 	} catch (error) {
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		swapDispatch({
@@ -164,6 +173,12 @@ export async function executeDeposit(
 			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
 		})
 		console.error(error)
+		await trackEvent({
+			category: category.SwapCard,
+			action: action.FailedDeposit,
+			label: 'concero_failed_deposit',
+			data: { from: swapState.from, to: swapState.to },
+		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}

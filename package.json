@@ -43,7 +43,7 @@
 		"i18next": "^23.6.0",
 		"lightweight-charts": "^4.0.1",
 		"oauth-1.0a": "^2.2.6",
-		"posthog-js": "^1.130.1",
+		"posthog-js": "^1.157.2",
 		"rango-sdk": "^0.1.40",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

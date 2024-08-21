@@ -41,8 +41,8 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 	const handleSwapButtonClick = async () => {
 		void trackEvent({
 			category: category.SwapCard,
-			action: action.BeginSwap,
-			label: 'concero_begin_swap',
+			action: action.BeginDeposit,
+			label: 'concero_begin_deposit',
 			data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
 		})
 
