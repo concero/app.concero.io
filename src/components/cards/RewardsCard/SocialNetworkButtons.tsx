@@ -33,7 +33,9 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 		if (twitterCode && twitterVerifyCode && user) {
 			const fetchedNickname = await connectTwitter(twitterCode, twitterVerifyCode, user)
 			setTwitterNickname(fetchedNickname)
-			window.location.replace('/rewards')
+			setTimeout(() => {
+				window.location.replace('https://app.concero.io/rewards')
+			}, 0)
 		}
 	}
 
