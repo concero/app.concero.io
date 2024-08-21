@@ -21,7 +21,6 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 		if (discordCode && user) {
 			const fetchedNickname = await connectDiscord(discordCode, user)
 			setDiscordNickname(fetchedNickname)
-			window.location.replace('/rewards')
 		}
 	}
 
@@ -33,9 +32,6 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 		if (twitterCode && twitterVerifyCode && user) {
 			const fetchedNickname = await connectTwitter(twitterCode, twitterVerifyCode, user)
 			setTwitterNickname(fetchedNickname)
-			setTimeout(() => {
-				window.location.replace('https://app.concero.io/rewards')
-			}, 0)
 		}
 	}
 
