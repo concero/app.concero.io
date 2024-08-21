@@ -159,7 +159,6 @@ export async function executeDeposit(
 		})
 
 		await handleDepositTransaction(hash, publicClient, walletClient, swapDispatch, swapState)
-		// posthog event success deposit
 		await trackEvent({
 			category: category.SwapCard,
 			action: action.SuccessDeposit,

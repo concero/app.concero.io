@@ -8,6 +8,8 @@ import { verifyQuest } from './questVerifier'
 import { type IUser } from '../../../api/concero/user/userType'
 import { TransactionStatus } from '../../../api/concero/types'
 import { QuestStatus } from '../../cards/QuestsCard/getQuestStatus'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action, category } from '../../../constants/tracking'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -37,7 +39,15 @@ export const QuestCondition = ({ quest, index, condition, user }: QuestModalCond
 		try {
 			setTxStatus(TransactionStatus.PENDING)
 
-			const questRes = await verifyQuest(quest, condition, user)
+			const [questRes] = await Promise.all([
+				verifyQuest(quest, condition, user),
+				trackEvent({
+					category: category.QuestCard,
+					action: action.BeginQuest,
+					label: 'concero_verify_quest_begin',
+					data: { id: quest._id, name: quest.name },
+				}),
+			])
 
 			if (questRes) {
 				setTxStatus(TransactionStatus.SUCCESS)
@@ -47,12 +57,24 @@ export const QuestCondition = ({ quest, index, condition, user }: QuestModalCond
 					const rewardsMessage = questRes.communityRewardsMessage + '\n' + questRes.discordRewardsMessage
 					setMessage(rewardsMessage)
 				}
+				await trackEvent({
+					category: category.QuestCard,
+					action: action.SuccessQuest,
+					label: 'concero_verify_quest_success',
+					data: { id: quest._id, name: quest.name },
+				})
 			} else {
 				setTxStatus(TransactionStatus.FAILED)
 			}
 		} catch (error) {
 			console.error(error)
 			setTxStatus(TransactionStatus.FAILED)
+			await trackEvent({
+				category: category.QuestCard,
+				action: action.FailedQuest,
+				label: 'concero_verify_quest_fail',
+				data: { id: quest._id, name: quest.name },
+			})
 		}
 	}
 
