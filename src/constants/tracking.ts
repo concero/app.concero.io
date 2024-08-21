@@ -4,6 +4,7 @@ export enum category {
 	StakingHeader = 'cat_staking_header',
 	NewsCard = 'cat_news_card',
 	SwapCard = 'cat_swap_card',
+	QuestCard = 'cat_quest_card',
 	ChartCard = 'cat_chart_card',
 	Wallet = 'cat_wallet',
 }
@@ -40,6 +41,9 @@ export enum action {
 	BeginDeposit = 'action_begin_deposit',
 	SuccessDeposit = 'action_success_deposit',
 	FailedDeposit = 'action_failed_deposit',
+	BeginQuest = 'action_begin_quest',
+	SuccessQuest = 'action_success_quest',
+	FailedQuest = 'action_failed_quest',
 	SwapFailed = 'action_swap_failed',
 	SwapSuccess = 'action_swap_success',
 	SwapRejected = 'action_swap_rejected',
