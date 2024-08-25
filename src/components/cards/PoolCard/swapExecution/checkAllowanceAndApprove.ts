@@ -10,8 +10,6 @@ export async function checkAllowanceAndApprove(
 	const { from, to } = swapState
 	const { token } = from
 
-	console.log(from.token.address)
-
 	const allowance = await publicClient.readContract({
 		abi: erc20Abi,
 		functionName: 'allowance',

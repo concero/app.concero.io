@@ -2,7 +2,7 @@ import { type Address, parseAbi } from 'viem'
 import { base } from 'wagmi/chains'
 import { getPublicClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../web3/wagmi'
-import { poolsAddressesMap } from '../../constants/poolsAddressesMap'
+import { poolsAddressesMap } from '../../constants/conceroContracts'
 
 export async function getWithdrawalIdByLpAddress(address: Address): Promise<string | null> {
 	try {

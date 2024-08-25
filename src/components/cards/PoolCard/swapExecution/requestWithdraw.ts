@@ -68,8 +68,6 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 				strict: false,
 			})
 
-			console.log(decodedLog.eventName)
-
 			if (decodedLog.eventName === 'ConceroParentPool_WithdrawRequestInitiated') {
 				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 				swapDispatch({

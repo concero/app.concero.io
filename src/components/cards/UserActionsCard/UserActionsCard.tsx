@@ -5,12 +5,14 @@ import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader
 import { useAccount } from 'wagmi'
 import { UserAction } from './UserAction'
 import { fetchParentPoolActionsByLpAddress } from '../../../api/concero/fetchParentPoolActionsByLpAddress'
+import { handleWithdrawRequestActions } from '../../../api/concero/getUserActions'
 
 export enum UserActionStatus {
 	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
 	CompleteRequestWithdraw = 'CompleteRequestWithdraw',
 	CompleteWithdraw = 'CompleteWithdraw',
 	CompleteDeposit = 'CompleteDeposit',
+	WithdrawRetryNeeded = 'WithdrawRetryNeeded',
 }
 
 export interface UserTransaction {
@@ -29,33 +31,28 @@ export function UserActionsCard() {
 	const { address } = useAccount()
 	const [actions, setActions] = useState<UserTransaction[]>([])
 
-	// const watchActions = async () => {
-	// 	await watchUserActions(address, actions => {
-	// 		setActions(prev => [...prev, ...actions])
-	// 	})
-	// }
-
 	const getActions = async () => {
 		return await fetchParentPoolActionsByLpAddress(address)
 	}
 
 	useEffect(() => {
-		if (actions.length !== 0 || !address) return
+		if (!address) return
 
 		getActions()
 			.then(actions => {
-				setActions(actions)
+				handleWithdrawRequestActions(actions, address)
+					.then(newActions => {
+						setActions(newActions)
+					})
+					.catch(error => {
+						console.error(error)
+						setActions(actions)
+					})
 			})
 			.catch(error => {
 				console.error(error)
 			})
 	}, [address])
-
-	// useEffect(() => {
-	// 	handleWithdrawRequestActions(actions).then(newActions => {
-	// 		setActions(newActions)
-	// 	})
-	// }, [actions])
 
 	return (
 		<div>

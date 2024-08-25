@@ -10,18 +10,26 @@ import { type ReactNode, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
 import { getWalletClient } from '@wagmi/core'
 import { config } from '../../../web3/wagmi'
+import { base } from 'wagmi/chains'
+import { parseAbi } from 'viem'
+import { automationAddress } from '../../../constants/conceroContracts'
+import { getWithdrawalIdByLpAddress } from '../../../api/concero/getWithdrawalIdByLpAddress'
 
-const renderStatusTag = (action: UserTransaction) => {
+const renderWithdrawStatusTag = (action: UserTransaction) => {
 	const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.IDLE)
 	const { address, chainId } = useAccount()
 
 	const handleCompleteWithdrawal = async () => {
 		if (status === TransactionStatus.IDLE || status === TransactionStatus.FAILED) {
 			try {
+				if (!address) return
+
 				setStatus(TransactionStatus.PENDING)
 
 				const walletClient = await getWalletClient(config, { chainId })
-				const txStatus = await completeWithdrawal(address!, walletClient)
+				walletClient.switchChain({ id: base.id })
+
+				const txStatus = await completeWithdrawal(address, walletClient)
 
 				setStatus(txStatus)
 			} catch (error) {
@@ -31,11 +39,39 @@ const renderStatusTag = (action: UserTransaction) => {
 		}
 	}
 
+	const handleRetryWithdrawal = async () => {
+		try {
+			if (!address) return
+
+			const walletClient = await getWalletClient(config, { chainId })
+			walletClient.switchChain({ id: base.id })
+
+			const withdrawId = await getWithdrawalIdByLpAddress(address)
+			if (!withdrawId) return
+
+			walletClient.writeContract({
+				account: address,
+				abi: parseAbi(['function retryPerformWithdrawalRequest(bytes32 _withdrawalId) external']),
+				functionName: 'retryPerformWithdrawalRequest',
+				args: [withdrawId],
+				address: automationAddress,
+				gas: 4_000_000n,
+			})
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	const stageButtonsMap: Record<TransactionStatus, ReactNode> = {
 		[TransactionStatus.IDLE]: (
-			<Button size="sm" onClick={handleCompleteWithdrawal}>
-				Claim
-			</Button>
+			<div style={{ flexDirection: 'row', gap: 10 }}>
+				<Button size="sm" onClick={handleCompleteWithdrawal}>
+					Claim
+				</Button>
+				<Button size="sm" onClick={handleRetryWithdrawal}>
+					Retry withdrawal
+				</Button>
+			</div>
 		),
 		[TransactionStatus.FAILED]: (
 			<Button className={classNames.errorButton} onClick={handleCompleteWithdrawal} size="sm">
@@ -54,7 +90,10 @@ const renderStatusTag = (action: UserTransaction) => {
 		),
 	}
 
-	if (action.status === UserActionStatus.ActiveRequestWithdraw && address) {
+	if (
+		action.status === UserActionStatus.ActiveRequestWithdraw ||
+		action.status === UserActionStatus.WithdrawRetryNeeded
+	) {
 		return stageButtonsMap[status]
 	}
 
@@ -73,7 +112,10 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 			</div>
 			<div className={classNames.rightSide}>
 				{/* {action.deadline} */}
-				{action.status === UserActionStatus.ActiveRequestWithdraw ? renderStatusTag(action) : null}
+				{action.status === UserActionStatus.ActiveRequestWithdraw ||
+				action.status === UserActionStatus.WithdrawRetryNeeded
+					? renderWithdrawStatusTag(action)
+					: null}
 				{action.amount ? <h4>{action.amount} USDC</h4> : null}
 			</div>
 		</div>
