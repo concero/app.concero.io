@@ -23,7 +23,7 @@ export function getButtonType(
 	}
 
 	if (balance && new BigNumber(from.amount).gt(balance.amount.formatted)) {
-		return ButtonType.LOW_BALANCE
+		// return ButtonType.LOW_BALANCE
 	}
 
 	if (from.amount) {

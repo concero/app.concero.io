@@ -1,4 +1,4 @@
-import { type Address, createPublicClient, http, erc20Abi, formatUnits } from 'viem'
+import { type Address, erc20Abi, formatUnits } from 'viem'
 import { base } from 'viem/chains'
 import { config } from '../../constants/config'
 import { getPoolLiquidity } from './getPoolLiquidity'

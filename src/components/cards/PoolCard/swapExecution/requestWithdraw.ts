@@ -65,6 +65,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 				abi: ParentPool,
 				data: log.data,
 				topics: log.topics,
+				strict: false,
 			})
 
 			console.log(decodedLog.eventName)
@@ -114,6 +115,7 @@ export async function startWithdrawal(
 
 		await checkTransactionStatus(hash, publicClient, swapDispatch)
 	} catch (error) {
+		console.error(error)
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		swapDispatch({
 			type: 'SET_SWAP_STEPS',

@@ -44,7 +44,7 @@ const renderStatusTag = (action: UserTransaction) => {
 		),
 		[TransactionStatus.SUCCESS]: (
 			<Button className={classNames.successButton} isDisabled={true} size="sm">
-				Claimed success{' '}
+				Claimed success
 			</Button>
 		),
 		[TransactionStatus.PENDING]: (
@@ -72,8 +72,8 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 				</div>
 			</div>
 			<div className={classNames.rightSide}>
-				{action.deadline}
-				{action.status === UserActionStatus.ActiveRequestWithdraw && renderStatusTag(action)}
+				{/* {action.deadline} */}
+				{action.status === UserActionStatus.ActiveRequestWithdraw ? renderStatusTag(action) : null}
 				{action.amount ? <h4>{action.amount} USDC</h4> : null}
 			</div>
 		</div>

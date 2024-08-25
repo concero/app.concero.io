@@ -2,7 +2,6 @@ import { type Dispatch, useEffect } from 'react'
 import { type Config } from '@wagmi/core'
 import { getBalance } from '../../../utils/getBalance'
 import { type SwapAction, type SwapState } from './swapReducer/types'
-import { getLpRatio } from '../../screens/PoolScreen/poolScripts/getLpRatio'
 import { calculateLpAmount, calculateWithdrawableAmount } from '../../../api/concero/poolLpTokens'
 import { formatUnits, parseUnits } from 'viem'
 
@@ -17,6 +16,9 @@ const setLpBalance = async (swapState: SwapState, swapDispatch: Dispatch<SwapAct
 	const { poolMode, from, to } = swapState
 
 	let currentBalance = 0
+
+	if (!from.amount || from.amount === '0') return
+
 	const amountInDecimals = parseUnits(from.amount, from.token.decimals)
 
 	if (poolMode === 'deposit') {

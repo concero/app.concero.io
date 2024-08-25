@@ -42,7 +42,6 @@ export const ProjectedEarningsCard = ({ deposit }: ProjectedEarningsProps) => {
 				<h2>{earnValue.toFixed(2)} USDC</h2>
 				<p className="body1">{numOfWeek === 0 ? 'Current total' : `${numOfWeek} week`}</p>
 			</div>
-
 			<ReactSlider
 				onChange={(value: number) => {
 					setNumOfWeek(value)

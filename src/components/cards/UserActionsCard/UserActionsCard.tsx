@@ -1,10 +1,10 @@
 import { Card } from '../Card/Card'
 import classNames from './UserActionsCard.module.pcss'
 import { useEffect, useState } from 'react'
-import { handleDepositRequestActions, watchUserActions } from '../../../api/concero/getUserActions'
 import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'
 import { UserAction } from './UserAction'
+import { fetchParentPoolActionsByLpAddress } from '../../../api/concero/fetchParentPoolActionsByLpAddress'
 
 export enum UserActionStatus {
 	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
@@ -22,28 +22,40 @@ export interface UserTransaction {
 	address: string
 	isActiveWithdraw?: boolean
 	deadline?: number | null
+	args: any
 }
 
 export function UserActionsCard() {
 	const { address } = useAccount()
 	const [actions, setActions] = useState<UserTransaction[]>([])
 
-	const watchActions = async () => {
-		await watchUserActions(address, actions => {
-			setActions(prev => [...prev, ...actions])
-		})
+	// const watchActions = async () => {
+	// 	await watchUserActions(address, actions => {
+	// 		setActions(prev => [...prev, ...actions])
+	// 	})
+	// }
+
+	const getActions = async () => {
+		return await fetchParentPoolActionsByLpAddress(address)
 	}
 
 	useEffect(() => {
 		if (actions.length !== 0 || !address) return
 
-		void watchActions()
+		getActions()
+			.then(actions => {
+				setActions(actions)
+			})
+			.catch(error => {
+				console.error(error)
+			})
 	}, [address])
 
-	useEffect(() => {
-		const newActions = handleDepositRequestActions(actions)
-		setActions(newActions)
-	}, [actions])
+	// useEffect(() => {
+	// 	handleWithdrawRequestActions(actions).then(newActions => {
+	// 		setActions(newActions)
+	// 	})
+	// }, [actions])
 
 	return (
 		<div>
