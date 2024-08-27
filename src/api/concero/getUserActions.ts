@@ -1,8 +1,6 @@
-import { type Address, formatUnits, type Log, parseAbi } from 'viem'
-import { arbitrum, avalanche, base, polygon } from 'wagmi/chains'
-import { abi } from '../../abi/ParentPool.json'
+import { type Address, parseAbi } from 'viem'
+import { arbitrum, avalanche, polygon } from 'wagmi/chains'
 import { UserActionStatus, type UserTransaction } from '../../components/cards/UserActionsCard/UserActionsCard'
-import { config } from '../../constants/config'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { getPublicClient } from '@wagmi/core'
@@ -11,143 +9,11 @@ import { poolsAddressesMap } from '../../constants/conceroContracts'
 import { getWithdrawalIdByLpAddress } from './getWithdrawalIdByLpAddress'
 
 dayjs.extend(isSameOrBefore)
-const publicClient = getPublicClient(wagmiConfig, { chainId: base.id })
-
-export const getLastDeposit = async (address: Address): Promise<Log | null> => {
-	const firstBlockNumber = 17868906n
-
-	const blockRange = 50_000n
-	let toBlock = await publicClient.getBlockNumber()
-	let fromBlock = toBlock - blockRange
-
-	while (toBlock >= firstBlockNumber) {
-		const eventsDeposit = await publicClient.getContractEvents({
-			address: config.PARENT_POOL_CONTRACT,
-			abi,
-			eventName: 'ConceroParentPool_DepositCompleted',
-			args: {
-				lpAddress: address,
-			},
-			toBlock,
-			fromBlock,
-		})
-
-		for (const event of eventsDeposit) {
-			const receipt = await publicClient.getTransactionReceipt({
-				hash: event.transactionHash,
-			})
-
-			if (receipt.from.toLowerCase() === address.toLowerCase()) {
-				return event
-			}
-		}
-
-		toBlock -= blockRange
-		fromBlock -= blockRange
-	}
-
-	return null
-}
 
 export const poolEventNamesMap = {
 	ConceroParentPool_DepositCompleted: 'Liquidity provided',
 	ConceroParentPool_WithdrawRequestInitiated: 'Withdrawal Submitted',
 	ConceroParentPool_Withdrawn: 'Withdrawal Complete',
-}
-
-export const watchUserActions = async (address: Address, onGetActions: (txs: UserTransaction[]) => any) => {
-	const blockNumber = await publicClient.getBlockNumber()
-	const firstBlockNumber = 17868906n
-
-	const blockRange = 50_000n
-	let toBlock = blockNumber
-	let fromBlock = blockNumber - blockRange
-
-	while (toBlock >= firstBlockNumber) {
-		const eventsDeposit = await publicClient.getContractEvents({
-			address: config.PARENT_POOL_CONTRACT,
-			abi,
-			eventName: 'ConceroParentPool_DepositCompleted',
-			toBlock,
-			fromBlock,
-		})
-
-		const eventsRequestWithdraw = await publicClient.getContractEvents({
-			address: config.PARENT_POOL_CONTRACT,
-			abi,
-			eventName: 'ConceroParentPool_WithdrawRequestInitiated',
-			toBlock,
-			fromBlock,
-		})
-
-		const eventsCompleteWithdraw = await publicClient.getContractEvents({
-			address: config.PARENT_POOL_CONTRACT,
-			abi,
-			eventName: 'ConceroParentPool_Withdrawn',
-			toBlock,
-			fromBlock,
-		})
-
-		const userActions: UserTransaction[] = []
-
-		for (const event of eventsDeposit) {
-			const block = await publicClient.getBlock({
-				blockNumber: event.blockNumber,
-			})
-
-			const result: UserTransaction = {
-				time: Number(block.timestamp) * 1000,
-				amount: formatUnits(event.args!.usdcAmount, 6),
-				eventName: event.eventName,
-				status: UserActionStatus.CompleteDeposit,
-				transactionHash: event.transactionHash,
-				address: event.args.lpAddress,
-				args: event.args,
-			}
-
-			userActions.push(result)
-		}
-
-		for (const event of eventsRequestWithdraw) {
-			const block = await publicClient.getBlock({
-				blockNumber: event.blockNumber,
-			})
-
-			const result: UserTransaction = {
-				time: Number(block.timestamp) * 1000,
-				amount: '0',
-				eventName: event.eventName,
-				status: UserActionStatus.CompleteRequestWithdraw,
-				transactionHash: event.transactionHash,
-				address: event.args.caller,
-				deadline: event.args.deadline ? Number(event.args.deadline) : null,
-			}
-
-			userActions.push(result)
-		}
-
-		for (const event of eventsCompleteWithdraw) {
-			const block = await publicClient.getBlock({
-				blockNumber: event.blockNumber,
-			})
-
-			const result: UserTransaction = {
-				time: Number(block.timestamp) * 1000,
-				amount: formatUnits(event.args!.amount, 6),
-				eventName: event.eventName,
-				status: UserActionStatus.CompleteWithdraw,
-				transactionHash: event.transactionHash,
-				address: event.args.to,
-			}
-
-			userActions.push(result)
-		}
-
-		onGetActions(userActions)
-
-		toBlock -= blockRange
-		fromBlock -= blockRange
-	}
 }
 
 export const isWithdrawRequestFailed = async (withdrawRequestId: string): Promise<boolean> => {
@@ -182,13 +48,14 @@ export const handleWithdrawRequestActions = async (actions: UserTransaction[], l
 			const now = Math.floor(Date.now() / 1000)
 			const oneHour = 3600
 
+			action.isActiveWithdraw = true
+
 			if (action.args.deadline + oneHour <= now) {
 				const withdrawId = await getWithdrawalIdByLpAddress(lpAddress)
 				if (withdrawId && withdrawId !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
 					const isFailed = await isWithdrawRequestFailed(withdrawId)
 					if (isFailed) {
-						// action.status = UserActionStatus.WithdrawRetryNeeded
-						action.status = UserActionStatus.ActiveRequestWithdraw
+						action.status = UserActionStatus.WithdrawRetryNeeded
 						break
 					}
 				}

@@ -9,9 +9,6 @@ import { handleWithdrawRequestActions } from '../../../api/concero/getUserAction
 
 export enum UserActionStatus {
 	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
-	CompleteRequestWithdraw = 'CompleteRequestWithdraw',
-	CompleteWithdraw = 'CompleteWithdraw',
-	CompleteDeposit = 'CompleteDeposit',
 	WithdrawRetryNeeded = 'WithdrawRetryNeeded',
 }
 
@@ -30,6 +27,7 @@ export interface UserTransaction {
 export function UserActionsCard() {
 	const { address } = useAccount()
 	const [actions, setActions] = useState<UserTransaction[]>([])
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const getActions = async () => {
 		return await fetchParentPoolActionsByLpAddress(address)
@@ -37,6 +35,8 @@ export function UserActionsCard() {
 
 	useEffect(() => {
 		if (!address) return
+
+		setIsLoading(true)
 
 		getActions()
 			.then(actions => {
@@ -48,21 +48,27 @@ export function UserActionsCard() {
 						console.error(error)
 						setActions(actions)
 					})
+					.finally(() => {
+						setIsLoading(false)
+					})
 			})
 			.catch(error => {
 				console.error(error)
 			})
 	}, [address])
 
+	console.log(actions)
+
 	return (
 		<div>
 			<div className={classNames.header}>
 				<h4>Your actions</h4>
-				<h4>Type</h4>
+				{/* <h4>Type</h4> */}
 			</div>
 			<Card className={`${classNames.actionsCard} cardConvex`}>
-				{actions.length === 0 ? (
-					<FullScreenLoader />
+				{isLoading && <FullScreenLoader />}
+				{!isLoading && actions.length === 0 ? (
+					<div className="body4 ac jc h-full">You don't have any action yet</div>
 				) : (
 					actions.map(action => <UserAction key={action.transactionHash} action={action} />)
 				)}
