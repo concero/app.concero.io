@@ -1,33 +1,21 @@
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
-import {
-	type Address,
-	createPublicClient,
-	decodeEventLog,
-	type Hash,
-	http,
-	type PublicClient,
-	type WalletClient,
-} from 'viem'
+import { type Address, decodeEventLog, type Hash, parseAbi, type PublicClient, type WalletClient } from 'viem'
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { base } from 'viem/chains'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
 import { config } from '../../../../constants/config'
 import { TransactionStatus } from '../../../../api/concero/types'
-
-export enum WithdrawStatus {
-	completeWithdrawal = 'completeWithdrawal',
-	startWithdraw = 'startWithdraw',
-}
+import { getPublicClient, getWalletClient } from '@wagmi/core'
+import { config as wagmiConfig } from '../../../../web3/wagmi'
+import { getWithdrawalIdByLpAddress } from '../../../../api/concero/getWithdrawalIdByLpAddress'
+import { automationAddress } from '../../../../constants/conceroContracts'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = base
 
-const publicClient = createPublicClient({
-	chain,
-	transport: http(),
-})
+const publicClient = getPublicClient(wagmiConfig, { chainId: chain.id })
 
 async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
 	const depositAmount = BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)
@@ -124,7 +112,10 @@ export async function startWithdrawal(
 	}
 }
 
-export const completeWithdrawal = async (address: Address, walletClient: WalletClient): Promise<TransactionStatus> => {
+export const completeWithdrawal = async (address: Address, chainId: number): Promise<TransactionStatus> => {
+	const walletClient = await getWalletClient(wagmiConfig, { chainId })
+	walletClient.switchChain({ id: base.id })
+
 	const hash = await walletClient.writeContract({
 		account: address,
 		abi: ParentPool,
@@ -159,6 +150,54 @@ export const completeWithdrawal = async (address: Address, walletClient: WalletC
 			}
 			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
 				return TransactionStatus.FAILED
+			}
+		} catch (err) {
+			console.error(err)
+			return TransactionStatus.FAILED
+		}
+	}
+
+	return TransactionStatus.FAILED
+}
+
+export const retryWithdrawal = async (address: Address, chainId: number): Promise<TransactionStatus> => {
+	const walletClient = await getWalletClient(wagmiConfig, { chainId })
+	walletClient.switchChain({ id: base.id })
+
+	const withdrawId = await getWithdrawalIdByLpAddress(address)
+	if (!withdrawId) return TransactionStatus.FAILED
+
+	const hash = await walletClient.writeContract({
+		account: address,
+		abi: parseAbi(['function retryPerformWithdrawalRequest(bytes32 _withdrawalId) external']),
+		functionName: 'retryPerformWithdrawalRequest',
+		args: [withdrawId as Address],
+		address: automationAddress,
+		gas: 4_000_000n,
+	})
+
+	const receipt = await publicClient.waitForTransactionReceipt({
+		hash,
+		timeout: 10_000,
+		pollingInterval: 3_000,
+		retryCount: 10,
+		confirmations: 5,
+	})
+
+	if (receipt.status === 'reverted') {
+		return TransactionStatus.FAILED
+	}
+
+	for (const log of receipt.logs) {
+		try {
+			const decodedLog = decodeEventLog({
+				abi: ParentPool,
+				data: log.data,
+				topics: log.topics,
+			})
+
+			if (decodedLog.eventName === 'ConceroAutomation_RetryPerformed') {
+				return TransactionStatus.SUCCESS
 			}
 		} catch (err) {
 			console.error(err)
