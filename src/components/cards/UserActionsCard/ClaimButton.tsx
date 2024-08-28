@@ -14,13 +14,14 @@ interface Props {
 
 export const ClaimButton = ({ action, status, setStatus }: Props) => {
 	const { address, chainId } = useAccount()
+	const isRetryRequestWithdraw = action.status === UserActionStatus.WithdrawRetryNeeded
 
 	const handleCompleteWithdrawal = async () => {
 		try {
 			if (!address) return
 			setStatus(TransactionStatus.PENDING)
 
-			if (isRetryStatus) {
+			if (isRetryRequestWithdraw) {
 				const txStatus = await retryWithdrawal(address, chainId!)
 				setStatus(txStatus)
 			} else {
@@ -33,11 +34,9 @@ export const ClaimButton = ({ action, status, setStatus }: Props) => {
 		}
 	}
 
-	const isRetryStatus = action.status === UserActionStatus.WithdrawRetryNeeded || status === TransactionStatus.FAILED
-
 	const claimButton = (
 		<Button size="sm" onClick={handleCompleteWithdrawal}>
-			{isRetryStatus ? 'Retry' : 'Claim'}
+			{isRetryRequestWithdraw ? 'Retry' : 'Claim'}
 		</Button>
 	)
 

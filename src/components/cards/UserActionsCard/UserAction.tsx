@@ -13,14 +13,9 @@ const getWithdrawalDate = (deadline: number) => {
 	const givenTime = dayjs.unix(deadline)
 	const now = dayjs()
 
-	const diffInMilliseconds = Math.abs(now.diff(givenTime))
-	const diffDuration = dayjs.duration(diffInMilliseconds)
+	const diffInMilliseconds = now.from(givenTime, true)
 
-	const days = diffDuration.days()
-	const hours = diffDuration.hours()
-	const minutes = diffDuration.minutes()
-
-	return `Available in ${days}d ${hours}h ${minutes}m`
+	return `Available in ${diffInMilliseconds}`
 }
 
 export const UserAction = ({ action }: { action: UserTransaction }) => {
