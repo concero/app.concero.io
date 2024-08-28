@@ -6,7 +6,7 @@ import { UserActionStatus, type UserTransaction } from './UserActionsCard'
 import { type ReactNode, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
 import { Tag } from '../../tags/Tag/Tag'
-import { ClaimButton } from './ClaimButton'
+import { ManageWithdrawalButton } from './ManageWithdrawalButton'
 import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
 
 const getWithdrawalDate = (deadline: number) => {
@@ -53,7 +53,9 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 				)}
 			</div>
 			<div className={classNames.rightSide}>
-				{isWithdrawalAvailable ? <ClaimButton status={status} setStatus={setStatus} action={action} /> : null}
+				{isWithdrawalAvailable ? (
+					<ManageWithdrawalButton status={status} setStatus={setStatus} action={action} />
+				) : null}
 				{action.amount ? (
 					<h4>
 						{amountSign}

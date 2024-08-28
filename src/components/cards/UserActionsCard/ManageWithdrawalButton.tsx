@@ -12,7 +12,7 @@ interface Props {
 	setStatus: Dispatch<SetStateAction<TransactionStatus>>
 }
 
-export const ClaimButton = ({ action, status, setStatus }: Props) => {
+export const ManageWithdrawalButton = ({ action, status, setStatus }: Props) => {
 	const { address, chainId } = useAccount()
 	const isRetryRequestWithdraw = action.status === UserActionStatus.WithdrawRetryNeeded
 
