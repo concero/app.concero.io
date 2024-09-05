@@ -151,10 +151,7 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
 				return TransactionStatus.FAILED
 			}
-		} catch (err) {
-			console.error(err)
-			return TransactionStatus.FAILED
-		}
+		} catch (err) {}
 	}
 
 	return TransactionStatus.FAILED
