@@ -1,4 +1,4 @@
-import classNames from './RewardsCard.module.pcss'
+import classNames from './ProfileCard.module.pcss'
 import type { IUser } from '../../../api/concero/user/userType'
 import { useEffect, useState } from 'react'
 import { connectDiscord } from '../../../api/concero/socialNetworks/connectDiscord'

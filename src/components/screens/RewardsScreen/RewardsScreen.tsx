@@ -1,5 +1,5 @@
 import classNames from './RewardsScreen.module.pcss'
-import { RewardsCard } from '../../cards/RewardsCard/RewardsCard'
+import { ProfileCard } from '../../cards/ProfileCard/ProfileCard'
 import { QuestsCard } from '../../cards/QuestsCard/QuestsCard'
 import { LeaderboardCard } from '../../cards/LeaderboardCard/LeaderboardCard'
 import { useEffect, useState } from 'react'
@@ -42,7 +42,7 @@ export const RewardsScreen = () => {
 	return (
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrap}>
-				<RewardsCard user={user} />
+				{user && <ProfileCard user={user} />}
 				<QuestsCard user={user} />
 				<LeaderboardCard user={user} />
 			</div>

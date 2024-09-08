@@ -7,7 +7,7 @@ import { type IUser } from '../../../api/concero/user/userType'
 import { fetchLeaderboard } from '../../../api/concero/user/fetchLeaderboard'
 import { useAccount } from 'wagmi'
 import type { Address } from 'viem'
-import { publicClient } from '../RewardsCard/RewardsCard'
+import { publicClient } from '../ProfileCard/ProfileCard'
 
 interface MemberProps {
 	user: IUser

@@ -3,14 +3,14 @@ import { memo } from 'react'
 import classNames from '../../screens/EarnScreen/EarnScreen.module.pcss'
 import { withErrorBoundary } from '../../wrappers/WithErrorBoundary'
 import { TokensCard } from '../TokensCard/TokensCard'
-import { RewardsCard } from '../RewardsCard/RewardsCard'
+import { ProfileCard } from '../ProfileCard/ProfileCard'
 import { ProtocolCard } from '../ProtocolCard/ProtocolCard'
 import { EarnHighlightsCard } from '../EarnHighlightsCard/EarnHighlightsCard'
 
 const Protocol = memo(withErrorBoundary(ProtocolCard))
 const Highlights = memo(withErrorBoundary(EarnHighlightsCard))
 const Tokens = memo(withErrorBoundary(TokensCard))
-const Rewards = memo(withErrorBoundary(RewardsCard))
+const Rewards = memo(withErrorBoundary(ProfileCard))
 // const Prediction = memo(withErrorBoundary(PredictionCard))
 
 export function EarnDetailsCard({ earnState }) {

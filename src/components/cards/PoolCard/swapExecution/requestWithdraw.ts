@@ -138,6 +138,7 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 	}
 
 	for (const log of receipt.logs) {
+		// TODO add decoder wrapper
 		try {
 			const decodedLog = decodeEventLog({
 				abi: ParentPool,
@@ -186,6 +187,7 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 	}
 
 	for (const log of receipt.logs) {
+		// TODO add decoder wrapper
 		try {
 			const decodedLog = decodeEventLog({
 				abi: ParentPool,
@@ -198,7 +200,6 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 			}
 		} catch (err) {
 			console.error(err)
-			return TransactionStatus.FAILED
 		}
 	}
 

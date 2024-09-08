@@ -39,17 +39,26 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 	}
 
 	const handleSwapButtonClick = async () => {
-		void trackEvent({
-			category: category.SwapCard,
-			action: action.BeginDeposit,
-			label: 'concero_begin_deposit',
-			data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
-		})
-
 		const walletClient = await getWalletClient(config, { chainId: Number(swapState.from.chain.id) })
 		if (swapState.poolMode === 'deposit') {
+			void trackEvent({
+				category: category.SwapCard,
+				action: action.BeginDeposit,
+				label: 'concero_begin_deposit',
+				data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
+			})
+
 			await executeDeposit(swapState, swapDispatch, walletClient)
 		} else {
+			// TODO add event withdraw
+			// void trackEvent({
+			// 	category: category.SwapCard,
+			// 	action: action.BeginDeposit,
+			// 	label: 'concero_begin_deposit',
+			// 	data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
+			// })
+			//
+
 			await startWithdrawal(swapState, swapDispatch, walletClient)
 		}
 	}

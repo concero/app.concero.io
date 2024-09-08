@@ -6,12 +6,18 @@ import { routes } from './constants/routes'
 import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
-import { RewardsScreen } from './components/screens/RewardsScreen/RewardsScreen'
 import { handleCreateUser } from './web3/handleCreateUser'
 
 const PoolScreen = lazy(
 	async () =>
 		await import('./components/screens/PoolScreen/PoolScreen').then(module => ({ default: module.PoolScreen })),
+)
+
+const RewardsScreen = lazy(
+	async () =>
+		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
+			default: module.RewardsScreen,
+		})),
 )
 
 export const Navigator = () => {
