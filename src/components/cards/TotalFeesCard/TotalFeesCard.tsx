@@ -30,7 +30,7 @@ export const TotalFeesCard = () => {
 			<div className="row jsb w-full">
 				<div className="gap-sm">
 					<h4 className="body4">Total fees</h4>
-					<h2>${totalFees} USDC</h2>
+					<h2>{totalFees} USDC</h2>
 				</div>
 				<Dropdown setActiveItem={setActiveFilter} activeItem={activeFilter} items={timeFilters} />
 			</div>
