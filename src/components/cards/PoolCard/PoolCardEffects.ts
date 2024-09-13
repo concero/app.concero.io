@@ -4,6 +4,7 @@ import { getBalance } from '../../../utils/getBalance'
 import { type SwapAction, type SwapState } from './swapReducer/types'
 import { calculateLpAmount, calculateWithdrawableAmount } from '../../../api/concero/poolLpTokens'
 import { formatUnits, parseUnits } from 'viem'
+import { checkLastWithdrawRequest } from '../../../api/concero/getUserActions'
 
 interface UseSwapCardEffectsProps {
 	swapState: SwapState
@@ -41,7 +42,7 @@ const setLpBalance = async (swapState: SwapState, swapDispatch: Dispatch<SwapAct
 }
 
 export function useSwapCardEffects({ swapState, swapDispatch, address }: UseSwapCardEffectsProps) {
-	const { from, to, poolMode } = swapState
+	const { from } = swapState
 
 	useEffect(() => {
 		void getBalance({ dispatch: swapDispatch, from, address })
@@ -50,6 +51,18 @@ export function useSwapCardEffects({ swapState, swapDispatch, address }: UseSwap
 	useEffect(() => {
 		void setLpBalance(swapState, swapDispatch)
 	}, [from.amount])
+
+	useEffect(() => {
+		if (swapState.poolMode !== 'withdraw') return
+		if (!address) return
+
+		checkLastWithdrawRequest(address).then(lastWithdrawAction => {
+			if (lastWithdrawAction) {
+				swapDispatch({ type: 'SET_IS_WITHDRAW_INITIATED', payload: true })
+				swapDispatch({ type: 'SET_ACTUAL_WITHDRAW_DEADLINE', payload: lastWithdrawAction.deadline })
+			}
+		})
+	}, [address, swapState.poolMode])
 
 	useEffect(() => {
 		swapDispatch({ type: 'SET_ADDRESS', direction: 'from', payload: address })

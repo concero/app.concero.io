@@ -5,7 +5,6 @@ import { FullScreenLoader } from '../../layout/FullScreenLoader/FullScreenLoader
 import { useAccount } from 'wagmi'
 import { UserAction } from './UserAction'
 import { fetchParentPoolActionsByLpAddress } from '../../../api/concero/fetchParentPoolActionsByLpAddress'
-import { handleWithdrawRequestActions } from '../../../api/concero/getUserActions'
 
 export enum UserActionStatus {
 	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
@@ -40,30 +39,20 @@ export function UserActionsCard() {
 
 		getActions()
 			.then(actions => {
-				handleWithdrawRequestActions(actions, address)
-					.then(newActions => {
-						setActions(newActions)
-					})
-					.catch(error => {
-						console.error(error)
-						setActions(actions)
-					})
-					.finally(() => {
-						setIsLoading(false)
-					})
+				setActions(actions)
 			})
 			.catch(error => {
 				console.error(error)
 			})
+			.finally(() => {
+				setIsLoading(false)
+			})
 	}, [address])
-
-	console.log(actions)
 
 	return (
 		<div>
 			<div className={classNames.header}>
 				<h4>Your actions</h4>
-				{/* <h4>Type</h4> */}
 			</div>
 			<Card className={`${classNames.actionsCard} cardConvex`}>
 				{isLoading && <FullScreenLoader />}

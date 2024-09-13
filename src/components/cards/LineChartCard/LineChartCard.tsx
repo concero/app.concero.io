@@ -5,7 +5,7 @@ import Dropdown from '../../layout/DropdownSelect/DropdownSelect'
 import { type SelectItem } from '../../../utils/chartTimeFilters'
 import { type ChartData } from '../../../types/utils'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
-import { groupDataByDays, groupDataByWeeks } from '../../../utils/charts'
+import { groupDataByDays } from '../../../utils/charts'
 
 export interface BarChartCardProps {
 	titleCard: string

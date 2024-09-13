@@ -108,4 +108,6 @@ export const swapInitialState = () => ({
 	isDestinationAddressVisible: false,
 	settingsModalOpen: false,
 	isTestnet: false,
+	isWithdrawInitiated: false,
+	withdrawDeadline: null,
 })

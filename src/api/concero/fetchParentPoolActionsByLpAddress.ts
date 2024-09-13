@@ -2,7 +2,7 @@ import { config } from '../../constants/config'
 import { type UserTransaction } from '../../components/cards/UserActionsCard/UserActionsCard'
 import { get } from '../client'
 
-export async function fetchParentPoolActionsByLpAddress(lpAddress: string): Promise<UserTransaction | []> {
+export async function fetchParentPoolActionsByLpAddress(lpAddress: string): Promise<UserTransaction[] | []> {
 	try {
 		const url = config.baseURL + `/userParentPoolActions?lpAddress=${lpAddress}`
 		const response = await get(url)

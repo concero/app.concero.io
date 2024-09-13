@@ -103,12 +103,13 @@ body::-webkit-scrollbar {
 	--color-grey-300: #131313;
 
 	/* green */
+	--color-green-500: #f3fffb;
 	--color-green-550: #abedd5;
 	--color-green-600: #c7f3e3;
 	--color-green-650: #e3f9f1;
 	--color-green-450: #20a273;
 	--color-green-400: #1a8b65;
-	--color-green-500: #26c281;
+	--color-green-300: #26c281;
 	--color-green-350: #0f271f;
 
 	/* red */

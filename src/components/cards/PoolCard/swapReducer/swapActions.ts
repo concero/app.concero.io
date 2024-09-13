@@ -114,6 +114,14 @@ export const swapActions: SwapAction = {
 		const isTestnet = !state.isTestnet
 		return { ...state, isTestnet }
 	},
+	SET_IS_WITHDRAW_INITIATED: (state: SwapState, action) => {
+		const isWithdrawInitiated = action.payload
+		return { ...state, isWithdrawInitiated }
+	},
+	SET_ACTUAL_WITHDRAW_DEADLINE: (state: SwapState, action) => {
+		const withdrawDeadline = action.payload
+		return { ...state, withdrawDeadline }
+	},
 }
 
 function updateLastSwapState(state: SwapState): SwapState {

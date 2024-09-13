@@ -3,9 +3,9 @@ import { type Chain, type Provider } from '../../../../api/concero/types'
 import { type StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
 import { type TransactionStatus } from 'rango-sdk'
 import { type ButtonType } from '../SwapButton/constants'
-import { type ConceroBalanceResponse } from '../../../../api/concero/fetchBalancesByChainIds'
 import { type TokenAmount } from '../../../../utils/TokenAmount'
 import { type Address } from 'viem'
+import { type UserTransaction } from '../../UserActionsCard/UserActionsCard'
 
 export interface SwapStateDirection {
 	chain: {
@@ -62,11 +62,13 @@ export interface SwapState {
 	settings: Settings
 	buttonState: ButtonState
 	balance: Balance | null
-	walletBalances: ConceroBalanceResponse | null
+	walletBalances: any
 	isDestinationAddressVisible: boolean
 	isTestnet: boolean
+	isWithdrawInitiated: boolean
+	withdrawDeadline: number | null
 	response: null
-	status: 'pending' | 'success' | 'failure' | 'pending' | 'awaiting'
+	status: 'pending' | 'success' | 'failure' | 'awaiting'
 }
 
 export interface Settings {
@@ -132,3 +134,5 @@ export type SwapAction =
 	| { type: 'SWAP_DIRECTIONS' }
 	| { type: 'SET_IS_DESTINATION_ADDRESS_VISIBLE'; status: boolean }
 	| { type: 'TOGGLE_TESTNET' }
+	| { type: 'SET_IS_WITHDRAW_INITIATED'; payload: boolean }
+	| { type: 'SET_ACTUAL_WITHDRAW_DEADLINE'; payload: null | UserTransaction }

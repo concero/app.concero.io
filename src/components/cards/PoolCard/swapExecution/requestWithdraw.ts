@@ -11,6 +11,7 @@ import { getPublicClient, getWalletClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
 import { getWithdrawalIdByLpAddress } from '../../../../api/concero/getWithdrawalIdByLpAddress'
 import { automationAddress } from '../../../../constants/conceroContracts'
+import ConceroAutomationAbi from '../../../../abi/ConceroAutomationAbi'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = base
@@ -185,10 +186,12 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 		return TransactionStatus.FAILED
 	}
 
+	localStorage.setItem('retryPerformedTimestamp', String(new Date().getTime()))
+
 	for (const log of receipt.logs) {
 		try {
 			const decodedLog = decodeEventLog({
-				abi: ParentPool,
+				abi: ConceroAutomationAbi.abi,
 				data: log.data,
 				topics: log.topics,
 			})
@@ -196,10 +199,7 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 			if (decodedLog.eventName === 'ConceroAutomation_RetryPerformed') {
 				return TransactionStatus.SUCCESS
 			}
-		} catch (err) {
-			console.error(err)
-			return TransactionStatus.FAILED
-		}
+		} catch (err) {}
 	}
 
 	return TransactionStatus.FAILED
