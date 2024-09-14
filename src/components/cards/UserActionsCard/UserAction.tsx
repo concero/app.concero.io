@@ -59,7 +59,7 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 		return () => {
 			clearInterval(intervalId)
 		}
-	}, [])
+	}, [localStorage])
 
 	const isWithdrawalAvailable =
 		action.status === UserActionStatus.ActiveRequestWithdraw ||

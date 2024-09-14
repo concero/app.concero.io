@@ -13,7 +13,7 @@ import { startWithdrawal } from '../swapExecution/requestWithdraw'
 import { getWalletClient } from '@wagmi/core'
 import { config } from '../../../../web3/wagmi'
 import { Card } from '../../Card/Card'
-import { checkWithdrawAvailable, getWithdrawalDate } from '../../UserActionsCard/UserAction'
+import { checkWithdrawAvailable } from '../../UserActionsCard/UserAction'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode }) => {
 	const { isConnected } = useAccount()
