@@ -29,7 +29,7 @@ export function UserActionsCard() {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const getActions = async () => {
-		return await fetchParentPoolActionsByLpAddress(address)
+		return await fetchParentPoolActionsByLpAddress(address!)
 	}
 
 	useEffect(() => {

@@ -45,7 +45,6 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 
 		const updateRemainingTime = () => {
 			const currentTime = new Date()
-			console.log(endTime, retryPerformedTimestamp)
 			const remainingTime = Math.max(0, Math.floor((endTime.getTime() - currentTime.getTime()) / 1000))
 			setRetryTimeLeft(remainingTime < 0 ? 0 : remainingTime)
 		}
