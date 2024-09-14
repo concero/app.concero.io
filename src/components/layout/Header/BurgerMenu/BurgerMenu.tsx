@@ -55,8 +55,7 @@ export function BurgerMenu() {
 	return (
 		<div className={classNames.container}>
 			<Button
-				variant={'black'}
-				size={'sq-sm'}
+				variant={'secondary'}
 				onClick={() => {
 					setIsMenuOpened(prev => !prev)
 				}}

@@ -7,15 +7,14 @@ import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 import { Button } from '../../../buttons/Button/Button'
+import buttonClassNames from '../../../buttons/Button/Button.module.pcss'
 
 interface HeaderProps {
 	style?: CSSProperties
 	children?: ReactNode
-	setIsNewSwapCardMode: (isNewSwapCardMode: boolean) => void
-	isNewSwapCardMode: boolean
 }
 
-export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewSwapCardMode }) => {
+export const Header: FC<HeaderProps> = ({ children }) => {
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
@@ -28,28 +27,26 @@ export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewS
 					<Logo />
 				</div>
 				{!isMobile ? (
-					<ul>
+					<ul className="gap-xs">
 						<a className={classNames.link} target="_blank" href="https://lanca.io" rel="noreferrer">
-							Swap
+							<Button variant="tetrary">Swap</Button>
 						</a>
-						<Link className={matchSwapPool ? classNames.active : classNames.link} to={routes.pool}>
-							<Button variant="black" size="xs">
+						<span className={classNames.separator} />
+						<Link to={routes.pool}>
+							<Button
+								className={matchSwapPool ? buttonClassNames.tetraryColorActive : ''}
+								variant="tetrary"
+							>
 								Provide liquidity
 							</Button>
 						</Link>
-						<Link className={matchSwapRewards ? classNames.active : classNames.link} to={routes.rewards}>
-							Rewards
-						</Link>
-					</ul>
-				) : null}
-				{!isNewSwapCardMode ? (
-					<ul
-						onClick={() => {
-							setIsNewSwapCardMode(true)
-						}}
-					>
-						<Link className={classNames.active} to={routes.swap}>
-							Switch to new version
+						<Link to={routes.rewards}>
+							<Button
+								className={matchSwapRewards ? buttonClassNames.tetraryColorActive : ''}
+								variant="tetrary"
+							>
+								Rewards
+							</Button>
 						</Link>
 					</ul>
 				) : null}

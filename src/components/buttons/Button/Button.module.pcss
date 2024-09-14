@@ -1,15 +1,15 @@
 .button {
 	flex: none;
 	align-items: center;
-	border: 1px solid var(--color-primary-300);
 	border-radius: var(--st-br-md);
-	color: var(--color-text-primary);
+	min-height: var(--sp-lg);
+	color: var(--color-primary-25);
 	cursor: pointer;
 	display: flex;
 	flex-direction: row;
-	gap: var(--sp-sm);
+	gap: var(--sp-xs);
 	justify-content: center;
-	padding: var(--sp-md) var(--sp-md);
+	padding: var(--st-br-sm) var(--st-br-lg);
 	transform-origin: center;
 	transition:
 		transform 0.2s,
@@ -20,74 +20,52 @@
 }
 
 .button:hover {
-	background-color: var(--color-primary-500);
-	border-color: var(--color-primary-400);
+	background-color: var(--color-primary-700);
+	border-color: var(--color-primary-700);
 }
 
 .button:active {
-	background-color: var(--color-primary-600);
-	border-color: var(--color-primary-500);
+	background-color: var(--color-primary-800);
+	border-color: var(--color-primary-800);
 	transform: scale(0.98);
-}
-
-.xs {
-	font-size: 14px;
-	gap: var(--sp-xs);
-	padding: var(--sp-xs) var(--sp-sm);
-	min-height: 28px;
 }
 
 .sm {
 	font-size: 16px;
 	gap: var(--sp-sm);
 	padding: var(--sp-sm) var(--sp-sm);
-	min-height: 32px;
 }
 
 .md {
 	font-size: 16px;
-	gap: var(--sp-md);
+	font-weight: 500;
+	line-height: 18px;
 	min-height: 40px;
 }
 
 .lg {
 	font-size: 0.875rem;
 	padding: var(--sp-md) var(--sp-lg);
-	min-height: 48px;
-}
-
-.xl {
-	font-size: 2rem;
-	padding: var(--sp-sm) var(--sp-sm);
-}
-
-.sq-xs {
-	border-radius: var(--st-br-sm);
-	padding: var(--sp-xs) var(--sp-xs);
-}
-
-.sq-sm {
-	padding: var(--sp-sm) var(--sp-sm);
-}
-
-.sq-md {
-	padding: var(--sp-md) var(--sp-md);
-}
-
-.sq-lg {
-	padding: var(--sp-lg) var(--sp-lg);
 }
 
 .primary {
-	background: linear-gradient(123deg, var(--color-primary-400) -20%, var(--color-primary-500) 100%);
-	border-color: var(--color-primary-400);
-	color: var(--color-button-text-primary);
+	background: var(--color-primary-600);
+	color: var(--color-primary-25);
 }
 
 .secondary {
-	background-color: var(--color-primary-700);
-	border-color: var(--color-primary-600);
-	color: var(--color-primary-400);
+	background-color: var(--color-grey-100);
+	color: var(--color-grey-600);
+}
+
+.secondary:hover {
+	background-color: var(--color-grey-200);
+	color: var(--color-grey-700);
+}
+
+.secondary:active {
+	background-color: var(--color-grey-300);
+	color: var(--color-grey-700);
 }
 
 .subtle {
@@ -140,31 +118,36 @@
 	transform: translateY(2px);
 }
 
-.black {
+.tetrary {
 	background-color: transparent;
 	border: 1px solid transparent;
-	color: var(--color-text-primary);
+	color: var(--color-grey-600);
 }
 
-.black:hover {
-	background-color: var(--color-grey-600);
+.tetrary:hover {
+	background-color: var(--color-grey-200);
+	color: var(--color-grey-700);
 	border: 1px solid transparent;
 }
 
-.black:active {
-	background-color: var(--color-grey-600);
+.tetrary:active {
+	background-color: var(--color-grey-300);
+	color: var(--color-grey-700);
 	border: 1px solid transparent;
+}
+
+.tetraryColorActive {
+	color: var(--color-primary-600);
+
+	&:hover {
+		color: var(--color-primary-600);
+	}
 }
 
 .filled {
 	background-color: var(--color-primary-500);
 	border: none;
 	color: var(--color-text-primary);
-}
-
-.secondary:hover {
-	background-color: var(--color-primary-600);
-	border-color: var(--color-primary-500);
 }
 
 .light {
