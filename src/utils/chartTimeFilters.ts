@@ -14,11 +14,11 @@ export const getStartOfToday = () => {
 }
 
 const getStartOfThisWeek = () => {
-	return dayjs().weekday(0).startOf('day').subtract(1, 'day').valueOf() / 1000
+	return dayjs().subtract(6, 'day').valueOf() / 1000
 }
 
 const getStartOfThisMonth = () => {
-	return dayjs().startOf('month').subtract(1, 'day').valueOf() / 1000
+	return dayjs().subtract(29, 'day').valueOf() / 1000
 }
 
 type TimeOption = 'today' | 'this week' | 'this month' | 'all-time'

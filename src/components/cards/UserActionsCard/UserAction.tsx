@@ -3,13 +3,26 @@ import BlockiesSvg from 'blockies-react-svg'
 import { poolEventNamesMap } from '../../../api/concero/getUserActions'
 import dayjs from 'dayjs'
 import { UserActionStatus, type UserTransaction } from './UserActionsCard'
-import { type ReactNode, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
 import { Tag } from '../../tags/Tag/Tag'
 import { ManageWithdrawalButton } from './ManageWithdrawalButton'
 import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
 
-const getWithdrawalDate = (deadline: number) => {
+export const checkWithdrawAvailable = (deadline: number) => {
+	const givenTime = dayjs.unix(deadline)
+	const now = dayjs()
+
+	if (now.isAfter(givenTime)) {
+		return 'Claim available'
+	}
+	const diffInMilliseconds = givenTime.diff(now)
+	const diffInDays = Math.ceil(dayjs.duration(diffInMilliseconds).asDays())
+
+	return `Claim in: ${diffInDays}`
+}
+
+export const getWithdrawalDate = (deadline: number) => {
 	const givenTime = dayjs.unix(deadline)
 	const now = dayjs()
 
@@ -20,6 +33,33 @@ const getWithdrawalDate = (deadline: number) => {
 
 export const UserAction = ({ action }: { action: UserTransaction }) => {
 	const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.IDLE)
+
+	const [retryTimeLeft, setRetryTimeLeft] = useState<number>(30 * 60)
+
+	useEffect(() => {
+		const retryPerformedTimestamp = localStorage.getItem('retryPerformedTimestamp')
+
+		if (!retryPerformedTimestamp) return
+
+		const endTime = new Date(Number(retryPerformedTimestamp) + 30 * 60 * 1000)
+
+		const updateRemainingTime = () => {
+			const currentTime = new Date()
+			console.log(endTime, retryPerformedTimestamp)
+			const remainingTime = Math.max(0, Math.floor((endTime.getTime() - currentTime.getTime()) / 1000))
+			setRetryTimeLeft(remainingTime < 0 ? 0 : remainingTime)
+		}
+
+		updateRemainingTime()
+
+		const intervalId = setInterval(() => {
+			updateRemainingTime()
+		}, 60 * 1000)
+
+		return () => {
+			clearInterval(intervalId)
+		}
+	}, [])
 
 	const isWithdrawalAvailable =
 		action.status === UserActionStatus.ActiveRequestWithdraw ||
@@ -38,6 +78,9 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 
 	const amountSign = action.eventName === 'ConceroParentPool_DepositCompleted' ? '+' : '-'
 
+	const isWithdrawRetryPending =
+		localStorage.getItem('retryPerformedTimestamp') && retryTimeLeft !== 0 && action.isActiveWithdraw
+
 	return (
 		<div className={classNames.action}>
 			<div className={classNames.leftSide}>
@@ -51,12 +94,16 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 				) : (
 					stageTagMap[status]
 				)}
+
+				{isWithdrawRetryPending && (
+					<Tag color="main">Pending {String(Math.floor(retryTimeLeft / 60))} min...</Tag>
+				)}
 			</div>
 			<div className={classNames.rightSide}>
-				{isWithdrawalAvailable ? (
+				{isWithdrawalAvailable || isWithdrawRetryPending ? (
 					<ManageWithdrawalButton status={status} setStatus={setStatus} action={action} />
 				) : null}
-				{action.amount ? (
+				{action.amount !== '0' ? (
 					<h4>
 						{amountSign}
 						{Number(action.amount).toFixed(0)} USDC

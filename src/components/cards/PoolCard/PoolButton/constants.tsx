@@ -16,6 +16,7 @@ export enum ButtonType {
 	TESTNET_AMOUNT_TOO_HIGH = 12,
 	TESTNET_AMOUNT_TOO_LOW = 13,
 	WITHDRAW = 14,
+	WITHDRAW_NOT_AVAILABLE = 15,
 }
 
 export const buttonText: { [key in ButtonType]: string } = {
@@ -33,6 +34,7 @@ export const buttonText: { [key in ButtonType]: string } = {
 	[ButtonType.CONNECT_WALLET_BRIGHT]: 'button.connectWalletToSwap',
 	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: 'Amount should not be greater than 10',
 	[ButtonType.TESTNET_AMOUNT_TOO_LOW]: 'Minimum deposit is $100',
+	[ButtonType.WITHDRAW_NOT_AVAILABLE]: 'Request in not available',
 }
 
 export const isButtonDisabled: { [key in ButtonType]: boolean } = {
@@ -50,6 +52,7 @@ export const isButtonDisabled: { [key in ButtonType]: boolean } = {
 	[ButtonType.CONNECT_WALLET_BRIGHT]: false,
 	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: true,
 	[ButtonType.TESTNET_AMOUNT_TOO_LOW]: true,
+	[ButtonType.WITHDRAW_NOT_AVAILABLE]: true,
 }
 
 export const buttonStyleClass: { [key in ButtonType]: string } = {
@@ -67,6 +70,7 @@ export const buttonStyleClass: { [key in ButtonType]: string } = {
 	[ButtonType.CONNECT_WALLET_BRIGHT]: 'swap',
 	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: 'wrong',
 	[ButtonType.TESTNET_AMOUNT_TOO_LOW]: 'wrong',
+	[ButtonType.WITHDRAW_NOT_AVAILABLE]: 'wrong',
 }
 
 export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
@@ -84,4 +88,5 @@ export const iconComponent: { [key in ButtonType]: ReactNode | null } = {
 	[ButtonType.CONNECT_WALLET_BRIGHT]: <IconWallet size={18} color="white" />,
 	[ButtonType.TESTNET_AMOUNT_TOO_HIGH]: <IconWallet size={18} color="white" />,
 	[ButtonType.TESTNET_AMOUNT_TOO_LOW]: <IconWallet size={18} color="white" />,
+	[ButtonType.WITHDRAW_NOT_AVAILABLE]: null,
 }

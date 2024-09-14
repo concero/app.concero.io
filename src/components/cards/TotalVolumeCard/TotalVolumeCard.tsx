@@ -12,11 +12,6 @@ export const TotalVolumeCard = () => {
 	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 	const [commonValue, setCommonValue] = useState<string>()
 
-	useEffect(() => {
-		const value = volumeData.reduce((acc, item) => acc + item.value, 0)
-		setCommonValue(value.toFixed(1))
-	}, [volumeData])
-
 	const getTotalVolume = async () => {
 		const { startTime, endTime } = activeFilter
 		const fees = await fetchFees(startTime, endTime)
@@ -28,9 +23,14 @@ export const TotalVolumeCard = () => {
 			}
 		})
 
+		const totalValue = chartData.reduce((acc, item) => {
+			return acc + item.value
+		}, 0)
+
 		const table = {}
 		const uniqueChatData = chartData.filter(({ time }) => !table[time] && (table[time] = 1))
 
+		setCommonValue(totalValue.toFixed(1))
 		setVolumeData(uniqueChatData)
 	}
 

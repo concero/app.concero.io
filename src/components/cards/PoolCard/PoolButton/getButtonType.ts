@@ -8,7 +8,12 @@ export function getButtonType(
 	isInsufficientGas: boolean,
 	isFetchBalancesLoading: boolean,
 ): ButtonType {
-	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, stage, isTestnet } = swapState
+	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, isWithdrawInitiated, poolMode, stage } =
+		swapState
+
+	if (poolMode === 'withdraw' && isWithdrawInitiated) {
+		return ButtonType.WITHDRAW_NOT_AVAILABLE
+	}
 
 	if (isLoading) {
 		return ButtonType.LOADING
@@ -53,7 +58,7 @@ export function getButtonType(
 	}
 
 	if (from.amount && to.amount && routes.length > 0) {
-		return ButtonType.SWAP
+		return ButtonType.DEPOSIT
 	}
 
 	return ButtonType.ENTER_AMOUNT
