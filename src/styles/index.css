@@ -309,33 +309,45 @@ li {
 }
 
 h1 {
-	font-size: 2rem;
-	font-weight: 600;
+	font-size: 3rem;
+	font-weight: 500;
+	line-height: 3rem;
 }
 
 h2 {
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-weight: 500;
+	line-height: 2rem;
 }
 
 h3 {
-	font-size: 1.25rem;
+	font-size: 1.5rem;
 	font-weight: 500;
+	line-height: 1.5rem;
 }
 
 h4 {
-	font-size: 1rem;
+	font-size: 1.125rem;
 	font-weight: 500;
+	line-height: 1.375rem;
 }
 
 h5 {
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1.25rem;
+}
+
+h6 {
 	font-size: 0.875rem;
 	font-weight: 500;
+	line-height: 1.125rem;
 }
 
 p {
 	display: inline;
 	font-size: 1rem;
+	line-height: 1.25rem;
 	font-weight: 400;
 }
 
@@ -346,21 +358,24 @@ a {
 
 .body1 {
 	color: var(--color-text-secondary);
-	font-size: 0.85rem;
+	font-size: 0.75rem;
 	flex: none;
+	line-height: 1rem;
 }
 
 .body2 {
 	color: var(--color-text-secondary);
-	font-size: 0.85rem;
+	font-size: 0.875rem;
 	flex: none;
-	font-weight: 500;
+	font-weight: 400;
+	line-height: 1.125rem;
 }
 
 .body3 {
 	color: var(--color-text-secondary);
-	font-size: 0.95rem;
+	font-size: 1rem;
 	flex: none;
+	line-height: 1.25rem;
 }
 
 .body4 {
@@ -382,7 +397,7 @@ button {
 	outline: none;
 }
 
-.tradingview-widget-copyright {
+#tv-attr-logo {
 	display: none;
 }
 

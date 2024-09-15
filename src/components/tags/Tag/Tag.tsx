@@ -6,35 +6,33 @@ export interface TagProps {
 	leftIcon?: ReactNode
 	rightIcon?: ReactNode
 	onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-	color:
-		| 'blue'
-		| 'pink'
-		| 'red'
-		| 'green'
-		| 'grey'
-		| 'main'
-		| 'mainDarker'
-		| 'recommended'
-		| 'cheapest'
-		| 'fastest'
-		| 'transparent'
-		| 'secondary'
+	variant?: 'branded' | 'positive' | 'negative' | 'warning' | 'neutral'
 	isLoading?: boolean
-	children?: string | JSX.Element[] | JSX.Element
-	size?: 'sm' | 'md' | 'lg' | 'xxs'
+	children?: ReactNode
+	size?: 'sm' | 'md'
 	title?: string
 }
 
-export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size, color, onClick, title = null }) => {
-	const sizeClass = size ? className[size] : className.xs
+export const Tag: FC<TagProps> = ({
+	leftIcon,
+	rightIcon,
+	children,
+	size = 'md',
+	variant = 'branded',
+	onClick,
+	title = null,
+}) => {
+	const sizeClass = className[size]
 
 	return (
 		<div className={className.container} onClick={onClick || null} style={onClick ? { cursor: 'pointer' } : null}>
-			<div className={`${className.tag}  ${sizeClass} ${className[color]}`}>
-				{leftIcon}
-				{children}
-				{title || null}
-				{rightIcon}
+			<div className={`${className.tag}  ${sizeClass} ${className[variant]}`}>
+				<p className={className.tagWrap}>
+					{leftIcon}
+					{children}
+					{title || null}
+					{rightIcon}
+				</p>
 			</div>
 		</div>
 	)

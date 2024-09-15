@@ -14,7 +14,6 @@ export enum PointsBooster {
 	MultiplyX2 = 2,
 	MultiplyX5 = 5,
 	MultiplyX10 = 10,
-	// other boosters...
 }
 
 export interface IUser {

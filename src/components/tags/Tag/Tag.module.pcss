@@ -1,80 +1,28 @@
-.container {
+.tag {
 	flex-direction: row;
 	flex-wrap: nowrap;
 	white-space: nowrap;
-}
-
-.tag {
 	align-items: center;
-	border-radius: var(--st-br-sm);
-	flex-direction: row;
+	border-radius: var(--sp-xl);
 	gap: var(--sp-xs);
 	justify-content: center;
-	padding: var(--sp-sm);
 	font-size: 14px;
-}
-
-.xs {
+	font-weight: 400;
 	padding: var(--sp-xs) var(--sp-sm);
 }
 
-.xxs {
-	padding: var(--sp-xxs) var(--sp-xxs);
+.tagWrap {
+	padding: 3px var(--sp-xs);
 }
 
-.md {
-	padding: var(--sp-sm) var(--sp-md);
+.sm {
+	font-size: 12px;
 }
 
-.lg {
-	padding: var(--sp-md) var(--sp-lg);
-}
+.branded {
+	background-color: var(--color-primary-100);
 
-.pink {
-	color: var(--color-pink-500);
-	background-color: var(--color-pink-600);
-}
-
-.blue {
-	color: var(--color-blue-light);
-	background-color: var(--color-blue-darkest);
-}
-
-.red {
-	color: var(--color-red-500);
-	background-color: var(--color-red-700);
-	border: 1px solid var(--color-red-650);
-}
-
-.green {
-	color: var(--color-green-500);
-	background-color: var(--color-green-650);
-	border: 1px solid var(--color-green-600);
-
-	.title {
-		color: var(--color-green-500);
-	}
-}
-
-.grey {
-	background-color: var(--color-grey-650);
-	color: var(--color-grey-450);
-}
-
-.main {
-	background-color: var(--color-primary-750);
-	color: var(--color-primary-500);
-}
-
-.transparent {
-	background-color: none;
-}
-
-.secondary {
-	background-color: var(--color-grey-650);
-	border: 1px solid var(--color-grey-600);
-
-	.title {
-		color: var(--color-grey-500);
+	p {
+		color: var(--color-primary-700);
 	}
 }

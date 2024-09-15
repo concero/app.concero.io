@@ -1,4 +1,4 @@
-import { type CSSProperties, type FC, type ReactNode } from 'react'
+import { type FC, type ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../../constants/routes'
@@ -8,13 +8,16 @@ import { WalletButton } from '../WalletButton/WalletButton'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 import { Button } from '../../../buttons/Button/Button'
 import buttonClassNames from '../../../buttons/Button/Button.module.pcss'
+import { Tag } from '../../../tags/Tag/Tag'
+import { type IUser } from '../../../../api/concero/user/userType'
+import { UserMultipliers } from './UserMultipliers'
 
 interface HeaderProps {
-	style?: CSSProperties
+	user: IUser
 	children?: ReactNode
 }
 
-export const Header: FC<HeaderProps> = ({ children }) => {
+export const Header: FC<HeaderProps> = ({ children, user }) => {
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
@@ -52,6 +55,15 @@ export const Header: FC<HeaderProps> = ({ children }) => {
 				) : null}
 			</div>
 			<div className={classNames.headerButtonsContainer}>
+				{user && (
+					<>
+						<Tag>{user.points.toFixed(4)} CERs</Tag>
+						<div data-tooltip-id="multiplier-tooltip">
+							<Tag>{String(user.multiplier)}x</Tag>
+						</div>
+						<UserMultipliers />
+					</>
+				)}
 				<WalletButton />
 				<BurgerMenu />
 			</div>
