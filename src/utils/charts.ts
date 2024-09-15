@@ -38,7 +38,6 @@ const groupByWeeks = (data: ChartData[]) => {
 const calculateWeeklyAverages = (groupedData: Record<string, ChartData>, timeFormat: string) => {
 	return Object.keys(groupedData).map(key => {
 		const time = dayjs(key, timeFormat).valueOf()
-		console.log('time', time, dayjs(key, timeFormat).toString())
 		return {
 			time,
 			value: groupedData[key].value / 7,
