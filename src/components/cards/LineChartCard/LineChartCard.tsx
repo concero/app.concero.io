@@ -9,9 +9,9 @@ import { groupDataByDays } from '../../../utils/charts'
 
 export interface BarChartCardProps {
 	titleCard: string
-	filterItems: SelectItem[]
-	activeItem: SelectItem
-	setActiveItem: (item: Dispatch<SetStateAction<SelectItem>>) => void
+	filterItems?: SelectItem[]
+	activeItem?: SelectItem
+	setActiveItem?: (item: Dispatch<SetStateAction<SelectItem>>) => void
 	commonValue: string
 	data: ChartData[]
 	className?: string
@@ -31,7 +31,11 @@ export const LineChartCard = ({
 	useEffect(() => {
 		let newData: ChartData[] = data
 
-		if (activeItem.value === 'this week' || activeItem.value === 'this month' || activeItem.value === 'all-time') {
+		const activeItemCondition =
+			activeItem &&
+			(activeItem.value === 'this week' || activeItem.value === 'this month' || activeItem.value === 'all-time')
+
+		if (activeItemCondition) {
 			newData = groupDataByDays(data)
 		}
 
@@ -45,7 +49,7 @@ export const LineChartCard = ({
 					<h4 className="body4">{titleCard}</h4>
 					{commonValue && <h2>{commonValue}</h2>}
 				</div>
-				{filterItems && filterItems.length > 0 && (
+				{filterItems && activeItem && setActiveItem && (
 					<Dropdown activeItem={activeItem} setActiveItem={setActiveItem} items={filterItems} />
 				)}
 			</div>

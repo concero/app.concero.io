@@ -25,15 +25,25 @@ const groupByDays = (data: ChartData[]) => {
 
 const groupByWeeks = (data: ChartData[]) => {
 	return data.reduce((acc: Record<string, ChartData>, item) => {
-		const week = dayjs(item.time).weekYear()
-		const year = dayjs(item.time).year()
-		const weekKey = `${year}-W${week}`
+		const weekKey = dayjs(item.time).startOf('week').format('YYYY-MM-DD')
 		if (!acc[weekKey]) {
 			acc[weekKey] = item
 		}
 		acc[weekKey].value += item.value
+
 		return acc
 	}, {})
+}
+
+const calculateWeeklyAverages = (groupedData: Record<string, ChartData>, timeFormat: string) => {
+	return Object.keys(groupedData).map(key => {
+		const time = dayjs(key, timeFormat).valueOf()
+		console.log('time', time, dayjs(key, timeFormat).toString())
+		return {
+			time,
+			value: groupedData[key].value / 7,
+		}
+	})
 }
 
 const convertGroupedToArray = (groupedData: Record<string, ChartData>, timeFormat: string) => {
@@ -53,5 +63,5 @@ export const groupDataByDays = (data: ChartData[]) => {
 
 export const groupDataByWeeks = (data: ChartData[]) => {
 	const groupedByWeeks = groupByWeeks(data)
-	return convertGroupedToArray(groupedByWeeks, 'YYYY-[W]W')
+	return calculateWeeklyAverages(groupedByWeeks, 'YYYY-[W]W')
 }
