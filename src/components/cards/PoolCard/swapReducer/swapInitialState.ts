@@ -1,6 +1,6 @@
 import { SwapCardStage } from './types'
 import { ButtonType } from '../PoolButton/constants'
-import { config } from '../../../../constants/config'
+import { config, IS_POOL_TESTNET } from '../../../../constants/config'
 
 const mainnetTokens = {
 	contractAddress: config.PARENT_POOL_CONTRACT,
@@ -38,7 +38,7 @@ const mainnetTokens = {
 }
 
 const testnetTokens = {
-	contractAddress: '0x42b40f42f28178998b2a4A8e5fe725F65403Ed24',
+	contractAddress: config.PARENT_POOL_CONTRACT,
 	chain: {
 		addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
 		explorerURI: 'https://sepolia.basescan.org',
@@ -60,7 +60,7 @@ const testnetTokens = {
 		symbol: 'USDC',
 	},
 	lpToken: {
-		address: '0x459FDd324126aE6f4F4d7dE8616867f33DF0d4f6',
+		address: config.LPTOKEN,
 		chain_id: '84532',
 		decimals: 18,
 		is_popular: true,
@@ -71,17 +71,19 @@ const testnetTokens = {
 	},
 }
 
+const currentTokens = IS_POOL_TESTNET ? testnetTokens : mainnetTokens
+
 export const swapInitialState = () => ({
 	from: {
-		chain: mainnetTokens.chain,
-		token: mainnetTokens.mainToken,
+		chain: currentTokens.chain,
+		token: currentTokens.mainToken,
 		amount: '',
 		amount_usd: 0.0,
 		address: '',
 	},
 	to: {
-		chain: mainnetTokens.chain,
-		token: mainnetTokens.lpToken,
+		chain: currentTokens.chain,
+		token: currentTokens.lpToken,
 		amount: '',
 		amount_usd: 0.0,
 		address: '',
