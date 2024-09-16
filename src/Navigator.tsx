@@ -24,7 +24,6 @@ const RewardsScreen = lazy(
 export const Navigator = () => {
 	const [user, setUser] = useState<IUser | null>(null)
 	const { address } = useAccount()
-	const [isNewSwapCardMode, setIsNewSwapCardMode] = useState(true)
 
 	useEffect(() => {
 		if (!address) return
@@ -38,7 +37,7 @@ export const Navigator = () => {
 	return (
 		<BrowserRouter>
 			<AppScreen>
-				<Header user={user} setIsNewSwapCardMode={setIsNewSwapCardMode} />
+				<Header user={user} />
 				<Routes>
 					<Route
 						path={routes.pool}

@@ -2,7 +2,7 @@ import burgerMenuIcon from '../../../../assets/icons/burgerMenuIcon.svg'
 import classNames from './BurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { type KeyboardEvent, useContext, useEffect, useState } from 'react'
-import { IconBrandDiscord, IconBrandTwitter, IconLanguage, IconMoon, IconSun } from '@tabler/icons-react'
+import { IconLanguage, IconMoon, IconSun } from '@tabler/icons-react'
 import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
 import { ThemeContext } from '../../../../hooks/themeContext'
 import { animated, useSpring } from '@react-spring/web'
@@ -76,8 +76,7 @@ export function BurgerMenu() {
 					<ul className={classNames.listContainer}>
 						<li>
 							<Button
-								variant={'black'}
-								size={'sq-sm'}
+								variant={'tetrary'}
 								className={classNames.listButton}
 								onClick={(e: MouseEvent) => {
 									toggleTheme()
@@ -94,8 +93,7 @@ export function BurgerMenu() {
 						</li>
 						<li>
 							<Button
-								variant={'black'}
-								size={'sq-sm'}
+								variant={'tetrary'}
 								className={classNames.listButton}
 								onClick={(e: MouseEvent) => {
 									setIsLanguageModalVisible(true)
@@ -104,34 +102,6 @@ export function BurgerMenu() {
 							>
 								<IconLanguage size={18} color={'var(--color-text-secondary)'} />
 								<h5>{t('header.menu.changeLanguage')}</h5>
-							</Button>
-						</li>
-						<li>
-							<Button
-								variant={'black'}
-								size={'sq-sm'}
-								className={classNames.listButton}
-								onClick={(e: MouseEvent) => {
-									window.open('https://twitter.com/concero_io', '_blank')
-									e.stopPropagation()
-								}}
-							>
-								<IconBrandTwitter size={18} color={'var(--color-text-secondary)'} />
-								<h5>{t('socialMedia.twitter')}</h5>
-							</Button>
-						</li>
-						<li>
-							<Button
-								variant={'black'}
-								size={'sq-sm'}
-								className={classNames.listButton}
-								onClick={(e: MouseEvent) => {
-									window.open('https://discord.com/channels/1155792755105214535', '_blank')
-									e.stopPropagation()
-								}}
-							>
-								<IconBrandDiscord size={18} color={'var(--color-text-secondary)'} />
-								<h5>{t('socialMedia.discord')}</h5>
 							</Button>
 						</li>
 					</ul>

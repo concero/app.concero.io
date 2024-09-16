@@ -10,10 +10,11 @@ import { Button } from '../../../buttons/Button/Button'
 import buttonClassNames from '../../../buttons/Button/Button.module.pcss'
 import { Tag } from '../../../tags/Tag/Tag'
 import { type IUser } from '../../../../api/concero/user/userType'
-import { UserMultipliers } from './UserMultipliers'
+import { UserMultipliers } from './UserMultipliers/UserMultipliers'
+import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
 
 interface HeaderProps {
-	user: IUser
+	user: IUser | null
 	children?: ReactNode
 }
 
@@ -58,10 +59,9 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 				{user && (
 					<>
 						<Tag>{user.points.toFixed(4)} CERs</Tag>
-						<div data-tooltip-id="multiplier-tooltip">
+						<TooltipWrapper tooltipId={'user-multiplier'} tooltipContent={<UserMultipliers user={user} />}>
 							<Tag>{String(user.multiplier)}x</Tag>
-						</div>
-						<UserMultipliers />
+						</TooltipWrapper>
 					</>
 				)}
 				<WalletButton />

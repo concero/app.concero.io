@@ -18,8 +18,7 @@ export function ModalHeader({ title, isLoading = false, onClick }: ModalHeaderPr
 			</div>
 			<Button
 				onClick={onClick}
-				variant="black"
-				size="sq-xs"
+				variant="tetrary"
 				leftIcon={<IconX size={18} color="var(--color-text-secondary)" />}
 			/>
 		</div>
