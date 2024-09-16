@@ -23,10 +23,19 @@ export interface UserTransaction {
 	args: any
 }
 
+export const getRemainingTime = (time: string | number): number => {
+	const endTime = new Date(Number(time) + 30 * 60 * 1000)
+
+	const currentTime = new Date()
+	const remainingTime = Math.max(0, Math.floor((endTime.getTime() - currentTime.getTime()) / 1000))
+	return remainingTime < 0 ? 0 : remainingTime
+}
+
 export function UserActionsCard() {
 	const { address } = useAccount()
 	const [actions, setActions] = useState<UserTransaction[]>([])
 	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [retryTimeLeft, setRetryTimeLeft] = useState<number>(0)
 
 	const getActions = async () => {
 		return await fetchParentPoolActionsByLpAddress(address)
@@ -34,7 +43,9 @@ export function UserActionsCard() {
 
 	useEffect(() => {
 		if (!address) return
+		if (retryTimeLeft !== 0) return
 
+		setActions([])
 		setIsLoading(true)
 
 		getActions()
@@ -47,7 +58,20 @@ export function UserActionsCard() {
 			.finally(() => {
 				setIsLoading(false)
 			})
-	}, [address])
+	}, [address, retryTimeLeft])
+
+	useEffect(() => {
+		const retryPerformedTimestamp = localStorage.getItem('retryPerformedTimestamp')
+		if (!retryPerformedTimestamp) return
+
+		const intervalId = setInterval(() => {
+			setRetryTimeLeft(getRemainingTime(retryPerformedTimestamp))
+		}, 60 * 1000)
+
+		return () => {
+			clearInterval(intervalId)
+		}
+	}, [])
 
 	return (
 		<div>
@@ -59,7 +83,14 @@ export function UserActionsCard() {
 				{!isLoading && actions.length === 0 ? (
 					<div className="body4 ac jc h-full">You don't have any action yet</div>
 				) : (
-					actions.map(action => <UserAction key={action.transactionHash} action={action} />)
+					actions.map(action => (
+						<UserAction
+							setRetryTimeLeft={setRetryTimeLeft}
+							retryTimeLeft={retryTimeLeft}
+							key={action.transactionHash}
+							action={action}
+						/>
+					))
 				)}
 			</Card>
 		</div>

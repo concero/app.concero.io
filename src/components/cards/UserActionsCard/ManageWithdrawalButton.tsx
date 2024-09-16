@@ -1,4 +1,4 @@
-import { UserActionStatus, type UserTransaction } from './UserActionsCard'
+import { UserActionStatus, type UserTransaction, getRemainingTime } from './UserActionsCard'
 import { TransactionStatus } from '../../../api/concero/types'
 import { type Dispatch, type ReactNode, type SetStateAction } from 'react'
 import { useAccount } from 'wagmi'
@@ -10,9 +10,10 @@ interface Props {
 	action: UserTransaction
 	status: TransactionStatus
 	setStatus: Dispatch<SetStateAction<TransactionStatus>>
+	setRetryTimeLeft: Dispatch<SetStateAction<number>>
 }
 
-export const ManageWithdrawalButton = ({ action, status, setStatus }: Props) => {
+export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTimeLeft }: Props) => {
 	const { address, chainId } = useAccount()
 	const isRetryRequestWithdraw = action.status === UserActionStatus.WithdrawRetryNeeded
 
@@ -23,7 +24,15 @@ export const ManageWithdrawalButton = ({ action, status, setStatus }: Props) => 
 
 			if (isRetryRequestWithdraw) {
 				const txStatus = await retryWithdrawal(address, chainId!)
-				setStatus(txStatus)
+
+				if (txStatus === TransactionStatus.SUCCESS) {
+					const timeLeft = new Date().getTime()
+
+					localStorage.setItem('retryPerformedTimestamp', String(timeLeft))
+					setRetryTimeLeft(getRemainingTime(timeLeft))
+				}
+
+				setStatus(TransactionStatus.SUCCESS)
 			} else {
 				const txStatus = await completeWithdrawal(address, chainId!)
 				setStatus(txStatus)
@@ -43,7 +52,7 @@ export const ManageWithdrawalButton = ({ action, status, setStatus }: Props) => 
 	const stageButtonsMap: Record<TransactionStatus, ReactNode> = {
 		[TransactionStatus.IDLE]: claimButton,
 		[TransactionStatus.FAILED]: claimButton,
-		[TransactionStatus.SUCCESS]: (
+		[TransactionStatus.SUCCESS]: !isRetryRequestWithdraw && (
 			<Button className={classNames.successButton} isDisabled={true} size="sm">
 				Claimed success
 			</Button>

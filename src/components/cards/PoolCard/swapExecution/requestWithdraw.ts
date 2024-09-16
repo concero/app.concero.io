@@ -5,15 +5,16 @@ import { type Address, decodeEventLog, type Hash, parseAbi, type PublicClient, t
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { base } from 'viem/chains'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
-import { config } from '../../../../constants/config'
+import { config, IS_POOL_TESTNET, PARENT_POOL_CHAIN_ID } from '../../../../constants/config'
 import { TransactionStatus } from '../../../../api/concero/types'
 import { getPublicClient, getWalletClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
 import { getWithdrawalIdByLpAddress } from '../../../../api/concero/getWithdrawalIdByLpAddress'
 import ConceroAutomationAbi from '../../../../abi/ConceroAutomationAbi'
+import { baseSepolia } from 'wagmi/chains'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
-const chain = base
+const chain = IS_POOL_TESTNET ? baseSepolia : base
 
 const publicClient = getPublicClient(wagmiConfig, { chainId: chain.id })
 
@@ -114,7 +115,7 @@ export async function startWithdrawal(
 
 export const completeWithdrawal = async (address: Address, chainId: number): Promise<TransactionStatus> => {
 	const walletClient = await getWalletClient(wagmiConfig, { chainId })
-	walletClient.switchChain({ id: base.id })
+	walletClient.switchChain({ id: PARENT_POOL_CHAIN_ID })
 
 	const hash = await walletClient.writeContract({
 		account: address,
@@ -159,7 +160,7 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 
 export const retryWithdrawal = async (address: Address, chainId: number): Promise<TransactionStatus> => {
 	const walletClient = await getWalletClient(wagmiConfig, { chainId })
-	walletClient.switchChain({ id: base.id })
+	walletClient.switchChain({ id: PARENT_POOL_CHAIN_ID })
 
 	const withdrawId = await getWithdrawalIdByLpAddress(address)
 	if (!withdrawId) return TransactionStatus.FAILED
@@ -175,17 +176,15 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 
 	const receipt = await publicClient.waitForTransactionReceipt({
 		hash,
-		timeout: 10_000,
+		timeout: 60_000,
 		pollingInterval: 3_000,
-		retryCount: 10,
+		retryCount: 50,
 		confirmations: 5,
 	})
 
 	if (receipt.status === 'reverted') {
 		return TransactionStatus.FAILED
 	}
-
-	localStorage.setItem('retryPerformedTimestamp', String(new Date().getTime()))
 
 	for (const log of receipt.logs) {
 		try {

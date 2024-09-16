@@ -1,6 +1,8 @@
 import { type Address } from 'viem'
+import { base, baseSepolia } from 'wagmi/chains'
 
 export const IS_POOL_TESTNET = true
+export const PARENT_POOL_CHAIN_ID = IS_POOL_TESTNET ? baseSepolia.id : base.id
 
 const parentPoolTestnet = '0x0fB1ef702a3fA805e221AAF653A853b34b23dd33' as Address
 const childPoolArbitrumTestnet = '0xb0260E0A79cb31a196bB798005ff7b20E1E79E2F' as Address
