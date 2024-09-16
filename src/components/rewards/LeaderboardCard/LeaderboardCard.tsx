@@ -1,5 +1,5 @@
 import classNames from './LeaderboardCard.module.pcss'
-import { Card } from '../Card/Card'
+import { Card } from '../../cards/Card/Card'
 import { truncateWallet } from '../../../utils/formatting'
 import BlockiesSvg from 'blockies-react-svg'
 import { useEffect, useState } from 'react'

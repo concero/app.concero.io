@@ -99,7 +99,7 @@ input[type='number']::-webkit-outer-spin-button {
 	background-size: 200% 200%;
 	background-position: 200% 200%;
 	border-radius: var(--sp-lg);
-	padding: var(--sp-md);
+	padding: var(--st-br-lg);
 	transition: background-position 0.4s;
 	position: relative;
 }

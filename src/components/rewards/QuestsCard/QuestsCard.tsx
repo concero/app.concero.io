@@ -1,12 +1,11 @@
 import classNames from './QuestsCard.module.pcss'
-import { Card } from '../Card/Card'
+import { Card } from '../../cards/Card/Card'
 import { Tag } from '../../tags/Tag/Tag'
 import { IconArrowUpRight } from '@tabler/icons-react'
 import { Button } from '../../buttons/Button/Button'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { getQuestStatus, QuestStatus } from './getQuestStatus'
-import { UserHistory } from '../../modals/RewardsUserHistory/RewardsUserHistory'
 import { type IQuest } from '../../../api/concero/quest/questType'
 import { fetchQuests } from '../../../api/concero/quest/fetchQuests'
 import { QuestModal } from '../../modals/QuestModal/QuestModal'
@@ -88,18 +87,6 @@ export const QuestsCard = ({ user }: QuestsCardProps) => {
 		<div className="gap-md">
 			<div className={classNames.questsHeader}>
 				<h4>Quests</h4>
-				{address && (
-					<Button
-						onClick={() => {
-							setIsOpen(true)
-						}}
-						size="xs"
-						className="body1"
-						variant="black"
-					>
-						See history
-					</Button>
-				)}
 			</div>
 			{quests.length === 0 && (
 				<Card className="row jc">
@@ -116,8 +103,6 @@ export const QuestsCard = ({ user }: QuestsCardProps) => {
 					{quests[3] && <QuestCard quest={quests[3]} user={user} variant="big" />}
 				</div>
 			</div>
-
-			<UserHistory isOpen={isOpen} setIsOpen={setIsOpen} />
 		</div>
 	)
 }

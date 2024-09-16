@@ -1,12 +1,13 @@
 import classNames from './RewardsScreen.module.pcss'
-import { ProfileCard } from '../../cards/ProfileCard/ProfileCard'
-import { QuestsCard } from '../../cards/QuestsCard/QuestsCard'
-import { LeaderboardCard } from '../../cards/LeaderboardCard/LeaderboardCard'
+import { ProfileCard } from '../../rewards/ProfileCard/ProfileCard'
+import { QuestsCard } from '../../rewards/QuestsCard/QuestsCard'
+import { LeaderboardCard } from '../../rewards/LeaderboardCard/LeaderboardCard'
 import { useEffect, useState } from 'react'
 import { fetchUserByAddress } from '../../../api/concero/user/fetchUserByAddress'
 import { useAccount } from 'wagmi'
 import { type IUser } from '../../../api/concero/user/userType'
 import { createUser } from '../../../api/concero/user/createUser'
+import { StreaksCard } from '../../rewards/StreaksCard/StreaksCard'
 
 const InfoTitle = () => {
 	return (
@@ -43,6 +44,7 @@ export const RewardsScreen = () => {
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrap}>
 				{user && <ProfileCard user={user} />}
+				{user && <StreaksCard user={user} />}
 				<QuestsCard user={user} />
 				<LeaderboardCard user={user} />
 			</div>

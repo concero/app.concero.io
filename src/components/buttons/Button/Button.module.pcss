@@ -30,10 +30,18 @@
 	transform: scale(0.98);
 }
 
+button:focus-visible {
+	box-shadow:
+		0 0 0 2px #f9fbfb,
+		0 0 0 4px var(--color-primary-500, #7a5af8);
+}
+
 .sm {
-	font-size: 1rem;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
 	gap: var(--sp-sm);
-	padding: var(--sp-sm) var(--sp-sm);
+	padding: 7px var(--st-br-lg);
 }
 
 .md {
@@ -66,6 +74,21 @@
 .secondary:active {
 	background-color: var(--color-grey-300);
 	color: var(--color-grey-700);
+}
+
+.secondaryColor {
+	background-color: var(--color-primary-100);
+	color: var(--color-primary-600);
+}
+
+.secondaryColor:hover {
+	background-color: var(--color-primary-200);
+	color: var(--color-primary-700);
+}
+
+.secondaryColor:active {
+	background-color: var(--color-primary-300);
+	color: var(--color-primary-700);
 }
 
 .subtle {
