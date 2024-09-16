@@ -30,7 +30,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 				<div className={classNames.logoContainer}>
 					<Logo />
 				</div>
-				{!isMobile ? (
+				{!isMobile && (
 					<ul className="gap-xs">
 						<a className={classNames.link} target="_blank" href="https://lanca.io" rel="noreferrer">
 							<Button variant="tetrary">Swap</Button>
@@ -53,7 +53,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 							</Button>
 						</Link>
 					</ul>
-				) : null}
+				)}
 			</div>
 			<div className={classNames.headerButtonsContainer}>
 				{user && (
@@ -64,7 +64,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 						</TooltipWrapper>
 					</>
 				)}
-				<WalletButton />
+				{!isMobile && <WalletButton />}
 				<BurgerMenu />
 			</div>
 		</header>

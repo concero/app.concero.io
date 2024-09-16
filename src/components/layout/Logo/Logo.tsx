@@ -1,11 +1,4 @@
-import { type FC } from 'react'
-
-export interface LogoProps {
-	width?: number
-	height?: number
-}
-
-export const Logo: FC<LogoProps> = () => (
+export const Logo = () => (
 	<div className="row ac gap-xs">
 		<svg xmlns="http://www.w3.org/2000/svg" width="23" height="20" viewBox="0 0 23 20" fill="none">
 			<path
