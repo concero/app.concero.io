@@ -382,7 +382,7 @@ button {
 	outline: none;
 }
 
-.tradingview-widget-copyright {
+#tv-attr-logo {
 	display: none;
 }
 

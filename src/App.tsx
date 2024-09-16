@@ -8,15 +8,11 @@ import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
 import { DataProvider } from './hooks/DataContext/DataContext'
-import { lazy, useEffect } from 'react'
+import { useEffect } from 'react'
 import { I18Provider } from './i18n/I18nextProvider'
 import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-const WalletConnectModal = lazy(
-	async () => await import('./web3/WalletConnectModal').then(module => ({ default: module.WalletConnectModal })),
-)
 
 function App() {
 	useEffect(() => {
@@ -37,7 +33,6 @@ function App() {
 									<NotificationsProvider>
 										<Notifications />
 										<Navigator />
-										{/* <WalletConnectModal /> */}
 									</NotificationsProvider>
 								</ThemeProvider>
 							</SelectionProvider>

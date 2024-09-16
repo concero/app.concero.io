@@ -64,6 +64,8 @@ export function UserActionsCard() {
 		const retryPerformedTimestamp = localStorage.getItem('retryPerformedTimestamp')
 		if (!retryPerformedTimestamp) return
 
+		setRetryTimeLeft(getRemainingTime(retryPerformedTimestamp))
+
 		const intervalId = setInterval(() => {
 			setRetryTimeLeft(getRemainingTime(retryPerformedTimestamp))
 		}, 60 * 1000)

@@ -45,6 +45,13 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 		action.status === UserActionStatus.WithdrawRetryNeeded
 
 	const isRequestWithdrawal = action.eventName === 'ConceroParentPool_WithdrawRequestInitiated'
+	const isWithdrawRetryPending = retryTimeLeft !== 0 && action.isActiveWithdraw
+
+	useEffect(() => {
+		if (action.status === UserActionStatus.WithdrawRetryNeeded && !isWithdrawRetryPending) {
+			setStatus(TransactionStatus.FAILED)
+		}
+	}, [retryTimeLeft])
 
 	const stageTagMap: Record<TransactionStatus, ReactNode> = {
 		[TransactionStatus.FAILED]: <Tag color="pink">Failed</Tag>,
@@ -56,8 +63,6 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 	}
 
 	const amountSign = action.eventName === 'ConceroParentPool_DepositCompleted' ? '+' : '-'
-
-	const isWithdrawRetryPending = retryTimeLeft !== 0 && action.isActiveWithdraw
 
 	return (
 		<div className={classNames.action}>
@@ -78,7 +83,7 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 				)}
 			</div>
 			<div className={classNames.rightSide}>
-				{isWithdrawalAvailable || isWithdrawRetryPending ? (
+				{isWithdrawalAvailable && !isWithdrawRetryPending ? (
 					<ManageWithdrawalButton
 						setRetryTimeLeft={setRetryTimeLeft}
 						status={status}
