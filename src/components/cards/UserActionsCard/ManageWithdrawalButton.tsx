@@ -5,6 +5,8 @@ import { useAccount } from 'wagmi'
 import { completeWithdrawal, retryWithdrawal } from '../PoolCard/swapExecution/requestWithdraw'
 import { Button } from '../../buttons/Button/Button'
 import classNames from './UserActionsCard.module.pcss'
+import { trackEvent } from '../../../hooks/useTracking'
+import { action as tracingAction, category } from '../../../constants/tracking'
 
 interface Props {
 	action: UserTransaction
@@ -23,6 +25,13 @@ export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTime
 			setStatus(TransactionStatus.PENDING)
 
 			if (isRetryRequestWithdraw) {
+				void trackEvent({
+					category: category.PoolUserActions,
+					action: tracingAction.BeginRetryWithdrawalRequest,
+					label: tracingAction.BeginRetryWithdrawalRequest,
+					data: { action },
+				})
+
 				const txStatus = await retryWithdrawal(address, chainId!)
 
 				if (txStatus === TransactionStatus.SUCCESS) {
@@ -34,6 +43,13 @@ export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTime
 
 				setStatus(TransactionStatus.SUCCESS)
 			} else {
+				void trackEvent({
+					category: category.PoolUserActions,
+					action: tracingAction.BeginWithdrawalComplete,
+					label: tracingAction.BeginWithdrawalComplete,
+					data: { action },
+				})
+
 				const txStatus = await completeWithdrawal(address, chainId!)
 				setStatus(txStatus)
 			}

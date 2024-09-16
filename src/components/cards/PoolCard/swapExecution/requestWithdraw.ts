@@ -12,6 +12,8 @@ import { config as wagmiConfig } from '../../../../web3/wagmi'
 import { getWithdrawalIdByLpAddress } from '../../../../api/concero/getWithdrawalIdByLpAddress'
 import ConceroAutomationAbi from '../../../../abi/ConceroAutomationAbi'
 import { baseSepolia } from 'wagmi/chains'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action as tracingAction, action, category } from '../../../../constants/tracking'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = IS_POOL_TESTNET ? baseSepolia : base
@@ -63,6 +65,13 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 					type: 'SET_SWAP_STEPS',
 					payload: [{ status: 'success', title: 'Sending transaction' }],
 				})
+
+				void trackEvent({
+					category: category.PoolCard,
+					action: action.SuccessWithdrawalRequest,
+					label: 'action_success_withdraw_request',
+					data: { txHash },
+				})
 			}
 		} catch (err) {}
 	}
@@ -108,6 +117,12 @@ export async function startWithdrawal(
 			type: 'SET_SWAP_STEPS',
 			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
 		})
+		void trackEvent({
+			category: category.PoolCard,
+			action: action.FailedWithdrawalRequest,
+			label: 'action_failed_withdraw_request',
+			data: { from: swapState.from, to: swapState.to },
+		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
@@ -147,9 +162,23 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 			})
 
 			if (decodedLog.eventName === 'ConceroParentPool_Withdrawn') {
+				void trackEvent({
+					category: category.PoolUserActions,
+					action: tracingAction.SuccessWithdrawalComplete,
+					label: tracingAction.SuccessWithdrawalComplete,
+					data: { action, txHash: hash },
+				})
+
 				return TransactionStatus.SUCCESS
 			}
 			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
+				void trackEvent({
+					category: category.PoolUserActions,
+					action: tracingAction.FailedWithdrawalComplete,
+					label: tracingAction.FailedWithdrawalComplete,
+					data: { action, txHash: hash },
+				})
+
 				return TransactionStatus.FAILED
 			}
 		} catch (err) {}
@@ -183,6 +212,12 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 	})
 
 	if (receipt.status === 'reverted') {
+		void trackEvent({
+			category: category.PoolUserActions,
+			action: tracingAction.FailedRetryWithdrawalRequest,
+			label: tracingAction.FailedRetryWithdrawalRequest,
+			data: { action, txHash: hash },
+		})
 		return TransactionStatus.FAILED
 	}
 
@@ -195,6 +230,12 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 			})
 
 			if (decodedLog.eventName === 'ConceroAutomation_RetryPerformed') {
+				void trackEvent({
+					category: category.PoolUserActions,
+					action: tracingAction.SuccessRetryWithdrawalRequest,
+					label: tracingAction.SuccessRetryWithdrawalRequest,
+					data: { action, txHash: hash },
+				})
 				return TransactionStatus.SUCCESS
 			}
 		} catch (err) {}

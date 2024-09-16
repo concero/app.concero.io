@@ -159,7 +159,7 @@ export async function executeDeposit(
 
 		await handleDepositTransaction(hash, publicClient, walletClient, swapDispatch, swapState)
 		await trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SuccessDeposit,
 			label: 'concero_success_deposit',
 			data: { from: swapState.from, to: swapState.to },
@@ -172,7 +172,7 @@ export async function executeDeposit(
 		})
 		console.error(error)
 		await trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.FailedDeposit,
 			label: 'concero_failed_deposit',
 			data: { from: swapState.from, to: swapState.to },
