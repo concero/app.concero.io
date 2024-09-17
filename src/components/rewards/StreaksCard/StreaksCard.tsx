@@ -1,10 +1,10 @@
-import { LpHoldingStreak } from './LpHoldingStreak/LpHoldingStreak'
+import { StreakCard } from './LpHoldingStreak/StreakCard'
 
 export const StreaksCard = () => {
 	return (
 		<div className="row wrap gap-lg">
-			<LpHoldingStreak />
-			<LpHoldingStreak />
+			<StreakCard title="LP Holdling Streak" buttonTitle="Provide Liquidity" onClick={() => {}} />
+			<StreakCard title="LP Holdling Streak" buttonTitle="Provide Liquidity" onClick={() => {}} />
 		</div>
 	)
 }
