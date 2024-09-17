@@ -50,6 +50,8 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 	useEffect(() => {
 		if (action.status === UserActionStatus.WithdrawRetryNeeded && !isWithdrawRetryPending) {
 			setStatus(TransactionStatus.FAILED)
+		} else {
+			setStatus(TransactionStatus.IDLE)
 		}
 	}, [retryTimeLeft])
 
