@@ -10,6 +10,7 @@ import { type IQuest } from '../../../api/concero/quest/questType'
 import { fetchQuests } from '../../../api/concero/quest/fetchQuests'
 import { QuestModal } from '../../modals/QuestModal/QuestModal'
 import type { IUser } from '../../../api/concero/user/userType'
+import { ArrowRightIcon } from '../../../assets/icons/ArrowRightIcon'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -43,18 +44,25 @@ const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) 
 					setIsOpen(true)
 				}}
 			>
-				<Card className={`row jsb h-full ${variant === 'small' ? 'ac' : ''}`} key={variant}>
-					<div className="jsb h-full gap-md">
-						<Tag size="sm" color={typeStatus === QuestStatus.LAUNCH ? 'pink' : 'blue'}>
-							{status}
+				<Card className={`jsb h-full gap-lg`} key={variant}>
+					<div className="row jsb ac">
+						<p className="body2">Socials</p>
+						<Tag size="sm" variant={'neutral'}>
+							00 days left
 						</Tag>
-						{variant === 'big' ? <h2>{name}</h2> : <h4>{name}</h4>}
+					</div>
+					<div className="h-full gap-xs">
+						{variant === 'big' ? <h3>{name}</h3> : <h4>{name}</h4>}
+						<h6>+ 25 CERs</h6>
 					</div>
 					{variant === 'small' ? (
 						<IconArrowUpRight width={33} height={33} stroke={2} color={'var(--color-primary-650)'} />
 					) : (
 						questImage
 					)}
+					<Button variant="secondary" size="sm">
+						<ArrowRightIcon />
+					</Button>
 				</Card>
 			</div>
 			<QuestModal
