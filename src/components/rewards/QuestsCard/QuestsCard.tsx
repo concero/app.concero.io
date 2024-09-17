@@ -11,6 +11,7 @@ import { fetchQuests } from '../../../api/concero/quest/fetchQuests'
 import { QuestModal } from '../../modals/QuestModal/QuestModal'
 import type { IUser } from '../../../api/concero/user/userType'
 import { ArrowRightIcon } from '../../../assets/icons/ArrowRightIcon'
+import { IconButton } from '../../buttons/IconButton/IconButton'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -55,14 +56,10 @@ const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) 
 						{variant === 'big' ? <h3>{name}</h3> : <h4>{name}</h4>}
 						<h6>+ 25 CERs</h6>
 					</div>
-					{variant === 'small' ? (
-						<IconArrowUpRight width={33} height={33} stroke={2} color={'var(--color-primary-650)'} />
-					) : (
-						questImage
-					)}
-					<Button variant="secondary" size="sm">
+					{questImage}
+					<IconButton size="sm" variant="secondary">
 						<ArrowRightIcon />
-					</Button>
+					</IconButton>
 				</Card>
 			</div>
 			<QuestModal
