@@ -7,7 +7,7 @@ import classNames from './QuestModal.module.pcss'
 import { verifyQuest } from './questVerifier'
 import { type IUser } from '../../../api/concero/user/userType'
 import { TransactionStatus } from '../../../api/concero/types'
-import { QuestStatus } from '../../rewards/QuestsCard/getQuestStatus'
+import { QuestStatus } from '../../rewards/QuestsGroup/getQuestStatus'
 import { trackEvent } from '../../../hooks/useTracking'
 import { action, category } from '../../../constants/tracking'
 

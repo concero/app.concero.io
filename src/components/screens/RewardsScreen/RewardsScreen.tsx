@@ -1,6 +1,6 @@
 import classNames from './RewardsScreen.module.pcss'
 import { ProfileCard } from '../../rewards/ProfileCard/ProfileCard'
-import { QuestsCard } from '../../rewards/QuestsCard/QuestsCard'
+import { QuestsGroup } from '../../rewards/QuestsGroup/QuestsGroup'
 import { LeaderboardCard } from '../../rewards/LeaderboardCard/LeaderboardCard'
 import { useEffect, useState } from 'react'
 import { fetchUserByAddress } from '../../../api/concero/user/fetchUserByAddress'
@@ -45,7 +45,7 @@ export const RewardsScreen = () => {
 			<div className={classNames.rewardsWrap}>
 				{user && <ProfileCard user={user} />}
 				{user && <StreaksCard />}
-				<QuestsCard user={user} />
+				<QuestsGroup user={user} />
 				<LeaderboardCard user={user} />
 			</div>
 
