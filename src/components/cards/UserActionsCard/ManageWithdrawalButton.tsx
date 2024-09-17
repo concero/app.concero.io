@@ -70,7 +70,7 @@ export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTime
 		[TransactionStatus.FAILED]: claimButton,
 		[TransactionStatus.SUCCESS]: !isRetryRequestWithdraw && (
 			<Button className={classNames.successButton} isDisabled={true} size="sm">
-				Claimed success
+				Claimed successfully
 			</Button>
 		),
 	}

@@ -66,6 +66,8 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 
 	const amountSign = action.eventName === 'ConceroParentPool_DepositCompleted' ? '+' : '-'
 
+	const retryTimeLeftInMinutes = Math.floor(retryTimeLeft / 60)
+
 	return (
 		<div className={classNames.action}>
 			<div className={classNames.leftSide}>
@@ -81,7 +83,11 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 				)}
 
 				{isWithdrawRetryPending && (
-					<Tag color="main">Pending {String(Math.floor(retryTimeLeft / 60))} min...</Tag>
+					<Tag color="main">
+						{retryTimeLeftInMinutes
+							? ` ${String(retryTimeLeftInMinutes)} min...`
+							: ' less than a minute...'}
+					</Tag>
 				)}
 			</div>
 			<div className={classNames.rightSide}>
