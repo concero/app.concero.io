@@ -2,11 +2,9 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin-left: var(--sp-screen-h);
-	margin-right: var(--sp-sm);
 
-	h4 {
-		color: var(--color-grey-450);
+	h6 {
+		color: var(--color-grey-600);
 	}
 
 	button {
@@ -20,10 +18,22 @@
 	border-radius: 50%;
 }
 
-.youTag {
-	border-radius: var(--sp-sm);
-	padding: var(--sp-sm);
-	background: var(--color-primary-750);
-	color: var(--color-primary-500);
-	font-size: 14px;
+.table {
+	border-radius: var(--sp-xxl);
+	background-color: var(--color-grey-25);
+}
+
+.tableRow {
+	flex-direction: row;
+}
+
+.tableCell {
+	padding-left: var(--sp-lg);
+	display: flex;
+	justify-content: center;
+	width: 100%;
+
+	&:first-child {
+		max-width: 72px;
+	}
 }

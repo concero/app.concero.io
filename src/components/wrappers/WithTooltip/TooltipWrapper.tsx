@@ -11,6 +11,8 @@ interface TooltipProps {
 export function TooltipWrapper({ children, tooltipId, tooltipContent }: TooltipProps) {
 	return (
 		<div>
+			<div data-tooltip-id={tooltipId}>{children}</div>
+
 			<Tooltip id={tooltipId} className={classNames.tooltip}>
 				{tooltipContent}
 			</Tooltip>

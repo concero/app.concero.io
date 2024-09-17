@@ -37,4 +37,5 @@ export interface IUser {
 			locale: string
 		} | null
 	}
+	position?: number
 }

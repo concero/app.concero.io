@@ -41,6 +41,31 @@ interface LeaderboardCardProps {
 	user: IUser | null | undefined
 }
 
+interface LeaderboardTableProps {
+	users: IUser[]
+}
+
+const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
+	return (
+		<div className={classNames.table}>
+			<div className={classNames.tableRow}>
+				<div className={classNames.tableCell}>
+					<h6>#</h6>
+				</div>
+				<div className={classNames.tableCell}>
+					<h6>User</h6>
+				</div>
+				<div className={classNames.tableCell}>
+					<h6>CERs collected</h6>
+				</div>
+			</div>
+			{users.map(user => (
+				<Member key={user.address} place={user.position} user={user} />
+			))}
+		</div>
+	)
+}
+
 export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 	const [users, setUsers] = useState<IUser[]>([])
 
@@ -59,13 +84,9 @@ export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 	return (
 		<div className="gap-md">
 			<div className={classNames.leaderboardHeader}>
-				<h4>Leaderboard</h4>
+				<h6>Leaderboard</h6>
 			</div>
-			<Card className="gap-md">
-				{users.map((user, i) => (
-					<Member key={user.address} place={user.position} user={user} />
-				))}
-			</Card>
+			<LeaderboardTable users={users} />
 		</div>
 	)
 }

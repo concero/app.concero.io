@@ -1,7 +1,7 @@
 import type { IUser } from '../../../api/concero/user/userType'
 import { useState } from 'react'
 import { getQuestStatus } from '../QuestsGroup/getQuestStatus'
-import classNames from '../QuestsGroup/QuestsGroup.module.pcss'
+import classNames from './QuestCard.module.pcss'
 import { Card } from '../../cards/Card/Card'
 import { Tag } from '../../tags/Tag/Tag'
 import { IconButton } from '../../buttons/IconButton/IconButton'
@@ -45,13 +45,19 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 						</Tag>
 					</div>
 					<div className="h-full gap-xs">
-						{variant === 'big' ? <h3>{name}</h3> : <h4>{name}</h4>}
-						<h6>+ 25 CERs</h6>
+						{variant === 'big' ? (
+							<h3 className={classNames.title}>{name}</h3>
+						) : (
+							<h4 className={classNames.title}>{name}</h4>
+						)}
+						<h6 className={classNames.points}>+ 25 CERs</h6>
 					</div>
 					{questImage}
-					<IconButton size="sm" variant="secondary">
-						<ArrowRightIcon />
-					</IconButton>
+					<div className="row w-full jfe">
+						<IconButton size="sm" variant="secondary">
+							<ArrowRightIcon />
+						</IconButton>
+					</div>
 				</Card>
 			</div>
 			<QuestModal
