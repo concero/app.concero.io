@@ -1,6 +1,6 @@
 import type { IUser } from './userType'
 import { post } from '../../client'
-import { type QuestStatus } from '../../../components/modals/QuestModal/questVerifier'
+import { type QuestStatus } from '../../../components/rewards/Quests/QuestModal/questVerifier'
 
 export const updateUserDiscord = async (data: any): Promise<IUser> => {
 	const url = `${process.env.CONCERO_API_URL}/connect/discord`

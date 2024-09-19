@@ -1,13 +1,13 @@
-import type { IUser } from '../../../api/concero/user/userType'
+import type { IUser } from '../../../../api/concero/user/userType'
 import { useState } from 'react'
 import { getQuestStatus } from '../QuestsGroup/getQuestStatus'
 import classNames from './QuestCard.module.pcss'
-import { Card } from '../../cards/Card/Card'
-import { Tag } from '../../tags/Tag/Tag'
-import { IconButton } from '../../buttons/IconButton/IconButton'
-import { ArrowRightIcon } from '../../../assets/icons/ArrowRightIcon'
-import { QuestModal } from '../../modals/QuestModal/QuestModal'
-import type { IQuest } from '../../../api/concero/quest/questType'
+import { Card } from '../../../cards/Card/Card'
+import { Tag } from '../../../tags/Tag/Tag'
+import { IconButton } from '../../../buttons/IconButton/IconButton'
+import { ArrowRightIcon } from '../../../../assets/icons/ArrowRightIcon'
+import { QuestModal } from '../QuestModal/QuestModal'
+import type { IQuest } from '../../../../api/concero/quest/questType'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -32,18 +32,20 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	return (
 		<>
 			<div
-				className={`${classNames.questCard} ${className}`}
+				className={`${classNames.questCard} ${classNames[variant]} ${className}`}
 				onClick={() => {
 					setIsOpen(true)
 				}}
 			>
 				<Card className={`jsb h-full gap-lg`} key={variant}>
-					<div className="row jsb ac">
-						<p className="body2">Socials</p>
-						<Tag size="sm" variant={'neutral'}>
-							00 days left
-						</Tag>
-					</div>
+					{variant !== 'small' && (
+						<div className="row jsb ac">
+							<p className="body2">Socials</p>
+							<Tag size="sm" variant={'neutral'}>
+								00 days left
+							</Tag>
+						</div>
+					)}
 					<div className="h-full gap-xs">
 						{variant === 'big' ? (
 							<h3 className={classNames.title}>{name}</h3>

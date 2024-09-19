@@ -1,5 +1,4 @@
 import classNames from './LeaderboardCard.module.pcss'
-import { Card } from '../../cards/Card/Card'
 import { truncateWallet } from '../../../utils/formatting'
 import BlockiesSvg from 'blockies-react-svg'
 import { useEffect, useState } from 'react'
@@ -17,22 +16,28 @@ const Member = ({ user, place }: MemberProps) => {
 	const { address: currentUserAddress } = useAccount()
 	const { address, points } = user
 
-	const walletAddress = <span className="body2">{address && truncateWallet(address)}</span>
+	const walletAddress = <p className="body2">{address && truncateWallet(address)}</p>
 	const isCurrentUser = currentUserAddress?.toLowerCase() === address.toLowerCase()
 
 	return (
-		<div className="row jsb ac">
-			<div className="row ac gap-md">
-				<span>{place}</span>
-				<BlockiesSvg address={address} className={classNames.avatar} />
-				{walletAddress}
-				{isCurrentUser && (
-					<Tag size="sm" variant={'neutral'}>
-						You
-					</Tag>
-				)}
+		<div className={classNames.tableRow}>
+			<div className={classNames.tableCell}>
+				<p className="body2">{place}</p>
 			</div>
-			<p className="body2">{points.toFixed(4)}</p>
+			<div className={classNames.tableCell}>
+				<div className="row ac gap-sm">
+					<BlockiesSvg address={address} className={classNames.avatar} />
+					{walletAddress}
+					{isCurrentUser && (
+						<Tag size="sm" variant={'neutral'}>
+							You
+						</Tag>
+					)}
+				</div>
+			</div>
+			<div className={classNames.tableCell}>
+				<p className="body2">{points.toFixed(4)}</p>
+			</div>
 		</div>
 	)
 }

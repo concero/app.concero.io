@@ -31,7 +31,7 @@ const ProfileHeader = ({ user, setIsOpen }: ProfileHeaderProps) => {
 			<div className="row gap-sm ac">
 				{user && <BlockiesSvg address={user.address} className={classNames.avatar} />}
 				<div className="afs">
-					<h4>{truncateWallet(user.address)}</h4>
+					<h5>{truncateWallet(user.address)}</h5>
 				</div>
 			</div>
 			<Button onClick={setIsOpen} variant={'secondary'} size={'sm'}>
@@ -47,7 +47,6 @@ export const ProfileCard = ({ user }: ProfileCardProps) => {
 	return (
 		<Card className={classNames.container}>
 			<ProfileHeader setIsOpen={setIsOpen} user={user} />
-			{/* <SocialNetworkButtons user={user} /> */}
 			<UserHistory isOpen={isOpen} setIsOpen={setIsOpen} />
 		</Card>
 	)

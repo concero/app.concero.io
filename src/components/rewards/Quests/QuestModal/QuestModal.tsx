@@ -1,15 +1,16 @@
-import { Modal } from '../Modal/Modal'
-import { Tag } from '../../tags/Tag/Tag'
-import { Button } from '../../buttons/Button/Button'
+import { Modal } from '../../../modals/Modal/Modal'
+import { Tag } from '../../../tags/Tag/Tag'
+import { Button } from '../../../buttons/Button/Button'
 import { type Dispatch, type SetStateAction, useState } from 'react'
-import { type IQuest, type IQuestCondition, QuestConditionType } from '../../../api/concero/quest/questType'
+import { type IQuest, type IQuestCondition } from '../../../../api/concero/quest/questType'
 import classNames from './QuestModal.module.pcss'
 import { verifyQuest } from './questVerifier'
-import { type IUser } from '../../../api/concero/user/userType'
-import { TransactionStatus } from '../../../api/concero/types'
-import { QuestStatus } from '../../rewards/QuestsGroup/getQuestStatus'
-import { trackEvent } from '../../../hooks/useTracking'
-import { action, category } from '../../../constants/tracking'
+import { type IUser } from '../../../../api/concero/user/userType'
+import { TransactionStatus } from '../../../../api/concero/types'
+import { QuestStatus } from '../QuestsGroup/getQuestStatus'
+import { trackEvent } from '../../../../hooks/useTracking'
+import { action, category } from '../../../../constants/tracking'
+import { QuestStep } from './QuestStep/QuestStep'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -112,45 +113,38 @@ export const QuestModal = ({ quest, isOpen, setIsOpen, status, typeStatus, user 
 
 	const passedQuest = user?.passedQuests.find(uQuest => uQuest.id === quest._id)
 
+	// TODO change category
+	const questTitle = (
+		<div className="row gap-sm ac">
+			<p className={`${classNames.category} body2`}>Socials</p>
+			<Tag size="sm" variant="neutral">
+				Started, 00 days left
+			</Tag>
+		</div>
+	)
+
 	return (
-		<Modal className={classNames.questModal} show={isOpen} setShow={setIsOpen} title="Quest">
-			<div className={classNames.header}>
-				<div className="row jsb w-full">
+		<Modal className={classNames.questModal} show={isOpen} setShow={setIsOpen} title={questTitle}>
+			<div className={classNames.mainInfo}>
+				<div className="w-full gap-sm">
 					<h2>{name}</h2>
-					<div className="gap-sm row">
-						{!!rewards?.booster && (
-							<Tag size="sm" color={'recommended'}>
-								x{String(rewards.booster)} multiplier
-							</Tag>
-						)}
-						{!!rewards?.points && (
-							<Tag size="sm" color={'recommended'}>
-								+{String(rewards.points)} CERs
-							</Tag>
-						)}
-						{quest.conditions[0].type === QuestConditionType.ProvideLiquidity && (
-							<Tag size="sm" color={'recommended'}>
-								CERs Based on LP
-							</Tag>
-						)}
-					</div>
+					<h6 className={classNames.points}>+ 25 CERs</h6>
 				</div>
-				<p className="body4">{description}</p>
-				<Tag size="sm" color={typeStatus === QuestStatus.LAUNCH ? 'pink' : 'blue'}>
-					{status}
-				</Tag>
+				<p className={`${classNames.description} body3`}>{description}</p>
 			</div>
 
-			{typeStatus === QuestStatus.LAUNCH && (
-				<Button variant="convex" isDisabled={true} className={classNames.warning}>
-					Starts soon
-				</Button>
-			)}
-			{typeStatus === QuestStatus.FINISHED && (
-				<Button variant="convex" isDisabled={true} className={classNames.warning}>
-					Quest ended
-				</Button>
-			)}
+			<div className="gap-sm">
+				<div className="row ac jsb">
+					<h6>Steps:</h6>
+					<h6>0/4</h6>
+				</div>
+				<div className="gap-xs">
+					<QuestStep />
+					<QuestStep />
+					<QuestStep />
+					<QuestStep />
+				</div>
+			</div>
 
 			{!passedQuest &&
 				typeStatus === QuestStatus.GOING &&

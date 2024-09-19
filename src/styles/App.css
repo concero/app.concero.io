@@ -66,6 +66,10 @@
 	gap: var(--sp-xl);
 }
 
+.gap-xxl {
+	gap: var(--sp-xxl);
+}
+
 .hide-down {
 	opacity: 0;
 	transform: translateY(10px);

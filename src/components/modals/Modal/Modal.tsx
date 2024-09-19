@@ -4,7 +4,7 @@ import classNames from './Modal.module.pcss'
 import { ModalHeader } from './ModalHeader'
 
 export interface ModalProps {
-	title?: string
+	title?: ReactNode | string
 	show: boolean
 	setShow: (show: boolean) => void
 	children?: ReactNode

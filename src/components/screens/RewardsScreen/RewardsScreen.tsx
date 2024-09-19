@@ -1,6 +1,6 @@
 import classNames from './RewardsScreen.module.pcss'
 import { ProfileCard } from '../../rewards/ProfileCard/ProfileCard'
-import { QuestsGroup } from '../../rewards/QuestsGroup/QuestsGroup'
+import { QuestsGroup } from '../../rewards/Quests/QuestsGroup/QuestsGroup'
 import { LeaderboardCard } from '../../rewards/LeaderboardCard/LeaderboardCard'
 import { useEffect, useState } from 'react'
 import { fetchUserByAddress } from '../../../api/concero/user/fetchUserByAddress'

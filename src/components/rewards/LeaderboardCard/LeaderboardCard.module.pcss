@@ -19,12 +19,24 @@
 }
 
 .table {
+	padding-bottom: var(--sp-sm);
+	padding-left: var(--sp-sm);
+	padding-right: var(--sp-sm);
 	border-radius: var(--sp-xxl);
 	background-color: var(--color-grey-25);
 }
 
 .tableRow {
 	flex-direction: row;
+	height: 50px;
+
+	&:first-child {
+		h6 {
+			color: var(--color-grey-500);
+		}
+
+		border-bottom: 1px solid var(--color-grey-100);
+	}
 }
 
 .tableCell {
@@ -32,6 +44,10 @@
 	display: flex;
 	justify-content: center;
 	width: 100%;
+
+	p {
+		color: var(--color-grey-700);
+	}
 
 	&:first-child {
 		max-width: 72px;
