@@ -16,7 +16,7 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 		})
 
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapRejected,
 			label: 'User rejected swap',
 			data: { stdRoute: selectedRoute },
@@ -31,7 +31,7 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 			},
 		})
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapFailed,
 			label: 'swap_failed',
 			data: { provider: selectedRoute.provider, selectedRoute },
@@ -48,7 +48,7 @@ export const handleTransactionError = (e: Error, swapDispatch: Dispatch<SwapActi
 			payload: { title: 'Transaction failed', body: 'Something went wrong', status: 'error' },
 		})
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapFailed,
 			label: 'swap_failed',
 			data: { provider: selectedRoute.provider, selectedRoute },

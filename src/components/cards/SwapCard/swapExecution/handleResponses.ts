@@ -21,7 +21,7 @@ export const handleRangoResponse = (
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'failure', provider: 'rango', tx_data: stdRoute })
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapFailed,
 			label: 'swap_failed',
 			data: { provider: 'rango', stdRoute },
@@ -30,7 +30,7 @@ export const handleRangoResponse = (
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 		logTxToDB({ tx_id: executedRoute.diagnosisUrl, status: 'success', provider: 'rango', tx_data: stdRoute })
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapSuccess,
 			label: 'swap_success',
 			data: { provider: 'rango', stdRoute },
@@ -47,7 +47,7 @@ export const handleLifiResponse = (executedRoute: Route, swapDispatch: Dispatch<
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 		logTxToDB({ tx_id: executedRoute.id, status: 'success', provider: 'lifi', tx_data: stdRoute })
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapSuccess,
 			label: 'swap_success',
 			data: { provider: 'lifi', stdRoute },
@@ -56,7 +56,7 @@ export const handleLifiResponse = (executedRoute: Route, swapDispatch: Dispatch<
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		logTxToDB({ tx_id: executedRoute.id, status: 'failure', provider: 'lifi', tx_data: stdRoute })
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapFailed,
 			label: 'swap_failed',
 			data: { provider: 'lifi', stdRoute },
@@ -65,7 +65,7 @@ export const handleLifiResponse = (executedRoute: Route, swapDispatch: Dispatch<
 		logTxToDB({ tx_id: executedRoute.id, status: 'cancelled', provider: 'lifi', tx_data: stdRoute })
 
 		trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapRejected,
 			label: 'User rejected swap',
 			data: { stdRoute },

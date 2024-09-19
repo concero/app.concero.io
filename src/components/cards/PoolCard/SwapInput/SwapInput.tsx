@@ -13,7 +13,7 @@ import { startWithdrawal } from '../swapExecution/requestWithdraw'
 import { getWalletClient } from '@wagmi/core'
 import { config } from '../../../../web3/wagmi'
 import { Card } from '../../Card/Card'
-import { checkWithdrawAvailable } from '../../UserActionsCard/UserAction'
+import { checkWithdrawAvailable, getWithdrawalDate } from '../../UserActionsCard/UserAction'
 
 export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSwapCardMode }) => {
 	const { isConnected } = useAccount()
@@ -40,17 +40,24 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 	}
 
 	const handleSwapButtonClick = async () => {
-		void trackEvent({
-			category: category.SwapCard,
-			action: action.BeginDeposit,
-			label: 'concero_begin_deposit',
-			data: { isNewSwapCardMode, from: swapState.from, to: swapState.to },
-		})
-
 		const walletClient = await getWalletClient(config, { chainId: Number(swapState.from.chain.id) })
 		if (swapState.poolMode === 'deposit') {
+			void trackEvent({
+				category: category.PoolCard,
+				action: action.BeginDeposit,
+				label: 'concero_begin_deposit',
+				data: { from: swapState.from, to: swapState.to },
+			})
+
 			await executeDeposit(swapState, swapDispatch, walletClient)
 		} else {
+			void trackEvent({
+				category: category.PoolCard,
+				action: action.BeginWithdrawalRequest,
+				label: 'action_begin_withdraw_request',
+				data: { from: swapState.from, to: swapState.to },
+			})
+
 			await startWithdrawal(swapState, swapDispatch, walletClient)
 		}
 	}

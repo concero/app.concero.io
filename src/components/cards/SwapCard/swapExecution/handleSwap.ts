@@ -46,7 +46,7 @@ export const handleSwap = async ({
 	try {
 		if (provider === 'rango') {
 			void trackEvent({
-				category: category.SwapCard,
+				category: category.PoolCard,
 				action: action.BeginSwap,
 				label: 'rango_begin_swap',
 				data: { originalRoute, isNewSwapCardMode },
@@ -63,7 +63,7 @@ export const handleSwap = async ({
 			handleRangoResponse(response, swapDispatch, selectedRoute)
 		} else if (provider === 'lifi') {
 			void trackEvent({
-				category: category.SwapCard,
+				category: category.PoolCard,
 				action: action.BeginSwap,
 				label: 'lifi_begin_swap',
 				data: { originalRoute, isNewSwapCardMode },

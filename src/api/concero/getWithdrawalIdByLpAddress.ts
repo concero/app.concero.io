@@ -1,14 +1,13 @@
 import { type Address, parseAbi } from 'viem'
-import { base } from 'wagmi/chains'
 import { getPublicClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../web3/wagmi'
-import { poolsAddressesMap } from '../../constants/conceroContracts'
+import { config, PARENT_POOL_CHAIN_ID } from '../../constants/config'
 
 export async function getWithdrawalIdByLpAddress(address: Address): Promise<string | null> {
 	try {
-		const publicClient = getPublicClient(wagmiConfig, { chainId: base.id })
+		const publicClient = getPublicClient(wagmiConfig, { chainId: PARENT_POOL_CHAIN_ID })
 		return await publicClient.readContract({
-			address: poolsAddressesMap[base.id],
+			address: config.PARENT_POOL_CONTRACT,
 			abi: parseAbi(['function s_withdrawalIdByLPAddress(address) view returns (bytes32)']),
 			functionName: 's_withdrawalIdByLPAddress',
 			args: [address],
