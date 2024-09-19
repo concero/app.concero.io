@@ -1,6 +1,6 @@
 import { SwapCardStage } from './types'
 import { ButtonType } from '../PoolButton/constants'
-import { config, IS_POOL_TESTNET } from '../../../../constants/config'
+import { config, IS_TESTNET } from '../../../../constants/config'
 
 const mainnetTokens = {
 	contractAddress: config.PARENT_POOL_CONTRACT,
@@ -71,19 +71,19 @@ const testnetTokens = {
 	},
 }
 
-const currentTokens = IS_POOL_TESTNET ? testnetTokens : mainnetTokens
+const currentToken = IS_TESTNET ? testnetTokens : mainnetTokens
 
 export const swapInitialState = () => ({
 	from: {
-		chain: currentTokens.chain,
-		token: currentTokens.mainToken,
+		chain: currentToken.chain,
+		token: currentToken.mainToken,
 		amount: '',
 		amount_usd: 0.0,
 		address: '',
 	},
 	to: {
-		chain: currentTokens.chain,
-		token: currentTokens.lpToken,
+		chain: currentToken.chain,
+		token: currentToken.lpToken,
 		amount: '',
 		amount_usd: 0.0,
 		address: '',

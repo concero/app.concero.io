@@ -15,8 +15,8 @@ import {
 	parentPoolBase,
 } from './poolMainnetAddresses'
 
-export const IS_POOL_TESTNET = false
-export const PARENT_POOL_CHAIN_ID = IS_POOL_TESTNET ? baseSepolia.id : base.id
+export const IS_TESTNET = false
+export const PARENT_POOL_CHAIN_ID = IS_TESTNET ? baseSepolia.id : base.id
 
 export const config = {
 	baseURL: process.env.CONCERO_API_URL!,
@@ -35,10 +35,10 @@ export const config = {
 	CONCERO_DOMAIN_URL: process.env.CONCERO_DOMAIN_URL!,
 
 	// POOLS & LP
-	AUTOMATION_ADDRESS: IS_POOL_TESTNET ? automationsBaseSepolia : automationsBase,
-	LPTOKEN: IS_POOL_TESTNET ? lpTokenBaseSepolia : lpTokenBase,
-	PARENT_POOL_CONTRACT: IS_POOL_TESTNET ? parentPoolBaseSepolia : parentPoolBase,
-	CHILD_POOL_ARBITRUM: IS_POOL_TESTNET ? childPoolArbitrumSepolia : childPoolArbitrum,
+	AUTOMATION_ADDRESS: IS_TESTNET ? automationsBaseSepolia : automationsBase,
+	LPTOKEN: IS_TESTNET ? lpTokenBaseSepolia : lpTokenBase,
+	PARENT_POOL_CONTRACT: IS_TESTNET ? parentPoolBaseSepolia : parentPoolBase,
+	CHILD_POOL_ARBITRUM: IS_TESTNET ? childPoolArbitrumSepolia : childPoolArbitrum,
 	CHILD_POOL_POLYGON: childPoolPolygon,
-	CHILD_POOL_AVALANCHE: IS_POOL_TESTNET ? childPoolAvalancheFuji : childPoolAvalanche,
+	CHILD_POOL_AVALANCHE: IS_TESTNET ? childPoolAvalancheFuji : childPoolAvalanche,
 }

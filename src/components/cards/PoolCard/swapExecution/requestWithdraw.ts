@@ -5,7 +5,7 @@ import { type Address, decodeEventLog, type Hash, parseAbi, type PublicClient, t
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { base } from 'viem/chains'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
-import { config, IS_POOL_TESTNET, PARENT_POOL_CHAIN_ID } from '../../../../constants/config'
+import { config, IS_TESTNET, PARENT_POOL_CHAIN_ID } from '../../../../constants/config'
 import { TransactionStatus } from '../../../../api/concero/types'
 import { getPublicClient, getWalletClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
@@ -16,7 +16,7 @@ import { trackEvent } from '../../../../hooks/useTracking'
 import { action as tracingAction, action, category } from '../../../../constants/tracking'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
-const chain = IS_POOL_TESTNET ? baseSepolia : base
+const chain = IS_TESTNET ? baseSepolia : base
 
 const publicClient = getPublicClient(wagmiConfig, { chainId: chain.id })
 
