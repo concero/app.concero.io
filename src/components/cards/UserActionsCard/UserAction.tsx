@@ -3,7 +3,7 @@ import BlockiesSvg from 'blockies-react-svg'
 import { poolEventNamesMap } from '../../../api/concero/getUserActions'
 import dayjs from 'dayjs'
 import { UserActionStatus, type UserTransaction } from './UserActionsCard'
-import { type ReactNode, useEffect, useState } from 'react'
+import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
 import { Tag } from '../../tags/Tag/Tag'
 import { ManageWithdrawalButton } from './ManageWithdrawalButton'
@@ -31,41 +31,29 @@ export const getWithdrawalDate = (deadline: number) => {
 	return `Available in ${diffInMilliseconds}`
 }
 
-export const UserAction = ({ action }: { action: UserTransaction }) => {
+interface Props {
+	action: UserTransaction
+	retryTimeLeft: number
+	setRetryTimeLeft: Dispatch<SetStateAction<number>>
+}
+
+export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) => {
 	const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.IDLE)
-
-	const [retryTimeLeft, setRetryTimeLeft] = useState<number>(30 * 60)
-
-	useEffect(() => {
-		const retryPerformedTimestamp = localStorage.getItem('retryPerformedTimestamp')
-
-		if (!retryPerformedTimestamp) return
-
-		const endTime = new Date(Number(retryPerformedTimestamp) + 30 * 60 * 1000)
-
-		const updateRemainingTime = () => {
-			const currentTime = new Date()
-			console.log(endTime, retryPerformedTimestamp)
-			const remainingTime = Math.max(0, Math.floor((endTime.getTime() - currentTime.getTime()) / 1000))
-			setRetryTimeLeft(remainingTime < 0 ? 0 : remainingTime)
-		}
-
-		updateRemainingTime()
-
-		const intervalId = setInterval(() => {
-			updateRemainingTime()
-		}, 60 * 1000)
-
-		return () => {
-			clearInterval(intervalId)
-		}
-	}, [])
 
 	const isWithdrawalAvailable =
 		action.status === UserActionStatus.ActiveRequestWithdraw ||
 		action.status === UserActionStatus.WithdrawRetryNeeded
 
 	const isRequestWithdrawal = action.eventName === 'ConceroParentPool_WithdrawRequestInitiated'
+	const isWithdrawRetryPending = retryTimeLeft !== 0 && action.isActiveWithdraw
+
+	useEffect(() => {
+		if (action.status === UserActionStatus.WithdrawRetryNeeded && !isWithdrawRetryPending) {
+			setStatus(TransactionStatus.FAILED)
+		} else {
+			setStatus(TransactionStatus.IDLE)
+		}
+	}, [retryTimeLeft])
 
 	const stageTagMap: Record<TransactionStatus, ReactNode> = {
 		[TransactionStatus.FAILED]: <Tag color="pink">Failed</Tag>,
@@ -78,8 +66,7 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 
 	const amountSign = action.eventName === 'ConceroParentPool_DepositCompleted' ? '+' : '-'
 
-	const isWithdrawRetryPending =
-		localStorage.getItem('retryPerformedTimestamp') && retryTimeLeft !== 0 && action.isActiveWithdraw
+	const retryTimeLeftInMinutes = Math.floor(retryTimeLeft / 60)
 
 	return (
 		<div className={classNames.action}>
@@ -96,12 +83,21 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 				)}
 
 				{isWithdrawRetryPending && (
-					<Tag color="main">Pending {String(Math.floor(retryTimeLeft / 60))} min...</Tag>
+					<Tag color="main">
+						{retryTimeLeftInMinutes
+							? ` ${String(retryTimeLeftInMinutes)} min...`
+							: ' less than a minute...'}
+					</Tag>
 				)}
 			</div>
 			<div className={classNames.rightSide}>
-				{isWithdrawalAvailable || isWithdrawRetryPending ? (
-					<ManageWithdrawalButton status={status} setStatus={setStatus} action={action} />
+				{isWithdrawalAvailable && !isWithdrawRetryPending ? (
+					<ManageWithdrawalButton
+						setRetryTimeLeft={setRetryTimeLeft}
+						status={status}
+						setStatus={setStatus}
+						action={action}
+					/>
 				) : null}
 				{action.amount !== '0' ? (
 					<h4>

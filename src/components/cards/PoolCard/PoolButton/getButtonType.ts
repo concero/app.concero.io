@@ -1,6 +1,7 @@
 import { ButtonType } from './constants'
 import BigNumber from 'bignumber.js'
 import { type SwapState } from '../swapReducer/types'
+import { IS_TESTNET } from '../../../../constants/config'
 
 export function getButtonType(
 	swapState: SwapState,
@@ -33,7 +34,7 @@ export function getButtonType(
 
 	if (from.amount) {
 		if (swapState.poolMode === 'deposit') {
-			if (BigNumber(from.amount).lt(100)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
+			if (BigNumber(from.amount).lt(IS_TESTNET ? 1 : 100)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
 
 			return ButtonType.DEPOSIT
 		} else {

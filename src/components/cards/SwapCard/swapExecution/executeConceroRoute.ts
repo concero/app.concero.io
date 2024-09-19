@@ -96,7 +96,7 @@ const setError = (swapDispatch: Dispatch<SwapAction>, swapState: SwapState, erro
 	}
 
 	void trackEvent({
-		category: category.SwapCard,
+		category: category.PoolCard,
 		action: action.SwapFailed,
 		label: 'swap_failed',
 		data: { provider: 'concero', from: swapState.from, to: swapState.to, error, type },
@@ -305,7 +305,7 @@ export async function executeConceroRoute(
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 
 		void trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SwapSuccess,
 			label: 'swap_success',
 			data: { provider: 'concero', from: swapState.from, to: swapState.to },

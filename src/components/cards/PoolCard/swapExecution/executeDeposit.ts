@@ -4,15 +4,16 @@ import { decodeEventLog, type Hash, parseUnits, type PublicClient, type WalletCl
 import { base } from 'viem/chains'
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
-import { config } from '../../../../constants/config'
+import { config, IS_TESTNET } from '../../../../constants/config'
 import { sleep } from '../../../../utils/sleep'
 import { getPublicClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { baseSepolia } from 'wagmi/chains'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
-const chain = base
+const chain = IS_TESTNET ? baseSepolia : base
 
 const completeDeposit = async (
 	swapState: SwapState,
@@ -21,8 +22,6 @@ const completeDeposit = async (
 	walletClient: WalletClient,
 	publicClient: PublicClient,
 ) => {
-	console.log('requestID', depositRequestId)
-
 	const txHash = await walletClient.writeContract({
 		abi: ParentPool,
 		functionName: 'completeDeposit',
@@ -160,7 +159,7 @@ export async function executeDeposit(
 
 		await handleDepositTransaction(hash, publicClient, walletClient, swapDispatch, swapState)
 		await trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.SuccessDeposit,
 			label: 'concero_success_deposit',
 			data: { from: swapState.from, to: swapState.to },
@@ -173,7 +172,7 @@ export async function executeDeposit(
 		})
 		console.error(error)
 		await trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.FailedDeposit,
 			label: 'concero_failed_deposit',
 			data: { from: swapState.from, to: swapState.to },

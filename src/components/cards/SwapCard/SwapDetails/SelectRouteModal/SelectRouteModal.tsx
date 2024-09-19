@@ -24,7 +24,7 @@ export function SelectRouteModal({ swapState, swapDispatch, isOpen, setIsOpen }:
 		setIsOpen(false)
 		void trackEvent({
 			action: action.SelectRoute,
-			category: category.SwapCard,
+			category: category.PoolCard,
 			label: 'route_selected',
 			data: { routeId: swapState.selectedRoute?.id },
 		})
