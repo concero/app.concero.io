@@ -1,10 +1,10 @@
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { fetchUserTransactions } from '../../../api/concero/fetchUserTransactions'
 import { Modal } from '../Modal/Modal'
 import classNames from './RewardsUserHistory.module.pcss'
 import { UserAction } from './UserAction'
-import { type IConceroInfraTx } from '../../../api/concero/transactionType'
+import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActions'
+import { type IUserActionPopulated } from '../../../api/concero/userActions/userActionType'
 
 interface UserHistoryProps {
 	isOpen: boolean
@@ -13,11 +13,12 @@ interface UserHistoryProps {
 
 export const UserHistory = ({ isOpen, setIsOpen }: UserHistoryProps) => {
 	const { address } = useAccount()
-	const [transactions, setTransactions] = useState<IConceroInfraTx[]>([])
+	const [actions, setActions] = useState<IUserActionPopulated[]>([])
 
 	const fetchAndSetUserTransactions = async () => {
-		const response = await fetchUserTransactions(address!)
-		setTransactions(response)
+		const response = await fetchUserActions(address!)
+		console.log(response)
+		setActions(response)
 	}
 
 	useEffect(() => {
@@ -30,8 +31,8 @@ export const UserHistory = ({ isOpen, setIsOpen }: UserHistoryProps) => {
 		<Modal show={isOpen} setShow={setIsOpen} title="History" className={classNames.historyModal}>
 			<div className={classNames.historyWrapper}>
 				{!address && <h4>Connect wallet to see your history</h4>}
-				{transactions.map(transaction => (
-					<UserAction key={transaction.srcTxHash} transaction={transaction} type="swap" />
+				{actions.map(action => (
+					<UserAction key={action.timestamp} action={action} />
 				))}
 			</div>
 		</Modal>

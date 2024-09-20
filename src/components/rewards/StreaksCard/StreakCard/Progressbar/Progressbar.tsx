@@ -2,12 +2,10 @@ import { Tag } from '../../../../tags/Tag/Tag'
 import classNames from './Progressbar.module.pcss'
 
 interface ProgressbarStepProps {
-	value: number
-	total: number
 	length?: number
 }
 
-const ProgressbarStep = ({ value, total, length = 49 }: ProgressbarStepProps) => {
+const ProgressbarStep = ({ length = 49 }: ProgressbarStepProps) => {
 	return (
 		<div className={classNames.progressStep} style={{ width: `${length}px` }}>
 			<div className={classNames.progressValue}></div>

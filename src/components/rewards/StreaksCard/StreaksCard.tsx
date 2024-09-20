@@ -1,4 +1,4 @@
-import { StreakCard } from './LpHoldingStreak/StreakCard'
+import { StreakCard } from './StreakCard/StreakCard'
 import { Button } from '../../buttons/Button/Button'
 import { Link } from 'react-router-dom'
 import { routes } from '../../../constants/routes'
