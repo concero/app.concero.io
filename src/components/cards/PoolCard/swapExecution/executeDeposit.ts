@@ -75,8 +75,6 @@ const handleDepositTransaction = async (
 		confirmations: 5,
 	})
 
-	console.log(receipt)
-
 	if (receipt.status === 'reverted') {
 		throw new Error('Transaction reverted')
 	}
@@ -111,7 +109,7 @@ const handleDepositTransaction = async (
 
 	const depositRequestId = decodedLog.args.requestId
 
-	await sleep(50_000)
+	await sleep(40_000)
 
 	await completeDeposit(swapState, swapDispatch, depositRequestId, walletClient, publicClient)
 }
