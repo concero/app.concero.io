@@ -23,7 +23,8 @@ export const checkWithdrawAvailable = (deadline: number) => {
 }
 
 export const getWithdrawalDate = (deadline: number) => {
-	const givenTime = dayjs.unix(deadline)
+	const oneHour = 3600
+	const givenTime = dayjs.unix(deadline + oneHour)
 	const now = dayjs()
 
 	const diffInMilliseconds = now.from(givenTime, true)
