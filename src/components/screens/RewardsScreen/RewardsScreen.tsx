@@ -8,15 +8,7 @@ import { useAccount } from 'wagmi'
 import { type IUser } from '../../../api/concero/user/userType'
 import { createUser } from '../../../api/concero/user/createUser'
 import { StreaksCard } from '../../rewards/StreaksCard/StreaksCard'
-
-const InfoTitle = () => {
-	return (
-		<a className={classNames.infoTitle} target="_blank" href="https://concero.io/" rel="noreferrer">
-			<h5>Build the next big thing with Concero</h5>
-			<span className="body3">Click here to learn the benefits</span>
-		</a>
-	)
-}
+import { Footer } from '../../rewards/Footer/Footer'
 
 export const RewardsScreen = () => {
 	const { address } = useAccount()
@@ -41,15 +33,21 @@ export const RewardsScreen = () => {
 	}, [address])
 
 	return (
-		<div className={classNames.rewardsScreenContainer}>
-			<div className={classNames.rewardsWrap}>
-				{user && <ProfileCard user={user} />}
-				{user && <StreaksCard />}
-				<QuestsGroup user={user} />
-				<LeaderboardCard user={user} />
+		<>
+			<div className={classNames.rewardsScreenContainer}>
+				<div className={classNames.rewardsWrap}>
+					{user && (
+						<>
+							<ProfileCard user={user} />
+							<StreaksCard />
+						</>
+					)}
+					<QuestsGroup user={user} />
+					<LeaderboardCard user={user} />
+				</div>
 			</div>
 
-			<InfoTitle />
-		</div>
+			<Footer />
+		</>
 	)
 }

@@ -30,7 +30,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				<div className={classNames.questsHeader}>
 					<h6>Daily</h6>
 				</div>
-				<div className="row gap-lg">
+				<div className={classNames.dailyQuests}>
 					{quests[0] && <QuestCard quest={quests[0]} user={user} variant="small" />}
 					{quests[1] && <QuestCard quest={quests[1]} user={user} variant="small" />}
 					{quests[2] && <QuestCard quest={quests[2]} user={user} variant="small" />}

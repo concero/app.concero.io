@@ -12,6 +12,12 @@
 	flex-direction: row;
 	gap: var(--sp-md);
 	width: 100%;
+	flex-wrap: wrap;
+}
+
+.dailyQuests {
+	flex-direction: row;
+	gap: var(--sp-lg);
 }
 
 .otherQuestsWrap {
@@ -28,4 +34,15 @@
 	width: 100%;
 	align-items: center;
 	margin-top: var(--sp-lg);
+}
+
+@media (max-width: 768px) {
+	.dailyQuests {
+		flex-wrap: wrap;
+
+		> div {
+			width: 47%;
+			max-width: 47%;
+		}
+	}
 }
