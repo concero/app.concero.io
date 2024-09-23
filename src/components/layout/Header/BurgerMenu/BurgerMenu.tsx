@@ -106,6 +106,7 @@ export function BurgerMenu() {
 						</li>
 					</ul>
 					<Button
+						className="w-full"
 						variant="secondaryColor"
 						onClick={() => {
 							setIsModalContactSupportModalVisible(true)

@@ -10,19 +10,14 @@ export interface IUserTier {
 	bonuses: string[]
 }
 
-export enum PointsBooster {
-	MultiplyX2 = 2,
-	MultiplyX5 = 5,
-	MultiplyX10 = 10,
-}
-
 export interface IUser {
-	_id: string
 	address: string
 	tier: IUserTier
 	points: number
 	passedQuests: IPassedQuest[]
-	multiplier: PointsBooster
+	multiplier: number
+	liquidityHoldingMultiplier: number
+	dailySwappingMultiplier: number
 	subscriptions: {
 		twitter: {
 			id: string
@@ -37,5 +32,4 @@ export interface IUser {
 			locale: string
 		} | null
 	}
-	position?: number
 }

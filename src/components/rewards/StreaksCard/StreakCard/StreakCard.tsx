@@ -8,22 +8,28 @@ import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
 interface Props {
 	title: string
 	button: ReactNode
-	description?: string
+	description?: JSX.Element
+	streak: number
 }
 
-export const StreakCard = ({ title, button, description }: Props) => {
+export const StreakCard = ({ title, button, description, streak }: Props) => {
 	return (
 		<Card className={classNames.container}>
 			<div className="row jsb ac">
 				<h4>{title}</h4>
 				{description && (
-					<TooltipWrapper tooltipId={title} tooltipContent={<p>{description}</p>}>
+					<TooltipWrapper
+						place={'bottom-start'}
+						className={classNames.tooltipWrap}
+						tooltipId={title}
+						tooltipContent={description}
+					>
 						<InfoIcon />
 					</TooltipWrapper>
 				)}
 			</div>
 			<div className="row gap-sm">
-				<Progressbar />
+				<Progressbar streak={streak} />
 			</div>
 			{button}
 		</Card>
