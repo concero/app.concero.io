@@ -136,7 +136,7 @@ body::-webkit-scrollbar {
 	--color-pink-600: #fee8f7;
 
 	/* text */
-	--color-text-primary: #131313;
+	--color-text-primary: #101828;
 	--color-button-text-primary: #fbfbfb;
 	--color-text-secondary: #7e7b86;
 	--color-primary-to-lightest: #7335f7;
@@ -270,7 +270,6 @@ a,
 button,
 input,
 label,
-span,
 li {
 	box-sizing: border-box;
 	color: var(--color-text-primary);

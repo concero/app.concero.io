@@ -26,7 +26,7 @@ export const IconButton = ({
 			onClick={onClick}
 			className={`${className} ${classSize} ${classVariant} ${styles.button}`}
 		>
-			<span className={styles.svg}>{children}</span>
+			{children}
 		</button>
 	)
 }

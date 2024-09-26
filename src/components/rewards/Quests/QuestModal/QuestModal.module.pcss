@@ -1,12 +1,18 @@
 .questModal {
+	margin-top: 48px;
 	max-width: 600px;
 	width: 100%;
 	overflow: scroll;
+	gap: var(--sp-lg);
 }
 
 .mainInfo {
-	margin-bottom: 42px;
-	gap: var(--sp-lg);
+	gap: var(--sp-md);
+}
+
+.questImage {
+	width: 100%;
+	object-fit: contain;
 }
 
 .warning {
@@ -27,4 +33,26 @@
 	max-width: 430px;
 	width: 100%;
 	color: var(--color-grey-500);
+}
+
+.connectWalletText {
+	color: var(--color-grey-500);
+}
+
+.rewardModal {
+	width: 395px;
+	align-items: center;
+	gap: var(--sp-lg);
+
+	h3 {
+		color: var(--color-primary-700);
+	}
+
+	h4 {
+		color: var(--color-grey-700);
+	}
+
+	button {
+		width: 100%;
+	}
 }

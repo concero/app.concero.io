@@ -25,13 +25,15 @@ export const Tag: FC<TagProps> = ({
 	const sizeClass = className[size]
 
 	return (
-		<div className={className.container} onClick={onClick} style={{ cursor: 'pointer' }}>
-			<div className={`${className.tag}  ${sizeClass} ${className[variant]}`}>
-				{leftIcon}
-				{children}
-				{title || null}
-				{rightIcon}
-			</div>
+		<div
+			className={`${className.tag} ${sizeClass} ${className[variant]}`}
+			onClick={onClick}
+			style={{ cursor: onClick ? 'pointer' : 'default' }}
+		>
+			{leftIcon}
+			{children}
+			{title || null}
+			{rightIcon}
 		</div>
 	)
 }

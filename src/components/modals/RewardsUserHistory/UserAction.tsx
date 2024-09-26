@@ -2,7 +2,7 @@ import classNames from './RewardsUserHistory.module.pcss'
 import { useEffect, useState } from 'react'
 import {
 	ActionType,
-	type IUserActionPopulated,
+	type IUserAction,
 	TransactionType,
 	type UserActionQuestData,
 	type UserActionTxData,
@@ -10,10 +10,11 @@ import {
 import { formatDateTime } from '../../../utils/formatting'
 
 interface UserActionProps {
-	action: IUserActionPopulated
+	action: IUserAction
 }
 
 export const UserAction = ({ action }: UserActionProps) => {
+	console.log(action)
 	const [value, setValue] = useState('')
 	const isQuest = action.actionType === ActionType.questReward
 

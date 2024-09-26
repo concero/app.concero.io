@@ -10,7 +10,7 @@
 	flex-direction: row;
 	gap: var(--sp-xs);
 	justify-content: center;
-	padding: var(--st-br-sm) var(--st-br-lg);
+	padding: var(--sp-sm) var(--sp-lg);
 	transform-origin: center;
 	transition:
 		transform 0.2s,
@@ -18,6 +18,11 @@
 		border-color 0.25s,
 		color 0.25s;
 	font-weight: 400;
+}
+
+.innerButton {
+	display: flex;
+	padding: 3px var(--sp-xs);
 }
 
 .fullButton {
@@ -46,7 +51,7 @@ button:focus-visible {
 	font-weight: 500;
 	line-height: 18px;
 	gap: var(--sp-sm);
-	padding: 7px var(--st-br-lg);
+	padding: var(--sp-xs) var(--sp-md);
 }
 
 .md {
@@ -58,7 +63,8 @@ button:focus-visible {
 
 .lg {
 	font-size: 0.875rem;
-	padding: var(--sp-md) var(--sp-lg);
+	font-weight: 500;
+	padding: var(--sp-md) var(--sp-xl);
 }
 
 .primary {
@@ -122,17 +128,14 @@ button:focus-visible {
 }
 
 .isDisabled {
-	background: none;
-	background-color: var(--color-primary-700);
-	border-color: var(--color-primary-600);
-	color: var(--color-primary-500);
+	background-color: var(--color-grey-50);
+	color: var(--color-grey-400);
 	pointer-events: none;
 }
 
 .isDisabled:hover {
-	background: none;
-	background-color: var(--color-primary-700);
-	border-color: var(--color-primary-600);
+	background-color: var(--color-grey-50);
+	color: var(--color-grey-400);
 	pointer-events: none;
 }
 
@@ -148,38 +151,32 @@ button:focus-visible {
 
 .tetrary {
 	background-color: transparent;
-	border: 1px solid transparent;
 	color: var(--color-grey-600);
 }
 
 .tetrary:hover {
 	background-color: var(--color-grey-200);
 	color: var(--color-grey-700);
-	border: 1px solid transparent;
 }
 
 .tetrary:active {
 	background-color: var(--color-grey-300);
 	color: var(--color-grey-700);
-	border: 1px solid transparent;
 }
 
 .tetraryColor {
 	background-color: transparent;
-	border: 1px solid transparent;
 	color: var(--color-primary-600);
 }
 
 .tetraryColor:hover {
 	background-color: var(--color-grey-200);
 	color: var(--color-grey-700);
-	border: 1px solid transparent;
 }
 
 .tetraryColor:active {
 	background-color: var(--color-grey-300);
 	color: var(--color-grey-700);
-	border: 1px solid transparent;
 }
 
 .tetraryColorActive {

@@ -10,9 +10,24 @@ export interface ModalProps {
 	children?: ReactNode
 	className?: string
 	isHeaderVisible?: boolean
+	position?: 'top' | 'bottom' | 'center'
 }
 
-export const Modal: FC<ModalProps> = ({ title = '', show, setShow, children, className, isHeaderVisible = true }) => {
+const positionClassMap = {
+	top: 'jfs',
+	bottom: 'jfe',
+	center: 'jc',
+}
+
+export const Modal: FC<ModalProps> = ({
+	title = '',
+	position = 'center',
+	show,
+	setShow,
+	children,
+	className,
+	isHeaderVisible = true,
+}) => {
 	const stopPropagation = (event: MouseEvent<HTMLDivElement, MouseEvent>) => {
 		event.stopPropagation()
 	}
@@ -51,7 +66,7 @@ export const Modal: FC<ModalProps> = ({ title = '', show, setShow, children, cla
 		fadeAnimation.opacity.to(o => o > 0) && (
 			<animated.div
 				style={fadeAnimation}
-				className={classNames.overlay}
+				className={`${classNames.overlay} ${positionClassMap[position]}`}
 				onClick={() => {
 					setShow(false)
 				}}

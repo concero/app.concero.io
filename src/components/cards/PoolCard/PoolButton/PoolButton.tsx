@@ -24,6 +24,7 @@ export const PoolButton: FC<SwapButtonProps> = ({ swapState, isConnected, onClic
 		<div className={classNames.container}>
 			<Button
 				size="lg"
+				variant="secondary"
 				leftIcon={iconComponent[buttonType]}
 				isDisabled={isButtonDisabled[buttonType]}
 				isLoading={isLoading}

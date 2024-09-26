@@ -1,13 +1,14 @@
 import type { IUser } from '../../../../api/concero/user/userType'
 import { useState } from 'react'
-import { getQuestStatus } from '../QuestsGroup/getQuestStatus'
 import classNames from './QuestCard.module.pcss'
 import { Card } from '../../../cards/Card/Card'
 import { Tag } from '../../../tags/Tag/Tag'
 import { IconButton } from '../../../buttons/IconButton/IconButton'
 import { ArrowRightIcon } from '../../../../assets/icons/ArrowRightIcon'
 import { QuestModal } from '../QuestModal/QuestModal'
-import type { IQuest } from '../../../../api/concero/quest/questType'
+import { type IQuest, QuestCategory, QuestType } from '../../../../api/concero/quest/questType'
+import { config } from '../../../../constants/config'
+import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -16,17 +17,34 @@ interface QuestCardProps {
 	className?: string
 }
 
+export const categoryNameMap = {
+	[QuestCategory.OnChain]: 'On chain',
+	[QuestCategory.Socials]: 'Socials',
+	[QuestCategory.Common]: 'Common',
+	[QuestCategory.Campaign]: 'Campaign',
+}
+
 export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const { name, startDate, endDate, image } = quest
 
-	const { status, typeStatus } = getQuestStatus(startDate, endDate)
+	const questIsBegin = hasQuestEventStarted(startDate)
 
-	const imgWidth = variant === 'big' ? 124 : 115
-	const imgHeight = variant === 'big' ? 163 : 143
+	if (!questIsBegin) return null
+
+	const daysLeft = getQuestDaysLeft(endDate)
+
+	const imgWidth = '100%'
+	const imgHeight = quest.type === QuestType.Campaign ? 64 : 280
 
 	const questImage = quest.image ? (
-		<img className={classNames.questImage} width={imgWidth} height={imgHeight} src={image} alt="Quest image" />
+		<img
+			className={quest.type === QuestType.Campaign ? classNames.campaignImage : classNames.questImage}
+			width={imgWidth}
+			height={imgHeight}
+			src={`${config.assetsURI}/icons/quests/${image}`}
+			alt="Quest image"
+		/>
 	) : null
 
 	return (
@@ -38,38 +56,38 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 				}}
 			>
 				<Card className={`jsb h-full gap-lg`} key={variant}>
-					{variant !== 'small' && (
-						<div className="row jsb ac">
-							<p className="body2">Socials</p>
-							<Tag size="sm" variant={'neutral'}>
-								00 days left
-							</Tag>
-						</div>
-					)}
-					<div className="h-full gap-xs">
-						{variant === 'big' ? (
-							<h3 className={classNames.title}>{name}</h3>
-						) : (
-							<h4 className={classNames.title}>{name}</h4>
+					<div className="gap-sm">
+						{variant !== 'small' && (
+							<div className="row jsb ac">
+								<p className="body2">{categoryNameMap[quest.category]}</p>
+								<Tag size="sm" variant={'neutral'}>
+									{daysLeft} {daysLeft > 1 ? 'days' : 'day'} left
+								</Tag>
+							</div>
 						)}
-						<h6 className={classNames.points}>+ 25 CERs</h6>
+						<div className="h-full gap-xs">
+							{variant === 'big' ? (
+								<h3 className={classNames.title}>{name}</h3>
+							) : (
+								<h4 className={classNames.title}>{name}</h4>
+							)}
+							{quest.rewards.points && (
+								<h6 className={classNames.points}>+ {quest.rewards.points} CERs</h6>
+							)}
+						</div>
 					</div>
-					{questImage}
+
+					{variant === 'big' && quest.image && questImage}
+
 					<div className="row w-full jfe">
+						{quest.userAction?.data.completedQuestStepIds.length}
 						<IconButton size="sm" variant="secondary">
 							<ArrowRightIcon />
 						</IconButton>
 					</div>
 				</Card>
 			</div>
-			<QuestModal
-				user={user}
-				isOpen={isOpen}
-				setIsOpen={setIsOpen}
-				quest={quest}
-				status={status}
-				typeStatus={typeStatus}
-			/>
+			<QuestModal daysLeft={daysLeft} user={user} isOpen={isOpen} setIsOpen={setIsOpen} quest={quest} />
 		</>
 	)
 }

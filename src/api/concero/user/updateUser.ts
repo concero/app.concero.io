@@ -1,6 +1,5 @@
 import type { IUser } from './userType'
 import { post } from '../../client'
-import { type QuestStatus } from '../../../components/rewards/Quests/QuestModal/questVerifier'
 
 export const updateUserDiscord = async (data: any): Promise<IUser> => {
 	const url = `${process.env.CONCERO_API_URL}/connect/discord`
@@ -20,16 +19,15 @@ export const updateUserTwitter = async (data: any): Promise<IUser> => {
 
 export const verifyUserQuest = async (
 	questId: string,
+	stepId: string,
 	userId: string,
 ): Promise<{
-	status: QuestStatus
-	points: number | null
-	discordRewardsMessage?: string
-	communityRewardsMessage?: string
+	success: boolean
+	status: boolean
 }> => {
 	const url = `${process.env.CONCERO_API_URL}/quests/verify`
 
-	const response = await post(url, { userId, questId })
+	const response = await post(url, { userId, questId, stepId })
 	if (response.status !== 200) throw new Error('Something went wrong')
 	return response.data
 }

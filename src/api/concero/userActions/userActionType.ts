@@ -27,9 +27,16 @@ export interface UserActionTxData {
 
 export interface UserActionQuestData {
 	name: string
+	points?: number
+	multiplier?: number
+	timestamp: number
+	completedQuestStepIds?: number[]
+	isCompleted?: boolean
 }
 
-export interface IUserActionPopulated {
+export interface IUserAction {
+	userAddress: string
+	documentId: string
 	actionType: ActionType
 	points?: number
 	multiplier?: number

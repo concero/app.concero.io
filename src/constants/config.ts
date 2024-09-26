@@ -11,6 +11,7 @@ const automationsTestnet = 'Ox' as Address
 
 export const config = {
 	baseURL: process.env.CONCERO_API_URL!,
+	assetsURI: process.env.CONCERO_ASSETS_URI,
 	headers: { 'Content-Type': 'application/json' },
 	CRYPTOPANIC_API_KEY: process.env.CRYPTOPANIC_API_KEY!,
 	LIFI_INTEGRATOR: process.env.LIFI_INTEGRATOR!,

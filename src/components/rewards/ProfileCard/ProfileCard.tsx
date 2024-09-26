@@ -4,12 +4,10 @@ import BlockiesSvg from 'blockies-react-svg'
 import { truncateWallet } from '../../../utils/formatting'
 
 import { type IUser } from '../../../api/concero/user/userType'
-import { createPublicClient } from 'viem'
-import { mainnet } from 'wagmi/chains'
-import { http } from 'wagmi'
 import { Button } from '../../buttons/Button/Button'
 import { UserHistory } from '../../modals/RewardsUserHistory/RewardsUserHistory'
 import { type Dispatch, type SetStateAction, useState } from 'react'
+import { type IUserAction } from '../../../api/concero/userActions/userActionType'
 
 interface ProfileHeaderProps {
 	user: IUser
@@ -18,12 +16,8 @@ interface ProfileHeaderProps {
 
 interface ProfileCardProps {
 	user: IUser
+	userActions: IUserAction[]
 }
-
-export const publicClient = createPublicClient({
-	chain: mainnet,
-	transport: http(),
-})
 
 const ProfileHeader = ({ user, setIsOpen }: ProfileHeaderProps) => {
 	return (
@@ -34,20 +28,26 @@ const ProfileHeader = ({ user, setIsOpen }: ProfileHeaderProps) => {
 					<h5>{truncateWallet(user.address)}</h5>
 				</div>
 			</div>
-			<Button onClick={setIsOpen} variant={'secondary'} size={'sm'}>
+			<Button
+				onClick={() => {
+					setIsOpen(true)
+				}}
+				variant={'secondary'}
+				size={'sm'}
+			>
 				Open history
 			</Button>
 		</div>
 	)
 }
 
-export const ProfileCard = ({ user }: ProfileCardProps) => {
+export const ProfileCard = ({ user, userActions }: ProfileCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
 	return (
 		<Card className={classNames.container}>
 			<ProfileHeader setIsOpen={setIsOpen} user={user} />
-			<UserHistory isOpen={isOpen} setIsOpen={setIsOpen} />
+			<UserHistory userActions={userActions} isOpen={isOpen} setIsOpen={setIsOpen} />
 		</Card>
 	)
 }

@@ -1,3 +1,5 @@
+import { type Address } from 'viem'
+
 export interface IPassedQuest {
 	id: string
 	points: number
@@ -10,14 +12,21 @@ export interface IUserTier {
 	bonuses: string[]
 }
 
+export interface UserStreaks {
+	liquidityHoldingStreak: number
+	dailySwappingStreak: number
+}
+
 export interface IUser {
-	address: string
+	_id: string
+	address: Address
 	tier: IUserTier
 	points: number
 	passedQuests: IPassedQuest[]
 	multiplier: number
 	liquidityHoldingMultiplier: number
 	dailySwappingMultiplier: number
+	streaks: UserStreaks
 	subscriptions: {
 		twitter: {
 			id: string

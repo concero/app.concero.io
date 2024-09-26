@@ -1,4 +1,3 @@
-import burgerMenuIcon from '../../../../assets/icons/burgerMenuIcon.svg'
 import classNames from './BurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
 import { type KeyboardEvent, useContext, useEffect, useState } from 'react'
@@ -10,6 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { MobileBreadcrumbs } from './MobileBreadcrumbs/MobileBreadcrumbs'
 import { ContactSupportModal } from '../../../modals/ContactSupportModal/ContactSupportModal'
+import { IconButton } from '../../../buttons/IconButton/IconButton'
+import { IconBurger } from '../../../../assets/icons/IconBurger'
 
 export function BurgerMenu() {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
@@ -54,16 +55,14 @@ export function BurgerMenu() {
 
 	return (
 		<div className={classNames.container}>
-			<Button
-				variant={'secondary'}
+			<IconButton
+				variant="secondary"
 				onClick={() => {
 					setIsMenuOpened(prev => !prev)
 				}}
 			>
-				<div className={classNames.imgContainer}>
-					<img src={burgerMenuIcon} />
-				</div>
-			</Button>
+				<IconBurger />
+			</IconButton>
 			<animated.div
 				style={overlayFadeAnimation}
 				className={classNames.overlay}
