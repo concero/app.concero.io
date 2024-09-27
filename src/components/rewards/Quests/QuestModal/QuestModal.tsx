@@ -37,6 +37,7 @@ export const QuestModal = ({
 }: QuestModalProps) => {
 	const [rewardModalIsOpen, setRewardModalIsOpen] = useState<boolean>(false)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [points, setPoints] = useState<number>(0)
 	const { name, description, rewards, steps, image } = quest
 
 	useEffect(() => {
@@ -53,7 +54,8 @@ export const QuestModal = ({
 		try {
 			const result = await claimQuestReward(quest._id, user._id)
 
-			if (result.status) {
+			if (result.points > 0) {
+				setPoints(result.points)
 				setRewardIsClaimed(true)
 				setRewardModalIsOpen(true)
 			}
@@ -119,7 +121,7 @@ export const QuestModal = ({
 	)
 
 	if (rewardModalIsOpen) {
-		return <RewardModal show={rewardModalIsOpen} setShow={setRewardModalIsOpen} quest={quest} />
+		return <RewardModal points={points} show={rewardModalIsOpen} setShow={setRewardModalIsOpen} quest={quest} />
 	}
 
 	return (
@@ -127,7 +129,7 @@ export const QuestModal = ({
 			<div className={classNames.mainInfo}>
 				<div className="w-full gap-sm">
 					<h2>{name}</h2>
-					{rewards.points && <h6 className={classNames.points}>+ {rewards.points} CERs</h6>}
+					{!!rewards.points && <h6 className={classNames.points}>+ {rewards.points} CERs</h6>}
 				</div>
 
 				{questImage}

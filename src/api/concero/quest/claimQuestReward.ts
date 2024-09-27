@@ -5,7 +5,7 @@ export const claimQuestReward = async (
 	userId: string,
 ): Promise<{
 	success: boolean
-	status: boolean
+	points: number
 }> => {
 	const url = `${process.env.CONCERO_API_URL}/quests/claimReward`
 

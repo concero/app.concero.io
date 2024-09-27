@@ -86,7 +86,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 							) : (
 								<h4 className={classNames.title}>{name}</h4>
 							)}
-							{quest.rewards.points && (
+							{!!quest.rewards.points && (
 								<h6 className={classNames.points}>+ {quest.rewards.points} CERs</h6>
 							)}
 						</div>

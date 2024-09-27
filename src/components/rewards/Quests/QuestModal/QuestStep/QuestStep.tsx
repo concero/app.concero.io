@@ -169,7 +169,9 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 				</Button>
 			</div>
 			{verifyStatus === VerificationStatus.FAILED && (
-				<p className={`${classNames.error} body2`}>Verification failed, try again</p>
+				<p className={`${classNames.error} body2`}>
+					You haven’t met the requirements for this task. Please complete it and try again.
+				</p>
 			)}
 		</div>
 	)

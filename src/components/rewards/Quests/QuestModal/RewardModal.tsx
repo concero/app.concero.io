@@ -9,9 +9,10 @@ interface Props {
 	show: boolean
 	setShow: Dispatch<SetStateAction<boolean>>
 	quest: IQuest
+	points: number
 }
 
-export const RewardModal = ({ show, setShow, quest }: Props) => {
+export const RewardModal = ({ show, setShow, quest, points }: Props) => {
 	const questImage = quest.image ? (
 		<img
 			className={classNames.questImage}
@@ -24,7 +25,7 @@ export const RewardModal = ({ show, setShow, quest }: Props) => {
 	return (
 		<Modal isHeaderVisible={false} className={classNames.rewardModal} show={show} setShow={setShow}>
 			{questImage}
-			<h3>+ {quest.rewards.points} CERs</h3>
+			<h3>+ {points} CERs</h3>
 			<h4>You finished “{quest.name}”!</h4>
 			<Button
 				onClick={() => {
