@@ -45,7 +45,7 @@ export const swapActions: SwapAction = {
 	// SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
 	TOGGLE_INSURANCE: (state, action) => {
 		trackEvent({
-			category: trackingCategory.SwapCard,
+			category: trackingCategory.PoolCard,
 			action: trackingAction.ToggleInsurance,
 			label: 'toggle_insurance',
 		})
@@ -61,7 +61,7 @@ export const swapActions: SwapAction = {
 	},
 	TOGGLE_SETTINGS_MODAL_OPEN: state => {
 		void trackEvent({
-			category: trackingCategory.SwapCard,
+			category: trackingCategory.PoolCard,
 			action: trackingAction.ToggleSettingsModal,
 			label: 'toggle_settings_modal_open',
 			data: { isOpen: !state.settingsModalOpen },
@@ -70,7 +70,7 @@ export const swapActions: SwapAction = {
 	},
 	SET_SETTINGS: (state, action) => {
 		void trackEvent({
-			category: trackingCategory.SwapCard,
+			category: trackingCategory.PoolCard,
 			action: trackingAction.ToggleSettingsModal,
 			label: 'set_settings',
 			data: state.settings,

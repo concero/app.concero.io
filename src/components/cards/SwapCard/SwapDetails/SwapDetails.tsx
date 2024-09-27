@@ -50,7 +50,7 @@ export const SwapDetails: FC<SwapDetailsProps> = ({ swapState, swapDispatch }) =
 							onClick={() => {
 								void trackEvent({
 									action: action.OpenRoutesModal,
-									category: category.SwapCard,
+									category: category.PoolCard,
 									label: 'route_modal_opened',
 								})
 								setIsSelectRouteModalVisible(true)
