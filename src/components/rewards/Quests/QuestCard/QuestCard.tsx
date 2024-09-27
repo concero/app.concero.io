@@ -34,7 +34,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 		if (quest.userAction) {
 			const userQuestData = quest.userAction.data as UserActionQuestData
 
-			setRewardIsClaimed(userQuestData.isCompleted || false)
+			// setRewardIsClaimed(userQuestData.isCompleted || false)
 			setCompletedStepIds(userQuestData.completedQuestStepIds!)
 		}
 	}, [user, quest])
