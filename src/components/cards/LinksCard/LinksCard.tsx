@@ -59,7 +59,7 @@ const ExternalLink = ({ link }: ExternalLinkProps) => {
 		<Button
 			isDisabled={link.isDisable}
 			className={classNames.link}
-			variant="convex"
+			variant="secondary"
 			size="sm"
 			rightIcon={<IconExternalLink size={16} color={'var(--color-text-secondary)'} />}
 		>

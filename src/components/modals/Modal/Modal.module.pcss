@@ -4,7 +4,6 @@
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0.5);
 	display: flex;
-	justify-content: center;
 	top: 0;
 	left: 0;
 	position: fixed;
@@ -17,13 +16,12 @@
 
 .container {
 	background-color: var(--color-base-background);
-	border: 1px solid var(--color-grey-600);
-	border-radius: var(--st-br-md);
+	border-radius: var(--sp-xl);
 	overflow-y: hidden;
-	padding: var(--sp-md);
+	padding: var(--sp-lg);
 	z-index: 11;
+	max-height: 90vh;
 	max-width: 700px;
-	max-height: 600px;
 }
 
 .header {
@@ -31,7 +29,6 @@
 	flex-direction: row;
 	gap: var(--sp-sm);
 	justify-content: space-between;
-	padding-bottom: var(--sp-sm);
 }
 
 .titleContainer {

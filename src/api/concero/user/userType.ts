@@ -1,3 +1,5 @@
+import { type Address } from 'viem'
+
 export interface IPassedQuest {
 	id: string
 	points: number
@@ -10,20 +12,21 @@ export interface IUserTier {
 	bonuses: string[]
 }
 
-export enum PointsBooster {
-	MultiplyX2 = 2,
-	MultiplyX5 = 5,
-	MultiplyX10 = 10,
-	// other boosters...
+export interface UserStreaks {
+	liquidityHoldingStreak: number
+	dailySwappingStreak: number
 }
 
 export interface IUser {
 	_id: string
-	address: string
+	address: Address
 	tier: IUserTier
 	points: number
 	passedQuests: IPassedQuest[]
-	multiplier: PointsBooster
+	multiplier: number
+	liquidityHoldingMultiplier: number
+	dailySwappingMultiplier: number
+	streaks: UserStreaks
 	subscriptions: {
 		twitter: {
 			id: string
@@ -38,4 +41,5 @@ export interface IUser {
 			locale: string
 		} | null
 	}
+	position?: number
 }

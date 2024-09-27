@@ -99,11 +99,16 @@ export const TokenArea: FC<TokenAreaProps> = ({
 							/>
 						</div>
 					)}
-					<Button variant={'convex'} className={classNames.selectTokenButton} isDisabled={true}>
-						<TokenIcon
-							tokenLogoSrc={selection.token.logoURI}
-							chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/8453.svg`}
-						/>
+					<Button
+						leftIcon={
+							<TokenIcon
+								tokenLogoSrc={selection.token.logoURI}
+								chainLogoSrc={`${config.CONCERO_ASSETS_URI}/icons/chains/filled/8453.svg`}
+							/>
+						}
+						className={classNames.selectTokenButton}
+						isDisabled={true}
+					>
 						<div className={classNames.selectTokenButtonTitle}>
 							<h4>{selection.token.symbol}</h4>
 							<p className={'body2'}>{selection.chain.name}</p>

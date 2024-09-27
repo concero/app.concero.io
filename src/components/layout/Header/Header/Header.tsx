@@ -1,4 +1,4 @@
-import { type CSSProperties, type FC, type ReactNode, useState } from 'react'
+import { type FC, type ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../../constants/routes'
@@ -6,17 +6,19 @@ import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
-import { FeedbackModal } from '../../../modals/FeedbackModal/FeedbackModal'
+import { Button } from '../../../buttons/Button/Button'
+import buttonClassNames from '../../../buttons/Button/Button.module.pcss'
+import { Tag } from '../../../tags/Tag/Tag'
+import { type IUser } from '../../../../api/concero/user/userType'
+import { UserMultipliers } from './UserMultipliers/UserMultipliers'
+import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
 
 interface HeaderProps {
-	style?: CSSProperties
+	user: IUser | null
 	children?: ReactNode
-	setIsNewSwapCardMode: (isNewSwapCardMode: boolean) => void
-	isNewSwapCardMode: boolean
 }
 
-export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewSwapCardMode }) => {
-	const [isFeedbackModalOpened, setIsFeedbackModalOpened] = useState(false)
+export const Header: FC<HeaderProps> = ({ children, user }) => {
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
@@ -28,48 +30,43 @@ export const Header: FC<HeaderProps> = ({ children, setIsNewSwapCardMode, isNewS
 				<div className={classNames.logoContainer}>
 					<Logo />
 				</div>
-				{!isMobile ? (
-					<ul>
-						<a className={classNames.link} target="_blank" href="http://lanca.io" rel="noreferrer">
-							Swap
+				{!isMobile && (
+					<ul className="gap-xs">
+						<a className={classNames.link} target="_blank" href="https://lanca.io" rel="noreferrer">
+							<Button variant="tetrary">Swap</Button>
 						</a>
-						<Link className={matchSwapPool ? classNames.active : classNames.link} to={routes.pool}>
-							Provide liquidity
+						<span className={classNames.separator} />
+						<Link style={{ pointerEvents: matchSwapPool ? 'none' : 'all' }} to={routes.pool}>
+							<Button
+								className={matchSwapPool ? buttonClassNames.tetraryColorActive : ''}
+								variant="tetrary"
+							>
+								Provide liquidity
+							</Button>
 						</Link>
-						<Link className={matchSwapRewards ? classNames.active : classNames.link} to={routes.rewards}>
-							Rewards
+						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
+							<Button
+								className={matchSwapRewards ? buttonClassNames.tetraryColorActive : ''}
+								variant="tetrary"
+							>
+								Rewards
+							</Button>
 						</Link>
 					</ul>
-				) : null}
-				{!isNewSwapCardMode ? (
-					<ul
-						onClick={() => {
-							setIsNewSwapCardMode(true)
-						}}
-					>
-						<Link className={classNames.active} to={routes.swap}>
-							Switch to new version
-						</Link>
-					</ul>
-				) : null}
+				)}
 			</div>
 			<div className={classNames.headerButtonsContainer}>
-				{/* {!isMobile ? ( */}
-				{/*	<Button */}
-				{/*		variant="subtle" */}
-				{/*		size="sm" */}
-				{/*		className={classNames.helpButton} */}
-				{/*		onClick={() => { */}
-				{/*			handleHelpButtonClick() */}
-				{/*		}} */}
-				{/*	> */}
-				{/*		{t('modal.helpUsImprove')} */}
-				{/*	</Button> */}
-				{/* ) : null} */}
-				<WalletButton />
+				{user && (
+					<>
+						<Tag>{user.points.toFixed(4)} CERs</Tag>
+						<TooltipWrapper tooltipId={'user-multiplier'} tooltipContent={<UserMultipliers user={user} />}>
+							<Tag>{String(user.multiplier)}x</Tag>
+						</TooltipWrapper>
+					</>
+				)}
+				{!isMobile && <WalletButton />}
 				<BurgerMenu />
 			</div>
-			<FeedbackModal show={isFeedbackModalOpened} setShow={setIsFeedbackModalOpened} />
 		</header>
 	)
 }
