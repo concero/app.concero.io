@@ -13,7 +13,7 @@ import { getWithdrawalIdByLpAddress } from '../../../../api/concero/getWithdrawa
 import ConceroAutomationAbi from '../../../../abi/ConceroAutomationAbi'
 import { baseSepolia } from 'wagmi/chains'
 import { trackEvent } from '../../../../hooks/useTracking'
-import { action as tracingAction, action, category } from '../../../../constants/tracking'
+import { action as trackingAction, category } from '../../../../constants/tracking'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = IS_TESTNET ? baseSepolia : base
@@ -48,6 +48,13 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 			type: 'SET_SWAP_STEPS',
 			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
 		})
+
+		void trackEvent({
+			category: category.PoolCard,
+			action: trackingAction.FailedWithdrawalRequest,
+			label: trackingAction.FailedWithdrawalRequest,
+			data: { txHash },
+		})
 	}
 
 	for (const log of receipt.logs) {
@@ -68,7 +75,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 
 				void trackEvent({
 					category: category.PoolCard,
-					action: action.SuccessWithdrawalRequest,
+					action: trackingAction.SuccessWithdrawalRequest,
 					label: 'action_success_withdraw_request',
 					data: { txHash },
 				})
@@ -119,13 +126,22 @@ export async function startWithdrawal(
 		})
 		void trackEvent({
 			category: category.PoolCard,
-			action: action.FailedWithdrawalRequest,
+			action: trackingAction.FailedWithdrawalRequest,
 			label: 'action_failed_withdraw_request',
 			data: { from: swapState.from, to: swapState.to },
 		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
+}
+
+const getCompleteWithdrawalFailedTrackEvent = (hash: Hash) => {
+	void trackEvent({
+		category: category.PoolUserActions,
+		action: trackingAction.FailedWithdrawalComplete,
+		label: trackingAction.FailedWithdrawalComplete,
+		data: { txHash: hash },
+	})
 }
 
 export const completeWithdrawal = async (address: Address, chainId: number): Promise<TransactionStatus> => {
@@ -150,10 +166,13 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 	})
 
 	if (receipt.status === 'reverted') {
+		getCompleteWithdrawalFailedTrackEvent(hash)
+
 		return TransactionStatus.FAILED
 	}
 
 	for (const log of receipt.logs) {
+		// TODO add decoder wrapper
 		try {
 			const decodedLog = decodeEventLog({
 				abi: ParentPool,
@@ -164,26 +183,22 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 			if (decodedLog.eventName === 'ConceroParentPool_Withdrawn') {
 				void trackEvent({
 					category: category.PoolUserActions,
-					action: tracingAction.SuccessWithdrawalComplete,
-					label: tracingAction.SuccessWithdrawalComplete,
-					data: { action, txHash: hash },
+					action: trackingAction.SuccessWithdrawalComplete,
+					label: trackingAction.SuccessWithdrawalComplete,
+					data: { txHash: hash },
 				})
 
 				return TransactionStatus.SUCCESS
 			}
 			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
-				void trackEvent({
-					category: category.PoolUserActions,
-					action: tracingAction.FailedWithdrawalComplete,
-					label: tracingAction.FailedWithdrawalComplete,
-					data: { action, txHash: hash },
-				})
+				getCompleteWithdrawalFailedTrackEvent(hash)
 
 				return TransactionStatus.FAILED
 			}
 		} catch (err) {}
 	}
 
+	getCompleteWithdrawalFailedTrackEvent(hash)
 	return TransactionStatus.FAILED
 }
 
@@ -214,14 +229,15 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 	if (receipt.status === 'reverted') {
 		void trackEvent({
 			category: category.PoolUserActions,
-			action: tracingAction.FailedRetryWithdrawalRequest,
-			label: tracingAction.FailedRetryWithdrawalRequest,
-			data: { action, txHash: hash },
+			action: trackingAction.FailedRetryWithdrawalRequest,
+			label: trackingAction.FailedRetryWithdrawalRequest,
+			data: { txHash: hash },
 		})
 		return TransactionStatus.FAILED
 	}
 
 	for (const log of receipt.logs) {
+		// TODO add decoder wrapper
 		try {
 			const decodedLog = decodeEventLog({
 				abi: ConceroAutomationAbi.abi,
@@ -232,14 +248,22 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 			if (decodedLog.eventName === 'ConceroAutomation_RetryPerformed') {
 				void trackEvent({
 					category: category.PoolUserActions,
-					action: tracingAction.SuccessRetryWithdrawalRequest,
-					label: tracingAction.SuccessRetryWithdrawalRequest,
-					data: { action, txHash: hash },
+					action: trackingAction.SuccessRetryWithdrawalRequest,
+					label: trackingAction.SuccessRetryWithdrawalRequest,
+					data: { txHash: hash },
 				})
 				return TransactionStatus.SUCCESS
 			}
-		} catch (err) {}
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
+	void trackEvent({
+		category: category.PoolUserActions,
+		action: trackingAction.FailedRetryWithdrawalRequest,
+		label: trackingAction.FailedRetryWithdrawalRequest,
+		data: { txHash: hash },
+	})
 	return TransactionStatus.FAILED
 }

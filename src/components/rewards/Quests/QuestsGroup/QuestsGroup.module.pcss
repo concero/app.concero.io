@@ -1,0 +1,48 @@
+.questsHeader {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	h6 {
+		color: var(--color-grey-600);
+	}
+}
+
+.smallCardsContainer {
+	flex-direction: row;
+	gap: var(--sp-md);
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.dailyQuests {
+	flex-direction: row;
+	gap: var(--sp-lg);
+}
+
+.otherQuestsWrap {
+	flex-direction: column;
+	gap: var(--sp-md);
+}
+
+.campaign {
+	max-width: 100% !important;
+	height: 246px !important;
+}
+
+.loadMoreWrap {
+	width: 100%;
+	align-items: center;
+	margin-top: var(--sp-lg);
+}
+
+@media (max-width: 768px) {
+	.dailyQuests {
+		flex-wrap: wrap;
+
+		> div {
+			width: 47%;
+			max-width: 47%;
+		}
+	}
+}

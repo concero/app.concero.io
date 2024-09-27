@@ -6,5 +6,5 @@ export interface AppScreenProps {
 }
 
 export const AppScreen: FC<AppScreenProps> = ({ children }) => {
-	return <div className={`${classNames.container} ${classNames.abTestNewSwapCardLayoutContainer}`}>{children}</div>
+	return <div className={`${classNames.container}`}>{children}</div>
 }

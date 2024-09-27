@@ -3,7 +3,6 @@ import { ListModal } from '../ListModal/ListModal'
 import { useState } from 'react'
 import { Button } from '../../buttons/Button/Button'
 import classNames from '../../layout/Header/WalletButton/WalletButton.module.pcss'
-import { IconCheck } from '@tabler/icons-react'
 import { type Language, languages } from '../../../i18n/languages'
 import { setItem } from '../../../utils/localStorage'
 
@@ -33,12 +32,10 @@ export function LanguageModal({ setShow, show }: LanguageModalProps) {
 				onClick={() => {
 					onSelect(item)
 				}}
-				variant={isSelected ? 'filled' : 'black'}
+				variant={isSelected ? 'secondaryColor' : 'secondary'}
+				className={classNames.renderItemContainer}
 			>
-				<div className={classNames.renderItemContainer}>
-					{item.title}
-					<div>{isSelected ? <IconCheck size={18} /> : null}</div>
-				</div>
+				{item.title}
 			</Button>
 		)
 	}

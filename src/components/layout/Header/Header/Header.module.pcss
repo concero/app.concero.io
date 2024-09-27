@@ -2,53 +2,24 @@
 	align-items: center;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: var(--sp-screen-h) 60px var(--sp-xxl);
+	padding: var(--st-br-sm) var(--sp-xl);
+	margin-bottom: var(--sp-xl);
+	background: var(--color-grey-25);
 }
 
 .comingSoonContainer {
 	flex-direction: row;
 }
 
-ul {
-	color: var(--color-text-secondary);
-	font-size: 0.875rem;
-	font-weight: 500;
-	gap: var(--sp-sm);
-
-	a {
-		border: 1px solid transparent;
-		border-radius: 6px;
-		padding: 6px var(--sp-md);
-	}
-
-	.active {
-		background-color: var(--color-primary-500);
-		border: 1px solid var(--color-primary-500);
-		color: var(--color-button-text-primary);
-	}
-
-	.active:hover {
-		background-color: var(--color-primary-500);
-	}
-
-	.comingSoon {
-		color: var(--color-grey-550);
-	}
-}
-
-a {
-	transition:
-		color 0.2s ease-in-out,
-		background-color 0.2s ease-in-out,
-		transform 0.2s ease-in-out;
-}
-
-a:hover {
-	transform: translateY(-2px);
-}
-
 .logoContainer {
-	margin-right: var(--sp-sm);
+	margin-right: 40px;
+}
+
+.separator {
+	width: 1px;
+	background: var(--color-grey-200);
+	margin: auto var(--sp-md);
+	height: var(--sp-lg);
 }
 
 .navigatorContainer {
@@ -65,6 +36,11 @@ a:hover {
 
 @media (max-width: 768px) {
 	.header {
-		margin: var(--sp-screen-h) 10px var(--sp-xxl);
+		padding: var(--st-br-sm) var(--st-br-lg);
+	}
+
+	.logoContainer {
+		width: 90px;
+		margin-right: 0;
 	}
 }

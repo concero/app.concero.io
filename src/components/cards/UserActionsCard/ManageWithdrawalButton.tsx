@@ -1,4 +1,4 @@
-import { UserActionStatus, type UserTransaction, getRemainingTime } from './UserActionsCard'
+import { getRemainingTime, UserActionStatus, type UserTransaction } from './UserActionsCard'
 import { TransactionStatus } from '../../../api/concero/types'
 import { type Dispatch, type ReactNode, type SetStateAction } from 'react'
 import { useAccount } from 'wagmi'
@@ -39,9 +39,10 @@ export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTime
 
 					localStorage.setItem('retryPerformedTimestamp', String(timeLeft))
 					setRetryTimeLeft(getRemainingTime(timeLeft))
+					setStatus(TransactionStatus.SUCCESS)
 				}
 
-				setStatus(TransactionStatus.SUCCESS)
+				setStatus(TransactionStatus.FAILED)
 			} else {
 				void trackEvent({
 					category: category.PoolUserActions,

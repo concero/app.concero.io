@@ -1,5 +1,5 @@
 .w-full {
-	width: 100%;
+	width: 100% !important;
 }
 
 .h-full {
@@ -66,6 +66,10 @@
 	gap: var(--sp-xl);
 }
 
+.gap-xxl {
+	gap: var(--sp-xxl);
+}
+
 .hide-down {
 	opacity: 0;
 	transform: translateY(10px);
@@ -95,13 +99,11 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .card {
-	background-color: var(--color-grey-700);
-	/*background: linear-gradient(154deg, var(--color-grey-700), rgba(0, 0, 0, 0)) no-repeat;*/
+	background-color: var(--color-grey-25);
 	background-size: 200% 200%;
 	background-position: 200% 200%;
-	border: 1px solid var(--color-grey-650);
-	border-radius: var(--st-br-md);
-	padding: var(--sp-md);
+	border-radius: var(--sp-lg);
+	padding: var(--st-br-lg);
 	transition: background-position 0.4s;
 	position: relative;
 }

@@ -1,8 +1,8 @@
 import { type MouseEventHandler, type ReactNode } from 'react'
 
 export interface ButtonProps {
-	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'sq-xs' | 'sq-sm' | 'sq-md' | 'sq-lg' | 'sq-xl'
-	variant?: 'primary' | 'secondary' | 'filled' | 'subtle' | 'black' | 'light' | 'convex'
+	size?: 'sm' | 'md' | 'lg'
+	variant?: 'primary' | 'secondary' | 'secondaryColor' | 'tetrary' | 'tetraryColor'
 	leftIcon?: ReactNode
 	rightIcon?: ReactNode
 	onClick?: MouseEventHandler<HTMLButtonElement> | undefined

@@ -89,7 +89,7 @@ export const en = {
 			protocol: 'Protocol',
 			vaultDetails: 'Vault details',
 			tokens: 'Tokens',
-			rewards: 'Rewards',
+			rewards: 'rewards',
 		},
 		button: {
 			stake: 'Stake',
