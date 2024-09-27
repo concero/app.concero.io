@@ -94,7 +94,7 @@ body::-webkit-scrollbar {
 	--color-grey-800: #1d2939;
 	--color-grey-900: #101828;
 
-	/* green */
+	/* success */
 	--color-success-25: #f6fef9;
 	--color-success-50: #ecfdf3;
 	--color-success-100: #d1fadf;
@@ -107,33 +107,31 @@ body::-webkit-scrollbar {
 	--color-success-800: #05603a;
 	--color-success-900: #054f31;
 
-	/* red */
-	--color-red-300: #2a0d0d;
-	--color-red-350: #541a1a;
-	--color-red-400: #7f2727;
-	--color-red-450: #a93434;
-	--color-red-500: #d34141;
-	--color-red-550: #dc6767;
-	--color-red-600: #e58d8d;
-	--color-red-650: #edb3b3;
-	--color-red-700: #f6d9d9;
+	/* warning */
+	--color-warning-25: #fffcf5;
+	--color-warning-50: #fffaeb;
+	--color-warning-100: #fef0c7;
+	--color-warning-200: #fedf89;
+	--color-warning-300: #fec84b;
+	--color-warning-400: #fdb022;
+	--color-warning-500: #f79009;
+	--color-warning-600: #dc6803;
+	--color-warning-700: #b54708;
+	--color-warning-800: #93370d;
+	--color-warning-900: #7a2e0e;
 
-	/* blue */
-	--color-blue-darkest: #d9efff;
-	--color-blue-darker: #b3d3ff;
-	--color-blue-dark: #8ec7ff;
-	--color-blue-main: #69bbff;
-	--color-blue-light: #45afff;
-	--color-blue-lighter: #1f9fff;
-	--color-blue-lightest: #0c7dcc;
-
-	/* yellow */
-	--color-yellow-warning: #ffebcd;
-	--color-yellow-warning-text: #d59261;
-
-	/* pink */
-	--color-pink-500: #f735a9;
-	--color-pink-600: #fee8f7;
+	/* danger */
+	--color-danger-25: #fffbfa;
+	--color-danger-50: #fef3f2;
+	--color-danger-100: #fee4e2;
+	--color-danger-200: #fecdca;
+	--color-danger-300: #fda29b;
+	--color-danger-400: #f97066;
+	--color-danger-500: #f04438;
+	--color-danger-600: #d92d20;
+	--color-danger-700: #b42318;
+	--color-danger-800: #912018;
+	--color-danger-900: #7a271a;
 
 	/* text */
 	--color-text-primary: #101828;
@@ -193,34 +191,6 @@ body::-webkit-scrollbar {
 	--color-success-700: #d1fadf;
 	--color-success-800: #ecfdf3;
 	--color-success-900: #f6fef9;
-
-	/* red */
-	--color-red-700: #2a0d0d;
-	--color-red-650: #541a1a;
-	--color-red-600: #7f2727;
-	--color-red-550: #a93434;
-	--color-red-500: #d34141;
-	--color-red-450: #dc6767;
-	--color-red-400: #e58d8d;
-	--color-red-350: #edb3b3;
-	--color-red-300: #f6d9d9;
-
-	/* blue */
-	--color-blue-darkest: #0c7dcc;
-	--color-blue-darker: #1f9fff;
-	--color-blue-dark: #45afff;
-	--color-blue-main: #69bbff;
-	--color-blue-light: #8ec7ff;
-	--color-blue-lighter: #b3d3ff;
-	--color-blue-lightest: #d9efff;
-
-	/* yellow */
-	--color-yellow-warning: #ffebcd;
-	--color-yellow-warning-text: #d59261;
-
-	/* pink */
-	--color-pink-500: #f735a9;
-	--color-pink-600: #fee8f7;
 
 	/* text */
 	--color-text-primary: #f7f7f7;
@@ -402,4 +372,27 @@ button {
 
 .cardHeaderTitle {
 	color: var(--color-text-secondary);
+}
+
+.cerpTestText {
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+
+	h1 {
+		margin: 0 20px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cerpTestText {
+		h1 {
+			font-size: 2rem;
+			margin: 0 20px;
+		}
+	}
 }

@@ -6,7 +6,6 @@ dayjs.extend(duration)
 export const hasQuestEventStarted = (startDate: number) => {
 	const now = dayjs()
 	const start = dayjs(startDate)
-	console.log(start.format())
 
 	return now.isAfter(start)
 }
@@ -14,6 +13,10 @@ export const hasQuestEventStarted = (startDate: number) => {
 export const getQuestDaysLeft = (endDate: number) => {
 	const now = dayjs()
 	const end = dayjs(endDate)
+
+	if (now.isAfter(end)) {
+		return 0
+	}
 
 	const daysLeft = now.diff(end, 'day')
 

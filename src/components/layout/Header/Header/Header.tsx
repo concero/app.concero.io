@@ -36,7 +36,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 							<Button variant="tetrary">Swap</Button>
 						</a>
 						<span className={classNames.separator} />
-						<Link to={routes.pool}>
+						<Link style={{ pointerEvents: matchSwapPool ? 'none' : 'all' }} to={routes.pool}>
 							<Button
 								className={matchSwapPool ? buttonClassNames.tetraryColorActive : ''}
 								variant="tetrary"
@@ -44,7 +44,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 								Provide liquidity
 							</Button>
 						</Link>
-						<Link to={routes.rewards}>
+						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
 							<Button
 								className={matchSwapRewards ? buttonClassNames.tetraryColorActive : ''}
 								variant="tetrary"

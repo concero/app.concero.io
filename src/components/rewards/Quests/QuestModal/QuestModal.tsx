@@ -1,5 +1,4 @@
 import { Modal } from '../../../modals/Modal/Modal'
-import { Tag } from '../../../tags/Tag/Tag'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { type IQuest } from '../../../../api/concero/quest/questType'
 import classNames from './QuestModal.module.pcss'
@@ -10,6 +9,8 @@ import { categoryNameMap } from '../QuestCard/QuestCard'
 import { Button } from '../../../buttons/Button/Button'
 import { RewardModal } from './RewardModal'
 import { type UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
+import { QuestStatus } from '../QuestStatus'
+import { claimQuestReward } from '../../../../api/concero/quest/claimQuestReward'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -17,12 +18,25 @@ interface QuestModalProps {
 	quest: IQuest
 	daysLeft: number
 	user: IUser | null | undefined
+	completedStepIds: number[]
+	setCompletedStepIds: Dispatch<SetStateAction<number[]>>
+	rewardIsClaimed: boolean
+	setRewardIsClaimed: Dispatch<SetStateAction<boolean>>
 }
 
-export const QuestModal = ({ quest, isOpen, setIsOpen, user, daysLeft }: QuestModalProps) => {
-	const [completedStepIds, setCompletedStepIds] = useState<number[]>([])
-	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
+export const QuestModal = ({
+	setCompletedStepIds,
+	setRewardIsClaimed,
+	completedStepIds,
+	rewardIsClaimed,
+	quest,
+	isOpen,
+	setIsOpen,
+	user,
+	daysLeft,
+}: QuestModalProps) => {
 	const [rewardModalIsOpen, setRewardModalIsOpen] = useState<boolean>(false)
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const { name, description, rewards, steps, image } = quest
 
 	useEffect(() => {
@@ -30,11 +44,24 @@ export const QuestModal = ({ quest, isOpen, setIsOpen, user, daysLeft }: QuestMo
 			const userQuestData = quest.userAction.data as UserActionQuestData
 			setCompletedStepIds(userQuestData.completedQuestStepIds!)
 		}
-	}, [quest])
+	}, [user, quest])
 
-	const handleClaimReward = () => {
-		setRewardIsClaimed(true)
-		setRewardModalIsOpen(true)
+	const handleClaimReward = async () => {
+		if (!user) return
+		setIsLoading(true)
+
+		try {
+			const result = await claimQuestReward(quest._id, user._id)
+
+			if (result.status) {
+				setRewardIsClaimed(true)
+				setRewardModalIsOpen(true)
+			}
+		} catch (err) {
+			console.log(err)
+		}
+
+		setIsLoading(false)
 	}
 
 	const addCompletedStep = (stepId: number) => {
@@ -55,9 +82,12 @@ export const QuestModal = ({ quest, isOpen, setIsOpen, user, daysLeft }: QuestMo
 	const questTitle = (
 		<div className="row gap-sm ac">
 			<p className={`${classNames.category} body2`}>{categoryNameMap[quest.category]}</p>
-			<Tag size="sm" variant="neutral">
-				{completedStepIds.length > 0 && 'Started, '} {daysLeft} {daysLeft > 1 ? 'days' : 'day'} left
-			</Tag>
+			<QuestStatus
+				daysLeft={daysLeft}
+				isStarted={completedStepIds.length > 0}
+				isCompleted={isQuestCompleted}
+				rewardIsClaimed={rewardIsClaimed}
+			/>
 		</div>
 	)
 
@@ -72,6 +102,7 @@ export const QuestModal = ({ quest, isOpen, setIsOpen, user, daysLeft }: QuestMo
 			<div className="gap-xs">
 				{steps.map(step => (
 					<QuestStep
+						isCompleted={completedStepIds.includes(+step.id)}
 						addCompletedStep={addCompletedStep}
 						questId={quest._id}
 						user={user}
@@ -112,8 +143,8 @@ export const QuestModal = ({ quest, isOpen, setIsOpen, user, daysLeft }: QuestMo
 				</div>
 			)}
 
-			{isQuestCompleted && (
-				<Button isDisabled={rewardIsClaimed} onClick={handleClaimReward}>
+			{isQuestCompleted && !rewardIsClaimed && (
+				<Button isLoading={isLoading} isDisabled={rewardIsClaimed} onClick={handleClaimReward}>
 					Claim reward
 				</Button>
 			)}

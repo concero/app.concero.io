@@ -4,9 +4,8 @@ import { type IQuest, QuestType } from '../../../../api/concero/quest/questType'
 import { fetchQuests } from '../../../../api/concero/quest/fetchQuests'
 import type { IUser } from '../../../../api/concero/user/userType'
 import { QuestCard } from '../QuestCard/QuestCard'
-import { Button } from '../../../buttons/Button/Button'
-import { PlusIcon } from '../../../../assets/icons/PlusIcon'
 import { type IUserAction } from '../../../../api/concero/userActions/userActionType'
+import { fetchUserQuestActions } from '../../../../api/concero/userActions/fetchUserQuestActions'
 
 interface QuestsCardProps {
 	user: IUser | null | undefined
@@ -14,23 +13,27 @@ interface QuestsCardProps {
 
 export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const [quests, setQuests] = useState<IQuest[]>([])
-	const [userQuestActions, setUserQuestActions] = useState<IUserAction[]>([])
 
-	useEffect(() => {
-		fetchQuests().then(list => {
-			setQuests(list)
-		})
-	}, [])
+	const handleGetQuests = async () => {
+		let userQuestActions: IUserAction[] = []
+		if (user) {
+			userQuestActions = await fetchUserQuestActions(user.address)
+		}
+		const fetchedQuests = await fetchQuests()
 
-	useEffect(() => {
-		const newQuests = quests.map(quest => {
-			const userAction = userQuestActions.find(
-				action => action.documentId.toLocaleLowerCase() === quest._id.toLocaleLowerCase(),
-			)
+		const newQuests = fetchedQuests.map(quest => {
+			const userAction = userQuestActions.find(action => {
+				return action.documentId.toLocaleLowerCase() === quest._id.toLocaleLowerCase()
+			})
 			return { ...quest, userAction }
 		})
+
 		setQuests(newQuests)
-	}, [userQuestActions])
+	}
+
+	useEffect(() => {
+		void handleGetQuests()
+	}, [user])
 
 	const campaignQuest = quests.find((quest: IQuest) => quest.type === QuestType.Campaign)
 	const dailyQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Daily)
@@ -43,16 +46,18 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				<QuestCard className={classNames.campaign} quest={campaignQuest} user={user} variant="big" />
 			)}
 
-			<div className="gap-md">
-				<div className={classNames.questsHeader}>
-					<h6>Daily</h6>
+			{dailyQuests.length > 0 && (
+				<div className="gap-md">
+					<div className={classNames.questsHeader}>
+						<h6>Daily</h6>
+					</div>
+					<div className={classNames.dailyQuests}>
+						{dailyQuests.map((quest: IQuest) => (
+							<QuestCard key={quest._id} quest={quest} user={user} variant="small" />
+						))}
+					</div>
 				</div>
-				<div className={classNames.dailyQuests}>
-					{dailyQuests.map((quest: IQuest) => (
-						<QuestCard key={quest._id} quest={quest} user={user} variant="small" />
-					))}
-				</div>
-			</div>
+			)}
 
 			<div className="gap-sm">
 				<div className={classNames.questsHeader}>
@@ -70,12 +75,14 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 						))}
 					</div>
 				</div>
-				<div className={classNames.loadMoreWrap}>
-					<Button size="sm" variant="tetrary" leftIcon={<PlusIcon />}>
-						Load more
-					</Button>
-				</div>
 			</div>
 		</div>
 	)
 }
+
+// TODO add load more
+// <div className={classNames.loadMoreWrap}>
+// 	<Button size="sm" variant="tetrary" leftIcon={<PlusIcon />}>
+// 		Load more
+// 	</Button>
+// </div>

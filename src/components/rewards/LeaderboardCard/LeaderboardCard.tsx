@@ -28,11 +28,13 @@ const Member = ({ user, place }: MemberProps) => {
 				<div className="row ac gap-sm">
 					<BlockiesSvg address={address} className={classNames.avatar} />
 					{walletAddress}
-					{isCurrentUser && (
-						<Tag size="sm" variant={'neutral'}>
-							You
-						</Tag>
-					)}
+					<div className={classNames.currentUser}>
+						{isCurrentUser && (
+							<Tag size="sm" variant={'neutral'}>
+								You
+							</Tag>
+						)}
+					</div>
 				</div>
 			</div>
 			<div className={classNames.tableCell}>

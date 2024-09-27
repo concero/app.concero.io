@@ -109,7 +109,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 			{swapState.poolMode === 'deposit' && swapState.from.amount && Number(swapState.from.amount) !== 0 ? (
 				<Card className={classNames.warningCard}>
 					<div className="row gap-sm">
-						<IconCoins width={18} height={18} color={'var(--color-yellow-warning-text)'} />
+						<IconCoins width={18} height={18} color={'var(--color-warning-700)'} />
 						<p>Withdrawal limitations</p>
 					</div>
 					<p>Your funds will be available for withdrawal after 7 days</p>
@@ -120,7 +120,7 @@ export const SwapInput: FC<SwapInputProps> = ({ swapState, swapDispatch, isNewSw
 				<Card className={`${classNames.warningCard} ${classNames.greenCard}`}>
 					{swapState.withdrawDeadline && (
 						<div className="row gap-sm">
-							<IconClockHour3 width={18} height={18} color={'var(--color-green-300)'} />
+							<IconClockHour3 width={18} height={18} color={'var(--color-success-700)'} />
 							<p>
 								<strong>{checkWithdrawAvailable(swapState.withdrawDeadline)}</strong>
 							</p>

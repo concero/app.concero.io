@@ -27,7 +27,7 @@ export const LiquidityCapCard = () => {
 
 	return (
 		<Card className={`${classNames.liquidityCapCard} cardConvex`}>
-			<h4 className={classNames.title}>{t('liquidityCap.title')}</h4>
+			<h4 className="body4">{t('liquidityCap.title')}</h4>
 			<h2>
 				${poolLiquidity.toFixed(0)} <span className={classNames.maxValue}>/ ${maxCap}</span>
 			</h2>

@@ -1,12 +1,18 @@
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from './QuestStep.module.pcss'
 import { Tag } from '../../../../tags/Tag/Tag'
-import { type IQuestStep, OnChainSource, VerificationStatus } from '../../../../../api/concero/quest/questType'
+import {
+	type IQuestStep,
+	OnChainSource,
+	QuestCategory,
+	SocialSource,
+	VerificationStatus,
+} from '../../../../../api/concero/quest/questType'
 import { useEffect, useState } from 'react'
 import { trackEvent } from '../../../../../hooks/useTracking'
 import { action, category } from '../../../../../constants/tracking'
 import { type IUser } from '../../../../../api/concero/user/userType'
-import { verifyUserQuest } from '../../../../../api/concero/user/updateUser'
+import { verifyQuest } from '../../../../../api/concero/quest/verifyQuest'
 
 type StepMode = 'group' | 'one'
 
@@ -16,11 +22,14 @@ export interface Props {
 	questId: string
 	mode?: StepMode
 	addCompletedStep: (id: number) => void
+	isCompleted?: boolean
 }
 
 const defaultStartQuestLinkMap: Record<any, string> = {
 	[OnChainSource.INFRA]: 'https://lanca.io',
 	[OnChainSource.POOL]: 'https://app.concero.io/pool',
+	[SocialSource.DISCORD]: 'https://discord.com/channels/1155792755105214535',
+	[SocialSource.TWITTER]: 'https://x.com/concero_io',
 }
 
 interface ButtonStepStyle {
@@ -60,10 +69,12 @@ const buttonsStyle: Record<StepMode, ButtonStepStyle> = {
 	},
 }
 
-export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedStep }: Props) => {
+export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedStep, isCompleted }: Props) => {
+	const currentStatus = isCompleted ? VerificationStatus.SUCCESS : VerificationStatus.NOT_STARTED
+
 	const [linkIsVisited, setLinkIsVisited] = useState<boolean>(false)
 	const [buttonState, setButtonState] = useState<ButtonStepStyle>(buttonsStyle[mode])
-	const [verifyStatus, setVerifyStatus] = useState<VerificationStatus>(VerificationStatus.NOT_STARTED)
+	const [verifyStatus, setVerifyStatus] = useState<VerificationStatus>(currentStatus)
 
 	const startQuestLink = step?.options?.link ? step.options.link : defaultStartQuestLinkMap[step.source]
 
@@ -75,18 +86,23 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 				verifyButton: { ...buttonState.verifyButton, variant: 'primary' },
 			}
 
-			console.log(newButtonState)
 			setButtonState(newButtonState)
 		}
 	}, [linkIsVisited])
 
 	const handleVerifyQuest = async () => {
 		if (!user || !step) return
+
+		if (step.category === QuestCategory.Socials && !linkIsVisited) {
+			setVerifyStatus(VerificationStatus.FAILED)
+			return
+		}
+
 		try {
 			setVerifyStatus(VerificationStatus.PENDING)
 
 			const [questRes] = await Promise.all([
-				verifyUserQuest(questId, step.id, user._id),
+				verifyQuest(questId, step.id, user._id),
 				trackEvent({
 					category: category.QuestCard,
 					action: action.BeginQuest,
@@ -138,18 +154,23 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 	}
 
 	const actionButtons = (
-		<div className="gap-sm row">
-			<Button onClick={handleStartQuest} size={buttonState.size} variant={buttonState.startButton.variant}>
-				{buttonState.startButton.text}
-			</Button>
-			<Button
-				onClick={handleVerifyQuest}
-				isLoading={verifyStatus === VerificationStatus.PENDING}
-				size={buttonState.size}
-				variant={buttonState.verifyButton.variant}
-			>
-				{buttonState.verifyButton.text}
-			</Button>
+		<div className="gap-sm">
+			<div className="gap-sm row">
+				<Button onClick={handleStartQuest} size={buttonState.size} variant={buttonState.startButton.variant}>
+					{buttonState.startButton.text}
+				</Button>
+				<Button
+					onClick={handleVerifyQuest}
+					isLoading={verifyStatus === VerificationStatus.PENDING}
+					size={buttonState.size}
+					variant={buttonState.verifyButton.variant}
+				>
+					{buttonState.verifyButton.text}
+				</Button>
+			</div>
+			{verifyStatus === VerificationStatus.FAILED && (
+				<p className={`${classNames.error} body2`}>Verification failed, try again</p>
+			)}
 		</div>
 	)
 

@@ -39,11 +39,6 @@ export function MobileBreadcrumbs() {
 				</Button>
 			</a>
 			<div className={classNames.separator} />
-			<a className={classNames.link}>
-				<Button variant={'tetrary'} className={`${classNames.listButton}`}>
-					<h5>Settings</h5>
-				</Button>
-			</a>
 		</ul>
 	)
 }

@@ -1,14 +1,15 @@
 import type { IUser } from '../../../../api/concero/user/userType'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classNames from './QuestCard.module.pcss'
 import { Card } from '../../../cards/Card/Card'
-import { Tag } from '../../../tags/Tag/Tag'
 import { IconButton } from '../../../buttons/IconButton/IconButton'
 import { ArrowRightIcon } from '../../../../assets/icons/ArrowRightIcon'
 import { QuestModal } from '../QuestModal/QuestModal'
 import { type IQuest, QuestCategory, QuestType } from '../../../../api/concero/quest/questType'
 import { config } from '../../../../constants/config'
 import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
+import { QuestStatus } from '../QuestStatus'
+import type { UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -26,22 +27,34 @@ export const categoryNameMap = {
 
 export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const { name, startDate, endDate, image } = quest
+	const [completedStepIds, setCompletedStepIds] = useState<number[]>([])
+	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
 
+	useEffect(() => {
+		if (quest.userAction) {
+			const userQuestData = quest.userAction.data as UserActionQuestData
+
+			setRewardIsClaimed(userQuestData.isCompleted || false)
+			setCompletedStepIds(userQuestData.completedQuestStepIds!)
+		}
+	}, [user, quest])
+
+	const { name, startDate, endDate, image } = quest
+	const questIsComplete = completedStepIds.length === quest.steps.length
 	const questIsBegin = hasQuestEventStarted(startDate)
+	const daysLeft = getQuestDaysLeft(endDate)
 
 	if (!questIsBegin) return null
 
-	const daysLeft = getQuestDaysLeft(endDate)
-
-	const imgWidth = '100%'
-	const imgHeight = quest.type === QuestType.Campaign ? 64 : 280
+	const handleOpenQuest = () => {
+		if (rewardIsClaimed) return
+		setIsOpen(true)
+	}
 
 	const questImage = quest.image ? (
 		<img
 			className={quest.type === QuestType.Campaign ? classNames.campaignImage : classNames.questImage}
-			width={imgWidth}
-			height={imgHeight}
+			width={'100%'}
 			src={`${config.assetsURI}/icons/quests/${image}`}
 			alt="Quest image"
 		/>
@@ -50,19 +63,21 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	return (
 		<>
 			<div
+				style={{ cursor: `${rewardIsClaimed ? 'default' : 'pointer'}` }}
 				className={`${classNames.questCard} ${classNames[variant]} ${className}`}
-				onClick={() => {
-					setIsOpen(true)
-				}}
+				onClick={handleOpenQuest}
 			>
 				<Card className={`jsb h-full gap-lg`} key={variant}>
 					<div className="gap-sm">
 						{variant !== 'small' && (
 							<div className="row jsb ac">
 								<p className="body2">{categoryNameMap[quest.category]}</p>
-								<Tag size="sm" variant={'neutral'}>
-									{daysLeft} {daysLeft > 1 ? 'days' : 'day'} left
-								</Tag>
+								<QuestStatus
+									daysLeft={daysLeft}
+									isStarted={questIsBegin}
+									isCompleted={questIsComplete}
+									rewardIsClaimed={rewardIsClaimed}
+								/>
 							</div>
 						)}
 						<div className="h-full gap-xs">
@@ -79,15 +94,26 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 
 					{variant === 'big' && quest.image && questImage}
 
-					<div className="row w-full jfe">
-						{quest.userAction?.data.completedQuestStepIds.length}
-						<IconButton size="sm" variant="secondary">
-							<ArrowRightIcon />
-						</IconButton>
-					</div>
+					{!rewardIsClaimed && (
+						<div className="row w-full jfe">
+							<IconButton size="sm" variant="secondary">
+								<ArrowRightIcon />
+							</IconButton>
+						</div>
+					)}
 				</Card>
 			</div>
-			<QuestModal daysLeft={daysLeft} user={user} isOpen={isOpen} setIsOpen={setIsOpen} quest={quest} />
+			<QuestModal
+				setRewardIsClaimed={setRewardIsClaimed}
+				rewardIsClaimed={rewardIsClaimed}
+				setCompletedStepIds={setCompletedStepIds}
+				completedStepIds={completedStepIds}
+				daysLeft={daysLeft}
+				user={user}
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				quest={quest}
+			/>
 		</>
 	)
 }

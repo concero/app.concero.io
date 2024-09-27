@@ -49,8 +49,34 @@
 	background-color: #5865f2;
 }
 
+.navigation {
+	flex-direction: row;
+	gap: var(--sp-lg);
+}
+
+.navigationLeft {
+	flex-direction: row;
+	gap: var(--sp-lg);
+}
+
 @media (max-width: 768px) {
 	.linkGroup {
+		width: 150px;
+	}
+
+	.navigation {
 		width: 100%;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+
+	.navigationLeft {
+		justify-content: space-between;
+	}
+}
+
+@media (max-width: 350px) {
+	.navigationLeft {
+		flex-direction: column;
 	}
 }

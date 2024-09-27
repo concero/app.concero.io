@@ -42,8 +42,8 @@ export const Footer = () => {
 					</Button>
 				</div>
 
-				<div className="row gap-lg">
-					<div className="row gap-lg">
+				<div className={classNames.navigation}>
+					<div className={classNames.navigationLeft}>
 						<div className={classNames.linkGroup}>
 							<p className="body2">Documentation:</p>
 							<Button className={classNames.link} variant="tetrary" size="md">
