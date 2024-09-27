@@ -10,8 +10,14 @@ import { ContactSupportModal } from '../../../modals/ContactSupportModal/Contact
 import { IconButton } from '../../../buttons/IconButton/IconButton'
 import { IconBurger } from '../../../../assets/icons/IconBurger'
 import { LanguageIcon } from '../../../../assets/icons/LanguageIcon'
+import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetworkButtons'
+import { type IUser } from '../../../../api/concero/user/userType'
 
-export function BurgerMenu() {
+interface Props {
+	user: IUser | null
+}
+
+export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
@@ -71,10 +77,12 @@ export function BurgerMenu() {
 				<animated.div style={fadeAnimation} className={classNames.menuContainer}>
 					{isMobile ? <MobileBreadcrumbs /> : null}
 					<ul className={classNames.listContainer}>
+						{user && <SocialNetworkButtons user={user} />}
 						<li>
 							<Button
 								leftIcon={<LanguageIcon />}
-								variant={'tetrary'}
+								variant={'secondary'}
+								size={'sm'}
 								className={classNames.listButton}
 								onClick={(e: MouseEvent) => {
 									setIsLanguageModalVisible(true)
