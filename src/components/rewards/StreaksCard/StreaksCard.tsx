@@ -19,7 +19,7 @@ export const StreaksCard = ({ user }: Props) => {
 	return (
 		<div className="row wrap gap-lg">
 			<StreakCard
-				streak={user.streaks.liquidityHoldingStreak}
+				streak={user.streaks?.liquidityHoldingStreak || 0}
 				title="LP Holdling Streak"
 				description={<StreakTooltip title={'Liquidity'} description={lpDescription} />}
 				button={
@@ -31,7 +31,7 @@ export const StreaksCard = ({ user }: Props) => {
 				}
 			/>
 			<StreakCard
-				streak={user.streaks.dailySwappingStreak}
+				streak={user.streaks?.dailySwappingStreak || 0}
 				title="Daily Swapping Streak"
 				description={<StreakTooltip title={'Swaps'} description={swapDescription} />}
 				button={
