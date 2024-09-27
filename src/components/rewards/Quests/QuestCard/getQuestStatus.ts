@@ -3,7 +3,7 @@ import duration from 'dayjs/plugin/duration'
 
 dayjs.extend(duration)
 
-export const hasQuestEventStarted = (startDate: number) => {
+export const hasQuestEventStarted = (startDate: number): number => {
 	const now = dayjs()
 	const start = dayjs(startDate)
 
@@ -18,7 +18,7 @@ export const getQuestDaysLeft = (endDate: number) => {
 		return 0
 	}
 
-	const daysLeft = now.diff(end, 'day')
+	const daysLeft = end.diff(now, 'day')
 
 	return daysLeft > 0 ? daysLeft : 0
 }
