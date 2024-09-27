@@ -3,10 +3,9 @@ import { createContext, type FC, type ReactNode, useContext, useEffect, useState
 import { type Colors } from '../constants/colors'
 
 import lightColors from '../constants/json/colors-light.json'
-import darkColors from '../constants/json/colors-dark.json'
 import { trackEvent } from './useTracking'
 import { action, category } from '../constants/tracking'
-import { getItem, setItem } from '../utils/localStorage'
+import { setItem } from '../utils/localStorage'
 
 interface ThemeContextType {
 	theme: 'light' | 'dark'
@@ -21,20 +20,14 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-	const bodyClassTheme = getItem<'light' | 'dark'>('theme', 'light') ?? 'dark'
-
-	const [theme, setTheme] = useState<'light' | 'dark'>(bodyClassTheme)
-	const [colors, setColors] = useState<Colors>(
-		bodyClassTheme === 'light' ? (lightColors.color as Colors) : (darkColors.color as Colors),
-	)
+	const [theme, setTheme] = useState<'light' | 'dark'>('light')
+	const [colors, setColors] = useState<Colors>(lightColors.color)
 
 	const toggleTheme = () => {
-		const bodyClassTheme = document.body.classList.contains('dark') ? 'dark' : 'light'
-		const newTheme = bodyClassTheme === 'light' ? 'dark' : 'light'
-		setTheme(newTheme)
-		setItem('theme', newTheme)
+		const newTheme = 'light'
+		setTheme('light')
+		setItem('theme', 'light')
 
-		document.body.classList.remove(bodyClassTheme)
 		document.body.classList.add(newTheme)
 
 		trackEvent({
@@ -46,16 +39,12 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 	}
 
 	useEffect(() => {
-		if (theme === 'light') {
+		if (theme === 'dark') {
 			document.body.classList.remove('dark')
 			document.body.classList.add('light')
-		} else {
-			document.body.classList.remove('light')
-			document.body.classList.add('dark')
 		}
 
-		const themeColors = theme === 'light' ? lightColors : darkColors
-		setColors(themeColors.color as Colors)
+		setColors(lightColors.color as Colors)
 	}, [theme])
 
 	return <ThemeContext.Provider value={{ theme, toggleTheme, colors }}>{children}</ThemeContext.Provider>
