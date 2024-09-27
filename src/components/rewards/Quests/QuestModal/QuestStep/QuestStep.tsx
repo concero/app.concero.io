@@ -5,6 +5,7 @@ import {
 	type IQuestStep,
 	OnChainSource,
 	QuestCategory,
+	QuestSocialAction,
 	SocialSource,
 	VerificationStatus,
 } from '../../../../../api/concero/quest/questType'
@@ -93,7 +94,9 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 	const handleVerifyQuest = async () => {
 		if (!user || !step) return
 
-		if (step.category === QuestCategory.Socials && !linkIsVisited) {
+		const isConnectNetwork = step.questAction === QuestSocialAction.ConnectSocialNetwork
+
+		if (step.category === QuestCategory.Socials && !linkIsVisited && !isConnectNetwork) {
 			setVerifyStatus(VerificationStatus.FAILED)
 			return
 		}
