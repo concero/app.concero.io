@@ -59,23 +59,25 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				</div>
 			)}
 
-			<div className="gap-sm">
-				<div className={classNames.questsHeader}>
-					<h6>Quests</h6>
-				</div>
-				<div className={classNames.otherQuestsWrap}>
-					<div className={classNames.smallCardsContainer}>
-						{primaryQuests.map((quest: IQuest) => (
-							<QuestCard key={quest._id} quest={quest} user={user} variant="big" />
-						))}
+			{quests.length > 0 && (
+				<div className="gap-sm">
+					<div className={classNames.questsHeader}>
+						<h6>Quests</h6>
 					</div>
-					<div className={classNames.smallCardsContainer}>
-						{secondaryQuests.map((quest: IQuest) => (
-							<QuestCard key={quest._id} quest={quest} user={user} variant="normal" />
-						))}
+					<div className={classNames.otherQuestsWrap}>
+						<div className={classNames.smallCardsContainer}>
+							{primaryQuests.map((quest: IQuest) => (
+								<QuestCard key={quest._id} quest={quest} user={user} variant="big" />
+							))}
+						</div>
+						<div className={classNames.smallCardsContainer}>
+							{secondaryQuests.map((quest: IQuest) => (
+								<QuestCard key={quest._id} quest={quest} user={user} variant="normal" />
+							))}
+						</div>
 					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	)
 }

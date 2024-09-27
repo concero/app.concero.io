@@ -53,7 +53,10 @@ export interface IQuestStep {
 	description?: string
 	source: SocialSource | OnChainSource
 	questAction: QuestOnChainAction | QuestSocialAction
-	options?: any
+	options?: {
+		link?: string
+		value?: string
+	}
 	category: QuestCategory
 	status: VerificationStatus
 	order?: 1

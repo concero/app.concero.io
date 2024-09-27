@@ -52,10 +52,10 @@ export const RewardsScreen = () => {
 			<div className={classNames.rewardsScreenContainer}>
 				<div className={classNames.rewardsWrap}>
 					{user && (
-						<>
+						<div className="gap-lg">
 							<ProfileCard userActions={userActions} user={user} />
 							<StreaksCard user={user} />
-						</>
+						</div>
 					)}
 					<QuestsGroup user={user} />
 					<LeaderboardCard user={user} />
