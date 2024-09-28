@@ -5,13 +5,13 @@ import { type IUser } from '../api/concero/user/userType'
 
 export const handleFetchUser = async (address: Address): Promise<IUser | null> => {
 	try {
-		const currentUser = await fetchUserByAddress(address)
-		if (currentUser) return currentUser
-
-		await createUser(address)
 		return await fetchUserByAddress(address)
 	} catch (error) {
 		console.error('error in handleCreateUser:', error)
-		return null
+
+		if (error.data.error === 'User not found') {
+			await createUser(address)
+			return await fetchUserByAddress(address)
+		}
 	}
 }
