@@ -8,7 +8,6 @@ import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
 import { handleFetchUser } from './web3/handleFetchUser'
 import { type IUser } from './api/concero/user/userType'
-import { useFeatureFlagEnabled } from 'posthog-js/react'
 
 const PoolScreen = lazy(
 	async () =>
@@ -25,8 +24,6 @@ const RewardsScreen = lazy(
 export const Navigator = () => {
 	const [user, setUser] = useState<IUser | null>(null)
 
-	const cerpTesting = useFeatureFlagEnabled('cerp-testing')
-
 	const { address } = useAccount()
 
 	useEffect(() => {
@@ -37,20 +34,6 @@ export const Navigator = () => {
 		})
 		posthog.identify(address)
 	}, [address])
-
-	if (!cerpTesting) {
-		return (
-			<AppScreen>
-				<div className="cerpTestText">
-					<h1>
-						We are currently working on a major update to our app.
-						<br />
-						It will be available in a few hours. Stay tuned!
-					</h1>
-				</div>
-			</AppScreen>
-		)
-	}
 
 	return (
 		<BrowserRouter>
