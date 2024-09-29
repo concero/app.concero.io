@@ -24,7 +24,7 @@ export const RewardsScreen = () => {
 		setUserActions(response)
 	}
 
-	const cerpTesting = useFeatureFlagEnabled('cerp-testing')
+	// const cerpTesting = useFeatureFlagEnabled('cerp-testing')
 
 	useEffect(() => {
 		if (address) {
@@ -38,19 +38,19 @@ export const RewardsScreen = () => {
 		setUser(currentUser!)
 	}
 
-	if (!cerpTesting) {
-		return (
-			<AppScreen>
-				<div className="cerpTestText">
-					<h1>
-						We are currently working on a major update to our app.
-						<br />
-						It will be available in a few hours. Stay tuned!
-					</h1>
-				</div>
-			</AppScreen>
-		)
-	}
+	// if (!cerpTesting) {
+	// 	return (
+	// 		<AppScreen>
+	// 			<div className="cerpTestText">
+	// 				<h1>
+	// 					We are currently working on a major update to our app.
+	// 					<br />
+	// 					It will be available in a few hours. Stay tuned!
+	// 				</h1>
+	// 			</div>
+	// 		</AppScreen>
+	// 	)
+	// }
 
 	return (
 		<>
