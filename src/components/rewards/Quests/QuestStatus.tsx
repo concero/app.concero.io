@@ -1,13 +1,15 @@
 import { Tag } from '../../tags/Tag/Tag'
+import { QuestType } from '../../../api/concero/quest/questType'
 
 interface Props {
 	daysLeft: number
 	isStarted: boolean
 	isCompleted: boolean
 	rewardIsClaimed: boolean
+	questType: QuestType
 }
 
-export const QuestStatus = ({ daysLeft, isStarted, isCompleted, rewardIsClaimed }: Props) => {
+export const QuestStatus = ({ daysLeft, isStarted, isCompleted, rewardIsClaimed, questType }: Props) => {
 	let status = `${isStarted ? 'Started, ' : ''} ${daysLeft} ${daysLeft > 1 ? 'days' : 'day'} left`
 	if (isCompleted) status = 'Done!'
 	if (rewardIsClaimed) status = 'Finished'
@@ -17,6 +19,10 @@ export const QuestStatus = ({ daysLeft, isStarted, isCompleted, rewardIsClaimed 
 	if (daysLeft <= 1) variant = 'negative'
 	if (isCompleted) variant = 'positive'
 	if (rewardIsClaimed) variant = 'neutral'
+
+	if (questType === QuestType.Daily && !isCompleted && !rewardIsClaimed) {
+		return null
+	}
 
 	return (
 		<Tag size="sm" variant={variant}>

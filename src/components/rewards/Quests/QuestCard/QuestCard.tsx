@@ -10,6 +10,7 @@ import { config } from '../../../../constants/config'
 import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
 import type { UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
+import dayjs from 'dayjs'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -30,9 +31,17 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const [completedStepIds, setCompletedStepIds] = useState<number[]>([])
 	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
 
+	const isDailyQuest = quest.type === QuestType.Daily
+
 	useEffect(() => {
 		if (quest.userAction) {
 			const userQuestData = quest.userAction.data as UserActionQuestData
+
+			const nowDate = dayjs()
+			const isOneDayDifference = nowDate.diff(userQuestData.timestamp, 'day') === 1
+			const isNewDailyQuest = isDailyQuest && isOneDayDifference
+
+			if (isNewDailyQuest) return
 
 			setRewardIsClaimed(userQuestData.isCompleted || false)
 			setCompletedStepIds(userQuestData.completedQuestStepIds!)
@@ -73,8 +82,9 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 							<div className="row jsb ac">
 								<p className="body2">{categoryNameMap[quest.category]}</p>
 								<QuestStatus
+									questType={quest.type}
 									daysLeft={daysLeft}
-									isStarted={questIsBegin}
+									isStarted={completedStepIds.length > 0}
 									isCompleted={questIsComplete}
 									rewardIsClaimed={rewardIsClaimed}
 								/>
