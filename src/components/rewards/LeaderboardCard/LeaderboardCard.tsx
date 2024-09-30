@@ -76,16 +76,14 @@ const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 	const [users, setUsers] = useState<IUser[]>([])
 
-	const handleFetchUsers = async (userAddress: string) => {
+	const handleFetchUsers = async (userAddress: string | undefined) => {
 		const { users } = await fetchLeaderboard(userAddress)
 
 		setUsers(users)
 	}
 
 	useEffect(() => {
-		if (user?.address) {
-			void handleFetchUsers(user.address)
-		}
+		void handleFetchUsers(user?.address)
 	}, [user])
 
 	return (

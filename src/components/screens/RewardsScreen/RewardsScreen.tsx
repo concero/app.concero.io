@@ -11,8 +11,6 @@ import type { IUserAction } from '../../../api/concero/userActions/userActionTyp
 import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActions'
 import { type Address } from 'viem'
 import { handleFetchUser } from '../../../web3/handleFetchUser'
-import { AppScreen } from '../AppScreen/AppScreen'
-import { useFeatureFlagEnabled } from 'posthog-js/react'
 
 export const RewardsScreen = () => {
 	const { address } = useAccount()
@@ -37,20 +35,6 @@ export const RewardsScreen = () => {
 		const currentUser = await handleFetchUser(userAddress)
 		setUser(currentUser!)
 	}
-
-	// if (!cerpTesting) {
-	// 	return (
-	// 		<AppScreen>
-	// 			<div className="cerpTestText">
-	// 				<h1>
-	// 					We are currently working on a major update to our app.
-	// 					<br />
-	// 					It will be available in a few hours. Stay tuned!
-	// 				</h1>
-	// 			</div>
-	// 		</AppScreen>
-	// 	)
-	// }
 
 	return (
 		<>

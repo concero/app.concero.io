@@ -78,6 +78,7 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 	const [verifyStatus, setVerifyStatus] = useState<VerificationStatus>(currentStatus)
 
 	const startQuestLink = step?.options?.link ? step.options.link : defaultStartQuestLinkMap[step.source]
+	const isConnectNetwork = step.questAction === QuestSocialAction.ConnectSocialNetwork
 
 	useEffect(() => {
 		if (linkIsVisited) {
@@ -93,8 +94,6 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 
 	const handleVerifyQuest = async () => {
 		if (!user || !step) return
-
-		const isConnectNetwork = step.questAction === QuestSocialAction.ConnectSocialNetwork
 
 		if (step.category === QuestCategory.Socials && !linkIsVisited && !isConnectNetwork) {
 			setVerifyStatus(VerificationStatus.FAILED)
@@ -145,6 +144,15 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 		window.open(startQuestLink, '_blank')
 	}
 
+	const getErrorText = () => {
+		if (isConnectNetwork) {
+			const network = step.source === SocialSource.TWITTER ? 'Twitter' : 'Discord'
+			return `Make sure you have connected ${network} in the right-top menu.`
+		}
+
+		return 'You haven’t met the requirements for this task. Please complete it and try again.'
+	}
+
 	if (verifyStatus === VerificationStatus.SUCCESS) {
 		return (
 			<div className={classNames.containerSuccessState}>
@@ -172,9 +180,7 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 				</Button>
 			</div>
 			{verifyStatus === VerificationStatus.FAILED && (
-				<p className={`${classNames.error} body2`}>
-					You haven’t met the requirements for this task. Please complete it and try again.
-				</p>
+				<p className={`${classNames.error} body2`}>{getErrorText()}</p>
 			)}
 		</div>
 	)
