@@ -64,7 +64,8 @@ export default function Dropdown({ activeItem, setActiveItem, items, variant = '
 						return (
 							<Button
 								key={item.title}
-								variant="black"
+								className="w-full"
+								variant="secondary"
 								onClick={() => {
 									selectOption(item)
 								}}

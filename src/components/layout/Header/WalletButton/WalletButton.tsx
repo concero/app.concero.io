@@ -1,12 +1,12 @@
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { action, category } from '../../../../constants/tracking'
 import { useAccount } from 'wagmi'
-import { IconWallet } from '@tabler/icons-react'
 import { Button } from '../../../buttons/Button/Button'
 import { truncateWallet } from '../../../../utils/formatting'
 import { useTranslation } from 'react-i18next'
 import classNames from './WalletButton.module.pcss'
 import { trackEvent } from '../../../../hooks/useTracking'
+import { IconWallet } from '@tabler/icons-react'
 
 export const WalletButton = () => {
 	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
@@ -31,16 +31,12 @@ export const WalletButton = () => {
 
 	return (
 		<Button
-			variant={isConnected ? 'black' : 'primary'}
-			leftIcon={
-				<IconWallet size={16} color={isConnected ? 'var(--color-grey-500)' : 'var(--color-base-white)'} />
-			}
-			size="sm"
+			leftIcon={isConnected ? <IconWallet size={16} color="var(--color-grey-600)" /> : null}
+			className={classNames.buttonWallet}
+			variant={isConnected ? 'secondary' : 'primary'}
 			onClick={handleClick}
 		>
-			<p className={`${classNames.buttonFont} ${!isConnected ? classNames.buttonText : 'body1'}`}>
-				{getStatus()}
-			</p>
+			{getStatus()}
 		</Button>
 	)
 }

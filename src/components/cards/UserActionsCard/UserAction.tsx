@@ -3,104 +3,72 @@ import BlockiesSvg from 'blockies-react-svg'
 import { poolEventNamesMap } from '../../../api/concero/getUserActions'
 import dayjs from 'dayjs'
 import { UserActionStatus, type UserTransaction } from './UserActionsCard'
-import { Button } from '../../buttons/Button/Button'
-import { completeWithdrawal } from '../PoolCard/swapExecution/requestWithdraw'
-import { useAccount } from 'wagmi'
-import { type ReactNode, useState } from 'react'
+import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
-import { getWalletClient } from '@wagmi/core'
-import { config } from '../../../web3/wagmi'
-import { base } from 'wagmi/chains'
-import { parseAbi } from 'viem'
-import { automationAddress } from '../../../constants/conceroContracts'
-import { getWithdrawalIdByLpAddress } from '../../../api/concero/getWithdrawalIdByLpAddress'
+import { Tag } from '../../tags/Tag/Tag'
+import { ManageWithdrawalButton } from './ManageWithdrawalButton'
+import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
 
-const renderWithdrawStatusTag = (action: UserTransaction) => {
-	const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.IDLE)
-	const { address, chainId } = useAccount()
+export const checkWithdrawAvailable = (deadline: number) => {
+	const givenTime = dayjs.unix(deadline)
+	const now = dayjs()
 
-	const handleCompleteWithdrawal = async () => {
-		if (status === TransactionStatus.IDLE || status === TransactionStatus.FAILED) {
-			try {
-				if (!address) return
-
-				setStatus(TransactionStatus.PENDING)
-
-				const walletClient = await getWalletClient(config, { chainId })
-				walletClient.switchChain({ id: base.id })
-
-				const txStatus = await completeWithdrawal(address, walletClient)
-
-				setStatus(txStatus)
-			} catch (error) {
-				setStatus(TransactionStatus.FAILED)
-				console.error(error)
-			}
-		}
+	if (now.isAfter(givenTime)) {
+		return 'Claim available'
 	}
+	const diffInMilliseconds = givenTime.diff(now)
+	const diffInDays = Math.ceil(dayjs.duration(diffInMilliseconds).asDays())
 
-	const handleRetryWithdrawal = async () => {
-		try {
-			if (!address) return
-
-			const walletClient = await getWalletClient(config, { chainId })
-			walletClient.switchChain({ id: base.id })
-
-			const withdrawId = await getWithdrawalIdByLpAddress(address)
-			if (!withdrawId) return
-
-			walletClient.writeContract({
-				account: address,
-				abi: parseAbi(['function retryPerformWithdrawalRequest(bytes32 _withdrawalId) external']),
-				functionName: 'retryPerformWithdrawalRequest',
-				args: [withdrawId],
-				address: automationAddress,
-				gas: 4_000_000n,
-			})
-		} catch (error) {
-			console.error(error)
-		}
-	}
-
-	const stageButtonsMap: Record<TransactionStatus, ReactNode> = {
-		[TransactionStatus.IDLE]: (
-			<div style={{ flexDirection: 'row', gap: 10 }}>
-				<Button size="sm" onClick={handleCompleteWithdrawal}>
-					Claim
-				</Button>
-				<Button size="sm" onClick={handleRetryWithdrawal}>
-					Retry withdrawal
-				</Button>
-			</div>
-		),
-		[TransactionStatus.FAILED]: (
-			<Button className={classNames.errorButton} onClick={handleCompleteWithdrawal} size="sm">
-				Error, try again
-			</Button>
-		),
-		[TransactionStatus.SUCCESS]: (
-			<Button className={classNames.successButton} isDisabled={true} size="sm">
-				Claimed success
-			</Button>
-		),
-		[TransactionStatus.PENDING]: (
-			<Button variant="subtle" isLoading={true} size="sm">
-				Loading
-			</Button>
-		),
-	}
-
-	if (
-		action.status === UserActionStatus.ActiveRequestWithdraw ||
-		action.status === UserActionStatus.WithdrawRetryNeeded
-	) {
-		return stageButtonsMap[status]
-	}
-
-	return null
+	return `Claim in: ${diffInDays}`
 }
 
-export const UserAction = ({ action }: { action: UserTransaction }) => {
+export const getWithdrawalDate = (deadline: number) => {
+	const oneHour = 3600
+	const givenTime = dayjs.unix(deadline + oneHour)
+	const now = dayjs()
+
+	const diffInMilliseconds = now.from(givenTime, true)
+
+	return `Available in ${diffInMilliseconds}`
+}
+
+interface Props {
+	action: UserTransaction
+	retryTimeLeft: number
+	setRetryTimeLeft: Dispatch<SetStateAction<number>>
+}
+
+export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) => {
+	const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.IDLE)
+
+	const isWithdrawalAvailable =
+		action.status === UserActionStatus.ActiveRequestWithdraw ||
+		action.status === UserActionStatus.WithdrawRetryNeeded
+
+	const isRequestWithdrawal = action.eventName === 'ConceroParentPool_WithdrawRequestInitiated'
+	const isWithdrawRetryPending = retryTimeLeft !== 0 && action.isActiveWithdraw
+
+	useEffect(() => {
+		if (action.status === UserActionStatus.WithdrawRetryNeeded && !isWithdrawRetryPending) {
+			setStatus(TransactionStatus.FAILED)
+		} else {
+			setStatus(TransactionStatus.IDLE)
+		}
+	}, [retryTimeLeft])
+
+	const stageTagMap: Record<TransactionStatus, ReactNode> = {
+		[TransactionStatus.FAILED]: <Tag color="pink">Failed</Tag>,
+		[TransactionStatus.PENDING]: (
+			<Tag color="grey">
+				Pending <LoadingAnimation color="var(--color-grey-500)" />
+			</Tag>
+		),
+	}
+
+	const amountSign = action.eventName === 'ConceroParentPool_DepositCompleted' ? '+' : '-'
+
+	const retryTimeLeftInMinutes = Math.floor(retryTimeLeft / 60)
+
 	return (
 		<div className={classNames.action}>
 			<div className={classNames.leftSide}>
@@ -109,14 +77,35 @@ export const UserAction = ({ action }: { action: UserTransaction }) => {
 					<h5>{poolEventNamesMap[action.eventName]}</h5>
 					<p className="body1">{dayjs(action.time).format('D MMMM, HH:mm, YYYY')}</p>
 				</div>
+				{action.isActiveWithdraw && !isWithdrawalAvailable && isRequestWithdrawal ? (
+					<Tag color="grey">{getWithdrawalDate(action.args.deadline)}</Tag>
+				) : (
+					stageTagMap[status]
+				)}
+
+				{isWithdrawRetryPending && (
+					<Tag color="main">
+						{retryTimeLeftInMinutes
+							? ` ${String(retryTimeLeftInMinutes)} min...`
+							: ' less than a minute...'}
+					</Tag>
+				)}
 			</div>
 			<div className={classNames.rightSide}>
-				{/* {action.deadline} */}
-				{action.status === UserActionStatus.ActiveRequestWithdraw ||
-				action.status === UserActionStatus.WithdrawRetryNeeded
-					? renderWithdrawStatusTag(action)
-					: null}
-				{action.amount ? <h4>{action.amount} USDC</h4> : null}
+				{isWithdrawalAvailable && !isWithdrawRetryPending ? (
+					<ManageWithdrawalButton
+						setRetryTimeLeft={setRetryTimeLeft}
+						status={status}
+						setStatus={setStatus}
+						action={action}
+					/>
+				) : null}
+				{action.amount !== '0' ? (
+					<h4>
+						{amountSign}
+						{Number(action.amount).toFixed(0)} USDC
+					</h4>
+				) : null}
 			</div>
 		</div>
 	)

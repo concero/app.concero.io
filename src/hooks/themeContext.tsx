@@ -21,7 +21,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-	const bodyClassTheme = getItem<'light' | 'dark'>('theme', 'dark') ?? 'dark'
+	const bodyClassTheme = getItem<'light' | 'dark'>('theme', 'lightч3') ?? 'dark'
 
 	const [theme, setTheme] = useState<'light' | 'dark'>(bodyClassTheme)
 	const [colors, setColors] = useState<Colors>(
@@ -46,16 +46,10 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 	}
 
 	useEffect(() => {
-		if (theme === 'light') {
-			document.body.classList.remove('dark')
-			document.body.classList.add('light')
-		} else {
-			document.body.classList.remove('light')
-			document.body.classList.add('dark')
-		}
+		document.body.classList.remove('dark')
+		document.body.classList.add('light')
 
-		const themeColors = theme === 'light' ? lightColors : darkColors
-		setColors(themeColors.color as Colors)
+		setColors(lightColors.color as Colors)
 	}, [theme])
 
 	return <ThemeContext.Provider value={{ theme, toggleTheme, colors }}>{children}</ThemeContext.Provider>

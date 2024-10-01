@@ -6,29 +6,39 @@ import { routes } from './constants/routes'
 import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
 import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
-import { RewardsScreen } from './components/screens/RewardsScreen/RewardsScreen'
-import { handleCreateUser } from './web3/handleCreateUser'
+import { handleFetchUser } from './web3/handleFetchUser'
+import { type IUser } from './api/concero/user/userType'
 
 const PoolScreen = lazy(
 	async () =>
 		await import('./components/screens/PoolScreen/PoolScreen').then(module => ({ default: module.PoolScreen })),
 )
 
+const RewardsScreen = lazy(
+	async () =>
+		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
+			default: module.RewardsScreen,
+		})),
+)
+
 export const Navigator = () => {
+	const [user, setUser] = useState<IUser | null>(null)
+
 	const { address } = useAccount()
-	const [isNewSwapCardMode, setIsNewSwapCardMode] = useState(true)
 
 	useEffect(() => {
 		if (!address) return
 
-		void handleCreateUser(address)
+		handleFetchUser(address).then(user => {
+			setUser(user)
+		})
 		posthog.identify(address)
 	}, [address])
 
 	return (
 		<BrowserRouter>
 			<AppScreen>
-				<Header isNewSwapCardMode={isNewSwapCardMode} setIsNewSwapCardMode={setIsNewSwapCardMode} />
+				<Header user={user} />
 				<Routes>
 					<Route
 						path={routes.pool}

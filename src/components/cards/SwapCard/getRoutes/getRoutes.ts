@@ -29,7 +29,7 @@ const getLifiRoutes = async ({
 		return lifiRoutes
 	} catch (error) {
 		void trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.FetchLifiRoutesError,
 			label: 'fetch_lifi_routes_error',
 			data: { error },
@@ -52,7 +52,7 @@ const getRangoRoutes = async ({
 		return rangoRoutes
 	} catch (error) {
 		void trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.FetchRangoRoutesError,
 			label: 'fetch_rango_routes_error',
 			data: { error },

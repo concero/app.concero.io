@@ -1,102 +1,47 @@
-.container {
+.tag {
+	width: fit-content;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	white-space: nowrap;
-}
-
-.tag {
 	align-items: center;
-	border-radius: var(--st-br-sm);
-	flex-direction: row;
+	border-radius: var(--sp-xl);
 	gap: var(--sp-xs);
 	justify-content: center;
-	padding: var(--sp-xxs) var(--sp-sm);
-}
+	font-size: 14px;
+	font-weight: 400;
+	padding: 7px var(--sp-md);
 
-.xs {
-	padding: var(--sp-xs) var(--sp-sm);
-}
-
-.xxs {
-	padding: var(--sp-xxs) var(--sp-xxs);
-}
-
-.md {
-	padding: var(--sp-sm) var(--sp-md);
-}
-
-.lg {
-	padding: var(--sp-md) var(--sp-lg);
-}
-
-.pink {
-	color: var(--color-pink-500);
-	background-color: var(--color-pink-600);
-}
-
-.blue {
-	color: var(--color-blue-light);
-	background-color: var(--color-blue-darkest);
-}
-
-.red {
-	color: var(--color-red-500);
-	background-color: var(--color-red-700);
-	border: 1px solid var(--color-red-650);
-}
-
-.green {
-	color: var(--color-green-500);
-	background-color: var(--color-green-650);
-	border: 1px solid var(--color-green-600);
-
-	.title {
-		color: var(--color-green-500);
+	p {
+		color: var(--color-primary-700);
 	}
 }
 
-.grey {
-	background-color: var(--color-grey-600);
-	color: var(--color-grey-650);
+.sm {
+	font-size: 0.875rem;
+	line-height: 16px;
+	padding: var(--sp-xs) var(--sp-md);
 }
 
-.main {
-	background-color: var(--color-primary-500);
-
-	.title {
-		color: var(--color-base-white);
-	}
+.branded {
+	background-color: var(--color-primary-100);
+	color: var(--color-primary-700);
 }
 
-.mainDarker {
-	background-color: var(--color-primary-650);
-	color: var(--color-primary-white);
+.neutral {
+	background-color: var(--color-grey-100);
 }
 
-.recommended {
-	background-color: var(--color-primary-700);
-	color: var(--color-primary-550);
+.positive {
+	background-color: var(--color-success-100);
+	color: var(--color-success-700);
 }
 
-.fastest {
-	background-color: var(--color-red-700);
-	color: var(--color-red-500);
+.warning {
+	background-color: var(--color-warning-100);
+	color: var(--color-warning-700);
 }
 
-.cheapest {
-	background-color: rgb(from var(--color-primary-700) r g b / 0.2);
-	color: var(--color-primary-600);
-}
-
-.transparent {
-	background-color: none;
-}
-
-.secondary {
-	background-color: var(--color-grey-650);
-	border: 1px solid var(--color-grey-600);
-
-	.title {
-		color: var(--color-grey-500);
-	}
+.negative {
+	background-color: var(--color-danger-100);
+	color: var(--color-danger-700);
 }

@@ -1,21 +1,26 @@
-import burgerMenuIcon from '../../../../assets/icons/burgerMenuIcon.svg'
 import classNames from './BurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { type KeyboardEvent, useContext, useEffect, useState } from 'react'
-import { IconBrandDiscord, IconBrandTwitter, IconLanguage, IconMoon, IconSun } from '@tabler/icons-react'
+import { type KeyboardEvent, useEffect, useState } from 'react'
 import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
-import { ThemeContext } from '../../../../hooks/themeContext'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { MobileBreadcrumbs } from './MobileBreadcrumbs/MobileBreadcrumbs'
 import { ContactSupportModal } from '../../../modals/ContactSupportModal/ContactSupportModal'
+import { IconButton } from '../../../buttons/IconButton/IconButton'
+import { IconBurger } from '../../../../assets/icons/IconBurger'
+import { LanguageIcon } from '../../../../assets/icons/LanguageIcon'
+import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetworkButtons'
+import { type IUser } from '../../../../api/concero/user/userType'
 
-export function BurgerMenu() {
+interface Props {
+	user: IUser | null
+}
+
+export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
-	const { theme, toggleTheme } = useContext(ThemeContext)
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
 
@@ -54,17 +59,14 @@ export function BurgerMenu() {
 
 	return (
 		<div className={classNames.container}>
-			<Button
-				variant={'black'}
-				size={'sq-sm'}
+			<IconButton
+				variant="secondary"
 				onClick={() => {
 					setIsMenuOpened(prev => !prev)
 				}}
 			>
-				<div className={classNames.imgContainer}>
-					<img src={burgerMenuIcon} />
-				</div>
-			</Button>
+				<IconBurger />
+			</IconButton>
 			<animated.div
 				style={overlayFadeAnimation}
 				className={classNames.overlay}
@@ -75,68 +77,25 @@ export function BurgerMenu() {
 				<animated.div style={fadeAnimation} className={classNames.menuContainer}>
 					{isMobile ? <MobileBreadcrumbs /> : null}
 					<ul className={classNames.listContainer}>
+						{user && <SocialNetworkButtons user={user} />}
 						<li>
 							<Button
-								variant={'black'}
-								size={'sq-sm'}
-								className={classNames.listButton}
-								onClick={(e: MouseEvent) => {
-									toggleTheme()
-									e.stopPropagation()
-								}}
-							>
-								{theme === 'dark' ? (
-									<IconMoon size={18} color={'var(--color-text-secondary)'} />
-								) : (
-									<IconSun size={18} color={'var(--color-text-secondary)'} />
-								)}
-								<h5>{t('header.menu.toggleTheme')}</h5>
-							</Button>
-						</li>
-						<li>
-							<Button
-								variant={'black'}
-								size={'sq-sm'}
+								leftIcon={<LanguageIcon />}
+								variant={'secondary'}
+								size={'sm'}
 								className={classNames.listButton}
 								onClick={(e: MouseEvent) => {
 									setIsLanguageModalVisible(true)
 									e.stopPropagation()
 								}}
 							>
-								<IconLanguage size={18} color={'var(--color-text-secondary)'} />
 								<h5>{t('header.menu.changeLanguage')}</h5>
-							</Button>
-						</li>
-						<li>
-							<Button
-								variant={'black'}
-								size={'sq-sm'}
-								className={classNames.listButton}
-								onClick={(e: MouseEvent) => {
-									window.open('https://twitter.com/concero_io', '_blank')
-									e.stopPropagation()
-								}}
-							>
-								<IconBrandTwitter size={18} color={'var(--color-text-secondary)'} />
-								<h5>{t('socialMedia.twitter')}</h5>
-							</Button>
-						</li>
-						<li>
-							<Button
-								variant={'black'}
-								size={'sq-sm'}
-								className={classNames.listButton}
-								onClick={(e: MouseEvent) => {
-									window.open('https://discord.com/channels/1155792755105214535', '_blank')
-									e.stopPropagation()
-								}}
-							>
-								<IconBrandDiscord size={18} color={'var(--color-text-secondary)'} />
-								<h5>{t('socialMedia.discord')}</h5>
 							</Button>
 						</li>
 					</ul>
 					<Button
+						className="w-full"
+						variant="secondaryColor"
 						onClick={() => {
 							setIsModalContactSupportModalVisible(true)
 						}}

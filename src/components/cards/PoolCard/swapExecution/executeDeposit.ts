@@ -1,18 +1,32 @@
 import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/types'
 import { type Dispatch } from 'react'
-import { decodeEventLog, type Hash, parseUnits, type PublicClient, type WalletClient } from 'viem'
+import { type Address, decodeEventLog, type Hash, parseUnits, type PublicClient, type WalletClient } from 'viem'
 import { base } from 'viem/chains'
 import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
-import { config } from '../../../../constants/config'
+import { config, IS_TESTNET } from '../../../../constants/config'
 import { sleep } from '../../../../utils/sleep'
 import { getPublicClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
+import { baseSepolia } from 'wagmi/chains'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
-const chain = base
+const chain = IS_TESTNET ? baseSepolia : base
+
+interface CustomError {
+	data: {
+		txHash: string
+	}
+}
+
+const throwError = (txHash: Address) => {
+	const error = new Error('Failed transaction')
+	error.data = { txHash }
+
+	throw error
+}
 
 const completeDeposit = async (
 	swapState: SwapState,
@@ -21,8 +35,6 @@ const completeDeposit = async (
 	walletClient: WalletClient,
 	publicClient: PublicClient,
 ) => {
-	console.log('requestID', depositRequestId)
-
 	const txHash = await walletClient.writeContract({
 		abi: ParentPool,
 		functionName: 'completeDeposit',
@@ -37,7 +49,7 @@ const completeDeposit = async (
 	})
 
 	if (receipt.status === 'reverted') {
-		throw new Error('Transaction reverted')
+		throwError(txHash)
 	}
 
 	for (const log of receipt.logs) {
@@ -49,6 +61,13 @@ const completeDeposit = async (
 			})
 
 			if (decodedLog.eventName === 'ConceroParentPool_DepositCompleted') {
+				await trackEvent({
+					category: category.PoolCard,
+					action: action.SuccessDeposit,
+					label: action.SuccessDeposit,
+					data: { from: swapState.from, to: swapState.to, txHash },
+				})
+
 				swapDispatch({
 					type: 'SET_SWAP_STEPS',
 					payload: [
@@ -59,9 +78,11 @@ const completeDeposit = async (
 						},
 					],
 				})
+				return
 			}
 		} catch (err) {}
 	}
+	throwError(txHash)
 }
 
 const handleDepositTransaction = async (
@@ -76,10 +97,8 @@ const handleDepositTransaction = async (
 		confirmations: 5,
 	})
 
-	console.log(receipt)
-
 	if (receipt.status === 'reverted') {
-		throw new Error('Transaction reverted')
+		throwError(txHash)
 	}
 
 	const depositInitiatedLog = receipt.logs.find(log => {
@@ -99,7 +118,7 @@ const handleDepositTransaction = async (
 	})
 
 	if (!depositInitiatedLog) {
-		throw new Error('Deposit initiation log not found')
+		throwError(txHash)
 	}
 
 	const decodedLog = decodeEventLog({
@@ -108,11 +127,8 @@ const handleDepositTransaction = async (
 		topics: depositInitiatedLog.topics,
 	})
 
-	console.log(decodedLog)
-
 	const depositRequestId = decodedLog.args.requestId
-
-	await sleep(50_000)
+	await sleep(35_000)
 
 	await completeDeposit(swapState, swapDispatch, depositRequestId, walletClient, publicClient)
 }
@@ -159,24 +175,20 @@ export async function executeDeposit(
 		})
 
 		await handleDepositTransaction(hash, publicClient, walletClient, swapDispatch, swapState)
-		await trackEvent({
-			category: category.SwapCard,
-			action: action.SuccessDeposit,
-			label: 'concero_success_deposit',
-			data: { from: swapState.from, to: swapState.to },
-		})
-	} catch (error) {
+	} catch (e) {
+		const error = e as CustomError
+
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		swapDispatch({
 			type: 'SET_SWAP_STEPS',
 			payload: [{ title: 'Transaction failed', body: 'Something went wrong', status: 'error' }],
 		})
-		console.error(error)
+
 		await trackEvent({
-			category: category.SwapCard,
+			category: category.PoolCard,
 			action: action.FailedDeposit,
 			label: 'concero_failed_deposit',
-			data: { from: swapState.from, to: swapState.to },
+			data: { from: swapState.from, to: swapState.to, txHash: error.data.txHash },
 		})
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })

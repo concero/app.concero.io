@@ -3,22 +3,27 @@
 }
 
 .swapButton {
+	width: 100%;
 	height: 45px;
-	color: var(--color-button-text-primary);
-	border-radius: var(--st-br-xl);
 	border: none;
 }
 
 .loading {
-	background-color: var(--color-primary-750);
+	background-color: var(--color-primary-700);
 	color: var(--color-primary-to-lightest);
 	pointer-events: none;
 	cursor: wait;
 }
 
 .disabled {
-	background-color: var(--color-primary-750);
-	color: var(--color-primary-to-lightest);
+	background-color: var(--color-grey-200);
+	color: var(--color-grey-400);
+	pointer-events: none;
+}
+
+.disabled:hover {
+	background-color: var(--color-grey-50);
+	color: var(--color-grey-400);
 	pointer-events: none;
 
 	svg {
@@ -27,42 +32,33 @@
 }
 
 .wrong {
-	background-color: var(--color-red-700);
-	color: var(--color-red-400);
+	background-color: var(--color-danger-600);
+	color: var(--color-danger-25);
 	pointer-events: none;
 
 	svg {
-		stroke: var(--color-red-450);
-	}
-}
-
-.wrong:hover {
-	background-color: var(--color-red-700);
-	color: var(--color-red-400);
-
-	svg {
-		stroke: var(--color-red-450);
+		stroke: var(--color-danger-25);
 	}
 }
 
 .success {
-	background-color: var(--color-green-650);
-	color: var(--color-green-500);
+	background-color: var(--color-success-600);
+	color: var(--color-success-25);
 
 	svg {
-		stroke: var(--color-green-500);
+		stroke: var(--color-success-25);
 	}
 }
 
 .messageContainer {
-	background-color: var(--color-red-700);
+	background-color: var(--color-danger-700);
 	padding: var(--sp-md);
 	border-radius: var(--st-br-md);
-	border: 1px solid rgb(from var(--color-red-650) r g b / 0.4);
+	border: 1px solid rgb(from var(--color-danger-700) r g b / 0.4);
 	gap: var(--sp-sm);
 
 	p {
-		color: var(--color-red-400);
+		color: var(--color-danger-400);
 	}
 
 	.titleContainer {

@@ -1,0 +1,79 @@
+.questCard {
+	position: relative;
+	height: 310px;
+	transition:
+		color 0.2s ease-in-out,
+		background-color 0.2s ease-in-out,
+		transform 0.2s ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		transform: translateY(-2px);
+	}
+}
+
+.bigger {
+	width: 100%;
+	height: 246px;
+}
+
+.big {
+	max-width: 292px;
+	width: 100%;
+	height: 310px;
+}
+
+.normal {
+	max-width: 292px;
+	width: 100%;
+	height: 158px;
+}
+
+.small {
+	max-width: 189px;
+	width: 100%;
+	height: 146px;
+}
+
+.category {
+}
+
+.questImage {
+	position: absolute;
+	object-fit: contain;
+	bottom: 20px;
+	left: 0;
+	right: 0;
+	height: 70%;
+}
+
+.campaignImage {
+	object-fit: contain;
+	position: absolute;
+	top: 72px;
+	left: 0;
+	right: 0;
+	height: 142px;
+}
+
+.title {
+	color: var(--color-grey-700);
+}
+
+.points {
+	color: var(--color-primary-700);
+}
+
+@media (max-width: 768px) {
+	.big {
+		max-width: 100%;
+	}
+
+	.normal {
+		max-width: 100%;
+	}
+
+	.small {
+		width: 50%;
+	}
+}

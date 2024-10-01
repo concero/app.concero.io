@@ -1,31 +1,82 @@
-import { type PointsBooster } from '../user/userType'
+import { type IUserAction } from '../userActions/userActionType'
 
-export enum QuestConditionType {
-	ProvideLiquidity = 'ProvideLiquidity',
-	ConnectDiscord = 'ConnectDiscord',
-	ConnectTwitter = 'ConnectTwitter',
-	CommunityRewards = 'CommunityRewards',
+export enum OnChainSource {
+	INFRA = 'INFRA',
+	POOL = 'POOL',
 }
 
-export interface IQuestCondition {
-	type: QuestConditionType
-	description: string
-	targetNumber?: number
-	targetValue?: string
-	link?: string
+export enum SocialSource {
+	DISCORD = 'DISCORD',
+	TWITTER = 'TWITTER',
+}
+
+export enum QuestCategory {
+	Socials = 'Socials',
+	OnChain = 'OnChain',
+	Campaign = 'Campaign',
+	Common = 'Common',
+}
+
+export enum QuestType {
+	Campaign = 'Campaign',
+	Daily = 'Daily',
+	Primary = 'Primary',
+	Secondary = 'Secondary',
+}
+
+export enum VerificationStatus {
+	SUCCESS = 'SUCCESS',
+	PENDING = 'PENDING',
+	FAILED = 'FAILED',
+	NOT_STARTED = 'NOT_STARTED',
+}
+
+export enum QuestSocialAction {
+	ConnectSocialNetwork = 'ConnectSocialNetwork',
+	ConnectGroup = 'ConnectGroup',
+	Repost = 'Repost',
+}
+
+export enum QuestOnChainAction {
+	CheckVolume = 'CheckVolume',
+	ProvideLiquidity = 'ProvideLiquidity',
+}
+
+export interface QuestDateFilter {
+	dateStart: number
+	dateEnd: number
+}
+
+export interface IQuestStep {
+	id: string
+	title: string
+	description?: string
+	source: SocialSource | OnChainSource
+	questAction: QuestOnChainAction | QuestSocialAction
+	options?: {
+		link?: string
+		value?: string
+	}
+	category: QuestCategory
+	status: VerificationStatus
+	order?: 1
+	isComplete?: boolean
 }
 
 export interface IQuest {
 	_id: string
 	name: string
+	subtitle?: string
 	description: string
-	image: string
+	image?: string
 	startDate: number
 	endDate: number
-	conditions: IQuestCondition[]
+	steps: IQuestStep[]
 	rewards: {
 		points: number
-		booster?: PointsBooster
+		multiplier: number
 	}
-	position: number
+	type: QuestType
+	category: QuestCategory
+	userAction?: IUserAction
 }

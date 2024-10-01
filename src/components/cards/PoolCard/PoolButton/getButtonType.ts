@@ -1,6 +1,7 @@
 import { ButtonType } from './constants'
 import BigNumber from 'bignumber.js'
 import { type SwapState } from '../swapReducer/types'
+import { IS_TESTNET } from '../../../../constants/config'
 
 export function getButtonType(
 	swapState: SwapState,
@@ -8,7 +9,12 @@ export function getButtonType(
 	isInsufficientGas: boolean,
 	isFetchBalancesLoading: boolean,
 ): ButtonType {
-	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, stage, isTestnet } = swapState
+	const { from, to, routes, isLoading, balance, isNoRoutes, selectedRoute, isWithdrawInitiated, poolMode, stage } =
+		swapState
+
+	if (poolMode === 'withdraw' && isWithdrawInitiated) {
+		return ButtonType.WITHDRAW_NOT_AVAILABLE
+	}
 
 	if (isLoading) {
 		return ButtonType.LOADING
@@ -28,7 +34,7 @@ export function getButtonType(
 
 	if (from.amount) {
 		if (swapState.poolMode === 'deposit') {
-			if (BigNumber(from.amount).lt(100)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
+			if (BigNumber(from.amount).lt(IS_TESTNET ? 1 : 100)) return ButtonType.TESTNET_AMOUNT_TOO_LOW
 
 			return ButtonType.DEPOSIT
 		} else {
@@ -53,7 +59,7 @@ export function getButtonType(
 	}
 
 	if (from.amount && to.amount && routes.length > 0) {
-		return ButtonType.SWAP
+		return ButtonType.DEPOSIT
 	}
 
 	return ButtonType.ENTER_AMOUNT

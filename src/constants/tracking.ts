@@ -3,7 +3,8 @@ export enum category {
 	StakingScreen = 'cat_staking_screen',
 	StakingHeader = 'cat_staking_header',
 	NewsCard = 'cat_news_card',
-	SwapCard = 'cat_swap_card',
+	PoolCard = 'cat_pool_card',
+	PoolUserActions = 'cat_user_actions',
 	QuestCard = 'cat_quest_card',
 	ChartCard = 'cat_chart_card',
 	Wallet = 'cat_wallet',
@@ -38,9 +39,25 @@ export enum action {
 	FetchLifiRoutesError = 'action_fetch_lifi_routes_error',
 	FetchRangoRoutesError = 'action_fetch_rango_routes_error',
 	BeginSwap = 'action_begin_swap',
+
+	// Pool deposit
 	BeginDeposit = 'action_begin_deposit',
 	SuccessDeposit = 'action_success_deposit',
 	FailedDeposit = 'action_failed_deposit',
+
+	// Pool withdrawal
+	BeginWithdrawalRequest = 'action_begin_withdrawal_request',
+	SuccessWithdrawalRequest = 'action_success_withdrawal_request',
+	FailedWithdrawalRequest = 'action_failed_withdrawal_request',
+
+	BeginWithdrawalComplete = 'action_begin_withdrawal_complete',
+	SuccessWithdrawalComplete = 'action_success_withdrawal_complete',
+	FailedWithdrawalComplete = 'action_failed_withdrawal_complete',
+
+	BeginRetryWithdrawalRequest = 'action_begin_deposit_request',
+	SuccessRetryWithdrawalRequest = 'action_success_deposit_request',
+	FailedRetryWithdrawalRequest = 'action_failed_deposit_request',
+
 	BeginQuest = 'action_begin_quest',
 	SuccessQuest = 'action_success_quest',
 	FailedQuest = 'action_failed_quest',
