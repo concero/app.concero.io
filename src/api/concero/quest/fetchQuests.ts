@@ -9,7 +9,7 @@ export const fetchQuests = async (): Promise<IQuest[]> => {
 	// const response = await get(url, {
 	// 	headers: {
 	// 		Authorization: `Bearer ${token}`,
-	// 	},
+	// /	},
 	// })
 
 	const response = await get(url)
