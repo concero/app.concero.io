@@ -35,7 +35,7 @@ export const Footer = () => {
 			</div>
 			<div className="w-full jsb row wrap gap-xl">
 				<div>
-					<h5 className={classNames.title}>Build the nex big thing</h5>
+					<h5 className={classNames.title}>Build the next big thing</h5>
 					<p className={`${classNames.subtitle} body2`}>Contact us to learn the benefits</p>
 					<Button size="sm" variant="secondaryColor">
 						Contact us
