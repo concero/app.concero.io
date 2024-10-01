@@ -33,10 +33,15 @@ export const UserAction = ({ action }: UserActionProps) => {
 	}
 
 	useEffect(() => {
-		if (isQuest) {
+		if (action.actionType === ActionType.questReward) {
 			getQuestInfo()
-		} else {
+		}
+		if (action.actionType === ActionType.transactionReward) {
 			getTransactionInfo()
+		}
+		if (action.actionType === ActionType.specialReward) {
+			const { name } = action.data as UserActionQuestData
+			setValue(name)
 		}
 	}, [])
 

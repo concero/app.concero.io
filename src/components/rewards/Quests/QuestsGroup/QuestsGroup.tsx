@@ -81,10 +81,3 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 		</div>
 	)
 }
-
-// TODO add load more
-// <div className={classNames.loadMoreWrap}>
-// 	<Button size="sm" variant="tetrary" leftIcon={<PlusIcon />}>
-// 		Load more
-// 	</Button>
-// </div>

@@ -8,6 +8,7 @@ export enum TransactionType {
 export enum ActionType {
 	'transactionReward',
 	'questReward',
+	'specialReward',
 }
 
 export interface UserActionTxData {
