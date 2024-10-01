@@ -32,6 +32,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
 
 	const isDailyQuest = quest.type === QuestType.Daily
+	const isSocialQuest = quest.category === QuestCategory.Socials
 
 	useEffect(() => {
 		if (quest.userAction) {
@@ -68,6 +69,9 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 			alt="Quest image"
 		/>
 	) : null
+
+	// don't display social quest if they don't have a link
+	if (isDailyQuest && isSocialQuest && !quest.steps[0].options?.link) return null
 
 	return (
 		<>
