@@ -6,7 +6,7 @@ import { StreakTooltip } from './StreakTooltip/StreakTooltip'
 import { type IUser } from '../../../api/concero/user/userType'
 
 const lpDescription =
-	'Hold at least $500 worth of liquidity to get a multiplier. The longer you hold, the bigger multiplier you get.'
+	'Hold at least $100 worth of liquidity to get a multiplier. The longer you hold, the bigger multiplier you get.'
 
 const swapDescription =
 	'Perform swaps of at least $50 every day to get a multiplier. The longer your daily streak is the bigger multiplier you get.'
