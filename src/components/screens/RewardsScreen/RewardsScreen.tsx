@@ -25,8 +25,7 @@ export const RewardsScreen = () => {
 
 	useEffect(() => {
 		if (address) {
-			void fetchAndSetUserActions()
-			void getUser(address)
+			void Promise.all([fetchAndSetUserActions(), getUser('0xdddd5f804b9d293dce8819d232e8d76381605a62')])
 		}
 	}, [address])
 
