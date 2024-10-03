@@ -35,8 +35,10 @@ const fillProgressBars = (totalDays: number) => {
 
 	// fill months
 	for (let i = 1; i <= 4; i++) {
-		if (totalDays <= 28) {
-			progress[i] = Math.floor(totalDays / 7) // weeks in month
+		if (totalDays <= 7) {
+			break
+		} else if (totalDays >= 7 && totalDays < 28) {
+			progress[i] = Math.floor(totalDays / 7)
 			break
 		} else {
 			progress[i] = 4
