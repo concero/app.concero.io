@@ -39,8 +39,8 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 			const userQuestData = quest.userAction.data as UserActionQuestData
 
 			const nowDate = dayjs()
-			const isOneDayDifference = nowDate.diff(userQuestData.timestamp, 'day') === 1
-			const isNewDailyQuest = isDailyQuest && isOneDayDifference
+			const isMoreOneDayDifference = nowDate.diff(userQuestData.timestamp, 'day') >= 1
+			const isNewDailyQuest = isDailyQuest && isMoreOneDayDifference
 
 			if (isNewDailyQuest) return
 
