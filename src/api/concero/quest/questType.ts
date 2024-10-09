@@ -20,8 +20,8 @@ export enum QuestCategory {
 export enum QuestType {
 	Campaign = 'Campaign',
 	Daily = 'Daily',
-	Primary = 'Primary',
-	Secondary = 'Secondary',
+	Primary = 'Primary', // weekly
+	Secondary = 'Secondary', // weekly
 }
 
 export enum VerificationStatus {

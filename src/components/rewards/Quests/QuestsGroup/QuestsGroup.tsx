@@ -49,7 +49,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 			{dailyQuests.length > 0 && (
 				<div className="gap-md">
 					<div className={classNames.questsHeader}>
-						<h6>Daily</h6>
+						<h6>Daily quests</h6>
 					</div>
 					<div className={classNames.dailyQuests}>
 						{dailyQuests.map((quest: IQuest) => (
@@ -62,7 +62,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 			{quests.length > 0 && (
 				<div className="gap-sm">
 					<div className={classNames.questsHeader}>
-						<h6>Quests</h6>
+						<h6>Weekly quests</h6>
 					</div>
 					<div className={classNames.otherQuestsWrap}>
 						<div className={classNames.smallCardsContainer}>

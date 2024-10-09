@@ -11,6 +11,8 @@ import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
 import type { UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
 import dayjs from 'dayjs'
+import { getDaysUntilEndOfWeek } from '../../../../utils/date/getDaysUntilThisWeekt'
+import { checkIfDateIsThisWeek } from '../../../../utils/date/checkIfDateIsThisWeek'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -32,7 +34,15 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
 
 	const isDailyQuest = quest.type === QuestType.Daily
+	const isWeeklyQuest = quest.type === QuestType.Primary || quest.type === QuestType.Secondary
 	const isSocialQuest = quest.category === QuestCategory.Socials
+
+	const { name, startDate, endDate, image } = quest
+	const questIsComplete = completedStepIds.length === quest.steps.length
+	const questIsBegin = hasQuestEventStarted(startDate)
+	const daysLeft = isWeeklyQuest ? getDaysUntilEndOfWeek() : getQuestDaysLeft(endDate)
+
+	if (!questIsBegin) return null
 
 	useEffect(() => {
 		if (quest.userAction) {
@@ -42,19 +52,15 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 			const isMoreOneDayDifference = nowDate.diff(userQuestData.timestamp, 'day') >= 1
 			const isNewDailyQuest = isDailyQuest && isMoreOneDayDifference
 
-			if (isNewDailyQuest) return
+			const questNotStartedThisWeek = !checkIfDateIsThisWeek(userQuestData.timestamp)
+			const isNewWeeklyQuest = isWeeklyQuest && questNotStartedThisWeek
+
+			if (isNewDailyQuest || isNewWeeklyQuest) return
 
 			setRewardIsClaimed(userQuestData.isCompleted || false)
 			setCompletedStepIds(userQuestData.completedQuestStepIds!)
 		}
 	}, [user, quest])
-
-	const { name, startDate, endDate, image } = quest
-	const questIsComplete = completedStepIds.length === quest.steps.length
-	const questIsBegin = hasQuestEventStarted(startDate)
-	const daysLeft = getQuestDaysLeft(endDate)
-
-	if (!questIsBegin) return null
 
 	const handleOpenQuest = () => {
 		if (rewardIsClaimed) return
@@ -70,7 +76,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 		/>
 	) : null
 
-	// don't display social quest if they don't have a link
+	// don't display daily social quest if they don't have a link
 	if (isDailyQuest && isSocialQuest && !quest.steps[0].options?.link) return null
 
 	return (
