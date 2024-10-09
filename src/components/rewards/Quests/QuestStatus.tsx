@@ -10,7 +10,10 @@ interface Props {
 }
 
 export const QuestStatus = ({ daysLeft, isStarted, isCompleted, rewardIsClaimed, questType }: Props) => {
-	let status = `${isStarted ? 'Started, ' : ''} ${daysLeft} ${daysLeft > 1 ? 'days' : 'day'} left`
+	const dayText = daysLeft > 1 ? 'days' : 'day'
+	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} left`
+
+	let status = `${isStarted ? 'Started, ' : ''} ${daysLeftText}`
 	if (isCompleted) status = 'Done!'
 	if (rewardIsClaimed) status = 'Finished'
 
