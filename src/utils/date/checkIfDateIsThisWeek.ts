@@ -6,7 +6,7 @@ dayjs.extend(isBetween)
 dayjs.extend(isoWeek)
 
 export const checkIfDateIsThisWeek = (timestamp: number) => {
-	const startOfWeek = dayjs().startOf('week')
-	const endOfWeek = dayjs().endOf('week')
+	const startOfWeek = dayjs().startOf('isoWeek')
+	const endOfWeek = dayjs().endOf('isoWeek')
 	return dayjs(timestamp).isBetween(startOfWeek, endOfWeek, null, '[]')
 }
