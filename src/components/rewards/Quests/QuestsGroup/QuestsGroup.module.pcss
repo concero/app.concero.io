@@ -36,13 +36,9 @@
 	margin-top: var(--sp-lg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 580px) {
 	.dailyQuests {
-		flex-wrap: wrap;
-	}
-
-	.dailyQuest {
-		width: 47%;
-		max-width: 47%;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
 	}
 }
