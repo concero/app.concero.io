@@ -1,0 +1,39 @@
+.container {
+	position: relative;
+	width: 100%;
+
+	p {
+		position: absolute;
+		top: -13px;
+		left: 20px;
+		color: var(--color-base-black);
+		font-weight: 400;
+		background-color: var(--color-base-white);
+	}
+}
+
+.input {
+	flex: 1;
+	border: 1px solid var(--color-border-main);
+	border-radius: var(--st-br-md);
+	padding: var(--sp-md);
+	background-color: var(--color-base-white);
+	font-size: 16px;
+}
+
+.title {
+	z-index: 1;
+}
+
+.textarea {
+	flex: 1;
+	border: 1px solid var(--color-border-main);
+	background-color: var(--color-base-white);
+	border-radius: var(--st-br-md);
+	padding: var(--sp-md);
+	min-height: 130px;
+	overflow: hidden;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	font-size: 16px;
+}

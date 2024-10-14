@@ -21,6 +21,13 @@ const RewardsScreen = lazy(
 		})),
 )
 
+const FeedbackScreen = lazy(
+	async () =>
+		await import('./components/screens/FeedbackScreen/FeedbackScreen').then(module => ({
+			default: module.FeedbackScreen,
+		})),
+)
+
 export const Navigator = () => {
 	const [user, setUser] = useState<IUser | null>(null)
 
@@ -53,6 +60,14 @@ export const Navigator = () => {
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
 								<RewardsScreen />
+							</Suspense>
+						}
+					/>
+					<Route
+						path={routes.feedback}
+						element={
+							<Suspense fallback={<FullScreenLoader />}>
+								<FeedbackScreen />
 							</Suspense>
 						}
 					/>
