@@ -75,19 +75,25 @@ export function FeedbackScreen({ show, setShow, title, body, isMessageNeeded = t
 						<Input
 							title={'Name'}
 							type={'text'}
-							onChange={e => { setInputs({ ...inputs, name: e.target.value }); }}
+							onChange={e => {
+								setInputs({ ...inputs, name: e.target.value })
+							}}
 							value={inputs.name}
 						/>
 						<Input
 							title={'Email'}
 							type={'email'}
-							onChange={e => { setInputs({ ...inputs, email: e.target.value }); }}
+							onChange={e => {
+								setInputs({ ...inputs, email: e.target.value })
+							}}
 							value={inputs.email}
 						/>
 						<Input
 							title={'Twitter/Discord (optional)'}
 							type={'email'}
-							onChange={e => { setInputs({ ...inputs, socialMedia: e.target.value }); }}
+							onChange={e => {
+								setInputs({ ...inputs, socialMedia: e.target.value })
+							}}
 							value={inputs.socialMedia}
 						/>
 						{isMessageNeeded ? (
@@ -95,7 +101,9 @@ export function FeedbackScreen({ show, setShow, title, body, isMessageNeeded = t
 								title={'Message'}
 								inputType={'textarea'}
 								type={'text'}
-								onChange={e => { setInputs({ ...inputs, message: e.target.value }); }}
+								onChange={e => {
+									setInputs({ ...inputs, message: e.target.value })
+								}}
 								value={inputs.message}
 							/>
 						) : null}

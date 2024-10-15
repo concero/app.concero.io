@@ -6,19 +6,26 @@ import type { IUser } from '../../../../api/concero/user/userType'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { type IUserAction } from '../../../../api/concero/userActions/userActionType'
 import { fetchUserQuestActions } from '../../../../api/concero/userActions/fetchUserQuestActions'
+import { useAccount } from 'wagmi'
 
 interface QuestsCardProps {
 	user: IUser | null | undefined
 }
 
 export const QuestsGroup = ({ user }: QuestsCardProps) => {
+	const { address } = useAccount()
 	const [quests, setQuests] = useState<IQuest[]>([])
 
 	const handleGetQuests = async () => {
 		let userQuestActions: IUserAction[] = []
-		if (user) {
-			userQuestActions = await fetchUserQuestActions(user.address)
+
+		if (!user && !address) {
+			setQuests(await fetchQuests())
 		}
+
+		if (!user) return
+
+		userQuestActions = await fetchUserQuestActions(user.address)
 		const fetchedQuests = await fetchQuests()
 
 		const newQuests = fetchedQuests.map(quest => {
