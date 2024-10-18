@@ -98,7 +98,7 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 							setInputs({ ...inputs, email: e.target.value })
 						}}
 						value={inputs.email}
-						error={errors.email ? 'Invalid email' : ''} // Pass error
+						error={errors.email ? 'Invalid email' : ''}
 						className={errors.email ? classNames.inputError : ''}
 					/>
 					<Input
@@ -109,16 +109,16 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 							setInputs({ ...inputs, walletAddress: e.target.value })
 						}}
 						value={inputs.walletAddress}
-						error={errors.walletAddress ? 'Invalid wallet address' : ''} // Pass error
+						error={errors.walletAddress ? 'Invalid wallet address' : ''}
 						className={errors.walletAddress ? classNames.inputError : ''}
 					/>
 					<div className={classNames.productSelectContainer}>
 						<p>Product</p>
 						<ProductSelect
-							products={products} // Array of objects
-							activeItem={activeItem || { title: 'Select a product' }} // Placeholder
-							setActiveItem={setActiveItem} // Function to update
-							error={errors.product ? 'Please select a product' : ''} // Pass error
+							products={products}
+							activeItem={activeItem || { title: 'Select a product' }}
+							setActiveItem={setActiveItem}
+							error={errors.product ? 'Please select a product' : ''}
 						/>
 					</div>
 					<Input
@@ -129,9 +129,9 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 							setInputs({ ...inputs, message: e.target.value })
 						}}
 						value={inputs.message}
-						error={errors.message ? 'Message is too short. Minimum count is 100 symbols' : ''} // Pass error
-						className={errors.message ? classNames.inputError : ''} // Special class for larger field
-						style={{ paddingTop: '16px', height: '128px', textAlign: 'left' }} // Placeholder at the top and text alignment
+						error={errors.message ? 'Message is too short. Minimum count is 100 symbols' : ''}
+						className={errors.message ? classNames.inputError : ''}
+						style={{ paddingTop: '16px', height: '128px', textAlign: 'left' }}
 					/>
 					{errors.message ? (
 						errors.message

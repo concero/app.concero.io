@@ -32,13 +32,11 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
 			document.removeEventListener('keydown', handleKeyDown)
 		}
 	}, [show])
-	// Fade animation for the overlay
 	const fadeAnimation = useSpring({
 		opacity: show ? 1 : 0,
 		pointerEvents: show ? 'auto' : 'none',
 	})
 
-	// Transition for the modal appearance/disappearance
 	const transitions = useTransition(show, {
 		from: { transform: 'translateY(20px)', opacity: 0 },
 		enter: { transform: 'translateY(0)', opacity: 1 },

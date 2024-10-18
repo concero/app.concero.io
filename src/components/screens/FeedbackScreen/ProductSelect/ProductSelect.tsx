@@ -12,7 +12,6 @@ export interface ProductSelectProps {
 export default function ProductSelect({ products, activeItem, setActiveItem }: ProductSelectProps) {
 	const [isOpen, setIsOpen] = useState(false)
 
-	// Анимация для плавного открытия/закрытия
 	const fadeAnimation = useSpring({
 		opacity: isOpen ? 1 : 0,
 		transform: isOpen ? 'translateY(0)' : 'translateY(-20px)',
@@ -62,7 +61,7 @@ export default function ProductSelect({ products, activeItem, setActiveItem }: P
 									selectOption(product)
 								}}
 								className={classNames.selectOptionButton}
-								style={selectAnimation} // Анимация выбора
+								style={selectAnimation}
 							>
 								{product.title}
 							</animated.button>
