@@ -47,7 +47,13 @@ export const Modal: FC<ModalProps> = ({ title, show, setShow, children }) => {
 
 	return (
 		fadeAnimation.opacity.to(o => o > 0) && (
-			<animated.div style={fadeAnimation} className={classNames.overlay} onClick={() => { setShow(false); }}>
+			<animated.div
+				style={fadeAnimation}
+				className={classNames.overlay}
+				onClick={() => {
+					setShow(false)
+				}}
+			>
 				{transitions((style, item) =>
 					item ? (
 						<animated.div style={style} className={classNames.container} onClick={stopPropagation}>

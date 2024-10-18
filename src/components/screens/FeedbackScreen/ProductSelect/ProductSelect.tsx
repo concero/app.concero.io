@@ -58,7 +58,9 @@ export default function ProductSelect({ products, activeItem, setActiveItem }: P
 							<animated.button
 								key={product.title}
 								type="button"
-								onClick={() => { selectOption(product); }}
+								onClick={() => {
+									selectOption(product)
+								}}
 								className={classNames.selectOptionButton}
 								style={selectAnimation} // Анимация выбора
 							>

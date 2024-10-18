@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Card } from '../../cards/Card/Card'
 import ProductSelect from '../FeedbackScreen/ProductSelect/ProductSelect'
 import { Input } from './Input/Input'
-import { IconAlertCircle } from '@tabler/icons-react'
 import classNames from './FeedbackScreen.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { SuccessModal } from './SuccessModal/SuccessModal'
@@ -33,11 +32,9 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 	const [activeItem, setActiveItem] = useState<{ title: string } | null>(null)
 	const [isModalVisible, setIsModalVisible] = useState(false)
 
-	// Переработанный метод отправки формы с async/await
 	async function handleSubmit(e: any) {
 		e.preventDefault()
 
-		// Проверка ошибок
 		const newErrors = {
 			email: !inputs.email,
 			walletAddress: !inputs.walletAddress,
@@ -47,12 +44,10 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 
 		setErrors(newErrors)
 
-		// Если есть ошибки — остановить отправку
 		if (Object.values(newErrors).some(Boolean)) {
 			return
 		}
 
-		// Отправка данных
 		try {
 			const response = await axios({
 				method: 'POST',
@@ -72,13 +67,11 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 
 			console.log(response.data)
 
-			// Если запрос успешен — показать модалку
 			setIsModalVisible(true)
 		} catch (err) {
 			console.error('Error submitting form:', err)
 			setIsModalVisible(true)
 		} finally {
-			// Сброс формы
 			setInputs({
 				email: '',
 				walletAddress: '',

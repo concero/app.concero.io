@@ -21,7 +21,12 @@ export function SuccessModal({ show, onClose }: SuccessModalProps) {
 
 	return (
 		<div className={classNames.modalOverlay} onClick={onClose}>
-			<div className={classNames.modalContent} onClick={e => { e.stopPropagation(); }}>
+			<div
+				className={classNames.modalContent}
+				onClick={e => {
+					e.stopPropagation()
+				}}
+			>
 				<h2 className={classNames.modalTitle}>Feedback successfully sent!</h2>
 				<img
 					className={classNames.modalImage}
