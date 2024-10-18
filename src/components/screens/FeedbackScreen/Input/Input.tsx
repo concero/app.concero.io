@@ -1,5 +1,6 @@
 import classNames from './Input.module.pcss'
 import { type FC } from 'react'
+import { IconAlertCircle } from '@tabler/icons-react' // Corrected import
 
 interface InputProps {
 	type: 'text' | 'email' | 'password'
@@ -9,6 +10,7 @@ interface InputProps {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 	inputType?: 'input' | 'textarea'
 	className?: string
+	error?: string // Add error property
 }
 
 export const Input: FC<InputProps> = ({
@@ -19,6 +21,7 @@ export const Input: FC<InputProps> = ({
 	title,
 	inputType = 'input',
 	className,
+	error, // Destructure error property
 }) => {
 	return (
 		<div className={classNames.container}>
@@ -33,6 +36,12 @@ export const Input: FC<InputProps> = ({
 					value={value}
 					onChange={onChange}
 				/>
+			)}
+			{error && (
+				<div className={classNames.errorMessage}>
+					<IconAlertCircle size={16} color="var(--color-danger-700)"></IconAlertCircle>
+					<span>{error}</span>
+				</div>
 			)}
 		</div>
 	)
