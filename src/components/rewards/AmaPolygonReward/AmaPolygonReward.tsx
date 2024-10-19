@@ -1,22 +1,22 @@
-import classNames from './LoyaltyBonus.module.pcss'
-import { LancaLogo } from './LancaLogo'
+import classNames from './AmaPolygonReward.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { type IUser } from '../../../api/concero/user/userType'
 import { useEffect, useState } from 'react'
-import { checkLoyaltyBonus } from '../../../api/concero/rewards/loyaltyReward/checkLoyaltyBonus'
-import { claimLoyaltyBonus } from '../../../api/concero/rewards/loyaltyReward/claimLoyaltyBonus.ts'
+import { PolygonLogo } from './PolygonLogo'
+import { claimAmaPolygonReward } from '../../../api/concero/rewards/amaPolygonReward/cliamAmaPolygonReward'
+import { checkAmaPolygonReward } from '../../../api/concero/rewards/amaPolygonReward/checkAmaPolygonReward'
 
 interface Props {
 	user: IUser
 }
 
-export const LoyaltyBonus = ({ user }: Props) => {
+export const AmaPolygonReward = ({ user }: Props) => {
 	const [isShow, setIsShow] = useState(false)
 	const [rewardIsClaimed, setRewardIsClaimed] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
-		checkLoyaltyBonus(user.address).then(response => {
+		checkAmaPolygonReward(user.address).then(response => {
 			setIsShow(response)
 		})
 	}, [])
@@ -24,7 +24,7 @@ export const LoyaltyBonus = ({ user }: Props) => {
 	const claimReward = async () => {
 		try {
 			setIsLoading(true)
-			const isClaimed = await claimLoyaltyBonus(user.address)
+			const isClaimed = await claimAmaPolygonReward(user.address)
 			console.log(isClaimed)
 			setRewardIsClaimed(isClaimed)
 		} catch (err) {
@@ -38,12 +38,12 @@ export const LoyaltyBonus = ({ user }: Props) => {
 
 	return (
 		<div className={classNames.container}>
-			<div className={classNames.logoWrap}>
-				<LancaLogo />
+			<div className={classNames.logo}>
+				<PolygonLogo />
 			</div>
-			<p className={classNames.title}>Lancan Loyalty Bonus – 25 CERs</p>
+			<p className={classNames.title}>AMA with Polygon – 15 CERs</p>
 			<p className={classNames.subtitle}>
-				Congratulations! You have received 25 extra CERs for using Lanca in September
+				Congratulations! You have received 15 extra CERs for attending AMA with Polygon!
 			</p>
 			<Button
 				isDisabled={rewardIsClaimed}

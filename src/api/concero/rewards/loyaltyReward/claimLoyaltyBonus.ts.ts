@@ -1,5 +1,5 @@
 import type { Address } from 'viem'
-import { post } from '../../client'
+import { post } from '../../../client'
 
 export const claimLoyaltyBonus = async (address: Address): Promise<boolean> => {
 	const url = `${process.env.CONCERO_API_URL}/rewards/claimLoyaltyBonus/${address}`

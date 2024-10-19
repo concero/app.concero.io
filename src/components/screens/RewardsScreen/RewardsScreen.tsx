@@ -12,6 +12,7 @@ import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActi
 import { type Address } from 'viem'
 import { handleFetchUser } from '../../../web3/handleFetchUser'
 import { LoyaltyBonus } from '../../rewards/LoyaltyBonus/LoyaltyBonus'
+import { AmaPolygonReward } from '../../rewards/AmaPolygonReward/AmaPolygonReward'
 
 export const RewardsScreen = () => {
 	const { address } = useAccount()
@@ -42,6 +43,7 @@ export const RewardsScreen = () => {
 						<div className="gap-lg">
 							<ProfileCard userActions={userActions} user={user} />
 							<LoyaltyBonus user={user} />
+							<AmaPolygonReward user={user} />
 							<StreaksCard user={user} />
 						</div>
 					)}
