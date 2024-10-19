@@ -1,8 +1,8 @@
 import { type FC } from 'react'
 import { type ButtonProps } from './types'
-import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
 import { getButtonClasses } from './getButtonClasses'
 import classNames from './Button.module.pcss'
+import { Loader } from '../../layout/Loader/Loader'
 
 export const Button: FC<ButtonProps> = ({
 	size = 'md',
@@ -24,9 +24,9 @@ export const Button: FC<ButtonProps> = ({
 			onClick={!isDisabled ? onClick : undefined}
 			aria-label={variant + size}
 		>
-			{isLoading ? <LoadingAnimation /> : leftIcon}
-			<span className={classNames.innerButton}>{children}</span>
-			{rightIcon}
+			{!isLoading && leftIcon}
+			<span className={classNames.innerButton}>{isLoading ? <Loader variant="neutral" /> : children}</span>
+			{!isLoading && rightIcon}
 		</button>
 	)
 }
