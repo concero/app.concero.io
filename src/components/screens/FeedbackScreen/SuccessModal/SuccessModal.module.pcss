@@ -1,0 +1,78 @@
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #818894;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	overflow: hidden;
+}
+
+.modalContent {
+	background-color: #ffffff;
+	max-width: 500px;
+	border-radius: var(--sp-xl);
+	padding: var(--st-br-lg);
+	text-align: center;
+	animation: slideUp 0.5s ease-out;
+	position: relative;
+	top: -20%;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+@keyframes slideUp {
+	from {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.modalTitle {
+	font-size: 18px;
+	font-family: DM_Sans;
+	color: var(--color-grey-700);
+	font-weight: 500;
+	margin: var(--sp-xs) 0;
+}
+
+.modalImage {
+	width: 128px;
+	height: 128px;
+}
+
+.modalText {
+	font-size: 24px;
+	color: var(--color-grey-700);
+	font-weight: 500;
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	background-color: var(--color-grey-200);
+}
+
+.modalButton {
+	background-color: var(--color-primary-100);
+	color: var(--color-primary-600);
+	padding: var(--sp-lg) var(--sp-xl);
+	border: none;
+	border-radius: var(--sp-md);
+	cursor: pointer;
+	font-size: var(--sp-lg);
+	width: 384px;
+}
+
+.modalButton:hover {
+	background-color: var(--color-primary-200);
+}

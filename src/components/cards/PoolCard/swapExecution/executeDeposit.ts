@@ -128,7 +128,7 @@ const handleDepositTransaction = async (
 	})
 
 	const depositRequestId = decodedLog.args.requestId
-	await sleep(35_000)
+	await sleep(25_000)
 
 	await completeDeposit(swapState, swapDispatch, depositRequestId, walletClient, publicClient)
 }

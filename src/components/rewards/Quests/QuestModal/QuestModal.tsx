@@ -95,16 +95,18 @@ export const QuestModal = ({
 				</h6>
 			</div>
 			<div className="gap-xs">
-				{steps.map(step => (
-					<QuestStep
-						isCompleted={completedStepIds.includes(+step.id)}
-						addCompletedStep={addCompletedStep}
-						questId={quest._id}
-						user={user}
-						step={step}
-						key={step.id}
-					/>
-				))}
+				{steps.map(step => {
+					return (
+						<QuestStep
+							isCompleted={completedStepIds.includes(+step.id)}
+							addCompletedStep={addCompletedStep}
+							questId={quest._id}
+							user={user}
+							step={step}
+							key={step.id}
+						/>
+					)
+				})}
 			</div>
 		</div>
 	)
