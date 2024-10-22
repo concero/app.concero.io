@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useSpring, animated } from '@react-spring/web'
-import { IconChevronDown } from '@tabler/icons-react'
+import { IconAlertCircle, IconChevronDown, IconPencil } from '@tabler/icons-react'
 import classNames from './ProductSelect.module.pcss'
 
 export interface ProductSelectProps {
 	products: Array<{ title: string }>
 	activeItem: { title: string }
 	setActiveItem: (item: { title: string }) => void
+	error?: string
 }
 
-export default function ProductSelect({ products, activeItem, setActiveItem }: ProductSelectProps) {
+export default function ProductSelect({ products, activeItem, setActiveItem, error }: ProductSelectProps) {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const fadeAnimation = useSpring({
@@ -69,6 +70,13 @@ export default function ProductSelect({ products, activeItem, setActiveItem }: P
 					</div>
 				)}
 			</animated.div>
+
+			{error && (
+				<div className={classNames.errorContainer}>
+					<IconPencil size={16} color="var(--color-danger-700)" />
+					<span className={classNames.errorMessage}>{error}</span>
+				</div>
+			)}
 		</div>
 	)
 }

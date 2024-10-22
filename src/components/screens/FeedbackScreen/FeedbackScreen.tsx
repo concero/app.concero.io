@@ -51,17 +51,12 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 		try {
 			const response = await axios({
 				method: 'POST',
-				url: 'https://send.concero.io/api/v1/client/cltkp48yy0009swvupzjn5ezi/responses',
+				url: 'http://localhost:4000/api/submit_feedback',
 				data: {
-					surveyId: 'clu2fnr98001gmiks31g00uml',
-					userId: inputs.email,
-					finished: true,
-					data: {
-						email: inputs.email,
-						walletAddress: inputs.walletAddress,
-						product: activeItem?.title,
-						message: inputs.message,
-					},
+					email: inputs.email,
+					walletAddress: inputs.walletAddress,
+					product: activeItem?.title,
+					message: inputs.message,
 				},
 			})
 
@@ -70,7 +65,7 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 			setIsModalVisible(true)
 		} catch (err) {
 			console.error('Error submitting form:', err)
-			setIsModalVisible(true)
+			// setIsModalVisible(true)
 		} finally {
 			setInputs({
 				email: '',
