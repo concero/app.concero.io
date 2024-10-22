@@ -138,7 +138,6 @@ export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: Co
 							</p>
 						</div>
 					)}
-
 					<Button className={classNames.submitButton} onClick={handleSubmit}>
 						Send Feedback
 					</Button>
