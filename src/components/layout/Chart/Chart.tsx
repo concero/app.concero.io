@@ -1,5 +1,5 @@
 import { type FC, useContext, useEffect, useRef } from 'react'
-import { type IChartApi, createChart } from 'lightweight-charts'
+import { createChart, type IChartApi } from 'lightweight-charts'
 import { animated, useSpring } from '@react-spring/web'
 import { ThemeContext } from '../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
@@ -52,6 +52,7 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 		if (!chartRef.current) return
 		const chart = createChart(chartRef.current, chartOptions(colors))
 		setupChartStyles(chart, colors)
+		console.log(data)
 		seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
 		seriesRef.current.setData(data)
 		const secondSeries = addSecondSeries(chart, secondData, colors, theme)
