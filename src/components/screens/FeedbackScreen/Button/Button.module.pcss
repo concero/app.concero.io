@@ -1,0 +1,229 @@
+.button {
+	flex: none;
+	align-items: center;
+	border: 1px solid var(--color-primary-350);
+	border-radius: var(--st-br-md);
+	color: var(--color-text-primary);
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	gap: var(--sp-sm);
+	justify-content: center;
+	padding: var(--sp-md) var(--sp-md);
+	transform-origin: center;
+	transition:
+		transform 0.2s,
+		0.25s,
+		border-color 0.25s,
+		color 0.25s;
+	font-weight: 400;
+}
+
+.button:hover {
+	background-color: var(--color-primary-500);
+	border-color: #8f5df9;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 18px 0 rgb(115 53 247 / 30%);
+}
+
+.button:active {
+	background-color: var(--color-primary-600);
+	border-color: var(--color-primary-500);
+	transform: scale(0.98);
+}
+
+.xs {
+	font-size: 0.875rem;
+	gap: var(--sp-xs);
+	padding: var(--sp-xs) var(--sp-sm);
+	min-height: 28px;
+}
+
+.sm {
+	font-size: 0.875rem;
+	gap: var(--sp-sm);
+	padding: var(--sp-sm) var(--sp-sm);
+	min-height: 36px;
+}
+
+.md {
+	font-size: 20px;
+	gap: var(--sp-md);
+	min-height: 44px;
+	border-radius: var(--st-br-md);
+}
+
+.lg {
+	font-size: 20px;
+	padding: var(--sp-md) var(--sp-lg);
+	border-radius: var(--st-br-lg);
+	min-height: 56px;
+}
+
+.xl {
+	font-size: 2rem;
+	padding: var(--sp-sm) var(--sp-sm);
+}
+
+.sq-xs {
+	border-radius: var(--st-br-sm);
+	padding: var(--sp-xs) var(--sp-xs);
+}
+
+.sq-sm {
+	padding: var(--sp-sm) var(--sp-sm);
+}
+
+.sq-md {
+	padding: var(--sp-md) var(--sp-md);
+}
+
+.sq-lg {
+	padding: var(--sp-lg) var(--sp-lg);
+}
+
+.primary {
+	background: #7335f7;
+	border-color: transparent;
+	color: var(--color-base-white);
+}
+
+.secondary {
+	background-color: var(--color-primary-700);
+	border-color: var(--color-primary-650);
+	color: var(--color-primary-400);
+}
+
+.subtle {
+	background-color: var(--color-grey-650);
+	border: 1px solid var(--color-grey-600);
+	color: var(--color-text-secondary);
+}
+
+.subtle:hover {
+	background-color: var(--color-grey-600);
+	border-color: var(--color-grey-550);
+}
+
+.subtle:active {
+	background-color: var(--color-grey-650);
+}
+
+.isLoading {
+	background-color: var(--color-primary-650);
+	border-color: var(--color-primary-700);
+	cursor: wait;
+}
+
+.isLoading:hover {
+	background-color: var(--color-primary-650);
+	border-color: var(--color-primary-700);
+	cursor: wait;
+}
+
+.isDisabled {
+	background: none;
+	background-color: var(--color-primary-750);
+	border-color: var(--color-primary-650);
+	color: var(--color-primary-400);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.isDisabled:hover {
+	background: none;
+	background-color: var(--color-primary-750);
+	border-color: var(--color-primary-650);
+}
+
+.isDisabled.subtle {
+	background-color: var(--color-grey-650);
+	border-color: var(--color-grey-600);
+	color: var(--color-grey-550);
+}
+
+.pressable-down:active {
+	transform: translateY(2px);
+}
+
+.black {
+	background-color: transparent;
+	border: 1px solid transparent;
+	color: var(--color-text-secondary);
+}
+
+.black:hover {
+	background-color: var(--color-grey-650);
+	border: 1px solid transparent;
+	box-shadow: unset;
+	transform: unset;
+}
+
+.black:active {
+	background-color: var(--color-grey-600);
+	border: 1px solid transparent;
+}
+
+.filled {
+	background-color: var(--color-primary-500);
+	border: none;
+	color: var(--color-text-primary);
+}
+
+.secondary:hover {
+	background-color: var(--color-primary-650);
+	border-color: var(--color-primary-500);
+}
+
+.light {
+	border-radius: var(--st-br-xl);
+	border: 1px solid rgb(from var(--color-primary-700) r g b / 20%);
+	background: var(--color-primary-750);
+	color: var(--color-primary-550);
+}
+
+.light:hover {
+	background: var(--color-primary-750);
+	border: 1px solid rgb(from var(--color-primary-700) r g b / 20%);
+	border-radius: var(--st-br-xl);
+}
+
+.convex {
+	border-radius: var(--st-br-md);
+	border: 1px solid var(--color-grey-600);
+	background: var(--color-base-white);
+	color: var(--color-text-secondary);
+}
+
+:global(.dark) .convex {
+	background: var(--color-grey-600);
+}
+
+:global(.dark) .isDisabled.convex {
+	background: var(--color-base-black);
+}
+
+.convex:hover {
+	background: var(--color-base-white);
+	border: 1px solid var(--color-grey-600);
+	color: var(--color-text-secondary);
+	border-radius: var(--st-br-md);
+	box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
+	transform: translateY(-2px);
+}
+
+:global(.dark) .convex:hover {
+	background: var(--color-grey-625);
+}
+
+.transparent {
+	background-color: transparent;
+	border: solid 1px var(--color-base-black);
+}
+
+.transparent:hover {
+	background-color: transparent;
+	border: solid 1px var(--color-base-black);
+	transform: unset;
+	box-shadow: none;
+}

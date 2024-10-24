@@ -12,4 +12,5 @@ export const routes = {
 	portfolio: '/portfolio',
 	notFound: '/404',
 	resetPassword: '/reset-password',
+	feedback: '/feedback',
 }

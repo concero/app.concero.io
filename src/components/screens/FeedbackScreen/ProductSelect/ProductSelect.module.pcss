@@ -1,0 +1,62 @@
+.dropdownSelect {
+	position: relative;
+}
+
+.dropdownButton {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: var(--color-grey-100);
+	width: 100%;
+	padding: var(--sp-md) var(--sp-lg);
+	border-radius: var(--st-br-md);
+	color: var(--color-grey-500);
+	text-align: left;
+	font-size: 16px;
+	font-weight: 500;
+	max-width: 393px;
+}
+
+.chevronIcon {
+	color: var(--color-grey-500);
+}
+
+.selectOptionsContainer {
+	position: absolute;
+	width: 100%;
+	top: calc(100% + 0px);
+	left: 0;
+	z-index: 1000;
+}
+
+.selectOptions {
+	background-color: var(--color-grey-100);
+	border-radius: var(--st-br-md);
+}
+
+.selectOptionButton {
+	width: 100%;
+	padding: var(--sp-md) var(--sp-lg);
+	color: var(--color-grey-500);
+	background: var(--color-grey-100);
+	text-align: left;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.errorContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 8px;
+	color: var(--color-danger-700);
+	gap: 4px;
+}
+
+.errorMessage {
+	color: var(--color-danger-700);
+	font-size: 14px;
+	font-weight: 400;
+}
