@@ -14,9 +14,7 @@ interface UserActionProps {
 }
 
 export const UserAction = ({ action }: UserActionProps) => {
-	console.log(action)
 	const [value, setValue] = useState('')
-	const isQuest = action.actionType === ActionType.questReward
 
 	const getTransactionInfo = () => {
 		const { from, to, type } = action.data as UserActionTxData
@@ -52,7 +50,7 @@ export const UserAction = ({ action }: UserActionProps) => {
 			<div className="row">
 				<span className={`${classNames.points} body2`}>+ {action.points?.toFixed(2)} CERs</span>
 				<p className={`${classNames.date} body2`}>
-					{formatDateTime(new Date(action.timestamp), 'D MMM YYYY, hh:mm')}
+					{formatDateTime(new Date(action.timestamp), 'D MMM YYYY, HH:mm')}
 				</p>
 			</div>
 		</div>
