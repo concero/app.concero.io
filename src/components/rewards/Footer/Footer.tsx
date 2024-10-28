@@ -45,13 +45,17 @@ export const Footer = () => {
 				<div className={classNames.navigation}>
 					<div className={classNames.navigationLeft}>
 						<div className={classNames.linkGroup}>
-							<p className="body2">Documentation:</p>
-							<Button className={classNames.link} variant="tetrary" size="md">
-								Documentation
-							</Button>
-							<Button className={classNames.link} variant="tetrary" size="md">
-								White paper
-							</Button>
+							<p className="body2">Integrate:</p>
+							<a target="_blank" rel="noreferrer" href="https://docs.concero.io">
+								<Button className={classNames.link} variant="tetrary" size="md">
+									Documentation
+								</Button>
+							</a>
+							<a target="_blank" rel="noreferrer" href="https://www.concero.io/whitepaper.pdf">
+								<Button className={classNames.link} variant="tetrary" size="md">
+									White paper
+								</Button>
+							</a>
 						</div>
 
 						<div className={classNames.linkGroup}>
