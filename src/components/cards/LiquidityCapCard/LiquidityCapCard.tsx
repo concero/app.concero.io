@@ -1,37 +1,28 @@
-import { useTranslation } from 'react-i18next'
 import { Card } from '../Card/Card'
 import classNames from './LiquidityCapCard.module.pcss'
 import { ProgressBar } from '../../layout/progressBar/ProgressBar'
-import { useEffect, useState } from 'react'
-import { getMaxCap } from './getLiquidityCap'
-import { getPoolLiquidity } from '../../../api/concero/getPoolLiquidity'
+import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
+import { useGetLiquidity } from '../../pool/poolScripts/useGetLiquidity'
 
 export const LiquidityCapCard = () => {
-	const [maxCap, setMaxCap] = useState<number>(0)
-	const [poolLiquidity, setPoolLiquidity] = useState<number>(0)
-	const { t } = useTranslation()
-
+	const { poolLiquidity, maxCap, isLoading } = useGetLiquidity()
 	const percentage = (poolLiquidity / maxCap) * 100
-
-	const setCap = async () => {
-		const cap = await getMaxCap()
-		const newPoolLiquidity = await getPoolLiquidity()
-
-		setPoolLiquidity(Number(newPoolLiquidity))
-		setMaxCap(Number(cap))
-	}
-
-	useEffect(() => {
-		setCap()
-	}, [])
 
 	return (
 		<Card className={`${classNames.liquidityCapCard} cardConvex`}>
-			<h4 className="body4">{t('liquidityCap.title')}</h4>
-			<h2>
-				${poolLiquidity.toFixed(0)} <span className={classNames.maxValue}>/ ${maxCap}</span>
-			</h2>
-			<ProgressBar percentage={percentage || 0} />
+			<h4>Pool Liquidity</h4>
+			{isLoading ? (
+				<SkeletonLoader width={128} height={27.5} />
+			) : (
+				<h3 className={classNames.value}>
+					{poolLiquidity.toFixed(0)} <span className={classNames.maxValue}>/{maxCap}</span>
+				</h3>
+			)}
+			{isLoading ? <SkeletonLoader height={8} /> : <ProgressBar percentage={percentage || 0} />}
+			<div className="row jsb ac">
+				<p className="body1">0</p>
+				<p className="body1">{maxCap}</p>
+			</div>
 		</Card>
 	)
 }

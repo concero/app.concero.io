@@ -1,6 +1,6 @@
 import { type FC, memo, useCallback, useEffect, useState } from 'react'
 import { IconChevronDown } from '@tabler/icons-react'
-import { Chart } from '../../layout/Chart/Chart'
+import { Chart } from '../../layout/Charts/Chart/Chart'
 import classNames from './EarnChartCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { type EarnChartCardProps } from './types'

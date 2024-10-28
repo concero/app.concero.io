@@ -1,0 +1,56 @@
+import { useEffect, useState } from 'react'
+import { ChartCard } from '../../cards/LineChartCard/ChartCard'
+import classNames from './AverageApyCard.module.pcss'
+import type { ChartData } from '../../../types/utils'
+import { getUniqueChatData, groupDataByWeeks } from '../../../utils/charts'
+import { type Fee } from '../../../api/concero/types'
+import { createTimeFilters } from '../../../utils/chartTimeFilters'
+
+const timeFilters = createTimeFilters()
+
+interface Props {
+	fees: Fee[]
+	isLoading: boolean
+}
+
+export const AverageApyCard = ({ fees, isLoading }: Props) => {
+	const [apyData, setApyData] = useState<ChartData[]>([])
+	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
+	const [commonValue, setCommonValue] = useState<string>('')
+
+	const getTotalVolume = async () => {
+		const chartData = fees.map(fee => {
+			const apyOnFeeFormula = fee.percentReturned * 365.25
+
+			return {
+				time: fee.timestamp * 1000,
+				value: apyOnFeeFormula,
+			}
+		})
+
+		const weeklyAverageData = groupDataByWeeks(getUniqueChatData(chartData))
+
+		setCommonValue(weeklyAverageData[weeklyAverageData.length - 2].value.toFixed(0))
+		setApyData(weeklyAverageData)
+	}
+
+	useEffect(() => {
+		if (!fees) return
+
+		void getTotalVolume()
+	}, [fees, activeFilter])
+
+	return (
+		<ChartCard
+			isLoading={isLoading}
+			className={classNames.averageApyCard}
+			setActiveItem={setActiveFilter}
+			activeItem={activeFilter}
+			filterItems={timeFilters}
+			titleCard="Pool APY"
+			subtitle="Total APY"
+			data={apyData}
+			commonValue={`${commonValue}%`}
+		/>
+	)
+}

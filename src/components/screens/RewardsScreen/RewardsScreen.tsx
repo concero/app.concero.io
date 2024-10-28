@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { type IUser } from '../../../api/concero/user/userType'
 import { StreaksCard } from '../../rewards/StreaksCard/StreaksCard'
-import { Footer } from '../../rewards/Footer/Footer'
 import type { IUserAction } from '../../../api/concero/userActions/userActionType'
 import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActions'
 import { type Address } from 'viem'
@@ -36,23 +35,19 @@ export const RewardsScreen = () => {
 	}
 
 	return (
-		<>
-			<div className={classNames.rewardsScreenContainer}>
-				<div className={classNames.rewardsWrap}>
-					{user && (
-						<div className="gap-lg">
-							<ProfileCard userActions={userActions} user={user} />
-							<LoyaltyBonus user={user} />
-							<AmaPolygonReward user={user} />
-							<StreaksCard user={user} />
-						</div>
-					)}
-					<QuestsGroup user={user} />
-					<LeaderboardCard user={user} />
-				</div>
+		<div className={classNames.rewardsScreenContainer}>
+			<div className={classNames.rewardsWrap}>
+				{user && (
+					<div className="gap-lg">
+						<ProfileCard userActions={userActions} user={user} />
+						<LoyaltyBonus user={user} />
+						<AmaPolygonReward user={user} />
+						<StreaksCard user={user} />
+					</div>
+				)}
+				<QuestsGroup user={user} />
+				<LeaderboardCard user={user} />
 			</div>
-
-			<Footer />
-		</>
+		</div>
 	)
 }
