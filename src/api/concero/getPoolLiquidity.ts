@@ -44,5 +44,6 @@ export const getPoolLiquidity = async (childrenOnly = false) => {
 		return BigInt(totalLiquidity)
 	}
 
+	console.log(totalLiquidity, formatUnits(BigInt(totalLiquidity), usdcDecimals))
 	return Number(formatUnits(BigInt(totalLiquidity), usdcDecimals))
 }
