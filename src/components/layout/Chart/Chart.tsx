@@ -19,28 +19,6 @@ const useFadeInAnimation = () =>
 		reset: true,
 	})
 
-const averageData = (data: ChartData[], interval: number): ChartData[] => {
-	const result: ChartData[] = []
-	let sum = 0
-	let count = 0
-
-	for (let i = 0; i < data.length; i++) {
-		sum += data[i].value
-		count++
-
-		if (count === interval || i === data.length - 1) {
-			result.push({
-				date: data[i].date,
-				value: sum / count,
-			})
-			sum = 0
-			count = 0
-		}
-	}
-
-	return result
-}
-
 export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 	const chartRef = useRef<HTMLDivElement>(null)
 	const tooltipRef = useRef<HTMLDivElement | null>(null)
@@ -52,13 +30,14 @@ export const Chart: FC<ChartProps> = ({ data, secondData = null }) => {
 		if (!chartRef.current) return
 		const chart = createChart(chartRef.current, chartOptions(colors))
 		setupChartStyles(chart, colors)
-		console.log(data)
+
 		seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
 		seriesRef.current.setData(data)
 		const secondSeries = addSecondSeries(chart, secondData, colors, theme)
 		tooltipRef.current = createTooltip()
 		chartRef.current.appendChild(tooltipRef.current)
 		chart.timeScale().fitContent()
+
 		const handleResize = () => {
 			const { clientWidth, clientHeight } = chartRef.current!
 			chart.resize(clientWidth, clientHeight)

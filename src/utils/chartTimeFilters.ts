@@ -9,19 +9,15 @@ dayjs.extend(isSameOrAfter)
 dayjs.extend(weekday)
 dayjs.extend(isSameOrBefore)
 
-export const getStartOfToday = () => {
-	return dayjs().startOf('day').subtract(1, 'day').valueOf() / 1000
-}
-
-const getStartOfThisWeek = () => {
-	return dayjs().subtract(6, 'day').valueOf() / 1000
-}
-
 const getStartOfThisMonth = () => {
 	return dayjs().subtract(29, 'day').valueOf() / 1000
 }
 
-type TimeOption = 'today' | 'this week' | 'this month' | 'all-time'
+const getStartOfThreeMonthAgo = () => {
+	return dayjs().subtract(3, 'month').valueOf() / 1000
+}
+
+type TimeOption = 'M' | '3M' | 'All'
 
 export interface SelectItem {
 	title: string
@@ -35,21 +31,15 @@ export const createTimeFilters = () => {
 
 	return [
 		{
-			title: 'Today',
-			value: 'today',
-			startTime: getStartOfToday(),
-			endTime: now,
-		},
-		{
-			title: 'This week',
-			value: 'this week',
-			startTime: getStartOfThisWeek(),
-			endTime: now,
-		},
-		{
-			title: 'This month',
-			value: 'this month',
+			title: 'M',
+			value: '3M',
 			startTime: getStartOfThisMonth(),
+			endTime: now,
+		},
+		{
+			title: '3M',
+			value: '3M',
+			startTime: getStartOfThreeMonthAgo(),
 			endTime: now,
 		},
 		{

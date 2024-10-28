@@ -8,6 +8,7 @@ import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
 import { handleFetchUser } from './web3/handleFetchUser'
 import { type IUser } from './api/concero/user/userType'
+import { Footer } from './components/rewards/Footer/Footer'
 
 const PoolScreen = lazy(
 	async () =>
@@ -74,6 +75,7 @@ export const Navigator = () => {
 					<Route path={routes.root} element={<Navigate to={routes.pool} />} />
 					<Route path={'/*'} element={<Navigate to={routes.pool} />} />
 				</Routes>
+				<Footer />
 			</AppScreen>
 		</BrowserRouter>
 	)

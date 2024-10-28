@@ -27,12 +27,12 @@ export const chartOptions = colors => ({
 	},
 	crosshair: {
 		horzLine: {
-			visible: true,
+			visible: false,
 			labelVisible: false,
 			color: colors.grey.dark,
 		},
 		vertLine: {
-			visible: true,
+			visible: false,
 			labelVisible: false,
 			color: colors.grey.dark,
 		},
@@ -58,7 +58,7 @@ export const areaSeriesOptions = (colors, theme, lineNumber = null) => {
 
 	return {
 		baseLineVisible: false,
-		lineType: 2,
+		lineType: 0,
 		lineWidth: 1.8,
 		strokeLinecap: 'round',
 		topColor: getTopColor(),

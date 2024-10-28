@@ -41,12 +41,12 @@ export const TotalVolumeCard = () => {
 	return (
 		<LineChartCard
 			className={classNames.totalVolumeCard}
-			titleCard="Total Volume"
+			titleCard="Volume"
 			filterItems={timeFilters}
 			activeItem={activeFilter}
 			setActiveItem={setActiveFilter}
 			data={volumeData}
-			commonValue={`${commonValue} USDC`}
+			commonValue={commonValue}
 		/>
 	)
 }
