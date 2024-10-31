@@ -1,5 +1,4 @@
 import { type Dispatch, useEffect } from 'react'
-import { type Config } from '@wagmi/core'
 import { getBalance } from '../../../utils/getBalance'
 import { type SwapAction, type SwapState } from './swapReducer/types'
 import { calculateLpAmount, calculateWithdrawableAmount } from '../../../api/concero/pool/poolLpTokens'
@@ -10,7 +9,6 @@ interface UseSwapCardEffectsProps {
 	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
 	address: string | undefined
-	connector: NonNullable<Config<TPublicClient>['connector']> | undefined
 }
 
 const setLpBalance = async (swapState: SwapState, swapDispatch: Dispatch<SwapAction>) => {
@@ -35,8 +33,8 @@ const setLpBalance = async (swapState: SwapState, swapDispatch: Dispatch<SwapAct
 		type: 'SET_AMOUNT',
 		direction: 'to',
 		payload: {
-			amount: currentBalance,
-			amount_usd: poolMode === 'deposit' ? from.amount : from.amount,
+			amount: String(currentBalance),
+			amount_usd: Number(from.amount),
 		},
 	})
 }

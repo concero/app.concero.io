@@ -3,6 +3,7 @@ import classNames from './SwapProgress.module.pcss'
 import { Avatar } from '../../../tags/Avatar/Avatar'
 import { type Direction } from '../../../../types/StandardRoute'
 import { useTranslation } from 'react-i18next'
+import { formatNumber } from '../../../../utils/formatting'
 
 interface TokenInfoProps {
 	direction: Direction
@@ -15,7 +16,7 @@ export const TokenInfo: FC<TokenInfoProps> = ({ direction }) => {
 	return (
 		<div className={classNames.tokenInfoItem}>
 			<Avatar src={token.logoURI} size="sm" />
-			<h4>{amount}</h4>
+			<h4>{formatNumber(Number(amount))}</h4>
 			<h4>{token.symbol}</h4>
 			<h4>{t('swapProgressCard.on')}</h4>
 			<h4>{chain.name}</h4>

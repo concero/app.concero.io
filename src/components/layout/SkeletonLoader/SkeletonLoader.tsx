@@ -8,7 +8,7 @@ interface SkeletonLoaderProps {
 
 export function SkeletonLoader({ className, width, height }: SkeletonLoaderProps) {
 	return (
-		<span
+		<div
 			style={{
 				width,
 				height,

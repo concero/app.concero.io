@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi'
 import { Button } from '../../buttons/Button/Button'
 import { trackEvent } from '../../../hooks/useTracking'
 import { action as tracingAction, category } from '../../../constants/tracking'
-import { completeWithdrawal, retryWithdrawal } from '../PoolCard/swapExecution/requestWithdraw'
+import { completeWithdrawal, retryWithdrawal } from '../PoolCard/poolExecution/requestWithdraw'
 
 interface Props {
 	action: UserTransaction

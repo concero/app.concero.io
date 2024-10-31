@@ -1,11 +1,25 @@
-import { type StandardRoute } from '../../../../types/StandardRoute'
 import { type Chain, type Provider } from '../../../../api/concero/types'
-import { type StageStep } from '../../EarnHeaderCard/ManageModal/SwapProgress/TransactionStep'
 import { type TransactionStatus } from 'rango-sdk'
-import { type ButtonType } from '../SwapButton/constants'
+import { type ErrorType } from '../SwapButton/constants'
 import { type TokenAmount } from '../../../../utils/TokenAmount'
-import { type Address } from 'viem'
-import { type UserTransaction } from '../../../pool/UserActions/UserActions'
+
+export enum StageType {
+	approve = 1,
+	requestTx = 2,
+	transaction = 2,
+	success = 3,
+	warning = 4,
+}
+
+export type StageStepStatus = 'idle' | 'pending' | 'await' | 'success' | 'error'
+
+export interface StageStep {
+	title: string
+	status: StageStepStatus
+	type: StageType
+	body?: string
+	txLink?: string | null | undefined
+}
 
 export interface SwapStateDirection {
 	chain: {
@@ -26,12 +40,7 @@ export interface SwapStateDirection {
 	}
 	amount: string
 	amount_usd: number
-	address: Address
-}
-
-export interface ButtonState {
-	type: ButtonType
-	message?: string
+	address: string
 }
 
 export enum SwapCardStage {
@@ -39,7 +48,7 @@ export enum SwapCardStage {
 	progress = 'progress',
 	failed = 'failed',
 	success = 'success',
-	contactSupport = 'contactSupport',
+	warning = 'warning',
 }
 
 export interface Balance {
@@ -49,26 +58,18 @@ export interface Balance {
 
 export interface SwapState {
 	poolMode: 'deposit' | 'withdraw'
-	settingsModalOpen: boolean
 	from: SwapStateDirection
 	to: SwapStateDirection
-	routes: StandardRoute[]
-	isNoRoutes: boolean
-	isLoading: boolean
-	selectedRoute: StandardRoute | null
+	steps: StageStep[]
+
 	typingTimeout: number
 	stage: SwapCardStage
-	steps: StageStep[]
 	settings: Settings
-	buttonState: ButtonState
-	balance: Balance | null
-	walletBalances: any
-	isDestinationAddressVisible: boolean
+	balance: Balance
+
+	isLoading: boolean
 	isTestnet: boolean
-	isWithdrawInitiated: boolean
-	withdrawDeadline: number | null
-	response: null
-	status: 'pending' | 'success' | 'failure' | 'awaiting'
+	inputError: null
 }
 
 export interface Settings {
@@ -101,10 +102,10 @@ export enum SwapActionType {
 	UPDATE_LAST_SWAP_STEP = 'UPDATE_LAST_SWAP_STEP',
 	UPDATE_PREV_RANGO_STEPS = 'UPDATE_PREV_RANGO_STEPS',
 	SET_WALLET_BALANCES = 'SET_WALLET_BALANCES',
+	SET_INPUT_ERROR = 'SET_INPUT_ERROR',
 }
 
 export type SwapAction =
-	| { type: 'SWITCH_POOL_MODE'; payload: 'deposit' | 'withdraw' }
 	| { type: 'POPULATE_ROUTES'; payload: any; fromAmount: string | null }
 	| { type: 'CLEAR_ROUTES' }
 	| { type: 'SET_BALANCE'; payload: Balance | null }
@@ -123,16 +124,16 @@ export type SwapAction =
 	| { type: 'SET_SWAP_STAGE'; payload: SwapCardStage }
 	| { type: 'TOGGLE_SETTINGS_MODAL_OPEN' }
 	| { type: 'SET_SETTINGS'; payload: any }
-	| { type: 'SET_SWAP_STEPS'; payload: any[] }
-	| { type: 'APPEND_SWAP_STEP'; payload: any }
+	| { type: 'SET_SWAP_STEPS'; payload: StageStep[] }
+	| { type: 'APPEND_SWAP_STEP'; payload: StageStep[] }
 	| { type: 'SET_TO_ADDRESS'; payload: string }
 	| { type: 'UPSERT_SWAP_STEP'; payload: any }
 	| { type: 'UPDATE_LAST_SWAP_STEP' }
 	| { type: 'UPDATE_PREV_RANGO_STEPS'; currentTransactionStatus: TransactionStatus }
-	| { type: SwapActionType.SET_WALLET_BALANCES; balances: ConceroBalanceResponse | null }
+	| { type: SwapActionType.SET_WALLET_BALANCES; balances: any }
 	| { type: 'SET_IS_NO_ROUTES'; status: boolean }
 	| { type: 'SWAP_DIRECTIONS' }
 	| { type: 'SET_IS_DESTINATION_ADDRESS_VISIBLE'; status: boolean }
 	| { type: 'TOGGLE_TESTNET' }
-	| { type: 'SET_IS_WITHDRAW_INITIATED'; payload: boolean }
-	| { type: 'SET_ACTUAL_WITHDRAW_DEADLINE'; payload: null | UserTransaction }
+	| { type: 'SET_IS_SUFFICIENT_LIQUIDITY'; payload: boolean }
+	| { type: 'SET_INPUT_ERROR'; payload: ErrorType | null }

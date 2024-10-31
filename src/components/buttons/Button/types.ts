@@ -10,4 +10,5 @@ export interface ButtonProps {
 	isDisabled?: boolean
 	className?: string
 	children?: ReactNode
+	isFull?: boolean
 }

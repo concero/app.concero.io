@@ -1,21 +1,19 @@
 import { useState } from 'react'
-import { useAccount } from 'wagmi'
 import { useSwapReducer } from './swapReducer/swapReducer'
 import { useSwapCardEffects } from './PoolCardEffects'
 import { SwapInput } from './SwapInput/SwapInput'
 import { SwapProgress } from './SwapProgress/SwapProgress'
 import { SwapCardStage } from './swapReducer/types'
-import { SwapCardHeader } from './SwapCardHeader/SwapCardHeader'
 import { Button } from '../../buttons/Button/Button'
 import { Modal } from '../../modals/Modal/Modal'
+import classNames from './PoolCard.module.pcss'
+import { useAccount } from 'wagmi'
 
 export const PoolCard = () => {
+	const { address } = useAccount()
 	const [swapState, swapDispatch] = useSwapReducer()
-	const { address, connector } = useAccount()
 
 	const isInputStage = swapState.stage === SwapCardStage.input
-	// const isSuccess = swapState.stage === SwapCardStage.success
-
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
 	const handleGoBack = () => {
@@ -26,11 +24,12 @@ export const PoolCard = () => {
 		swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
 	}
 
-	useSwapCardEffects({ swapState, swapDispatch, address, connector })
+	useSwapCardEffects({ swapDispatch, swapState, address })
 
 	return (
 		<>
 			<Button
+				className={classNames.button}
 				onClick={() => {
 					setIsOpen(true)
 				}}
@@ -39,8 +38,13 @@ export const PoolCard = () => {
 				Deposit
 			</Button>
 
-			<Modal isHeaderVisible={false} show={isOpen} setShow={setIsOpen}>
-				<SwapCardHeader swapState={swapState} swapDispatch={swapDispatch} />
+			<Modal
+				position="top"
+				className={classNames.container}
+				isHeaderVisible={false}
+				show={isOpen}
+				setShow={setIsOpen}
+			>
 				{isInputStage ? (
 					<SwapInput swapState={swapState} swapDispatch={swapDispatch} />
 				) : (

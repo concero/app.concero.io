@@ -40,6 +40,11 @@
 	transform: scale(0.98);
 }
 
+.button:disabled {
+	background-color: var(--color-grey-50);
+	border-color: var(--color-grey-400);
+}
+
 button:focus-visible {
 	box-shadow:
 		0 0 0 2px #f9fbfb,
@@ -62,8 +67,9 @@ button:focus-visible {
 }
 
 .lg {
-	font-size: 0.875rem;
+	font-size: 1rem;
 	font-weight: 500;
+	height: 48px;
 	padding: var(--sp-md) var(--sp-xl);
 }
 
@@ -117,9 +123,13 @@ button:focus-visible {
 }
 
 .isLoading {
+	background-color: var(--color-primary-600);
+	border-color: var(--color-primary-700);
 	cursor: wait;
 }
 .isLoading:hover {
+	background-color: var(--color-primary-600);
+	border-color: var(--color-primary-700);
 	cursor: wait;
 }
 

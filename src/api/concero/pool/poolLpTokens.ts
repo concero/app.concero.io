@@ -31,24 +31,24 @@ export const getLpTotalSupply = async () => {
 	return Number(formatUnits(totalSupply, lpTokenDecimals))
 }
 
-export const calculateLpAmount = async (amountToDeposit: bigint) => {
+export const calculateLpAmount = async (amountToDeposit: bigint): Promise<bigint> => {
 	const childPoolsBalance = await getPoolLiquidity(true)
 
-	return await client.readContract({
+	return (await client.readContract({
 		address: config.PARENT_POOL_CONTRACT,
 		abi: ParentPool,
 		functionName: 'calculateLpAmount',
 		args: [childPoolsBalance, amountToDeposit],
-	})
+	})) as bigint
 }
 
-export const calculateWithdrawableAmount = async (clpAmount: bigint) => {
+export const calculateWithdrawableAmount = async (clpAmount: bigint): Promise<bigint> => {
 	const childPoolsBalance = await getPoolLiquidity(true)
 
-	return await client.readContract({
+	return (await client.readContract({
 		address: config.PARENT_POOL_CONTRACT,
 		abi: ParentPool,
 		functionName: 'calculateWithdrawableAmount',
 		args: [childPoolsBalance, clpAmount],
-	})
+	})) as bigint
 }

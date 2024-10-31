@@ -3,12 +3,10 @@ import { handleBeforeUnload } from '../../../../utils/leavingPageEvents'
 import { type SwapAction, type SwapState } from './types'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action as trackingAction, category as trackingCategory } from '../../../../constants/tracking'
+import { type ErrorType } from '../SwapButton/constants'
 
 export const swapActions: SwapAction = {
 	/* ROUTE-RELATED ACTIONS */
-	SWITCH_POOL_MODE: (state: SwapState, action) => {
-		return { ...state, poolMode: action.payload, from: state.to, to: state.from }
-	},
 	POPULATE_ROUTES: (state, action) => {
 		if (action.fromAmount !== state.from.amount) return state
 		return { ...state, routes: action.payload, selectedRoute: action.payload[0] }
@@ -47,7 +45,7 @@ export const swapActions: SwapAction = {
 	// SET_RESPONSE: (state, action: SwapAction) => ({ ...state, response: action.payload }),
 	TOGGLE_INSURANCE: (state, action) => {
 		trackEvent({
-			category: trackingCategory.PoolCard,
+			category: trackingCategory.SwapCard,
 			action: trackingAction.ToggleInsurance,
 			label: 'toggle_insurance',
 		})
@@ -62,8 +60,8 @@ export const swapActions: SwapAction = {
 		return { ...state, stage: action.payload }
 	},
 	TOGGLE_SETTINGS_MODAL_OPEN: state => {
-		void trackEvent({
-			category: trackingCategory.PoolCard,
+		trackEvent({
+			category: trackingCategory.SwapCard,
 			action: trackingAction.ToggleSettingsModal,
 			label: 'toggle_settings_modal_open',
 			data: { isOpen: !state.settingsModalOpen },
@@ -71,8 +69,8 @@ export const swapActions: SwapAction = {
 		return { ...state, settingsModalOpen: !state.settingsModalOpen }
 	},
 	SET_SETTINGS: (state, action) => {
-		void trackEvent({
-			category: trackingCategory.PoolCard,
+		trackEvent({
+			category: trackingCategory.SwapCard,
 			action: trackingAction.ToggleSettingsModal,
 			label: 'set_settings',
 			data: state.settings,
@@ -94,6 +92,22 @@ export const swapActions: SwapAction = {
 		return { ...state, steps: newSteps }
 	},
 	UPDATE_LAST_SWAP_STEP: updateLastSwapState,
+	// UPDATE_PREV_RANGO_STEPS: (state: SwapState, action: SwapAction): SwapState => {
+	// 	if (!state.steps.length) return state
+	// 	if (action.currentTransactionStatus === 'failed') {
+	// 		return updateLastSwapState(state)
+	// 	} else {
+	// 		const newStatuses = state.steps.map((step: StageStep): StageStep => {
+	// 			if (step.title === 'Bridging transaction') {
+	// 				return { ...step, status: 'success' }
+	// 			} else if (step.title === 'Action required') {
+	// 				return { ...step, status: 'success', title: 'Transaction approved', body: 'Your transaction has been successfully approved.' }
+	// 			}
+	// 			return step
+	// 		})
+	// 		return { ...state, steps: newStatuses }
+	// 	}
+	// },
 	SET_WALLET_BALANCES: (state: SwapState, action: SwapAction) => ({ ...state, walletBalances: action.balances }),
 	SET_IS_NO_ROUTES: (state: SwapState, action: SwapAction) => ({ ...state, isNoRoutes: action.status }),
 	SWAP_DIRECTIONS: (state: SwapState) => {
@@ -114,13 +128,13 @@ export const swapActions: SwapAction = {
 		const isTestnet = !state.isTestnet
 		return { ...state, isTestnet }
 	},
-	SET_IS_WITHDRAW_INITIATED: (state: SwapState, action) => {
-		const isWithdrawInitiated = action.payload
-		return { ...state, isWithdrawInitiated }
+	SET_IS_SUFFICIENT_LIQUIDITY: (state: SwapState, action: SwapAction) => {
+		const isSufficientLiquidity = action.payload
+		return { ...state, isSufficientLiquidity }
 	},
-	SET_ACTUAL_WITHDRAW_DEADLINE: (state: SwapState, action) => {
-		const withdrawDeadline = action.payload
-		return { ...state, withdrawDeadline }
+	SET_INPUT_ERROR: (state: SwapState, action: { payload: ErrorType | null }) => {
+		const inputError = action.payload
+		return { ...state, inputError }
 	},
 }
 

@@ -1,54 +1,12 @@
 .container {
 	width: 100%;
-	padding: var(--sp-md);
 	cursor: pointer;
-	border-radius: var(--st-br-md);
-	border: 1px solid transparent;
 	transition: 0.2s ease-in-out;
-	gap: var(--sp-md);
+	gap: var(--sp-lg);
 }
 
-.container:hover {
-	background-color: var(--color-grey-650);
-	border: 1px solid var(--color-grey-600);
-}
-
-.header {
+.separator {
 	width: 100%;
-	align-items: center;
-}
-
-.routeStepsContainer {
-	flex-direction: row;
-	gap: var(--sp-sm);
-	justify-content: center;
-	align-items: center;
-}
-
-.rowContainer {
-	flex-direction: row;
-	gap: var(--sp-sm);
-	justify-content: center;
-	align-items: center;
-}
-
-.tags {
-	width: 100%;
-	align-items: center;
-}
-
-.footerTitleContainer {
-	display: none;
-
-	p {
-		font-size: 14px;
-	}
-}
-
-.container:hover .tags {
-	display: none;
-}
-
-.container:hover .footerTitleContainer {
-	display: flex;
+	height: 1px;
+	background-color: var(--color-grey-200);
 }

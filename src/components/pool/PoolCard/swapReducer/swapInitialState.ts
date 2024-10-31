@@ -1,6 +1,5 @@
-import { SwapCardStage } from './types'
-import { ButtonType } from '../PoolButton/constants'
 import { config, IS_TESTNET } from '../../../../constants/config'
+import { ErrorType } from '../SwapButton/constants'
 
 const mainnetTokens = {
 	contractAddress: config.PARENT_POOL_CONTRACT,
@@ -8,7 +7,7 @@ const mainnetTokens = {
 		addressPatterns: ['^(0x)[0-9A-Fa-f]{40}$'],
 		explorerURI: 'https://basescan.org',
 		id: '8453',
-		logoURI: 'https://api.concero.io/static/icons/chains/8453.svg',
+		logoURI: 'https://api.concero.io/static/icons/chains/filled/8453.svg',
 		name: 'Base',
 		symbol: 'ETH',
 		tokens: [],
@@ -96,7 +95,7 @@ export const swapInitialState = () => ({
 	selectedRoute: null,
 	typingTimeout: 0,
 	response: null,
-	stage: SwapCardStage.input,
+	stage: 'input',
 	steps: [], // [ { status, title, body, txLink } ]
 	status: 'pending', // success, failure, pending, awaiting
 	settings: {
@@ -105,7 +104,7 @@ export const swapInitialState = () => ({
 		allowSwitchChain: true,
 	},
 	chains: [],
-	buttonState: { type: ButtonType.ENTER_AMOUNT },
+	buttonState: { type: ErrorType.ENTER_AMOUNT },
 	walletBalances: null,
 	isDestinationAddressVisible: false,
 	settingsModalOpen: false,

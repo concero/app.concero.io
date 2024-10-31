@@ -5,7 +5,7 @@ import { TokenInfo } from './TokenInfo'
 import { colors } from '../../../../../constants/colors'
 import { Button } from '../../../../buttons/Button/Button'
 import { type IStep, type ManageState } from '../useEarnReducer/types'
-import { TransactionStep } from '../../../../layout/TransactionStep/TransactionStep'
+import { TransactionStep } from '../../../../pool/PoolCard/SwapProgress/TransactionStep/TransactionStep'
 import { useTranslation } from 'react-i18next'
 
 interface SwapProgressProps {
