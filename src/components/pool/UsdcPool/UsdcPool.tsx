@@ -11,8 +11,8 @@ import { EarningsCard } from '../EarningsCard/EarningsCard'
 export const UsdcPool = () => {
 	return (
 		<div className={classNames.container}>
-			<Link to={routes.pool}>
-				<IconButton className={classNames.back} variant="secondary">
+			<Link to={routes.pool} className={classNames.back}>
+				<IconButton variant="secondary">
 					<ArrowLeftIcon />
 				</IconButton>
 			</Link>

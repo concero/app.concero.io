@@ -68,7 +68,6 @@ export const TextInput: FC<TextInputProps> = forwardRef<HTMLInputElement, TextIn
 			<div
 				className={`${wrapperClassName} ${inputClass} ${isFocused && variant === 'default' ? classNames.focused : ''}`}
 				onClick={handleAreaClick}
-				style={{ width: '100%' }}
 			>
 				{title ? <p className="body1">{title}</p> : null}
 				<input

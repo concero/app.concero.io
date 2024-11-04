@@ -214,15 +214,12 @@ export async function executeDeposit(
 
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		swapDispatch({
-			type: 'SET_SWAP_STEPS',
-			payload: [
-				{
-					title: 'Transaction failed',
-					body: 'Something went wrong',
-					status: 'error',
-					type: StageType.transaction,
-				},
-			],
+			type: 'UPSERT_SWAP_STEP',
+			payload: {
+				title: 'Transaction failed',
+				body: 'Something went wrong',
+				status: 'error',
+			},
 		})
 
 		await trackEvent({

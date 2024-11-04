@@ -19,3 +19,22 @@
 		width: 49%;
 	}
 }
+
+.rewardsCard {
+	height: auto !important;
+}
+
+@media (max-width: 1000px) {
+	.wrap {
+		flex-direction: column-reverse;
+		max-height: 100%;
+
+		> div {
+			width: 100%;
+		}
+	}
+
+	.rewardsCard {
+		height: 192px !important;
+	}
+}

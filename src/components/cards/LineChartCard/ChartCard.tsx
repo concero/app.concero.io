@@ -8,6 +8,7 @@ import { Button } from '../../buttons/Button/Button'
 import { BarChart } from '../../layout/Charts/BarChart/BarChart'
 import { Loader } from '../../layout/Loader/Loader'
 import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
+import { toLocaleNumber } from '../../../utils/formatting'
 
 export interface BarChartCardProps {
 	titleCard: string
@@ -52,33 +53,35 @@ export const ChartCard = ({
 		)
 
 	return (
-		<Card className={`${className} cardConvex`}>
-			<div className={classNames.header}>
-				<div>
-					<h4 className={classNames.title}>{titleCard}</h4>
+		<Card className={`${className} jsb`}>
+			<div>
+				<div className={classNames.header}>
+					<div>
+						<h4 className={classNames.title}>{titleCard}</h4>
+					</div>
+					<div className="row gap-xs">
+						{setActiveItem &&
+							filterItems?.map(filterItem => {
+								const isActive = filterItem.value === activeItem?.value
+								return (
+									<Button
+										onClick={() => {
+											setActiveItem(filterItem)
+										}}
+										variant={`${isActive ? 'secondary' : 'tetrary'}`}
+										size="sm"
+									>
+										{filterItem.title}
+									</Button>
+								)
+							})}
+					</div>
 				</div>
-				<div className="row gap-xs">
-					{setActiveItem &&
-						filterItems?.map(filterItem => {
-							const isActive = filterItem.value === activeItem?.value
-							return (
-								<Button
-									onClick={() => {
-										setActiveItem(filterItem)
-									}}
-									variant={`${isActive ? 'secondary' : 'tetrary'}`}
-									size="sm"
-								>
-									{filterItem.title}
-								</Button>
-							)
-						})}
-				</div>
+
+				{isLoading ? <SkeletonLoader className={classNames.value} width={150} height={32} /> : title}
+
+				{subtitle && isLoading ? <SkeletonLoader width={105} height={20} /> : <p>{subtitle}</p>}
 			</div>
-
-			{isLoading ? <SkeletonLoader className={classNames.value} width={150} height={32} /> : title}
-
-			{subtitle && isLoading ? <SkeletonLoader width={105} height={20} /> : <p>{subtitle}</p>}
 
 			{isLoading ? (
 				<div className="w-full h-full ac jc">

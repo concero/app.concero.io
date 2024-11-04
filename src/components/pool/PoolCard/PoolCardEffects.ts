@@ -1,45 +1,17 @@
-import { type Dispatch, useEffect } from 'react'
+import { type Dispatch, type MutableRefObject, useEffect } from 'react'
 import { getBalance } from '../../../utils/getBalance'
 import { type SwapAction, type SwapState } from './swapReducer/types'
-import { calculateLpAmount, calculateWithdrawableAmount } from '../../../api/concero/pool/poolLpTokens'
-import { formatUnits, parseUnits } from 'viem'
 import { checkLastWithdrawRequest } from '../../../api/concero/getUserActions'
+import { setLpBalance } from './handlers/setLpBalance'
 
 interface UseSwapCardEffectsProps {
 	swapState: SwapState
 	swapDispatch: Dispatch<SwapAction>
 	address: string | undefined
+	typingTimeoutRef: MutableRefObject<number | undefined>
 }
 
-const setLpBalance = async (swapState: SwapState, swapDispatch: Dispatch<SwapAction>) => {
-	const { poolMode, from, to } = swapState
-
-	let currentBalance = 0
-
-	if (!from.amount || from.amount === '0') return
-
-	const amountInDecimals = parseUnits(from.amount, from.token.decimals)
-
-	if (poolMode === 'deposit') {
-		const lpAmount = await calculateLpAmount(amountInDecimals)
-		currentBalance = Number(formatUnits(lpAmount, to.token.decimals))
-	}
-	if (poolMode === 'withdraw') {
-		const usdcAmount = await calculateWithdrawableAmount(amountInDecimals)
-		currentBalance = Number(formatUnits(usdcAmount, to.token.decimals))
-	}
-
-	swapDispatch({
-		type: 'SET_AMOUNT',
-		direction: 'to',
-		payload: {
-			amount: String(currentBalance),
-			amount_usd: Number(from.amount),
-		},
-	})
-}
-
-export function useSwapCardEffects({ swapState, swapDispatch, address }: UseSwapCardEffectsProps) {
+export function useSwapCardEffects({ swapState, swapDispatch, address, typingTimeoutRef }: UseSwapCardEffectsProps) {
 	const { from } = swapState
 
 	useEffect(() => {
@@ -47,7 +19,7 @@ export function useSwapCardEffects({ swapState, swapDispatch, address }: UseSwap
 	}, [from.token.address, from.chain.id, address, from.amount])
 
 	useEffect(() => {
-		void setLpBalance(swapState, swapDispatch)
+		void setLpBalance(swapState, swapDispatch, typingTimeoutRef)
 	}, [from.amount])
 
 	useEffect(() => {

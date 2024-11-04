@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children, user }) => {
-	const isMobile = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('ipad')
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
 

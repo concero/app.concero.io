@@ -5,19 +5,16 @@ import type { ChartData } from '../../../types/utils'
 import { fetchFees } from '../../../api/concero/pool/fetchFees'
 import { createTimeFilters } from '../../../utils/chartTimeFilters'
 import { groupDataByDays } from '../../../utils/charts'
-import { Button } from '../../buttons/Button/Button'
 import { UserActions } from '../UserActions/UserActions'
-import { useAccount } from 'wagmi'
 import { PoolCard } from '../PoolCard/PoolCard'
+import { toLocaleNumber } from '../../../utils/formatting'
 
 const timeFilters = createTimeFilters()
 
 export const EarningsCard = () => {
-	const { address } = useAccount()
-
 	const [earningsData, setEarningsData] = useState<ChartData[]>([])
 	const [commonValue, setCommonValue] = useState<number>(0)
-	const [activeFilter, setActiveFilter] = useState(timeFilters[0])
+	const [activeFilter, setActiveFilter] = useState(timeFilters[2])
 
 	const getTotalVolume = async () => {
 		const { startTime, endTime } = activeFilter
@@ -29,12 +26,19 @@ export const EarningsCard = () => {
 
 		setCommonValue(totalFees)
 
-		const chartData = fees.map(fee => {
-			return {
-				time: fee.timestamp * 1000,
-				value: fee.percentReturned,
-			}
-		})
+		const chartData = fees
+			.filter(fee => {
+				const feeTime = fee.timestamp
+				const { startTime, endTime } = activeFilter
+
+				return (!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)
+			})
+			.map(fee => {
+				return {
+					time: fee.timestamp * 1000,
+					value: fee.percentReturned,
+				}
+			})
 
 		setEarningsData(groupDataByDays(chartData))
 	}
@@ -45,12 +49,8 @@ export const EarningsCard = () => {
 
 	const footer = (
 		<div className={classNames.footer}>
-			<div className="row gap-sm">
+			<div className={classNames.poolButtons}>
 				<PoolCard />
-
-				<Button className={classNames.button} size="lg" variant="secondaryColor">
-					Withdrawal
-				</Button>
 			</div>
 
 			<UserActions />
@@ -66,8 +66,8 @@ export const EarningsCard = () => {
 			activeItem={activeFilter}
 			setActiveItem={setActiveFilter}
 			data={earningsData}
-			commonValue={`$${commonValue.toFixed(1)}`}
-			footer={address && footer}
+			commonValue={`$${toLocaleNumber(commonValue, 2)}`}
+			footer={footer}
 		/>
 	)
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSwapReducer } from './swapReducer/swapReducer'
 import { useSwapCardEffects } from './PoolCardEffects'
 import { SwapInput } from './SwapInput/SwapInput'
@@ -9,44 +9,68 @@ import { Modal } from '../../modals/Modal/Modal'
 import classNames from './PoolCard.module.pcss'
 import { useAccount } from 'wagmi'
 
-export const PoolCard = () => {
-	const { address } = useAccount()
-	const [swapState, swapDispatch] = useSwapReducer()
+interface Props {
+	isDepositOnly?: boolean
+}
 
-	const isInputStage = swapState.stage === SwapCardStage.input
+export const PoolCard = ({ isDepositOnly = false }: Props) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [swapState, swapDispatch] = useSwapReducer()
+	const { address } = useAccount()
+	const typingTimeoutRef = useRef<number>()
+
+	const isInputStages = swapState.stage === SwapCardStage.input || swapState.stage === SwapCardStage.review
 
 	const handleGoBack = () => {
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'from' })
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
-		swapDispatch({ type: 'CLEAR_ROUTES' })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.input })
 		swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
 	}
 
-	useSwapCardEffects({ swapDispatch, swapState, address })
+	useSwapCardEffects({ swapDispatch, swapState, address, typingTimeoutRef })
+
+	const handeClose = () => {
+		handleGoBack()
+		setIsOpen(false)
+	}
 
 	return (
 		<>
-			<Button
-				className={classNames.button}
-				onClick={() => {
-					setIsOpen(true)
-				}}
-				size="lg"
-			>
-				Deposit
-			</Button>
+			<div className={classNames.buttons}>
+				<Button
+					className={classNames.button}
+					onClick={() => {
+						swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
+						setIsOpen(true)
+					}}
+					size="lg"
+				>
+					Deposit
+				</Button>
+				{!isDepositOnly && (
+					<Button
+						onClick={() => {
+							swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'withdraw' })
+							setIsOpen(true)
+						}}
+						size="lg"
+						variant="secondaryColor"
+					>
+						Withdrawal
+					</Button>
+				)}
+			</div>
 
 			<Modal
 				position="top"
 				className={classNames.container}
 				isHeaderVisible={false}
 				show={isOpen}
-				setShow={setIsOpen}
+				setShow={handeClose}
 			>
-				{isInputStage ? (
-					<SwapInput swapState={swapState} swapDispatch={swapDispatch} />
+				{isInputStages ? (
+					<SwapInput onClose={handeClose} swapState={swapState} swapDispatch={swapDispatch} />
 				) : (
 					<SwapProgress swapState={swapState} handleGoBack={handleGoBack} />
 				)}

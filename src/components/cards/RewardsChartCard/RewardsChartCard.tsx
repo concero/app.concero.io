@@ -5,6 +5,7 @@ import type { Fee } from '../../../api/concero/types'
 import type { ChartData } from '../../../types/utils'
 import { ChartCard } from '../LineChartCard/ChartCard'
 import classNames from '../TotalVolumeCard/TotalVolumeCard.module.pcss'
+import { toLocaleNumber } from '../../../utils/formatting'
 
 const timeFilters = createTimeFilters()
 
@@ -15,9 +16,18 @@ interface Props {
 	withFilter?: boolean
 	height?: number
 	size?: 'S' | 'M'
+	className?: string
 }
 
-export const RewardsCard = ({ fees, isLoading, withFilter = true, height, title = 'Rewards', size = 'M' }: Props) => {
+export const RewardsCard = ({
+	fees,
+	isLoading,
+	withFilter = true,
+	height,
+	className,
+	title = 'Rewards',
+	size = 'M',
+}: Props) => {
 	const [volumeData, setVolumeData] = useState<ChartData[]>([])
 	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 	const [commonValue, setCommonValue] = useState<string>()
@@ -41,7 +51,7 @@ export const RewardsCard = ({ fees, isLoading, withFilter = true, height, title 
 			return acc + item.value
 		}, 0)
 
-		setCommonValue('$' + totalValue.toFixed(0))
+		setCommonValue('$' + toLocaleNumber(totalValue))
 		setVolumeData(groupDataByWeeks(chartData))
 	}
 
@@ -64,7 +74,7 @@ export const RewardsCard = ({ fees, isLoading, withFilter = true, height, title 
 	return (
 		<ChartCard
 			isLoading={isLoading}
-			className={classNames.totalVolumeCard}
+			className={`${classNames.totalVolumeCard} ${className}`}
 			titleCard={title}
 			data={volumeData}
 			commonValue={commonValue}

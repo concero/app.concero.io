@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { type ChartData } from '../../../types/utils'
 import { type Fee } from '../../../api/concero/types'
 import { groupDataByDays } from '../../../utils/charts'
+import { toLocaleNumber } from '../../../utils/formatting'
 
 const timeFilters = createTimeFilters()
 
@@ -37,7 +38,7 @@ export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 			return acc + item.value
 		}, 0)
 
-		setCommonValue('$' + totalValue.toFixed(0))
+		setCommonValue('$' + toLocaleNumber(totalValue))
 		setVolumeData(groupDataByDays(chartData))
 	}
 

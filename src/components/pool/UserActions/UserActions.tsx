@@ -5,7 +5,7 @@ import { UserAction } from './UserAction'
 import { fetchParentPoolActionsByLpAddress } from '../../../api/concero/fetchParentPoolActionsByLpAddress'
 import { Modal } from '../../modals/Modal/Modal'
 import { Button } from '../../buttons/Button/Button'
-import { Loader } from '../../layout/Loader/Loader'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 export enum UserActionStatus {
 	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
@@ -38,8 +38,7 @@ export function UserActions() {
 	const [actions, setActions] = useState<UserTransaction[]>([])
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [retryTimeLeft, setRetryTimeLeft] = useState<number>(0)
-
-	const actionsIsEmpty = address && actions.length === 0 && !isLoading
+	const isMobile = useMediaQuery('ipad')
 
 	const getActions = async () => {
 		return await fetchParentPoolActionsByLpAddress(address)
@@ -79,10 +78,6 @@ export function UserActions() {
 		}
 	}, [])
 
-	if (actionsIsEmpty) {
-		return null
-	}
-
 	return (
 		<>
 			<Button
@@ -94,7 +89,7 @@ export function UserActions() {
 				variant="secondary"
 				className={classNames.buttonActions}
 			>
-				Actions History
+				{isMobile ? '' : 'Actions'} History
 			</Button>
 			<Modal
 				position="top"

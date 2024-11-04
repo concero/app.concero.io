@@ -1,6 +1,7 @@
 import { Card } from '../Card/Card'
 import classNames from './StatisticCard.module.pcss'
 import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
+import { toLocaleNumber } from '../../../utils/formatting'
 
 interface Props {
 	title: string
@@ -13,7 +14,11 @@ export const StatisticCard = ({ title, value, isLoading }: Props) => {
 		<Card className="cardConvex w-full">
 			<div className="gap-sm">
 				<h4>{title}</h4>
-				{isLoading ? <SkeletonLoader width={128} height={24} /> : <h3 className={classNames.value}>{value}</h3>}
+				{isLoading ? (
+					<SkeletonLoader width={128} height={24} />
+				) : (
+					<h3 className={classNames.value}>{toLocaleNumber(value)}</h3>
+				)}
 			</div>
 		</Card>
 	)

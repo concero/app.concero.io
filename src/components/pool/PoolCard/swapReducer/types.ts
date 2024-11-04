@@ -16,7 +16,7 @@ export type StageStepStatus = 'idle' | 'pending' | 'await' | 'success' | 'error'
 export interface StageStep {
 	title: string
 	status: StageStepStatus
-	type: StageType
+	type?: StageType
 	body?: string
 	txLink?: string | null | undefined
 }
@@ -41,10 +41,12 @@ export interface SwapStateDirection {
 	amount: string
 	amount_usd: number
 	address: string
+	isLpToken: boolean
 }
 
 export enum SwapCardStage {
 	input = 'input',
+	review = 'review',
 	progress = 'progress',
 	failed = 'failed',
 	success = 'success',
@@ -56,8 +58,10 @@ export interface Balance {
 	symbol: string
 }
 
+export type PoolMode = 'deposit' | 'withdraw'
+
 export interface SwapState {
-	poolMode: 'deposit' | 'withdraw'
+	poolMode: PoolMode
 	from: SwapStateDirection
 	to: SwapStateDirection
 	steps: StageStep[]
@@ -137,3 +141,4 @@ export type SwapAction =
 	| { type: 'TOGGLE_TESTNET' }
 	| { type: 'SET_IS_SUFFICIENT_LIQUIDITY'; payload: boolean }
 	| { type: 'SET_INPUT_ERROR'; payload: ErrorType | null }
+	| { type: 'TOGGLE_POOL_MODE'; payload: PoolMode }

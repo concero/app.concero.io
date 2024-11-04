@@ -211,3 +211,9 @@ export function formatNumber(num: number, options: FormatNumberOptions = {}): st
 
 	return result
 }
+
+export const toLocaleNumber = (number: number | string, fixed = 0) => {
+	return Number(number)
+		.toFixed(fixed)
+		.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}

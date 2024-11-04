@@ -10,9 +10,43 @@
 	justify-content: space-between;
 	padding-top: var(--sp-lg);
 	border-top: 1px solid var(--color-grey-300);
+	gap: var(--sp-sm);
+}
+
+.poolButtons {
+	flex-direction: row;
+	gap: var(--sp-sm);
+
+	button {
+		width: 177px;
+	}
 }
 
 .button {
 	max-width: 177px;
 	width: 100%;
+}
+
+@media (max-width: 744px) {
+	.earnings {
+		height: 100%;
+	}
+
+	.footer {
+		width: 100%;
+		flex-direction: column;
+
+		button {
+			width: 100%;
+		}
+	}
+
+	.poolButtons {
+		width: 100%;
+		flex-direction: column;
+
+		> button {
+			width: 100%;
+		}
+	}
 }

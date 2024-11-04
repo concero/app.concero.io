@@ -2,9 +2,8 @@
 	position: relative;
 	height: 100%;
 	align-items: center;
-	padding-bottom: 50px;
 	min-height: 100vh;
-	padding-top: var(--sp-xxl);
+	padding: var(--sp-xxl) var(--sp-lg) 50px;
 	background: radial-gradient(77.79% 77.78% at 50% 22.22%, #ebe9fe 0%, rgba(246, 254, 249, 0.1) 83.22%),
 		linear-gradient(180deg, #f9fafb 0%, #eaecf0 100%);
 }
@@ -13,4 +12,10 @@
 	max-width: 806px;
 	width: 100%;
 	height: 100%;
+}
+
+@media (max-width: 1000px) {
+	.poolContainer {
+		max-width: 532px;
+	}
 }

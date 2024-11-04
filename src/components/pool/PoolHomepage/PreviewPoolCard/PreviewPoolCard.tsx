@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { useGetLiquidity } from '../../poolScripts/useGetLiquidity'
 import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 import { PoolCard } from '../../PoolCard/PoolCard'
+import { toLocaleNumber } from '../../../../utils/formatting'
 
 interface Props {
 	fees: Fee[]
@@ -19,8 +20,8 @@ interface Props {
 export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 	const { poolLiquidity, maxCap, isLoading: isLiquidityLoading } = useGetLiquidity()
 
-	const [commonApyValue, setCommonApyValue] = useState<number>(0)
-	const [totalRewards, setTotalRewards] = useState<number>(0)
+	const [commonApyValue, setCommonApyValue] = useState<string>('0')
+	const [totalRewards, setTotalRewards] = useState<string>('0')
 
 	const setApyHandle = async () => {
 		let rewards = 0
@@ -36,9 +37,9 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 		})
 
 		const weeklyAverageData = groupDataByWeeks(getUniqueChatData(chartData))
-		setCommonApyValue(weeklyAverageData[weeklyAverageData.length - 2].value)
 
-		setTotalRewards(rewards)
+		setCommonApyValue(toLocaleNumber(weeklyAverageData[weeklyAverageData.length - 2].value))
+		setTotalRewards(toLocaleNumber(rewards))
 	}
 
 	useEffect(() => {
@@ -59,7 +60,7 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 					{isLoading ? (
 						<SkeletonLoader height={24} width={95} />
 					) : (
-						<h3 className={classNames.value}>APY {commonApyValue.toFixed(0)}%</h3>
+						<h3 className={classNames.value}>APY {commonApyValue}%</h3>
 					)}
 				</div>
 
@@ -69,30 +70,28 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 						{isLiquidityLoading ? (
 							<SkeletonLoader height={20} width={64} />
 						) : (
-							<b>${poolLiquidity.toFixed(0)}</b>
+							<b>${toLocaleNumber(poolLiquidity)}</b>
 						)}
 						<p>from</p>
-						{isLiquidityLoading ? <SkeletonLoader height={20} width={64} /> : <b>${maxCap}</b>}
+						{isLiquidityLoading ? (
+							<SkeletonLoader height={20} width={64} />
+						) : (
+							<b>${toLocaleNumber(maxCap)}</b>
+						)}
 					</div>
 				</div>
 
 				<div className={classNames.metric}>
 					<p>Rewards Distributed</p>
-					<div>
-						{isLiquidityLoading ? (
-							<SkeletonLoader height={20} width={64} />
-						) : (
-							<b>${totalRewards.toFixed(0)}</b>
-						)}
-					</div>
+					<div>{isLiquidityLoading ? <SkeletonLoader height={20} width={64} /> : <b>${totalRewards}</b>}</div>
 				</div>
 			</div>
 
 			<div className={classNames.buttons}>
-				<PoolCard />
+				<PoolCard isDepositOnly />
 
-				<Link className={classNames.button} to={link}>
-					<Button size="lg" variant="secondaryColor">
+				<Link to={link}>
+					<Button isFull size="lg" variant="secondaryColor">
 						Open Earnings
 					</Button>
 				</Link>

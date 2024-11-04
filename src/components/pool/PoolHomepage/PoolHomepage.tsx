@@ -35,16 +35,16 @@ export const PoolHomepage = () => {
 	return (
 		<div className={classNames.details}>
 			<div className="gap-lg">
-				<div className="row gap-lg">
+				<div className={classNames.column}>
 					<TotalVolumeCard isLoading={isLoading} fees={fees} />
 					<RewardsCard isLoading={isLoading} title="Rewards" fees={fees} />
 				</div>
-				<div className="row gap-lg">
+				<div className="gap-lg row">
 					<StatisticCard isLoading={isLoading} title="LP Providers" value={providersCount} />
 					<StatisticCard isLoading={isLoading} title="Transactions" value={fees.length} />
 				</div>
 			</div>
-			<div className="row gap-lg f1">
+			<div className={classNames.column}>
 				<PreviewPoolCard link={routes.poolUsdc} isLoading={isLoading} fees={fees} />
 				<PreviewPoolCardDisabled />
 			</div>

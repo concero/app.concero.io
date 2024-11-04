@@ -30,8 +30,21 @@
 .buttons {
 	flex-direction: row;
 	gap: var(--sp-sm);
+
+	> button,
+	a {
+		display: flex;
+		width: 50%;
+	}
 }
 
-.button {
-	width: 49%;
+@media (max-width: 425px) {
+	.buttons {
+		flex-direction: column;
+
+		> button,
+		a {
+			width: 100%;
+		}
+	}
 }

@@ -10,4 +10,6 @@ export interface TokenAreaProps {
 	isLoading?: boolean
 	stage: SwapCardStage
 	error?: ErrorType | null
+	balanceLoading?: boolean
+	setBalanceLoading?: Dispatch<boolean>
 }

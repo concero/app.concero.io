@@ -21,12 +21,14 @@ interface SwapProgressProps {
 
 export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack }) => {
 	const [time, setTime] = useState(0)
-	const { to, from, steps, stage } = swapState
+	const { to, from, steps, stage, poolMode } = swapState
 
 	const isFailed = stage === SwapCardStage.failed
 	const isSuccess = stage === SwapCardStage.success
 	const currentStep = steps[steps.length - 1]
 	const isAwait = currentStep && currentStep.status === 'await'
+
+	const isDeposit = poolMode === 'deposit'
 
 	useEffect(() => {
 		const timerId = setInterval(() => {
@@ -77,9 +79,13 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, handleGoBack })
 			<div className={classNames.progressContainer}>
 				<TransactionStep status={steps[0]?.status} title="Approvals" />
 				<TrailArrowRightIcon />
-				<TransactionStep status={steps[1]?.status} title="Request" />
-				<TrailArrowRightIcon />
-				<TransactionStep status={steps[2]?.status} title="Deposit" />
+				{isDeposit && (
+					<>
+						<TransactionStep status={steps[1]?.status} title="Request" />
+						<TrailArrowRightIcon />
+					</>
+				)}
+				<TransactionStep status={steps[isDeposit ? 2 : 1]?.status} title="Deposit" />
 			</div>
 
 			<Separator />

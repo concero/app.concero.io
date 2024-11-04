@@ -33,6 +33,7 @@ export const PoolSummary = () => {
 				<div className="gap-lg">
 					<LiquidityCapCard />
 					<RewardsCard
+						className={classNames.rewardsCard}
 						isLoading={isLoading}
 						size="S"
 						title="Rewards Distributed"

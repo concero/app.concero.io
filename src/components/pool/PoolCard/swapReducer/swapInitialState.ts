@@ -79,6 +79,7 @@ export const swapInitialState = () => ({
 		amount: '',
 		amount_usd: 0.0,
 		address: '',
+		isLpToken: false,
 	},
 	to: {
 		chain: currentToken.chain,
@@ -86,6 +87,7 @@ export const swapInitialState = () => ({
 		amount: '',
 		amount_usd: 0.0,
 		address: '',
+		isLpToken: true,
 	},
 	poolMode: 'deposit',
 	balance: null,

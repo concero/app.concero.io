@@ -14,7 +14,7 @@ export const errorTextMap: { [key in ErrorType]: string } = {
 	[ErrorType.LOW_GAS]: 'Insufficient gas',
 	[ErrorType.LOW_FEES]: 'Insufficient fees',
 	[ErrorType.NO_ROUTES]: 'No routes found',
-	[ErrorType.AMOUNT_TOO_LOW]: 'From amount is too low',
+	[ErrorType.AMOUNT_TOO_LOW]: 'Minimum deposit is 100 USDC',
 	[ErrorType.NOT_SUFFICIENT_LIQUIDITY]: 'Try lower amount',
 }
 
