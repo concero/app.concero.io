@@ -35,6 +35,7 @@ export const RewardsScreen = () => {
 		setUser(currentUser!)
 	}
 
+	// todo: refactor user part into a separate component
 	return (
 		<>
 			<div className={classNames.rewardsScreenContainer}>

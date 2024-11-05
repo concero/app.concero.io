@@ -28,6 +28,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 		userQuestActions = await fetchUserQuestActions(user.address)
 		const fetchedQuests = await fetchQuests()
 
+		// todo: what is this used for?
 		const newQuests = fetchedQuests.map(quest => {
 			const userAction = userQuestActions.find(action => {
 				return action.documentId.toLocaleLowerCase() === quest._id.toLocaleLowerCase()
@@ -39,14 +40,17 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	}
 
 	useEffect(() => {
+		// todo: this should not be named a handle as its not connected to a button
 		void handleGetQuests()
 	}, [user])
 
+	// todo: let's send sorted data from BE and not use filters and finds on the frontend
 	const campaignQuest = quests.find((quest: IQuest) => quest.type === QuestType.Campaign)
 	const dailyQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Daily)
 	const primaryQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Primary)
 	const secondaryQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Secondary)
 
+	// todo: we have dailyQuests, therefore quests should be renamed
 	return (
 		<div className="gap-xxl">
 			{campaignQuest && (

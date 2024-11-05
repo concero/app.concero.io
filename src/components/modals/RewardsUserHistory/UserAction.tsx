@@ -26,6 +26,7 @@ export const UserAction = ({ action }: UserActionProps) => {
 	}
 
 	const getQuestInfo = () => {
+		// todo: can we remove all "as" type casts?
 		const { name } = action.data as UserActionQuestData
 		setValue(`Quest completed: ${name}`)
 	}
