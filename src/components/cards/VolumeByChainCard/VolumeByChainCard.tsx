@@ -13,10 +13,12 @@ export const VolumeByChainCard = () => {
 	const [volumeByChain, setVolumeByChain] = useState<ReChartsData[]>([])
 
 	const getTotalVolume = async () => {
+		// TODO: unhandled error thrown by fetchFees!
 		const fees = await fetchFees()
 
 		const chainsDataMap: Record<number, number> = {}
 
+		// TODO: 2 loops can be combined into 1 reduce method!
 		fees.forEach(fee => {
 			const currentValue = chainsDataMap[fee.chainId] ?? 0
 			chainsDataMap[fee.chainId] = currentValue + fee.loanGivenOut
@@ -33,6 +35,7 @@ export const VolumeByChainCard = () => {
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection
 		getTotalVolume()
 	}, [])
 

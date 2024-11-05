@@ -14,7 +14,10 @@ export const TotalVolumeCard = () => {
 
 	const getTotalVolume = async () => {
 		const { startTime, endTime } = activeFilter
+		// TODO: unhandled error thrown by fetchFees!
 		const fees = await fetchFees(startTime, endTime)
+
+		// TODO: 3 loops can be combined into 1 reduce!
 
 		const chartData = fees.map(fee => {
 			return {
@@ -35,6 +38,7 @@ export const TotalVolumeCard = () => {
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection
 		getTotalVolume()
 	}, [activeFilter])
 

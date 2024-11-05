@@ -12,11 +12,13 @@ export const TotalTransactionsCard = () => {
 
 	const getTotalTransactions = async () => {
 		const { startTime, endTime } = activeFilter
+		// TODO: unhandled error thrown by fetchFees!
 		const fees = await fetchFees(startTime, endTime)
 		setTotalTransactions(fees.length)
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection
 		getTotalTransactions()
 	}, [activeFilter])
 

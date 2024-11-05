@@ -10,6 +10,7 @@ export const AverageApyCard = () => {
 	const [commonApyValue, setCommonApyValue] = useState<number>(0)
 
 	const getTotalVolume = async () => {
+		// TODO: you throw an error out of this function and don't even catch it!
 		const fees = await fetchFees()
 
 		const chartData = fees.map(fee => {
@@ -28,6 +29,7 @@ export const AverageApyCard = () => {
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection!!!!
 		getTotalVolume()
 	}, [])
 

@@ -12,6 +12,7 @@ export const TotalFeesCard = () => {
 
 	const getTotalFees = async () => {
 		const { startTime, endTime } = activeFilter
+		// TODO: unhandled error thrown by fetchFees!
 		const fees = await fetchFees(startTime, endTime)
 
 		const result = fees.reduce((acc, fee) => {
@@ -22,6 +23,7 @@ export const TotalFeesCard = () => {
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection
 		getTotalFees()
 	}, [activeFilter])
 

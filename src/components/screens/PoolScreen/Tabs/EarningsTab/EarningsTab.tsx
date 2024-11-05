@@ -47,19 +47,22 @@ export const EarningsTab = () => {
 		const totalSupply = await getLpTotalSupply()
 		const poolLiquidity = await getPoolLiquidity()
 
+		// TODO: TS2365: Operator / cannot be applied to types number and number | bigint
 		const ratio = totalSupply / poolLiquidity
 		const lpDecimals = parseUnits(String(balanceLp), 18)
 		const balanceUsdc = await calculateWithdrawableAmount(lpDecimals)
-		const balancaUsdcFormated = Number(formatUnits(balanceUsdc, 6))
+		const balanceUsdcFormated = Number(formatUnits(balanceUsdc, 6))
 
-		const poolShare = (balancaUsdcFormated / poolLiquidity) * 100
+		// TODO: TS2365: Operator / cannot be applied to types number and number | bigint
+		const poolShare = (balanceUsdcFormated / poolLiquidity) * 100
 
 		setUserPoolShare(poolShare)
-		setUserBalanceUsdc(balancaUsdcFormated)
+		setUserBalanceUsdc(balanceUsdcFormated)
 		setRate(ratio)
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection!
 		getTokens()
 	}, [address])
 

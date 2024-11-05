@@ -14,14 +14,17 @@ export const LiquidityCapCard = () => {
 	const percentage = (poolLiquidity / maxCap) * 100
 
 	const setCap = async () => {
+		// TODO: may be possible to use Promise.all
 		const cap = await getMaxCap()
 		const newPoolLiquidity = await getPoolLiquidity()
 
+		// TODO: remove conversion to Number because it's already a number
 		setPoolLiquidity(Number(newPoolLiquidity))
 		setMaxCap(Number(cap))
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection! add .catch((er) => ...) to setCap
 		setCap()
 	}, [])
 

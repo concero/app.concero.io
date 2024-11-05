@@ -26,7 +26,7 @@ const auditsLinks: Link[] = [
 	},
 ]
 
-const resorcesLinks: Link[] = [
+const resourcesLinks: Link[] = [
 	{
 		title: 'Source code',
 		url: 'https://github.com/concero/contracts-ccip',
@@ -93,7 +93,7 @@ export const LinksCard = () => {
 			<span className="body4">Resources</span>
 
 			<div className={classNames.linksList}>
-				{resorcesLinks.map(link => (
+				{resourcesLinks.map(link => (
 					<ExternalLink key={link.title} link={link} />
 				))}
 			</div>

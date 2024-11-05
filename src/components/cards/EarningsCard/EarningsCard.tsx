@@ -14,6 +14,8 @@ export const EarningsCard = () => {
 
 	const getTotalVolume = async () => {
 		const { startTime, endTime } = activeFilter
+
+		// TODO: the error that is thrown from this function is not handled!
 		const fees = await fetchFees(startTime, endTime)
 
 		const totalFees = fees.reduce((acc, fee) => {
@@ -22,6 +24,7 @@ export const EarningsCard = () => {
 
 		setCommonValue(totalFees)
 
+		// TODO: unnecessary loop. replace this 3 loops with only ONE reduce method!
 		const chartData = fees.map(fee => {
 			return {
 				time: fee.timestamp * 1000,
@@ -30,12 +33,14 @@ export const EarningsCard = () => {
 		})
 
 		const table = {}
+		// TODO: unnecessary loop. replace with reduce method
 		const uniqueChatData = chartData.filter(({ time }) => !table[time] && (table[time] = 1))
 
 		setEarningsData(uniqueChatData)
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection
 		getTotalVolume()
 	}, [activeFilter])
 

@@ -13,12 +13,15 @@ interface ProjectedEarningsProps {
 
 export const ProjectedEarningsCard = ({ deposit }: ProjectedEarningsProps) => {
 	const [numOfWeek, setNumOfWeek] = useState(0)
+	// TODO: unused state!
 	const [totalFees, setTotalFees] = useState(0)
 
+	// TODO: unused logic
 	const getFeesToday = async () => {
 		const now = dayjs().valueOf() / 1000
 		const startOfDay = getStartOfToday()
 
+		// TODO: the error that is thrown from this function is not handled!
 		const feesToday = await fetchFees(startOfDay, now)
 
 		const totalFeesSum = feesToday.reduce((acc, fee) => {
@@ -29,9 +32,11 @@ export const ProjectedEarningsCard = ({ deposit }: ProjectedEarningsProps) => {
 	}
 
 	useEffect(() => {
+		// TODO: unhandled promise rejection!
 		getFeesToday()
 	}, [])
 
+	// TODO: only english allowed
 	// депозит * (1 + totalFeesSum(daily)) ^ кол-во дней
 	const earnValue = deposit * (1 + 0.0013) ** (7 * numOfWeek)
 

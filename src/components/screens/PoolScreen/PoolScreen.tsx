@@ -27,6 +27,7 @@ const menuItems: TabItem[] = [
 export const PoolScreen = () => {
 	const [activeTab, setActiveTab] = useState<TabItem>(menuItems[0])
 
+	// TODO: do we really need this function?
 	const changeTab = (tab: TabItem) => {
 		setActiveTab(tab)
 	}

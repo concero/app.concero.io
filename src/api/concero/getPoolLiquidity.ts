@@ -35,6 +35,7 @@ export const getPoolLiquidity = async (childrenOnly = false) => {
 
 	const formattedPoolConfigs = poolConfigs.filter(poolConfig => (childrenOnly ? !poolConfig.isParent : true))
 
+	// TODO: replace with promise all
 	for (const poolConfig of formattedPoolConfigs) {
 		const totalOnChain = await getLiquidityOnChain(poolConfig)
 		totalLiquidity += totalOnChain
