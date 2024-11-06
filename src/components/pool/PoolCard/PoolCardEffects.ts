@@ -12,15 +12,15 @@ interface UseSwapCardEffectsProps {
 }
 
 export function useSwapCardEffects({ swapState, swapDispatch, address, typingTimeoutRef }: UseSwapCardEffectsProps) {
-	const { from } = swapState
+	const { from, balance } = swapState
 
 	useEffect(() => {
 		void getBalance({ dispatch: swapDispatch, from, address })
-	}, [from.token.address, from.chain.id, address, from.amount])
+	}, [from.token.address, from.chain.id, from.amount, address])
 
 	useEffect(() => {
 		void setLpBalance(swapState, swapDispatch, typingTimeoutRef)
-	}, [from.amount])
+	}, [from.token.address, from.chain.id, from.amount, balance])
 
 	useEffect(() => {
 		if (swapState.poolMode !== 'withdraw') return

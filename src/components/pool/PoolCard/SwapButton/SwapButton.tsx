@@ -3,20 +3,22 @@ import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { useAccount } from 'wagmi'
 import { Button } from '../../../buttons/Button/Button'
 
-export const SwapButton = ({ error, onClick, isLoading }: SwapButtonProps) => {
+export const SwapButton = ({ error, onClick, isLoading, isDeposit }: SwapButtonProps) => {
 	const { isConnected } = useAccount()
 	const { open } = useWeb3Modal()
 
+	const actionText: string = isDeposit ? 'Request Deposit' : 'Request Withdrawal'
+
 	return (
 		<Button
-			isDisabled={!!error}
+			isDisabled={isConnected && !!error}
 			isFull
 			size="lg"
 			variant="primary"
 			isLoading={isLoading}
 			onClick={isConnected ? onClick : open}
 		>
-			{isConnected ? 'Begin Swap' : 'Connect Wallet'}
+			{isConnected ? actionText : 'Connect Wallet'}
 		</Button>
 	)
 }

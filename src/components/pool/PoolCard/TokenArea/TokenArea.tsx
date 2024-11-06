@@ -11,14 +11,18 @@ import { Badge } from '../../../layout/Badge/Badge'
 import { SelectTokenShape } from './SelectTokenShape/SelectTokenShape'
 import { InputError } from '../SwapInput/InputError/InputError'
 import { ErrorCategory, errorTextMap, errorTypeMap } from '../SwapButton/constants'
-import { getBalance } from '../../../../utils/getBalance'
-import { useAccount } from 'wagmi'
 import { TextInput } from '../../../input/TextInput'
 
-export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispatch, balance = null, stage, error }) => {
-	const [loading, setLoading] = useState(false)
+export const TokenArea: FC<TokenAreaProps> = ({
+	isLoading,
+	direction,
+	selection,
+	swapDispatch,
+	balance = null,
+	stage,
+	error,
+}) => {
 	const [state, tokenAreaDispatch] = useTokenAreaReducer()
-	const { address } = useAccount()
 	const inputRef = useRef<ForwardedRef<HTMLInputElement>>()
 	const { t } = useTranslation()
 
@@ -39,15 +43,6 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 
 		handleAmountChange({ value: amount.formatted, state, dispatch: swapDispatch, direction: 'from' })
 	}
-
-	useEffect(() => {
-		if (direction === 'to') return
-		setLoading(true)
-
-		getBalance({ dispatch: swapDispatch, from: selection, address }).finally(() => {
-			setLoading(false)
-		})
-	}, [selection.token.address, selection.chain.id, selection.amount, address])
 
 	return (
 		<div
@@ -88,7 +83,7 @@ export const TokenArea: FC<TokenAreaProps> = ({ direction, selection, swapDispat
 			</div>
 
 			<AmountUsd
-				loading={loading}
+				loading={isLoading}
 				state={state}
 				balance={balance}
 				selection={selection}

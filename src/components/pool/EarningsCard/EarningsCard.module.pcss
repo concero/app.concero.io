@@ -16,10 +16,6 @@
 .poolButtons {
 	flex-direction: row;
 	gap: var(--sp-sm);
-
-	button {
-		width: 177px;
-	}
 }
 
 .button {
@@ -36,7 +32,7 @@
 		width: 100%;
 		flex-direction: column;
 
-		button {
+		> button {
 			width: 100%;
 		}
 	}
@@ -44,9 +40,9 @@
 	.poolButtons {
 		width: 100%;
 		flex-direction: column;
+	}
 
-		> button {
-			width: 100%;
-		}
+	.button {
+		max-width: 100%;
 	}
 }

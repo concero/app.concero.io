@@ -6,6 +6,8 @@ import { fetchParentPoolActionsByLpAddress } from '../../../api/concero/fetchPar
 import { Modal } from '../../modals/Modal/Modal'
 import { Button } from '../../buttons/Button/Button'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { IconButton } from '../../buttons/IconButton/IconButton'
+import { CrossIcon } from '../../../assets/icons/CrossIcon'
 
 export enum UserActionStatus {
 	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
@@ -93,13 +95,26 @@ export function UserActions() {
 			</Button>
 			<Modal
 				position="top"
-				title="Actions history"
 				setShow={() => {
 					setIsOpen(!isOpen)
 				}}
 				show={isOpen}
+				isHeaderVisible={false}
 				className={classNames.actionsModal}
 			>
+				<div className="row ac jsb">
+					<h3 className={classNames.title}>Actions history</h3>
+					<IconButton
+						onClick={() => {
+							setIsOpen(false)
+						}}
+						size="md"
+						variant="secondary"
+					>
+						<CrossIcon />
+					</IconButton>
+				</div>
+
 				<div className={`${classNames.action} ${classNames.header}`}>
 					<div className={classNames.leftSide}>
 						<h6>Action</h6>

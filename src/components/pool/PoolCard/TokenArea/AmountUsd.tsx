@@ -12,7 +12,7 @@ interface AmountUsdProps {
 	selection: SwapStateDirection
 	direction: 'from' | 'to'
 	handleMaxButtonClick: () => void
-	loading: boolean
+	loading?: boolean
 }
 
 export function AmountUsd({ state, balance, selection, direction, handleMaxButtonClick, loading }: AmountUsdProps) {
@@ -37,7 +37,7 @@ export function AmountUsd({ state, balance, selection, direction, handleMaxButto
 				{!!balance && (
 					<h6 className={classNames.balance}>
 						{loading ? (
-							<SkeletonLoader width={120} height={18} />
+							<Loader variant="neutral" />
 						) : (
 							`Balance: ${formatedBalance} ${selection.token.symbol}`
 						)}

@@ -9,7 +9,7 @@ export const setLpBalance = async (
 	swapDispatch: Dispatch<SwapAction>,
 	typingTimeoutRef: MutableRefObject<number | undefined>,
 ) => {
-	const { poolMode, from, to } = swapState
+	const { poolMode, from, to, balance } = swapState
 
 	if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
 	swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.input })

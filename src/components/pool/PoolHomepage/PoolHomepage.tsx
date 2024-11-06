@@ -44,9 +44,12 @@ export const PoolHomepage = () => {
 					<StatisticCard isLoading={isLoading} title="Transactions" value={fees.length} />
 				</div>
 			</div>
-			<div className={classNames.column}>
-				<PreviewPoolCard link={routes.poolUsdc} isLoading={isLoading} fees={fees} />
-				<PreviewPoolCardDisabled />
+			<div className="gap-sm">
+				<h6>Pools</h6>
+				<div className={classNames.column}>
+					<PreviewPoolCard link={routes.poolUsdc} isLoading={isLoading} fees={fees} />
+					<PreviewPoolCardDisabled />
+				</div>
 			</div>
 		</div>
 	)

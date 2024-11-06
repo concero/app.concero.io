@@ -28,23 +28,21 @@
 }
 
 .buttons {
+	width: 100%;
 	flex-direction: row;
 	gap: var(--sp-sm);
+}
 
-	> button,
-	a {
-		display: flex;
-		width: 50%;
-	}
+.button {
+	width: 50%;
 }
 
 @media (max-width: 425px) {
 	.buttons {
 		flex-direction: column;
+	}
 
-		> button,
-		a {
-			width: 100%;
-		}
+	.button {
+		width: 100%;
 	}
 }

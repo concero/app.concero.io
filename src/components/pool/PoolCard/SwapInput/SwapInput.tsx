@@ -37,6 +37,7 @@ export const SwapInput = ({ swapState, swapDispatch, onClose }: SwapInputProps) 
 	const tokenArea = (
 		<div className={classNames.tokenAreasContainer}>
 			<TokenArea
+				isLoading={swapState.isLoading}
 				direction="from"
 				selection={swapState.from}
 				swapDispatch={swapDispatch}
@@ -70,7 +71,12 @@ export const SwapInput = ({ swapState, swapDispatch, onClose }: SwapInputProps) 
 
 			<SwapDetails swapState={swapState} swapDispatch={swapDispatch} />
 
-			<SwapButton isLoading={swapState.isLoading} error={swapState.inputError} onClick={handleStartTx} />
+			<SwapButton
+				isDeposit={isDeposit}
+				isLoading={swapState.isLoading}
+				error={swapState.inputError}
+				onClick={handleStartTx}
+			/>
 
 			{inputError && amountIsAvailable && (
 				<div className={classNames.feeDetails}>

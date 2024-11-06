@@ -12,7 +12,7 @@ export function getInputError(swapState: SwapState): ErrorType | null {
 
 	if (from.amount === '') return null
 
-	if (balance && isDeposit && Number(from.amount) < minAmount) {
+	if (isDeposit && Number(from.amount) < minAmount) {
 		return ErrorType.AMOUNT_TOO_LOW
 	}
 

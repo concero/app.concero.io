@@ -43,7 +43,7 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 	}
 
 	useEffect(() => {
-		if (!fees) return
+		if (!fees.length) return
 		void setApyHandle()
 	}, [fees])
 
@@ -64,33 +64,37 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 					)}
 				</div>
 
-				<div className={classNames.metric}>
-					<p>Total Liquidity</p>
-					<div className="row gap-xs">
-						{isLiquidityLoading ? (
-							<SkeletonLoader height={20} width={64} />
-						) : (
-							<b>${toLocaleNumber(poolLiquidity)}</b>
-						)}
-						<p>from</p>
-						{isLiquidityLoading ? (
-							<SkeletonLoader height={20} width={64} />
-						) : (
-							<b>${toLocaleNumber(maxCap)}</b>
-						)}
+				<div className="gap-md">
+					<div className={classNames.metric}>
+						<p>Total Liquidity</p>
+						<div className="row gap-xs">
+							{isLiquidityLoading ? (
+								<SkeletonLoader height={20} width={64} />
+							) : (
+								<b>${toLocaleNumber(poolLiquidity)}</b>
+							)}
+							<p>from</p>
+							{isLiquidityLoading ? (
+								<SkeletonLoader height={20} width={64} />
+							) : (
+								<b>${toLocaleNumber(maxCap)}</b>
+							)}
+						</div>
 					</div>
-				</div>
 
-				<div className={classNames.metric}>
-					<p>Rewards Distributed</p>
-					<div>{isLiquidityLoading ? <SkeletonLoader height={20} width={64} /> : <b>${totalRewards}</b>}</div>
+					<div className={classNames.metric}>
+						<p>Rewards Distributed</p>
+						<div>
+							{isLiquidityLoading ? <SkeletonLoader height={20} width={64} /> : <b>${totalRewards}</b>}
+						</div>
+					</div>
 				</div>
 			</div>
 
 			<div className={classNames.buttons}>
-				<PoolCard isDepositOnly />
+				<PoolCard depositButtonClasses={classNames.button} isDepositOnly />
 
-				<Link to={link}>
+				<Link to={link} className={classNames.button}>
 					<Button isFull size="lg" variant="secondaryColor">
 						Open Earnings
 					</Button>

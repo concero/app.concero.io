@@ -73,5 +73,6 @@ export const areaSeriesOptions = (colors, theme, lineNumber = null) => {
 			type: 'volume',
 			priceScaleId: '',
 		},
+		priceLineVisible: false,
 	}
 }

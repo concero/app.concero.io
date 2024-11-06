@@ -50,7 +50,7 @@ export const EarningsCard = () => {
 	const footer = (
 		<div className={classNames.footer}>
 			<div className={classNames.poolButtons}>
-				<PoolCard />
+				<PoolCard depositButtonClasses={classNames.button} withdrawalButtonClasses={classNames.button} />
 			</div>
 
 			<UserActions />

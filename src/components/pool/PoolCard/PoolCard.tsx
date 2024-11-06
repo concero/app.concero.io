@@ -11,9 +11,11 @@ import { useAccount } from 'wagmi'
 
 interface Props {
 	isDepositOnly?: boolean
+	depositButtonClasses?: string
+	withdrawalButtonClasses?: string
 }
 
-export const PoolCard = ({ isDepositOnly = false }: Props) => {
+export const PoolCard = ({ isDepositOnly = false, depositButtonClasses, withdrawalButtonClasses }: Props) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [swapState, swapDispatch] = useSwapReducer()
 	const { address } = useAccount()
@@ -35,32 +37,43 @@ export const PoolCard = ({ isDepositOnly = false }: Props) => {
 		setIsOpen(false)
 	}
 
+	const depositButton = (
+		<Button
+			className={depositButtonClasses}
+			onClick={() => {
+				swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
+				setIsOpen(true)
+			}}
+			size="lg"
+		>
+			Deposit
+		</Button>
+	)
+
+	const withdrawalButton = (
+		<Button
+			className={withdrawalButtonClasses}
+			onClick={() => {
+				swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'withdraw' })
+				setIsOpen(true)
+			}}
+			size="lg"
+			variant="secondaryColor"
+		>
+			Withdrawal
+		</Button>
+	)
+
 	return (
 		<>
-			<div className={classNames.buttons}>
-				<Button
-					className={classNames.button}
-					onClick={() => {
-						swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
-						setIsOpen(true)
-					}}
-					size="lg"
-				>
-					Deposit
-				</Button>
-				{!isDepositOnly && (
-					<Button
-						onClick={() => {
-							swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'withdraw' })
-							setIsOpen(true)
-						}}
-						size="lg"
-						variant="secondaryColor"
-					>
-						Withdrawal
-					</Button>
-				)}
-			</div>
+			{isDepositOnly ? (
+				depositButton
+			) : (
+				<div className={classNames.buttons}>
+					{depositButton}
+					{withdrawalButton}
+				</div>
+			)}
 
 			<Modal
 				position="top"
