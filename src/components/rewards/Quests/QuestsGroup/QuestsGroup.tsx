@@ -19,12 +19,14 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const handleGetQuests = async () => {
 		let userQuestActions: IUserAction[] = []
 
+		// todo: calling fetchQuests twice
 		if (!user && !address) {
 			setQuests(await fetchQuests())
 		}
 
 		if (!user) return
 
+		// todo: promise.all
 		userQuestActions = await fetchUserQuestActions(user.address)
 		const fetchedQuests = await fetchQuests()
 

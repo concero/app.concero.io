@@ -22,6 +22,8 @@ function App() {
 
 	const queryClient = new QueryClient()
 
+	// todo: we don't need SelectionProvider and DataProvider in app.concero.io anymore, these have to be removed.
+	// todo: the dark mode should be implemented via themeProvider later
 	return (
 		<PostHogProvider>
 			<I18Provider>
