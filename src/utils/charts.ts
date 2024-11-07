@@ -36,7 +36,7 @@ const groupByWeeks = (data: ChartData[]) => {
 }
 
 const calculateWeeklyAverages = (groupedData: Record<string, ChartData>, timeFormat: string) => {
-	return Object.keys(groupedData).reduce((acc, key) => {
+	return Object.keys(groupedData).reduce((acc: ChartData[], key) => {
 		const time = dayjs(key, timeFormat).valueOf()
 		if (isNaN(time)) {
 			return acc

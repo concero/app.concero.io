@@ -6,6 +6,7 @@ export function getButtonClasses(
 	variant: ButtonProps['variant'],
 	isLoading: ButtonProps['isLoading'],
 	isDisabled: ButtonProps['isDisabled'],
+	isFull: ButtonProps['isFull'],
 	className: ButtonProps['className'],
 ) {
 	const baseClasses = [styles.button]
@@ -13,6 +14,10 @@ export function getButtonClasses(
 	const variantClass = variant ? styles[variant] : ''
 	const isLoadingClass = isLoading ? styles.isLoading : ''
 	const isDisabledClass = isDisabled ? styles.isDisabled : ''
+	const isFullClass = isFull ? styles.fullButton : ''
+
 	const additionalClasses = className?.split(' ')
-	return baseClasses.concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, additionalClasses).join(' ')
+	return baseClasses
+		.concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, isFullClass, additionalClasses)
+		.join(' ')
 }

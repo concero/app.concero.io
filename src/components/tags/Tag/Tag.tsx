@@ -5,23 +5,14 @@ import className from './Tag.module.pcss'
 export interface TagProps {
 	leftIcon?: ReactNode
 	rightIcon?: ReactNode
-	onClick?: (event: MouseEvent<HTMLButtonElement>) => void
+	onClick?: (event: MouseEvent<HTMLDivElement>) => void
 	variant?: 'branded' | 'positive' | 'negative' | 'warning' | 'neutral'
 	isLoading?: boolean
 	children?: ReactNode
 	size?: 'sm' | 'md'
-	title?: string
 }
 
-export const Tag: FC<TagProps> = ({
-	leftIcon,
-	rightIcon,
-	children,
-	size = 'md',
-	variant = 'branded',
-	onClick,
-	title = null,
-}) => {
+export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size = 'md', variant = 'branded', onClick }) => {
 	const sizeClass = className[size]
 
 	return (
@@ -31,8 +22,7 @@ export const Tag: FC<TagProps> = ({
 			style={{ cursor: onClick ? 'pointer' : 'default' }}
 		>
 			{leftIcon}
-			{children}
-			{title || null}
+			<p>{children}</p>
 			{rightIcon}
 		</div>
 	)

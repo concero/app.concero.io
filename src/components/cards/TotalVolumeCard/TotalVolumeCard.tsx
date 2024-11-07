@@ -1,52 +1,66 @@
-import { LineChartCard } from '../LineChartCard/LineChartCard'
+import { ChartCard } from '../LineChartCard/ChartCard'
 import classNames from './TotalVolumeCard.module.pcss'
 import { createTimeFilters } from '../../../utils/chartTimeFilters'
 import { useEffect, useState } from 'react'
-import { fetchFees } from '../../../api/concero/fetchFees'
 import { type ChartData } from '../../../types/utils'
+import { type Fee } from '../../../api/concero/types'
+import { groupDataByDays } from '../../../utils/charts'
+import { toLocaleNumber } from '../../../utils/formatting'
 
 const timeFilters = createTimeFilters()
 
-export const TotalVolumeCard = () => {
+interface Props {
+	fees: Fee[]
+	isLoading: boolean
+}
+
+const description = 'Total volume of cross-chain transactions using the liquidity of the pool'
+
+export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 	const [volumeData, setVolumeData] = useState<ChartData[]>([])
 	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 	const [commonValue, setCommonValue] = useState<string>()
 
 	const getTotalVolume = async () => {
-		const { startTime, endTime } = activeFilter
-		const fees = await fetchFees(startTime, endTime)
+		const chartData = fees
+			.filter(fee => {
+				const feeTime = fee.timestamp
+				const { startTime, endTime } = activeFilter
 
-		const chartData = fees.map(fee => {
-			return {
-				time: fee.timestamp * 1000,
-				value: fee.loanGivenOut,
-			}
-		})
+				return (!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)
+			})
+			.map(fee => {
+				return {
+					time: fee.timestamp * 1000,
+					value: fee.loanGivenOut,
+				}
+			})
 
 		const totalValue = chartData.reduce((acc, item) => {
 			return acc + item.value
 		}, 0)
 
-		const table = {}
-		const uniqueChatData = chartData.filter(({ time }) => !table[time] && (table[time] = 1))
-
-		setCommonValue(totalValue.toFixed(1))
-		setVolumeData(uniqueChatData)
+		setCommonValue('$' + toLocaleNumber(totalValue))
+		setVolumeData(chartData)
 	}
 
 	useEffect(() => {
-		getTotalVolume()
-	}, [activeFilter])
+		if (!fees) return
+
+		void getTotalVolume()
+	}, [activeFilter, fees])
 
 	return (
-		<LineChartCard
+		<ChartCard
+			description={description}
+			isLoading={isLoading}
 			className={classNames.totalVolumeCard}
-			titleCard="Total Volume"
+			titleCard="Volume"
 			filterItems={timeFilters}
 			activeItem={activeFilter}
 			setActiveItem={setActiveFilter}
 			data={volumeData}
-			commonValue={`${commonValue} USDC`}
+			commonValue={commonValue}
 		/>
 	)
 }

@@ -58,12 +58,5 @@ export function SelectionProvider({ children }: SelectionProviderProps) {
 		initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
 	)
 
-	// useEffect(() => {
-	// 	selectionDispatch({
-	// 		type: 'SET_SELECTION',
-	// 		payload: initArgs({ fromTokens: tokens['1'], toTokens: tokens['137'], chains }),
-	// 	})
-	// }, [tokens])
-
 	return <SelectionContext.Provider value={{ selection, selectionDispatch }}>{children}</SelectionContext.Provider>
 }

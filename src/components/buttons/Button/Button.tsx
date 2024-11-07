@@ -14,13 +14,15 @@ export const Button: FC<ButtonProps> = ({
 	children,
 	onClick,
 	className,
+	isFull,
 }) => {
-	const buttonClasses = getButtonClasses(size, variant, isLoading, isDisabled, className)
+	const buttonClasses = getButtonClasses(size, variant, isLoading, isDisabled, isFull, className)
 
 	return (
 		<button
 			className={buttonClasses}
 			id={classNames[variant]}
+			disabled={isDisabled}
 			onClick={!isDisabled ? onClick : undefined}
 			aria-label={variant + size}
 		>

@@ -1,5 +1,5 @@
 import { config } from '../../constants/config'
-import { type UserTransaction } from '../../components/cards/UserActionsCard/UserActionsCard'
+import { type UserTransaction } from '../../components/pool/UserActions/UserActions'
 import { get } from '../client'
 
 export async function fetchParentPoolActionsByLpAddress(lpAddress: string): Promise<UserTransaction[] | []> {

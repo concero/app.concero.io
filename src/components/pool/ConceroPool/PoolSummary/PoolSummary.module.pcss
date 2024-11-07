@@ -1,0 +1,39 @@
+.container {
+	margin-top: 48px;
+	display: flex;
+	flex-direction: column;
+	gap: var(--sp-sm);
+
+	h5 {
+		color: var(--color-grey-600);
+	}
+}
+
+.wrap {
+	height: 100%;
+	max-height: 308px;
+	flex-direction: row;
+	gap: var(--sp-lg);
+
+	> div {
+		width: 49%;
+	}
+}
+
+.rewardsCard {
+}
+
+@media (max-width: 1000px) {
+	.wrap {
+		flex-direction: column-reverse;
+		max-height: 100%;
+
+		> div {
+			width: 100%;
+		}
+	}
+
+	.rewardsCard {
+		height: 192px !important;
+	}
+}
