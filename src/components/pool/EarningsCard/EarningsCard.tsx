@@ -86,12 +86,11 @@ export const EarningsCard = ({ poolIsFilled, poolDataIsLoading }: Props) => {
 				<h4>Your Earnings</h4>
 				<div className={classNames.placeholder}>
 					<div className={classNames.placeholderText}>
-						{isDisconnected && (
+						{isDisconnected ? (
 							<h2>
 								Connect wallet <br /> to manage your earnings
 							</h2>
-						)}
-						{userIsNotDeposited && (
+						) : (
 							<>
 								<h2>You haven't deposited yet</h2>
 								<p>Make your first deposit to start earn in this pool.</p>
@@ -125,7 +124,7 @@ export const EarningsCard = ({ poolIsFilled, poolDataIsLoading }: Props) => {
 						<Tag variant="positive" size="md">
 							<ArrowUpIcon />
 							&nbsp; ${toLocaleNumber(userEarnings.earnings, 2)}
-							&nbsp; ({toLocaleNumber(userEarnings.percents, 2)})%
+							&nbsp; ({toLocaleNumber(userEarnings.percents, 2)}%)
 						</Tag>
 					)}
 				</div>
