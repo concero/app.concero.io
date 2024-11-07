@@ -57,7 +57,12 @@ export const PoolCard = ({
 			classNameWrapper={depositButtonClasses}
 			className={classNames.tooltip}
 			tooltipId={'deposit-button'}
-			tooltipContent={<p>{poolDescription}</p>}
+			tooltipContent={
+				<div className="gap-xs">
+					<h6>Pool is filled</h6>
+					<p>{poolDescription}</p>
+				</div>
+			}
 		>
 			<Button className={depositButtonClasses} isFull isDisabled={true} size="lg">
 				Deposit
