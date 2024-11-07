@@ -22,14 +22,21 @@ export const AverageApyCard = ({ fees, isLoading }: Props) => {
 	const [commonValue, setCommonValue] = useState<string>('')
 
 	const getTotalVolume = async () => {
-		const chartData = fees.map(fee => {
-			const apyOnFeeFormula = fee.percentReturned * 365.25
+		const chartData = fees
+			.filter(fee => {
+				const feeTime = fee.timestamp
+				const { startTime, endTime } = activeFilter
 
-			return {
-				time: fee.timestamp * 1000,
-				value: apyOnFeeFormula,
-			}
-		})
+				return (!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)
+			})
+			.map(fee => {
+				const apyOnFeeFormula = fee.percentReturned * 365.25
+
+				return {
+					time: fee.timestamp * 1000,
+					value: apyOnFeeFormula,
+				}
+			})
 
 		const weeklyAverageData = groupDataByWeeks(getUniqueChatData(chartData))
 

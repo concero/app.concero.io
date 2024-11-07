@@ -26,7 +26,7 @@ export const ConceroPool = () => {
 				<div className={classNames.iconWrap}>
 					<UsdcIcon />
 				</div>
-				<h4 className={classNames.title}>Concero</h4>
+				<h4 className={classNames.title}>USDC Pool</h4>
 				{poolIsFilled && <Tag size="sm">Full</Tag>}
 			</div>
 
