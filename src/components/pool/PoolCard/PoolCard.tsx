@@ -20,7 +20,7 @@ interface Props {
 	userIsNotDeposited?: boolean
 }
 
-const despositDescription = 'The pool has reached its maximum capacity and you cannot deposit money into it.'
+const poolDescription = 'The pool has reached its max capacity and you cannot deposit money into it.'
 
 export const PoolCard = ({
 	isDepositOnly = false,
@@ -57,7 +57,7 @@ export const PoolCard = ({
 			classNameWrapper={depositButtonClasses}
 			className={classNames.tooltip}
 			tooltipId={'deposit-button'}
-			tooltipContent={<p>{despositDescription}</p>}
+			tooltipContent={<p>{poolDescription}</p>}
 		>
 			<Button className={depositButtonClasses} isFull isDisabled={true} size="lg">
 				Deposit

@@ -37,9 +37,11 @@ export const Footer = () => {
 				<div>
 					<h5 className={classNames.title}>Build the next big thing</h5>
 					<p className={`${classNames.subtitle} body2`}>Contact us to learn the benefits</p>
-					<Button size="sm" variant="secondaryColor">
-						Contact us
-					</Button>
+					<a href="mailto:concerocrypto@gmail.com">
+						<Button size="sm" variant="secondaryColor">
+							Contact us
+						</Button>
+					</a>
 				</div>
 
 				<div className={classNames.navigation}>

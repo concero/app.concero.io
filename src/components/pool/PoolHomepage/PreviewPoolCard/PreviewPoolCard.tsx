@@ -1,5 +1,5 @@
 import classNames from './PreviewPoolCard.module.pcss'
-import { ConceroIcon } from '../../../../assets/icons/ConceroIcon'
+import { UsdcIcon } from '../../../../assets/icons/UsdcIcon'
 import { Card } from '../../../cards/Card/Card'
 import { Button } from '../../../buttons/Button/Button'
 import { useEffect, useState } from 'react'
@@ -18,9 +18,6 @@ interface Props {
 	link: string
 	isLoading: boolean
 }
-
-const poolDescription =
-	'For security reasons, our pools have a maximum capacity limit. However, this can sometimes be exceeded because the pool also stores the fees it has earned.'
 
 export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 	const { poolLiquidity, maxCap, isLoading: isLiquidityLoading } = useGetLiquidity()
@@ -57,14 +54,13 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 		<Card className="w-full gap-xxl">
 			<div className="gap-lg">
 				<div className="row ac jsb wrap gap-xs">
-					<div className="row ac gap-xs">
-						<div className={classNames.logoWrap}>
-							<ConceroIcon />
+					<div className="row ac gap-sm">
+						<div className={classNames.iconWrap}>
+							<UsdcIcon />
 						</div>
-						<h4 className={classNames.title}>Concero</h4>
-						{poolIsFilled && <InfoTooltip description={poolDescription} tooltipId={'pool-preview'} />}
+						<h4 className={classNames.title}>USDC</h4>
+						{poolIsFilled && <Tag size="sm">Full</Tag>}
 					</div>
-					{poolIsFilled && <Tag size="sm">Pool is filled</Tag>}
 
 					{isLoading ? (
 						<SkeletonLoader height={24} width={95} />

@@ -1,4 +1,4 @@
-import { ConceroIcon } from '../../../assets/icons/ConceroIcon'
+import { UsdcIcon } from '../../../assets/icons/UsdcIcon'
 import { IconButton } from '../../buttons/IconButton/IconButton'
 import { ArrowLeftIcon } from '../../../assets/icons/ArrowLeftIcon.tsx'
 import classNames from './ConceroPool.module.pcss'
@@ -9,9 +9,6 @@ import { EarningsCard } from '../EarningsCard/EarningsCard'
 import { InfoTooltip } from '../../wrappers/InfoTooltip/InfoTooltip'
 import { Tag } from '../../tags/Tag/Tag'
 import { useGetLiquidity } from '../poolScripts/useGetLiquidity'
-
-const poolDescription =
-	'For security reasons, our pools have a maximum capacity limit. However, this can sometimes be exceeded because the pool also stores the fees it has earned.'
 
 export const ConceroPool = () => {
 	const { poolLiquidity, maxCap, isLoading } = useGetLiquidity()
@@ -27,15 +24,10 @@ export const ConceroPool = () => {
 
 			<div className="row ac gap-sm">
 				<div className={classNames.iconWrap}>
-					<ConceroIcon />
+					<UsdcIcon />
 				</div>
 				<h4 className={classNames.title}>Concero</h4>
-				{poolIsFilled && (
-					<>
-						<InfoTooltip description={poolDescription} tooltipId={'pool-preview'} />
-						<Tag size="sm">Pool is filled</Tag>
-					</>
-				)}
+				{poolIsFilled && <Tag size="sm">Full</Tag>}
 			</div>
 
 			<EarningsCard poolDataIsLoading={isLoading} poolIsFilled={poolIsFilled} />
