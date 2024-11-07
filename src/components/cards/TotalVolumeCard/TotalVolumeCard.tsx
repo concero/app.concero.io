@@ -41,7 +41,7 @@ export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 		}, 0)
 
 		setCommonValue('$' + toLocaleNumber(totalValue))
-		setVolumeData(groupDataByDays(chartData))
+		setVolumeData(chartData)
 	}
 
 	useEffect(() => {
