@@ -21,7 +21,7 @@ export const PreviewPoolCardDisabled = () => {
 					<div className={classNames.metric}>
 						<p>Total Liquidity</p>
 						<span>
-							<b>-</b> from <b>-</b>
+							<b>-</b>
 						</span>
 					</div>
 

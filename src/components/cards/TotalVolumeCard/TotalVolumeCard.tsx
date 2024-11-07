@@ -4,7 +4,6 @@ import { createTimeFilters } from '../../../utils/chartTimeFilters'
 import { useEffect, useState } from 'react'
 import { type ChartData } from '../../../types/utils'
 import { type Fee } from '../../../api/concero/types'
-import { groupDataByDays } from '../../../utils/charts'
 import { toLocaleNumber } from '../../../utils/formatting'
 
 const timeFilters = createTimeFilters()
@@ -55,7 +54,7 @@ export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 			description={description}
 			isLoading={isLoading}
 			className={classNames.totalVolumeCard}
-			titleCard="Volume"
+			titleCard="Total volume"
 			filterItems={timeFilters}
 			activeItem={activeFilter}
 			setActiveItem={setActiveFilter}
