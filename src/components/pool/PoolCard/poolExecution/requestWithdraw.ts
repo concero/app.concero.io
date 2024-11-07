@@ -113,7 +113,7 @@ export async function startWithdrawal(
 			payload: [{ status: 'pending', title: 'Sending transaction' }],
 		})
 
-		await checkAllowanceAndApprove(swapState, publicClient, walletClient)
+		await checkAllowanceAndApprove(swapState, swapDispatch, publicClient, walletClient)
 		const hash = await sendTransaction(swapState, publicClient, walletClient)
 
 		await checkTransactionStatus(hash, publicClient, swapDispatch)

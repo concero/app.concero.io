@@ -1,0 +1,21 @@
+export const ChartPlaceholder = () => (
+	<svg xmlns="http://www.w3.org/2000/svg" width="753" height="112" viewBox="0 0 753 112" fill="none">
+		<path
+			d="M46.784 64.0678L0 112H753V0L723.336 8.14545L691.391 44.8L664.009 0L634.345 39.7091L604.682 26.4727L573.877 20.8727L547.636 31.5636H517.973L488.309 3.05455L456.364 76.8727L428.982 28L399.318 43.2727L369.655 33.6L339.991 44.2909L312.609 69.2364L282.945 52.4364L253.282 80.4364L221.336 52.4364L193.955 57.0182L164.291 62.6182L134.627 50.9091L104.964 68.2182L77.5818 59.0545L46.784 64.0678Z"
+			fill="url(#paint0_linear_917_66937)"
+		/>
+		<defs>
+			<linearGradient
+				id="paint0_linear_917_66937"
+				x1="550.269"
+				y1="112"
+				x2="550.511"
+				y2="-0.00179459"
+				gradientUnits="userSpaceOnUse"
+			>
+				<stop offset="0.2" stopColor="#FCFCFD" />
+				<stop offset="1" stopColor="#EBEEF2" />
+			</linearGradient>
+		</defs>
+	</svg>
+)

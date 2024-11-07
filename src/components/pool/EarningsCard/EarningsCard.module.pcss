@@ -2,6 +2,7 @@
 	width: 100%;
 	height: 314px;
 	margin-top: var(--sp-lg);
+	justify-content: space-between;
 }
 
 .footer {
@@ -19,13 +20,50 @@
 }
 
 .button {
-	max-width: 177px;
+	width: 177px;
+}
+
+.placeholder {
 	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.placeholderText {
+	max-width: 400px;
+	text-align: center;
+	gap: var(--sp-sm);
+
+	h2,
+	p {
+		color: var(--color-grey-600);
+	}
+}
+
+.price {
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: 10px;
+
+	h1 {
+		font-size: 64px;
+		color: var(--color-grey-600);
+	}
+}
+
+.percents {
+	flex-direction: row;
+	color: var(--color-success-700);
+	align-content: center;
+	gap: var(--sp-xs);
+	font-size: 18px;
 }
 
 @media (max-width: 744px) {
 	.earnings {
-		height: 100%;
+		height: 526px;
 	}
 
 	.footer {
@@ -43,6 +81,12 @@
 	}
 
 	.button {
-		max-width: 100%;
+		width: 100%;
+	}
+
+	.price {
+		h1 {
+			font-size: 48px;
+		}
 	}
 }

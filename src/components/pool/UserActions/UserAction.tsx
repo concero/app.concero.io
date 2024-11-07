@@ -7,33 +7,22 @@ import { TransactionStatus } from '../../../api/concero/types'
 import { Tag } from '../../tags/Tag/Tag'
 import { ManageWithdrawalButton } from './ManageWithdrawalButton'
 
-export const checkWithdrawAvailable = (deadline: number) => {
-	const givenTime = dayjs.unix(deadline)
-	const now = dayjs()
-
-	if (now.isAfter(givenTime)) {
-		return 'Claim available'
-	}
-	const diffInMilliseconds = givenTime.diff(now)
-	const diffInDays = Math.ceil(dayjs.duration(diffInMilliseconds).asDays())
-
-	return `Claim in: ${diffInDays}`
-}
-
 export const getWithdrawalDate = (deadline: number) => {
 	if (!deadline) return
 
 	const oneHour = 3600
+	let units = 'days'
 	const givenTime = dayjs.unix(deadline + oneHour)
 	const now = dayjs()
 
 	let timeLeft = now.diff(givenTime, 'days')
 
 	if (timeLeft === 0) {
+		units = 'hours'
 		timeLeft = now.diff(givenTime, 'hours')
 	}
 
-	return `Locked, ${timeLeft} days left`
+	return `Locked, ${timeLeft} ${units} left`
 }
 
 interface Props {
@@ -116,12 +105,14 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 			<div className={classNames.date}>
 				<p className="body1">{dayjs(action.time).format('DD MMM YYYY, HH:mm')}</p>
 			</div>
-			<ManageWithdrawalButton
-				setRetryTimeLeft={setRetryTimeLeft}
-				status={status}
-				setStatus={setStatus}
-				action={action}
-			/>
+			<div className={classNames.button}>
+				<ManageWithdrawalButton
+					setRetryTimeLeft={setRetryTimeLeft}
+					status={status}
+					setStatus={setStatus}
+					action={action}
+				/>
+			</div>
 		</div>
 	)
 }

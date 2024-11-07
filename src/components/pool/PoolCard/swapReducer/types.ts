@@ -6,9 +6,8 @@ import { type TokenAmount } from '../../../../utils/TokenAmount'
 export enum StageType {
 	approve = 1,
 	requestTx = 2,
-	transaction = 2,
-	success = 3,
-	warning = 4,
+	transaction = 3,
+	transactionSigned = 4,
 }
 
 export type StageStepStatus = 'idle' | 'pending' | 'await' | 'success' | 'error'

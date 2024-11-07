@@ -7,6 +7,7 @@ interface TooltipProps {
 	tooltipId: string
 	tooltipContent: JSX.Element
 	className?: string
+	classNameWrapper?: string
 	place?:
 		| 'top'
 		| 'top-start'
@@ -22,14 +23,23 @@ interface TooltipProps {
 		| 'left-end'
 }
 
-export function TooltipWrapper({ children, tooltipId, tooltipContent, className, place }: TooltipProps) {
+export function TooltipWrapper({
+	children,
+	tooltipId,
+	tooltipContent,
+	className,
+	classNameWrapper,
+	place,
+}: TooltipProps) {
 	return (
-		<div>
-			<div data-tooltip-id={tooltipId}>{children}</div>
+		<>
+			<div data-tooltip-id={tooltipId} className={classNameWrapper}>
+				{children}
+			</div>
 
 			<Tooltip place={place} id={tooltipId} className={`${classNames.tooltip} ${className}`}>
 				{tooltipContent}
 			</Tooltip>
-		</div>
+		</>
 	)
 }

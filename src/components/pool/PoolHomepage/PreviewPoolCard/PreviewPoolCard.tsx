@@ -1,5 +1,5 @@
 import classNames from './PreviewPoolCard.module.pcss'
-import { ConceroIcon } from '../../../../assets/icons/conceroIcon'
+import { ConceroIcon } from '../../../../assets/icons/ConceroIcon'
 import { Card } from '../../../cards/Card/Card'
 import { Button } from '../../../buttons/Button/Button'
 import { useEffect, useState } from 'react'
@@ -10,6 +10,8 @@ import { useGetLiquidity } from '../../poolScripts/useGetLiquidity'
 import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 import { PoolCard } from '../../PoolCard/PoolCard'
 import { toLocaleNumber } from '../../../../utils/formatting'
+import { Tag } from '../../../tags/Tag/Tag'
+import { InfoTooltip } from '../../../wrappers/InfoTooltip/InfoTooltip'
 
 interface Props {
 	fees: Fee[]
@@ -17,11 +19,15 @@ interface Props {
 	isLoading: boolean
 }
 
+const poolDescription =
+	'For security reasons, our pools have a maximum capacity limit. However, this can sometimes be exceeded because the pool also stores the fees it has earned.'
+
 export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 	const { poolLiquidity, maxCap, isLoading: isLiquidityLoading } = useGetLiquidity()
 
 	const [commonApyValue, setCommonApyValue] = useState<string>('0')
 	const [totalRewards, setTotalRewards] = useState<string>('0')
+	const poolIsFilled = poolLiquidity > maxCap
 
 	const setApyHandle = async () => {
 		let rewards = 0
@@ -50,13 +56,16 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 	return (
 		<Card className="w-full gap-xxl">
 			<div className="gap-lg">
-				<div className="row ac jsb">
-					<div className="row ac gap-sm">
+				<div className="row ac jsb wrap gap-xs">
+					<div className="row ac gap-xs">
 						<div className={classNames.logoWrap}>
 							<ConceroIcon />
 						</div>
-						<h4 className={classNames.title}>USDC</h4>
+						<h4 className={classNames.title}>Concero</h4>
+						{poolIsFilled && <InfoTooltip description={poolDescription} tooltipId={'pool-preview'} />}
 					</div>
+					{poolIsFilled && <Tag size="sm">Pool is filled</Tag>}
+
 					{isLoading ? (
 						<SkeletonLoader height={24} width={95} />
 					) : (
@@ -92,7 +101,7 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 			</div>
 
 			<div className={classNames.buttons}>
-				<PoolCard depositButtonClasses={classNames.button} isDepositOnly />
+				<PoolCard poolIsFilled={poolIsFilled} depositButtonClasses={classNames.button} isDepositOnly />
 
 				<Link to={link} className={classNames.button}>
 					<Button isFull size="lg" variant="secondaryColor">

@@ -42,6 +42,7 @@ export const PoolSummary = () => {
 						fees={fees}
 					/>
 				</div>
+
 				<AverageApyCard isLoading={isLoading} fees={fees} />
 			</div>
 		</section>

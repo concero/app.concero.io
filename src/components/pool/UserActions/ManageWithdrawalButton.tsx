@@ -16,9 +16,14 @@ interface Props {
 
 export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTimeLeft }: Props) => {
 	const { address, chainId } = useAccount()
-	const isActiveRequest = action.status === UserActionStatus.WithdrawRetryNeeded
+	const isActiveRequest = action.status === UserActionStatus.ActiveRequestWithdraw
 	const isRetryRequestWithdraw = action.status === UserActionStatus.WithdrawRetryNeeded
 	const isTxFailed = status === TransactionStatus.FAILED
+	const isPending = status === TransactionStatus.PENDING
+	const isSuccess = status === TransactionStatus.SUCCESS
+
+	const retryPerformedTimestamp = localStorage.getItem('retryPerformedTimestamp')
+	const isRertyPerformed = retryPerformedTimestamp && getRemainingTime(retryPerformedTimestamp) > 0
 
 	const handleCompleteWithdrawal = async () => {
 		try {
@@ -59,6 +64,10 @@ export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTime
 			setStatus(TransactionStatus.FAILED)
 			console.error(error)
 		}
+	}
+
+	if (isRertyPerformed || isSuccess || isPending) {
+		return null
 	}
 
 	if (isActiveRequest || isRetryRequestWithdraw || isTxFailed) {

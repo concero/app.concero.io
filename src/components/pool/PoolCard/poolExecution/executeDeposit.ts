@@ -35,12 +35,34 @@ const completeDeposit = async (
 	walletClient: WalletClient,
 	publicClient: PublicClient,
 ) => {
+	swapDispatch({
+		type: 'SET_SWAP_STEPS',
+		payload: [
+			{ title: 'Signature required', status: 'success', type: StageType.approve },
+			{ title: 'Pending', status: 'success', type: StageType.requestTx },
+			{ title: 'Pending', status: 'await', type: StageType.transaction },
+		],
+	})
+
 	const txHash = await walletClient.writeContract({
 		abi: ParentPool,
 		functionName: 'completeDeposit',
 		address: parentPoolAddress,
 		args: [depositRequestId],
 		gas: 4_000_000n,
+	})
+
+	if (swapState.stage === SwapCardStage.failed) {
+		return
+	}
+
+	swapDispatch({
+		type: 'SET_SWAP_STEPS',
+		payload: [
+			{ title: 'Signature required', status: 'success', type: StageType.approve },
+			{ title: 'Pending', status: 'success', type: StageType.requestTx },
+			{ title: 'Pending', status: 'pending', type: StageType.transactionSigned },
+		],
 	})
 
 	const receipt = await publicClient.waitForTransactionReceipt({
@@ -67,6 +89,8 @@ const completeDeposit = async (
 					label: action.SuccessDeposit,
 					data: { from: swapState.from, to: swapState.to, txHash },
 				})
+
+				swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.success })
 
 				swapDispatch({
 					type: 'SET_SWAP_STEPS',

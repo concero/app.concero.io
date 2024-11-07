@@ -14,6 +14,8 @@ interface Props {
 	isLoading: boolean
 }
 
+const description = 'Total volume of cross-chain transactions using the liquidity of the pool'
+
 export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 	const [volumeData, setVolumeData] = useState<ChartData[]>([])
 	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
@@ -50,6 +52,7 @@ export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 
 	return (
 		<ChartCard
+			description={description}
 			isLoading={isLoading}
 			className={classNames.totalVolumeCard}
 			titleCard="Volume"

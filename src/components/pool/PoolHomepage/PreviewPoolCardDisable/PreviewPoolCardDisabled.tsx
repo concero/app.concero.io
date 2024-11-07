@@ -1,7 +1,7 @@
 import classNames from './PreviewPoolCardDisable.module.pcss'
-import { ConceroIcon } from '../../../../assets/icons/conceroIcon'
 import { Card } from '../../../cards/Card/Card'
 import { Button } from '../../../buttons/Button/Button'
+import { EthIcon } from '../../../../assets/icons/EthIcon'
 
 export const PreviewPoolCardDisabled = () => {
 	return (
@@ -10,7 +10,7 @@ export const PreviewPoolCardDisabled = () => {
 				<div className="row ac jsb">
 					<div className="row ac gap-sm">
 						<div className={classNames.logoWrap}>
-							<ConceroIcon />
+							<EthIcon />
 						</div>
 						<h4 className={classNames.title}>ETH</h4>
 					</div>

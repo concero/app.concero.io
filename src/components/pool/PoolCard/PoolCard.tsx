@@ -8,17 +8,32 @@ import { Button } from '../../buttons/Button/Button'
 import { Modal } from '../../modals/Modal/Modal'
 import classNames from './PoolCard.module.pcss'
 import { useAccount } from 'wagmi'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { add } from 'husky'
+import { TooltipWrapper } from '../../wrappers/WithTooltip/TooltipWrapper'
 
 interface Props {
 	isDepositOnly?: boolean
 	depositButtonClasses?: string
 	withdrawalButtonClasses?: string
+	poolIsFilled?: boolean
+	userIsNotDeposited?: boolean
 }
 
-export const PoolCard = ({ isDepositOnly = false, depositButtonClasses, withdrawalButtonClasses }: Props) => {
+const despositDescription = 'The pool has reached its maximum capacity and you cannot deposit money into it.'
+
+export const PoolCard = ({
+	isDepositOnly = false,
+	depositButtonClasses,
+	withdrawalButtonClasses,
+	poolIsFilled,
+	userIsNotDeposited,
+}: Props) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [swapState, swapDispatch] = useSwapReducer()
-	const { address } = useAccount()
+	const { address, isConnected } = useAccount()
+	const { open } = useWeb3Modal()
+
 	const typingTimeoutRef = useRef<number>()
 
 	const isInputStages = swapState.stage === SwapCardStage.input || swapState.stage === SwapCardStage.review
@@ -37,21 +52,42 @@ export const PoolCard = ({ isDepositOnly = false, depositButtonClasses, withdraw
 		setIsOpen(false)
 	}
 
-	const depositButton = (
+	const disabledDepositButton = (
+		<TooltipWrapper
+			classNameWrapper={depositButtonClasses}
+			className={classNames.tooltip}
+			tooltipId={'deposit-button'}
+			tooltipContent={<p>{despositDescription}</p>}
+		>
+			<Button className={depositButtonClasses} isFull isDisabled={true} size="lg">
+				Deposit
+			</Button>
+		</TooltipWrapper>
+	)
+
+	const depositButton = poolIsFilled ? (
+		disabledDepositButton
+	) : (
 		<Button
+			isDisabled={poolIsFilled}
 			className={depositButtonClasses}
-			onClick={() => {
-				swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
-				setIsOpen(true)
-			}}
+			onClick={
+				isConnected
+					? () => {
+							swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
+							setIsOpen(true)
+						}
+					: open
+			}
 			size="lg"
 		>
-			Deposit
+			{isConnected ? 'Deposit' : 'Connect wallet'}
 		</Button>
 	)
 
 	const withdrawalButton = (
 		<Button
+			isDisabled={!address || userIsNotDeposited}
 			className={withdrawalButtonClasses}
 			onClick={() => {
 				swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'withdraw' })
@@ -85,7 +121,7 @@ export const PoolCard = ({ isDepositOnly = false, depositButtonClasses, withdraw
 				{isInputStages ? (
 					<SwapInput onClose={handeClose} swapState={swapState} swapDispatch={swapDispatch} />
 				) : (
-					<SwapProgress swapState={swapState} handleGoBack={handleGoBack} />
+					<SwapProgress swapState={swapState} swapDispatch={swapDispatch} handleGoBack={handleGoBack} />
 				)}
 			</Modal>
 		</>

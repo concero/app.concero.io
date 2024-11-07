@@ -28,8 +28,8 @@ export function useSwapCardEffects({ swapState, swapDispatch, address, typingTim
 
 		checkLastWithdrawRequest(address).then(lastWithdrawAction => {
 			if (lastWithdrawAction) {
-				swapDispatch({ type: 'SET_IS_WITHDRAW_INITIATED', payload: true })
-				swapDispatch({ type: 'SET_ACTUAL_WITHDRAW_DEADLINE', payload: lastWithdrawAction.deadline })
+				// swapDispatch({ type: 'SET_IS_WITHDRAW_INITIATED', payload: true })
+				// swapDispatch({ type: 'SET_ACTUAL_WITHDRAW_DEADLINE', payload: lastWithdrawAction.deadline })
 			}
 		})
 	}, [address, swapState.poolMode])

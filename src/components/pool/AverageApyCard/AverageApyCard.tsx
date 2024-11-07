@@ -13,6 +13,9 @@ interface Props {
 	isLoading: boolean
 }
 
+const apyDescription =
+	'APY (Annual Percentage Yield) is calculated on the basis of the average fee earned by the pool in the previous week, extrapolated for the year.'
+
 export const AverageApyCard = ({ fees, isLoading }: Props) => {
 	const [apyData, setApyData] = useState<ChartData[]>([])
 	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
@@ -42,6 +45,7 @@ export const AverageApyCard = ({ fees, isLoading }: Props) => {
 
 	return (
 		<ChartCard
+			description={apyDescription}
 			isLoading={isLoading}
 			className={classNames.averageApyCard}
 			setActiveItem={setActiveFilter}

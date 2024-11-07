@@ -8,9 +8,10 @@ import { Button } from '../../buttons/Button/Button'
 import { BarChart } from '../../layout/Charts/BarChart/BarChart'
 import { Loader } from '../../layout/Loader/Loader'
 import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
-import { toLocaleNumber } from '../../../utils/formatting'
+import { InfoTooltip } from '../../wrappers/InfoTooltip/InfoTooltip'
 
 export interface BarChartCardProps {
+	description?: string
 	titleCard: string
 	subtitle?: string
 	filterItems?: SelectItem[]
@@ -27,6 +28,7 @@ export interface BarChartCardProps {
 }
 
 export const ChartCard = ({
+	description,
 	titleCard,
 	subtitle,
 	activeItem,
@@ -56,8 +58,9 @@ export const ChartCard = ({
 		<Card className={`${className} jsb`}>
 			<div>
 				<div className={classNames.header}>
-					<div>
+					<div className="row gap-sm ac">
 						<h4 className={classNames.title}>{titleCard}</h4>
+						{description && <InfoTooltip description={description} tooltipId={titleCard} />}
 					</div>
 					<div className="row gap-xs">
 						{setActiveItem &&

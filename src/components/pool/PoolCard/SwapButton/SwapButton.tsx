@@ -10,14 +10,7 @@ export const SwapButton = ({ error, onClick, isLoading, isDeposit }: SwapButtonP
 	const actionText: string = isDeposit ? 'Request Deposit' : 'Request Withdrawal'
 
 	return (
-		<Button
-			isDisabled={isConnected && !!error}
-			isFull
-			size="lg"
-			variant="primary"
-			isLoading={isLoading}
-			onClick={isConnected ? onClick : open}
-		>
+		<Button isFull size="lg" variant="primary" isLoading={isLoading} onClick={isConnected ? onClick : open}>
 			{isConnected ? actionText : 'Connect Wallet'}
 		</Button>
 	)

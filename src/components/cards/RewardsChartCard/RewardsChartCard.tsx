@@ -19,6 +19,9 @@ interface Props {
 	className?: string
 }
 
+const description =
+	"The pool receives a fee of 0.1% of the transaction amount for each cross-chain transaction executed using the pool's liquidity. These fees are shared proportionally between all LP providers in the pool."
+
 export const RewardsCard = ({
 	fees,
 	isLoading,
@@ -73,6 +76,7 @@ export const RewardsCard = ({
 
 	return (
 		<ChartCard
+			description={description}
 			isLoading={isLoading}
 			className={`${classNames.totalVolumeCard} ${className}`}
 			titleCard={title}

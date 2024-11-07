@@ -8,18 +8,21 @@
 	gap: var(--sp-xs);
 	justify-content: center;
 	font-size: 14px;
-	font-weight: 400;
 	padding: 7px var(--sp-md);
 
 	p {
+		font-weight: 500;
 		color: var(--color-primary-700);
 	}
 }
 
 .sm {
-	font-size: 0.875rem;
-	line-height: 16px;
 	padding: var(--sp-xs) var(--sp-md);
+
+	p {
+		font-size: 14px;
+		line-height: 16px;
+	}
 }
 
 .branded {
@@ -29,19 +32,32 @@
 
 .neutral {
 	background-color: var(--color-grey-100);
+
+	p {
+		color: var(--color-grey-700);
+	}
 }
 
 .positive {
 	background-color: var(--color-success-100);
-	color: var(--color-success-700);
+
+	p {
+		color: var(--color-success-700);
+	}
 }
 
 .warning {
 	background-color: var(--color-warning-100);
-	color: var(--color-warning-700);
+
+	p {
+		color: var(--color-warning-700);
+	}
 }
 
 .negative {
 	background-color: var(--color-danger-100);
-	color: var(--color-danger-700);
+
+	p {
+		color: var(--color-danger-700);
+	}
 }
