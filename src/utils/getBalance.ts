@@ -4,6 +4,7 @@ import { TokenAmount } from './TokenAmount'
 import { createPublicClient, erc20Abi, getContract } from 'viem'
 import { base, baseSepolia } from 'wagmi/chains'
 import { http } from 'wagmi'
+import { IS_TESTNET } from '../constants/config'
 
 interface HandleBalanceProps {
 	dispatch: Dispatch<SwapAction>
@@ -25,7 +26,7 @@ interface HandleBalanceProps {
 }
 
 const publicClient = createPublicClient({
-	chain: base,
+	chain: IS_TESTNET ? baseSepolia : base,
 	transport: http(),
 })
 

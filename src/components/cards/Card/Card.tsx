@@ -1,4 +1,5 @@
 import { type FC, type ReactNode } from 'react'
+import classNames from './Card.module.pcss'
 
 interface CardProps {
 	children: ReactNode
@@ -7,7 +8,7 @@ interface CardProps {
 }
 
 export const Card: FC<CardProps> = ({ children, className, onClick }) => (
-	<div className={`card ${className}`} onClick={onClick && onClick}>
+	<div className={`${classNames.card} ${className}`} onClick={onClick && onClick}>
 		{children}
 	</div>
 )

@@ -6,7 +6,7 @@ import { fetchParentPoolActionsByLpAddress } from './fetchParentPoolActionsByLpA
 dayjs.extend(isSameOrBefore)
 
 export const poolEventNamesMap = {
-	ConceroParentPool_DepositCompleted: 'Liquidity provided',
+	ConceroParentPool_DepositCompleted: 'Deposit',
 	ConceroParentPool_WithdrawRequestInitiated: 'Withdrawal Submitted',
 	ConceroParentPool_Withdrawn: 'Withdrawal Complete',
 }

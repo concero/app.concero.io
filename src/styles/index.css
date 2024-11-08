@@ -4,6 +4,8 @@
 	--st-br-md: 12px;
 	--st-br-sm: 8px;
 	--st-br-xs: 4px;
+
+	--sp-xxxl: 48px;
 	--sp-xxl: 32px;
 	--sp-xl: 24px;
 	--sp-lg: 16px;
@@ -219,7 +221,7 @@ div#root {
 
 div {
 	box-sizing: border-box;
-	color: var(--color-text-primary);
+	color: var(--color-grey-500);
 	display: flex;
 	flex-direction: column;
 	scrollbar-width: none;
@@ -242,7 +244,7 @@ input,
 label,
 li {
 	box-sizing: border-box;
-	color: var(--color-text-primary);
+	color: var(--color-grey-500);
 	font-family: inherit;
 	margin: 0;
 	padding: 0;
@@ -254,7 +256,7 @@ li {
 
 textarea {
 	box-sizing: border-box;
-	color: var(--color-text-primary);
+	color: var(--color-grey-500);
 	font-family: inherit;
 	margin: 0;
 	padding: 0;
@@ -326,14 +328,14 @@ a {
 }
 
 .body1 {
-	color: var(--color-text-secondary);
-	font-size: 0.75rem;
+	color: var(--color-grey-500);
+	font-size: 0.875rem;
 	flex: none;
 	line-height: 1rem;
 }
 
 .body2 {
-	color: var(--color-text-secondary);
+	color: var(--color-grey-500);
 	font-size: 0.875rem;
 	flex: none;
 	font-weight: 400;
@@ -341,21 +343,21 @@ a {
 }
 
 .body3 {
-	color: var(--color-text-secondary);
+	color: var(--color-grey-500);
 	font-size: 1rem;
 	flex: none;
 	line-height: 1.25rem;
 }
 
 .body4 {
-	color: var(--color-text-secondary);
+	color: var(--color-grey-500);
 	font-size: 15px;
 	flex: none;
 	font-weight: 500;
 }
 
 .tagBody {
-	color: var(--color-base-white);
+	color: var(--color-grey-500);
 	font-size: 0.85rem;
 }
 
@@ -371,7 +373,7 @@ button {
 }
 
 .cardHeaderTitle {
-	color: var(--color-text-secondary);
+	color: var(--color-grey-500);
 }
 
 .cerpTestText {

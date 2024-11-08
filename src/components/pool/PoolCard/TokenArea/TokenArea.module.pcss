@@ -1,0 +1,86 @@
+.tokenContainer {
+	width: 100%;
+	transition: 0.2s ease-in-out;
+}
+
+.input {
+	background: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: calc(100% - 110px);
+
+	input {
+		padding: 0;
+		font-size: 32px;
+		font-weight: 500;
+		color: var(--color-grey-700);
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+.tokenRowHeader {
+	color: var(--color-grey-600);
+}
+
+.tokenRow {
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: var(--sp-sm);
+	margin-top: var(--sp-sm);
+	margin-bottom: var(--sp-xs);
+}
+
+.selectTokenButton {
+	width: 100%;
+	gap: var(--sp-xs);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.amountUsdContainer {
+	justify-content: flex-start;
+	align-items: flex-start;
+
+	h5 {
+		font-weight: 400;
+		color: var(--color-grey-500);
+	}
+}
+
+.balance {
+	font-weight: 400;
+	color: var(--color-grey-500);
+}
+
+.maxButton {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.maxButton:hover {
+	cursor: pointer;
+	color: var(--color-grey-500);
+}
+
+.hidden {
+	opacity: 0;
+}
+
+.maxBalanceSkeleton {
+	width: 20px;
+	height: 16px;
+	border-radius: var(--st-br-md);
+}
+
+.skeleton {
+	width: 120px;
+	height: 16px;
+	border-radius: var(--st-br-md);
+}

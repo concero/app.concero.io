@@ -1,10 +1,10 @@
 import styles from './IconButton.module.pcss'
-import { type MouseEventHandler, type ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 
 interface Props {
 	isDisabled?: boolean
 	children: ReactNode
-	onClick?: MouseEventHandler<HTMLButtonElement> | undefined
+	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 	className?: string
 	size?: 'sm' | 'md' | 'lg'
 	variant?: 'default' | 'secondary' | 'secondaryColor' | 'tetrary' | 'tetraryColor'

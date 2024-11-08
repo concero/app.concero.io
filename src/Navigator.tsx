@@ -8,10 +8,18 @@ import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
 import { handleFetchUser } from './web3/handleFetchUser'
 import { type IUser } from './api/concero/user/userType'
+import { Footer } from './components/rewards/Footer/Footer'
 
 const PoolScreen = lazy(
 	async () =>
 		await import('./components/screens/PoolScreen/PoolScreen').then(module => ({ default: module.PoolScreen })),
+)
+
+const UsdcPoolScreen = lazy(
+	async () =>
+		await import('./components/screens/PoolScreen/UsdcPoolScreen').then(module => ({
+			default: module.UsdcPoolScreen,
+		})),
 )
 
 const RewardsScreen = lazy(
@@ -56,6 +64,22 @@ export const Navigator = () => {
 						}
 					/>
 					<Route
+						path={routes.poolUsdc}
+						element={
+							<Suspense fallback={<FullScreenLoader />}>
+								<UsdcPoolScreen />
+							</Suspense>
+						}
+					/>
+					<Route
+						path={routes.pool}
+						element={
+							<Suspense fallback={<FullScreenLoader />}>
+								<PoolScreen />
+							</Suspense>
+						}
+					/>
+					<Route
 						path={routes.rewards}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
@@ -74,6 +98,7 @@ export const Navigator = () => {
 					<Route path={routes.root} element={<Navigate to={routes.pool} />} />
 					<Route path={'/*'} element={<Navigate to={routes.pool} />} />
 				</Routes>
+				<Footer />
 			</AppScreen>
 		</BrowserRouter>
 	)
