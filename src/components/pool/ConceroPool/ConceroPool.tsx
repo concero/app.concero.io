@@ -6,7 +6,6 @@ import { PoolSummary } from './PoolSummary/PoolSummary'
 import { Link } from 'react-router-dom'
 import { routes } from '../../../constants/routes'
 import { EarningsCard } from '../EarningsCard/EarningsCard'
-import { InfoTooltip } from '../../wrappers/InfoTooltip/InfoTooltip'
 import { Tag } from '../../tags/Tag/Tag'
 import { useGetLiquidity } from '../poolScripts/useGetLiquidity'
 

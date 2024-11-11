@@ -71,7 +71,7 @@ export const EarningsCard = ({ poolIsFilled, poolDataIsLoading }: Props) => {
 						/>
 					</div>
 
-					<UserActions isDisabled={userIsNotDeposited} />
+					<UserActions />
 				</>
 			)}
 		</div>
