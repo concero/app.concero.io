@@ -70,7 +70,7 @@ export const PoolCard = ({
 		</TooltipWrapper>
 	)
 
-	const depositButton = poolIsFilled ? (
+	const depositButton = !poolIsFilled ? (
 		disabledDepositButton
 	) : (
 		<Button

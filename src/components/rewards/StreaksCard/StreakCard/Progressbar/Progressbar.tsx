@@ -86,14 +86,14 @@ export const Progressbar = ({ streak }: ProgressbarProps) => {
 	return (
 		<div className="row">
 			<div className="gap-sm">
-				<p className="body1">1st Week</p>
+				<p className={classNames.date}>1st Week</p>
 				<div className="row gap-sm">
 					<ProgressbarItem value={result[0]} maxValue={7} color="color1" title={1.5} />
 				</div>
 			</div>
 			<Separator />
 			<div className="gap-sm">
-				<p className="body1">Months</p>
+				<p className={classNames.date}>Months</p>
 				<div className="row gap-xs">
 					<ProgressbarItem value={result[1]} maxValue={4} color="color2" title={2} stepLength={45.75} />
 					<ProgressbarItem value={result[2]} maxValue={4} color="color3" title={2.5} stepLength={45.75} />

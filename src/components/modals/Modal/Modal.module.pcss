@@ -12,17 +12,13 @@
 	-webkit-backdrop-filter: blur(8px);
 	-moz-backdrop-filter: blur(8px);
 	backdrop-filter: blur(8px);
-	padding-top: 48px;
-	padding-left: var(--sp-lg);
-	padding-right: var(--sp-lg);
 }
 
 .container {
-	background-color: var(--color-grey-25);
+	background-color: var(--color-base-background);
 	border-radius: var(--sp-xl);
 	overflow-y: hidden;
 	padding: var(--sp-lg);
-	gap: var(--sp-lg);
 	z-index: 11;
 	max-height: 90vh;
 	max-width: 700px;
@@ -33,25 +29,29 @@
 	flex-direction: row;
 	gap: var(--sp-sm);
 	justify-content: space-between;
-	position: relative;
-	height: var(--sp-xxl);
-
-	button {
-		position: absolute;
-	}
 }
 
 .titleContainer {
 	flex-direction: row;
 	align-items: center;
-	width: 100%;
-	text-align: center;
-	justify-content: center;
+	gap: var(--sp-md);
+}
+
+.title {
+	font-size: 24px;
+	font-weight: 500;
 	color: var(--color-grey-700);
 }
 
 @media (max-width: 768px) {
+	.overlay {
+		justify-content: flex-end;
+	}
+
 	.container {
 		width: 100%;
+		border-radius: unset;
+		border-top-left-radius: var(--st-br-md);
+		border-top-right-radius: var(--st-br-md);
 	}
 }
