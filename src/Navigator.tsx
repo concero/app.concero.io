@@ -1,14 +1,10 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppScreen } from './components/screens/AppScreen/AppScreen'
 import { Header } from './components/layout/Header/Header/Header'
 import { routes } from './constants/routes'
 import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
-import { useAccount } from 'wagmi'
-import posthog from 'posthog-js'
-import { handleFetchUser } from './web3/handleFetchUser'
-import { type IUser } from './api/concero/user/userType'
-import { Footer } from './components/rewards/Footer/Footer'
+import { Footer } from './components/layout/Footer/Footer'
 
 const PoolScreen = lazy(
 	async () =>
@@ -37,23 +33,10 @@ const FeedbackScreen = lazy(
 )
 
 export const Navigator = () => {
-	const [user, setUser] = useState<IUser | null>(null)
-
-	const { address } = useAccount()
-
-	useEffect(() => {
-		if (!address) return
-
-		handleFetchUser(address).then(user => {
-			setUser(user)
-		})
-		posthog.identify(address)
-	}, [address])
-
 	return (
 		<BrowserRouter>
 			<AppScreen>
-				<Header user={user} />
+				<Header />
 				<Routes>
 					<Route
 						path={routes.pool}

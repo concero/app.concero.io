@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from 'react'
+import { type FC, type ReactNode, useEffect, useState } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import classNames from './Header.module.pcss'
 import { routes } from '../../../../constants/routes'
@@ -12,13 +12,28 @@ import { Tag } from '../../../tags/Tag/Tag'
 import { type IUser } from '../../../../api/concero/user/userType'
 import { UserMultipliers } from './UserMultipliers/UserMultipliers'
 import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
+import { useAccount } from 'wagmi'
+import { handleFetchUser } from '../../../../web3/handleFetchUser'
+import posthog from 'posthog-js'
 
 interface HeaderProps {
-	user: IUser | null
 	children?: ReactNode
 }
 
-export const Header: FC<HeaderProps> = ({ children, user }) => {
+export const Header: FC<HeaderProps> = ({ children }) => {
+	const [user, setUser] = useState<IUser | null>(null)
+
+	const { address } = useAccount()
+
+	useEffect(() => {
+		if (!address) return
+
+		handleFetchUser(address).then(user => {
+			setUser(user)
+		})
+		posthog.identify(address)
+	}, [address])
+
 	const isMobile = useMediaQuery('ipad')
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
