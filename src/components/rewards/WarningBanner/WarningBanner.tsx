@@ -7,9 +7,9 @@ export const WarningBanner = () => {
 			<div className={classNames.logoWrap}>
 				<InfoIcon color={'var(--color-warning-600)'} />
 			</div>
-			<p className={classNames.title}>Transaction Tracking (CERs) is Updating Now</p>
+			<p className={classNames.title}>Your actions are being updated</p>
 			<p className={classNames.subtitle}>
-				Your streaks, CERs, and transaction history are safe and will be visible once the update is complete.
+				Your latest streaks, CERs and tx history are safely recorded and will appear on your profile soon.
 			</p>
 		</div>
 	)
