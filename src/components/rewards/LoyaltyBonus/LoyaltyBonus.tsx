@@ -25,7 +25,6 @@ export const LoyaltyBonus = ({ user }: Props) => {
 		try {
 			setIsLoading(true)
 			const isClaimed = await claimLoyaltyBonus(user.address)
-			console.log(isClaimed)
 			setRewardIsClaimed(isClaimed)
 		} catch (err) {
 			console.error(err)
