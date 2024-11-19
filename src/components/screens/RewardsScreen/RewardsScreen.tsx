@@ -11,7 +11,6 @@ import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActi
 import { type Address } from 'viem'
 import { handleFetchUser } from '../../../web3/handleFetchUser'
 import { LoyaltyBonus } from '../../rewards/LoyaltyBonus/LoyaltyBonus'
-import { Warning } from 'postcss'
 import { WarningBanner } from '../../rewards/WarningBanner/WarningBanner'
 
 export const RewardsScreen = () => {

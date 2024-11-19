@@ -1,10 +1,10 @@
 import classNames from './LoyaltyBonus.module.pcss'
-import { LancaLogo } from './LancaLogo'
 import { Button } from '../../buttons/Button/Button'
 import { type IUser } from '../../../api/concero/user/userType'
 import { useEffect, useState } from 'react'
 import { checkLoyaltyBonus } from '../../../api/concero/rewards/loyaltyReward/checkLoyaltyBonus'
 import { claimLoyaltyBonus } from '../../../api/concero/rewards/loyaltyReward/claimLoyaltyBonus.ts'
+import { HeartIcon } from '../../../assets/icons/HeartIcon'
 
 interface Props {
 	user: IUser
@@ -38,17 +38,17 @@ export const LoyaltyBonus = ({ user }: Props) => {
 	return (
 		<div className={classNames.container}>
 			<div className={classNames.logoWrap}>
-				<LancaLogo />
+				<HeartIcon />
 			</div>
-			<p className={classNames.title}>Lancan Loyalty Bonus – 25 CERs</p>
+			<p className={classNames.title}>Thanks for being a Loyal Lancan! - 15 CERs</p>
 			<p className={classNames.subtitle}>
-				Congratulations! You have received 25 extra CERs for using Lanca in September
+				Congratulations! You have received 15 extra CERs for being a Loyal Lancan!
 			</p>
 			<Button
 				isDisabled={rewardIsClaimed}
 				isLoading={isLoading}
 				onClick={claimReward}
-				size="sm"
+				size="md"
 				className={classNames.button}
 			>
 				{rewardIsClaimed ? 'Claimed' : 'Claim'}
