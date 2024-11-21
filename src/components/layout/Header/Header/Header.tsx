@@ -12,6 +12,7 @@ import { Tag } from '../../../tags/Tag/Tag'
 import { type IUser } from '../../../../api/concero/user/userType'
 import { UserMultipliers } from './UserMultipliers/UserMultipliers'
 import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
+import { toLocaleNumber } from '../../../../utils/formatting'
 
 interface HeaderProps {
 	user: IUser | null
@@ -58,7 +59,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 			<div className={classNames.headerButtonsContainer}>
 				{user && (
 					<>
-						<Tag>{user.points.toFixed(4)} CERs</Tag>
+						<Tag>{toLocaleNumber(user.points, 4)} CERs</Tag>
 						<TooltipWrapper tooltipId={'user-multiplier'} tooltipContent={<UserMultipliers user={user} />}>
 							<Tag>
 								{String(
