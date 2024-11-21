@@ -13,6 +13,7 @@ import { LanguageIcon } from '../../../../assets/icons/LanguageIcon'
 import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetworkButtons'
 import { type IUser } from '../../../../api/concero/user/userType'
 import { Separator } from '../../Separator/Separator'
+import { Dropdown } from './Dropdown'
 
 interface Props {
 	user: IUser | null
@@ -22,7 +23,7 @@ export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
-	const isMobile = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('ipad')
 	const { t } = useTranslation()
 
 	const handleKeyDown = (event: KeyboardEvent) => {
@@ -76,6 +77,27 @@ export function BurgerMenu({ user }: Props) {
 		}
 	}, [])
 
+	const settings = (
+		<ul className={classNames.listContainer}>
+			{user && <SocialNetworkButtons user={user} />}
+			<Separator />
+			<li>
+				<Button
+					leftIcon={<LanguageIcon />}
+					variant={isMobile ? 'tetrary' : 'secondary'}
+					size={isMobile ? 'md' : 'sm'}
+					className={classNames.listButton}
+					onClick={() => {
+						setIsLanguageModalVisible(true)
+					}}
+				>
+					{t('header.menu.changeLanguage')}
+				</Button>
+			</li>
+			{!isMobile && <Separator />}
+		</ul>
+	)
+
 	return (
 		<div className={classNames.container}>
 			<IconButton variant="secondary" onClick={handleMenuOpen}>
@@ -89,27 +111,17 @@ export function BurgerMenu({ user }: Props) {
 					setIsMenuOpened(false)
 				}}
 			>
-				<animated.div style={fadeAnimation} className={classNames.menuContainer}>
+				<animated.div
+					onClick={(e: MouseEvent) => {
+						e.stopPropagation()
+					}}
+					style={fadeAnimation}
+					className={classNames.menuContainer}
+				>
 					{isMobile ? <MobileBreadcrumbs /> : null}
 
-					<ul className={classNames.listContainer}>
-						{user && <SocialNetworkButtons user={user} />}
-						<Separator />
-						<li>
-							<Button
-								leftIcon={<LanguageIcon />}
-								variant={'secondary'}
-								size={'sm'}
-								className={classNames.listButton}
-								onClick={() => {
-									setIsLanguageModalVisible(true)
-								}}
-							>
-								{t('header.menu.changeLanguage')}
-							</Button>
-						</li>
-						<Separator />
-					</ul>
+					{isMobile ? <Dropdown>{settings}</Dropdown> : settings}
+					{isMobile && <Separator />}
 
 					<Button
 						className="w-full"

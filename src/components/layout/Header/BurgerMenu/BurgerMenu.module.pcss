@@ -58,7 +58,17 @@
 	}
 }
 
-@media (max-width: 768px) {
+.dropdownButton {
+	justify-content: space-between;
+
+	&:active,
+	&:hover {
+		background-color: transparent;
+		color: var(--color-grey-600);
+	}
+}
+
+@media (max-width: 1024px) {
 	.overlay {
 		align-items: flex-start;
 		justify-content: flex-start;
@@ -71,5 +81,17 @@
 		width: 384px;
 		right: 15px;
 		top: 60px;
+		padding: var(--sp-lg);
+	}
+}
+
+@media (max-width: 420px) {
+	.menuContainer {
+		width: 100%;
+		right: 0;
+		top: 56px;
+		height: 100vh;
+		border-radius: 0;
+		box-shadow: none;
 	}
 }

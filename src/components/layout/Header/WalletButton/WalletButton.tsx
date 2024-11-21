@@ -8,7 +8,12 @@ import classNames from './WalletButton.module.pcss'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { IconWallet } from '@tabler/icons-react'
 
-export const WalletButton = () => {
+interface Props {
+	className?: string
+	isFull?: boolean
+}
+
+export const WalletButton = ({ className, isFull = false }: Props) => {
 	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
 	const { open } = useWeb3Modal()
 	const { t } = useTranslation()
@@ -31,8 +36,9 @@ export const WalletButton = () => {
 
 	return (
 		<Button
+			isFull={isFull}
 			leftIcon={isConnected ? <IconWallet size={16} color="var(--color-grey-600)" /> : null}
-			className={classNames.buttonWallet}
+			className={`${classNames.buttonWallet} ${className}`}
 			variant={isConnected ? 'secondary' : 'primary'}
 			onClick={handleClick}
 		>

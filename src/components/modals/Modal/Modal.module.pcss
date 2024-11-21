@@ -16,7 +16,7 @@
 }
 
 .container {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	margin-top: var(--sp-xxxl);
 	margin-bottom: var(--sp-xxxl);
@@ -26,7 +26,6 @@
 	padding: var(--sp-lg);
 	z-index: 11;
 	max-width: 700px;
-	width: calc(100% - var(--sp-lg) * 2);
 }
 
 .header {
@@ -46,4 +45,10 @@
 	font-size: 24px;
 	font-weight: 500;
 	color: var(--color-grey-700);
+}
+
+@media (max-width: 744px) {
+	.container {
+		width: calc(100% - var(--sp-lg) * 2) !important;
+	}
 }

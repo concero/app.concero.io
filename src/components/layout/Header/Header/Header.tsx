@@ -20,7 +20,8 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children, user }) => {
-	const isMobile = useMediaQuery('ipad')
+	const isTablet = useMediaQuery('ipad')
+	const isMobile = useMediaQuery('mobile')
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
 
@@ -31,7 +32,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 				<div className={classNames.logoContainer}>
 					<Logo />
 				</div>
-				{!isMobile && (
+				{!isTablet && (
 					<ul className="gap-xs">
 						<a className={classNames.link} target="_blank" href="https://lanca.io" rel="noreferrer">
 							<Button variant="tetrary">Swap</Button>
