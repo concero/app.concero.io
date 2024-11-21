@@ -12,6 +12,7 @@ import { IconBurger } from '../../../../assets/icons/IconBurger'
 import { LanguageIcon } from '../../../../assets/icons/LanguageIcon'
 import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetworkButtons'
 import { type IUser } from '../../../../api/concero/user/userType'
+import { Separator } from '../../Separator/Separator'
 
 interface Props {
 	user: IUser | null
@@ -28,6 +29,16 @@ export function BurgerMenu({ user }: Props) {
 		if (event.key === 'Escape') {
 			setIsMenuOpened(false)
 		}
+	}
+
+	const handleMenuClose = () => {
+		console.log('close')
+		setIsMenuOpened(false)
+	}
+
+	const handleMenuOpen = (e: MouseEvent) => {
+		e.stopPropagation()
+		setIsMenuOpened(prev => !prev)
 	}
 
 	const fadeAnimation = useSpring({
@@ -57,16 +68,20 @@ export function BurgerMenu({ user }: Props) {
 		}
 	}, [isMenuOpened])
 
+	useEffect(() => {
+		document.addEventListener('click', handleMenuClose)
+
+		return () => {
+			document.removeEventListener('click', handleMenuClose)
+		}
+	}, [])
+
 	return (
 		<div className={classNames.container}>
-			<IconButton
-				variant="secondary"
-				onClick={() => {
-					setIsMenuOpened(prev => !prev)
-				}}
-			>
+			<IconButton variant="secondary" onClick={handleMenuOpen}>
 				<IconBurger />
 			</IconButton>
+
 			<animated.div
 				style={overlayFadeAnimation}
 				className={classNames.overlay}
@@ -76,26 +91,30 @@ export function BurgerMenu({ user }: Props) {
 			>
 				<animated.div style={fadeAnimation} className={classNames.menuContainer}>
 					{isMobile ? <MobileBreadcrumbs /> : null}
+
 					<ul className={classNames.listContainer}>
 						{user && <SocialNetworkButtons user={user} />}
+						<Separator />
 						<li>
 							<Button
 								leftIcon={<LanguageIcon />}
 								variant={'secondary'}
 								size={'sm'}
 								className={classNames.listButton}
-								onClick={(e: MouseEvent) => {
+								onClick={() => {
 									setIsLanguageModalVisible(true)
-									e.stopPropagation()
 								}}
 							>
-								<h5>{t('header.menu.changeLanguage')}</h5>
+								{t('header.menu.changeLanguage')}
 							</Button>
 						</li>
+						<Separator />
 					</ul>
+
 					<Button
 						className="w-full"
 						variant="secondaryColor"
+						size="md"
 						onClick={() => {
 							setIsModalContactSupportModalVisible(true)
 						}}

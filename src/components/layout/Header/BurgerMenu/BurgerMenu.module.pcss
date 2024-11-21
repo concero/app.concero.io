@@ -11,7 +11,6 @@
 	width: 100vw;
 	height: 100vh;
 	align-items: center;
-	background-color: rgba(0, 0, 0, 0.5);
 	display: flex;
 	justify-content: center;
 	top: 0;
@@ -19,33 +18,33 @@
 	position: fixed;
 	bottom: 0;
 	z-index: 10;
-	-webkit-backdrop-filter: blur(8px);
-	-moz-backdrop-filter: blur(8px);
-	backdrop-filter: blur(8px);
 }
 
 .menuContainer {
 	position: absolute;
-	right: 40px;
+	right: 25px;
 	top: 60px;
-	width: 230px;
+	width: 184px;
 	background-color: var(--color-grey-100);
-	border-radius: var(--st-br-md);
-	padding: var(--sp-md);
+	border-radius: var(--sp-lg);
+	padding: var(--sp-sm);
 	gap: var(--sp-sm);
+	box-shadow:
+		0 4px 24px 0 rgba(52, 64, 84, 0.15),
+		0 2px 12px 0 rgba(52, 64, 84, 0.1);
 }
 
 .listContainer {
 	width: 100%;
 	flex-direction: column;
+	align-items: center;
 	gap: var(--sp-sm);
-	padding-bottom: var(--sp-sm);
-	border-bottom: 1px solid var(--color-grey-200);
 
 	li {
 		width: 100%;
 		gap: var(--sp-md);
 		transition: transform 0.2s ease-out;
+
 		.listButton {
 			width: 100%;
 			justify-content: flex-start;
@@ -69,9 +68,8 @@
 
 	.menuContainer {
 		background-color: var(--color-grey-25);
-		position: unset;
-		width: 100%;
-		right: 0px;
-		top: 0px;
+		width: 384px;
+		right: 15px;
+		top: 60px;
 	}
 }

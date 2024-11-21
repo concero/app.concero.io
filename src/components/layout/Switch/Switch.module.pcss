@@ -1,0 +1,22 @@
+.wrapper {
+	flex-direction: row;
+	width: 36px;
+	height: 20px;
+	padding: 2px;
+	border-radius: var(--sp-lg);
+	background: var(--color-grey-400);
+	transition: 0.2s;
+
+	> div {
+		width: var(--sp-lg);
+		height: var(--sp-lg);
+		background: var(--color-grey-25);
+		border-radius: 50%;
+		box-shadow: 0 2px 4px 0 rgba(52, 64, 84, 0.2);
+	}
+}
+
+.active {
+	justify-content: flex-end;
+	background: var(--color-primary-600);
+}

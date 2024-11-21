@@ -1,5 +1,4 @@
 .container {
-	width: 100%;
 	gap: var(--st-br-md);
 	overflow: hidden;
 	background: var(--color-grey-25);
@@ -22,42 +21,14 @@
 
 .connectSocialNetworkButton {
 	cursor: pointer;
-	gap: 6px;
-	border-radius: 12px;
-	text-align: start;
+	width: 100%;
+	padding: var(--sp-xs) var(--sp-md);
 	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	background: var(--color-primary-750);
-	padding: 10px var(--sp-md);
+	justify-content: space-between;
+	align-items: center;
 
-	h4 {
-		color: var(--color-primary-500);
-	}
-
-	span {
-		font-weight: normal;
-		color: var(--color-primary-600);
-	}
-}
-
-.socialNetworkConnected {
-	background: var(--color-green-550);
-	pointer-events: none;
-
-	h4,
-	span {
-		color: var(--color-green-400);
-	}
-}
-
-.connectSocialNetworkButtonDisabled {
-	background: var(--color-grey-600);
-	pointer-events: none;
-
-	h4,
-	span {
-		color: var(--color-grey-450);
+	h6 {
+		padding: 3px 4px;
 	}
 }
 

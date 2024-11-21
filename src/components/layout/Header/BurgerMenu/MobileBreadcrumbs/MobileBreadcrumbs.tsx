@@ -27,7 +27,6 @@ export function MobileBreadcrumbs() {
 					<h5>{t('header.swap')}</h5>
 				</Button>
 			</a>
-			<div className={classNames.separator} />
 		</ul>
 	)
 }
