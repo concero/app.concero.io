@@ -66,14 +66,21 @@ export const QuestModal = ({
 
 	const isQuestCompleted = completedStepIds.length === quest.steps.length
 
-	const questImage = quest.image ? (
+	const questImage = (
 		<img
 			className={classNames.questImage}
 			height={160}
-			src={`${config.assetsURI}/icons/quests/${image}`}
+			src={
+				quest.image
+					? `${config.assetsURI}/icons/quests/${image}`
+					: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+			}
+			onError={(e: any) => {
+				e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+			}}
 			alt="Quest image"
 		/>
-	) : null
+	)
 
 	const questTitle = (
 		<div className="row gap-sm ac">
