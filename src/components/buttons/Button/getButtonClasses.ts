@@ -18,6 +18,6 @@ export function getButtonClasses(
 
 	const additionalClasses = className?.split(' ')
 	return baseClasses
-		.concat(sizeClass, variantClass, isLoadingClass, isDisabledClass, isFullClass, additionalClasses)
+		.concat(additionalClasses, sizeClass, variantClass, isLoadingClass, isDisabledClass, isFullClass)
 		.join(' ')
 }

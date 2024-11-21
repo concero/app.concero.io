@@ -10,9 +10,8 @@ import { config } from '../../../../constants/config'
 import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
 import type { UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
-import dayjs from 'dayjs'
 import { getDaysUntilEndOfWeek } from '../../../../utils/date/getDaysUntilThisWeekt'
-import { checkIfDateIsThisWeek } from '../../../../utils/date/checkIfDateIsThisWeek'
+import { checkIfDateIsThisDay, checkIfDateIsThisWeek } from '../../../../utils/date/checkIfDateIsThisWeek'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -48,9 +47,8 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 		if (quest.userAction) {
 			const userQuestData = quest.userAction.data as UserActionQuestData
 
-			const nowDate = dayjs()
-			const isMoreOneDayDifference = nowDate.diff(userQuestData.timestamp, 'day') >= 1
-			const isNewDailyQuest = isDailyQuest && isMoreOneDayDifference
+			const questNotStartedThisDay = !checkIfDateIsThisDay(userQuestData.timestamp)
+			const isNewDailyQuest = isDailyQuest && questNotStartedThisDay
 
 			const questNotStartedThisWeek = !checkIfDateIsThisWeek(userQuestData.timestamp)
 			const isNewWeeklyQuest = isWeeklyQuest && questNotStartedThisWeek
@@ -67,14 +65,21 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 		setIsOpen(true)
 	}
 
-	const questImage = quest.image ? (
+	const questImage = (
 		<img
 			className={quest.type === QuestType.Campaign ? classNames.campaignImage : classNames.questImage}
 			width={'100%'}
-			src={`${config.assetsURI}/icons/quests/${image}`}
+			src={
+				quest.image
+					? `${config.assetsURI}/icons/quests/${image}`
+					: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+			}
+			onError={(e: any) => {
+				e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+			}}
 			alt="Quest image"
 		/>
-	) : null
+	)
 
 	// don't display daily social quest if they don't have a link
 	if (isDailyQuest && isSocialQuest && !quest.steps[0].options?.link) return null

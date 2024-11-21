@@ -13,14 +13,21 @@ interface Props {
 }
 
 export const RewardModal = ({ show, setShow, quest, points }: Props) => {
-	const questImage = quest.image ? (
+	const questImage = (
 		<img
 			className={classNames.questImage}
 			height={128}
-			src={`${config.assetsURI}/icons/quests/${quest.image}`}
+			src={
+				quest.image
+					? `${config.assetsURI}/icons/quests/${quest.image}`
+					: `${config.assetsURI}/icons/quests/QuestRewardPlaceholder.webp`
+			}
+			onError={(e: any) => {
+				e.target.src = `${config.assetsURI}/icons/quests/QuestRewardPlaceholder.webp`
+			}}
 			alt="Quest image"
 		/>
-	) : null
+	)
 
 	return (
 		<Modal isHeaderVisible={false} className={classNames.rewardModal} show={show} setShow={setShow}>

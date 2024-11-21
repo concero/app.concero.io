@@ -85,10 +85,10 @@ body::-webkit-scrollbar {
 
 	/* grey */
 	--color-grey-25: #fcfcfd;
-	--color-grey-50: #f9fafb;
-	--color-grey-100: #f2f4f7;
-	--color-grey-200: #eaecf0;
-	--color-grey-300: #d0d5dd;
+	--color-grey-50: #f7f8f9;
+	--color-grey-100: #ebeef2;
+	--color-grey-200: #dadde4;
+	--color-grey-300: #bfc6d0;
 	--color-grey-400: #98a2b3;
 	--color-grey-500: #667085;
 	--color-grey-600: #475467;

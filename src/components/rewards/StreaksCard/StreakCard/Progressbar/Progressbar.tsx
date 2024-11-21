@@ -66,9 +66,17 @@ const ProgressbarStep = ({ value = 0, maxValue = 7, length = 49, color = 'color1
 }
 
 const ProgressbarItem = ({ stepLength, title, color, value, maxValue }: ProgressbarItemProps) => {
+	const progress = calculateProgress(value, maxValue)
+	const isFinished = progress === 100
+	const isNotStarted = progress <= 0
+
 	return (
 		<div className="gap-xs ac">
-			<Tag size="sm" variant="branded">
+			<Tag
+				size="sm"
+				className={isNotStarted ? classNames.disabled : ''}
+				variant={isFinished ? 'branded' : 'neutral'}
+			>
 				{title}x
 			</Tag>
 			<ProgressbarStep value={value} maxValue={maxValue} color={color} length={stepLength} />
