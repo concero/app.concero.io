@@ -44,6 +44,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 
 	const campaignQuest = quests.find((quest: IQuest) => quest.type === QuestType.Campaign)
 	const dailyQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Daily)
+	const monthlyQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Monthly)
 	const primaryQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Primary)
 	const secondaryQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Secondary)
 
@@ -65,6 +66,10 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 					</div>
 				</div>
 			)}
+
+			{monthlyQuests.map((quest: IQuest) => (
+				<QuestCard key={quest._id} className={classNames.campaign} quest={quest} user={user} variant="big" />
+			))}
 
 			{quests.length > 0 && (
 				<div className="gap-sm">

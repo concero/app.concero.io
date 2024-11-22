@@ -12,6 +12,7 @@ import { Tag } from '../../../tags/Tag/Tag'
 import { type IUser } from '../../../../api/concero/user/userType'
 import { UserMultipliers } from './UserMultipliers/UserMultipliers'
 import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
+import { toLocaleNumber } from '../../../../utils/formatting'
 
 interface HeaderProps {
 	user: IUser | null
@@ -19,7 +20,8 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children, user }) => {
-	const isMobile = useMediaQuery('ipad')
+	const isTablet = useMediaQuery('ipad')
+	const isMobile = useMediaQuery('mobile')
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
 
@@ -30,7 +32,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 				<div className={classNames.logoContainer}>
 					<Logo />
 				</div>
-				{!isMobile && (
+				{!isTablet && (
 					<ul className="gap-xs">
 						<a className={classNames.link} target="_blank" href="https://lanca.io" rel="noreferrer">
 							<Button variant="tetrary">Swap</Button>
@@ -58,7 +60,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 			<div className={classNames.headerButtonsContainer}>
 				{user && (
 					<>
-						<Tag>{user.points.toFixed(4)} CERs</Tag>
+						<Tag>{toLocaleNumber(user.points, 4)} CERs</Tag>
 						<TooltipWrapper tooltipId={'user-multiplier'} tooltipContent={<UserMultipliers user={user} />}>
 							<Tag>
 								{String(

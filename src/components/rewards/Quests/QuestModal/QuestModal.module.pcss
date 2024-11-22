@@ -10,9 +10,25 @@
 	gap: var(--sp-md);
 }
 
+.title {
+	color: var(--color-grey-700);
+}
+
 .questImage {
 	width: 100%;
 	object-fit: contain;
+}
+
+.placeholderImage {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 262px;
+}
+
+.imageFrame {
+	min-height: 208px;
 }
 
 .warning {
@@ -30,7 +46,6 @@
 }
 
 .description {
-	max-width: 430px;
 	width: 100%;
 	color: var(--color-grey-500);
 }
@@ -40,7 +55,9 @@
 }
 
 .rewardModal {
-	width: 395px;
+	width: 100%;
+	max-width: 395px;
+	min-height: 380px;
 	align-items: center;
 	gap: var(--sp-lg);
 

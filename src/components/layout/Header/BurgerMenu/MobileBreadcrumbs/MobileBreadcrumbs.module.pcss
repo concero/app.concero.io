@@ -2,25 +2,32 @@
 	flex-direction: column;
 	width: 100%;
 	gap: var(--sp-md);
+}
 
-	.link {
+.link {
+	flex-direction: row;
+	width: 100%;
+	border: unset;
+	padding: unset;
+
+	.listButton {
+		justify-content: flex-start;
 		width: 100%;
-		border: unset;
-		padding: unset;
-
-		.listButton {
-			justify-content: flex-start;
-			width: 100%;
-		}
 	}
+}
 
-	.separator {
-		width: 100%;
-		height: 1px;
-		background-color: var(--color-grey-200);
-	}
+.separator {
+	width: 100%;
+	height: 1px;
+	background-color: var(--color-grey-200);
 }
 
 .active {
 	background-color: var(--color-primary-600);
+}
+
+@media (max-width: 1024px) {
+	.walletButton {
+		justify-content: flex-start;
+	}
 }

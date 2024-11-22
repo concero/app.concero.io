@@ -12,6 +12,8 @@ import { IconBurger } from '../../../../assets/icons/IconBurger'
 import { LanguageIcon } from '../../../../assets/icons/LanguageIcon'
 import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetworkButtons'
 import { type IUser } from '../../../../api/concero/user/userType'
+import { Separator } from '../../Separator/Separator'
+import { Dropdown } from './Dropdown'
 
 interface Props {
 	user: IUser | null
@@ -21,13 +23,22 @@ export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
-	const isMobile = useMediaQuery('mobile')
+	const isMobile = useMediaQuery('ipad')
 	const { t } = useTranslation()
 
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Escape') {
 			setIsMenuOpened(false)
 		}
+	}
+
+	const handleMenuClose = () => {
+		setIsMenuOpened(false)
+	}
+
+	const handleMenuOpen = (e: MouseEvent) => {
+		e.stopPropagation()
+		setIsMenuOpened(prev => !prev)
 	}
 
 	const fadeAnimation = useSpring({
@@ -57,16 +68,41 @@ export function BurgerMenu({ user }: Props) {
 		}
 	}, [isMenuOpened])
 
+	useEffect(() => {
+		document.addEventListener('click', handleMenuClose)
+
+		return () => {
+			document.removeEventListener('click', handleMenuClose)
+		}
+	}, [])
+
+	const settings = (
+		<ul className={classNames.listContainer}>
+			{user && <SocialNetworkButtons user={user} />}
+			<Separator />
+			<li>
+				<Button
+					leftIcon={<LanguageIcon />}
+					variant={isMobile ? 'tetrary' : 'secondary'}
+					size={isMobile ? 'md' : 'sm'}
+					className={classNames.listButton}
+					onClick={() => {
+						setIsLanguageModalVisible(true)
+					}}
+				>
+					{t('header.menu.changeLanguage')}
+				</Button>
+			</li>
+			{!isMobile && <Separator />}
+		</ul>
+	)
+
 	return (
 		<div className={classNames.container}>
-			<IconButton
-				variant="secondary"
-				onClick={() => {
-					setIsMenuOpened(prev => !prev)
-				}}
-			>
+			<IconButton variant="secondary" onClick={handleMenuOpen}>
 				<IconBurger />
 			</IconButton>
+
 			<animated.div
 				style={overlayFadeAnimation}
 				className={classNames.overlay}
@@ -74,28 +110,22 @@ export function BurgerMenu({ user }: Props) {
 					setIsMenuOpened(false)
 				}}
 			>
-				<animated.div style={fadeAnimation} className={classNames.menuContainer}>
+				<animated.div
+					onClick={(e: MouseEvent) => {
+						e.stopPropagation()
+					}}
+					style={fadeAnimation}
+					className={classNames.menuContainer}
+				>
 					{isMobile ? <MobileBreadcrumbs /> : null}
-					<ul className={classNames.listContainer}>
-						{user && <SocialNetworkButtons user={user} />}
-						<li>
-							<Button
-								leftIcon={<LanguageIcon />}
-								variant={'secondary'}
-								size={'sm'}
-								className={classNames.listButton}
-								onClick={(e: MouseEvent) => {
-									setIsLanguageModalVisible(true)
-									e.stopPropagation()
-								}}
-							>
-								<h5>{t('header.menu.changeLanguage')}</h5>
-							</Button>
-						</li>
-					</ul>
+
+					{isMobile ? <Dropdown>{settings}</Dropdown> : settings}
+					{isMobile && <Separator />}
+
 					<Button
 						className="w-full"
 						variant="secondaryColor"
+						size="md"
 						onClick={() => {
 							setIsModalContactSupportModalVisible(true)
 						}}

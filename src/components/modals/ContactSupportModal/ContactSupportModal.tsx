@@ -14,10 +14,13 @@ export function ContactSupportModal({ isShow, setIsShow }: ContactSupportModalPr
 	const { t } = useTranslation()
 
 	return (
-		<Modal show={isShow} setShow={setIsShow} title={t('contactSupportCard.contractSupport')}>
-			<div className={classNames.supportCardContainer}>
-				<ContactSupportCard infoToCopy={infoToCopy} />
-			</div>
+		<Modal
+			show={isShow}
+			setShow={setIsShow}
+			className={classNames.supportCardContainer}
+			title={t('contactSupportCard.contractSupport')}
+		>
+			<ContactSupportCard infoToCopy={infoToCopy} />
 		</Modal>
 	)
 }

@@ -1,23 +1,32 @@
 import { type FC, type MouseEvent, type ReactNode } from 'react'
 
-import className from './Tag.module.pcss'
+import classNames from './Tag.module.pcss'
 
 export interface TagProps {
 	leftIcon?: ReactNode
 	rightIcon?: ReactNode
 	onClick?: (event: MouseEvent<HTMLDivElement>) => void
 	variant?: 'branded' | 'positive' | 'negative' | 'warning' | 'neutral'
+	className?: string
 	isLoading?: boolean
-	children?: ReactNode
+	children: ReactNode
 	size?: 'sm' | 'md'
 }
 
-export const Tag: FC<TagProps> = ({ leftIcon, rightIcon, children, size = 'md', variant = 'branded', onClick }) => {
-	const sizeClass = className[size]
+export const Tag: FC<TagProps> = ({
+	leftIcon,
+	rightIcon,
+	children,
+	size = 'md',
+	variant = 'branded',
+	onClick,
+	className,
+}) => {
+	const sizeClass = classNames[size]
 
 	return (
 		<div
-			className={`${className.tag} ${sizeClass} ${className[variant]}`}
+			className={`${classNames.tag} ${sizeClass} ${classNames[variant]} ${className}`}
 			onClick={onClick}
 			style={{ cursor: onClick ? 'pointer' : 'default' }}
 		>

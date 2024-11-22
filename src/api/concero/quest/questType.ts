@@ -20,6 +20,7 @@ export enum QuestCategory {
 export enum QuestType {
 	Campaign = 'Campaign',
 	Daily = 'Daily',
+	Monthly = 'Monthly',
 	Primary = 'Primary', // weekly
 	Secondary = 'Secondary', // weekly
 }
@@ -56,6 +57,7 @@ export interface IQuestStep {
 	options?: {
 		link?: string
 		value?: string
+		isCrossChain?: boolean
 	}
 	category: QuestCategory
 	status: VerificationStatus
