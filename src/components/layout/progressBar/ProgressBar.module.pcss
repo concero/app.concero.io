@@ -1,4 +1,5 @@
 .progressBar {
+	flex-direction: row;
 	height: var(--sp-sm);
 	border-radius: var(--st-br-xs);
 	background-color: var(--color-grey-100);
@@ -9,4 +10,32 @@
 	border-radius: var(--st-br-xs);
 	height: inherit;
 	background: linear-gradient(90deg, #bdb4fe 0%, #9b8afb 100%);
+}
+
+.value1 {
+	color: var(--color-grey-700);
+}
+
+.maxValue1 {
+	color: var(--color-grey-500);
+	font-size: 14px;
+}
+
+.value2 {
+	color: var(--color-grey-700);
+	font-size: 1rem;
+}
+
+.maxValue2 {
+	color: var(--color-grey-600);
+	font-size: 1rem;
+}
+
+.currentValueWrapper {
+	position: relative;
+	height: 34px;
+}
+
+.currentValue {
+	width: fit-content;
 }

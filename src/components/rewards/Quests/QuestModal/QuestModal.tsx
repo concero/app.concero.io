@@ -5,12 +5,13 @@ import classNames from './QuestModal.module.pcss'
 import { type IUser } from '../../../../api/concero/user/userType'
 import { QuestStep } from './QuestStep/QuestStep'
 import { config } from '../../../../constants/config'
-import { categoryNameMap } from '../QuestCard/QuestCard'
+import { categoryNameMap, getDateUnitMap } from '../QuestCard/QuestCard'
 import { Button } from '../../../buttons/Button/Button'
 import { RewardModal } from './RewardModal'
 import { QuestStatus } from '../QuestStatus'
 import { claimQuestReward } from '../../../../api/concero/quest/claimQuestReward'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { Stepper } from '../../../layout/Stepper/Stepper'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -88,6 +89,7 @@ export const QuestModal = ({
 		<div className="row gap-sm ac">
 			<p className={`${classNames.category} body2`}>{isDailyQuest ? 'Daily' : categoryNameMap[quest.category]}</p>
 			<QuestStatus
+				isRepeat={!!getDateUnitMap(quest.type)}
 				questType={quest.type}
 				daysLeft={daysLeft}
 				isStarted={completedStepIds.length > 0}
@@ -99,19 +101,14 @@ export const QuestModal = ({
 
 	const stepsGroup = (
 		<div className="gap-sm">
-			<div className="row ac jsb">
-				<h6>Steps:</h6>
-				<h6>
-					{completedStepIds.length}/{steps.length}
-				</h6>
-			</div>
+			<Stepper steps={steps.length} completedSteps={completedStepIds.length} />
 			<div className="gap-xs">
 				{steps.map(step => {
 					return (
 						<QuestStep
 							isCompleted={completedStepIds.includes(+step.id)}
 							addCompletedStep={addCompletedStep}
-							questId={quest._id}
+							quest={quest}
 							user={user}
 							step={step}
 							key={step.id}
@@ -123,7 +120,7 @@ export const QuestModal = ({
 	)
 
 	const oneStep = !isQuestCompleted && (
-		<QuestStep addCompletedStep={addCompletedStep} questId={quest._id} user={user} mode="one" step={steps[0]} />
+		<QuestStep addCompletedStep={addCompletedStep} quest={quest} user={user} mode="one" step={steps[0]} />
 	)
 
 	if (rewardModalIsOpen) {

@@ -10,8 +10,12 @@ import { config } from '../../../../constants/config'
 import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
 import type { UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
-import { getDaysUntilEndOfWeek } from '../../../../utils/date/getDaysUntilThisWeekt'
-import { checkIfDateIsThisDay, checkIfDateIsThisWeek } from '../../../../utils/date/checkIfDateIsThisWeek'
+import {
+	checkIfDateIsThisDay,
+	checkIfDateIsThisMonth,
+	checkIfDateIsThisWeek,
+} from '../../../../utils/date/checkIfDateIsThisWeek'
+import { getDaysUntil } from '../../../../utils/date/getDaysUntil'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -27,6 +31,14 @@ export const categoryNameMap = {
 	[QuestCategory.Campaign]: 'Campaign',
 }
 
+export const getDateUnitMap = (type: QuestType) => {
+	if (type === QuestType.Daily) return 'day'
+	if (type === QuestType.Primary || type === QuestType.Secondary) return 'week'
+	if (type === QuestType.Monthly) return 'month'
+
+	return null
+}
+
 export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [completedStepIds, setCompletedStepIds] = useState<number[]>([])
@@ -34,12 +46,14 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 
 	const isDailyQuest = quest.type === QuestType.Daily
 	const isWeeklyQuest = quest.type === QuestType.Primary || quest.type === QuestType.Secondary
+	const isMonthlyQuest = quest.type === QuestType.Monthly
+
 	const isSocialQuest = quest.category === QuestCategory.Socials
 
 	const { name, startDate, endDate, image } = quest
 	const questIsComplete = completedStepIds.length === quest.steps.length
 	const questIsBegin = hasQuestEventStarted(startDate)
-	const daysLeft = isWeeklyQuest ? getDaysUntilEndOfWeek() : getQuestDaysLeft(endDate)
+	const daysLeft = getDateUnitMap(quest.type) ? getDaysUntil(getDateUnitMap(quest.type)!) : getQuestDaysLeft(endDate)
 
 	if (!questIsBegin) return null
 
@@ -53,7 +67,10 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 			const questNotStartedThisWeek = !checkIfDateIsThisWeek(userQuestData.timestamp)
 			const isNewWeeklyQuest = isWeeklyQuest && questNotStartedThisWeek
 
-			if (isNewDailyQuest || isNewWeeklyQuest) return
+			const questNotStartedThisMonth = !checkIfDateIsThisMonth(userQuestData.timestamp)
+			const isNewMonthlyQuest = isMonthlyQuest && questNotStartedThisMonth
+
+			if (isNewDailyQuest || isNewWeeklyQuest || isNewMonthlyQuest) return
 
 			setRewardIsClaimed(userQuestData.isCompleted || false)
 			setCompletedStepIds(userQuestData.completedQuestStepIds!)
@@ -97,6 +114,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 							<div className="row jsb ac">
 								<p className="body2">{categoryNameMap[quest.category]}</p>
 								<QuestStatus
+									isRepeat={!!getDateUnitMap(quest.type)}
 									questType={quest.type}
 									daysLeft={daysLeft}
 									isStarted={completedStepIds.length > 0}

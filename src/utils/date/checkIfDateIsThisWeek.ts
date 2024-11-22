@@ -16,3 +16,9 @@ export const checkIfDateIsThisWeek = (timestamp: number) => {
 	const endOfWeek = dayjs().endOf('isoWeek')
 	return dayjs(timestamp).isBetween(startOfWeek, endOfWeek, null, '[]')
 }
+
+export const checkIfDateIsThisMonth = (timestamp: number) => {
+	const startOfMonth = dayjs().startOf('month')
+	const endOfMonth = dayjs().endOf('month')
+	return dayjs(timestamp).isBetween(startOfMonth, endOfMonth, null, '[]')
+}
