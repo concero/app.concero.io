@@ -33,7 +33,6 @@ export function BurgerMenu({ user }: Props) {
 	}
 
 	const handleMenuClose = () => {
-		console.log('close')
 		setIsMenuOpened(false)
 	}
 
