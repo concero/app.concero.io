@@ -213,16 +213,19 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 		)
 	}
 
+	let swapLeft = 0
+
+	if (isCheckVolumeStep && userVolume) {
+		swapLeft = Number(step.options?.value) - userVolume < 0 ? 0 : Number(step.options?.value) - userVolume
+	}
+
 	const oneStepProgressBar = (
 		<div className={classNames.container}>
 			<div className="gap-xs">
-				{loading || !userVolume ? (
+				{loading || userVolume === null ? (
 					<SkeletonLoader height={22} width={200} />
 				) : (
-					<h4>
-						Left to swap $
-						{!step.options?.value ? 'n/a' : toLocaleNumber(Number(step.options.value) - userVolume, 0)}
-					</h4>
+					<h4>Left to swap ${!step.options?.value ? 'n/a' : toLocaleNumber(swapLeft, 0)}</h4>
 				)}
 				<p className="body2">From {toLocaleNumber(Number(step.options!.value), 0)}</p>
 			</div>
