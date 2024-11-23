@@ -132,7 +132,10 @@ export const QuestModal = ({
 			<div className={classNames.mainInfo}>
 				<div className="w-full gap-sm">
 					<h2 className={classNames.title}>{name}</h2>
-					{!!rewards.points && <h6 className={classNames.points}>+ {rewards.points} CERs</h6>}
+					{quest.subtitle && <h2 className={classNames.subtitle}>{quest.subtitle}</h2>}
+					<h6 className={classNames.points}>
+						{rewards.points ? `${rewards.points} CERs` : ''} {rewards?.role ? '+ Role' : ''}
+					</h6>
 				</div>
 
 				{questImage}

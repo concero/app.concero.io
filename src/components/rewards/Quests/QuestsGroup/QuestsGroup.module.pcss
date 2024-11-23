@@ -2,6 +2,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: var(--sp-md);
 
 	h6 {
 		color: var(--color-grey-600);
@@ -10,9 +11,14 @@
 
 .smallCardsContainer {
 	flex-direction: row;
-	gap: var(--sp-md);
+	gap: var(--sp-lg);
 	width: 100%;
 	flex-wrap: wrap;
+}
+
+.monthlyQuests {
+	gap: var(--sp-lg);
+	margin-bottom: var(--sp-lg);
 }
 
 .dailyQuests {
@@ -22,12 +28,11 @@
 
 .otherQuestsWrap {
 	flex-direction: column;
-	gap: var(--sp-md);
+	gap: var(--sp-lg);
 }
 
 .campaign {
 	max-width: 100% !important;
-	height: 246px !important;
 }
 
 .loadMoreWrap {

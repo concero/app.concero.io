@@ -21,6 +21,7 @@ export enum QuestType {
 	Campaign = 'Campaign',
 	Daily = 'Daily',
 	Monthly = 'Monthly',
+	Big = 'Big',
 	Primary = 'Primary', // weekly
 	Secondary = 'Secondary', // weekly
 }
@@ -77,6 +78,7 @@ export interface IQuest {
 	rewards: {
 		points: number
 		multiplier: number
+		role?: boolean
 	}
 	type: QuestType
 	category: QuestCategory
