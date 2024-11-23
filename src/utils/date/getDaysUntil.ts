@@ -5,7 +5,7 @@ dayjs.extend(isoWeek)
 
 export const getDaysUntil = (mode: 'day' | 'week' | 'month' = 'day'): number => {
 	const today = dayjs()
-	const endOfDate = dayjs().endOf(mode)
+	const endOfDate = dayjs().endOf(mode === 'week' ? 'isoWeek' : mode)
 
 	return endOfDate.diff(today, mode === 'day' ? 'hour' : 'day')
 }
