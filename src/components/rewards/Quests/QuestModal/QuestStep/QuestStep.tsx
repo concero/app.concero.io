@@ -2,10 +2,13 @@ import { Button } from '../../../../buttons/Button/Button'
 import classNames from './QuestStep.module.pcss'
 import { Tag } from '../../../../tags/Tag/Tag'
 import {
+	type IQuest,
 	type IQuestStep,
 	OnChainSource,
 	QuestCategory,
+	QuestOnChainAction,
 	QuestSocialAction,
+	QuestType,
 	SocialSource,
 	VerificationStatus,
 } from '../../../../../api/concero/quest/questType'
@@ -14,13 +17,18 @@ import { trackEvent } from '../../../../../hooks/useTracking'
 import { action, category } from '../../../../../constants/tracking'
 import { type IUser } from '../../../../../api/concero/user/userType'
 import { verifyQuest } from '../../../../../api/concero/quest/verifyQuest'
+import { fetchUserVolume } from '../../../../../api/concero/fetchUserVolume'
+import { ProgressBar } from '../../../../layout/progressBar/ProgressBar'
+import { getDayRangeDates, getWeekRangeDates } from '../../../../../utils/date/getRangeDates'
+import { SkeletonLoader } from '../../../../layout/SkeletonLoader/SkeletonLoader'
+import { toLocaleNumber } from '../../../../../utils/formatting'
 
 type StepMode = 'group' | 'one'
 
 export interface Props {
 	step: IQuestStep
 	user: IUser | null | undefined
-	questId: string
+	quest: IQuest
 	mode?: StepMode
 	addCompletedStep: (id: number) => void
 	isCompleted?: boolean
@@ -70,12 +78,18 @@ const buttonsStyle: Record<StepMode, ButtonStepStyle> = {
 	},
 }
 
-export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedStep, isCompleted }: Props) => {
+export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep, isCompleted }: Props) => {
 	const currentStatus = isCompleted ? VerificationStatus.SUCCESS : VerificationStatus.NOT_STARTED
-
+	const [userVolume, setUserVolume] = useState<number | null>(null)
+	const [loading, setLoading] = useState<boolean>(false)
 	const [linkIsVisited, setLinkIsVisited] = useState<boolean>(false)
 	const [buttonState, setButtonState] = useState<ButtonStepStyle>(buttonsStyle[mode])
 	const [verifyStatus, setVerifyStatus] = useState<VerificationStatus>(currentStatus)
+
+	const isDailyQuest = quest.type === QuestType.Daily
+	const isWeeklyQuest = quest.type === QuestType.Primary || quest.type === QuestType.Secondary
+
+	const isCheckVolumeStep = step.questAction === QuestOnChainAction.CheckVolume
 
 	const startQuestLink = step?.options?.link ? step.options.link : defaultStartQuestLinkMap[step.source]
 	const isConnectNetwork = step.questAction === QuestSocialAction.ConnectSocialNetwork
@@ -92,6 +106,41 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 		}
 	}, [linkIsVisited])
 
+	useEffect(() => {
+		if (!isCheckVolumeStep) return
+		if (!user || userVolume !== null) return
+
+		let startDate = quest.startDate
+		let endDate = quest.endDate
+
+		if (isDailyQuest) {
+			const dates = getDayRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		} else if (isWeeklyQuest) {
+			const dates = getWeekRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		}
+
+		setLoading(true)
+		fetchUserVolume({
+			address: user.address,
+			startDate,
+			endDate,
+			isCrossChain: step.options?.isCrossChain,
+		})
+			.then(res => {
+				setUserVolume(res)
+			})
+			.catch(error => {
+				console.error(error)
+			})
+			.finally(() => {
+				setLoading(false)
+			})
+	}, [user])
+
 	const handleVerifyQuest = async () => {
 		if (!user || !step) return
 
@@ -104,12 +153,12 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 			setVerifyStatus(VerificationStatus.PENDING)
 
 			const [questRes] = await Promise.all([
-				verifyQuest(questId, step.id, user._id),
+				verifyQuest(quest._id, step.id, user._id),
 				trackEvent({
 					category: category.QuestCard,
 					action: action.BeginQuest,
 					label: 'concero_verify_quest_begin',
-					data: { id: questId, step },
+					data: { id: quest._id, step },
 				}),
 			])
 
@@ -120,7 +169,7 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 					category: category.QuestCard,
 					action: action.SuccessQuest,
 					label: 'concero_verify_quest_success',
-					data: { id: questId, step },
+					data: { id: quest._id, step },
 				})
 			} else {
 				setVerifyStatus(VerificationStatus.FAILED)
@@ -132,7 +181,7 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 				category: category.QuestCard,
 				action: action.FailedQuest,
 				label: 'concero_verify_quest_fail',
-				data: { id: questId, step },
+				data: { id: quest._id, step },
 			})
 		}
 	}
@@ -164,6 +213,31 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 		)
 	}
 
+	let swapLeft = 0
+
+	if (isCheckVolumeStep && userVolume) {
+		swapLeft = Number(step.options?.value) - userVolume < 0 ? 0 : Number(step.options?.value) - userVolume
+	}
+
+	const oneStepProgressBar = (
+		<div className={classNames.container}>
+			<div className="gap-xs">
+				{loading || userVolume === null ? (
+					<SkeletonLoader height={22} width={200} />
+				) : (
+					<h4>Left to swap ${!step.options?.value ? 'n/a' : toLocaleNumber(swapLeft, 0)}</h4>
+				)}
+				<p className="body2">From {toLocaleNumber(Number(step.options!.value), 0)}</p>
+			</div>
+			<ProgressBar
+				isLoading={loading}
+				type="float"
+				currentValue={Number(userVolume)}
+				maxValue={Number(step.options!.value)}
+			/>
+		</div>
+	)
+
 	const actionButtons = (
 		<div className="gap-sm">
 			<div className="gap-sm row">
@@ -186,7 +260,14 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 	)
 
 	if (mode === 'one') {
-		return user && actionButtons
+		return (
+			user && (
+				<>
+					{isCheckVolumeStep && oneStepProgressBar}
+					{actionButtons}
+				</>
+			)
+		)
 	}
 
 	return (
@@ -195,6 +276,14 @@ export const QuestStep = ({ step, mode = 'group', user, questId, addCompletedSte
 				<h4>{step.title}</h4>
 				<p className="body2">{step.description}</p>
 			</div>
+			{isCheckVolumeStep && (
+				<ProgressBar
+					isLoading={loading}
+					type="float"
+					currentValue={Number(userVolume)}
+					maxValue={Number(step.options!.value)}
+				/>
+			)}
 			{user && actionButtons}
 		</div>
 	)

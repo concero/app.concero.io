@@ -20,6 +20,8 @@ export enum QuestCategory {
 export enum QuestType {
 	Campaign = 'Campaign',
 	Daily = 'Daily',
+	Monthly = 'Monthly',
+	Big = 'Big',
 	Primary = 'Primary', // weekly
 	Secondary = 'Secondary', // weekly
 }
@@ -56,6 +58,7 @@ export interface IQuestStep {
 	options?: {
 		link?: string
 		value?: string
+		isCrossChain?: boolean
 	}
 	category: QuestCategory
 	status: VerificationStatus
@@ -75,6 +78,7 @@ export interface IQuest {
 	rewards: {
 		points: number
 		multiplier: number
+		role?: boolean
 	}
 	type: QuestType
 	category: QuestCategory

@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import classNames from './ContactSupportCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
-import { IconArrowLeft, IconBrandDiscord, IconCheck, IconCopy, IconMail } from '@tabler/icons-react'
+import { IconArrowLeft, IconBrandDiscord, IconCheck, IconMail } from '@tabler/icons-react'
 import { copyToClipboard } from '../../../utils/copyToClipboard'
 import { useTranslation } from 'react-i18next'
+import { IconCopy } from '../../../assets/icons/IconCopy'
 
 interface ContactSupportProps {
 	infoToCopy: any
@@ -36,8 +37,9 @@ export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSup
 				<h4 className={classNames.title}>1. {t('contactSupportCard.copyDebugInfo')}</h4>
 				<div className={classNames.alightStart}>
 					<Button
-						variant={'primary'}
-						leftIcon={isCopied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+						variant={'secondary'}
+						size="md"
+						leftIcon={isCopied ? <IconCheck size={16} /> : <IconCopy />}
 						onClick={handleCopy}
 					>
 						{t('contactSupportCard.copyDebugInfo')}
@@ -48,7 +50,7 @@ export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSup
 				<h4 className={classNames.title}>2. {t('contactSupportCard.dropUsAMessage')}</h4>
 				<div className={classNames.buttonContainer}>
 					<Button
-						leftIcon={<IconBrandDiscord size={16} />}
+						size="md"
 						className={classNames.f1}
 						onClick={() =>
 							window.open(
@@ -61,7 +63,7 @@ export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSup
 						{t('socialMedia.discord')}
 					</Button>
 					<Button
-						leftIcon={<IconMail size={16} />}
+						size="md"
 						className={classNames.f1}
 						variant="secondary"
 						onClick={() => window.open('mailto:Concerocrypto@gmail.com', '_blank')}

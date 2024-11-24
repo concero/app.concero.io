@@ -7,11 +7,19 @@ interface Props {
 	isCompleted: boolean
 	rewardIsClaimed: boolean
 	questType: QuestType
+	isRepeat?: boolean
 }
 
-export const QuestStatus = ({ daysLeft, isStarted, isCompleted, rewardIsClaimed, questType }: Props) => {
+export const QuestStatus = ({
+	daysLeft,
+	isStarted,
+	isCompleted,
+	rewardIsClaimed,
+	questType,
+	isRepeat = false,
+}: Props) => {
 	const dayText = daysLeft > 1 ? 'days' : 'day'
-	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} left`
+	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} ${isRepeat ? 'to reset' : 'left'}`
 
 	let status = `${isStarted ? 'Started, ' : ''} ${daysLeftText}`
 	if (isCompleted) status = 'Done!'

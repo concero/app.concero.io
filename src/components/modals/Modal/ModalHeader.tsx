@@ -13,7 +13,7 @@ export function ModalHeader({ title, isLoading = false, onClick }: ModalHeaderPr
 	return (
 		<div className={classNames.header}>
 			<div className={classNames.titleContainer}>
-				<h5>{title}</h5>
+				<h5 className={classNames.title}>{title}</h5>
 				{isLoading ? <LoadingAnimation size={16} color={'var(--color-grey-600)'} /> : null}
 			</div>
 			<IconButton onClick={onClick} variant="secondary" size="md">

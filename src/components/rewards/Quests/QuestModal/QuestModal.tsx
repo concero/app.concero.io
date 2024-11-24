@@ -1,15 +1,17 @@
 import { Modal } from '../../../modals/Modal/Modal'
 import { type Dispatch, type SetStateAction, useState } from 'react'
-import { type IQuest } from '../../../../api/concero/quest/questType'
+import { type IQuest, QuestType } from '../../../../api/concero/quest/questType'
 import classNames from './QuestModal.module.pcss'
 import { type IUser } from '../../../../api/concero/user/userType'
 import { QuestStep } from './QuestStep/QuestStep'
 import { config } from '../../../../constants/config'
-import { categoryNameMap } from '../QuestCard/QuestCard'
+import { categoryNameMap, getDateUnitMap } from '../QuestCard/QuestCard'
 import { Button } from '../../../buttons/Button/Button'
 import { RewardModal } from './RewardModal'
 import { QuestStatus } from '../QuestStatus'
 import { claimQuestReward } from '../../../../api/concero/quest/claimQuestReward'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { Stepper } from '../../../layout/Stepper/Stepper'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -34,10 +36,13 @@ export const QuestModal = ({
 	user,
 	daysLeft,
 }: QuestModalProps) => {
+	const { open } = useWeb3Modal()
 	const [rewardModalIsOpen, setRewardModalIsOpen] = useState<boolean>(false)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [points, setPoints] = useState<number>(0)
 	const { name, description, rewards, steps, image } = quest
+
+	const isDailyQuest = quest.type === QuestType.Daily
 
 	const handleClaimReward = async () => {
 		if (!user) return
@@ -64,19 +69,27 @@ export const QuestModal = ({
 
 	const isQuestCompleted = completedStepIds.length === quest.steps.length
 
-	const questImage = quest.image ? (
+	const questImage = (
 		<img
 			className={classNames.questImage}
 			height={160}
-			src={`${config.assetsURI}/icons/quests/${image}`}
+			src={
+				quest.image
+					? `${config.assetsURI}/icons/quests/${image}`
+					: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+			}
+			onError={(e: any) => {
+				e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+			}}
 			alt="Quest image"
 		/>
-	) : null
+	)
 
 	const questTitle = (
 		<div className="row gap-sm ac">
-			<p className={`${classNames.category} body2`}>{categoryNameMap[quest.category]}</p>
+			<p className={`${classNames.category} body2`}>{isDailyQuest ? 'Daily' : categoryNameMap[quest.category]}</p>
 			<QuestStatus
+				isRepeat={!!getDateUnitMap(quest.type)}
 				questType={quest.type}
 				daysLeft={daysLeft}
 				isStarted={completedStepIds.length > 0}
@@ -88,19 +101,14 @@ export const QuestModal = ({
 
 	const stepsGroup = (
 		<div className="gap-sm">
-			<div className="row ac jsb">
-				<h6>Steps:</h6>
-				<h6>
-					{completedStepIds.length}/{steps.length}
-				</h6>
-			</div>
+			<Stepper steps={steps.length} completedSteps={completedStepIds.length} />
 			<div className="gap-xs">
 				{steps.map(step => {
 					return (
 						<QuestStep
 							isCompleted={completedStepIds.includes(+step.id)}
 							addCompletedStep={addCompletedStep}
-							questId={quest._id}
+							quest={quest}
 							user={user}
 							step={step}
 							key={step.id}
@@ -112,7 +120,7 @@ export const QuestModal = ({
 	)
 
 	const oneStep = !isQuestCompleted && (
-		<QuestStep addCompletedStep={addCompletedStep} questId={quest._id} user={user} mode="one" step={steps[0]} />
+		<QuestStep addCompletedStep={addCompletedStep} quest={quest} user={user} mode="one" step={steps[0]} />
 	)
 
 	if (rewardModalIsOpen) {
@@ -123,8 +131,11 @@ export const QuestModal = ({
 		<Modal position="top" className={classNames.questModal} show={isOpen} setShow={setIsOpen} title={questTitle}>
 			<div className={classNames.mainInfo}>
 				<div className="w-full gap-sm">
-					<h2>{name}</h2>
-					{!!rewards.points && <h6 className={classNames.points}>+ {rewards.points} CERs</h6>}
+					<h2 className={classNames.title}>{name}</h2>
+					{quest.subtitle && <h2 className={classNames.subtitle}>{quest.subtitle}</h2>}
+					<h6 className={classNames.points}>
+						{rewards.points ? `${rewards.points} CERs` : ''} {rewards?.role ? '+ Role' : ''}
+					</h6>
 				</div>
 
 				{questImage}
@@ -135,13 +146,15 @@ export const QuestModal = ({
 			{steps.length > 1 ? stepsGroup : oneStep}
 
 			{!user && (
-				<div className="row w-full jc">
-					<p className={classNames.connectWalletText}>Connect your wallet to claim rewards</p>
+				<div className="row w-full">
+					<Button size="lg" onClick={open}>
+						Connect wallet
+					</Button>
 				</div>
 			)}
 
 			{isQuestCompleted && !rewardIsClaimed && (
-				<Button isLoading={isLoading} isDisabled={rewardIsClaimed} onClick={handleClaimReward}>
+				<Button size="lg" isLoading={isLoading} isDisabled={rewardIsClaimed} onClick={handleClaimReward}>
 					Claim reward
 				</Button>
 			)}

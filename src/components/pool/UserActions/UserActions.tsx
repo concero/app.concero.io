@@ -26,10 +26,6 @@ export interface UserTransaction {
 	args: any
 }
 
-export interface Props {
-	isDisabled: boolean
-}
-
 export const getRemainingTime = (time: string | number): number => {
 	const endTime = new Date(Number(time) + 30 * 60 * 1000)
 
@@ -38,7 +34,7 @@ export const getRemainingTime = (time: string | number): number => {
 	return remainingTime < 0 ? 0 : remainingTime
 }
 
-export function UserActions({ isDisabled }: Props) {
+export function UserActions() {
 	const { address } = useAccount()
 	const [isOpen, setIsOpen] = useState(false)
 	const [actions, setActions] = useState<UserTransaction[]>([])
@@ -88,7 +84,7 @@ export function UserActions({ isDisabled }: Props) {
 		<>
 			<Button
 				isLoading={isLoading}
-				isDisabled={(!isLoading && actions.length === 0) || !address || isDisabled}
+				isDisabled={(!isLoading && actions.length === 0) || !address}
 				onClick={() => {
 					setIsOpen(!isOpen)
 				}}
