@@ -8,7 +8,7 @@ export interface FetchUserResponse {
 
 export const fetchLeaderboard = async (userAddress: string | undefined): Promise<FetchUserResponse> => {
 	const userAddressQuery = userAddress ? `userAddress=${userAddress}` : ''
-	const url = `${process.env.CONCERO_API_URL}/users/leaderboard?${userAddressQuery}`
+	const url = `${process.env.CONCERO_API_URL}/usersLeaderboard?${userAddressQuery}`
 
 	const response = await get(url)
 	if (response.status !== 200) throw new Error('Something went wrong')
