@@ -6,29 +6,25 @@ import type { IUser } from '../../../../api/concero/user/userType'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { type IUserAction } from '../../../../api/concero/userActions/userActionType'
 import { fetchUserQuestActions } from '../../../../api/concero/userActions/fetchUserQuestActions'
-import { useAccount } from 'wagmi'
 
 interface QuestsCardProps {
 	user: IUser | null | undefined
 }
 
 export const QuestsGroup = ({ user }: QuestsCardProps) => {
-	const { address } = useAccount()
 	const [quests, setQuests] = useState<IQuest[]>([])
 
-	const handleGetQuests = async () => {
+	const getQuests = async () => {
 		let userQuestActions: IUserAction[] = []
 
-		// todo: calling fetchQuests twice
-		if (!user && !address) {
-			setQuests(await fetchQuests())
+		const fetchedQuests = await fetchQuests()
+
+		if (!user) {
+			setQuests(fetchedQuests)
+			return
 		}
 
-		if (!user) return
-
-		// todo: promise.all
 		userQuestActions = await fetchUserQuestActions(user.address)
-		const fetchedQuests = await fetchQuests()
 
 		// todo: what is this used for?
 		const newQuests = fetchedQuests.map(quest => {
@@ -42,8 +38,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	}
 
 	useEffect(() => {
-		// todo: this should not be named a handle as its not connected to a button
-		void handleGetQuests()
+		void getQuests()
 	}, [user])
 
 	// todo: let's send sorted data from BE and not use filters and finds on the frontend

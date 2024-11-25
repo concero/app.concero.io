@@ -1,7 +1,6 @@
 import { type IUser } from '../../../api/concero/user/userType'
 import { ProfileCard } from '../ProfileCard/ProfileCard'
 import { LoyaltyBonus } from '../LoyaltyBonus/LoyaltyBonus'
-import { AmaPolygonReward } from '../AmaPolygonReward/AmaPolygonReward'
 import { StreaksCard } from '../StreaksCard/StreaksCard'
 import { type IUserAction } from '../../../api/concero/userActions/userActionType'
 
@@ -17,7 +16,6 @@ export const RewardsProfile = ({ user, userActions }: Props) => {
 		<div className="gap-lg">
 			<ProfileCard userActions={userActions} user={user} />
 			<LoyaltyBonus user={user} />
-			<AmaPolygonReward user={user} />
 			<StreaksCard user={user} />
 		</div>
 	)
