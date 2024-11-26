@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import classNames from './WalletButton.module.pcss'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { IconWallet } from '@tabler/icons-react'
+import { TrailArrowRightIcon } from '../../../../assets/icons/TrailArrowRightIcon'
 
 interface Props {
 	className?: string
@@ -28,7 +29,7 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 	}
 
 	const getStatus = () => {
-		if (isConnected) return truncateWallet(address!)
+		if (isConnected) return truncateWallet(address!, 4)
 		if (isConnecting) return t('walletButton.connecting')
 		if (isDisconnected) return t('walletButton.connectWallet')
 		return t('walletButton.connectWallet')
@@ -40,6 +41,7 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 			leftIcon={isConnected ? <IconWallet size={16} color="var(--color-grey-600)" /> : null}
 			className={`${classNames.buttonWallet} ${className}`}
 			variant={isConnected ? 'secondary' : 'primary'}
+			rightIcon={isConnected && <TrailArrowRightIcon />}
 			onClick={handleClick}
 		>
 			{getStatus()}

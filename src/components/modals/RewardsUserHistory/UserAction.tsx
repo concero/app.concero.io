@@ -49,7 +49,9 @@ export const UserAction = ({ action }: UserActionProps) => {
 			<p className={`${classNames.title} body2`}>{value}</p>
 
 			<div className="row">
-				<span className={`${classNames.points} body2`}>+ {action.points?.toFixed(2)} CERs</span>
+				<span className={`${classNames.points} body2`}>
+					+ {action.points ? toLocaleNumber(action.points, 2) : 'n/a'} CERs
+				</span>
 				<p className={`${classNames.date} body2`}>
 					{formatDateTime(new Date(action.timestamp), 'D MMM YYYY, HH:mm')}
 				</p>

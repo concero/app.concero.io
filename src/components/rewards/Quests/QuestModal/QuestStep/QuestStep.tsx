@@ -202,20 +202,9 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 		return 'You haven’t met the requirements for this task. Please complete it and try again.'
 	}
 
-	if (verifyStatus === VerificationStatus.SUCCESS) {
-		return (
-			<div className={classNames.containerSuccessState}>
-				<h4>{step.title}</h4>
-				<Tag size="md" variant="positive">
-					Done!
-				</Tag>
-			</div>
-		)
-	}
-
 	let swapLeft = 0
 
-	if (isCheckVolumeStep && userVolume) {
+	if (isCheckVolumeStep && userVolume !== null) {
 		swapLeft = Number(step.options?.value) - userVolume < 0 ? 0 : Number(step.options?.value) - userVolume
 	}
 
@@ -258,6 +247,21 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 			)}
 		</div>
 	)
+
+	if (mode === 'one' && verifyStatus === VerificationStatus.SUCCESS && !isCheckVolumeStep) {
+		return null
+	}
+
+	if (verifyStatus === VerificationStatus.SUCCESS) {
+		return (
+			<div className={classNames.containerSuccessState}>
+				<h4>{step.title}</h4>
+				<Tag size="md" variant="positive">
+					Done!
+				</Tag>
+			</div>
+		)
+	}
 
 	if (mode === 'one') {
 		return (
