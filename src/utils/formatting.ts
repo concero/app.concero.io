@@ -82,7 +82,8 @@ export const truncate = (str: string, length = 100, ending = '...'): string =>
 	str.length > length ? str.substring(0, length - ending.length) + ending : str
 
 // trucate wallet address to 6 characters on the end
-export const truncateWallet = (str: string): string => `${str.slice(0, 6)}...${str.slice(-4)}`
+export const truncateWallet = (str: string, firstSlice: number = 6): string =>
+	`${str.slice(0, firstSlice)}...${str.slice(-4)}`
 
 export const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1)
 

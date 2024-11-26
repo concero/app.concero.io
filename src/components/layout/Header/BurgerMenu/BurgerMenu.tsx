@@ -79,7 +79,7 @@ export function BurgerMenu({ user }: Props) {
 	const settings = (
 		<ul className={classNames.listContainer}>
 			{user && <SocialNetworkButtons user={user} />}
-			<Separator />
+			{user && <Separator />}
 			<li>
 				<Button
 					leftIcon={<LanguageIcon />}

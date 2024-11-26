@@ -119,8 +119,15 @@ export const QuestModal = ({
 		</div>
 	)
 
-	const oneStep = !isQuestCompleted && (
-		<QuestStep addCompletedStep={addCompletedStep} quest={quest} user={user} mode="one" step={steps[0]} />
+	const oneStep = (
+		<QuestStep
+			isCompleted={isQuestCompleted}
+			addCompletedStep={addCompletedStep}
+			quest={quest}
+			user={user}
+			mode="one"
+			step={steps[0]}
+		/>
 	)
 
 	if (rewardModalIsOpen) {
