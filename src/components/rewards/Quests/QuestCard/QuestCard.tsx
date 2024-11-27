@@ -10,6 +10,8 @@ import { config } from '../../../../constants/config'
 import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
 import type { UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
+import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
+import { Loader } from '../../../layout/Loader/Loader'
 import {
 	checkIfDateIsThisDay,
 	checkIfDateIsThisMonth,
@@ -22,6 +24,7 @@ interface QuestCardProps {
 	quest: IQuest
 	user: IUser | null | undefined
 	className?: string
+	isLoading?: boolean
 }
 
 export const categoryNameMap = {
@@ -39,7 +42,7 @@ export const getDateUnitMap = (type: QuestType) => {
 	return null
 }
 
-export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) => {
+export const QuestCard = ({ variant = 'big', quest, user, className, isLoading }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [completedStepIds, setCompletedStepIds] = useState<number[]>([])
 	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
@@ -56,6 +59,10 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const daysLeft = getDateUnitMap(quest.type) ? getDaysUntil(getDateUnitMap(quest.type)!) : getQuestDaysLeft(endDate)
 
 	if (!questIsBegin) return null
+
+	useEffect(() => {
+		console.log(isLoading, 'Is the data loading?')
+	}, [isLoading])
 
 	useEffect(() => {
 		if (quest.userAction) {
@@ -112,7 +119,13 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 					<div className="gap-sm">
 						{variant !== 'small' && (
 							<div className="row jsb ac">
-								<p className="body2">{categoryNameMap[quest.category]}</p>
+								{isLoading ? (
+									<SkeletonLoader width={64} height={16} />
+								) : (
+									<>
+										<p className="body2">{categoryNameMap[quest.category]}</p>
+									</>
+								)}
 								<QuestStatus
 									isRepeat={!!getDateUnitMap(quest.type)}
 									questType={quest.type}
@@ -120,22 +133,35 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 									isStarted={completedStepIds.length > 0}
 									isCompleted={questIsComplete}
 									rewardIsClaimed={rewardIsClaimed}
+									isLoading={isLoading}
 								/>
 							</div>
 						)}
 						<div className="h-full gap-xs">
-							{variant === 'big' ? (
+							{isLoading ? (
+								<SkeletonLoader width={variant === 'big' ? 233 : 157} height={28} />
+							) : variant === 'big' ? (
 								<h3 className={classNames.title}>{name}</h3>
 							) : (
 								<h4 className={classNames.title}>{name}</h4>
 							)}
-							{!!quest.rewards.points && (
-								<h6 className={classNames.points}>+ {quest.rewards.points} CERs</h6>
-							)}
+							{!!quest.rewards.points &&
+								(isLoading ? (
+									<SkeletonLoader width={128} height={16} />
+								) : (
+									<h6 className={classNames.points}>+ {quest.rewards.points} CERs</h6>
+								))}
 						</div>
 					</div>
 
-					{variant === 'big' && quest.image && questImage}
+					{variant === 'big' &&
+						(isLoading ? (
+							<div className={`${classNames.loadingContainer}`}>
+								<Loader variant="neutral" />
+							</div>
+						) : (
+							questImage
+						))}
 
 					{!rewardIsClaimed && (
 						<div className="row w-full jfe">

@@ -15,12 +15,16 @@ interface QuestsCardProps {
 export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const { address } = useAccount()
 	const [quests, setQuests] = useState<IQuest[]>([])
+	const [isLoading, setIsLoading] = useState<boolean>(true)
 
 	const handleGetQuests = async () => {
 		let userQuestActions: IUserAction[] = []
 
 		if (!user && !address) {
-			setQuests(await fetchQuests())
+			const fetchedQuests = await fetchQuests()
+			setQuests(fetchedQuests)
+			setIsLoading(false)
+			return
 		}
 
 		if (!user) return
@@ -36,10 +40,12 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 		})
 
 		setQuests(newQuests)
+		setIsLoading(false)
 	}
 
 	useEffect(() => {
 		void handleGetQuests()
+		console.log(isLoading, 'Is the data loading?')
 	}, [user])
 
 	const campaignQuest = quests.find((quest: IQuest) => quest.type === QuestType.Campaign)
@@ -53,7 +59,13 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	return (
 		<div className="gap-xxl">
 			{campaignQuest && (
-				<QuestCard className={classNames.campaign} quest={campaignQuest} user={user} variant="big" />
+				<QuestCard
+					className={classNames.campaign}
+					quest={campaignQuest}
+					user={user}
+					variant="big"
+					isLoading={isLoading}
+				/>
 			)}
 
 			{dailyQuests.length > 0 && (
@@ -63,7 +75,13 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 					</div>
 					<div className={classNames.dailyQuests}>
 						{dailyQuests.map((quest: IQuest) => (
-							<QuestCard key={quest._id} quest={quest} user={user} variant="small" />
+							<QuestCard
+								key={quest._id}
+								quest={quest}
+								user={user}
+								variant="small"
+								isLoading={isLoading}
+							/>
 						))}
 					</div>
 				</div>
@@ -82,6 +100,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 							quest={quest}
 							user={user}
 							variant="big"
+							isLoading={isLoading}
 						/>
 					))}
 				</div>
@@ -91,12 +110,24 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 						<div className={classNames.otherQuestsWrap}>
 							<div className={classNames.smallCardsContainer}>
 								{primaryQuests.map((quest: IQuest) => (
-									<QuestCard key={quest._id} quest={quest} user={user} variant="big" />
+									<QuestCard
+										key={quest._id}
+										quest={quest}
+										user={user}
+										variant="big"
+										isLoading={isLoading}
+									/>
 								))}
 							</div>
 							<div className={classNames.smallCardsContainer}>
 								{secondaryQuests.map((quest: IQuest) => (
-									<QuestCard key={quest._id} quest={quest} user={user} variant="normal" />
+									<QuestCard
+										key={quest._id}
+										quest={quest}
+										user={user}
+										variant="normal"
+										isLoading={isLoading}
+									/>
 								))}
 							</div>
 						</div>
