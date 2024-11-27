@@ -214,7 +214,7 @@ export function formatNumber(num: number, options: FormatNumberOptions = {}): st
 }
 
 export const roundToPrecision = (num: number, precision: number) => {
-	const factor = Math.pow(10, precision) // Например, 10^2 для двух знаков после запятой
+	const factor = Math.pow(10, precision)
 	return Math.round(num * factor) / factor
 }
 
