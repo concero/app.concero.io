@@ -26,11 +26,8 @@ export const Button: FC<ButtonProps> = ({
 			onClick={!isDisabled ? onClick : undefined}
 			aria-label={variant + size}
 		>
-			<div className="row ac">
-				{!isLoading && leftIcon}
-				<span className={classNames.innerButton}>{isLoading ? <Loader variant="neutral" /> : children}</span>
-			</div>
-
+			{!isLoading && leftIcon}
+			<span className={classNames.innerButton}>{isLoading ? <Loader variant="neutral" /> : children}</span>
 			{!isLoading && rightIcon}
 		</button>
 	)
