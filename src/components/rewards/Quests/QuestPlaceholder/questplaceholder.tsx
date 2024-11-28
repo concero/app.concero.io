@@ -3,7 +3,6 @@ import classNames from './questplaceholder.module.pcss'
 import { Card } from '../../../cards/Card/Card'
 import { IconButton } from '../../../buttons/IconButton/IconButton'
 import { ArrowRightIcon } from '../../../../assets/icons/ArrowRightIcon'
-import { QuestStatus } from '../QuestStatus'
 import { QuestCategory, QuestType } from '../../../../api/concero/quest/questType'
 import { Loader } from '../../../layout/Loader/Loader'
 
@@ -34,15 +33,7 @@ export const QuestPlaceholder = ({ variant = 'big', className }: QuestPlaceholde
 					{variant !== 'small' && (
 						<div className="row jsb ac">
 							<SkeletonLoader width={64} height={16} />
-							<QuestStatus
-								isRepeat={false}
-								questType={QuestType.Daily}
-								daysLeft={0}
-								isStarted={false}
-								isCompleted={false}
-								rewardIsClaimed={false}
-								isLoading={true}
-							/>
+							<SkeletonLoader width={132} height={26} />
 						</div>
 					)}
 					<div className="h-full gap-xs">

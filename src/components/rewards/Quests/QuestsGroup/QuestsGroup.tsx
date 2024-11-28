@@ -74,7 +74,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				<QuestCard className={classNames.campaign} quest={campaignQuest} user={user} variant="big" />
 			)}
 
-			{dailyQuests.length > 0 && (
+			{(isLoading || dailyQuests.length > 0) && (
 				<div className="gap-sm">
 					<div className={classNames.questsHeader}>
 						<h6>Daily</h6>
@@ -92,7 +92,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 					{renderQuestCards(monthlyQuests, 'big', classNames.campaign)}
 				</div>
 
-				{quests.length > 0 && (
+				{(isLoading || quests.length > 0) && (
 					<div className="gap-lg">
 						<div className={classNames.otherQuestsWrap}>
 							<div className={classNames.smallCardsContainer}>
