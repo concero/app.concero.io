@@ -66,6 +66,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 							place="top-end"
 							tooltipContent={<UserMultipliers user={user} />}
 						>
+							{/* <UserMultipliers user={user} /> */}
 							<Tag>
 								{String(
 									user.multiplier +
