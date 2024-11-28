@@ -61,7 +61,11 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 				{user && (
 					<>
 						<Tag>{toLocaleNumber(user.points, 2)} CERs</Tag>
-						<TooltipWrapper tooltipId={'user-multiplier'} tooltipContent={<UserMultipliers user={user} />}>
+						<TooltipWrapper
+							tooltipId={'user-multiplier'}
+							place="top-end"
+							tooltipContent={<UserMultipliers user={user} />}
+						>
 							<Tag>
 								{String(
 									user.multiplier +
