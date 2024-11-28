@@ -17,16 +17,16 @@ export const UserMultipliers = ({ user }: UserMultipliersProps) => {
 			</div>
 			<div className={classNames.multiplierComponents}>
 				<div className={classNames.item}>
-					<span className="body1">Base</span>
-					<p>{multiplier}x</p>
+					<span>Base</span>
+					<p className={classNames.multiplier}>{multiplier}x</p>
 				</div>
 				<div className={classNames.item}>
-					<span className="body1">Liquidity Holding</span>
-					<p className="body1">{liquidityHoldingMultiplier}x</p>
+					<span>Liquidity Holding</span>
+					<p className={classNames.multiplier}>{liquidityHoldingMultiplier}x</p>
 				</div>
 				<div className={classNames.item}>
-					<span className="body1">Daily Swapping</span>
-					<p className="body1">{dailySwappingMultiplier}x</p>
+					<span>Daily Swapping</span>
+					<p className={classNames.multiplier}>{dailySwappingMultiplier}x</p>
 				</div>
 			</div>
 		</div>
