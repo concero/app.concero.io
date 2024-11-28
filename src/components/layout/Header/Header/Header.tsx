@@ -63,7 +63,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 						<Tag>{toLocaleNumber(user.points, 2)} CERs</Tag>
 						<TooltipWrapper
 							tooltipId={'user-multiplier'}
-							place="top-end"
+							place={isTablet || isMobile ? 'top-end' : 'top'}
 							tooltipContent={<UserMultipliers user={user} />}
 						>
 							<Tag>
