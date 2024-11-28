@@ -35,7 +35,6 @@ export const getDateUnitMap = (type: QuestType) => {
 	if (type === QuestType.Daily) return 'day'
 	if (type === QuestType.Primary || type === QuestType.Secondary) return 'week'
 	if (type === QuestType.Monthly) return 'month'
-
 	return null
 }
 
@@ -135,7 +134,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 						</div>
 					</div>
 
-					{variant === 'big' && quest.image && questImage}
+					{variant === 'big' && questImage}
 
 					{!rewardIsClaimed && (
 						<div className="row w-full jfe">
