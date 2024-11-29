@@ -83,7 +83,7 @@ export const Navigator = () => {
 						path={routes.rewards}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
-								<RewardsScreen />
+								<RewardsScreen user={user} />
 							</Suspense>
 						}
 					/>

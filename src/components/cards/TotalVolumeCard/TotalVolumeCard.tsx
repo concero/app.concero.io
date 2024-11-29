@@ -46,8 +46,9 @@ export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 	useEffect(() => {
 		if (!fees) return
 
-		// TODO: unhandled promise rejection
-		void getTotalVolume()
+		void getTotalVolume().catch(e => {
+			console.error(e)
+		})
 	}, [activeFilter, fees])
 
 	return (

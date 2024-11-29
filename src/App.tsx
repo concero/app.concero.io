@@ -20,7 +20,7 @@ function App() {
 
 	const queryClient = new QueryClient()
 
-	// todo: the dark mode should be implemented via themeProvider later
+	// todo: add dark mode
 	return (
 		<PostHogProvider>
 			<I18Provider>

@@ -1,7 +1,6 @@
-import type { Address } from 'viem'
 import { get } from '../../../client'
 
-export const checkLoyaltyBonus = async (address: Address): Promise<boolean> => {
+export const checkLoyaltyBonus = async (address: string): Promise<boolean> => {
 	const url = `${process.env.CONCERO_API_URL}/rewards/checkLoyaltyBonus/${address}`
 
 	const response = await get(url)

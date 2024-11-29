@@ -7,7 +7,6 @@ import { type IUser } from '../../../api/concero/user/userType'
 import { Button } from '../../buttons/Button/Button'
 import { UserHistory } from '../../modals/RewardsUserHistory/RewardsUserHistory'
 import { type Dispatch, type SetStateAction, useState } from 'react'
-import { type IUserAction } from '../../../api/concero/userActions/userActionType'
 
 interface ProfileHeaderProps {
 	user: IUser
@@ -16,7 +15,6 @@ interface ProfileHeaderProps {
 
 interface ProfileCardProps {
 	user: IUser
-	userActions: IUserAction[]
 }
 
 const ProfileHeader = ({ user, setIsOpen }: ProfileHeaderProps) => {
@@ -41,13 +39,13 @@ const ProfileHeader = ({ user, setIsOpen }: ProfileHeaderProps) => {
 	)
 }
 
-export const ProfileCard = ({ user, userActions }: ProfileCardProps) => {
+export const ProfileCard = ({ user }: ProfileCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
 	return (
 		<Card className={classNames.container}>
 			<ProfileHeader setIsOpen={setIsOpen} user={user} />
-			<UserHistory userActions={userActions} isOpen={isOpen} setIsOpen={setIsOpen} />
+			<UserHistory user={user} isOpen={isOpen} setIsOpen={setIsOpen} />
 		</Card>
 	)
 }

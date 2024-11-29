@@ -1,8 +1,7 @@
-import type { Address } from 'viem'
 import { get } from '../../client'
 import { type IUserAction } from './userActionType'
 
-export const fetchUserActions = async (address: Address): Promise<IUserAction[]> => {
+export const fetchUserActions = async (address: string): Promise<IUserAction[]> => {
 	const url = `${process.env.CONCERO_API_URL}/userActions/${address}`
 
 	const response = await get(url)
