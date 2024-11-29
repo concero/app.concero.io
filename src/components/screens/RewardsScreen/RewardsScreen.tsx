@@ -15,10 +15,10 @@ import { ProfilePlaceholder } from '../../rewards/ProfileCard/ProfilePlaceholder
 import { StreaksPlaceholders } from '../../rewards/StreaksCard/StreakCard/StreakPlaceholder/StreakPlaceholder'
 
 export const RewardsScreen = () => {
-	const { address } = useAccount()
+	const { address, isConnected } = useAccount()
 	const [user, setUser] = useState<IUser>()
 	const [userActions, setUserActions] = useState<IUserAction[]>([])
-	const [loading, setIsLoading] = useState<boolean>(true)
+	const [loading, setIsLoading] = useState<boolean>(false)
 
 	const fetchAndSetUserActions = async () => {
 		const response = await fetchUserActions(address!)
@@ -31,31 +31,32 @@ export const RewardsScreen = () => {
 	}
 
 	useEffect(() => {
-		if (address) {
+		if (isConnected && address) {
 			setIsLoading(true)
 			void Promise.all([fetchAndSetUserActions(), getUser(address)]).finally(() => {
 				setIsLoading(false)
 			})
 		}
-	}, [address])
+	}, [isConnected, address])
 
 	return (
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrap}>
-				{loading ? (
-					<>
-						<ProfilePlaceholder />
-						<StreaksPlaceholders />
-					</>
-				) : (
-					user && (
-						<div className="gap-lg">
-							<ProfileCard userActions={userActions} user={user} />
-							<LoyaltyBonus user={user} />
-							<StreaksCard user={user} />
-						</div>
-					)
-				)}
+				{isConnected &&
+					(loading ? (
+						<>
+							<ProfilePlaceholder />
+							<StreaksPlaceholders />
+						</>
+					) : (
+						user && (
+							<div className="gap-lg">
+								<ProfileCard userActions={userActions} user={user} />
+								<LoyaltyBonus user={user} />
+								<StreaksCard user={user} />
+							</div>
+						)
+					))}
 				<QuestsGroup user={user} />
 				<LeaderboardCard user={user} />
 			</div>
