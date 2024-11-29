@@ -23,7 +23,7 @@ export interface BarChartCardProps {
 	footer?: React.ReactNode
 	isBar?: boolean
 	height?: number
-	size: 'S' | 'M'
+	size?: 'S' | 'M'
 	isLoading: boolean
 }
 

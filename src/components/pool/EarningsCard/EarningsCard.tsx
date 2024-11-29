@@ -47,7 +47,9 @@ export const EarningsCard = ({ poolIsFilled, poolDataIsLoading }: Props) => {
 	}
 
 	useEffect(() => {
-		void getTotalVolume()
+		void getTotalVolume().catch(e => {
+			console.error(e)
+		})
 	}, [address])
 
 	const footer = (
