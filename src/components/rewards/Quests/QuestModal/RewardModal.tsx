@@ -35,8 +35,11 @@ export const RewardModal = ({ show, setShow, quest, points, showRoleAlert }: Pro
 	return (
 		<Modal isHeaderVisible={false} className={classNames.rewardModal} show={show} setShow={setShow}>
 			{questImage}
-			<h3>+ {points} CERs</h3>
-			<h4>For completing “{quest.name}”!</h4>
+			<div className={showRoleAlert ? classNames.titleContainerWithAlert : classNames.titleContainer}>
+				<h3>+ {points} CERs</h3>
+				<h4>For completing “{quest.name}”!</h4>
+			</div>
+
 			{showRoleAlert && (
 				<Alert
 					title="Role Coming This Week!"
