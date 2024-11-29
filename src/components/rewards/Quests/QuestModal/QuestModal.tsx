@@ -131,7 +131,16 @@ export const QuestModal = ({
 	)
 
 	if (rewardModalIsOpen) {
-		return <RewardModal points={points} show={rewardModalIsOpen} setShow={setRewardModalIsOpen} quest={quest} />
+		const showRoleAlert = !!(quest.name === 'OG challenge ' || quest.name === 'Lancan GOAT Quest')
+		return (
+			<RewardModal
+				points={points}
+				show={rewardModalIsOpen}
+				setShow={setRewardModalIsOpen}
+				quest={quest}
+				showRoleAlert={showRoleAlert}
+			/>
+		)
 	}
 
 	return (

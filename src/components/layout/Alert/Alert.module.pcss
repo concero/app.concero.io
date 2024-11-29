@@ -1,19 +1,24 @@
 .container {
 	width: 100%;
 	flex-direction: row;
-	align-items: flex-start;
 	padding: var(--sp-sm);
-	border-radius: var(--sp-md);
-	gap: var(--sp-sm);
+	border-radius: var(--sp-lg);
+	gap: 12px;
+}
 
-	h5 {
-		margin-top: 6px;
-	}
+.content {
+	display: flex;
+	gap: var(--sp-xs);
 }
 
 .wrapIcon {
-	padding: var(--sp-sm);
-	border-radius: var(--sp-sm);
+	padding: var(--sp-md);
+	border-radius: var(--sp-md);
+	height: 48px;
+	svg {
+		width: var(--sp-xl);
+		height: var(--sp-xl);
+	}
 }
 
 .neutral {
