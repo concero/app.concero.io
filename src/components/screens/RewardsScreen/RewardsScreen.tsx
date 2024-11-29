@@ -12,6 +12,7 @@ import { type Address } from 'viem'
 import { handleFetchUser } from '../../../web3/handleFetchUser'
 import { LoyaltyBonus } from '../../rewards/LoyaltyBonus/LoyaltyBonus'
 import { ProfilePlaceholder } from '../../rewards/ProfileCard/ProfilePlaceholder/ProfilePlaceholder'
+import { StreaksPlaceholders } from '../../rewards/StreaksCard/StreakCard/StreakPlaceholder/StreakPlaceholder'
 
 export const RewardsScreen = () => {
 	const { address } = useAccount()
@@ -42,7 +43,10 @@ export const RewardsScreen = () => {
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrap}>
 				{loading ? (
-					<ProfilePlaceholder />
+					<>
+						<ProfilePlaceholder />
+						<StreaksPlaceholders />
+					</>
 				) : (
 					user && (
 						<div className="gap-lg">
