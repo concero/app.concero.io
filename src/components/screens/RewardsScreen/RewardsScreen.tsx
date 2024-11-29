@@ -11,38 +11,52 @@ import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActi
 import { type Address } from 'viem'
 import { handleFetchUser } from '../../../web3/handleFetchUser'
 import { LoyaltyBonus } from '../../rewards/LoyaltyBonus/LoyaltyBonus'
+import { ProfilePlaceholder } from '../../rewards/ProfileCard/ProfilePlaceholder/ProfilePlaceholder'
+import { StreaksPlaceholders } from '../../rewards/StreaksCard/StreakCard/StreakPlaceholder/StreakPlaceholder'
 
 export const RewardsScreen = () => {
-	const { address } = useAccount()
+	const { address, isConnected } = useAccount()
 	const [user, setUser] = useState<IUser>()
 	const [userActions, setUserActions] = useState<IUserAction[]>([])
+	const [loading, setIsLoading] = useState<boolean>(false)
 
 	const fetchAndSetUserActions = async () => {
 		const response = await fetchUserActions(address!)
 		setUserActions(response)
 	}
 
-	useEffect(() => {
-		if (address) {
-			void Promise.all([fetchAndSetUserActions(), getUser(address)])
-		}
-	}, [address])
-
 	const getUser = async (userAddress: Address) => {
 		const currentUser = await handleFetchUser(userAddress)
 		setUser(currentUser!)
 	}
 
+	useEffect(() => {
+		if (isConnected && address) {
+			setIsLoading(true)
+			void Promise.all([fetchAndSetUserActions(), getUser(address)]).finally(() => {
+				setIsLoading(false)
+			})
+		}
+	}, [isConnected, address])
+
 	return (
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrap}>
-				{user && (
-					<div className="gap-lg">
-						<ProfileCard userActions={userActions} user={user} />
-						<LoyaltyBonus user={user} />
-						<StreaksCard user={user} />
-					</div>
-				)}
+				{isConnected &&
+					(loading ? (
+						<>
+							<ProfilePlaceholder />
+							<StreaksPlaceholders />
+						</>
+					) : (
+						user && (
+							<div className="gap-lg">
+								<ProfileCard userActions={userActions} user={user} />
+								<LoyaltyBonus user={user} />
+								<StreaksCard user={user} />
+							</div>
+						)
+					))}
 				<QuestsGroup user={user} />
 				<LeaderboardCard user={user} />
 			</div>

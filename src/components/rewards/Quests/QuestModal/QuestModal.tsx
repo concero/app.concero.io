@@ -119,12 +119,28 @@ export const QuestModal = ({
 		</div>
 	)
 
-	const oneStep = !isQuestCompleted && (
-		<QuestStep addCompletedStep={addCompletedStep} quest={quest} user={user} mode="one" step={steps[0]} />
+	const oneStep = (
+		<QuestStep
+			isCompleted={isQuestCompleted}
+			addCompletedStep={addCompletedStep}
+			quest={quest}
+			user={user}
+			mode="one"
+			step={steps[0]}
+		/>
 	)
 
 	if (rewardModalIsOpen) {
-		return <RewardModal points={points} show={rewardModalIsOpen} setShow={setRewardModalIsOpen} quest={quest} />
+		const showRoleAlert = !!(quest.name === 'OG challenge ' || quest.name === 'Lancan GOAT Quest')
+		return (
+			<RewardModal
+				points={points}
+				show={rewardModalIsOpen}
+				setShow={setRewardModalIsOpen}
+				quest={quest}
+				showRoleAlert={showRoleAlert}
+			/>
+		)
 	}
 
 	return (

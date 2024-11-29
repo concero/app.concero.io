@@ -1,5 +1,6 @@
 import { Tag } from '../../tags/Tag/Tag'
 import { QuestType } from '../../../api/concero/quest/questType'
+import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
 
 interface Props {
 	daysLeft: number
@@ -8,6 +9,7 @@ interface Props {
 	rewardIsClaimed: boolean
 	questType: QuestType
 	isRepeat?: boolean
+	isLoading?: boolean
 }
 
 export const QuestStatus = ({
@@ -17,6 +19,7 @@ export const QuestStatus = ({
 	rewardIsClaimed,
 	questType,
 	isRepeat = false,
+	isLoading,
 }: Props) => {
 	const dayText = daysLeft > 1 ? 'days' : 'day'
 	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} ${isRepeat ? 'to reset' : 'left'}`
@@ -33,6 +36,10 @@ export const QuestStatus = ({
 
 	if (questType === QuestType.Daily && !isCompleted && !rewardIsClaimed) {
 		return null
+	}
+
+	if (isLoading) {
+		return <SkeletonLoader width={132} height={26} />
 	}
 
 	return (
