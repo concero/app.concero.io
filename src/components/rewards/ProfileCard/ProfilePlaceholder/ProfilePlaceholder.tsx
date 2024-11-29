@@ -6,7 +6,7 @@ import { Button } from '../../../buttons/Button/Button'
 export const ProfilePlaceholder = () => {
 	return (
 		<Card className={classNames.container}>
-			<SkeletonLoader height={48} width={256} />
+			<SkeletonLoader height={32} width={256} />
 			<Button size="sm" variant="secondary">
 				Open History
 			</Button>
