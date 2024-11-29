@@ -46,7 +46,6 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const isDailyQuest = quest.type === QuestType.Daily
 	const isWeeklyQuest = quest.type === QuestType.Primary || quest.type === QuestType.Secondary
 	const isMonthlyQuest = quest.type === QuestType.Monthly
-
 	const isSocialQuest = quest.category === QuestCategory.Socials
 
 	const { name, startDate, endDate, image } = quest
@@ -93,6 +92,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 			onError={(e: any) => {
 				e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
 			}}
+			loading="lazy"
 			alt="Quest image"
 		/>
 	)

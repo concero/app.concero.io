@@ -56,17 +56,21 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const primaryQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Primary)
 	const secondaryQuests = quests.filter((quest: IQuest) => quest.type === QuestType.Secondary)
 
-	const renderQuestCards = (quests: IQuest[], variant: 'big' | 'normal' | 'small', className?: string) =>
-		isLoading ? (
-			<>
-				<QuestPlaceholder variant={variant} className={className} />
-				<QuestPlaceholder variant={variant} className={className} />
-			</>
-		) : (
-			quests.map((quest: IQuest) => (
-				<QuestCard key={quest._id} quest={quest} user={user} variant={variant} className={className} />
-			))
-		)
+	const renderQuestCards = useCallback(
+		(quests: IQuest[], variant: 'big' | 'normal' | 'small', className?: string) =>
+			isLoading ? (
+				<>
+					<QuestPlaceholder variant={variant} className={className} />
+					<QuestPlaceholder variant={variant} className={className} />
+					{className === 'dailyQuest' && <QuestPlaceholder variant={variant} className={className} />}
+				</>
+			) : (
+				quests.map((quest: IQuest) => (
+					<QuestCard key={quest._id} quest={quest} user={user} variant={variant} className={className} />
+				))
+			),
+		[isLoading, user],
+	)
 
 	return (
 		<div className="gap-xxl">
@@ -79,7 +83,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 					<div className={classNames.questsHeader}>
 						<h6>Daily</h6>
 					</div>
-					<div className={classNames.dailyQuests}>{renderQuestCards(dailyQuests, 'small')}</div>
+					<div className={classNames.dailyQuests}>{renderQuestCards(dailyQuests, 'small', 'dailyQuest')}</div>
 				</div>
 			)}
 
@@ -92,7 +96,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 					{renderQuestCards(monthlyQuests, 'big', classNames.campaign)}
 				</div>
 
-				{(isLoading || quests.length > 0) && (
+				{(isLoading || primaryQuests.length > 0 || secondaryQuests.length > 0) && (
 					<div className="gap-lg">
 						<div className={classNames.otherQuestsWrap}>
 							<div className={classNames.smallCardsContainer}>

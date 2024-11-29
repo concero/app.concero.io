@@ -3,7 +3,6 @@
 	max-width: 600px;
 	width: 100%;
 	overflow: scroll;
-	gap: var(--sp-lg);
 }
 
 .mainInfo {
@@ -59,7 +58,7 @@
 	max-width: 395px;
 	min-height: 380px;
 	align-items: center;
-	gap: var(--sp-lg);
+	gap: var(--sp-xl);
 
 	h3 {
 		color: var(--color-primary-700);
@@ -67,9 +66,24 @@
 
 	h4 {
 		color: var(--color-grey-700);
+		font-size: 1rem;
+		line-height: 20px;
+		font-weight: 400;
 	}
 
 	button {
 		width: 100%;
 	}
+}
+
+.titleContainer {
+	display: flex;
+	text-align: center;
+	gap: var(--sp-sm);
+}
+
+.titleContainerWithAlert {
+	display: flex;
+	text-align: center;
+	gap: var(--sp-sm);
 }
