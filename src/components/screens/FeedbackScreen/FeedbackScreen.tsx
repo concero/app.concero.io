@@ -1,128 +1,154 @@
-// import { Modal } from '../../../layout/Modal/Modal'
-
-import classNames from './FeedbackScreen.module.pcss'
-import { Input } from '../../layout/Input/Input'
-// import { Button } from '../../../layout/Button/Button'
 import { useState } from 'react'
 import axios from 'axios'
-import { IconX } from '@tabler/icons-react'
-import { Modal } from '../../modals/Modal/Modal'
+import { Card } from '../../cards/Card/Card'
+import ProductSelect from '../FeedbackScreen/ProductSelect/ProductSelect'
+import { Input } from './Input/Input'
+import classNames from './FeedbackScreen.module.pcss'
+import { Button } from '../../buttons/Button/Button'
+import { SuccessModal } from './SuccessModal/SuccessModal'
 
 interface ContactModalProps {
 	show: boolean
-	setShow: (show: boolean) => void
 	title: string
 	body?: string
 	isMessageNeeded?: boolean
 }
 
-export function FeedbackScreen({ show, setShow, title, body, isMessageNeeded = true }: ContactModalProps) {
+const products = [{ title: 'Lanca' }, { title: 'CERP (Rewards)' }, { title: 'CELP (Pools)' }]
+
+export function FeedbackScreen({ show, title, body, isMessageNeeded = true }: ContactModalProps) {
 	const [inputs, setInputs] = useState({
-		name: '',
 		email: '',
+		walletAddress: '',
 		message: '',
-		socialMedia: '',
+	})
+	const [errors, setErrors] = useState({
+		email: false,
+		walletAddress: false,
+		message: false,
+		product: false,
 	})
 
-	// function handleSubmit(e: any) {
-	// 	e.preventDefault()
-	//
-	// 	if (!inputs.name || !inputs.email) {
-	// 		return
-	// 	}
-	//
-	// 	// axios({
-	// 	// 	method: 'POST',
-	// 	// 	url: 'https://send.concero.io/api/v1/client/cltkp48yy0009swvupzjn5ezi/responses',
-	// 	// 	data: {
-	// 	// 		surveyId: 'clu2fnr98001gmiks31g00uml',
-	// 	// 		userId: `${inputs.email}`,
-	// 	// 		finished: true,
-	// 	// 		data: {
-	// 	// 			name: inputs.name,
-	// 	// 			email: inputs.email,
-	// 	// 			discordOrTwitterUsername: inputs.socialMedia,
-	// 	// 			message: inputs.message,
-	// 	// 		},
-	// 	// 	},
-	// 	// })
-	// 	// 		.then(response => {
-	// 	// 			console.log(response)
-	// 	// 		})
-	// 	// 		.catch(err => {
-	// 	// 			console.log(err)
-	// 	// 		})
-	// 	// 		.finally(() => {
-	// 	// 			setShow(false)
-	// 	// 			setInputs({
-	// 	// 				name: '',
-	// 	// 				email: '',
-	// 	// 				message: '',
-	// 	// 				socialMedia: '',
-	// 	// 			})
-	// 	// 		})
-	// }
+	const [activeItem, setActiveItem] = useState<{ title: string } | null>(null)
+	const [isModalVisible, setIsModalVisible] = useState(false)
+
+	async function handleSubmit(e: any) {
+		e.preventDefault()
+
+		const newErrors = {
+			email: !inputs.email,
+			walletAddress: !inputs.walletAddress,
+			message: !inputs.message || inputs.message.length < 100,
+			product: !activeItem || activeItem.title === 'Select a product',
+		}
+
+		setErrors(newErrors)
+
+		if (Object.values(newErrors).some(Boolean)) {
+			return
+		}
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: 'http://localhost:4000/api/submit_feedback',
+				data: {
+					email: inputs.email,
+					walletAddress: inputs.walletAddress,
+					product: activeItem?.title,
+					message: inputs.message,
+				},
+			})
+
+			console.log(response.data)
+
+			setIsModalVisible(true)
+		} catch (err) {
+			console.error('Error submitting form:', err)
+			// setIsModalVisible(true)
+		} finally {
+			setInputs({
+				email: '',
+				walletAddress: '',
+				message: '',
+			})
+			setActiveItem(null)
+		}
+	}
 
 	return (
-		<Modal show={show} setShow={setShow}>
-			<div className={classNames.container}>
-				<div className={classNames.formContainer}>
+		<div className={classNames.feedbackScreenContainer}>
+			<Card className={classNames.card}>
+				<div className={classNames.cardHeadingContainer}>
 					<div className={classNames.titleContainer}>
-						<h2>{title}</h2>
-						{body ? <p className={'body2'}>{body}</p> : null}
+						<h2>Leave Feedback</h2>
 					</div>
-					<form className={classNames.inputContainer}>
-						<Input
-							title={'Name'}
-							type={'text'}
-							onChange={e => {
-								setInputs({ ...inputs, name: e.target.value })
-							}}
-							value={inputs.name}
-						/>
-						<Input
-							title={'Email'}
-							type={'email'}
-							onChange={e => {
-								setInputs({ ...inputs, email: e.target.value })
-							}}
-							value={inputs.email}
-						/>
-						<Input
-							title={'Twitter/Discord (optional)'}
-							type={'email'}
-							onChange={e => {
-								setInputs({ ...inputs, socialMedia: e.target.value })
-							}}
-							value={inputs.socialMedia}
-						/>
-						{isMessageNeeded ? (
-							<Input
-								title={'Message'}
-								inputType={'textarea'}
-								type={'text'}
-								onChange={e => {
-									setInputs({ ...inputs, message: e.target.value })
-								}}
-								value={inputs.message}
-							/>
-						) : null}
-						{/* <Button size={'md'} onClick={handleSubmit}> */}
-						{/*	<h4 className={classNames.buttonTitle}>Send</h4> */}
-						{/* </Button> */}
-					</form>
 				</div>
-				<div className={classNames.imageContainer}>
-					<img src={object} />
+				<div className={classNames.inputsContainer}>
+					<Input
+						title={'Email'}
+						placeholder={'your@email.com'}
+						type={'text'}
+						onChange={e => {
+							setInputs({ ...inputs, email: e.target.value })
+						}}
+						value={inputs.email}
+						error={errors.email ? 'Invalid email' : ''}
+						className={errors.email ? classNames.inputError : ''}
+					/>
+					<Input
+						title={'Wallet address'}
+						placeholder={'0xConcero'}
+						type={'text'}
+						onChange={e => {
+							setInputs({ ...inputs, walletAddress: e.target.value })
+						}}
+						value={inputs.walletAddress}
+						error={errors.walletAddress ? 'Invalid wallet address' : ''}
+						className={errors.walletAddress ? classNames.inputError : ''}
+					/>
+					<div className={classNames.productSelectContainer}>
+						<p>Product</p>
+						<ProductSelect
+							products={products}
+							activeItem={activeItem || { title: 'Select a product' }}
+							setActiveItem={setActiveItem}
+							error={errors.product ? 'Please select a product' : ''}
+						/>
+					</div>
+					<Input
+						title={'Message'}
+						placeholder={'Your message must be at least 100 symbols'}
+						inputType={'textarea'}
+						onChange={e => {
+							setInputs({ ...inputs, message: e.target.value })
+						}}
+						value={inputs.message}
+						error={errors.message ? 'Message is too short. Minimum count is 100 symbols' : ''}
+						className={errors.message ? classNames.inputError : ''}
+						style={{ paddingTop: '16px', height: '128px', textAlign: 'left' }}
+					/>
+					{errors.message ? (
+						errors.message
+					) : (
+						<div className={classNames.hintContainer}>
+							<p>
+								Describe your problem or suggestion. Don’t worry to be very detailed. Most relevant and
+								helpful feedbacks will be awarded by 25 CERs
+							</p>
+						</div>
+					)}
+					<Button className={classNames.submitButton} onClick={handleSubmit}>
+						Send Feedback
+					</Button>
 				</div>
-				{/* <Button */}
-				{/*	className={classNames.closeButton} */}
-				{/*	variant={'black'} */}
-				{/*	size={'xs'} */}
-				{/*	onClick={() => setShow(false)} */}
-				{/*	leftIcon={<IconX color={'var(--color-base-white)'} />} */}
-				{/* ></Button> */}
-			</div>
-		</Modal>
+			</Card>
+			<SuccessModal
+				show={isModalVisible}
+				onClose={() => {
+					setIsModalVisible(false)
+				}}
+			/>
+		</div>
 	)
 }
