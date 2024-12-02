@@ -2,7 +2,6 @@ import { StageType, type SwapAction, SwapCardStage, type SwapState } from '../sw
 import { type Dispatch } from 'react'
 import { type Address, decodeEventLog, type Hash, parseUnits, type PublicClient, type WalletClient } from 'viem'
 import { base } from 'viem/chains'
-import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
 import { config, IS_TESTNET } from '../../../../constants/config'
 import { sleep } from '../../../../utils/sleep'
@@ -11,6 +10,7 @@ import { config as wagmiConfig } from '../../../../web3/wagmi'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { baseSepolia } from 'wagmi/chains'
+import ParentPoolAbiV1_5 from '../../../../abi/ParentPoolAbiV1_5'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = IS_TESTNET ? baseSepolia : base
@@ -45,7 +45,7 @@ const completeDeposit = async (
 	})
 
 	const txHash = await walletClient.writeContract({
-		abi: ParentPool,
+		abi: ParentPoolAbiV1_5,
 		functionName: 'completeDeposit',
 		address: parentPoolAddress,
 		args: [depositRequestId],
@@ -77,7 +77,7 @@ const completeDeposit = async (
 	for (const log of receipt.logs) {
 		try {
 			const decodedLog = decodeEventLog({
-				abi: ParentPool,
+				abi: ParentPoolAbiV1_5,
 				data: log.data,
 				topics: log.topics,
 			})
@@ -138,7 +138,7 @@ const handleDepositTransaction = async (
 			if (!log.topics.length) return false
 
 			const decodedLog = decodeEventLog({
-				abi: ParentPool,
+				abi: ParentPoolAbiV1_5,
 				data: log.data,
 				topics: log.topics,
 			})
@@ -154,7 +154,7 @@ const handleDepositTransaction = async (
 	}
 
 	const decodedLog = decodeEventLog({
-		abi: ParentPool,
+		abi: ParentPoolAbiV1_5,
 		data: depositInitiatedLog.data,
 		topics: depositInitiatedLog.topics,
 	})
@@ -217,7 +217,7 @@ export async function executeDeposit(
 		})
 
 		const hash = await walletClient.writeContract({
-			abi: ParentPool,
+			abi: ParentPoolAbiV1_5,
 			functionName: 'startDeposit',
 			address: parentPoolAddress,
 			args: [parseUnits(swapState.from.amount, swapState.from.token.decimals)],

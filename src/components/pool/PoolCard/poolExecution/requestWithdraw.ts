@@ -2,7 +2,6 @@ import { type SwapAction, SwapCardStage, type SwapState } from '../swapReducer/t
 import { addingAmountDecimals } from '../../../../utils/formatting'
 import { type Dispatch } from 'react'
 import { type Address, decodeEventLog, type Hash, parseAbi, type PublicClient, type WalletClient } from 'viem'
-import { abi as ParentPool } from '../../../../abi/ParentPool.json'
 import { base } from 'viem/chains'
 import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
 import { config, IS_TESTNET, PARENT_POOL_CHAIN_ID } from '../../../../constants/config'
@@ -10,10 +9,10 @@ import { TransactionStatus } from '../../../../api/concero/types'
 import { getPublicClient, getWalletClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
 import { getWithdrawalIdByLpAddress } from '../../../../api/concero/getWithdrawalIdByLpAddress'
-import ConceroAutomationAbi from '../../../../abi/ConceroAutomationAbi'
 import { baseSepolia } from 'wagmi/chains'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action as trackingAction, category } from '../../../../constants/tracking'
+import ParentPoolAbiV1_5 from '../../../../abi/ParentPoolAbiV1_5'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = IS_TESTNET ? baseSepolia : base
@@ -25,7 +24,7 @@ async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClie
 
 	return await walletClient.writeContract({
 		account: swapState.from.address,
-		abi: ParentPool,
+		abi: ParentPoolAbiV1_5,
 		functionName: 'startWithdrawal',
 		address: parentPoolAddress,
 		args: [depositAmount],
@@ -60,7 +59,7 @@ const checkTransactionStatus = async (txHash: Hash, publicClient: PublicClient, 
 	for (const log of receipt.logs) {
 		try {
 			const decodedLog = decodeEventLog({
-				abi: ParentPool,
+				abi: ParentPoolAbiV1_5,
 				data: log.data,
 				topics: log.topics,
 				strict: false,
@@ -150,7 +149,7 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 
 	const hash = await walletClient.writeContract({
 		account: address,
-		abi: ParentPool,
+		abi: ParentPoolAbiV1_5,
 		functionName: 'completeWithdrawal',
 		args: [],
 		address: parentPoolAddress,
@@ -175,7 +174,7 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 		// TODO add decoder wrapper
 		try {
 			const decodedLog = decodeEventLog({
-				abi: ParentPool,
+				abi: ParentPoolAbiV1_5,
 				data: log.data,
 				topics: log.topics,
 			})
@@ -214,7 +213,7 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 		abi: parseAbi(['function retryPerformWithdrawalRequest(bytes32 _withdrawalId) external']),
 		functionName: 'retryPerformWithdrawalRequest',
 		args: [withdrawId as Address],
-		address: config.AUTOMATION_ADDRESS,
+		address: parentPoolAddress,
 		gas: 4_000_000n,
 	})
 
@@ -240,7 +239,7 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 		// TODO add decoder wrapper
 		try {
 			const decodedLog = decodeEventLog({
-				abi: ConceroAutomationAbi.abi,
+				abi: ParentPoolAbiV1_5,
 				data: log.data,
 				topics: log.topics,
 			})
