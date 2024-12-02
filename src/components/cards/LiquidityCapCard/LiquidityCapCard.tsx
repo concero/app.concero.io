@@ -16,7 +16,7 @@ export const LiquidityCapCard = () => {
 				<h4>Pool Liquidity</h4>
 				<InfoTooltip title={'Capacity limitations'} description={description} tooltipId={'pool-liquidity'} />
 			</div>
-			<ProgressBar type="float" isLoading={isLoading} currentValue={poolLiquidity} maxValue={maxCap} />
+			<ProgressBar type="big" isLoading={isLoading} currentValue={poolLiquidity} maxValue={maxCap} />
 		</Card>
 	)
 }

@@ -1,7 +1,6 @@
-export interface IQuestInProgress {
-	questId: string
-	completedSteps: number[]
-}
+export type CompletedSteps = number[]
+export type IQuestsInProgressMap = Record<string, CompletedSteps>
+export type ICompletedQuestsMap = Record<string, number>
 
 export interface IUserTier {
 	level: string
@@ -39,10 +38,10 @@ export interface UserConnectedSocials {
 export interface IUser {
 	_id: string
 	address: string
-	tier: IUserTier | null
+	tier: IUserTier
 	points: number
-	completedQuests: string[]
-	questsInProgress: IQuestInProgress[]
+	completedQuests: ICompletedQuestsMap
+	questsInProgress: IQuestsInProgressMap
 	multiplier: UserMultiplier
 	streak: UserStreaks
 	connectedSocials: UserConnectedSocials
