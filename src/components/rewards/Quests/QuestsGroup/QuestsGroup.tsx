@@ -48,26 +48,14 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 
 	return (
 		<div className="gap-xxl">
-			{quests?.Campaign?.map(quest => {
-				return (
-					<QuestCard
-						className={classNames.campaign}
-						quest={quest}
-						user={user}
-						variant="big"
-						key={quest._id}
-					/>
-				)
-			})}
+			{renderQuestCards(quests?.Campaign, 'big')}
 
-			{(isLoading || quests?.Daily) && (
-				<div className="gap-sm">
-					<div className={classNames.questsHeader}>
-						<h6>Daily</h6>
-					</div>
-					<div className={classNames.dailyQuests}>{renderQuestCards(quests?.Daily, 'small')}</div>
+			<div className="gap-sm">
+				<div className={classNames.questsHeader}>
+					<h6>Daily</h6>
 				</div>
-			)}
+				<div className={classNames.dailyQuests}>{renderQuestCards(quests?.Daily, 'small')}</div>
+			</div>
 
 			<div>
 				<div className={classNames.questsHeader}>
@@ -75,21 +63,17 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				</div>
 
 				<div className={classNames.monthlyQuests}>
-					{renderQuestCards(quests?.Big, 'big', classNames.campaign)}
+					{renderQuestCards(quests?.Monthly, 'big', classNames.campaign)}
 				</div>
 
-				{(isLoading || quests.length > 0) && (
-					<div className="gap-lg">
-						<div className={classNames.otherQuestsWrap}>
-							<div className={classNames.smallCardsContainer}>
-								{renderQuestCards(quests?.Primary, 'big')}
-							</div>
-							<div className={classNames.smallCardsContainer}>
-								{renderQuestCards(quests?.Secondary, 'normal')}
-							</div>
+				<div className="gap-lg">
+					<div className={classNames.otherQuestsWrap}>
+						<div className={classNames.smallCardsContainer}>{renderQuestCards(quests?.Primary, 'big')}</div>
+						<div className={classNames.smallCardsContainer}>
+							{renderQuestCards(quests?.Secondary, 'normal')}
 						</div>
 					</div>
-				)}
+				</div>
 			</div>
 		</div>
 	)

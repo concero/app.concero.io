@@ -1,16 +1,10 @@
 import { get } from '../../client'
-import { type IQuest } from './questType'
+import { type IQuest, type QuestType } from './questType'
 
-export const fetchQuests = async (): Promise<IQuest[]> => {
+export type GroupedQuests = Record<QuestType, IQuest[]>
+
+export const fetchQuests = async (): Promise<GroupedQuests> => {
 	const url = `${process.env.CONCERO_API_URL}/quests`
-
-	// const token = process.env.QUESTS_AUTH_TOKEN
-	//
-	// const response = await get(url, {
-	// 	headers: {
-	// 		Authorization: `Bearer ${token}`,
-	// /	},
-	// })
 
 	const response = await get(url)
 	if (response.status !== 200) throw new Error('Something went wrong')
