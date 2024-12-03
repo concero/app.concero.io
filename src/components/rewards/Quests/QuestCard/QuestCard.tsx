@@ -52,7 +52,6 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	useEffect(() => {
 		if (!user) return
 
-		console.log(user.completedQuests, quest._id, user.completedQuests[quest._id])
 		if (user.completedQuests[String(quest._id)]) {
 			setRewardIsClaimed(true)
 		}
