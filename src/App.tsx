@@ -4,17 +4,13 @@ import { WagmiProvider } from 'wagmi'
 import { Navigator } from './Navigator'
 import { config } from './web3/wagmi'
 import { ThemeProvider } from './hooks/themeContext'
-import { SelectionProvider } from './hooks/SelectionContext'
 import { Notifications } from './components/overlays/Notifications/Notifications'
 import { NotificationsProvider } from './hooks/notificationsContext'
-import { DataProvider } from './hooks/DataContext/DataContext'
 import { useEffect } from 'react'
 import { I18Provider } from './i18n/I18nextProvider'
 import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
 
 function App() {
 	useEffect(() => {
@@ -22,21 +18,20 @@ function App() {
 		bigNumberSettings()
 	}, [])
 
+	const queryClient = new QueryClient()
+
+	// todo: add dark mode
 	return (
 		<PostHogProvider>
 			<I18Provider>
 				<WagmiProvider config={config}>
 					<QueryClientProvider client={queryClient}>
-						<DataProvider>
-							<SelectionProvider setIsLoading={() => {}}>
-								<ThemeProvider>
-									<NotificationsProvider>
-										<Notifications />
-										<Navigator />
-									</NotificationsProvider>
-								</ThemeProvider>
-							</SelectionProvider>
-						</DataProvider>
+						<ThemeProvider>
+							<NotificationsProvider>
+								<Notifications />
+								<Navigator />
+							</NotificationsProvider>
+						</ThemeProvider>
 					</QueryClientProvider>
 				</WagmiProvider>
 			</I18Provider>

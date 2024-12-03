@@ -1,11 +1,6 @@
-// import { Modal } from '../../../layout/Modal/Modal'
-
 import classNames from './FeedbackScreen.module.pcss'
 import { Input } from '../../layout/Input/Input'
-// import { Button } from '../../../layout/Button/Button'
 import { useState } from 'react'
-import axios from 'axios'
-import { IconX } from '@tabler/icons-react'
 import { Modal } from '../../modals/Modal/Modal'
 
 interface ContactModalProps {

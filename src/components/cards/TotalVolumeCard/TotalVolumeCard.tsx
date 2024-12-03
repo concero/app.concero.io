@@ -21,23 +21,23 @@ export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 	const [commonValue, setCommonValue] = useState<string>()
 
 	const getTotalVolume = async () => {
-		const chartData = fees
-			.filter(fee => {
-				const feeTime = fee.timestamp
-				const { startTime, endTime } = activeFilter
+		let totalValue = 0
+		const chartData = fees.reduce((acc, fee) => {
+			const feeTime = fee.timestamp
+			const { startTime, endTime } = activeFilter
 
-				return (!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)
-			})
-			.map(fee => {
-				return {
+			if ((!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)) {
+				const feeValue = {
 					time: fee.timestamp * 1000,
 					value: fee.loanGivenOut,
 				}
-			})
 
-		const totalValue = chartData.reduce((acc, item) => {
-			return acc + item.value
-		}, 0)
+				totalValue += feeValue.value
+
+				return [...acc, feeValue]
+			}
+			return acc
+		}, [])
 
 		setCommonValue('$' + toLocaleNumber(totalValue))
 		setVolumeData(chartData)
@@ -46,7 +46,9 @@ export const TotalVolumeCard = ({ fees, isLoading }: Props) => {
 	useEffect(() => {
 		if (!fees) return
 
-		void getTotalVolume()
+		void getTotalVolume().catch(e => {
+			console.error(e)
+		})
 	}, [activeFilter, fees])
 
 	return (

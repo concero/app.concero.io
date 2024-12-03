@@ -1,7 +1,7 @@
 import { get } from '../client'
 import { type GetTokensParams } from '../../hooks/DataContext/types'
 
-export const fetchTokens = async ({ chainId, offset, limit, search }: GetTokensParams) => {
+export const fetchTokens = async ({ chainId, search }: GetTokensParams) => {
 	const chainIdQuery = chainId ? `?chain_id=${chainId}` : ''
 	const offsetQuery = chainId ? `?chain_id=${chainId}` : ''
 	const limitQuery = chainId ? `?chain_id=${chainId}` : ''

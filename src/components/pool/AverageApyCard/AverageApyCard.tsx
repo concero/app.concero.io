@@ -47,7 +47,9 @@ export const AverageApyCard = ({ fees, isLoading }: Props) => {
 	useEffect(() => {
 		if (!fees) return
 
-		void getTotalVolume()
+		void getTotalVolume().catch(e => {
+			console.error(e)
+		})
 	}, [fees, activeFilter])
 
 	return (

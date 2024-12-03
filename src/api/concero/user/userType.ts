@@ -1,45 +1,48 @@
-import { type Address } from 'viem'
-
-export interface IPassedQuest {
-	id: string
-	points: number
-	date: Date
-}
+export type CompletedSteps = number[]
+export type IQuestsInProgressMap = Record<string, CompletedSteps>
+export type ICompletedQuestsMap = Record<string, number>
 
 export interface IUserTier {
 	level: string
 	title: string
 	bonuses: string[]
+	pointsRequired: number
 }
 
 export interface UserStreaks {
-	liquidityHoldingStreak: number
-	dailySwappingStreak: number
+	dailySwap: number
+	liquidityHold: number
+}
+
+export interface UserMultiplier {
+	default: number
+	dailySwap: number | null
+	liquidityHold: number | null
+}
+
+export interface UserConnectedSocials {
+	twitter: {
+		id: string
+		screen_name: string
+		name: string
+	} | null
+	discord: {
+		id: string
+		username: string
+		email: string
+		avatar: string
+		locale: string
+	} | null
 }
 
 export interface IUser {
 	_id: string
-	address: Address
+	address: string
 	tier: IUserTier
 	points: number
-	passedQuests: IPassedQuest[]
-	multiplier: number
-	liquidityHoldingMultiplier: number
-	dailySwappingMultiplier: number
-	streaks: UserStreaks
-	subscriptions: {
-		twitter: {
-			id: string
-			screen_name: string
-			name: string
-		} | null
-		discord: {
-			id: string
-			username: string
-			email: string
-			avatar: string
-			locale: string
-		} | null
-	}
-	position?: number
+	completedQuests: ICompletedQuestsMap
+	questsInProgress: IQuestsInProgressMap
+	multiplier: UserMultiplier
+	streak: UserStreaks
+	connectedSocials: UserConnectedSocials
 }

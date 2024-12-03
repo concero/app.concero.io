@@ -57,7 +57,7 @@ export const QuestModal = ({
 				setRewardModalIsOpen(true)
 			}
 		} catch (err) {
-			console.log(err)
+			console.error(err)
 		}
 
 		setIsLoading(false)

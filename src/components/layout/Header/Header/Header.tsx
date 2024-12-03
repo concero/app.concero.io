@@ -68,9 +68,9 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 						>
 							<Tag>
 								{String(
-									user.multiplier +
-										(user?.dailySwappingMultiplier ?? 0) +
-										(user?.liquidityHoldingMultiplier ?? 0),
+									user.multiplier.default +
+										(user.multiplier.dailySwap ?? 0) +
+										(user.multiplier.liquidityHold ?? 0),
 								)}
 								x
 							</Tag>

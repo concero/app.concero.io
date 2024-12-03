@@ -4,11 +4,11 @@ import { AppScreen } from './components/screens/AppScreen/AppScreen'
 import { Header } from './components/layout/Header/Header/Header'
 import { routes } from './constants/routes'
 import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScreenLoader'
+import { Footer } from './components/layout/Footer/Footer'
+import type { IUser } from './api/concero/user/userType'
 import { useAccount } from 'wagmi'
-import posthog from 'posthog-js'
 import { handleFetchUser } from './web3/handleFetchUser'
-import { type IUser } from './api/concero/user/userType'
-import { Footer } from './components/rewards/Footer/Footer'
+import posthog from 'posthog-js'
 
 const PoolScreen = lazy(
 	async () =>
@@ -83,7 +83,7 @@ export const Navigator = () => {
 						path={routes.rewards}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
-								<RewardsScreen />
+								<RewardsScreen user={user} />
 							</Suspense>
 						}
 					/>

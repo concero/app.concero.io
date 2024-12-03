@@ -9,12 +9,6 @@ import { type IQuest, QuestCategory, QuestType } from '../../../../api/concero/q
 import { config } from '../../../../constants/config'
 import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
-import type { UserActionQuestData } from '../../../../api/concero/userActions/userActionType'
-import {
-	checkIfDateIsThisDay,
-	checkIfDateIsThisMonth,
-	checkIfDateIsThisWeek,
-} from '../../../../utils/date/checkIfDateIsThisWeek'
 import { getDaysUntil } from '../../../../utils/date/getDaysUntil'
 
 interface QuestCardProps {
@@ -35,6 +29,7 @@ export const getDateUnitMap = (type: QuestType) => {
 	if (type === QuestType.Daily) return 'day'
 	if (type === QuestType.Primary || type === QuestType.Secondary) return 'week'
 	if (type === QuestType.Monthly) return 'month'
+
 	return null
 }
 
@@ -44,8 +39,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
 
 	const isDailyQuest = quest.type === QuestType.Daily
-	const isWeeklyQuest = quest.type === QuestType.Primary || quest.type === QuestType.Secondary
-	const isMonthlyQuest = quest.type === QuestType.Monthly
+
 	const isSocialQuest = quest.category === QuestCategory.Socials
 
 	const { name, startDate, endDate, image } = quest
@@ -56,22 +50,14 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	if (!questIsBegin) return null
 
 	useEffect(() => {
-		if (quest.userAction) {
-			const userQuestData = quest.userAction.data as UserActionQuestData
+		if (!user) return
 
-			const questNotStartedThisDay = !checkIfDateIsThisDay(userQuestData.timestamp)
-			const isNewDailyQuest = isDailyQuest && questNotStartedThisDay
+		if (user.completedQuests[String(quest._id)]) {
+			setRewardIsClaimed(true)
+		}
 
-			const questNotStartedThisWeek = !checkIfDateIsThisWeek(userQuestData.timestamp)
-			const isNewWeeklyQuest = isWeeklyQuest && questNotStartedThisWeek
-
-			const questNotStartedThisMonth = !checkIfDateIsThisMonth(userQuestData.timestamp)
-			const isNewMonthlyQuest = isMonthlyQuest && questNotStartedThisMonth
-
-			if (isNewDailyQuest || isNewWeeklyQuest || isNewMonthlyQuest) return
-
-			setRewardIsClaimed(userQuestData.isCompleted || false)
-			setCompletedStepIds(userQuestData.completedQuestStepIds!)
+		if (user.questsInProgress[String(quest._id)]) {
+			setCompletedStepIds(user.questsInProgress[quest._id])
 		}
 	}, [user, quest])
 

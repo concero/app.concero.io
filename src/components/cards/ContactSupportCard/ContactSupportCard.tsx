@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import classNames from './ContactSupportCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
-import { IconArrowLeft, IconBrandDiscord, IconCheck, IconMail } from '@tabler/icons-react'
+import { IconArrowLeft, IconCheck } from '@tabler/icons-react'
 import { copyToClipboard } from '../../../utils/copyToClipboard'
 import { useTranslation } from 'react-i18next'
 import { IconCopy } from '../../../assets/icons/IconCopy'

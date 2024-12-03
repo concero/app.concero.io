@@ -4,7 +4,7 @@ import { config } from '../../../constants/config'
 import { updateUserTwitter } from '../user/updateUser'
 
 export const getRequestToken = async () => {
-	const request = await get(`${config.baseURL}/twitter_token`)
+	const request = await get(`${config.baseURL}/twitterToken`)
 	const link = request.data.data
 
 	window.location.href = link

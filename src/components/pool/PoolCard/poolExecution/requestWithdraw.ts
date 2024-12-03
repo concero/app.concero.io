@@ -13,6 +13,7 @@ import { baseSepolia } from 'wagmi/chains'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action as trackingAction, category } from '../../../../constants/tracking'
 import ParentPoolAbiV1_5 from '../../../../abi/ParentPoolAbiV1_5'
+import { decodeEventLogWrapper } from '../../../../utils/decodeEventLogWrapper'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = IS_TESTNET ? baseSepolia : base
@@ -171,12 +172,10 @@ export const completeWithdrawal = async (address: Address, chainId: number): Pro
 	}
 
 	for (const log of receipt.logs) {
-		// TODO add decoder wrapper
 		try {
-			const decodedLog = decodeEventLog({
+			const decodedLog = decodeEventLogWrapper({
 				abi: ParentPoolAbiV1_5,
-				data: log.data,
-				topics: log.topics,
+				log,
 			})
 
 			if (decodedLog.eventName === 'ConceroParentPool_Withdrawn') {
@@ -236,12 +235,10 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 	}
 
 	for (const log of receipt.logs) {
-		// TODO add decoder wrapper
 		try {
-			const decodedLog = decodeEventLog({
+			const decodedLog = decodeEventLogWrapper({
 				abi: ParentPoolAbiV1_5,
-				data: log.data,
-				topics: log.topics,
+				log,
 			})
 
 			if (decodedLog.eventName === 'ConceroAutomation_RetryPerformed') {

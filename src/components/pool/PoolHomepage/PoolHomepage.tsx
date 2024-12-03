@@ -15,7 +15,7 @@ export const PoolHomepage = () => {
 	const [fees, setFees] = useState<Fee[]>([])
 	const [providersCount, setProvidersCount] = useState<number>(0)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [txCount, setTxCount] = useState<number>(false)
+	const [txCount, setTxCount] = useState<boolean>(false)
 
 	const getTotalVolume = async () => {
 		try {

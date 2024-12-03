@@ -3,26 +3,11 @@ import classNames from './questplaceholder.module.pcss'
 import { Card } from '../../../cards/Card/Card'
 import { IconButton } from '../../../buttons/IconButton/IconButton'
 import { ArrowRightIcon } from '../../../../assets/icons/ArrowRightIcon'
-import { QuestCategory, QuestType } from '../../../../api/concero/quest/questType'
 import { Loader } from '../../../layout/Loader/Loader'
 
 interface QuestPlaceholderProps {
 	variant?: 'big' | 'normal' | 'small'
 	className?: string
-}
-
-export const categoryNameMap = {
-	[QuestCategory.OnChain]: 'On chain',
-	[QuestCategory.Socials]: 'Socials',
-	[QuestCategory.Common]: 'Common',
-	[QuestCategory.Campaign]: 'Campaign',
-}
-
-export const getDateUnitMap = (type: QuestType) => {
-	if (type === QuestType.Daily) return 'day'
-	if (type === QuestType.Primary || type === QuestType.Secondary) return 'week'
-	if (type === QuestType.Monthly) return 'month'
-	return null
 }
 
 export const QuestPlaceholder = ({ variant = 'big', className }: QuestPlaceholderProps) => {
