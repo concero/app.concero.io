@@ -20,7 +20,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 		const fetchedQuests = await fetchQuests()
 		setQuests(fetchedQuests)
 
-		setIsLoading(false)
+		// setIsLoading(false)
 	}, [user, address])
 
 	useEffect(() => {
@@ -48,7 +48,10 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 
 	return (
 		<div className="gap-xxl">
-			{renderQuestCards(quests?.Campaign, 'big')}
+			{!isLoading &&
+				quests?.Campaign?.map((quest: IQuest) => (
+					<QuestCard key={quest._id} quest={quest} user={user} variant={'big'} />
+				))}
 
 			<div className="gap-sm">
 				<div className={classNames.questsHeader}>
