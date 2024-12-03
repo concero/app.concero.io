@@ -8,8 +8,7 @@ import { Button } from '../../buttons/Button/Button'
 import { Modal } from '../../modals/Modal/Modal'
 import classNames from './PoolCard.module.pcss'
 import { useAccount } from 'wagmi'
-import { useWeb3Modal } from '@web3modal/wagmi/react'
-import { add } from 'husky'
+import { useAppKit } from '@reown/appkit/react'
 import { TooltipWrapper } from '../../wrappers/WithTooltip/TooltipWrapper'
 
 interface Props {
@@ -32,7 +31,7 @@ export const PoolCard = ({
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [swapState, swapDispatch] = useSwapReducer()
 	const { address, isConnected } = useAccount()
-	const { open } = useWeb3Modal()
+	const { open } = useAppKit()
 
 	const typingTimeoutRef = useRef<number>()
 
