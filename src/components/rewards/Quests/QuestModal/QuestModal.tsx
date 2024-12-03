@@ -10,7 +10,7 @@ import { Button } from '../../../buttons/Button/Button'
 import { RewardModal } from './RewardModal'
 import { QuestStatus } from '../QuestStatus'
 import { claimQuestReward } from '../../../../api/concero/quest/claimQuestReward'
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useAppKit } from '@reown/appkit/react'
 import { Stepper } from '../../../layout/Stepper/Stepper'
 
 interface QuestModalProps {
@@ -36,7 +36,7 @@ export const QuestModal = ({
 	user,
 	daysLeft,
 }: QuestModalProps) => {
-	const { open } = useWeb3Modal()
+	const { open } = useAppKit()
 	const [rewardModalIsOpen, setRewardModalIsOpen] = useState<boolean>(false)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [points, setPoints] = useState<number>(0)

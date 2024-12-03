@@ -1,11 +1,11 @@
 import { type SwapButtonProps } from './types'
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useAppKit } from '@reown/appkit/react'
 import { useAccount } from 'wagmi'
 import { Button } from '../../../buttons/Button/Button'
 
 export const SwapButton = ({ error, onClick, isLoading, isDeposit }: SwapButtonProps) => {
 	const { isConnected } = useAccount()
-	const { open } = useWeb3Modal()
+	const { open } = useAppKit()
 
 	const actionText: string = isDeposit ? 'Request Deposit' : 'Request Withdrawal'
 
