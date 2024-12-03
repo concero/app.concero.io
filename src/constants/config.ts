@@ -36,7 +36,7 @@ export const config = {
 	CONCERO_DOMAIN_URL: process.env.CONCERO_DOMAIN_URL!,
 
 	// POOLS & LP
-	POOL_IS_NOT_AVAILABLE: true,
+	POOL_IS_NOT_AVAILABLE: false,
 
 	AUTOMATION_ADDRESS: IS_TESTNET ? automationsBaseSepolia : automationsBase,
 	LPTOKEN: IS_TESTNET ? lpTokenBaseSepolia : lpTokenBase,

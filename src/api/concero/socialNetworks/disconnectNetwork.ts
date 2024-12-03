@@ -6,7 +6,7 @@ export const disconnectNetwork = async (
 	address: Address,
 	network: keyof IUser['connectedSocials'],
 ): Promise<boolean> => {
-	const url = `${process.env.CONCERO_API_URL}/disconnect/${network}`
+	const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
 
 	const response = await post(url, {
 		address,
