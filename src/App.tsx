@@ -14,13 +14,13 @@ import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+const queryClient = new QueryClient()
+
 function App() {
 	useEffect(() => {
 		initPosthog()
 		bigNumberSettings()
 	}, [])
-
-	const queryClient = new QueryClient()
 
 	return (
 		<PostHogProvider>
@@ -28,7 +28,7 @@ function App() {
 				<WagmiProvider config={config}>
 					<QueryClientProvider client={queryClient}>
 						<DataProvider>
-							<SelectionProvider>
+							<SelectionProvider setIsLoading={() => {}}>
 								<ThemeProvider>
 									<NotificationsProvider>
 										<Notifications />
