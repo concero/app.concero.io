@@ -17,6 +17,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 
 	const handleGetQuests = useCallback(async () => {
+		if (!user) return
 		const fetchedQuests = await fetchQuests()
 		setQuests(fetchedQuests)
 

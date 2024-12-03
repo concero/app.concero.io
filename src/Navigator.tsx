@@ -37,18 +37,27 @@ const FeedbackScreen = lazy(
 )
 
 export const Navigator = () => {
+	const { address, isConnected } = useAccount()
+	const [loading, setIsLoading] = useState<boolean>(false)
 	const [user, setUser] = useState<IUser | null>(null)
 
-	const { address } = useAccount()
+	const getUser = async () => {
+		const user = await handleFetchUser(address)
+		setUser(user)
+	}
 
 	useEffect(() => {
-		if (!address) return
-
-		handleFetchUser(address).then(user => {
-			setUser(user)
-		})
-		posthog.identify(address)
-	}, [address])
+		if (isConnected && address) {
+			setIsLoading(true)
+			void getUser(address)
+				.catch(e => {
+					console.error(e)
+				})
+				.finally(() => {
+					setIsLoading(false)
+				})
+		}
+	}, [isConnected, address])
 
 	return (
 		<BrowserRouter>
@@ -83,7 +92,7 @@ export const Navigator = () => {
 						path={routes.rewards}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
-								<RewardsScreen user={user} />
+								<RewardsScreen loading={loading} user={user} />
 							</Suspense>
 						}
 					/>
