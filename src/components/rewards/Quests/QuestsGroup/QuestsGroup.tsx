@@ -78,7 +78,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 					{renderQuestCards(quests?.Big, 'big', classNames.campaign)}
 				</div>
 
-				{(isLoading || quests?.Primary || quests?.Secondary) && (
+				{(isLoading || quests.length > 0) && (
 					<div className="gap-lg">
 						<div className={classNames.otherQuestsWrap}>
 							<div className={classNames.smallCardsContainer}>

@@ -1,4 +1,4 @@
-import type { IQuestInProgress, IUser } from '../../../../api/concero/user/userType'
+import type { IUser } from '../../../../api/concero/user/userType'
 import { useEffect, useState } from 'react'
 import classNames from './QuestCard.module.pcss'
 import { Card } from '../../../cards/Card/Card'
@@ -78,6 +78,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 			onError={(e: any) => {
 				e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
 			}}
+			loading="lazy"
 			alt="Quest image"
 		/>
 	)
@@ -119,7 +120,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 						</div>
 					</div>
 
-					{variant === 'big' && quest.image && questImage}
+					{variant === 'big' && questImage}
 
 					{!rewardIsClaimed && (
 						<div className="row w-full jfe">
