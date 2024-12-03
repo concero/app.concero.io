@@ -20,7 +20,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 		const fetchedQuests = await fetchQuests()
 		setQuests(fetchedQuests)
 
-		// setIsLoading(false)
+		setIsLoading(false)
 	}, [user, address])
 
 	useEffect(() => {
