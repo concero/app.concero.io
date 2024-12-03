@@ -47,7 +47,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const questIsBegin = hasQuestEventStarted(startDate)
 	const daysLeft = getDateUnitMap(quest.type) ? getDaysUntil(getDateUnitMap(quest.type)!) : getQuestDaysLeft(endDate)
 
-	if (!questIsBegin) return null
+	// if (!questIsBegin) return null
 
 	useEffect(() => {
 		if (!user) return
