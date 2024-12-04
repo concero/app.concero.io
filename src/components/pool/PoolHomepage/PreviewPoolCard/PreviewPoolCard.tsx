@@ -11,7 +11,6 @@ import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 import { PoolCard } from '../../PoolCard/PoolCard'
 import { toLocaleNumber } from '../../../../utils/formatting'
 import { Tag } from '../../../tags/Tag/Tag'
-import { InfoTooltip } from '../../../wrappers/InfoTooltip/InfoTooltip'
 
 interface Props {
 	fees: Fee[]
