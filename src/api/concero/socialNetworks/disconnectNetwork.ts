@@ -1,9 +1,8 @@
 import type { IUser } from '../user/userType'
 import { post } from '../../client'
-import { type Address } from 'viem'
 
 export const disconnectNetwork = async (
-	address: Address,
+	address: string,
 	network: keyof IUser['connectedSocials'],
 ): Promise<boolean> => {
 	const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`

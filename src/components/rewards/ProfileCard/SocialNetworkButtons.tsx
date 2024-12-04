@@ -23,7 +23,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 		try {
 			if (discordIsConnected) {
 				const isDisconnected = await disconnectNetwork(user.address, 'discord')
-				if (!isDisconnected) {
+				if (isDisconnected) {
 					setDiscordIsConnected(false)
 				}
 			} else {
@@ -36,7 +36,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 
 	const handleConnectTwitter = async () => {
 		try {
-			if (discordIsConnected) {
+			if (twitterIsConnected) {
 				const isDisconnected = await disconnectNetwork(user.address, 'twitter')
 				if (isDisconnected) {
 					setTwitterIsConnected(false)
@@ -71,14 +71,14 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 	}
 
 	useEffect(() => {
-		if (user?.subscriptions?.discord) {
-			setDiscordIsConnected(!!user.subscriptions?.discord?.username)
+		if (user?.connectedSocials?.discord) {
+			setDiscordIsConnected(!!user.connectedSocials?.discord?.username)
 		} else {
 			listenDiscordConnection().then()
 		}
 
-		if (user?.subscriptions?.twitter) {
-			setTwitterIsConnected(!!user.subscriptions?.twitter?.screen_name)
+		if (user?.connectedSocials?.twitter) {
+			setTwitterIsConnected(!!user.connectedSocials?.twitter?.screen_name)
 		} else {
 			listenTwitterConnection().then()
 		}

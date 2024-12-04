@@ -56,6 +56,7 @@ export const Navigator = () => {
 				.finally(() => {
 					setIsLoading(false)
 				})
+			posthog.identify(address)
 		}
 	}, [isConnected, address])
 

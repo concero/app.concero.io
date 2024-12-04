@@ -252,14 +252,17 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 		return null
 	}
 
-	if (verifyStatus === VerificationStatus.SUCCESS) {
+	if (verifyStatus === VerificationStatus.SUCCESS || (swapLeft === 0 && isCheckVolumeStep)) {
 		return (
-			<div className={classNames.containerSuccessState}>
-				<h4>{step.title}</h4>
-				<Tag size="md" variant="positive">
-					Done!
-				</Tag>
-			</div>
+			<>
+				<div className={classNames.containerSuccessState}>
+					<h4>{step.title}</h4>
+					<Tag size="md" variant="positive">
+						Done!
+					</Tag>
+				</div>
+				{mode === 'one' && verifyStatus !== VerificationStatus.SUCCESS && actionButtons}
+			</>
 		)
 	}
 
