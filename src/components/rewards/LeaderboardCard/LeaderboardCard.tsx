@@ -78,7 +78,6 @@ export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 
 	const handleFetchUsers = async (userAddress: string | undefined) => {
 		const { users } = await fetchLeaderboard(userAddress)
-
 		setUsers(users)
 	}
 
