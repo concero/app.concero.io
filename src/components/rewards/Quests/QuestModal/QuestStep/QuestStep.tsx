@@ -32,6 +32,7 @@ export interface Props {
 	mode?: StepMode
 	addCompletedStep: (id: number) => void
 	isCompleted?: boolean
+	isConnected: boolean
 }
 
 const defaultStartQuestLinkMap: Record<any, string> = {
@@ -78,7 +79,7 @@ const buttonsStyle: Record<StepMode, ButtonStepStyle> = {
 	},
 }
 
-export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep, isCompleted }: Props) => {
+export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep, isCompleted, isConnected }: Props) => {
 	const currentStatus = isCompleted ? VerificationStatus.SUCCESS : VerificationStatus.NOT_STARTED
 	const [userVolume, setUserVolume] = useState<number | null>(null)
 	const [loading, setLoading] = useState<boolean>(false)
@@ -87,7 +88,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 	const [verifyStatus, setVerifyStatus] = useState<VerificationStatus>(currentStatus)
 
 	const isDailyQuest = quest.type === QuestType.Daily
-	const isWeeklyQuest = quest.type === QuestType.Primary || quest.type === QuestType.Secondary
+	const isWeeklyQuest = quest.type === QuestType.Primary || QuestType.Secondary
 
 	const isCheckVolumeStep = step.questAction === QuestOnChainAction.CheckVolume
 
@@ -227,7 +228,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 		</div>
 	)
 
-	const actionButtons = (
+	const actionButtons = user && isConnected && (
 		<div className="gap-sm">
 			<div className="gap-sm row">
 				<Button onClick={handleStartQuest} size={buttonState.size} variant={buttonState.startButton.variant}>
@@ -252,7 +253,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 		return null
 	}
 
-	if (verifyStatus === VerificationStatus.SUCCESS || (swapLeft === 0 && isCheckVolumeStep)) {
+	if (verifyStatus === VerificationStatus.SUCCESS || (swapLeft === 0 && isCheckVolumeStep && isConnected)) {
 		return (
 			<>
 				<div className={classNames.containerSuccessState}>
@@ -268,7 +269,8 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 
 	if (mode === 'one') {
 		return (
-			user && (
+			user &&
+			isConnected && (
 				<>
 					{isCheckVolumeStep && oneStepProgressBar}
 					{actionButtons}
@@ -291,7 +293,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 					maxValue={Number(step.options!.value)}
 				/>
 			)}
-			{user && actionButtons}
+			{user && isConnected && actionButtons}
 		</div>
 	)
 }

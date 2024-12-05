@@ -7,7 +7,7 @@ import { ArrowRightIcon } from '../../../../assets/icons/ArrowRightIcon'
 import { QuestModal } from '../QuestModal/QuestModal'
 import { type IQuest, QuestCategory, QuestType } from '../../../../api/concero/quest/questType'
 import { config } from '../../../../constants/config'
-import { getQuestDaysLeft, hasQuestEventStarted } from './getQuestStatus'
+import { getQuestDaysLeft } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
 import { getDaysUntil } from '../../../../utils/date/getDaysUntil'
 
@@ -42,9 +42,8 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 
 	const isSocialQuest = quest.category === QuestCategory.Socials
 
-	const { name, startDate, endDate, image } = quest
+	const { name, endDate, image } = quest
 	const questIsComplete = completedStepIds.length === quest.steps.length
-	const questIsBegin = hasQuestEventStarted(startDate)
 	const daysLeft = getDateUnitMap(quest.type) ? getDaysUntil(getDateUnitMap(quest.type)!) : getQuestDaysLeft(endDate)
 
 	// if (!questIsBegin) return null

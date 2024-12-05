@@ -12,6 +12,7 @@ import { QuestStatus } from '../QuestStatus'
 import { claimQuestReward } from '../../../../api/concero/quest/claimQuestReward'
 import { useAppKit } from '@reown/appkit/react'
 import { Stepper } from '../../../layout/Stepper/Stepper'
+import { useAccount } from 'wagmi'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -37,6 +38,7 @@ export const QuestModal = ({
 	daysLeft,
 }: QuestModalProps) => {
 	const { open } = useAppKit()
+	const { isConnected } = useAccount()
 	const [rewardModalIsOpen, setRewardModalIsOpen] = useState<boolean>(false)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [points, setPoints] = useState<number>(0)
@@ -112,6 +114,7 @@ export const QuestModal = ({
 							user={user}
 							step={step}
 							key={step.id}
+							isConnected={isConnected}
 						/>
 					)
 				})}
@@ -127,6 +130,7 @@ export const QuestModal = ({
 			user={user}
 			mode="one"
 			step={steps[0]}
+			isConnected={isConnected}
 		/>
 	)
 
@@ -161,7 +165,7 @@ export const QuestModal = ({
 
 			{steps.length > 1 ? stepsGroup : oneStep}
 
-			{!user && (
+			{!isConnected && (
 				<div className="row w-full">
 					<Button size="lg" onClick={open}>
 						Connect wallet
