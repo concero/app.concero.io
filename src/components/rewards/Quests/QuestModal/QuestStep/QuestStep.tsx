@@ -87,7 +87,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 	const [verifyStatus, setVerifyStatus] = useState<VerificationStatus>(currentStatus)
 
 	const isDailyQuest = quest.type === QuestType.Daily
-	const isWeeklyQuest = quest.type === QuestType.Primary || quest.type === QuestType.Secondary
+	const isWeeklyQuest = quest.type === QuestType.Primary || QuestType.Secondary
 
 	const isCheckVolumeStep = step.questAction === QuestOnChainAction.CheckVolume
 
@@ -227,7 +227,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 		</div>
 	)
 
-	const actionButtons = (
+	const actionButtons = user && (
 		<div className="gap-sm">
 			<div className="gap-sm row">
 				<Button onClick={handleStartQuest} size={buttonState.size} variant={buttonState.startButton.variant}>
