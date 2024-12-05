@@ -126,7 +126,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 
 		setLoading(true)
 		fetchUserVolume({
-			address: '0xddDd5f804B9D293dce8819d232e8D76381605a62',
+			address: user.address,
 			startDate,
 			endDate,
 			isCrossChain: step.options?.isCrossChain,
