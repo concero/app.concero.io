@@ -19,7 +19,6 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const handleGetQuests = useCallback(async () => {
 		const fetchedQuests = await fetchQuests()
 		setQuests(fetchedQuests)
-
 		setIsLoading(false)
 	}, [address])
 
