@@ -1,10 +1,10 @@
 import { type IUser } from '../../../api/concero/user/userType'
 import { ProfileCard } from '../ProfileCard/ProfileCard'
 import { StreaksCard } from '../StreaksCard/StreaksCard'
-import { checkLoyaltyBonus } from '../../../api/concero/rewards/loyaltyReward/checkLoyaltyBonus'
 import { HeartIcon } from '../../../assets/icons/HeartIcon'
-import { claimLoyaltyBonus } from '../../../api/concero/rewards/loyaltyReward/claimLoyaltyBonus.ts'
 import { SpecialRewardBanner } from '../specialRewardBanner/SpecialRewardBanner'
+import { checkBTC100KBonus } from '../../../api/concero/rewards/loyaltyReward/checkBTC100KBonus'
+import { claimBTC100KBonus } from '../../../api/concero/rewards/loyaltyReward/claimBTC100KBonus'
 
 interface Props {
 	user: IUser
@@ -16,11 +16,13 @@ export const RewardsProfile = ({ user }: Props) => {
 			<ProfileCard user={user} />
 			<SpecialRewardBanner
 				user={user}
-				checkReward={checkLoyaltyBonus}
-				claimReward={claimLoyaltyBonus}
+				checkReward={checkBTC100KBonus}
+				claimReward={claimBTC100KBonus}
 				icon={<HeartIcon />}
-				title={'Thanks for being a Loyal Lancan! - 15 CERs'}
-				subtitle={'Congratulations! You have received 15 extra CERs for being a Loyal Lancan!'}
+				title={'$BTC has reached 100,000! - 100 CERs'}
+				subtitle={
+					'As $BTC makes a huge price landmark of $100k, the Intern has kept his promise for dropping 100 CERs to all Lancans'
+				}
 				variant="pink"
 			/>
 			<StreaksCard user={user} />
