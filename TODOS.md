@@ -29,20 +29,30 @@ TLDR: Atoms are the smallest, state-less, indivisible components that can be use
         assets
         constants
             abi
+            animations
+            translations
         components - to be refactored to @concero-ui
         modules
             rewards
             pools
-                api
-                hooks
+                api # all pool-related fetch hooks should be moved from global /api
+                hooks # generic hooks that are shared across pool components
                 screens
                 components # should contain module-specific organisms. If you find yourself using atoms or molecules here, they should be generalised and moved to the ui kit.
                     cards
                         EarningsCard
                         ...
+                    ComplexComponent
+                        hooks
+                        subcomponent1
+                        subcomponent2
+                        subcomponent3
+                        module.pcss
+                        index.tsx
                 types
                 utils
-                translations
+        styles
         utils
             web3
+            i18n
             client.ts # api client
