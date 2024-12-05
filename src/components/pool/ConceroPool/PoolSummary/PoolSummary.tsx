@@ -4,7 +4,7 @@ import { fetchFees } from '../../../../api/concero/pool/fetchFees'
 import { AverageApyCard } from '../../AverageApyCard/AverageApyCard'
 import classNames from './PoolSummary.module.pcss'
 import { type Fee } from '../../../../api/concero/types'
-import { RewardsCard } from '../../../cards/RewardsChartCard/RewardsChartCard'
+import { RewardsChartCard } from '../../../cards/RewardsChartCard/RewardsChartCard'
 
 export const PoolSummary = () => {
 	const [fees, setFees] = useState<Fee[]>([])
@@ -32,7 +32,7 @@ export const PoolSummary = () => {
 			<div className={classNames.wrap}>
 				<div className="gap-lg">
 					<LiquidityCapCard />
-					<RewardsCard
+					<RewardsChartCard
 						className={classNames.rewardsCard}
 						isLoading={isLoading}
 						size="S"
