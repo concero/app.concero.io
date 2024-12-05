@@ -12,11 +12,12 @@ interface QuestsCardProps {
 }
 
 export const QuestsGroup = ({ user }: QuestsCardProps) => {
-	const { address } = useAccount()
+	const { address, isConnected } = useAccount()
 	const [quests, setQuests] = useState<GroupedQuests | null>(null)
 	const [isLoading, setIsLoading] = useState<boolean>(true)
 
 	const handleGetQuests = useCallback(async () => {
+		if (!user && isConnected) return
 		const fetchedQuests = await fetchQuests()
 		setQuests(fetchedQuests)
 
