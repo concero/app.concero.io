@@ -14,7 +14,6 @@ export const RewardsProfile = ({ user }: Props) => {
 	return (
 		<div className="gap-lg">
 			<ProfileCard user={user} />
-
 			<SpecialRewardBanner
 				user={user}
 				checkReward={checkBTC100KBonus}
