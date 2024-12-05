@@ -1,7 +1,6 @@
 import classNames from './RewardsScreen.module.pcss'
 import { QuestsGroup } from '../../rewards/Quests/QuestsGroup/QuestsGroup'
 import { LeaderboardCard } from '../../rewards/LeaderboardCard/LeaderboardCard'
-import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { type IUser } from '../../../api/concero/user/userType'
 import { ProfilePlaceholder } from '../../rewards/ProfileCard/ProfilePlaceholder/ProfilePlaceholder'
