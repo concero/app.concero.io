@@ -56,3 +56,17 @@ TLDR: Atoms are the smallest, state-less, indivisible components that can be use
             web3
             i18n
             client.ts # api client
+
+## Bundling
+needs to be fixed in accordance with the recommendations below. Async imports should be used for modules
+```bash
+dist/assets/index-8uTjJm2T.js                              87.57 kB │ gzip:  28.00 kB
+dist/assets/index-C4KftXO4.js                             381.10 kB │ gzip: 113.66 kB
+dist/assets/PoolCard-Ds5sk6xo.js                          624.59 kB │ gzip: 180.04 kB
+dist/assets/index-CXS5X10Z.js                           2,595.55 kB │ gzip: 771.88 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+```
