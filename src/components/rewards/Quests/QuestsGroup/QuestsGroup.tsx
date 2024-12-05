@@ -22,7 +22,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 		setQuests(fetchedQuests)
 
 		setIsLoading(false)
-	}, [user, address])
+	}, [address])
 
 	useEffect(() => {
 		void handleGetQuests()
