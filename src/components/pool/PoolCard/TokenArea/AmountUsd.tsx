@@ -4,7 +4,6 @@ import { type Balance, type SwapStateDirection } from '../swapReducer/types'
 import { useTranslation } from 'react-i18next'
 import classNames from './TokenArea.module.pcss'
 import { Loader } from '../../../layout/Loader/Loader'
-import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 
 interface AmountUsdProps {
 	state: TokenAreaState

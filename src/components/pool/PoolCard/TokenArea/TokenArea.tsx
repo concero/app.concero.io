@@ -1,4 +1,4 @@
-import { type FC, type ForwardedRef, useEffect, useRef, useState } from 'react'
+import { type FC, type ForwardedRef, useRef } from 'react'
 import classNames from './TokenArea.module.pcss'
 import { type TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'

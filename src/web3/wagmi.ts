@@ -1,6 +1,7 @@
 import { http } from 'wagmi'
 import { fallback } from 'viem'
 import {
+	type AppKitNetwork,
 	arbitrum,
 	arbitrumSepolia,
 	aurora,
@@ -29,7 +30,6 @@ import {
 import { config as appConfig } from '../constants/config'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { createAppKit } from '@reown/appkit/react'
-import { type AppKitNetwork } from '@reown/appkit/networks'
 
 export const projectId = appConfig.WEB3_MODAL_PROJECT_ID
 

@@ -68,6 +68,7 @@ export const ChartCard = ({
 								const isActive = filterItem.value === activeItem?.value
 								return (
 									<Button
+										key={filterItem.value}
 										onClick={() => {
 											setActiveItem(filterItem)
 										}}

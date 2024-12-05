@@ -1,6 +1,12 @@
 import classNames from './BurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { type MouseEvent as ReactMouseEvent, type KeyboardEvent as ReactKeyboardEvent, useEffect, useState, useCallback } from 'react'
+import {
+	type KeyboardEvent as ReactKeyboardEvent,
+	type MouseEvent as ReactMouseEvent,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react'
 import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
@@ -45,7 +51,7 @@ export function BurgerMenu({ user }: Props) {
 		to: {
 			opacity: isMenuOpened ? 1 : 0,
 			translateY: isMenuOpened ? 0 : -100,
-			pointerEvents: isMenuOpened ? 'auto' : 'none' as const,
+			pointerEvents: isMenuOpened ? 'auto' : ('none' as const),
 		},
 		config: {
 			mass: 1,
@@ -61,7 +67,7 @@ export function BurgerMenu({ user }: Props) {
 	const overlayFadeAnimation = useSpring({
 		to: {
 			opacity: isMenuOpened ? 1 : 0,
-			pointerEvents: isMenuOpened ? 'auto' : 'none' as const,
+			pointerEvents: isMenuOpened ? 'auto' : ('none' as const),
 		},
 		config: {
 			mass: 1,
@@ -120,11 +126,7 @@ export function BurgerMenu({ user }: Props) {
 				<IconBurger />
 			</IconButton>
 
-			<animated.div
-				style={overlayFadeAnimation}
-				className={classNames.overlay}
-				onClick={handleMenuClose}
-			>
+			<animated.div style={overlayFadeAnimation} className={classNames.overlay} onClick={handleMenuClose}>
 				<animated.div
 					onClick={(e: ReactMouseEvent<HTMLDivElement>) => {
 						e.stopPropagation()

@@ -1,5 +1,4 @@
 import type React from 'react'
-import { type MouseEventHandler } from 'react'
 import { type ErrorType } from './constants'
 
 export interface SwapButtonProps {

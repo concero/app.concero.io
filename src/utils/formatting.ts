@@ -33,7 +33,7 @@ export function isValidNumber(number: string | number) {
 }
 
 // Date and time formatting
-const formatDate = (date: string | Date, format = 'YYYY-MM-DD'): string => dayjs(date).format(format)
+// const formatDate = (date: string | Date, format = 'YYYY-MM-DD'): string => dayjs(date).format(format)
 
 export const formatDateTime = (date: string | Date, format = 'YYYY-MM-DD HH:mm'): string => dayjs(date).format(format)
 

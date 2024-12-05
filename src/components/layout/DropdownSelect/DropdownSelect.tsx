@@ -3,7 +3,7 @@ import { Card } from '../../cards/Card/Card'
 import { Button } from '../../buttons/Button/Button'
 import { IconChevronDown } from '@tabler/icons-react'
 import classNames from './DropdownSelect.module.pcss'
-import { useSpring, animated } from '@react-spring/web'
+import { animated, useSpring } from '@react-spring/web'
 import { type SelectItem } from '../../../utils/chartTimeFilters'
 
 export interface DropdownSelectProps {

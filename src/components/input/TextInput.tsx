@@ -86,3 +86,4 @@ export const TextInput: FC<TextInputProps> = forwardRef<HTMLInputElement, TextIn
 		)
 	},
 )
+TextInput.displayName = 'TextInput'

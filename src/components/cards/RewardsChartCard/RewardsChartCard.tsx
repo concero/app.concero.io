@@ -1,5 +1,5 @@
 import { createTimeFilters } from '../../../utils/chartTimeFilters'
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { groupDataByWeeks } from '../../../utils/charts'
 import type { Fee } from '../../../api/concero/types'
 import type { ChartData } from '../../../types/utils'
@@ -19,7 +19,8 @@ interface Props {
 	className?: string
 }
 
-const REWARDS_DESCRIPTION = "The pool receives a fee of 0.1% of the transaction amount for each cross-chain transaction executed using the pool's liquidity. These fees are shared proportionally between all LP providers in the pool."
+const REWARDS_DESCRIPTION =
+	"The pool receives a fee of 0.1% of the transaction amount for each cross-chain transaction executed using the pool's liquidity. These fees are shared proportionally between all LP providers in the pool."
 
 export const RewardsChartCard = ({
 	fees,
@@ -70,11 +71,17 @@ export const RewardsChartCard = ({
 		void getTotalVolume()
 	}, [getTotalVolume, fees])
 
-	const filterProps = useMemo(() => withFilter ? {
-		filterItems: timeFilters,
-		activeItem: activeFilter,
-		setActiveItem: setActiveFilter,
-	} : {}, [withFilter, timeFilters, activeFilter])
+	const filterProps = useMemo(
+		() =>
+			withFilter
+				? {
+						filterItems: timeFilters,
+						activeItem: activeFilter,
+						setActiveItem: setActiveFilter,
+					}
+				: {},
+		[withFilter, timeFilters, activeFilter],
+	)
 
 	const sizeValue = size === 'small' ? 'S' : 'M'
 
