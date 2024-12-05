@@ -6,6 +6,7 @@ import type { IUser } from '../../../../api/concero/user/userType'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestPlaceholder } from '../QuestPlaceholder/questplaceholder'
 import { useAccount } from 'wagmi'
+import BTCCard from '../../BTCCard/BTCCard'
 
 interface QuestsCardProps {
 	user: IUser | null | undefined
@@ -53,7 +54,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				quests?.Campaign?.map((quest: IQuest) => (
 					<QuestCard key={quest._id} quest={quest} user={user} variant={'big'} />
 				))}
-
+			<BTCCard onClick={() => {}} />
 			<div className="gap-sm">
 				<div className={classNames.questsHeader}>
 					<h6>Daily</h6>
