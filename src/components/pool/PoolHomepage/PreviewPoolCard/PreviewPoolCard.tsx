@@ -10,7 +10,7 @@ import { useGetLiquidity } from '../../poolScripts/useGetLiquidity'
 import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 import { PoolCard } from '../../PoolCard/PoolCard'
 import { toLocaleNumber } from '../../../../utils/formatting'
-import { Tag } from '../../../tags/Tag/Tag'
+import { Tag } from '../../../layout/Tag/Tag'
 
 interface Props {
 	fees: Fee[]

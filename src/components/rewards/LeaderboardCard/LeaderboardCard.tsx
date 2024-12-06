@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { type IUser } from '../../../api/concero/user/userType'
 import { fetchLeaderboard } from '../../../api/concero/user/fetchLeaderboard'
 import { useAccount } from 'wagmi'
-import { Tag } from '../../tags/Tag/Tag'
+import { Tag } from '../../layout/Tag/Tag'
 
 interface MemberProps {
 	user: IUser

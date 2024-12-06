@@ -1,4 +1,4 @@
-import { Tag } from '../../tags/Tag/Tag'
+import { Tag } from '../../layout/Tag/Tag'
 import { QuestType } from '../../../api/concero/quest/questType'
 import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
 

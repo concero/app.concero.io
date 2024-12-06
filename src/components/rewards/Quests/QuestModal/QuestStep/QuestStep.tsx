@@ -1,6 +1,6 @@
 import { Button } from '../../../../buttons/Button/Button'
 import classNames from './QuestStep.module.pcss'
-import { Tag } from '../../../../tags/Tag/Tag'
+import { Tag } from '../../../../layout/Tag/Tag'
 import {
 	type IQuest,
 	type IQuestStep,

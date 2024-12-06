@@ -8,7 +8,7 @@ import { Button } from '../../buttons/Button/Button'
 import { BarChart } from '../../layout/Charts/BarChart/BarChart'
 import { Loader } from '../../layout/Loader/Loader'
 import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
-import { InfoTooltip } from '../../wrappers/InfoTooltip/InfoTooltip'
+import { InfoTooltip } from '../../layout/InfoTooltip/InfoTooltip'
 
 export interface BarChartCardProps {
 	description?: string

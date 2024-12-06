@@ -3,8 +3,6 @@ import { PostHogProvider } from 'posthog-js/react'
 import { WagmiProvider } from 'wagmi'
 import { Navigator } from './Navigator'
 import { config } from './web3/wagmi'
-import { Notifications } from './components/overlays/Notifications/Notifications'
-import { NotificationsProvider } from './hooks/notificationsContext'
 import { useEffect } from 'react'
 import { I18Provider } from './i18n/I18nextProvider'
 import { initPosthog } from './utils/initPosthog'
@@ -24,10 +22,7 @@ function App() {
 			<I18Provider>
 				<WagmiProvider config={config}>
 					<QueryClientProvider client={queryClient}>
-						<NotificationsProvider>
-							<Notifications />
-							<Navigator />
-						</NotificationsProvider>
+						<Navigator />
 					</QueryClientProvider>
 				</WagmiProvider>
 			</I18Provider>
