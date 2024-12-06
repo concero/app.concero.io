@@ -167,7 +167,12 @@ export const QuestModal = ({
 
 			{!isConnected && (
 				<div className="row w-full">
-					<Button size="lg" onClick={async () => { await open(); }}>
+					<Button
+						size="lg"
+						onClick={async () => {
+							await open()
+						}}
+					>
 						Connect wallet
 					</Button>
 				</div>
