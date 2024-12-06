@@ -108,7 +108,10 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 	}, [linkIsVisited])
 
 	useEffect(() => {
-		if (!isCheckVolumeStep) return
+		if (!isCheckVolumeStep || !isConnected) {
+			setLoading(false)
+			return
+		}
 		if (!user || userVolume !== null) return
 
 		let startDate = quest.startDate
@@ -140,7 +143,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 			.finally(() => {
 				setLoading(false)
 			})
-	}, [user])
+	}, [user, isConnected])
 
 	const handleVerifyQuest = async () => {
 		if (!user || !step) return
@@ -249,11 +252,15 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 		</div>
 	)
 
-	if (mode === 'one' && verifyStatus === VerificationStatus.SUCCESS && !isCheckVolumeStep) {
+	if (!isConnected) {
 		return null
 	}
 
-	if (verifyStatus === VerificationStatus.SUCCESS || (swapLeft === 0 && isCheckVolumeStep && isConnected)) {
+	if (loading || (isCheckVolumeStep && userVolume === null)) {
+		return oneStepProgressBar
+	}
+
+	if (verifyStatus === VerificationStatus.SUCCESS || (swapLeft === 0 && isCheckVolumeStep)) {
 		return (
 			<>
 				<div className={classNames.containerSuccessState}>
@@ -285,12 +292,12 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 				<h4>{step.title}</h4>
 				<p className="body2">{step.description}</p>
 			</div>
-			{isCheckVolumeStep && (
+			{isCheckVolumeStep && isConnected && (
 				<ProgressBar
-					isLoading={loading}
 					type="float"
 					currentValue={Number(userVolume)}
 					maxValue={Number(step.options!.value)}
+					isLoading={loading}
 				/>
 			)}
 			{user && isConnected && actionButtons}
