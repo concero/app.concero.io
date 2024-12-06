@@ -27,7 +27,7 @@ import {
 	sepolia,
 	zkSync,
 } from '@reown/appkit/networks'
-import { config as appConfig } from '../constants/config'
+import { config as appConfig } from '../../constants/config'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { createAppKit } from '@reown/appkit/react'
 

@@ -7,7 +7,7 @@ import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScree
 import { Footer } from './components/layout/Footer/Footer'
 import type { IUser } from './api/concero/user/userType'
 import { useAccount } from 'wagmi'
-import { handleFetchUser } from './web3/handleFetchUser'
+import { handleFetchUser } from './utils/web3/handleFetchUser'
 import posthog from 'posthog-js'
 
 const PoolScreen = lazy(
