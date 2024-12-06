@@ -15,6 +15,8 @@ interface UserHistoryProps {
 export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 	const [userActions, setUserActions] = useState<IUserAction[]>([])
 
+	console.log('userActions', userActions)
+
 	const fetchAndSetUserActions = async () => {
 		const response = await fetchUserActions(user.address)
 		setUserActions(response)
