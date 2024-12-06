@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { groupDataByWeeks } from '../../../utils/charts'
 import type { Fee } from '../../../api/concero/types'
 import type { ChartData } from '../../../types/utils'
-import { ChartCard } from '../LineChartCard/ChartCard'
+import { ChartCard } from '../ChartCard/ChartCard'
 import classNames from '../TotalVolumeCard/TotalVolumeCard.module.pcss'
 import { toLocaleNumber } from '../../../utils/formatting'
 

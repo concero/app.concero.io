@@ -29,13 +29,6 @@ const RewardsScreen = lazy(
 		})),
 )
 
-const FeedbackScreen = lazy(
-	async () =>
-		await import('./components/screens/FeedbackScreen/FeedbackScreen').then(module => ({
-			default: module.FeedbackScreen,
-		})),
-)
-
 export const Navigator = () => {
 	const { address, isConnected } = useAccount()
 	const [loading, setIsLoading] = useState<boolean>(false)
@@ -82,26 +75,10 @@ export const Navigator = () => {
 						}
 					/>
 					<Route
-						path={routes.pool}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<PoolScreen />
-							</Suspense>
-						}
-					/>
-					<Route
 						path={routes.rewards}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
 								<RewardsScreen loading={loading} user={user} />
-							</Suspense>
-						}
-					/>
-					<Route
-						path={routes.feedback}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<FeedbackScreen />
 							</Suspense>
 						}
 					/>

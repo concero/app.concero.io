@@ -56,7 +56,12 @@ TLDR: Atoms are the smallest, state-less, indivisible components that can be use
             web3
             i18n
             client.ts # api client
-
+## Other
+- Tanstack react-query for all data fetching
+- All folders must contain an index.ts file that exports all files in the folder. All imports should be adjusted accordingly.
+- Move loadingSkeletons checks to Suspense where possible.
+- There is Input and TextInput, standardize on one.
+- Leaderboard should be using Table component. Table should be a generic component that can be used in other modules.
 ## Bundling
 needs to be fixed in accordance with the recommendations below. Async imports should be used for modules
 ```bash
