@@ -18,7 +18,7 @@ export function ProgressBar({
 	width = '100%',
 	type = 'big',
 	symbol = '$',
-	isLoading,
+	isLoading = true,
 	currentValue,
 	minValue = 0,
 	maxValue,
