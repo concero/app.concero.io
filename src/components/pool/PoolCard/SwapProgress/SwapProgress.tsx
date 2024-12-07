@@ -50,8 +50,6 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch, h
 	const isDepositTxSigned = steps[2] ? steps[2].type === StageType.transactionSigned : false
 
 	const cancelTransaction = () => {
-		window.ethereum = null
-
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.failed })
 		swapDispatch({
 			type: 'UPSERT_SWAP_STEP',
@@ -132,7 +130,10 @@ export const SwapProgress: FC<SwapProgressProps> = ({ swapState, swapDispatch, h
 						<TrailArrowRightIcon />
 					</>
 				)}
-				<TransactionStep status={steps[isDeposit ? 2 : 1]?.status} title="Deposit" />
+				<TransactionStep
+					status={steps[isDeposit ? 2 : 1]?.status}
+					title={isDeposit ? 'Deposit' : 'Withdrawal'}
+				/>
 			</div>
 
 			<Separator />
