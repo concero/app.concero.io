@@ -50,11 +50,11 @@ If you have any questions or suggestions, please contact the team.
     - Ensure that your code is up-to-date with the latest changes in the target branch.
     - Remove all console.logs
 
-
 ## React-specific
 - Use native React features, avoiding third-party libraries unless absolutely necessary.
 - Keep state as local as possible
 - Avoid prop drilling
+- (Recommended) Use best practices from [Bulletproof React](https://github.com/alan2207/bulletproof-react/blob/master/README.md)
 
 ## CSS & Styling
 - Use PostCSS modules for styling. Avoid inline styles
