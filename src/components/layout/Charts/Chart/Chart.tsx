@@ -1,7 +1,6 @@
-import { type FC, useContext, useEffect, useRef } from 'react'
+import { type FC, useEffect, useRef } from 'react'
 import { createChart, type IChartApi } from 'lightweight-charts'
 import { animated, useSpring } from '@react-spring/web'
-import { ThemeContext } from '../../../../hooks/themeContext'
 import { areaSeriesOptions, chartOptions } from './chartOptions'
 import { createTooltip, updateTooltip } from './Tooltip'
 import { type ChartData } from '../../../../types/utils'
@@ -23,7 +22,7 @@ export const Chart: FC<ChartProps> = ({ data }) => {
 	const chartRef = useRef<HTMLDivElement>(null)
 	const tooltipRef = useRef<HTMLDivElement | null>(null)
 	const seriesRef = useRef<any>(null)
-	const { colors, theme } = useContext(ThemeContext)
+
 	const fadeProps = useFadeInAnimation()
 
 	const clearData = data.map(item => {
@@ -35,11 +34,11 @@ export const Chart: FC<ChartProps> = ({ data }) => {
 
 	useEffect(() => {
 		if (!chartRef.current) return
-		const chart = createChart(chartRef.current, chartOptions(colors))
+		const chart = createChart(chartRef.current, chartOptions)
 
 		setupChartStyles(chart)
 
-		seriesRef.current = chart.addAreaSeries(areaSeriesOptions(colors, theme))
+		seriesRef.current = chart.addAreaSeries(areaSeriesOptions)
 		seriesRef.current.setData(clearData)
 		tooltipRef.current = createTooltip()
 		chartRef.current.appendChild(tooltipRef.current)
@@ -59,7 +58,7 @@ export const Chart: FC<ChartProps> = ({ data }) => {
 		return () => {
 			cleanupChart(chart, handleResize)
 		}
-	}, [colors, clearData])
+	}, [clearData])
 
 	const setupChartStyles = (chart: IChartApi) => {
 		chart.timeScale().applyOptions({ visible: true, borderColor: 'transparent' })

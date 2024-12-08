@@ -3,7 +3,7 @@ import classNames from './StreakCard.module.pcss'
 import { InfoIcon } from '../../../../assets/icons/InfoIcon'
 import { Progressbar } from './Progressbar/Progressbar'
 import { type ReactNode } from 'react'
-import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
+import { TooltipWrapper } from '../../../layout/WithTooltip/TooltipWrapper'
 
 interface Props {
 	title: string

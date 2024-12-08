@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { UserActionStatus, type UserTransaction } from './UserActions'
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
-import { Tag } from '../../tags/Tag/Tag'
+import { Tag } from '../../layout/Tag/Tag'
 import { ManageWithdrawalButton } from './ManageWithdrawalButton'
 
 export const getWithdrawalDate = (deadline: number) => {

@@ -2,9 +2,9 @@ import { type Address, erc20Abi, formatUnits } from 'viem'
 import { base } from 'viem/chains'
 import { config, IS_TESTNET } from '../../../constants/config'
 import { getPoolLiquidity } from './getPoolLiquidity'
-import { abi as ParentPool } from '../../../abi/ParentPool.json'
+import { abi as ParentPool } from '../../../constants/abi/ParentPool.json'
 import { getPublicClient } from '@wagmi/core'
-import { config as wagmiConfig } from '../../../web3/wagmi'
+import { config as wagmiConfig } from '../../../utils/web3/wagmi'
 import { baseSepolia } from 'wagmi/chains'
 
 const client = getPublicClient(wagmiConfig, { chainId: IS_TESTNET ? baseSepolia.id : base.id })

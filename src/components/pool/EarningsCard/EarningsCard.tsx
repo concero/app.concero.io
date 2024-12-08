@@ -9,7 +9,7 @@ import { SkeletonLoader } from '../../layout/SkeletonLoader/SkeletonLoader'
 import { fetchUserEarnings, type UserEarnings } from '../../../api/concero/fetchUserEarnings'
 import { ArrowUpIcon } from '../../../assets/icons/ArrowUpIcon'
 import { toLocaleNumber } from '../../../utils/formatting'
-import { Tag } from '../../tags/Tag/Tag'
+import { Tag } from '../../layout/Tag/Tag'
 
 export interface Props {
 	poolIsFilled: boolean

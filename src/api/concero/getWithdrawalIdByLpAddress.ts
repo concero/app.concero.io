@@ -1,6 +1,6 @@
 import { type Address, parseAbi } from 'viem'
 import { getPublicClient } from '@wagmi/core'
-import { config as wagmiConfig } from '../../web3/wagmi'
+import { config as wagmiConfig } from '../../utils/web3/wagmi'
 import { config, PARENT_POOL_CHAIN_ID } from '../../constants/config'
 
 export async function getWithdrawalIdByLpAddress(address: Address): Promise<string | null> {

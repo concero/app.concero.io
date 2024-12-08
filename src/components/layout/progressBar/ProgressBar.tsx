@@ -1,7 +1,7 @@
 import classNames from './ProgressBar.module.pcss'
 import { toLocaleNumber } from '../../../utils/formatting'
 import { SkeletonLoader } from '../SkeletonLoader/SkeletonLoader'
-import { Tag } from '../../tags/Tag/Tag'
+import { Tag } from '../Tag/Tag'
 import { useEffect, useRef, useState } from 'react'
 
 export interface ProgressBarProps {

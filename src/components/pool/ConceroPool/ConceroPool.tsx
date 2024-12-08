@@ -6,7 +6,7 @@ import { PoolSummary } from './PoolSummary/PoolSummary'
 import { Link } from 'react-router-dom'
 import { routes } from '../../../constants/routes'
 import { EarningsCard } from '../EarningsCard/EarningsCard'
-import { Tag } from '../../tags/Tag/Tag'
+import { Tag } from '../../layout/Tag/Tag'
 import { useGetLiquidity } from '../poolScripts/useGetLiquidity'
 
 export const ConceroPool = () => {

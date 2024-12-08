@@ -6,11 +6,11 @@ import { checkAllowanceAndApprove } from './checkAllowanceAndApprove'
 import { config, IS_TESTNET } from '../../../../constants/config'
 import { sleep } from '../../../../utils/sleep'
 import { getPublicClient } from '@wagmi/core'
-import { config as wagmiConfig } from '../../../../web3/wagmi'
+import { config as wagmiConfig } from '../../../../utils/web3/wagmi'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action, category } from '../../../../constants/tracking'
 import { baseSepolia } from 'wagmi/chains'
-import ParentPoolAbiV1_5 from '../../../../abi/ParentPoolAbiV1_5'
+import ParentPoolAbiV1_5 from '../../../../constants/abi/ParentPoolAbiV1_5'
 
 export const parentPoolAddress = config.PARENT_POOL_CONTRACT
 const chain = IS_TESTNET ? baseSepolia : base

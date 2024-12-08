@@ -1,6 +1,12 @@
 import classNames from './BurgerMenu.module.pcss'
 import { Button } from '../../../buttons/Button/Button'
-import { type KeyboardEvent, useEffect, useState } from 'react'
+import {
+	type KeyboardEvent as ReactKeyboardEvent,
+	type MouseEvent as ReactMouseEvent,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react'
 import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
@@ -26,55 +32,72 @@ export function BurgerMenu({ user }: Props) {
 	const isMobile = useMediaQuery('ipad')
 	const { t } = useTranslation()
 
-	const handleKeyDown = (event: KeyboardEvent) => {
+	const handleKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
 		if (event.key === 'Escape') {
 			setIsMenuOpened(false)
 		}
-	}
+	}, [])
 
-	const handleMenuClose = () => {
+	const handleMenuClose = useCallback(() => {
 		setIsMenuOpened(false)
-	}
+	}, [])
 
-	const handleMenuOpen = (e: MouseEvent) => {
+	const handleMenuOpen = useCallback((e: ReactMouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation()
 		setIsMenuOpened(prev => !prev)
-	}
+	}, [])
 
 	const fadeAnimation = useSpring({
-		opacity: isMenuOpened ? 1 : 0,
-		translateY: isMenuOpened ? 0 : -100,
-		config: { easing: 'spring', mass: 1, tension: 600, friction: 30 },
-		pointerEvents: isMenuOpened ? 'auto' : 'none',
-		from: { opacity: 0, pointerEvents: 'none' },
+		to: {
+			opacity: isMenuOpened ? 1 : 0,
+			translateY: isMenuOpened ? 0 : -100,
+			pointerEvents: isMenuOpened ? 'auto' : ('none' as const),
+		},
+		config: {
+			mass: 1,
+			tension: 600,
+			friction: 30,
+		},
+		from: {
+			opacity: 0,
+			pointerEvents: 'none' as const,
+		},
 	})
 
 	const overlayFadeAnimation = useSpring({
-		opacity: isMenuOpened ? 1 : 0,
-		config: { easing: 'spring', mass: 1, tension: 600, friction: 30 },
-		pointerEvents: isMenuOpened ? 'auto' : 'none',
-		from: { opacity: 0, pointerEvents: 'none' },
+		to: {
+			opacity: isMenuOpened ? 1 : 0,
+			pointerEvents: isMenuOpened ? 'auto' : ('none' as const),
+		},
+		config: {
+			mass: 1,
+			tension: 600,
+			friction: 30,
+		},
+		from: {
+			opacity: 0,
+			pointerEvents: 'none' as const,
+		},
 	})
 
 	useEffect(() => {
 		if (isMenuOpened) {
 			document.body.style.overflowY = 'hidden'
-			document.addEventListener('keydown', handleKeyDown)
+			document.addEventListener('keydown', handleKeyDown as unknown as EventListener)
 		} else {
 			document.body.style.removeProperty('overflow-y')
 		}
 		return () => {
-			document.removeEventListener('keydown', handleKeyDown)
+			document.removeEventListener('keydown', handleKeyDown as unknown as EventListener)
 		}
-	}, [isMenuOpened])
+	}, [isMenuOpened, handleKeyDown])
 
 	useEffect(() => {
 		document.addEventListener('click', handleMenuClose)
-
 		return () => {
 			document.removeEventListener('click', handleMenuClose)
 		}
-	}, [])
+	}, [handleMenuClose])
 
 	const settings = (
 		<ul className={classNames.listContainer}>
@@ -103,15 +126,9 @@ export function BurgerMenu({ user }: Props) {
 				<IconBurger />
 			</IconButton>
 
-			<animated.div
-				style={overlayFadeAnimation}
-				className={classNames.overlay}
-				onClick={() => {
-					setIsMenuOpened(false)
-				}}
-			>
+			<animated.div style={overlayFadeAnimation} className={classNames.overlay} onClick={handleMenuClose}>
 				<animated.div
-					onClick={(e: MouseEvent) => {
+					onClick={(e: ReactMouseEvent<HTMLDivElement>) => {
 						e.stopPropagation()
 					}}
 					style={fadeAnimation}

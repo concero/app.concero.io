@@ -1,4 +1,4 @@
-import { ChartCard } from '../LineChartCard/ChartCard'
+import { ChartCard } from '../ChartCard/ChartCard'
 import classNames from './TotalVolumeCard.module.pcss'
 import { createTimeFilters } from '../../../utils/chartTimeFilters'
 import { useEffect, useState } from 'react'

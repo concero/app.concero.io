@@ -1,4 +1,4 @@
-import { type FC, type ForwardedRef, useEffect, useRef, useState } from 'react'
+import { type FC, type ForwardedRef, useRef } from 'react'
 import classNames from './TokenArea.module.pcss'
 import { type TokenAreaProps } from './types'
 import { handleAmountChange, handleAreaClick } from './handlers'
@@ -11,7 +11,7 @@ import { Badge } from '../../../layout/Badge/Badge'
 import { SelectTokenShape } from './SelectTokenShape/SelectTokenShape'
 import { InputError } from '../SwapInput/InputError/InputError'
 import { ErrorCategory, errorTextMap, errorTypeMap } from '../SwapButton/constants'
-import { TextInput } from '../../../input/TextInput'
+import { TextInput } from '../../../layout/TextInput/TextInput'
 
 export const TokenArea: FC<TokenAreaProps> = ({
 	isLoading,

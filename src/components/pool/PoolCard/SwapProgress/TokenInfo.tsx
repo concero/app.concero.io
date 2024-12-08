@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 import classNames from './SwapProgress.module.pcss'
-import { Avatar } from '../../../tags/Avatar/Avatar'
+import { Avatar } from '../../../layout/Avatar/Avatar'
 import { type Direction } from '../../../../types/StandardRoute'
 import { useTranslation } from 'react-i18next'
 import { formatNumber } from '../../../../utils/formatting'

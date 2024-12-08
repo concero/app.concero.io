@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import type { Fee } from '../../../api/concero/types'
 import { fetchFees } from '../../../api/concero/pool/fetchFees'
 import { TotalVolumeCard } from '../../cards/TotalVolumeCard/TotalVolumeCard'
-import { RewardsCard } from '../../cards/RewardsChartCard/RewardsChartCard'
+import { RewardsChartCard } from '../../cards/RewardsChartCard/RewardsChartCard'
 import { PreviewPoolCard } from './PreviewPoolCard/PreviewPoolCard'
 import { PreviewPoolCardDisabled } from './PreviewPoolCardDisable/PreviewPoolCardDisabled'
 import { routes } from '../../../constants/routes'
@@ -44,7 +44,7 @@ export const PoolHomepage = () => {
 			<div className="gap-lg">
 				<div className={classNames.column}>
 					<TotalVolumeCard isLoading={isLoading} fees={fees} />
-					<RewardsCard isLoading={isLoading} title="Total rewards" fees={fees} />
+					<RewardsChartCard isLoading={isLoading} title="Total rewards" fees={fees} />
 				</div>
 				<div className="gap-lg row">
 					<StatisticCard isLoading={isLoading} title="LP Providers" value={providersCount} />

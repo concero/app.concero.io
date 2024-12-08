@@ -1,10 +1,6 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { config } from '../constants/config'
-import queue from './queue.ts'
-
-type GetParams = Record<string, any>
-
-type PostData = Record<string, any>
+import queue from './queue'
 
 const api = axios.create({
 	baseURL: config.baseURL,

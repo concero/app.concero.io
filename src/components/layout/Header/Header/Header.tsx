@@ -8,10 +8,10 @@ import { WalletButton } from '../WalletButton/WalletButton'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 import { Button } from '../../../buttons/Button/Button'
 import buttonClassNames from '../../../buttons/Button/Button.module.pcss'
-import { Tag } from '../../../tags/Tag/Tag'
+import { Tag } from '../../Tag/Tag'
 import { type IUser } from '../../../../api/concero/user/userType'
 import { UserMultipliers } from './UserMultipliers/UserMultipliers'
-import { TooltipWrapper } from '../../../wrappers/WithTooltip/TooltipWrapper'
+import { TooltipWrapper } from '../../WithTooltip/TooltipWrapper'
 import { toLocaleNumber } from '../../../../utils/formatting'
 
 interface HeaderProps {

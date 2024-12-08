@@ -1,4 +1,4 @@
-import { Tag } from '../../../../tags/Tag/Tag'
+import { Tag } from '../../../../layout/Tag/Tag'
 import classNames from './Progressbar.module.pcss'
 
 type valueColor = 'color1' | 'color2' | 'color3' | 'color4' | 'color5'

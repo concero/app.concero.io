@@ -9,7 +9,7 @@ import { Modal } from '../../modals/Modal/Modal'
 import classNames from './PoolCard.module.pcss'
 import { useAccount } from 'wagmi'
 import { useAppKit } from '@reown/appkit/react'
-import { TooltipWrapper } from '../../wrappers/WithTooltip/TooltipWrapper'
+import { TooltipWrapper } from '../../layout/WithTooltip/TooltipWrapper'
 
 interface Props {
 	isDepositOnly?: boolean

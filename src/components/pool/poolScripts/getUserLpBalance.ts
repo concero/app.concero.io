@@ -2,7 +2,7 @@ import { type Address, erc20Abi, formatUnits, getContract } from 'viem'
 import { config, IS_TESTNET } from '../../../constants/config'
 import { getPublicClient } from '@wagmi/core'
 import { base, baseSepolia } from 'wagmi/chains'
-import { config as wagmiConfig } from '../../../web3/wagmi'
+import { config as wagmiConfig } from '../../../utils/web3/wagmi'
 
 const chainId = IS_TESTNET ? baseSepolia.id : base.id
 const publicClient = getPublicClient(wagmiConfig, { chainId })

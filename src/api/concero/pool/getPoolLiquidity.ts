@@ -1,7 +1,7 @@
 import { erc20Abi, formatUnits } from 'viem'
 import { type IPoolConfig, poolConfigs, poolLoansInUseAbiITem, usdcDecimals } from '../poolConfigs'
 import { getPublicClient } from '@wagmi/core'
-import { config } from '../../../web3/wagmi'
+import { config } from '../../../utils/web3/wagmi'
 
 export const getLiquidityOnChain = async (poolConfig: IPoolConfig) => {
 	const { chain, conceroContract, usdcContract } = poolConfig
