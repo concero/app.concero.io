@@ -8,7 +8,6 @@ import { config, IS_TESTNET, PARENT_POOL_CHAIN_ID } from '../../../../constants/
 import { TransactionStatus } from '../../../../api/concero/types'
 import { getPublicClient, getWalletClient } from '@wagmi/core'
 import { config as wagmiConfig } from '../../../../web3/wagmi'
-import { getWithdrawalIdByLpAddress } from '../../../../api/concero/getWithdrawalIdByLpAddress'
 import { baseSepolia } from 'wagmi/chains'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { action as trackingAction, category } from '../../../../constants/tracking'
@@ -204,14 +203,13 @@ export const retryWithdrawal = async (address: Address, chainId: number): Promis
 	const walletClient = await getWalletClient(wagmiConfig, { chainId })
 	walletClient.switchChain({ id: PARENT_POOL_CHAIN_ID })
 
-	const withdrawId = await getWithdrawalIdByLpAddress(address)
-	if (!withdrawId) return TransactionStatus.FAILED
+	// const withdrawId = await getWithdrawalIdByLpAddress(address)
+	// if (!withdrawId) return TransactionStatus.FAILED
 
 	const hash = await walletClient.writeContract({
 		account: address,
-		abi: parseAbi(['function retryPerformWithdrawalRequest(bytes32 _withdrawalId) external']),
+		abi: parseAbi(['function retryPerformWithdrawalRequest() external']),
 		functionName: 'retryPerformWithdrawalRequest',
-		args: [withdrawId as Address],
 		address: parentPoolAddress,
 		gas: 4_000_000n,
 	})
