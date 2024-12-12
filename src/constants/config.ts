@@ -10,6 +10,7 @@ import {
 	automationsBase,
 	childPoolArbitrum,
 	childPoolAvalanche,
+	childPoolOptimism,
 	childPoolPolygon,
 	lpTokenBase,
 	parentPoolBase,
@@ -44,4 +45,5 @@ export const config = {
 	CHILD_POOL_ARBITRUM: IS_TESTNET ? childPoolArbitrumSepolia : childPoolArbitrum,
 	CHILD_POOL_POLYGON: childPoolPolygon,
 	CHILD_POOL_AVALANCHE: IS_TESTNET ? childPoolAvalancheFuji : childPoolAvalanche,
+	CHILD_POOL_OPTIMISM: childPoolOptimism,
 }
