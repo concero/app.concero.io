@@ -1,6 +1,7 @@
 import { arbitrum, avalanche, base, polygon } from 'viem/chains'
 import type { Address, Chain } from 'viem'
 import { config } from '../../constants/config'
+import { optimism } from '@reown/appkit/networks'
 
 export interface IPoolConfig {
 	isParent: boolean
@@ -35,6 +36,12 @@ export const poolConfigs: IPoolConfig[] = [
 		chain: avalanche,
 		conceroContract: config.CHILD_POOL_AVALANCHE,
 		usdcContract: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
+	},
+	{
+		isParent: false,
+		chain: optimism,
+		conceroContract: config.CHILD_POOL_OPTIMISM,
+		usdcContract: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
 	},
 ]
 
