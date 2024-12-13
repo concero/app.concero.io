@@ -42,14 +42,14 @@ export const Navigator = () => {
 	const [user, setUser] = useState<IUser | null>(null)
 
 	const getUser = async () => {
-		const user = await handleFetchUser(address)
+		const user = await handleFetchUser(address!)
 		setUser(user)
 	}
 
 	useEffect(() => {
 		if (isConnected && address) {
 			setIsLoading(true)
-			void getUser(address)
+			void getUser()
 				.catch(e => {
 					console.error(e)
 				})
