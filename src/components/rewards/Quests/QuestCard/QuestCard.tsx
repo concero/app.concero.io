@@ -49,14 +49,18 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	useEffect(() => {
 		if (!user) return
 
-		if (user.completedQuests[String(_id)] || user.completedQuests.includes(_id.toString())) {
+		// if (user.completedQuests[String(_id)] || user.completedQuests.includes(_id.toString())) {
+		// 	setRewardIsClaimed(true)
+		// }
+
+		if (user.completedQuests[String(_id)]) {
 			setRewardIsClaimed(true)
 		}
 
-		const questInProgress = user.questsInProgress.find((q: { questId: string }) => q.questId === _id.toString())
-		if (questInProgress) {
-			setCompletedStepIds(questInProgress.completedSteps)
-		}
+		// const questInProgress = user.questsInProgress.find((q: { questId: string }) => q.questId === _id.toString())
+		// if (questInProgress) {
+		// 	setCompletedStepIds(questInProgress.completedSteps)
+		// }
 
 		if (user.questsInProgress[String(_id)]) {
 			setCompletedStepIds(user.questsInProgress[quest._id])
