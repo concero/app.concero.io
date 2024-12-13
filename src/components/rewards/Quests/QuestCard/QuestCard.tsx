@@ -54,7 +54,6 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 		}
 
 		const questInProgress = user.questsInProgress.find((q: { questId: string }) => q.questId === _id.toString())
-
 		if (questInProgress) {
 			setCompletedStepIds(questInProgress.completedSteps)
 		}
