@@ -42,7 +42,7 @@ export const Navigator = () => {
 	const [user, setUser] = useState<IUser | null>(null)
 
 	const getUser = async () => {
-		const user = await handleFetchUser(address!)
+		const user = await handleFetchUser(address)
 		setUser(user)
 	}
 
