@@ -1,6 +1,6 @@
 export type CompletedSteps = number[]
-export type IQuestsInProgressMap = Record<string, CompletedSteps>
-export type ICompletedQuestsMap = Record<string, number>
+export type IQuestsInProgressMap = Record<any, any>
+export type ICompletedQuestsMap = Record<any, any>
 
 export interface IUserTier {
 	level: string

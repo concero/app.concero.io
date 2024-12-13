@@ -39,23 +39,26 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const [rewardIsClaimed, setRewardIsClaimed] = useState<boolean>(false)
 
 	const isDailyQuest = quest.type === QuestType.Daily
-
 	const isSocialQuest = quest.category === QuestCategory.Socials
 
-	const { name, endDate, image } = quest
-	const questIsComplete = completedStepIds.length === quest.steps.length
-	const daysLeft = getDateUnitMap(quest.type) ? getDaysUntil(getDateUnitMap(quest.type)!) : getQuestDaysLeft(endDate)
+	const { name, endDate, image, _id } = quest
 
-	// if (!questIsBegin) return null
+	const questStepsCompleted = completedStepIds.length === quest.steps.length
+	const daysLeft = getDateUnitMap(quest.type) ? getDaysUntil(getDateUnitMap(quest.type)!) : getQuestDaysLeft(endDate)
 
 	useEffect(() => {
 		if (!user) return
 
-		if (user.completedQuests[String(quest._id)]) {
+		if (user.completedQuests[String(_id)] || user.completedQuests.includes(_id.toString())) {
 			setRewardIsClaimed(true)
 		}
 
-		if (user.questsInProgress[String(quest._id)]) {
+		const questInProgress = user.questsInProgress.find((q: { questId: string }) => q.questId === _id.toString())
+		if (questInProgress) {
+			setCompletedStepIds(questInProgress.completedSteps)
+		}
+
+		if (user.questsInProgress[String(_id)]) {
 			setCompletedStepIds(user.questsInProgress[quest._id])
 		}
 	}, [user, quest])
@@ -102,7 +105,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 									questType={quest.type}
 									daysLeft={daysLeft}
 									isStarted={completedStepIds.length > 0}
-									isCompleted={questIsComplete}
+									isCompleted={questStepsCompleted}
 									rewardIsClaimed={rewardIsClaimed}
 								/>
 							</div>
