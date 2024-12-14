@@ -49,21 +49,26 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	useEffect(() => {
 		if (!user) return
 
-		// if (user.completedQuests[String(_id)] || user.completedQuests.includes(_id.toString())) {
-		// 	setRewardIsClaimed(true)
-		// }
-
-		if (user.completedQuests[String(_id)]) {
-			setRewardIsClaimed(true)
+		if (Array.isArray(user.completedQuests)) {
+			if (user.completedQuests.includes(_id.toString())) {
+				setRewardIsClaimed(true)
+			}
+		} else if (typeof user.completedQuests === 'object') {
+			if (user.completedQuests.hasOwnProperty(_id.toString())) {
+				setRewardIsClaimed(true)
+			}
 		}
 
-		// const questInProgress = user.questsInProgress.find((q: { questId: string }) => q.questId === _id.toString())
-		// if (questInProgress) {
-		// 	setCompletedStepIds(questInProgress.completedSteps)
-		// }
-
-		if (user.questsInProgress[String(_id)]) {
-			setCompletedStepIds(user.questsInProgress[quest._id])
+		if (Array.isArray(user.questsInProgress)) {
+			const questInProgress = user.questsInProgress.find((q: { questId: string }) => q.questId === _id.toString())
+			if (questInProgress) {
+				setCompletedStepIds(questInProgress.completedSteps)
+			}
+		} else if (typeof user.questsInProgress === 'object') {
+			const questInProgress = user.questsInProgress[_id.toString()]
+			if (questInProgress) {
+				setCompletedStepIds(questInProgress)
+			}
 		}
 	}, [user, quest])
 
