@@ -17,6 +17,7 @@ TLDR: Atoms are the smallest, state-less, indivisible components that can be use
         beacon
         Chart
         ...
+
     organisms
         Header
         HeaderMenu
@@ -31,6 +32,7 @@ TLDR: Atoms are the smallest, state-less, indivisible components that can be use
             abi
             animations
             translations
+        hooks
         components - to be refactored to @concero-ui
         modules
             rewards
@@ -62,6 +64,7 @@ TLDR: Atoms are the smallest, state-less, indivisible components that can be use
 - Move loadingSkeletons checks to Suspense where possible.
 - There is Input and TextInput, standardize on one.
 - Leaderboard should be using Table component. Table should be a generic component that can be used in other modules.
+- (later) error codes
 ## Bundling
 needs to be fixed in accordance with the recommendations below. Async imports should be used for modules
 ```bash
