@@ -5,6 +5,8 @@ import type { ChartData } from '../../../types/utils'
 import { getUniqueChatData, groupDataByWeeks } from '../../../utils/charts'
 import { type Fee } from '../../../api/concero/types'
 import { createTimeFilters } from '../../../utils/chartTimeFilters'
+import { useGetLiquidity } from '../poolScripts/useGetLiquidity'
+import { toLocaleNumber } from '../../../utils/formatting'
 
 const timeFilters = createTimeFilters()
 
@@ -17,12 +19,15 @@ const apyDescription =
 	'APY (Annual Percentage Yield) is calculated on the basis of the average fee earned by the pool in the previous week, extrapolated for the year.'
 
 export const AverageApyCard = ({ fees, isLoading }: Props) => {
+	const { poolLiquidity } = useGetLiquidity()
 	const [apyData, setApyData] = useState<ChartData[]>([])
 	const [activeFilter, setActiveFilter] = useState(timeFilters[timeFilters.length - 1])
 	const [commonValue, setCommonValue] = useState<string>('')
 
-	const getTotalVolume = async () => {
-		const chartData = fees
+	const handleAPY = async (fees: Fee[]) => {
+		let rewards = 0
+
+		const feeData: ChartData[] = fees
 			.filter(fee => {
 				const feeTime = fee.timestamp
 				const { startTime, endTime } = activeFilter
@@ -30,26 +35,30 @@ export const AverageApyCard = ({ fees, isLoading }: Props) => {
 				return (!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)
 			})
 			.map(fee => {
-				const apyOnFeeFormula = fee.percentReturned * 365.25
-
+				rewards += fee.feeMade
 				return {
 					time: fee.timestamp * 1000,
-					value: apyOnFeeFormula,
+					value: fee.feeMade,
 				}
 			})
 
-		const weeklyAverageData = groupDataByWeeks(getUniqueChatData(chartData))
+		const groupedWeeklyFees = groupDataByWeeks(getUniqueChatData(feeData))
 
-		setCommonValue(weeklyAverageData[weeklyAverageData.length - 2].value.toFixed(0))
-		setApyData(weeklyAverageData)
+		if (groupedWeeklyFees.length < 2) {
+			console.warn('Not enough data to calculate APY')
+			return
+		}
+
+		const previousWeekFees = groupedWeeklyFees[groupedWeeklyFees.length - 2].value
+		const apy = ((previousWeekFees * 52) / poolLiquidity) * 100
+
+		setCommonValue(toLocaleNumber(apy).toString())
+		setApyData(groupedWeeklyFees)
 	}
 
 	useEffect(() => {
-		if (!fees) return
-
-		void getTotalVolume().catch(e => {
-			console.error(e)
-		})
+		if (!fees.length) return
+		void handleAPY(fees)
 	}, [fees, activeFilter])
 
 	return (
