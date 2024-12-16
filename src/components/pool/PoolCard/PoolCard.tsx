@@ -69,23 +69,25 @@ export const PoolCard = ({
 		</TooltipWrapper>
 	)
 
-	const depositButton = !poolIsFilled ? (
-		disabledDepositButton
+	const depositButton = poolIsFilled ? (
+		isConnected ? (
+			disabledDepositButton
+		) : (
+			<Button isDisabled={false} className={depositButtonClasses} onClick={async () => { await open(); }} size="lg">
+				Connect wallet
+			</Button>
+		)
 	) : (
 		<Button
-			isDisabled={poolIsFilled}
+			isDisabled={false}
 			className={depositButtonClasses}
-			onClick={
-				isConnected
-					? () => {
-							swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
-							setIsOpen(true)
-						}
-					: open
-			}
+			onClick={() => {
+				swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
+				setIsOpen(true)
+			}}
 			size="lg"
 		>
-			{isConnected ? 'Deposit' : 'Connect wallet'}
+			Deposit
 		</Button>
 	)
 
