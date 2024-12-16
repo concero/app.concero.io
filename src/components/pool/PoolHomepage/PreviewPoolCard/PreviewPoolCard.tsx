@@ -3,7 +3,7 @@ import { UsdcIcon } from '../../../../assets/icons/UsdcIcon'
 import { Card } from '../../../cards/Card/Card'
 import { Button } from '../../../buttons/Button/Button'
 import { useEffect, useState } from 'react'
-import { getUniqueChatData, groupDataByWeeks } from '../../../../utils/charts'
+import { groupDataByWeeks } from '../../../../utils/charts'
 import { type Fee } from '../../../../api/concero/types'
 import { Link } from 'react-router-dom'
 import { useGetLiquidity } from '../../poolScripts/useGetLiquidity'
@@ -11,6 +11,7 @@ import { SkeletonLoader } from '../../../layout/SkeletonLoader/SkeletonLoader'
 import { PoolCard } from '../../PoolCard/PoolCard'
 import { toLocaleNumber } from '../../../../utils/formatting'
 import { Tag } from '../../../layout/Tag/Tag'
+import { type ChartData } from '../../../../types/utils'
 
 interface Props {
 	fees: Fee[]
@@ -25,28 +26,34 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 	const [totalRewards, setTotalRewards] = useState<string>('0')
 	const poolIsFilled = poolLiquidity > maxCap
 
-	const setApyHandle = async () => {
+	const handleAPY = async (fees: Fee[]) => {
 		let rewards = 0
 
-		const chartData = fees.map(fee => {
-			const apyOnFeeFormula = fee.percentReturned * 365.25
+		const feeData: ChartData[] = fees.map(fee => {
 			rewards += fee.feeMade
-
 			return {
 				time: fee.timestamp * 1000,
-				value: apyOnFeeFormula,
+				value: fee.feeMade,
 			}
 		})
 
-		const weeklyAverageData = groupDataByWeeks(getUniqueChatData(chartData))
+		const groupedWeeklyFees = groupDataByWeeks(feeData)
 
-		setCommonApyValue(toLocaleNumber(weeklyAverageData[weeklyAverageData.length - 2].value))
-		setTotalRewards(toLocaleNumber(rewards))
+		if (groupedWeeklyFees.length < 2) {
+			console.warn('Not enough data to calculate APY')
+			return
+		}
+
+		const previousWeekFees = groupedWeeklyFees[groupedWeeklyFees.length - 2].value
+		const apy = ((previousWeekFees * 52) / poolLiquidity) * 100
+
+		setCommonApyValue(toLocaleNumber(apy).toString())
+		setTotalRewards(toLocaleNumber(rewards).toString())
 	}
 
 	useEffect(() => {
 		if (!fees.length) return
-		void setApyHandle()
+		void handleAPY(fees)
 	}, [fees])
 
 	return (
