@@ -1,12 +1,13 @@
 import { ColorType } from 'lightweight-charts'
+import { color } from '../../../../constants/json/colors-light.json'
 
-export const chartOptions = colors => ({
+export const chartOptions = {
 	layout: {
 		background: {
 			type: ColorType.Solid,
 			color: 'transparent',
 		},
-		textColor: colors.text.secondary,
+		textColor: color.text.secondary,
 		fontFamily: 'DM_Sans',
 	},
 	localization: {
@@ -15,12 +16,12 @@ export const chartOptions = colors => ({
 	},
 	grid: {
 		vertLines: {
-			color: colors.background,
+			color: color.background,
 			style: 1,
 			visible: false,
 		},
 		horzLines: {
-			color: colors.background,
+			color: color.background,
 			style: 1,
 			visible: false,
 		},
@@ -33,46 +34,42 @@ export const chartOptions = colors => ({
 		horzLine: {
 			visible: false,
 			labelVisible: false,
-			color: colors.grey.dark,
+			color: color.grey.dark,
 		},
 		vertLine: {
 			visible: false,
 			labelVisible: false,
-			color: colors.grey.dark,
+			color: color.grey.dark,
 		},
 	},
 	autoSize: true,
 	handleScroll: false,
 	handleScale: false,
-})
+}
 
-export const areaSeriesOptions = (colors, theme, lineNumber = null) => {
-	const lineColor = lineNumber === 2 ? '#1B7BEA' : colors.primary.main
-	// const topColor = lineNumber === 'secondLine' ? colors.primary.darker : colors.primary.darker
-	const dark = theme === 'dark'
+const lineNumber = null
+const lineColor = lineNumber === 2 ? '#1B7BEA' : color.primary.main
+// const topColor = lineNumber === 'secondLine' ? color.primary.darker : color.primary.darker
 
-	const getTopColor = () => {
-		if (lineNumber === 2) return '#1B7BEA'
-		return colors.primary.darker
-	}
-	const getBottomColor = () => {
-		if (dark) return 'rgba(0, 0, 0, 0)'
-		return 'rgba(255, 255, 255, 0)'
-	}
+const getTopColor = () => {
+	return color.primary.darker
+}
+const getBottomColor = () => {
+	return 'rgba(255, 255, 255, 0)'
+}
 
-	return {
-		baseLineVisible: false,
-		lineType: 0,
-		lineWidth: 1.8,
-		strokeLinecap: 'round',
-		topColor: getTopColor(),
-		bottomColor: getBottomColor(),
-		baseLineStyle: 1,
-		lineColor,
-		priceFormat: {
-			type: 'volume',
-			priceScaleId: '',
-		},
-		priceLineVisible: false,
-	}
+export const areaSeriesOptions = {
+	baseLineVisible: false,
+	lineType: 0,
+	lineWidth: 1.8,
+	strokeLinecap: 'round',
+	topColor: getTopColor(),
+	bottomColor: getBottomColor(),
+	baseLineStyle: 1,
+	lineColor,
+	priceFormat: {
+		type: 'volume',
+		priceScaleId: '',
+	},
+	priceLineVisible: false,
 }

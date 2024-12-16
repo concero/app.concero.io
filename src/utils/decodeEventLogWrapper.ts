@@ -1,10 +1,9 @@
 import { type Abi, decodeEventLog, type Hash } from 'viem'
 import { type Log } from 'viem/types/log'
 import { type DecodeEventLogReturnType } from 'viem/utils/abi/decodeEventLog'
-import { type ExplorerLog } from '../api/getLogsByAddress'
 
 interface DecodeEventLogWrapperParams {
-	log: Log | ExplorerLog
+	log: Log
 	abi: Abi
 	eventName?: string
 }
@@ -18,7 +17,7 @@ export const decodeEventLogWrapper = ({
 		return decodeEventLog({
 			abi,
 			eventName,
-			data: log.data as Hash,
+			data: log.data,
 			topics: log.topics,
 		})
 	} catch (e) {

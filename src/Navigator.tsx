@@ -7,7 +7,7 @@ import { FullScreenLoader } from './components/layout/FullScreenLoader/FullScree
 import { Footer } from './components/layout/Footer/Footer'
 import type { IUser } from './api/concero/user/userType'
 import { useAccount } from 'wagmi'
-import { handleFetchUser } from './web3/handleFetchUser'
+import { handleFetchUser } from './utils/web3/handleFetchUser'
 import posthog from 'posthog-js'
 
 const PoolScreen = lazy(
@@ -26,13 +26,6 @@ const RewardsScreen = lazy(
 	async () =>
 		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
 			default: module.RewardsScreen,
-		})),
-)
-
-const FeedbackScreen = lazy(
-	async () =>
-		await import('./components/screens/FeedbackScreen/FeedbackScreen').then(module => ({
-			default: module.FeedbackScreen,
 		})),
 )
 
@@ -82,26 +75,10 @@ export const Navigator = () => {
 						}
 					/>
 					<Route
-						path={routes.pool}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<PoolScreen />
-							</Suspense>
-						}
-					/>
-					<Route
 						path={routes.rewards}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
 								<RewardsScreen loading={loading} user={user} />
-							</Suspense>
-						}
-					/>
-					<Route
-						path={routes.feedback}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<FeedbackScreen />
 							</Suspense>
 						}
 					/>
