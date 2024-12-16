@@ -2,10 +2,7 @@ import './styles/App.css'
 import { PostHogProvider } from 'posthog-js/react'
 import { WagmiProvider } from 'wagmi'
 import { Navigator } from './Navigator'
-import { config } from './web3/wagmi'
-import { ThemeProvider } from './hooks/themeContext'
-import { Notifications } from './components/overlays/Notifications/Notifications'
-import { NotificationsProvider } from './hooks/notificationsContext'
+import { config } from './utils/web3/wagmi'
 import { useEffect } from 'react'
 import { I18Provider } from './i18n/I18nextProvider'
 import { initPosthog } from './utils/initPosthog'
@@ -20,18 +17,12 @@ function App() {
 
 	const queryClient = new QueryClient()
 
-	// todo: add dark mode
 	return (
 		<PostHogProvider>
 			<I18Provider>
 				<WagmiProvider config={config}>
 					<QueryClientProvider client={queryClient}>
-						<ThemeProvider>
-							<NotificationsProvider>
-								<Notifications />
-								<Navigator />
-							</NotificationsProvider>
-						</ThemeProvider>
+						<Navigator />
 					</QueryClientProvider>
 				</WagmiProvider>
 			</I18Provider>

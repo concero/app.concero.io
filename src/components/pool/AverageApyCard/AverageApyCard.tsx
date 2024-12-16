@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ChartCard } from '../../cards/LineChartCard/ChartCard'
+import { ChartCard } from '../../cards/ChartCard/ChartCard'
 import classNames from './AverageApyCard.module.pcss'
 import type { ChartData } from '../../../types/utils'
 import { getUniqueChatData, groupDataByWeeks } from '../../../utils/charts'

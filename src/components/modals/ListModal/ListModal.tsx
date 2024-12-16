@@ -3,7 +3,7 @@ import { IconSearch } from '@tabler/icons-react'
 import { Modal } from '../Modal/Modal'
 import classNames from './ListModal.module.pcss'
 import { type MultiSelectModalProps } from './types'
-import { TextInput } from '../../input/TextInput'
+import { TextInput } from '../../layout/TextInput/TextInput'
 
 export const ListModal: FC<MultiSelectModalProps> = ({
 	getItems,
