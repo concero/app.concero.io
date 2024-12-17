@@ -24,7 +24,7 @@ export const PreviewPoolCard = ({ fees, link, isLoading }: Props) => {
 
 	const [commonApyValue, setCommonApyValue] = useState<string>('0')
 	const [totalRewards, setTotalRewards] = useState<string>('0')
-	const poolIsFilled = poolLiquidity > maxCap
+	const poolIsFilled = poolLiquidity > maxCap - 100
 
 	const handleAPY = async (fees: Fee[]) => {
 		let rewards = 0
