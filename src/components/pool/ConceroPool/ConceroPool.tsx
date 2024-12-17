@@ -11,7 +11,7 @@ import { useGetLiquidity } from '../poolScripts/useGetLiquidity'
 
 export const ConceroPool = () => {
 	const { poolLiquidity, maxCap, isLoading } = useGetLiquidity()
-	const poolIsFilled = poolLiquidity > maxCap
+	const poolIsFilled = poolLiquidity > maxCap - 100
 
 	return (
 		<div className={classNames.container}>

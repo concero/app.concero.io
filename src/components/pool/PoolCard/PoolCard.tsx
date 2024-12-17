@@ -73,7 +73,14 @@ export const PoolCard = ({
 		isConnected ? (
 			disabledDepositButton
 		) : (
-			<Button isDisabled={false} className={depositButtonClasses} onClick={async () => { await open(); }} size="lg">
+			<Button
+				isDisabled={false}
+				className={depositButtonClasses}
+				onClick={async () => {
+					await open()
+				}}
+				size="lg"
+			>
 				Connect wallet
 			</Button>
 		)
@@ -81,11 +88,12 @@ export const PoolCard = ({
 		<Button
 			isDisabled={false}
 			className={depositButtonClasses}
+			size="lg"
+			isFull
 			onClick={() => {
 				swapDispatch({ type: 'TOGGLE_POOL_MODE', payload: 'deposit' })
 				setIsOpen(true)
 			}}
-			size="lg"
 		>
 			Deposit
 		</Button>
