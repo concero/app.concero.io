@@ -218,11 +218,24 @@ export const roundToPrecision = (num: number, precision: number) => {
 	return Math.round(num * factor) / factor
 }
 
-export const toLocaleNumber = (num: number | string, fixed = 0) => {
-	if (!num) return 0
+export const toLocaleNumber = (num: number | string, fixed = 2): string => {
+	if (num === null || num === undefined || isNaN(Number(num))) return '0'
 
 	const number = Number(num)
-	const formattedNumber = number % 1 === 0 ? number.toString() : roundToPrecision(number, fixed).toString()
 
-	return formattedNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+	// Check if the number is a whole number
+	if (Number.isInteger(number)) {
+		return number.toLocaleString('en-US')
+	}
+
+	// Round the number to the specified decimal places
+	const roundedNumber = number.toFixed(fixed)
+
+	// Create a formatter with the specified decimal places
+	const formatter = new Intl.NumberFormat('en-US', {
+		minimumFractionDigits: fixed,
+		maximumFractionDigits: fixed,
+	})
+
+	return formatter.format(Number(roundedNumber))
 }

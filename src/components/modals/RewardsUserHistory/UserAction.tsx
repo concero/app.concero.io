@@ -21,6 +21,9 @@ export const UserAction = ({ action }: UserActionProps) => {
 
 		const txAction = type === TransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
 
+		console.log('from', from.amount)
+		console.log('to', to.amount)
+
 		const txValue = `${txAction} from ${toLocaleNumber(from.amount, 2)} ${from.tokenSymbol} on ${from.chainName} to ${toLocaleNumber(to.amount, 2)} ${to.tokenSymbol} on ${to.chainName}`
 		setValue(txValue)
 	}
