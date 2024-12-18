@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { useSwapReducer } from './swapReducer/swapReducer'
 import { useSwapCardEffects } from './PoolCardEffects'
 import { SwapInput } from './SwapInput/SwapInput'
@@ -37,16 +37,16 @@ export const PoolCard = ({
 
 	const isInputStages = swapState.stage === SwapCardStage.input || swapState.stage === SwapCardStage.review
 
-	const handleGoBack = () => {
+	const handleGoBack = useCallback(() => {
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'from' })
 		swapDispatch({ type: 'RESET_AMOUNTS', direction: 'to' })
 		swapDispatch({ type: 'SET_SWAP_STAGE', payload: SwapCardStage.input })
 		swapDispatch({ type: 'SET_SWAP_STEPS', payload: [] })
-	}
+	}, [swapDispatch])
 
 	useSwapCardEffects({ swapDispatch, swapState, address, typingTimeoutRef })
 
-	const handeClose = () => {
+	const handleClose = () => {
 		handleGoBack()
 		setIsOpen(false)
 	}
@@ -130,10 +130,10 @@ export const PoolCard = ({
 				className={classNames.container}
 				isHeaderVisible={false}
 				show={isOpen}
-				setShow={handeClose}
+				setShow={handleClose}
 			>
 				{isInputStages ? (
-					<SwapInput onClose={handeClose} swapState={swapState} swapDispatch={swapDispatch} />
+					<SwapInput onClose={handleClose} swapState={swapState} swapDispatch={swapDispatch} />
 				) : (
 					<SwapProgress swapState={swapState} swapDispatch={swapDispatch} handleGoBack={handleGoBack} />
 				)}
