@@ -37,7 +37,7 @@ export const calculateLpAmount = async (amountToDeposit: bigint): Promise<bigint
 	return (await client.readContract({
 		address: config.PARENT_POOL_CONTRACT,
 		abi: ParentPool,
-		functionName: 'calculateLpAmount',
+		functionName: 'calculateLPTokensToMint',
 		args: [childPoolsBalance, amountToDeposit],
 	})) as bigint
 }

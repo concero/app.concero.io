@@ -155,11 +155,11 @@ const handleDepositTransaction = async (
 
 	const decodedLog = decodeEventLog({
 		abi: ParentPoolAbiV1_5,
-		data: depositInitiatedLog.data,
-		topics: depositInitiatedLog.topics,
+		data: depositInitiatedLog?.data,
+		topics: depositInitiatedLog?.topics,
 	})
 
-	const depositRequestId = decodedLog.args.requestId
+	const depositRequestId = decodedLog.args?.requestId
 	await sleep(25_000)
 
 	await completeDeposit(swapState, swapDispatch, depositRequestId, walletClient, publicClient)
