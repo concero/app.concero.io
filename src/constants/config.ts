@@ -16,7 +16,7 @@ import {
 	parentPoolBase,
 } from './poolMainnetAddresses'
 
-export const IS_TESTNET = true
+export const IS_TESTNET = false
 export const PARENT_POOL_CHAIN_ID = IS_TESTNET ? baseSepolia.id : base.id
 
 export const config = {
