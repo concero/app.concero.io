@@ -1,11 +1,12 @@
 import classNames from './UserActions.module.pcss'
-import { poolEventNamesMap } from '../../../api/concero/getUserActions'
-import dayjs from 'dayjs'
+import { parentPoolEventNamesMap, ParentPoolEventType } from '../../../api/concero/getUserActions'
 import { UserActionStatus, type UserTransaction } from './UserActions'
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
 import { TransactionStatus } from '../../../api/concero/types'
 import { Tag } from '../../layout/Tag/Tag'
 import { ManageWithdrawalButton } from './ManageWithdrawalButton'
+
+import dayjs from 'dayjs'
 
 export const getWithdrawalDate = (deadline: number) => {
 	if (!deadline) return
@@ -39,7 +40,7 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 		action.status === UserActionStatus.ActiveRequestWithdraw ||
 		action.status === UserActionStatus.WithdrawRetryNeeded
 
-	const isRequestWithdrawal = action.eventName === 'ConceroParentPool_WithdrawRequestInitiated'
+	const isRequestWithdrawal = action.eventType === ParentPoolEventType.WithdrawalRequestInitiated
 	const isWithdrawRetryPending = retryTimeLeft !== 0 && action.isActiveWithdraw
 
 	useEffect(() => {
@@ -51,6 +52,7 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 	}, [retryTimeLeft])
 
 	const stageTagMap: Record<TransactionStatus, ReactNode> = {
+		[TransactionStatus.IDLE]: null,
 		[TransactionStatus.FAILED]: (
 			<Tag variant="negative" size="sm">
 				Failed
@@ -68,14 +70,14 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 		),
 	}
 
-	const amountSign = action.eventName === 'ConceroParentPool_DepositCompleted' ? '+' : '-'
+	const amountSign = action.eventType === ParentPoolEventType.DepositCompleted ? '+' : '-'
 
 	const retryTimeLeftInMinutes = Math.floor(retryTimeLeft / 60)
 
 	return (
 		<div className={classNames.action}>
 			<div className={classNames.leftSide}>
-				<h6>{poolEventNamesMap[action.eventName]}</h6>
+				<h6>{parentPoolEventNamesMap[action.eventType ?? 0]}</h6>
 
 				{action.isActiveWithdraw && !isWithdrawalAvailable && isRequestWithdrawal ? (
 					<Tag variant="neutral" size="sm">

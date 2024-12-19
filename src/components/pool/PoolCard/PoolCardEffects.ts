@@ -26,7 +26,7 @@ export function useSwapCardEffects({ swapState, swapDispatch, address, typingTim
 		if (swapState.poolMode !== 'withdraw') return
 		if (!address) return
 
-		checkLastWithdrawRequest(address).then(lastWithdrawAction => {
+		checkLastWithdrawRequest(address as `0x${string}`).then(lastWithdrawAction => {
 			if (lastWithdrawAction) {
 				// swapDispatch({ type: 'SET_IS_WITHDRAW_INITIATED', payload: true })
 				// swapDispatch({ type: 'SET_ACTUAL_WITHDRAW_DEADLINE', payload: lastWithdrawAction.deadline })
