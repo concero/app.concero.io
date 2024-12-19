@@ -1,25 +1,36 @@
 import { type Address } from 'viem'
+import { fetchParentPoolActionsByLpAddress } from './fetchParentPoolActionsByLpAddress'
+
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import { fetchParentPoolActionsByLpAddress } from './fetchParentPoolActionsByLpAddress'
 
 dayjs.extend(isSameOrBefore)
 
-export const poolEventNamesMap = {
-	ConceroParentPool_DepositCompleted: 'Deposit',
-	ConceroParentPool_WithdrawRequestInitiated: 'Withdrawal Submitted',
-	ConceroParentPool_Withdrawn: 'Withdrawal Complete',
+export enum ParentPoolEventType {
+	DepositInitiated,
+	DepositCompleted,
+	WithdrawalRequestInitiated,
+	WithdrawalCompleted,
+	CLFRequestError,
+}
+
+export const parentPoolEventNamesMap: Record<ParentPoolEventType, string> = {
+	[ParentPoolEventType.DepositInitiated]: 'Deposit Initiated',
+	[ParentPoolEventType.DepositCompleted]: 'Deposit Completed',
+	[ParentPoolEventType.WithdrawalRequestInitiated]: 'Withdrawal Request Initiated',
+	[ParentPoolEventType.WithdrawalCompleted]: 'Withdrawal Completed',
+	[ParentPoolEventType.CLFRequestError]: 'CLF Request Error',
 }
 
 export const checkLastWithdrawRequest = async (lpAddress: Address) => {
 	const actions = await fetchParentPoolActionsByLpAddress(lpAddress)
 
 	for (const action of actions) {
-		if (action.eventName === 'ConceroParentPool_Withdrawn') {
+		if (action.eventType === ParentPoolEventType.WithdrawalCompleted) {
 			return null
 		}
 
-		if (action.eventName === 'ConceroParentPool_WithdrawRequestInitiated') {
+		if (action.eventType === ParentPoolEventType.WithdrawalRequestInitiated) {
 			return action
 		}
 	}

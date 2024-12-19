@@ -8,6 +8,7 @@ import { Button } from '../../buttons/Button/Button'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { IconButton } from '../../buttons/IconButton/IconButton'
 import { CrossIcon } from '../../../assets/icons/CrossIcon'
+import { type ParentPoolEventType } from '../../../api/concero/getUserActions'
 
 export enum UserActionStatus {
 	ActiveRequestWithdraw = 'ActiveRequestWithdraw',
@@ -15,7 +16,8 @@ export enum UserActionStatus {
 }
 
 export interface UserTransaction {
-	eventName: string
+	eventName?: string
+	eventType?: ParentPoolEventType
 	time: number
 	amount: string
 	status: string | null
@@ -43,7 +45,7 @@ export function UserActions() {
 	const isMobile = useMediaQuery('ipad')
 
 	const getActions = async () => {
-		return await fetchParentPoolActionsByLpAddress(address)
+		return await fetchParentPoolActionsByLpAddress(address!)
 	}
 
 	useEffect(() => {
