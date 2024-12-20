@@ -25,6 +25,15 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
 
+	const getPoints = (points: number | { $numberDecimal: string }): number => {
+		if (typeof points === 'number') {
+			return points
+		} else if (typeof points === 'object' && '$numberDecimal' in points) {
+			return parseFloat(points.$numberDecimal)
+		}
+		return 0
+	}
+
 	return (
 		<header className={classNames.header}>
 			{children}
@@ -60,7 +69,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 			<div className={classNames.headerButtonsContainer}>
 				{user && (
 					<>
-						<Tag>{toLocaleNumber(user.points, 2)} CERs</Tag>
+						<Tag>{toLocaleNumber(getPoints(user.points), 2)} CERs</Tag>
 						<TooltipWrapper
 							tooltipId={'user-multiplier'}
 							place={isTablet || isMobile ? 'top-end' : 'top'}
