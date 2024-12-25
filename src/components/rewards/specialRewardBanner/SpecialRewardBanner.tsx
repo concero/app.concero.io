@@ -22,7 +22,7 @@ export const SpecialRewardBanner = ({
 	subtitle,
 	variant = 'pink',
 }: Props) => {
-	const [isShow, setIsShow] = useState(false)
+	const [isShow, setIsShow] = useState(true)
 	const [rewardIsClaimed, setRewardIsClaimed] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
