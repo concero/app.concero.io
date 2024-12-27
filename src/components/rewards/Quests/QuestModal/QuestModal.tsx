@@ -179,7 +179,6 @@ export const QuestModal = ({
 					</Button>
 				</div>
 			)}
-
 			{isQuestCompleted && !rewardIsClaimed && (
 				<Button size="lg" isLoading={isLoading} isDisabled={rewardIsClaimed} onClick={handleClaimReward}>
 					Claim reward
