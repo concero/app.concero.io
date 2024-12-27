@@ -152,7 +152,9 @@ export const QuestModal = ({
 			<div className={classNames.mainInfo}>
 				<div className="w-full gap-sm">
 					<h2 className={classNames.title}>{name}</h2>
-					{quest.subtitle && <h2 className={classNames.subtitle}>{quest.subtitle}</h2>}
+					{quest.subtitle && quest.name !== 'Lancardio' && (
+						<h2 className={classNames.subtitle}>{quest.subtitle}</h2>
+					)}
 					<h6 className={classNames.points}>
 						{rewards.points ? `${rewards.points} CERs` : ''} {rewards?.role ? '+ Role' : ''}
 					</h6>
@@ -177,7 +179,6 @@ export const QuestModal = ({
 					</Button>
 				</div>
 			)}
-
 			{isQuestCompleted && !rewardIsClaimed && (
 				<Button size="lg" isLoading={isLoading} isDisabled={rewardIsClaimed} onClick={handleClaimReward}>
 					Claim reward
