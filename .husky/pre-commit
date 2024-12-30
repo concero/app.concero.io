@@ -1,4 +1,13 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+set -euo pipefail
 
-npm run format && npm run lint:fix && git add -A .
+# Branch name validation
+./$(dirname "$0")/validateBranchName.sh "$(git rev-parse --abbrev-ref HEAD)"
+
+# Pre-commit checks
+npm run format
+npm run lint:fix
+git add -A .
+
+echo "✅ Pre-commit checks passed successfully."
+exit 0
