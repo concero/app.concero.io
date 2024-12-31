@@ -25,35 +25,48 @@ export const AverageApyCard = ({ fees, isLoading }: Props) => {
 	const [commonValue, setCommonValue] = useState<string>('')
 
 	const handleAPY = async (fees: Fee[]) => {
-		let rewards = 0
-
-		const feeData: ChartData[] = fees
-			.filter(fee => {
-				const feeTime = fee.timestamp
-				const { startTime, endTime } = activeFilter
-
-				return (!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)
-			})
-			.map(fee => {
-				rewards += fee.feeMade
-				return {
+		try {
+			const feeData: ChartData[] = fees
+				.filter(fee => {
+					const feeTime = fee.timestamp
+					const { startTime, endTime } = activeFilter
+					return (!startTime || feeTime >= startTime) && (!endTime || feeTime <= endTime)
+				})
+				.map(fee => ({
 					time: fee.timestamp * 1000,
 					value: fee.feeMade,
+				}))
+
+			const groupedWeeklyFees = groupDataByWeeks(getUniqueChatData(feeData))
+
+			if (groupedWeeklyFees.length < 2) {
+				console.warn('Not enough data to calculate APY')
+				return
+			}
+
+			const weeklyApyData = groupedWeeklyFees.map((week, index) => {
+				if (index === 0) {
+					return {
+						time: week.time,
+						value: 0,
+					}
+				}
+				const previousWeekFees = groupedWeeklyFees[index - 1].value
+				const apy = ((previousWeekFees * 52) / poolLiquidity) * 100
+				return {
+					time: week.time,
+					value: apy,
 				}
 			})
 
-		const groupedWeeklyFees = groupDataByWeeks(getUniqueChatData(feeData))
+			const previousWeekFees = groupedWeeklyFees[groupedWeeklyFees.length - 2].value
+			const apy = ((previousWeekFees * 52) / poolLiquidity) * 100
 
-		if (groupedWeeklyFees.length < 2) {
-			console.warn('Not enough data to calculate APY')
-			return
+			setCommonValue(toLocaleNumber(apy).toString())
+			setApyData(weeklyApyData)
+		} catch (error) {
+			console.error('Error calculating APY:', error)
 		}
-
-		const previousWeekFees = groupedWeeklyFees[groupedWeeklyFees.length - 2].value
-		const apy = ((previousWeekFees * 52) / poolLiquidity) * 100
-
-		setCommonValue(toLocaleNumber(apy).toString())
-		setApyData(groupedWeeklyFees)
 	}
 
 	useEffect(() => {
