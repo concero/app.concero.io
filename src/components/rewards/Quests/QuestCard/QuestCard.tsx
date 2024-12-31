@@ -33,6 +33,21 @@ export const getDateUnitMap = (type: QuestType) => {
 	return null
 }
 
+const calculateMonthlyQuestDaysLeft = (endDate: number) => {
+	const endDateObj = new Date(endDate)
+	const now = new Date()
+	const timeDiff = endDateObj.getTime() - now.getTime()
+	const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24))
+	return daysLeft
+}
+
+const normalizeEndDate = (endDate: any) => {
+	if (typeof endDate === 'object' && endDate.$numberDecimal) {
+		return parseInt(endDate.$numberDecimal, 10)
+	}
+	return endDate
+}
+
 export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [completedStepIds, setCompletedStepIds] = useState<number[]>([])
@@ -43,8 +58,15 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 
 	const { name, endDate, image, _id } = quest
 
+	const normalizedEndDate = normalizeEndDate(endDate)
+
 	const questStepsCompleted = completedStepIds.length === quest.steps.length
-	const daysLeft = getDateUnitMap(quest.type) ? getDaysUntil(getDateUnitMap(quest.type)!) : getQuestDaysLeft(endDate)
+	const daysLeft =
+		quest.type === QuestType.Monthly
+			? calculateMonthlyQuestDaysLeft(normalizedEndDate)
+			: getDateUnitMap(quest.type)
+				? getDaysUntil(getDateUnitMap(quest.type)!)
+				: getQuestDaysLeft(normalizedEndDate)
 
 	useEffect(() => {
 		if (!user) return
