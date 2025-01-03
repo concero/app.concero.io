@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi'
 import { Button } from '../../buttons/Button/Button'
 import { trackEvent } from '../../../hooks/useTracking'
 import { action as tracingAction, category } from '../../../constants/tracking'
-import { completeWithdrawal, retryWithdrawal } from '../PoolCard/poolExecution/requestWithdraw'
+import { retryWithdrawal } from '../PoolCard/poolExecution/requestWithdraw'
 
 interface Props {
 	action: UserTransaction
@@ -16,49 +16,36 @@ interface Props {
 
 export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTimeLeft }: Props) => {
 	const { address, chainId } = useAccount()
-	const isActiveRequest = action.status === UserActionStatus.ActiveRequestWithdraw
 	const isRetryRequestWithdraw = action.status === UserActionStatus.WithdrawRetryNeeded
 	const isTxFailed = status === TransactionStatus.FAILED
 	const isPending = status === TransactionStatus.PENDING
 	const isSuccess = status === TransactionStatus.SUCCESS
 
 	const retryPerformedTimestamp = localStorage.getItem('retryPerformedTimestamp')
-	const isRertyPerformed = retryPerformedTimestamp && getRemainingTime(retryPerformedTimestamp) > 0
+	const isRetryPerformed = retryPerformedTimestamp && getRemainingTime(retryPerformedTimestamp) > 0
 
-	const handleCompleteWithdrawal = async () => {
+	const handleRetryWithdrawal = async () => {
 		try {
 			if (!address) return
 			setStatus(TransactionStatus.PENDING)
 
-			if (isRetryRequestWithdraw) {
-				void trackEvent({
-					category: category.PoolUserActions,
-					action: tracingAction.BeginRetryWithdrawalRequest,
-					label: tracingAction.BeginRetryWithdrawalRequest,
-					data: { action },
-				})
+			void trackEvent({
+				category: category.PoolUserActions,
+				action: tracingAction.BeginRetryWithdrawalRequest,
+				label: tracingAction.BeginRetryWithdrawalRequest,
+				data: { action },
+			})
 
-				const txStatus = await retryWithdrawal(address, chainId!)
+			const txStatus = await retryWithdrawal(address, chainId!)
 
-				if (txStatus === TransactionStatus.SUCCESS) {
-					const timeLeft = new Date().getTime()
+			if (txStatus === TransactionStatus.SUCCESS) {
+				const timeLeft = new Date().getTime()
 
-					localStorage.setItem('retryPerformedTimestamp', String(timeLeft))
-					setRetryTimeLeft(getRemainingTime(timeLeft))
-					setStatus(TransactionStatus.SUCCESS)
-				}
-
-				setStatus(TransactionStatus.FAILED)
+				localStorage.setItem('retryPerformedTimestamp', String(timeLeft))
+				setRetryTimeLeft(getRemainingTime(timeLeft))
+				setStatus(TransactionStatus.SUCCESS)
 			} else {
-				void trackEvent({
-					category: category.PoolUserActions,
-					action: tracingAction.BeginWithdrawalComplete,
-					label: tracingAction.BeginWithdrawalComplete,
-					data: { action },
-				})
-
-				const txStatus = await completeWithdrawal(address, chainId!)
-				setStatus(txStatus)
+				setStatus(TransactionStatus.FAILED)
 			}
 		} catch (error) {
 			setStatus(TransactionStatus.FAILED)
@@ -66,14 +53,14 @@ export const ManageWithdrawalButton = ({ action, status, setStatus, setRetryTime
 		}
 	}
 
-	if (isRertyPerformed || isSuccess || isPending) {
+	if (isRetryPerformed || isSuccess || isPending) {
 		return null
 	}
 
-	if (isActiveRequest || isRetryRequestWithdraw || isTxFailed) {
+	if (isRetryRequestWithdraw || isTxFailed) {
 		return (
-			<Button size="sm" variant="secondaryColor" onClick={handleCompleteWithdrawal}>
-				{isRetryRequestWithdraw ? 'Retry' : 'Claim'}
+			<Button size="sm" variant="secondaryColor" onClick={handleRetryWithdrawal}>
+				Retry
 			</Button>
 		)
 	}
