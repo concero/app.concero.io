@@ -5,22 +5,31 @@ import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState
 import { TransactionStatus } from '../../../api/concero/types'
 import { Tag } from '../../layout/Tag/Tag'
 import { ManageWithdrawalButton } from './ManageWithdrawalButton'
+import { IS_TESTNET } from '../../../constants/config'
 
 import dayjs from 'dayjs'
 
-export const getWithdrawalDate = (deadline: number) => {
-	if (!deadline) return
+export const getWithdrawalDate = (timestampInMillis: number) => {
+	if (!timestampInMillis) return
 
-	const oneHour = 3600
-	let units = 'days'
-	const givenTime = dayjs.unix(deadline + oneHour)
+	const timestampInSeconds = Math.floor(timestampInMillis / 1000)
+	const additionalTime = 597600 + (IS_TESTNET ? 0 : 3600)
+	const deadline = timestampInSeconds + additionalTime
+
+	const givenTime = dayjs.unix(deadline)
 	const now = dayjs()
 
-	let timeLeft = now.diff(givenTime, 'days')
+	let units = 'days'
+	let timeLeft = givenTime.diff(now, 'days')
 
 	if (timeLeft === 0) {
 		units = 'hours'
-		timeLeft = now.diff(givenTime, 'hours')
+		timeLeft = givenTime.diff(now, 'hours')
+	}
+
+	if (timeLeft === 0) {
+		units = 'minutes'
+		timeLeft = givenTime.diff(now, 'minutes')
 	}
 
 	return `Locked, ${timeLeft} ${units} left`
@@ -81,7 +90,7 @@ export const UserAction = ({ action, retryTimeLeft, setRetryTimeLeft }: Props) =
 
 				{action.isActiveWithdraw && !isWithdrawalAvailable && isRequestWithdrawal ? (
 					<Tag variant="neutral" size="sm">
-						{getWithdrawalDate(action.args.deadline)}
+						{getWithdrawalDate(action.time)}
 					</Tag>
 				) : (
 					(stageTagMap[status] ?? null)

@@ -19,7 +19,7 @@ const chain = IS_TESTNET ? baseSepolia : base
 
 const publicClient = getPublicClient(wagmiConfig, { chainId: chain.id })
 
-async function sendTransaction(swapState: SwapState, srcPublicClient: PublicClient, walletClient: WalletClient) {
+async function sendTransaction(swapState: SwapState, walletClient: WalletClient) {
 	const depositAmount = BigInt(addingAmountDecimals(swapState.from.amount, swapState.from.token.decimals)!)
 
 	return await walletClient.writeContract({
@@ -132,71 +132,6 @@ export async function startWithdrawal(
 	} finally {
 		swapDispatch({ type: 'SET_LOADING', payload: false })
 	}
-}
-
-const getCompleteWithdrawalFailedTrackEvent = (hash: Hash) => {
-	void trackEvent({
-		category: category.PoolUserActions,
-		action: trackingAction.FailedWithdrawalComplete,
-		label: trackingAction.FailedWithdrawalComplete,
-		data: { txHash: hash },
-	})
-}
-
-export const completeWithdrawal = async (address: Address, chainId: number): Promise<TransactionStatus> => {
-	const walletClient = await getWalletClient(wagmiConfig, { chainId })
-	walletClient.switchChain({ id: PARENT_POOL_CHAIN_ID })
-
-	const hash = await walletClient.writeContract({
-		account: address,
-		abi: ParentPoolAbiV1_5,
-		functionName: 'completeWithdrawal',
-		args: [],
-		address: parentPoolAddress,
-		gas: 4_000_000n,
-	})
-
-	const receipt = await publicClient.waitForTransactionReceipt({
-		hash,
-		timeout: 300_000,
-		pollingInterval: 3_000,
-		retryCount: 30,
-		confirmations: 5,
-	})
-
-	if (receipt.status === 'reverted') {
-		getCompleteWithdrawalFailedTrackEvent(hash)
-
-		return TransactionStatus.FAILED
-	}
-
-	for (const log of receipt.logs) {
-		try {
-			const decodedLog = decodeEventLogWrapper({
-				abi: ParentPoolAbiV1_5,
-				log,
-			})
-
-			if (decodedLog.eventName === 'ConceroParentPool_Withdrawn') {
-				void trackEvent({
-					category: category.PoolUserActions,
-					action: trackingAction.SuccessWithdrawalComplete,
-					label: trackingAction.SuccessWithdrawalComplete,
-					data: { txHash: hash },
-				})
-
-				return TransactionStatus.SUCCESS
-			}
-			if (decodedLog.eventName === 'ConceroParentPool_CLFRequestError') {
-				getCompleteWithdrawalFailedTrackEvent(hash)
-
-				return TransactionStatus.FAILED
-			}
-		} catch (err) {}
-	}
-
-	getCompleteWithdrawalFailedTrackEvent(hash)
-	return TransactionStatus.FAILED
 }
 
 export const retryWithdrawal = async (address: Address, chainId: number): Promise<TransactionStatus> => {
