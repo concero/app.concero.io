@@ -110,7 +110,7 @@ export const PoolCard = ({
 			size="lg"
 			variant="secondaryColor"
 		>
-			Withdrawal
+			Withdraw
 		</Button>
 	)
 
