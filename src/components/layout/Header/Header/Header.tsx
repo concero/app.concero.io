@@ -16,10 +16,11 @@ import { toLocaleNumber } from '../../../../utils/formatting'
 
 interface HeaderProps {
 	user: IUser | null
+	isWalletConnected: boolean
 	children?: ReactNode
 }
 
-export const Header: FC<HeaderProps> = ({ children, user }) => {
+export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) => {
 	const isTablet = useMediaQuery('ipad')
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapPool = useMatch(routes.pool)
@@ -67,7 +68,7 @@ export const Header: FC<HeaderProps> = ({ children, user }) => {
 				)}
 			</div>
 			<div className={classNames.headerButtonsContainer}>
-				{user && (
+				{user && isWalletConnected && (
 					<>
 						<Tag>{toLocaleNumber(getPoints(user.points), 2)} CERs</Tag>
 						<TooltipWrapper
