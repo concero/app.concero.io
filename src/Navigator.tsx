@@ -56,7 +56,7 @@ export const Navigator = () => {
 	return (
 		<BrowserRouter>
 			<AppScreen>
-				<Header user={user} />
+				<Header user={user} isWalletConnected={isConnected} />
 				<Routes>
 					<Route
 						path={routes.pool}

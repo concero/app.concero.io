@@ -14,7 +14,6 @@ export const Badge = ({ tokenLogoSrc, chainLogoSrc, borderSmall, size = 'm' }: T
 	const handleImgError = (e: any) => {
 		e.target.src = placeholder
 	}
-
 	return (
 		<div className={classNames.container}>
 			<img
