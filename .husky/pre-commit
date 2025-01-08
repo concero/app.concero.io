@@ -2,7 +2,7 @@
 
 .husky/validateBranchName.sh
 
-npm run lint && npm run format
+npm run format && npm run lint:fix && git add -A .
 
 echo "✅ Pre-commit checks passed successfully."
 exit 0
