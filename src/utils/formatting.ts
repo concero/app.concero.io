@@ -218,10 +218,15 @@ export const roundToPrecision = (num: number, precision: number) => {
 }
 
 export const toLocaleNumber = (num: number | string, fixed = 0) => {
-	if (!num) return 0
+	if (num == null) return 0
 
 	const number = Number(num)
-	const formattedNumber = number % 1 === 0 ? number.toString() : roundToPrecision(number, fixed).toString()
+	if (isNaN(number)) return 0
 
-	return formattedNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+	const roundedNumber = number % 1 === 0 ? number : roundToPrecision(number, fixed)
+	// To separate the display to the user of thousandths to decimal places
+	return roundedNumber.toLocaleString('en-US', {
+		minimumFractionDigits: fixed,
+		maximumFractionDigits: fixed,
+	}) // better use undefined instead 'en-US'
 }

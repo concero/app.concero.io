@@ -7,7 +7,7 @@ import {
 	type UserActionQuestData,
 	type UserActionTxData,
 } from '../../../api/concero/userActions/userActionType'
-import { formatDateTime, toLocaleNumber } from '../../../utils/formatting'
+import { formatDateTime, formatNumber, toLocaleNumber } from '../../../utils/formatting'
 
 interface UserActionProps {
 	action: IUserAction
@@ -20,8 +20,9 @@ export const UserAction = ({ action }: UserActionProps) => {
 		const { from, to, type } = action.data as UserActionTxData
 
 		const txAction = type === TransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
-
-		const txValue = `${txAction} from ${toLocaleNumber(from.amount, 2)} ${from.tokenSymbol} on ${from.chainName} to ${toLocaleNumber(to.amount, 2)} ${to.tokenSymbol} on ${to.chainName}`
+		const formattedFrom = formatNumber(from.amount)
+		const formattedTo = formatNumber(to.amount)
+		const txValue = `${txAction} from ${formattedFrom} ${from.tokenSymbol} on ${from.chainName} to ${formattedTo} ${to.tokenSymbol} on ${to.chainName}`
 		setValue(txValue)
 	}
 
