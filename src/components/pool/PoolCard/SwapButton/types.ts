@@ -3,6 +3,7 @@ import { type ErrorType } from './constants'
 
 export interface SwapButtonProps {
 	isLoading: boolean
+	isDepositDisabled: boolean
 	error: ErrorType | null
 	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 	isDeposit: boolean

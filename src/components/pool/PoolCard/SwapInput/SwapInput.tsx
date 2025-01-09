@@ -72,6 +72,7 @@ export const SwapInput = ({ swapState, swapDispatch, onClose }: SwapInputProps) 
 			<SwapDetails swapState={swapState} swapDispatch={swapDispatch} />
 
 			<SwapButton
+				isDepositDisabled={!amountIsAvailable}
 				isDeposit={isDeposit}
 				isLoading={swapState.isLoading}
 				error={swapState.inputError}
