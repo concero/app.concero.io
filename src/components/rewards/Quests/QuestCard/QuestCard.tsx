@@ -33,14 +33,6 @@ export const getDateUnitMap = (type: QuestType) => {
 	return null
 }
 
-const calculateMonthlyQuestDaysLeft = (endDate: number) => {
-	const endDateObj = new Date(endDate)
-	const now = new Date()
-	const timeDiff = endDateObj.getTime() - now.getTime()
-	const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24))
-	return daysLeft
-}
-
 const normalizeEndDate = (endDate: any) => {
 	if (typeof endDate === 'object' && endDate.$numberDecimal) {
 		return parseInt(endDate.$numberDecimal, 10)
@@ -63,7 +55,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const questStepsCompleted = completedStepIds.length === quest.steps.length
 	const daysLeft =
 		quest.type === QuestType.Monthly
-			? calculateMonthlyQuestDaysLeft(normalizedEndDate)
+			? getDaysUntil(normalizedEndDate)
 			: getDateUnitMap(quest.type)
 				? getDaysUntil(getDateUnitMap(quest.type)!)
 				: getQuestDaysLeft(normalizedEndDate)
@@ -98,6 +90,8 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 		if (rewardIsClaimed) return
 		setIsOpen(true)
 	}
+
+	console.log(daysLeft)
 
 	const questImage = (
 		<img
