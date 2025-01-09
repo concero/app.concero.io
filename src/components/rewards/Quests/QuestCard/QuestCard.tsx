@@ -9,7 +9,6 @@ import { type IQuest, QuestCategory, QuestType } from '../../../../api/concero/q
 import { config } from '../../../../constants/config'
 import { getQuestDaysLeft } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
-import { getDaysUntil } from '../../../../utils/date/getDaysUntil'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -33,14 +32,6 @@ export const getDateUnitMap = (type: QuestType) => {
 	return null
 }
 
-const calculateMonthlyQuestDaysLeft = (endDate: number) => {
-	const endDateObj = new Date(endDate)
-	const now = new Date()
-	const timeDiff = endDateObj.getTime() - now.getTime()
-	const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24))
-	return daysLeft
-}
-
 const normalizeEndDate = (endDate: any) => {
 	if (typeof endDate === 'object' && endDate.$numberDecimal) {
 		return parseInt(endDate.$numberDecimal, 10)
@@ -56,17 +47,11 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const isDailyQuest = quest.type === QuestType.Daily
 	const isSocialQuest = quest.category === QuestCategory.Socials
 
-	const { name, endDate, image, _id } = quest
+	const { name, image, endDate, _id } = quest
+	const questStepsCompleted = completedStepIds.length === quest.steps.length
 
 	const normalizedEndDate = normalizeEndDate(endDate)
-
-	const questStepsCompleted = completedStepIds.length === quest.steps.length
-	const daysLeft =
-		quest.type === QuestType.Monthly
-			? calculateMonthlyQuestDaysLeft(normalizedEndDate)
-			: getDateUnitMap(quest.type)
-				? getDaysUntil(getDateUnitMap(quest.type)!)
-				: getQuestDaysLeft(normalizedEndDate)
+	const daysLeft = getQuestDaysLeft(normalizedEndDate)
 
 	useEffect(() => {
 		if (!user) return
