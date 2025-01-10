@@ -9,7 +9,7 @@ import { type IQuest, QuestCategory, QuestType } from '../../../../api/concero/q
 import { config } from '../../../../constants/config'
 import { getQuestDaysLeft } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
-
+import { CersIcon } from '../../../../assets/icons/CersIcon'
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
 	quest: IQuest
@@ -104,6 +104,13 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	// don't display daily social quest if they don't have a link
 	if (isDailyQuest && isSocialQuest && !quest.steps[0].options?.link) return null
 
+	let rewardsToShow: string = '0'
+	// Display either pointsToshow or points
+	if (quest.rewards.pointsToShow && quest.rewards.pointsToShow.length > 0) {
+		rewardsToShow = quest.rewards.pointsToShow
+	} else if (quest.rewards.points) {
+		rewardsToShow = String(quest.rewards.points)
+	}
 	return (
 		<>
 			<div
@@ -133,7 +140,10 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 								<h4 className={classNames.title}>{name}</h4>
 							)}
 							{!!quest.rewards.points && (
-								<h6 className={classNames.points}>+ {quest.rewards.points} CERs</h6>
+								<div className={classNames.rewards}>
+									<h6 className={classNames.points}>+ {rewardsToShow}</h6>
+									<CersIcon />
+								</div>
 							)}
 						</div>
 					</div>

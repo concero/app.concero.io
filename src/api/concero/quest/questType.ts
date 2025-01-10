@@ -76,9 +76,10 @@ export interface IQuest {
 	endDate: number
 	steps: IQuestStep[]
 	rewards: {
-		points: number
-		multiplier: number
-		role?: boolean
+		points: number // Mandatory field, for automatic reward after completing the quest
+		pointsToShow?: string
+		multiplier: number // Temporary field, adds a multiplier to the user for a limited time
+		isCustomReward?: boolean
 	}
 	type: QuestType
 	category: QuestCategory
