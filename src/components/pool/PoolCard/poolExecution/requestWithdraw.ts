@@ -113,7 +113,7 @@ export async function startWithdrawal(
 		})
 
 		await checkAllowanceAndApprove(swapState, swapDispatch, publicClient, walletClient)
-		const hash = await sendTransaction(swapState, publicClient, walletClient)
+		const hash = await sendTransaction(swapState, walletClient)
 
 		await checkTransactionStatus(hash, publicClient, swapDispatch)
 	} catch (error) {
