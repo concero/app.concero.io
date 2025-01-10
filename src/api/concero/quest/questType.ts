@@ -80,6 +80,7 @@ export interface IQuest {
 		pointsToShow?: string
 		multiplier: number // Temporary field, adds a multiplier to the user for a limited time
 		isCustomReward?: boolean
+		role: '${boolean}'
 	}
 	type: QuestType
 	category: QuestCategory

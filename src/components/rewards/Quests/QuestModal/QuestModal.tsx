@@ -13,6 +13,7 @@ import { claimQuestReward } from '../../../../api/concero/quest/claimQuestReward
 import { useAppKit } from '@reown/appkit/react'
 import { Stepper } from '../../../layout/Stepper/Stepper'
 import { useAccount } from 'wagmi'
+import { CersIcon } from '../../../../assets/icons/CersIcon'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -146,7 +147,13 @@ export const QuestModal = ({
 			/>
 		)
 	}
-
+	let rewardsToShow: string = '0'
+	// Display either pointsToshow or points
+	if (quest.rewards.pointsToShow && quest.rewards.pointsToShow.length > 0) {
+		rewardsToShow = quest.rewards.pointsToShow
+	} else if (quest.rewards.points) {
+		rewardsToShow = String(quest.rewards.points)
+	}
 	return (
 		<Modal position="top" className={classNames.questModal} show={isOpen} setShow={setIsOpen} title={questTitle}>
 			<div className={classNames.mainInfo}>
@@ -155,9 +162,11 @@ export const QuestModal = ({
 					{quest.subtitle && quest.name !== 'Lancardio' && (
 						<h2 className={classNames.subtitle}>{quest.subtitle}</h2>
 					)}
-					<h6 className={classNames.points}>
-						{rewards.points ? `${rewards.points} CERs` : ''} {rewards?.role ? '+ Role' : ''}
-					</h6>
+					<div className={classNames.rewards}>
+						<h6 className={classNames.points}>+ {rewardsToShow}</h6>
+						<CersIcon />
+						{rewards?.role ? '+ Role' : ''}
+					</div>
 				</div>
 
 				{questImage}
