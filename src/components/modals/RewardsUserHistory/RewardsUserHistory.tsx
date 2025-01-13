@@ -5,6 +5,10 @@ import { UserAction } from './UserAction'
 import { type IUserAction } from '../../../api/concero/userActions/userActionType'
 import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActions'
 import { type IUser } from '../../../api/concero/user/userType'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import React from 'react'
+import { Loader } from '../../layout/Loader/Loader'
+import { useTranslation } from 'react-i18next'
 
 interface UserHistoryProps {
 	isOpen: boolean
@@ -13,28 +17,43 @@ interface UserHistoryProps {
 }
 
 export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
-	const [userActions, setUserActions] = useState<IUserAction[]>([])
-
-	const fetchAndSetUserActions = async () => {
-		const response = await fetchUserActions(user.address)
-		setUserActions(response)
-	}
-
-	useEffect(() => {
-		if (!isOpen || userActions.length > 0) return
-
-		fetchAndSetUserActions().catch(e => {
-			console.error(e)
-		})
-	}, [isOpen])
+	const { t } = useTranslation()
+	const limit = 20
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
+		queryKey: ['userActions', user.address],
+		queryFn: ({ pageParam = 0 }) => fetchUserActions(user.address, { limit, page: pageParam }),
+		initialPageParam: 0,
+		getNextPageParam: (lastPage, _, lastPageParam) => (lastPage.length === limit ? ++lastPageParam : undefined),
+	})
 
 	return (
 		<Modal show={isOpen} setShow={setIsOpen} title="History" className={classNames.historyModal}>
 			<div className={classNames.historyWrapper}>
 				{!user && <h4>Connect wallet to see your history</h4>}
-				{userActions.map(action => (
-					<UserAction key={action.timestamp} action={action} />
+				{status === 'pending' && (
+					<div className={classNames.loaderWrap}>
+						<Loader />
+					</div>
+				)}
+				{status === 'error' && <p>{t('utils.couldNotLoadData')}</p>}
+
+				{data?.pages.map((page, pageIndex) => (
+					<React.Fragment key={pageIndex}>
+						{page.map((action: IUserAction) => (
+							<UserAction key={action.timestamp} action={action} />
+						))}
+					</React.Fragment>
 				))}
+				{isFetchingNextPage && <p>Loading more...</p>}
+				<div>
+					<button
+						onClick={() => fetchNextPage()}
+						disabled={!hasNextPage || isFetchingNextPage}
+						className={classNames.loadMoreButton}
+					>
+						{isFetchingNextPage ? t('utils.loading') : hasNextPage ? t('utils.loadMoreData') : null}
+					</button>
+				</div>
 			</div>
 		</Modal>
 	)
