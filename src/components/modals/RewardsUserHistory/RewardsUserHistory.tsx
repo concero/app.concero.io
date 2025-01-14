@@ -9,6 +9,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import React from 'react'
 import { Loader } from '../../layout/Loader/Loader'
 import { useTranslation } from 'react-i18next'
+import { Button } from '../../buttons/Button/Button'
 
 interface UserHistoryProps {
 	isOpen: boolean
@@ -18,7 +19,7 @@ interface UserHistoryProps {
 
 export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 	const { t } = useTranslation()
-	const limit = 20
+	const limit = 6
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
 		queryKey: ['userActions', user.address],
 		queryFn: ({ pageParam = 0 }) => fetchUserActions(user.address, { limit, page: pageParam }),
@@ -44,15 +45,14 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 						))}
 					</React.Fragment>
 				))}
-				{isFetchingNextPage && <p>Loading more...</p>}
-				<div>
-					<button
+				<div className={classNames.loadNextWrap}>
+					<Button
+						variant="secondary"
 						onClick={() => fetchNextPage()}
-						disabled={!hasNextPage || isFetchingNextPage}
-						className={classNames.loadMoreButton}
+						isDisabled={!hasNextPage || isFetchingNextPage}
 					>
 						{isFetchingNextPage ? t('utils.loading') : hasNextPage ? t('utils.loadMoreData') : null}
-					</button>
+					</Button>
 				</div>
 			</div>
 		</Modal>
