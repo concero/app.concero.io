@@ -1,5 +1,11 @@
 $borderRadius: 9px;
 $borderSize: 2px;
+.wrap_with_label {
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+	line-height: 18px;
+}
 .checkbox {
 	display: flex;
 	align-items: center;
@@ -87,4 +93,12 @@ $borderSize: 2px;
 	border-radius: calc($borderRadius - $borderSize);
 	border: 2px solid #ffffff;
 	transition: all 0.2s;
+}
+
+.label {
+	font-size: 14px;
+	font-weight: 500;
+	&.label_disabled {
+		color: var(--color-grey-500);
+	}
 }
