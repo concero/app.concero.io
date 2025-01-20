@@ -24,13 +24,7 @@ export const TermsConditionErrorModal = (props: TProps): JSX.Element => {
 			</div>
 			<p className={classNames(cls.block, {}, [cls.description])}>Something went wrong, try again</p>
 			<div className={classNames(cls.block, {}, [cls.condition])}></div>
-			<Button
-				variant="primary"
-				className={cls.block}
-				isFull
-				onClick={onTryAgain}
-				size="lg"
-			>
+			<Button variant="primary" className={cls.block} isFull onClick={onTryAgain} size="lg">
 				Try again
 			</Button>
 		</Modal>

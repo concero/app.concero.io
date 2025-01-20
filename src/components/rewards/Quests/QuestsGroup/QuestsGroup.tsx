@@ -24,13 +24,13 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const handleGetQuests = useCallback(async () => {
-			fetchQuests()
-				.then(fetchedQuests => {
-					setQuests(fetchedQuests)
-				})
-				.finally(() => {
-					setIsLoading(false)
-				})
+		fetchQuests()
+			.then(fetchedQuests => {
+				setQuests(fetchedQuests)
+			})
+			.finally(() => {
+				setIsLoading(false)
+			})
 	}, [address])
 
 	useEffect(() => {
