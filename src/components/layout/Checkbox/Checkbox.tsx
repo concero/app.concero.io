@@ -2,7 +2,7 @@ import { type FC, useState, type MouseEvent, HTMLProps, ReactNode, useId, MouseE
 import cls from './Checkbox.module.pcss'
 import { classNames } from '../../../utils/classNames/classNames'
 
-type TProps = HTMLProps<HTMLDivElement> & {
+type TProps = Omit<HTMLProps<HTMLDivElement>, 'onChange' | 'disabled' | 'className'> & {
 	isChecked?: boolean
 	onChange?: (isChecked: boolean) => void
 	className?: string
@@ -13,7 +13,7 @@ type TProps = HTMLProps<HTMLDivElement> & {
 
 export const Checkbox = (props: TProps) => {
 	const { className, disabled, isChecked, onChange, id, label, ...otherProps } = props
-	const [internalChecked, setInternalChecked] = useState(false)
+	const [internalChecked, setInternalChecked] = useState(isChecked ?? false)
 	const checkboxGeneratedId = useId()
 	const checkboxId = id ?? checkboxGeneratedId
 

@@ -9,6 +9,7 @@ import type { IUser } from './api/concero/user/userType'
 import { useAccount } from 'wagmi'
 import { handleFetchUser } from './utils/web3/handleFetchUser'
 import posthog from 'posthog-js'
+import { CheckTermsOfUseDecorator } from './components/modals/TermsConditionModal/CheckTermsOfUse'
 
 const PoolScreen = lazy(
 	async () =>
@@ -62,7 +63,9 @@ export const Navigator = () => {
 						path={routes.pool}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
-								<PoolScreen />
+								<CheckTermsOfUseDecorator>
+									<PoolScreen />
+								</CheckTermsOfUseDecorator>
 							</Suspense>
 						}
 					/>
@@ -70,7 +73,9 @@ export const Navigator = () => {
 						path={routes.poolUsdc}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
-								<UsdcPoolScreen />
+								<CheckTermsOfUseDecorator>
+									<UsdcPoolScreen />
+								</CheckTermsOfUseDecorator>
 							</Suspense>
 						}
 					/>
@@ -78,7 +83,9 @@ export const Navigator = () => {
 						path={routes.rewards}
 						element={
 							<Suspense fallback={<FullScreenLoader />}>
-								<RewardsScreen loading={loading} user={user} />
+								<CheckTermsOfUseDecorator>
+									<RewardsScreen loading={loading} user={user} />
+								</CheckTermsOfUseDecorator>
 							</Suspense>
 						}
 					/>
