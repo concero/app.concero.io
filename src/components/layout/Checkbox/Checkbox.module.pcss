@@ -1,17 +1,18 @@
 $borderRadius: 9px;
 $borderSize: 2px;
+$heightCheckboxLine: 22px;
 .wrap_with_label {
 	display: flex;
 	flex-direction: row;
 	gap: 12px;
-	line-height: 18px;
+	line-height: $heightCheckboxLine;
 }
 .checkbox {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 22px;
-	height: 22px;
+	height: $heightCheckboxLine;
 	border: $borderSize solid var(--color-grey-400);
 	border-radius: $borderRadius;
 	background-color: var(--color-grey-100);
