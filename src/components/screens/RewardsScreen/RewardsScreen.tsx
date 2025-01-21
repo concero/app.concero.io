@@ -7,6 +7,9 @@ import { ProfilePlaceholder } from '../../rewards/ProfileCard/ProfilePlaceholder
 import { StreaksPlaceholders } from '../../rewards/StreaksCard/StreakCard/StreakPlaceholder/StreakPlaceholder'
 import { RewardsProfile } from '../../rewards/RewardsProfile/RewardsProfile'
 
+import { TechWorksScreen } from '../TechWorksScreen/TechWorksScreen'
+import { config } from '../../../constants/config'
+
 interface Props {
 	user: IUser | null
 	loading: boolean
@@ -14,7 +17,9 @@ interface Props {
 
 export const RewardsScreen = ({ user, loading }: Props) => {
 	const { isConnected } = useAccount()
-
+	if (config.REWARD_IS_NOT_AVAILABLE) {
+		return <TechWorksScreen />
+	}
 	return (
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrapper}>
