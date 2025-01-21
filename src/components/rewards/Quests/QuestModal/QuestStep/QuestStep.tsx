@@ -23,6 +23,7 @@ import { getDayRangeDates, getWeekRangeDates } from '../../../../../utils/date/g
 import { SkeletonLoader } from '../../../../layout/SkeletonLoader/SkeletonLoader'
 import { toLocaleNumber } from '../../../../../utils/formatting'
 import { termsIsActual } from '../../../../modals/TermsConditionModal/model/lib/termsIsActual'
+import { Address } from 'viem'
 
 type StepMode = 'group' | 'one'
 
@@ -158,7 +159,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 			setVerifyStatus(VerificationStatus.PENDING)
 
 			const [questRes] = await Promise.all([
-				verifyQuest(quest._id, step.id, user._id),
+				verifyQuest(quest._id, step.id, user.address as Address),
 				trackEvent({
 					category: category.QuestCard,
 					action: action.BeginQuest,

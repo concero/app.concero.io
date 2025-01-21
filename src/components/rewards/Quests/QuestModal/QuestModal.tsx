@@ -13,6 +13,7 @@ import { claimQuestReward } from '../../../../api/concero/quest/claimQuestReward
 import { useAppKit } from '@reown/appkit/react'
 import { Stepper } from '../../../layout/Stepper/Stepper'
 import { useAccount } from 'wagmi'
+import { Address } from 'viem'
 
 interface QuestModalProps {
 	isOpen: boolean
@@ -51,7 +52,7 @@ export const QuestModal = ({
 		setIsLoading(true)
 
 		try {
-			const result = await claimQuestReward(quest._id, user._id)
+			const result = await claimQuestReward(quest._id, user.address as Address)
 
 			if (result.points > 0) {
 				setPoints(result.points)
