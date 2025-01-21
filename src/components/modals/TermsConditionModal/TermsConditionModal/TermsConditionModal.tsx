@@ -36,7 +36,7 @@ export const TermsConditionModal = (props: TProps): JSX.Element => {
 					<a
 						target="_blank"
 						rel="noreferrer"
-						href="https://www.concero.io/terms-of-use.pdf"
+						href="https://app.concero.io/terms-of-use.pdf"
 						className={cls.link}
 					>
 						&nbsp;Terms of Use
@@ -45,7 +45,7 @@ export const TermsConditionModal = (props: TProps): JSX.Element => {
 					<a
 						target="_blank"
 						rel="noreferrer"
-						href="https://www.concero.io/terms-of-use.pdf"
+						href="https://app.concero.io/terms-of-use.pdf"
 						className={cls.link}
 					>
 						&nbsp; Privacy Policy&nbsp;
