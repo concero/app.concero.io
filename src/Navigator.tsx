@@ -37,7 +37,9 @@ export const Navigator = () => {
 
 	const getUser = async () => {
 		const user = await handleFetchUser(address!)
-		setUser(user)
+		if (user) {
+			setUser(user)
+		}
 	}
 
 	useEffect(() => {
