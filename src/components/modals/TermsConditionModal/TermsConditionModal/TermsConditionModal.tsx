@@ -54,7 +54,7 @@ export const TermsConditionModal = (props: TProps): JSX.Element => {
 				</label>
 			</div>
 			<Button
-				variant="secondary"
+				variant={checked ? 'primary' : 'secondary'}
 				className={cls.block}
 				isFull
 				isDisabled={!checked}
@@ -64,7 +64,6 @@ export const TermsConditionModal = (props: TProps): JSX.Element => {
 			>
 				Verify
 			</Button>
-			{isVerifyLoading && 'Please sign the message'}
 		</Modal>
 	)
 }

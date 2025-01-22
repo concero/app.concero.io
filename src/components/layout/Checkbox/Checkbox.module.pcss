@@ -25,7 +25,7 @@ $heightCheckboxLine: 22px;
 		border-color: var(--color-accent-600);
 	}
 
-	&:focus {
+	&:focus(:not(:active)) {
 		border-color: var(--color-accent-600);
 		outline: 2px solid var(--color-accent-500);
 		outline-offset: 2px;
@@ -61,7 +61,7 @@ $heightCheckboxLine: 22px;
 		border: 2px solid var(--color-grey-100);
 		background-color: var(--color-accent-600);
 	}
-	&:focus {
+	&:focus(:not(:active)) {
 		.inner {
 			background-color: var(--color-accent-700);
 		}
