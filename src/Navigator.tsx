@@ -43,7 +43,12 @@ export const Navigator = () => {
 			posthog.identify(address)
 		}
 	}, [isConnected, address])
-
+	const ExternalRedirect = ({ url }: { url: string }) => {
+		useEffect(() => {
+			window.location.href = url
+		}, [url])
+		return null
+	}
 	return (
 		<BrowserRouter>
 			<AppScreen>
@@ -61,6 +66,8 @@ export const Navigator = () => {
 					/>
 					<Route path={routes.root} element={<Navigate to={routes.rewards} />} />
 					<Route path={'/*'} element={<Navigate to={routes.rewards} />} />
+					<Route path={routes.pool} element={<ExternalRedirect url="https://lanca.io/pools" />} />
+					<Route path={routes.poolUsdc} element={<ExternalRedirect url="https://lanca.io/pools/usdc" />} />
 				</Routes>
 				<Footer />
 			</AppScreen>
