@@ -2,6 +2,7 @@ import pluginPrettier from 'eslint-plugin-prettier'
 import pluginTs from '@typescript-eslint/eslint-plugin'
 import parserTs from '@typescript-eslint/parser'
 import { fixupPluginRules } from '@eslint/compat'
+import storybook from 'eslint-plugin-storybook'
 export default [
 	{
 		ignores: ['node_modules', 'clf', 'typechain-types', 'artifacts', 'deployments', 'cache'],
@@ -14,6 +15,7 @@ export default [
 				project: './tsconfig.json',
 			},
 		},
+
 		plugins: {
 			'@typescript-eslint': pluginTs,
 			prettier: pluginPrettier,
@@ -39,8 +41,8 @@ export default [
 		},
 
 		rules: {
-			'storybook/await-interactions': 'off', // работает только со @storybook/testing-library, но она уже устарела (используем @storybook/test)
-			'storybook/use-storybook-testing-library': 'error', // запрещает использовать testing-library/react отдельно в stories
+			'storybook/await-interactions': 'off',
+			'storybook/use-storybook-testing-library': 'error',
 			'storybook/context-in-play-function': 'error',
 			'storybook/default-exports': 'error',
 			'storybook/no-uninstalled-addons': 'error',

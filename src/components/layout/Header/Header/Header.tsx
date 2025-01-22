@@ -23,7 +23,6 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) => {
 	const isTablet = useMediaQuery('ipad')
 	const isMobile = useMediaQuery('mobile')
-	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
 
 	const getPoints = (points: number | { $numberDecimal: string }): number => {
@@ -48,14 +47,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 							<Button variant="tetrary">Swap</Button>
 						</a>
 						<span className={classNames.separator} />
-						<Link style={{ pointerEvents: matchSwapPool ? 'none' : 'all' }} to={routes.pool}>
-							<Button
-								className={matchSwapPool ? buttonClassNames.tetraryColorActive : ''}
-								variant="tetrary"
-							>
-								Provide liquidity
-							</Button>
-						</Link>
+
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
 							<Button
 								className={matchSwapRewards ? buttonClassNames.tetraryColorActive : ''}
