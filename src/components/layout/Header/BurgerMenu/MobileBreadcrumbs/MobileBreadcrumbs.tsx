@@ -9,10 +9,10 @@ import { useMediaQuery } from '../../../../../hooks/useMediaQuery'
 export function MobileBreadcrumbs() {
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
-
+	if (!isMobile) return null
 	return (
 		<ul className={classNames.container}>
-			{isMobile && <WalletButton isFull={true} className={classNames.walletButton} />}
+			<WalletButton isFull={true} className={classNames.walletButton} />
 		</ul>
 	)
 }
