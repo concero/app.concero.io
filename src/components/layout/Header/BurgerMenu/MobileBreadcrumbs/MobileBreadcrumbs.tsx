@@ -13,22 +13,6 @@ export function MobileBreadcrumbs() {
 	return (
 		<ul className={classNames.container}>
 			{isMobile && <WalletButton isFull={true} className={classNames.walletButton} />}
-			<Link to={routes.rewards} className={classNames.link}>
-				<Button variant={'tetrary'} className={classNames.listButton}>
-					<h5>Rewards</h5>
-				</Button>
-			</Link>
-			<Link to={routes.pool} className={classNames.link}>
-				<Button variant={'tetrary'} className={classNames.listButton}>
-					<h5>Provide Liquidity</h5>
-				</Button>
-			</Link>
-			<div className={classNames.separator} />
-			<a href="https://lanca.io" className={classNames.link}>
-				<Button variant={'tetrary'} className={classNames.listButton}>
-					<h5>{t('header.swap')}</h5>
-				</Button>
-			</a>
 		</ul>
 	)
 }
