@@ -7,6 +7,8 @@ import classNames from './ProfileCard.module.pcss'
 import { Button } from '../../buttons/Button/Button'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { disconnectNetwork } from '../../../api/concero/socialNetworks/disconnectNetwork'
+import { DiscordIcon } from '../../../assets/icons/Socials/DiscordIcon'
+import { TwitterIcon } from '../../../assets/icons/Socials/TwitterIcon'
 
 export const discordLink = `https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=https%3A%2F%2Fapp.concero.io%2Frewards&scope=identify+guilds+email`
 
@@ -87,6 +89,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 	return (
 		<div className="w-full">
 			<Button
+				leftIcon={<TwitterIcon color="#1DA1F2" />}
 				onClick={handleConnectTwitter}
 				className={classNames.connectSocialNetworkButton}
 				variant="tetrary"
@@ -97,6 +100,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 				Twitter
 			</Button>
 			<Button
+				leftIcon={<DiscordIcon color="#1DA1F2" />}
 				onClick={handleConnectDiscord}
 				className={classNames.connectSocialNetworkButton}
 				variant="tetrary"

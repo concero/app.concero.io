@@ -1,7 +1,7 @@
 export const routes = {
 	home: '/',
 	root: '/',
-	pool: '/pool',
-	poolUsdc: '/pool/usdc',
+	pool: '/pools',
+	poolUsdc: '/pools/usdc',
 	rewards: '/rewards',
 }

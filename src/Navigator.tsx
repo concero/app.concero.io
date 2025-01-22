@@ -11,18 +11,6 @@ import { handleFetchUser } from './utils/web3/handleFetchUser'
 import posthog from 'posthog-js'
 import { CheckTermsOfUseDecorator } from './components/modals/TermsConditionModal/CheckTermsOfUse'
 
-const PoolScreen = lazy(
-	async () =>
-		await import('./components/screens/PoolScreen/PoolScreen').then(module => ({ default: module.PoolScreen })),
-)
-
-const UsdcPoolScreen = lazy(
-	async () =>
-		await import('./components/screens/PoolScreen/UsdcPoolScreen').then(module => ({
-			default: module.UsdcPoolScreen,
-		})),
-)
-
 const RewardsScreen = lazy(
 	async () =>
 		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
@@ -55,32 +43,17 @@ export const Navigator = () => {
 			posthog.identify(address)
 		}
 	}, [isConnected, address])
-
+	const ExternalRedirect = ({ url }: { url: string }) => {
+		useEffect(() => {
+			window.location.href = url
+		}, [url])
+		return null
+	}
 	return (
 		<BrowserRouter>
 			<AppScreen>
 				<Header user={user} isWalletConnected={isConnected} />
 				<Routes>
-					<Route
-						path={routes.pool}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<CheckTermsOfUseDecorator>
-									<PoolScreen />
-								</CheckTermsOfUseDecorator>
-							</Suspense>
-						}
-					/>
-					<Route
-						path={routes.poolUsdc}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<CheckTermsOfUseDecorator>
-									<UsdcPoolScreen />
-								</CheckTermsOfUseDecorator>
-							</Suspense>
-						}
-					/>
 					<Route
 						path={routes.rewards}
 						element={
@@ -91,8 +64,10 @@ export const Navigator = () => {
 							</Suspense>
 						}
 					/>
-					<Route path={routes.root} element={<Navigate to={routes.pool} />} />
-					<Route path={'/*'} element={<Navigate to={routes.pool} />} />
+					<Route path={routes.root} element={<Navigate to={routes.rewards} />} />
+					<Route path={'/*'} element={<Navigate to={routes.rewards} />} />
+					<Route path={routes.pool} element={<ExternalRedirect url="https://lanca.io/pools" />} />
+					<Route path={routes.poolUsdc} element={<ExternalRedirect url="https://lanca.io/pools/usdc" />} />
 				</Routes>
 				<Footer />
 			</AppScreen>
