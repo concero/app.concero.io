@@ -20,6 +20,7 @@ import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetwork
 import { type IUser } from '../../../../api/concero/user/userType'
 import { Separator } from '../../Separator/Separator'
 import { Dropdown } from './Dropdown'
+import { Tag } from '../../Tag/Tag'
 
 interface Props {
 	user: IUser | null
@@ -101,6 +102,23 @@ export function BurgerMenu({ user }: Props) {
 
 	const settings = (
 		<ul className={classNames.listContainer}>
+			<Button isFull isDisabled variant="tetrary" className={classNames.rewards}>
+				Rewards
+			</Button>
+			<Button
+				isFull
+				isDisabled
+				className={classNames.profile}
+				rightIcon={
+					<Tag size="sm" variant="neutral">
+						Coming Soon
+					</Tag>
+				}
+				variant="tetrary"
+			>
+				Profile
+			</Button>
+			<Separator />
 			{user && <SocialNetworkButtons user={user} />}
 			{user && <Separator />}
 			<li>
@@ -135,10 +153,8 @@ export function BurgerMenu({ user }: Props) {
 					className={classNames.menuContainer}
 				>
 					{isMobile ? <MobileBreadcrumbs /> : null}
-
-					{isMobile ? <Dropdown>{settings}</Dropdown> : settings}
+					{settings}
 					{isMobile && <Separator />}
-
 					<Button
 						className="w-full"
 						variant="secondaryColor"

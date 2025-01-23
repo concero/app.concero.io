@@ -22,6 +22,8 @@ import { ProgressBar } from '../../../../layout/progressBar/ProgressBar'
 import { getDayRangeDates, getWeekRangeDates } from '../../../../../utils/date/getRangeDates'
 import { SkeletonLoader } from '../../../../layout/SkeletonLoader/SkeletonLoader'
 import { toLocaleNumber } from '../../../../../utils/formatting'
+import { termsIsActual } from '../../../../modals/TermsConditionModal/model/lib/termsIsActual'
+import { Address } from 'viem'
 
 type StepMode = 'group' | 'one'
 
@@ -94,7 +96,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 
 	const startQuestLink = step?.options?.link ? step.options.link : defaultStartQuestLinkMap[step.source]
 	const isConnectNetwork = step.questAction === QuestSocialAction.ConnectSocialNetwork
-
+	let termsOfUseIsActual = termsIsActual(user ?? undefined)
 	useEffect(() => {
 		if (linkIsVisited) {
 			const newButtonState: ButtonStepStyle = {
@@ -157,7 +159,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 			setVerifyStatus(VerificationStatus.PENDING)
 
 			const [questRes] = await Promise.all([
-				verifyQuest(quest._id, step.id, user._id),
+				verifyQuest(quest._id, step.id, user.address as Address),
 				trackEvent({
 					category: category.QuestCard,
 					action: action.BeginQuest,
@@ -234,7 +236,12 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 	const actionButtons = user && isConnected && (
 		<div className="gap-sm">
 			<div className="gap-sm row">
-				<Button onClick={handleStartQuest} size={buttonState.size} variant={buttonState.startButton.variant}>
+				<Button
+					onClick={handleStartQuest}
+					size={buttonState.size}
+					variant={buttonState.startButton.variant}
+					isDisabled={!termsOfUseIsActual}
+				>
 					{buttonState.startButton.text}
 				</Button>
 				<Button
@@ -242,6 +249,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 					isLoading={verifyStatus === VerificationStatus.PENDING}
 					size={buttonState.size}
 					variant={buttonState.verifyButton.variant}
+					isDisabled={!termsOfUseIsActual}
 				>
 					{buttonState.verifyButton.text}
 				</Button>
