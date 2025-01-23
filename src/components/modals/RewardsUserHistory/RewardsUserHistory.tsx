@@ -41,19 +41,21 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 				{data?.pages.map((page, pageIndex) => (
 					<React.Fragment key={pageIndex}>
 						{page.map((action: IUserAction) => (
-							<UserAction key={action.timestamp} action={action} />
+							<UserAction key={JSON.stringify(action)} action={action} />
 						))}
 					</React.Fragment>
 				))}
-				<div className={classNames.loadNextWrap}>
-					<Button
-						variant="secondary"
-						onClick={() => fetchNextPage()}
-						isDisabled={!hasNextPage || isFetchingNextPage}
-					>
-						{isFetchingNextPage ? t('utils.loading') : hasNextPage ? t('utils.loadMoreData') : null}
-					</Button>
-				</div>
+				{(isFetchingNextPage || hasNextPage) && (
+					<div className={classNames.loadNextWrap}>
+						<Button
+							variant="secondary"
+							onClick={() => fetchNextPage()}
+							isDisabled={!hasNextPage || isFetchingNextPage}
+						>
+							{isFetchingNextPage ? t('utils.loading') : hasNextPage ? t('utils.loadMoreData') : null}
+						</Button>
+					</div>
+				)}
 			</div>
 		</Modal>
 	)
