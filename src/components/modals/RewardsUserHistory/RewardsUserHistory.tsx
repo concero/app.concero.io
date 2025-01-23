@@ -21,12 +21,16 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 	const { t } = useTranslation()
 	const limit = 10
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
+		refetchOnMount: false,
+		enabled: isOpen,
+		retry: 2,
 		queryKey: ['userActions', user.address],
 		queryFn: ({ pageParam = 0 }) => {
 			return fetchUserActions(user.address, { limit, page: pageParam })
 		},
 		initialPageParam: 0,
-		getNextPageParam(_, allPages) {
+		getNextPageParam(lastPage, allPages) {
+			if (lastPage.length < limit) return undefined
 			return allPages.length + 1
 		},
 	})
