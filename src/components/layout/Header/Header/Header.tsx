@@ -23,7 +23,6 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) => {
 	const isTablet = useMediaQuery('ipad')
 	const isMobile = useMediaQuery('mobile')
-	const matchSwapPool = useMatch(routes.pool)
 	const matchSwapRewards = useMatch(routes.rewards)
 
 	const getPoints = (points: number | { $numberDecimal: string }): number => {
@@ -44,18 +43,6 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 				</div>
 				{!isTablet && (
 					<ul className="gap-xs">
-						<a className={classNames.link} target="_blank" href="https://lanca.io" rel="noreferrer">
-							<Button variant="tetrary">Swap</Button>
-						</a>
-						<span className={classNames.separator} />
-						<Link style={{ pointerEvents: matchSwapPool ? 'none' : 'all' }} to={routes.pool}>
-							<Button
-								className={matchSwapPool ? buttonClassNames.tetraryColorActive : ''}
-								variant="tetrary"
-							>
-								Provide liquidity
-							</Button>
-						</Link>
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
 							<Button
 								className={matchSwapRewards ? buttonClassNames.tetraryColorActive : ''}
@@ -64,6 +51,18 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 								Rewards
 							</Button>
 						</Link>
+						<Button
+							isDisabled
+							className={classNames.profile}
+							rightIcon={
+								<Tag size="sm" variant="neutral">
+									Coming Soon
+								</Tag>
+							}
+							variant="tetrary"
+						>
+							Profile
+						</Button>
 					</ul>
 				)}
 			</div>
