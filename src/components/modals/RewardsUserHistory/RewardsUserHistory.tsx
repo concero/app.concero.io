@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
+import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from 'react'
 import { Modal } from '../Modal/Modal'
 import classNames from './RewardsUserHistory.module.pcss'
 import { UserAction } from './UserAction'
@@ -22,9 +22,13 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 	const limit = 10
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
 		queryKey: ['userActions', user.address],
-		queryFn: ({ pageParam = 0 }) => fetchUserActions(user.address, { limit, page: pageParam }),
+		queryFn: ({ pageParam = 0 }) => {
+			return fetchUserActions(user.address, { limit, page: pageParam })
+		},
 		initialPageParam: 0,
-		getNextPageParam: (lastPage, _, lastPageParam) => (lastPage.length === limit ? ++lastPageParam : undefined),
+		getNextPageParam(_, allPages) {
+			return allPages.length + 1
+		},
 	})
 
 	return (
