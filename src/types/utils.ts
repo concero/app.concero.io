@@ -10,4 +10,10 @@ export interface ChartData {
 export type TApiGetResponse<TData extends any> = {
 	success: boolean
 	data: TData
+	metaData: {
+		totalCount: number
+		pageSize: number
+		pageNumber: number
+		totalPage: number
+	}
 }

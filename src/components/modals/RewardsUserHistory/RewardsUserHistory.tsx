@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 import { Modal } from '../Modal/Modal'
 import classNames from './RewardsUserHistory.module.pcss'
 import { UserAction } from './UserAction'
@@ -30,8 +30,10 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 		},
 		initialPageParam: 0,
 		getNextPageParam(lastPage, allPages) {
-			if (lastPage.length < limit) return undefined
-			return allPages.length + 1
+			if (lastPage.metaData.pageNumber >= lastPage.metaData.totalPage) {
+				return undefined
+			}
+			return lastPage.metaData.pageNumber + 1
 		},
 	})
 
@@ -48,7 +50,7 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 
 				{data?.pages.map((page, pageIndex) => (
 					<React.Fragment key={pageIndex}>
-						{page.map((action: IUserAction) => (
+						{page.data.map((action: IUserAction) => (
 							<UserAction key={JSON.stringify(action)} action={action} />
 						))}
 					</React.Fragment>
