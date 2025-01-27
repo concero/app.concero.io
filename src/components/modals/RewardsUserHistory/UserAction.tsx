@@ -14,7 +14,7 @@ interface UserActionProps {
 
 export const UserAction = ({ action }: UserActionProps) => {
 	const [value, setValue] = useState('')
-	
+
 	const getTransactionInfo = () => {
 		//@ts-expect-error TODO: Improve Typing
 		const txAction = action.data?.type === TransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
