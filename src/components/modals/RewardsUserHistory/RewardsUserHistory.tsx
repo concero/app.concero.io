@@ -39,7 +39,12 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 	})
 
 	return (
-		<Modal show={isOpen} setShow={setIsOpen} title={<span className={classNames.headerTitle}>History</span>} className={classNames.historyModal}>
+		<Modal
+			show={isOpen}
+			setShow={setIsOpen}
+			title={<span className={classNames.headerTitle}>History</span>}
+			className={classNames.historyModal}
+		>
 			<div className={classNames.historyWrapper}>
 				{!user && <h4>Connect wallet to see your history</h4>}
 				{status === 'pending' && (
