@@ -13,7 +13,7 @@ export const UserMultipliers = ({ user }: { user: IUser }) => {
 			<div className={classNames.multiplierComponents}>
 				<div className={classNames.item}>
 					<span className="body1">Base:</span>
-					<p>{totalMultiplier}x</p>
+					<p>{defaultMultiplier || 0}x</p>
 				</div>
 				<div className={classNames.item}>
 					<span>Liquidity Holding Multiplier:</span>
