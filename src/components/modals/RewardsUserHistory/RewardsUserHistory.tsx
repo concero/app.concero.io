@@ -10,6 +10,7 @@ import React from 'react'
 import { Loader } from '../../layout/Loader/Loader'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../../buttons/Button/Button'
+import { Separator } from '../../layout/Separator/Separator'
 
 interface UserHistoryProps {
 	isOpen: boolean
@@ -38,7 +39,7 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 	})
 
 	return (
-		<Modal show={isOpen} setShow={setIsOpen} title="History" className={classNames.historyModal}>
+		<Modal show={isOpen} setShow={setIsOpen} title={<span className={classNames.headerTitle}>History</span>} className={classNames.historyModal}>
 			<div className={classNames.historyWrapper}>
 				{!user && <h4>Connect wallet to see your history</h4>}
 				{status === 'pending' && (
@@ -47,7 +48,15 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 					</div>
 				)}
 				{status === 'error' && <p>{t('utils.couldNotLoadData')}</p>}
-
+				{data && (
+					<div className={classNames.headerHistory}>
+						<span className={classNames.action}>Action</span>
+						<div className={classNames.wrapCersDate}>
+							<div className={classNames.cers}>CERs</div>
+							<div className={classNames.date}>Date</div>
+						</div>
+					</div>
+				)}
 				{data?.pages.map((page, pageIndex) => (
 					<React.Fragment key={pageIndex}>
 						{page.data.map((action: IUserAction) => (
