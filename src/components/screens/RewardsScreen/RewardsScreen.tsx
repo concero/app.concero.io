@@ -18,7 +18,13 @@ interface Props {
 
 export const RewardsScreen = ({ user, loading }: Props) => {
 	const { isConnected } = useAccount()
-	if (config.REWARD_IS_NOT_AVAILABLE) {
+	if (
+		config.REWARD_IS_NOT_AVAILABLE &&
+		user?.address !== '0xffb54219e8e4b0e08e5fa503edc1cf3080f73869' &&
+		user?.address !== '0x5b694ff6592f77958621595f94bffa05ac0724a1'
+	) {
+		console.log('user address:', user?.address)
+
 		return <TechWorksScreen />
 	}
 
