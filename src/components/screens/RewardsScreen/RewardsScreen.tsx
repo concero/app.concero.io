@@ -9,6 +9,7 @@ import { RewardsProfile } from '../../rewards/RewardsProfile/RewardsProfile'
 
 import { TechWorksScreen } from '../TechWorksScreen/TechWorksScreen'
 import { config } from '../../../constants/config'
+import { useMemo } from 'react'
 
 interface Props {
 	user: IUser | null
@@ -20,6 +21,7 @@ export const RewardsScreen = ({ user, loading }: Props) => {
 	if (config.REWARD_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
+
 	return (
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrapper}>

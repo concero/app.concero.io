@@ -52,7 +52,6 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 
 	const normalizedEndDate = normalizeEndDate(endDate)
 	const daysLeft = getQuestDaysLeft(normalizedEndDate)
-
 	useEffect(() => {
 		if (!user) return
 
@@ -68,16 +67,18 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 
 		if (Array.isArray(user.questsInProgress)) {
 			const questInProgress = user.questsInProgress.find((q: { questId: string }) => q.questId === _id.toString())
+
 			if (questInProgress) {
 				setCompletedStepIds(questInProgress.completedSteps)
 			}
 		} else if (typeof user.questsInProgress === 'object') {
 			const questInProgress = user.questsInProgress[_id.toString()]
+
 			if (questInProgress) {
 				setCompletedStepIds(questInProgress)
 			}
 		}
-	}, [user, quest])
+	}, [user, _id])
 
 	const handleOpenQuest = () => {
 		if (rewardIsClaimed) return

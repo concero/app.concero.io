@@ -22,6 +22,8 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const { address } = useAccount()
 	const [quests, setQuests] = useState<GroupedQuests | null>(null)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const memoizedUser = useMemo(() => user, [user?._id])
+	const memoizedQuests = useMemo(() => quests, [quests === null])
 
 	const handleGetQuests = useCallback(async () => {
 		fetchQuests()
@@ -46,18 +48,18 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 			}
 
 			return quests?.map((quest: IQuest) => (
-				<QuestCard key={quest._id} quest={quest} user={user} variant={variant} className={className} />
+				<QuestCard key={quest._id} quest={quest} user={memoizedUser} variant={variant} className={className} />
 			))
 		},
-		[isLoading, user],
+		[isLoading, memoizedUser],
 	)
 
 	const campaignQuests = useMemo(() => {
-		if (isLoading || !quests?.Campaign) return null
-		return quests.Campaign.map((quest: IQuest) => (
-			<QuestCard key={quest._id} quest={quest} user={user} variant={'big'} />
+		if (isLoading || !memoizedQuests?.Campaign) return null
+		return memoizedQuests.Campaign.map((quest: IQuest) => (
+			<QuestCard key={quest._id} quest={quest} user={memoizedUser} variant={'big'} />
 		))
-	}, [isLoading, quests?.Campaign, user])
+	}, [isLoading, memoizedQuests?.Campaign, memoizedUser])
 
 	return (
 		<div className="gap-xxl">
@@ -67,7 +69,7 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				<div className={classNames.questsHeader}>
 					<h6>Daily</h6>
 				</div>
-				<div className={classNames.dailyQuests}>{renderQuestCards(quests?.Daily, 'small')}</div>
+				<div className={classNames.dailyQuests}>{renderQuestCards(memoizedQuests?.Daily, 'small')}</div>
 			</div>
 
 			<div>
@@ -76,14 +78,16 @@ export const QuestsGroup = ({ user }: QuestsCardProps) => {
 				</div>
 
 				<div className={classNames.monthlyQuests}>
-					{renderQuestCards(quests?.Monthly, 'big', classNames.campaign)}
+					{renderQuestCards(memoizedQuests?.Monthly, 'big', classNames.campaign)}
 				</div>
 
 				<div className="gap-lg">
 					<div className={classNames.otherQuestsWrap}>
-						<div className={classNames.smallCardsContainer}>{renderQuestCards(quests?.Primary, 'big')}</div>
 						<div className={classNames.smallCardsContainer}>
-							{renderQuestCards(quests?.Secondary, 'normal')}
+							{renderQuestCards(memoizedQuests?.Primary, 'big')}
+						</div>
+						<div className={classNames.smallCardsContainer}>
+							{renderQuestCards(memoizedQuests?.Secondary, 'normal')}
 						</div>
 					</div>
 				</div>
