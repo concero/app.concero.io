@@ -135,7 +135,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 			startDate,
 			endDate,
 			isCrossChain: step.options?.isCrossChain,
-			chainIds: step.options?.chainIds
+			chainIds: step.options?.chainIds,
 		})
 			.then(res => {
 				setUserVolume(res)

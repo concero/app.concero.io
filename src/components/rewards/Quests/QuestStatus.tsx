@@ -21,7 +21,7 @@ export const QuestStatus = ({
 	questType,
 	isRepeat = false,
 	isLoading,
-	isNew
+	isNew,
 }: Props) => {
 	const dayText = daysLeft > 1 ? 'days' : 'day'
 	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} ${isRepeat ? 'to reset' : 'left'}`
