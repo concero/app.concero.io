@@ -75,7 +75,7 @@ export const QuestModal = ({
 	const questImage = (
 		<img
 			className={classNames.questImage}
-			height={160}
+			height={192}
 			src={
 				quest.image
 					? `${config.assetsURI}/icons/quests/${image}`
@@ -87,12 +87,13 @@ export const QuestModal = ({
 			alt="Quest image"
 		/>
 	)
-
+	const isOpQuest = quest.name === 'Lancan OP'
+	const isRepeat = isOpQuest ? false : !!getDateUnitMap(quest.type)
 	const questTitle = (
 		<div className="row gap-sm ac">
 			<p className={`${classNames.category} body2`}>{isDailyQuest ? 'Daily' : categoryNameMap[quest.category]}</p>
 			<QuestStatus
-				isRepeat={!!getDateUnitMap(quest.type)}
+				isRepeat={isRepeat}
 				questType={quest.type}
 				daysLeft={daysLeft}
 				isStarted={completedStepIds.length > 0}
@@ -151,7 +152,7 @@ export const QuestModal = ({
 	return (
 		<Modal position="top" className={classNames.questModal} show={isOpen} setShow={setIsOpen} title={questTitle}>
 			<div className={classNames.mainInfo}>
-				<div className="w-full gap-sm">
+				<div className="w-full gap-md">
 					<h2 className={classNames.title}>{name}</h2>
 					{quest.subtitle && quest.name !== 'Lancardio' && (
 						<h2 className={classNames.subtitle}>{quest.subtitle}</h2>

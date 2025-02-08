@@ -110,6 +110,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 
 	// don't display daily social quest if they don't have a link
 	if (isDailyQuest && isSocialQuest && !quest.steps[0].options?.link) return null
+	const isRepeat = isOpQuest ? false : !!getDateUnitMap(quest.type)
 
 	return (
 		<>
@@ -126,7 +127,7 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 								<div className="row">
 									<QuestStatus
 										isNew={isNewQuest}
-										isRepeat={!!getDateUnitMap(quest.type)}
+										isRepeat={isRepeat}
 										questType={quest.type}
 										daysLeft={daysLeft}
 										isStarted={completedStepIds.length > 0}
