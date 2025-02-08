@@ -9,6 +9,8 @@ import { type IQuest, QuestCategory, QuestType } from '../../../../api/concero/q
 import { config } from '../../../../constants/config'
 import { getQuestDaysLeft } from './getQuestStatus'
 import { QuestStatus } from '../QuestStatus'
+import { Tag } from '../../../layout/Tag/Tag'
+import dayjs from 'dayjs'
 
 interface QuestCardProps {
 	variant?: 'big' | 'normal' | 'small'
@@ -47,10 +49,14 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 	const isDailyQuest = quest.type === QuestType.Daily
 	const isSocialQuest = quest.category === QuestCategory.Socials
 
-	const { name, image, endDate, _id } = quest
+	const { name, image, endDate, _id, startDate } = quest
 	const questStepsCompleted = completedStepIds.length === quest.steps.length
 
 	const normalizedEndDate = normalizeEndDate(endDate)
+	const normalizedStartDate = normalizeEndDate(startDate)
+	const isOpQuest = name === 'Lancan OP'
+	const isNewQuest = isOpQuest && dayjs().diff(dayjs(normalizedStartDate), 'day') <= 7
+
 	const daysLeft = getQuestDaysLeft(normalizedEndDate)
 	useEffect(() => {
 		if (!user) return
@@ -117,14 +123,17 @@ export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCard
 						{variant !== 'small' && (
 							<div className="row jsb ac">
 								<p className="body2">{categoryNameMap[quest.category]}</p>
-								<QuestStatus
-									isRepeat={!!getDateUnitMap(quest.type)}
-									questType={quest.type}
-									daysLeft={daysLeft}
-									isStarted={completedStepIds.length > 0}
-									isCompleted={questStepsCompleted}
-									rewardIsClaimed={rewardIsClaimed}
-								/>
+								<div className="row">
+									<QuestStatus
+										isNew={isNewQuest}
+										isRepeat={!!getDateUnitMap(quest.type)}
+										questType={quest.type}
+										daysLeft={daysLeft}
+										isStarted={completedStepIds.length > 0}
+										isCompleted={questStepsCompleted}
+										rewardIsClaimed={rewardIsClaimed}
+									/>
+								</div>
 							</div>
 						)}
 						<div className="h-full gap-xs">

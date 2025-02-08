@@ -10,6 +10,7 @@ interface Props {
 	questType: QuestType
 	isRepeat?: boolean
 	isLoading?: boolean
+	isNew?: boolean
 }
 
 export const QuestStatus = ({
@@ -20,10 +21,10 @@ export const QuestStatus = ({
 	questType,
 	isRepeat = false,
 	isLoading,
+	isNew
 }: Props) => {
 	const dayText = daysLeft > 1 ? 'days' : 'day'
 	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} ${isRepeat ? 'to reset' : 'left'}`
-
 	let status = `${isStarted ? 'Started, ' : ''} ${daysLeftText}`
 	if (isCompleted) status = 'Done!'
 	if (rewardIsClaimed) status = 'Finished'
@@ -43,8 +44,15 @@ export const QuestStatus = ({
 	}
 
 	return (
-		<Tag size="sm" variant={variant}>
-			{status}
-		</Tag>
+		<div className="row gap-xs">
+			{isNew && (
+				<Tag size="sm" variant={'branded'}>
+					New
+				</Tag>
+			)}
+			<Tag size="sm" variant={variant}>
+				{status}
+			</Tag>
+		</div>
 	)
 }

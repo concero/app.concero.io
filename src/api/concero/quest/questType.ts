@@ -59,6 +59,7 @@ export interface IQuestStep {
 		link?: string
 		value?: string
 		isCrossChain?: boolean
+		chainIds?: string[]
 	}
 	category: QuestCategory
 	status: VerificationStatus
