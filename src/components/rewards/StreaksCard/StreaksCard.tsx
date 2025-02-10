@@ -35,7 +35,7 @@ export const StreaksCard = ({ user }: Props) => {
 				title="Daily Swapping Streak"
 				description={<StreakTooltip title={'Swaps'} description={swapDescription} />}
 				button={
-					<Link to="https://lanca.io" target="_blank">
+					<Link to="https://app.lanca.io" target="_blank">
 						<Button size="sm" variant="secondary">
 							Swap
 						</Button>

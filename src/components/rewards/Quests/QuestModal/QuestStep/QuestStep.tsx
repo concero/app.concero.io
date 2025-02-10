@@ -38,7 +38,7 @@ export interface Props {
 }
 
 const defaultStartQuestLinkMap: Record<any, string> = {
-	[OnChainSource.INFRA]: 'https://lanca.io',
+	[OnChainSource.INFRA]: 'https://app.lanca.io',
 	[OnChainSource.POOL]: 'https://app.concero.io/pool',
 	[SocialSource.DISCORD]: 'https://discord.com/channels/1155792755105214535',
 	[SocialSource.TWITTER]: 'https://x.com/concero_io',

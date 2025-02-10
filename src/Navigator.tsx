@@ -66,8 +66,11 @@ export const Navigator = () => {
 					/>
 					<Route path={routes.root} element={<Navigate to={routes.rewards} />} />
 					<Route path={'/*'} element={<Navigate to={routes.rewards} />} />
-					<Route path={routes.pool} element={<ExternalRedirect url="https://lanca.io/pools" />} />
-					<Route path={routes.poolUsdc} element={<ExternalRedirect url="https://lanca.io/pools/usdc" />} />
+					<Route path={routes.pool} element={<ExternalRedirect url="https://app.lanca.io/pools" />} />
+					<Route
+						path={routes.poolUsdc}
+						element={<ExternalRedirect url="https://app.lanca.io/pools/usdc" />}
+					/>
 				</Routes>
 				<Footer />
 			</AppScreen>
