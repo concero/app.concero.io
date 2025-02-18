@@ -38,7 +38,7 @@ const fillProgressBars = (totalDays: number) => {
 		if (totalDays <= 7) {
 			break
 		} else if (totalDays >= 7 && totalDays < 28) {
-			progress[i] = Math.floor(totalDays / 7)
+			progress[i] = totalDays / 7
 			break
 		} else {
 			progress[i] = 4
