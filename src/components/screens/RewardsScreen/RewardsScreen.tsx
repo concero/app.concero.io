@@ -9,23 +9,20 @@ import { RewardsProfile } from '../../rewards/RewardsProfile/RewardsProfile'
 
 import { TechWorksScreen } from '../TechWorksScreen/TechWorksScreen'
 import { config } from '../../../constants/config'
-import { useMemo } from 'react'
+import { TUserResponse } from '@/entities/User/model/types/response'
+import { QuestPreviewList } from '@/features/Quest'
+import { DailyTaskList } from '@/features/Quest/ui/DailyTaskList/DailyTaskList'
 
 interface Props {
-	user: IUser | null
+	user: TUserResponse | null
 	loading: boolean
 }
 
 export const RewardsScreen = ({ user, loading }: Props) => {
 	const { isConnected } = useAccount()
-	if (
-		config.REWARD_IS_NOT_AVAILABLE &&
-		user?.address !== '0xffb54219e8e4b0e08e5fa503edc1cf3080f73869' &&
-		user?.address !== '0x5b694ff6592f77958621595f94bffa05ac0724a1'
-	) {
+	if (config.REWARD_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
-
 	return (
 		<div className={classNames.rewardsScreenContainer}>
 			<div className={classNames.rewardsWrapper}>
@@ -38,7 +35,8 @@ export const RewardsScreen = ({ user, loading }: Props) => {
 					) : (
 						user && <RewardsProfile user={user} />
 					))}
-				<QuestsGroup user={user} />
+				<DailyTaskList />
+				<QuestPreviewList />
 				<LeaderboardCard user={user} />
 			</div>
 		</div>

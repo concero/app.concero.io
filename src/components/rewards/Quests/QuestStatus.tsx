@@ -12,7 +12,7 @@ interface Props {
 	isLoading?: boolean
 	isNew?: boolean
 }
-
+/**@deprecated */
 export const QuestStatus = ({
 	daysLeft,
 	isStarted,
