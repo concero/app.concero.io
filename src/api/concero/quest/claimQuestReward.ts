@@ -1,6 +1,6 @@
 import { Address } from 'viem'
 import { post } from '../../client'
-
+/**@deprecated */
 export const claimQuestReward = async (
 	questId: string,
 	address: Address,

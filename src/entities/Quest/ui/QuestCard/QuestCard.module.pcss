@@ -1,0 +1,44 @@
+.quest_card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
+	.header {
+		display: flex;
+		.title {
+			font: var(--font-heading-xxlarge);
+			color: var(--color-gray-700);
+		}
+		.subtitle {
+			font: var(--font-heading-xxlarge);
+			color: var(--color-gray-500);
+		}
+		.reward_points {
+			margin-top: var(--space-s);
+			font: var(--font-heading-xlarge);
+			color: var(--color-accent-700);
+		}
+	}
+	.image_wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		max-width: 100%;
+		max-height: 100%;
+		& > img {
+			width: auto;
+			height: auto;
+			max-width: 100%;
+			max-height: 158px;
+			object-fit: contain;
+		}
+		.description {
+			font: var(--font-heading-large);
+			color: var(--color-accent-600);
+		}
+		.controls {
+			display: flex;
+			justify-content: flex-start;
+		}
+	}
+}
