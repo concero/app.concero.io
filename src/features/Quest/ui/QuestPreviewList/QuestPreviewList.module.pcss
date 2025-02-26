@@ -1,0 +1,36 @@
+.quest_preview_list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
+	.title {
+		font: var(--font-heading-xxlarge);
+		color: var(--color-gray-700);
+	}
+	.filters {
+		display: flex;
+		gap: var(--space-xxs);
+		flex-direction: row;
+	}
+	.list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-m);
+		.monthly {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-m);
+		}
+		.primary {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: var(--space-m);
+		}
+		.secondary {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: var(--space-m);
+		}
+	}
+}
