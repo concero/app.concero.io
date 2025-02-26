@@ -6,8 +6,3 @@ export interface ChartData {
 	value: number
 	time: number
 }
-
-export type TApiGetResponse<TData extends any> = {
-	success: boolean
-	data: TData
-}

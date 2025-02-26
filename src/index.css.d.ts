@@ -6,3 +6,7 @@ export default identifiersMap
 export interface CssIdentifiersMap {
 	root: string | undefined
 }
+declare module '*.pcss' {
+	const content: Record<string, string>
+	export default content
+}

@@ -5,7 +5,7 @@ export interface FetchUserResponse {
 	users: IUser[]
 	currentUserPosition: number
 }
-
+/**@deprecated */
 export const fetchLeaderboard = async (userAddress: string | undefined): Promise<FetchUserResponse> => {
 	const userAddressQuery = userAddress ? `userAddress=${userAddress}` : ''
 	const url = `${process.env.CONCERO_API_URL}/usersLeaderboard?${userAddressQuery}`

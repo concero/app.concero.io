@@ -8,6 +8,7 @@ import { I18Provider } from './i18n/I18nextProvider'
 import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 function App() {
 	useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
 				<WagmiProvider config={config}>
 					<QueryClientProvider client={queryClient}>
 						<Navigator />
+						<ReactQueryDevtools initialIsOpen={false} />
 					</QueryClientProvider>
 				</WagmiProvider>
 			</I18Provider>
