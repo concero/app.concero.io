@@ -33,7 +33,6 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 		}
 		return 0
 	}
-
 	return (
 		<header className={classNames.header}>
 			{children}
