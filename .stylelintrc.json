@@ -1,105 +1,57 @@
 {
-  "extends": [
-    "stylelint-config-prettier",
-    "stylelint-config-recommended-scss"
-  ],
-  "rules": {
-    "at-rule-no-unknown": null,
-    "color-named": "never",
-    "color-hex-length": "long",
-    "function-disallowed-list": [
-      "rgb",
-      "hsl"
-    ],
-    "declaration-block-no-duplicate-properties": [
-      true,
-      {
-        "ignore": [
-          "consecutive-duplicates-with-different-values"
-        ]
-      }
-    ],
-    "declaration-empty-line-before": null,
-    "declaration-property-unit-allowed-list": {
-      "/^border(?!.*-radius$)/": [
-        "px",
-        "%"
-      ],
-      "/^border-radius/": [
-        "px",
-        "rem",
-        "%"
-      ],
-      "/^box-shadow": [
-        "px"
-      ],
-      "/^margin/": [
-        "rem",
-        "px"
-      ],
-      "/^padding/": [
-        "rem",
-        "px"
-      ],
-      "font-size": [
-        "rem",
-        "em",
-        "px"
-      ],
-      "height": [
-        "rem",
-        "%",
-        "vh",
-        "px"
-      ],
-      "width": [
-        "rem",
-        "%",
-        "vw",
-        "px"
-      ]
-    },
-    "max-empty-lines": 1,
-    "no-duplicate-selectors": true,
-    "selector-class-pattern": [
-      "^[a-z0-9-]+(__[a-z0-9-]+)?(--[a-z0-9-]+)?$",
-      {
-        "message": "Please follow BEM naming conventions",
-        "resolveNestedSelectors": true
-      }
-    ],
-    "selector-max-compound-selectors": [
-      1,
-      {
-        "message": "Descendent selectors break encapsulation and are bad for performance. Please try using BEM class names instead and nesting/combining them with &",
-        "severity": "warning"
-      }
-    ],
-    "selector-max-id": [
-      0
-    ],
-    "string-quotes": "single",
-    "value-no-vendor-prefix": true,
-    "font-family-no-missing-generic-family-keyword": null,
-    "no-descending-specificity": null,
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": [
-          "global"
-        ]
-      }
-    ],
-    "no-invalid-position-at-import-rule": null,
-    "rule-empty-line-before": null,
-    "selector-no-vendor-prefix": null,
-    "alpha-value-notation": null,
-    "color-function-notation": null,
-    "value-keyword-case": null,
-    "shorthand-property-no-redundant-values": null,
-    "declaration-block-no-redundant-longhand-properties": null,
-    "keyframes-name-pattern": null,
-    "number-max-precision": null,
-    "property-no-vendor-prefix": null
-  }
+	"extends": ["stylelint-config-prettier", "stylelint-config-recommended-scss"],
+	"rules": {
+		"at-rule-no-unknown": null,
+		"color-named": "never",
+		"color-hex-length": "long",
+		"function-disallowed-list": ["rgb", "hsl"],
+		"declaration-block-no-duplicate-properties": [
+			true,
+			{
+				"ignore": ["consecutive-duplicates-with-different-values"]
+			}
+		],
+		"declaration-empty-line-before": null,
+		"declaration-property-unit-allowed-list": {
+			"/^border(?!.*-radius$)/": ["px", "%"],
+			"/^border-radius/": ["px", "rem", "%"],
+			"/^box-shadow": ["px"],
+			"/^margin/": ["rem", "px"],
+			"/^padding/": ["rem", "px"],
+			"font-size": ["rem", "em", "px"],
+			"height": ["rem", "%", "vh", "px"],
+			"width": ["rem", "%", "vw", "px"]
+		},
+		"max-empty-lines": 1,
+		"no-duplicate-selectors": true,
+		"selector-class-pattern": [
+			"^[a-z0-9]+(_[a-z0-9]+)*$",
+			{
+				"message": "Please use only lowercase letters, numbers, and underscores in class names.",
+				"resolveNestedSelectors": true
+			}
+		],
+		"selector-max-id": [0],
+		"string-quotes": "single",
+		"value-no-vendor-prefix": true,
+		"font-family-no-missing-generic-family-keyword": null,
+		"no-descending-specificity": null,
+		"selector-pseudo-class-no-unknown": [
+			true,
+			{
+				"ignorePseudoClasses": ["global"]
+			}
+		],
+		"no-invalid-position-at-import-rule": null,
+		"rule-empty-line-before": null,
+		"selector-no-vendor-prefix": null,
+		"alpha-value-notation": null,
+		"color-function-notation": null,
+		"value-keyword-case": null,
+		"shorthand-property-no-redundant-values": null,
+		"declaration-block-no-redundant-longhand-properties": null,
+		"keyframes-name-pattern": null,
+		"number-max-precision": null,
+		"property-no-vendor-prefix": null
+	}
 }
