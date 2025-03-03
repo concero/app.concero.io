@@ -34,7 +34,12 @@ export const Navigator = () => {
 	const userToUse = user ?? null
 
 	return (
-		<BrowserRouter>
+		<BrowserRouter
+			future={{
+				v7_startTransition: true,
+				v7_relativeSplatPath: true,
+			}}
+		>
 			<AppScreen>
 				<Header user={userToUse} isWalletConnected={isConnected} />
 				<Routes>

@@ -12,7 +12,7 @@ export default [
 		languageOptions: {
 			parser: parserTs,
 			parserOptions: {
-				project: './tsconfig.json',
+				project: './tsconfig.app.json',
 			},
 		},
 
@@ -25,7 +25,6 @@ export default [
 			'prettier/prettier': 'error',
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-unused-vars': 'off',
-			'sort-imports': 'warn',
 		},
 	},
 	{ ignores: ['!.storybook'] },
