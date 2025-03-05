@@ -10,7 +10,7 @@ type TProps = Omit<HTMLProps<HTMLDivElement>, 'onChange' | 'disabled' | 'classNa
 	label?: string | number
 	id?: string | number
 }
-
+/**@deprecated use from '@concero/ui-kit' */
 export const Checkbox = (props: TProps) => {
 	const { className, disabled, isChecked, onChange, id, label, ...otherProps } = props
 	const [internalChecked, setInternalChecked] = useState(isChecked ?? false)

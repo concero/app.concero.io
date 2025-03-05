@@ -1,25 +1,19 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import cls from './QuestPreviewItem.module.pcss'
 import { useAccount } from 'wagmi'
-import { Modal } from '@/components/modals/Modal/Modal'
 import {
 	categoryQuestNameMap,
-	QuestCard,
 	QuestPreviewCard,
 	QuestStatus,
 	TQuest,
-	QuestStepGroup,
 	type TQuestCardStatus,
 	type TQuestPreviewSize,
 	getIsClaimedQuest,
-	useClaimQuestMutation,
 } from '@/entities/Quest'
-import {
-	useAddQuestToProgressMutation,
-	getCompletedStepsByQuest,
-	getIsStartedQuest,
-	type TUserResponse,
-} from '@/entities/User'
+import { getCompletedStepsByQuest, getIsStartedQuest, type TUserResponse } from '@/entities/User'
+import { QuestCard } from '../QuestCard/QuestCard'
+import { QuestRewardCard } from '@/entities/Quest'
+import { Modal } from '@/components/modals/Modal/Modal'
 
 type TProps = {
 	quest: TQuest
@@ -30,26 +24,16 @@ type TProps = {
 export const QuestPreviewItem = (props: TProps) => {
 	const { quest, user, size } = props
 	const { address } = useAccount()
-	const [isOpen, setIsopen] = useState(false)
-	const { mutate: addQuestInProgress } = useAddQuestToProgressMutation()
-	const startTheQuest = useCallback(() => {
-		if (address) {
-			addQuestInProgress({ address, questId: quest._id })
-		}
-	}, [])
-	const { mutate: claimQuest } = useClaimQuestMutation()
-	const claimThisQuest = useCallback(() => {
-		if (address) {
-			claimQuest({ address, questId: quest._id })
-		}
-	}, [])
+	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
+	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
 
 	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
 	if (user && getIsStartedQuest(quest._id, user)) {
 		statusOfQuest = 'STARTED'
 	}
 	const completedSteps = user ? getCompletedStepsByQuest(quest._id, user) : []
-	if (completedSteps.length === quest.steps.length) {
+
+	if (completedSteps.length >= quest.steps.filter(step => !step.optional).length) {
 		statusOfQuest = 'READY_TO_CLAIM'
 	}
 	const rewardIsClaimed = getIsClaimedQuest(quest._id, user)
@@ -57,6 +41,26 @@ export const QuestPreviewItem = (props: TProps) => {
 		statusOfQuest = 'FINISHED'
 	}
 
+	const handleClaimReward = () => {
+		setIsOpenQuestCard(false)
+		setIsOpenRewardModal(true)
+	}
+
+	if (isOpenRewardModal) {
+		return (
+			<Modal
+				isHeaderVisible={false}
+				position="top"
+				className={cls.rewards_modal}
+				show={true}
+				setShow={(arg: boolean) => {
+					arg ? setIsOpenRewardModal(true) : setIsOpenRewardModal(false)
+				}}
+			>
+				<QuestRewardCard quest={quest} onDone={() => setIsOpenRewardModal(false)} />
+			</Modal>
+		)
+	}
 	return (
 		<>
 			<QuestPreviewCard
@@ -64,15 +68,16 @@ export const QuestPreviewItem = (props: TProps) => {
 				size={size}
 				user={user}
 				onClick={() => {
-					setIsopen(true)
+					setIsOpenQuestCard(true)
 				}}
+				onClaim={handleClaimReward}
 			/>
 			<Modal
 				position="top"
 				className={cls.questModal}
-				show={isOpen}
+				show={isOpenQuestCard}
 				setShow={(arg: boolean) => {
-					arg ? setIsopen(true) : setIsopen(false)
+					arg ? setIsOpenQuestCard(true) : setIsOpenQuestCard(false)
 				}}
 				title={
 					<div className={cls.meta_info}>
@@ -87,13 +92,7 @@ export const QuestPreviewItem = (props: TProps) => {
 					</div>
 				}
 			>
-				<QuestCard
-					quest={quest}
-					status={statusOfQuest}
-					onStart={startTheQuest}
-					onClaim={claimThisQuest}
-					StepsSlot={<QuestStepGroup quest={quest} />}
-				/>
+				<QuestCard onClaim={handleClaimReward} quest={quest} status={statusOfQuest} />
 			</Modal>
 		</>
 	)

@@ -8,5 +8,6 @@ export type TClaimResponse = {
 	points: number
 }
 export type TQuest = z.infer<typeof IQuestZod>
-export type TGetQuestsResponse = Record<TQuestType, TQuest[]>
+export type TGetQuestsResponse = Partial<Record<TQuestType, TQuest[]>>
 export type TQuestStep = z.infer<typeof IQuestStepZod>
+export type TQuestTag = TQuest['tag']

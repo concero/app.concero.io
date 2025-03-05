@@ -3,7 +3,7 @@ import { type ButtonProps } from './types'
 import { getButtonClasses } from './getButtonClasses'
 import classNames from './Button.module.pcss'
 import { Loader } from '../../layout/Loader/Loader'
-
+/**@deprecated use from '@concero/ui-kit' */
 export const Button: FC<ButtonProps> = ({
 	size = 'md',
 	variant = 'primary',

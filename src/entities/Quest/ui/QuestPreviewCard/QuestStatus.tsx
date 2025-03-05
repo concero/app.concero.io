@@ -1,9 +1,10 @@
-import { TQuest, TQuestType } from '../../model/types/schema'
+import { TQuestType } from '../../model/types/schema'
 import { Tag } from '@/components/layout/Tag/Tag'
 import dayjs from 'dayjs'
 import { normalizeEndDate } from '../../model/lib/normalizeEndDate'
 import { getQuestDaysLeft } from '../../model/lib/getQuestDaysLeft'
 import { TUserResponse } from '@/entities/User/model/types/response'
+import { TQuest } from '../../model/types/response'
 
 export const getDateUnitMap = (type: TQuestType) => {
 	if (type === 'Daily') return 'day'
@@ -29,7 +30,7 @@ export const QuestStatus = ({ quest, isClaimed, questsInProgress }: Props) => {
 	const isOpQuest = name === 'Lancan OP' //                           ------------ IS TEMP ROW !!!
 	const normalizedEndDate = normalizeEndDate(endDate)
 	const normalizedStartDate = normalizeEndDate(startDate)
-	const isCompleted = completedStepIds.length === steps.length
+	const readyToClaim = completedStepIds.length === steps.length
 	const isNewQuest = isOpQuest && dayjs().diff(dayjs(normalizedStartDate), 'day') <= 7 //------------ isOpQuest IS TEMP !!!
 	const daysLeft = getQuestDaysLeft(normalizedEndDate)
 	const dayText = daysLeft > 1 ? 'days' : 'day'
@@ -38,16 +39,16 @@ export const QuestStatus = ({ quest, isClaimed, questsInProgress }: Props) => {
 
 	let status = `${isStarted ? 'Started, ' : ''} ${daysLeftText}`
 
-	if (isCompleted) status = 'Completed!'
-	if (isClaimed) status = 'Done'
+	if (readyToClaim) status = ' Done'
+	if (isClaimed) status = 'Completed!'
 
 	let variant: 'neutral' | 'warning' | 'negative' | 'positive' = 'neutral'
 	if (daysLeft <= 3) variant = 'warning'
 	if (daysLeft <= 1) variant = 'negative'
-	if (isCompleted) variant = 'neutral'
-	if (isClaimed) variant = 'positive'
+	if (readyToClaim) variant = 'positive'
+	if (isClaimed) variant = 'neutral'
 
-	if (questType === 'Daily' && !isCompleted && !isClaimed) {
+	if (questType === 'Daily' && !readyToClaim && !isClaimed) {
 		return null
 	}
 

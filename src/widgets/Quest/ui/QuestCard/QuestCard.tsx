@@ -1,39 +1,40 @@
 import { config } from '@/constants/config'
-import { TQuest, TQuestStep } from '../../model/types/response'
 import cls from './QuestCard.module.pcss'
-import { Button } from '@/components/buttons/Button/Button'
-import { QuestStepGroup } from '../../../../features/Quest/ui/QuestStepGroup/QuestStepGroup'
-import { TQuestCardStatus } from '../../model/types/schema'
 import { ConnectWallet } from '@/features/Auth'
+import { TQuest, TQuestCardStatus } from '@/entities/Quest'
+import { QuestStepGroup } from '@/features/Quest'
+import { ClaimReward } from '@/features/Quest'
+import { StartQuest } from '@/features/Quest'
 
 type TProps = {
 	quest: TQuest
 	status: TQuestCardStatus
-	onStart?: () => void
 	onClaim?: () => void
-	StepsSlot: JSX.Element
 }
 
 export const QuestCard = (props: TProps) => {
-	const { quest, status, onStart, StepsSlot } = props
+	const { quest, status, onClaim } = props
 	let controls = null
 	let showSteps = false
+	let showOnlyOptionalSteps = false
 	switch (status) {
 		case 'NOT_CONNECT':
 			controls = <ConnectWallet />
 			showSteps = false
 			break
 		case 'READY_TO_START':
-			controls = <Button onClick={onStart}>Start Quest</Button>
+			controls = <StartQuest questId={quest._id} propsButton={{ size: 'l', isFull: false }} />
 			showSteps = false
 			break
 		case 'STARTED':
 			controls = null
 			showSteps = true
+			showOnlyOptionalSteps = false
 			break
 		case 'READY_TO_CLAIM':
-			controls = <Button>Claim</Button>
+			controls = <ClaimReward questId={quest._id} onClaim={onClaim} propsButton={{ size: 'l' }} />
 			showSteps = true
+			showOnlyOptionalSteps = true
 			break
 		case 'FINISHED':
 			controls = null
@@ -68,8 +69,8 @@ export const QuestCard = (props: TProps) => {
 			</div>
 
 			<div className={cls.description}>{quest.description}</div>
-			{showSteps && StepsSlot}
-			<div className={cls.controls}>{controls}</div>
+			{showSteps && <QuestStepGroup quest={quest} onlyOptional={showOnlyOptionalSteps} />}
+			{controls ? <div className={cls.controls}>{controls}</div> : null}
 		</div>
 	)
 }

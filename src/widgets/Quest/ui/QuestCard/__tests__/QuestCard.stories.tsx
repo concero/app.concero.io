@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import { QuestCard } from '../QuestCard'
 import { TQuestCardStatus } from '@/entities/Quest/model/types/schema'
 import { UnionToTuple } from '@/shared/types/UnionToTuple'
@@ -29,7 +29,5 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
-	args: {
-		completedSteps: ['0'],
-	},
+	args: {},
 }

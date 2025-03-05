@@ -1,0 +1,40 @@
+.reward_card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
+	width: 100%;
+	.wrap_inner_card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-s);
+		.image_wrap {
+			min-height: 208px;
+			.image {
+				width: 100%;
+				object-fit: contain;
+			}
+			.placeholder_image {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 262px;
+			}
+		}
+		.description_wrap {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-xs);
+			.points {
+				text-align: center;
+				font: var(--font-heading-xlarge);
+				color: var(--color-accent-700);
+			}
+			.description {
+				text-align: center;
+				font: var(--font-body-large);
+				color: var(--color-gray-600);
+			}
+		}
+	}
+}

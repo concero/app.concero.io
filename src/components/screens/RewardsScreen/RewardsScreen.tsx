@@ -1,17 +1,15 @@
 import classNames from './RewardsScreen.module.pcss'
-import { QuestsGroup } from '../../rewards/Quests/QuestsGroup/QuestsGroup'
 import { LeaderboardCard } from '../../rewards/LeaderboardCard/LeaderboardCard'
 import { useAccount } from 'wagmi'
-import { type IUser } from '../../../api/concero/user/userType'
 import { ProfilePlaceholder } from '../../rewards/ProfileCard/ProfilePlaceholder/ProfilePlaceholder'
 import { StreaksPlaceholders } from '../../rewards/StreaksCard/StreakCard/StreakPlaceholder/StreakPlaceholder'
 import { RewardsProfile } from '../../rewards/RewardsProfile/RewardsProfile'
 
 import { TechWorksScreen } from '../TechWorksScreen/TechWorksScreen'
 import { config } from '../../../constants/config'
-import { TUserResponse } from '@/entities/User/model/types/response'
-import { QuestPreviewList } from '@/features/Quest'
-import { DailyTaskList } from '@/features/Quest/ui/DailyTaskList/DailyTaskList'
+import { TUserResponse } from '@/entities/User'
+import { DailyTaskList } from '@/features/Quest'
+import { QuestPreviewList } from '@/widgets/Quest'
 
 interface Props {
 	user: TUserResponse | null

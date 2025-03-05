@@ -10,7 +10,8 @@ export const QuestTypeZod = z.enum(['Campaign', 'Daily', 'Monthly', 'Big', 'Prim
 
 export const VerificationStatusZod = z.enum(['SUCCESS', 'PENDING', 'FAILED', 'NOT_STARTED'])
 
-export const QuestSocialActionZod = z.enum(['ConnectSocialNetwork', 'ConnectGroup', 'Repost'])
+export const QuestSocialActionZod = z.enum(['ConnectSocialNetwork', 'ConnectGroup', 'Repost', 'LikeTweet'])
+export const QuestTestingActionZod = z.enum(['ProvideFeedback', 'RateExperience'])
 
 export const QuestOnChainActionZod = z.enum(['CheckVolume', 'ProvideLiquidity'])
 
@@ -24,7 +25,7 @@ export const IQuestStepZod = z.object({
 	title: z.string(),
 	description: z.string().optional(),
 	source: z.union([SocialSourceZod, OnChainSourceZod]),
-	questAction: z.union([QuestOnChainActionZod, QuestSocialActionZod]),
+	questAction: z.union([QuestOnChainActionZod, QuestSocialActionZod, QuestTestingActionZod]),
 	options: z
 		.object({
 			link: z.string().optional(),
@@ -36,8 +37,10 @@ export const IQuestStepZod = z.object({
 	category: QuestCategoryZod,
 	status: VerificationStatusZod,
 	order: z.number().optional(),
-	isComplete: z.boolean().optional(),
+	optional: z.boolean().optional(),
 })
+const questTags = ['rewards', 'testing'] as const
+export type TTagQuest = (typeof questTags)[number]
 
 export const IQuestZod = z.object({
 	_id: z.string(),
@@ -56,4 +59,5 @@ export const IQuestZod = z.object({
 	type: QuestTypeZod,
 	category: QuestCategoryZod,
 	userAction: z.any().optional(),
+	tag: z.enum(questTags).optional(),
 })

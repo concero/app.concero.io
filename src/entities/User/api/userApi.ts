@@ -78,6 +78,29 @@ export const useRemoveQuestFromProgressMutation = () => {
 	})
 }
 
+export const addStepInProgress = async (address: string, questId: string, stepId: string) => {
+	const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}/steps`
+	const response = await post<TApiResponse<string>>(url, { stepId })
+	if (response.status !== 200) throw new Error('Something went wrong')
+	return response.data.success
+}
+
+export const useAddStepInProgressMutation = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: (payload: { address: string; questId: string; stepId: string }) =>
+			addStepInProgress(payload.address, payload.questId, payload.stepId),
+		onSuccess: () => {
+			// Инвалидируем кэш после успешного добавления шага
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+		},
+		onError: error => {
+			console.error('Failed to add step to quest in progress:', error)
+		},
+	})
+}
+
 export const getUserVolume = async ({ address, startDate, endDate, isCrossChain, chainIds }: TUserVolumeArgs) => {
 	const startDateValue = typeof startDate === 'object' ? Number(startDate.$numberDecimal) : startDate
 	const endDateValue = typeof endDate === 'object' ? Number(endDate.$numberDecimal) : endDate
@@ -175,3 +198,4 @@ export const useGetLeaderboard = (address?: string) => {
 		notifyOnChangeProps: ['data', 'isPending'],
 	})
 }
+export const invalidationTagUser = tagInvalidation

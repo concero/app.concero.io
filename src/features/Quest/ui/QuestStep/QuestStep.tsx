@@ -1,59 +1,53 @@
 import { useState } from 'react'
 import cls from './QuestStep.module.pcss'
-import { Tag } from '@/components/layout/Tag/Tag'
 import clsx from 'clsx'
-import { SkeletonLoader } from '@/components/layout/SkeletonLoader/SkeletonLoader'
-import { Loader } from '@/components/layout/Loader/Loader'
-import { TQuestStep } from '@/entities/Quest'
+import { TQuest, TQuestStep } from '@/entities/Quest'
 import { TStepActionProps } from '../StepActions/StepActions'
+import { Tag } from '@concero/ui-kit'
 
-type variant = 'testing' | 'rewards'
+type TVariant = 'testing' | 'rewards'
 type TProps = {
+	quest: TQuest
 	step: TQuestStep
-	isCompleted?: boolean
-	variant?: variant
-	isLoading?: boolean
-	isOptional?: boolean
-	StepAction: (props: TStepActionProps) => JSX.Element
+	isDone?: boolean
+	variant?: TVariant
+	showOnlyAction?: boolean
+	StepAction: ((props: TStepActionProps) => JSX.Element) | null
 }
 
 export const QuestStep = (props: TProps) => {
-	const { step, isCompleted, isLoading = false, variant = 'rewards', isOptional = false, StepAction } = props
+	const { quest, step, isDone, variant = 'rewards', StepAction, showOnlyAction } = props
 	const [errorText, setErrorText] = useState<string | undefined>()
+	const isOptional: boolean = step?.optional ?? false
 
-	if (isLoading) {
-		return (
-			<div className={clsx(cls.step_wrap, cls.loading)}>
-				<span className={cls.title} title={step.title}>
-					<SkeletonLoader height={24} width={272} />
-				</span>
-				<div className={cls.spinner_wrap}>
-					<Loader variant="neutral" />
-				</div>
-			</div>
-		)
-	}
-	if (isCompleted) {
+	if (isDone) {
 		return (
 			<div className={clsx(cls.step_wrap, cls.done)}>
 				<span className={cls.title} title={step.title}>
 					{step.title}
 				</span>
-				{variant === 'rewards' && <Tag variant="positive">Done</Tag>}
+				{variant === 'rewards' && !isOptional && <Tag variant="positive">Done</Tag>}
 			</div>
 		)
 	}
-
+	if (showOnlyAction && !step.optional) {
+		return (
+			<div className={clsx(cls.step_wrap, cls.single_step)}>
+				{StepAction ? <StepAction step={step} setErrorText={setErrorText} quest={quest} /> : null}
+				{errorText ? <span className={cls.error_text}>{errorText}</span> : null}
+			</div>
+		)
+	}
 	return (
 		<div className={cls.step_wrap}>
 			<div className={cls.title_wrap}>
 				<span className={cls.title} title={step.title}>
 					{step.title}
 				</span>
-				{true && <Tag variant="neutral">Optional</Tag>}
+				{step.optional && <Tag variant="neutral">Optional</Tag>}
 			</div>
 			<div className={cls.description}>{step.description}</div>
-			<StepAction step={step} setErrorText={setErrorText} />
+			{StepAction ? <StepAction step={step} setErrorText={setErrorText} quest={quest} /> : null}
 			{errorText ? <span className={cls.error_text}>{errorText}</span> : null}
 		</div>
 	)

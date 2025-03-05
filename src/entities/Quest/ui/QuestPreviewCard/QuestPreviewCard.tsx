@@ -3,12 +3,15 @@ import type { TQuest } from '../../model/types/response'
 import cls from './QuestPreviewCard.module.pcss'
 import { QuestStatus } from './QuestStatus'
 import { config } from '@/constants/config'
-import { IconButton } from '@/components/buttons/IconButton/IconButton'
 import ArrowRightIcon from '@/shared/assets/icons/monochrome/ArrowRight.svg?react'
 import { TUserResponse } from '@/entities/User'
 import clsx from 'clsx'
 import { categoryQuestNameMap } from '../../config/nameMaps'
 import { getIsClaimedQuest } from '../../model/lib/getIsClaimedQuest'
+import { getIsDoneQuest } from '@/entities/User'
+import { ClaimReward } from '@/features/Quest'
+import { useEffect, useRef, useState } from 'react'
+import { IconButton } from '@concero/ui-kit'
 
 type TClassname = string
 export type TQuestPreviewSize = 's' | 'm' | 'l' | 'xl'
@@ -17,12 +20,25 @@ type TProps = {
 	quest?: TQuest
 	user?: TUserResponse
 	onClick?: () => void
+	onClaim?: () => void
 }
 
 export const QuestPreviewCard = (props: TProps) => {
-	const { size = 's', quest, user, onClick } = props
+	const { size = 's', quest, user, onClick, onClaim } = props
 	if (!quest) return null
 
+	const [isHovered, setIsHovered] = useState<boolean>(false)
+	const [isPressed, setIsPressed] = useState<boolean>(false)
+
+	useEffect(() => {
+		const handleMouseUp = () => {
+			setIsPressed(false)
+		}
+		document.addEventListener('mouseup', handleMouseUp)
+		return () => {
+			document.removeEventListener('mouseup', handleMouseUp)
+		}
+	}, [])
 	const sizeClassMap: Record<TQuestPreviewSize, TClassname> = {
 		s: cls.size_s,
 		m: cls.size_m,
@@ -33,10 +49,15 @@ export const QuestPreviewCard = (props: TProps) => {
 	const showMetaInfo = size !== 's'
 	const showImage = size !== 's'
 	const rewardIsClaimed = getIsClaimedQuest(quest._id, user)
+	const isDone = getIsDoneQuest(quest, user)
 	return (
 		<Card
 			className={clsx(cls.preview_item, sizeClassMap[size], { [cls.disabled]: rewardIsClaimed })}
 			onClick={onClick}
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+			onMouseDown={() => setIsPressed(true)}
+			onMouseUp={() => setIsPressed(false)}
 		>
 			<div className={cls.header}>
 				{showMetaInfo && (
@@ -74,11 +95,12 @@ export const QuestPreviewCard = (props: TProps) => {
 				</div>
 			)}
 			<div className={cls.footer}>
-				{!rewardIsClaimed && (
-					<IconButton size="sm" variant="secondary">
+				{!rewardIsClaimed && !isDone && (
+					<IconButton size="s" variant="secondary" isHovered={isHovered} isPressed={isPressed}>
 						<ArrowRightIcon />
 					</IconButton>
 				)}
+				{isDone && <ClaimReward questId={quest._id} onClaim={onClaim} />}
 			</div>
 		</Card>
 	)
