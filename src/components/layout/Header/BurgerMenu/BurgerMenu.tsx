@@ -1,5 +1,4 @@
 import classNames from './BurgerMenu.module.pcss'
-import { Button } from '../../../buttons/Button/Button'
 import {
 	type KeyboardEvent as ReactKeyboardEvent,
 	type MouseEvent as ReactMouseEvent,
@@ -11,26 +10,26 @@ import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
-import { MobileBreadcrumbs } from './MobileBreadcrumbs/MobileBreadcrumbs'
 import { ContactSupportModal } from '../../../modals/ContactSupportModal/ContactSupportModal'
-import { IconButton } from '../../../buttons/IconButton/IconButton'
 import { IconBurger } from '../../../../assets/icons/IconBurger'
-import { LanguageIcon } from '../../../../assets/icons/LanguageIcon'
+import LanguageIcon from '@/shared/assets/icons/monochrome/LanguageIcon.svg?react'
+import CrossCloseIcon from '@/shared/assets/icons/monochrome/CrossClose.svg?react'
 import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetworkButtons'
-import { type IUser } from '../../../../api/concero/user/userType'
 import { Separator } from '../../Separator/Separator'
-import { Dropdown } from './Dropdown'
-import { Tag } from '../../Tag/Tag'
+import { Button, IconButton, Tag } from '@concero/ui-kit'
+import { TUserResponse } from '@/entities/User'
+import { WalletButton } from '../WalletButton/WalletButton'
 
 interface Props {
-	user: IUser | null
+	user: TUserResponse | null
 }
 
 export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
-	const isMobile = useMediaQuery('ipad')
+	const isTablet = useMediaQuery('ipad')
+	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
 
 	const handleKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -102,30 +101,38 @@ export function BurgerMenu({ user }: Props) {
 
 	const settings = (
 		<ul className={classNames.listContainer}>
-			<Button isFull isDisabled variant="tetrary" className={classNames.rewards}>
-				Rewards
-			</Button>
-			<Button
-				isFull
-				isDisabled
-				className={classNames.profile}
-				rightIcon={
-					<Tag size="sm" variant="neutral">
-						Coming Soon
-					</Tag>
-				}
-				variant="tetrary"
-			>
-				Profile
-			</Button>
-			<Separator />
-			{user && <SocialNetworkButtons user={user} />}
-			{user && <Separator />}
+			{isTablet && (
+				<>
+					<Button disabled variant="tetrary" className={classNames.rewards_page_btn}>
+						Rewards
+					</Button>
+					<Button
+						isFull
+						disabled
+						className={classNames.profile_page_btn}
+						rightIcon={
+							<Tag size="s" variant="neutral">
+								Coming Soon
+							</Tag>
+						}
+						variant="tetrary"
+					>
+						Profile
+					</Button>
+					<Separator />
+				</>
+			)}
+			{user && (
+				<>
+					<SocialNetworkButtons user={user} />
+					<Separator />
+				</>
+			)}
 			<li>
 				<Button
 					leftIcon={<LanguageIcon />}
-					variant={isMobile ? 'tetrary' : 'secondary'}
-					size={isMobile ? 'md' : 'sm'}
+					variant={'tetrary'}
+					size={'m'}
 					className={classNames.listButton}
 					onClick={() => {
 						setIsLanguageModalVisible(true)
@@ -134,14 +141,16 @@ export function BurgerMenu({ user }: Props) {
 					{t('header.menu.changeLanguage')}
 				</Button>
 			</li>
-			{!isMobile && <Separator />}
+			<li>
+				<Separator />
+			</li>
 		</ul>
 	)
 
 	return (
 		<div className={classNames.container}>
-			<IconButton variant="secondary" onClick={handleMenuOpen}>
-				<IconBurger />
+			<IconButton variant="secondary" onClick={handleMenuOpen} size="m">
+				{isMenuOpened ? <CrossCloseIcon /> : <IconBurger />}
 			</IconButton>
 
 			<animated.div style={overlayFadeAnimation} className={classNames.overlay} onClick={handleMenuClose}>
@@ -152,13 +161,12 @@ export function BurgerMenu({ user }: Props) {
 					style={fadeAnimation}
 					className={classNames.menuContainer}
 				>
-					{isMobile ? <MobileBreadcrumbs /> : null}
+					{isMobile && <WalletButton />}
 					{settings}
-					{isMobile && <Separator />}
 					<Button
-						className="w-full"
-						variant="secondaryColor"
-						size="md"
+						isFull
+						variant="secondary_color"
+						size="l"
 						onClick={() => {
 							setIsModalContactSupportModalVisible(true)
 						}}

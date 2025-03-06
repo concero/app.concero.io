@@ -21,6 +21,7 @@ export const ClaimReward = ({ questId, onClaim, className, propsButton }: TProps
 					onClaim?.(res.points)
 				})
 				.catch(err => {
+					
 					console.error('@ClaimReward: ', err)
 				})
 		}

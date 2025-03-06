@@ -64,19 +64,34 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 					address,
 					questId: quest._id,
 					stepId: step.id,
-				}).then(res => {
-					if (!res.status) {
-						setErrorText?.(
-							'You haven’t met the requirements for this task. Please complete it and try again.',
-						)
-						return
-					}
-					addStepInProgress({
-						address,
-						questId: quest._id,
-						stepId: step.id,
-					})
 				})
+					.then(res => {
+						if (!res.status) {
+							setErrorText?.(
+								'You haven’t met the requirements for this task. Please complete it and try again.',
+							)
+							return
+						}
+						addStepInProgress({
+							address,
+							questId: quest._id,
+							stepId: step.id,
+						})
+						trackEvent({
+							category: category.QuestCard,
+							action: action.SuccessQuest,
+							label: 'concero_verify_quest_success',
+							data: { id: quest._id, step },
+						})
+					})
+					.catch(e => {
+						trackEvent({
+							category: category.QuestCard,
+							action: action.FailedQuest,
+							label: 'concero_verify_quest_fail',
+							data: { id: quest._id, step },
+						})
+					})
 				trackEvent({
 					category: category.QuestCard,
 					action: action.BeginQuest,
@@ -123,19 +138,34 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 					address,
 					questId: quest._id,
 					stepId: step.id,
-				}).then(res => {
-					if (!res.status) {
-						setErrorText?.(
-							'You haven’t met the requirements for this task. Please complete it and try again.',
-						)
-						return
-					}
-					addStepInProgress({
-						address,
-						questId: quest._id,
-						stepId: step.id,
-					})
 				})
+					.then(res => {
+						if (!res.status) {
+							setErrorText?.(
+								'You haven’t met the requirements for this task. Please complete it and try again.',
+							)
+							return
+						}
+						addStepInProgress({
+							address,
+							questId: quest._id,
+							stepId: step.id,
+						})
+						trackEvent({
+							category: category.QuestCard,
+							action: action.SuccessQuest,
+							label: 'concero_verify_quest_success',
+							data: { id: quest._id, step },
+						})
+					})
+					.catch(e => {
+						trackEvent({
+							category: category.QuestCard,
+							action: action.FailedQuest,
+							label: 'concero_verify_quest_fail',
+							data: { id: quest._id, step },
+						})
+					})
 				trackEvent({
 					category: category.QuestCard,
 					action: action.BeginQuest,

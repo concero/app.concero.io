@@ -6,7 +6,6 @@ import EnvironmentPlugin from 'vite-plugin-environment'
 import svgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-
 const convertColorsToCurrentColorPlugin = {
 	name: 'convertColorsToCurrentColor',
 	description: 'Convert all fill and stroke colors to currentColor for monochrome SVGs.',

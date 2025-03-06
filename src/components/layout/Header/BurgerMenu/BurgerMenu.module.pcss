@@ -25,10 +25,10 @@
 	right: 25px;
 	top: 60px;
 	width: 320px;
-	background-color: var(--color-grey-25);
-	border-radius: var(--sp-lg);
-	padding: var(--sp-sm);
-	gap: var(--sp-sm);
+	background-color: var(--color-gray-25);
+	border-radius: var(--space-l);
+	padding: var(--space-m);
+	gap: var(--space-m);
 	box-shadow:
 		0 4px 24px 0 rgba(52, 64, 84, 0.15),
 		0 2px 12px 0 rgba(52, 64, 84, 0.1);
@@ -37,8 +37,8 @@
 .listContainer {
 	width: 100%;
 	flex-direction: column;
-	align-items: center;
-	gap: var(--sp-sm);
+	align-items: flex-start;
+	gap: var(--space-xs);
 
 	li {
 		width: 100%;
@@ -56,19 +56,13 @@
 	li:hover {
 		transform: translateY(-2px);
 	}
-	.rewards {
+	button.rewards_page_btn {
+		background-color: transparent;
 		color: var(--color-accent-700);
-		font-size: 16px;
-		font-weight: 500;
-		line-height: 18px;
-		justify-content: flex-start;
-		background-color: transparent !important;
 	}
-	.profile {
-		width: 100%;
-		text-align: left;
+	button.profile_page_btn {
 		justify-content: flex-start;
-		background-color: transparent !important;
+		/* background-color: transparent !important; */
 	}
 }
 

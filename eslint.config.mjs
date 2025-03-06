@@ -8,14 +8,14 @@ export default [
 		ignores: ['node_modules', 'clf', 'typechain-types', 'artifacts', 'deployments', 'cache'],
 	},
 	{
-		files: ['**/*.ts'],
+		files: ['src/*','src/**/*.ts', 'src/**/*.tsx'],
 		languageOptions: {
 			parser: parserTs,
-			parserOptions: {
-				project: './tsconfig.app.json',
-			},
+		// 	parserOptions: {
+		// 		project: './tsconfig.json',
+		// 	},
 		},
-
+		
 		plugins: {
 			'@typescript-eslint': pluginTs,
 			prettier: pluginPrettier,
@@ -33,7 +33,7 @@ export default [
 			storybook: { version: 'detect' },
 		},
 	},
-
+	
 	{
 		files: ['**/*.stories.{ts,tsx}', '.storybook/**/*.{ts, tsx}'],
 		plugins: {

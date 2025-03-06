@@ -38,6 +38,9 @@
 		"noUnusedLocals": false,
 		"noUnusedParameters": false
 	},
-	"include": ["src", "node_modules/eslint-plugin-react/lib/types.d.ts"],
-	"exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
+	"include": [
+		"src",
+		"node_modules/eslint-plugin-react/lib/types.d.ts",
+	],
+	"exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx", ".storybook/**/*.ts"]
 }
