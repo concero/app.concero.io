@@ -10,6 +10,7 @@ import { useVerifyQuestMutation } from '@/entities/Quest'
 import { trackEvent } from '@/hooks/useTracking'
 import { action, category } from '@/constants/tracking'
 import { Button } from '@concero/ui-kit'
+import { useState } from 'react'
 
 export type TStepActionProps = {
 	quest: TQuest
@@ -33,8 +34,8 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 		const isDailyQuest = quest.type === 'Daily'
 		const isWeeklyQuest = quest.type === 'Primary' || quest.type === 'Secondary'
 		const isSingleStep = quest.steps.length == 1
-		const { mutateAsync: verifyFn, isPending } = useVerifyQuestMutation()
-		const { mutateAsync: addStepInProgress } = useAddStepInProgressMutation()
+		const { mutateAsync: verifyFn, isPending: isPendingVerify } = useVerifyQuestMutation()
+		const { mutateAsync: addStepInProgress, isPending: isPendingAddStep } = useAddStepInProgressMutation()
 
 		let startDate = quest.startDate
 		let endDate = quest.endDate
@@ -112,7 +113,12 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 					<Button variant={isSingleStep ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
 						Swap
 					</Button>
-					<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
+					<Button
+						variant={'tetrary_color'}
+						onClick={handleVerify}
+						isLoading={isPendingVerify || isPendingAddStep}
+						size="l"
+					>
 						Verify
 					</Button>
 				</div>
@@ -126,11 +132,15 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 		const { step, quest, setErrorText } = props
 		const { address } = useAccount()
 		const { data: user } = useUserByAddress(address)
-		const { mutateAsync: verifyFn } = useVerifyQuestMutation()
-		const { mutateAsync: addStepInProgress } = useAddStepInProgressMutation()
+		const { mutateAsync: verifyFn, isPending: isPendingVerify } = useVerifyQuestMutation()
+		const { mutateAsync: addStepInProgress, isPending: isPendingAddStep } = useAddStepInProgressMutation()
 		const isSingleStep = quest.steps.length == 1
+		const [isOpenedLink, setIsOpenedLink] = useState(false)
 		const handleLink = () => {
 			window.open(step.options?.link, '_blank')
+			setTimeout(() => {
+				setIsOpenedLink(true)
+			}, 3000)
 		}
 		const handleVerify = () => {
 			if (quest && user && address) {
@@ -181,9 +191,11 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 						Open
 					</Button>
 					<Button
+						disabled={!isOpenedLink}
 						variant={isSingleStep ? 'secondary_color' : 'tetrary_color'}
 						onClick={handleVerify}
 						size="l"
+						isLoading={isPendingVerify || isPendingAddStep}
 					>
 						Verify
 					</Button>

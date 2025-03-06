@@ -12,7 +12,7 @@ type TProps = {
 }
 export const ClaimReward = ({ questId, onClaim, className, propsButton }: TProps) => {
 	const { address } = useAccount()
-	const { mutateAsync: claimQuest } = useClaimQuestMutation()
+	const { mutateAsync: claimQuest, isPending } = useClaimQuestMutation()
 	const claimThisQuest = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 		if (address) {
@@ -21,14 +21,20 @@ export const ClaimReward = ({ questId, onClaim, className, propsButton }: TProps
 					onClaim?.(res.points)
 				})
 				.catch(err => {
-					
 					console.error('@ClaimReward: ', err)
 				})
 		}
 	}, [])
 
 	return (
-		<Button variant="primary" size="s" onClick={claimThisQuest} className={className} {...propsButton}>
+		<Button
+			variant="primary"
+			size="s"
+			onClick={claimThisQuest}
+			isLoading={isPending}
+			className={className}
+			{...propsButton}
+		>
 			Claim reward
 		</Button>
 	)

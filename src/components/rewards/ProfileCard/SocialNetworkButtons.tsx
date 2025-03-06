@@ -89,7 +89,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 			<Button
 				leftIcon={<TwitterIcon />}
 				onClick={handleConnectTwitter}
-				className={classNames.connectSocialNetworkButton}
+				className={classNames.connect_social_btn}
 				variant="tetrary"
 				isFull
 				size={isMobile ? 'm' : 's'}
@@ -100,7 +100,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 			<Button
 				leftIcon={<DiscordIcon color="#1DA1F2" />}
 				onClick={handleConnectDiscord}
-				className={classNames.connectSocialNetworkButton}
+				className={classNames.connect_social_btn}
 				variant="tetrary"
 				isFull
 				size={isMobile ? 'm' : 's'}

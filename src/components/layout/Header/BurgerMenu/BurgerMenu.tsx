@@ -42,10 +42,10 @@ export function BurgerMenu({ user }: Props) {
 		setIsMenuOpened(false)
 	}, [])
 
-	const handleMenuOpen = useCallback((e: ReactMouseEvent<HTMLButtonElement>) => {
+	const handleMenuOpen = (e: ReactMouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation()
 		setIsMenuOpened(prev => !prev)
-	}, [])
+	}
 
 	const fadeAnimation = useSpring({
 		to: {
@@ -149,7 +149,15 @@ export function BurgerMenu({ user }: Props) {
 
 	return (
 		<div className={classNames.container}>
-			<IconButton variant="secondary" onClick={handleMenuOpen} size="m">
+			<IconButton
+				variant="secondary"
+				onClick={handleMenuOpen}
+				size="m"
+				htmlButtonProps={{
+					//@ts-expect-error dadw
+					onClick: handleMenuOpen,
+				}}
+			>
 				{isMenuOpened ? <CrossCloseIcon /> : <IconBurger />}
 			</IconButton>
 
@@ -161,7 +169,7 @@ export function BurgerMenu({ user }: Props) {
 					style={fadeAnimation}
 					className={classNames.menuContainer}
 				>
-					{isMobile && <WalletButton />}
+					{isMobile && <WalletButton isFull className={classNames.wallet_btn} />}
 					{settings}
 					<Button
 						isFull

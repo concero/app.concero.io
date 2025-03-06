@@ -12,7 +12,7 @@ type TProps = {
 }
 export const StartQuest = ({ questId, onStart, className, propsButton }: TProps) => {
 	const { address } = useAccount()
-	const { mutate: addQuestInProgress } = useAddQuestToProgressMutation()
+	const { mutate: addQuestInProgress, isPending } = useAddQuestToProgressMutation()
 	const startTheQuest = useCallback(() => {
 		if (address) {
 			addQuestInProgress({ address, questId })
@@ -21,7 +21,7 @@ export const StartQuest = ({ questId, onStart, className, propsButton }: TProps)
 	}, [])
 
 	return (
-		<Button onClick={startTheQuest} className={className} {...propsButton}>
+		<Button onClick={startTheQuest} className={className} isLoading={isPending} {...propsButton}>
 			Start quest
 		</Button>
 	)
