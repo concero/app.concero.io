@@ -48,7 +48,7 @@ export const QuestCard = (props: TProps) => {
 		<div className={cls.quest_card}>
 			<div className={cls.header}>
 				<div className={cls.title}>{quest.name}</div>
-				<div className={cls.subtitle}>{quest.subtitle}</div>
+				{quest.subtitle ? <div className={cls.subtitle}>{quest.subtitle}</div> : ''}
 				<div className={cls.reward_points}>+ {quest.rewards.points} CERs</div>
 			</div>
 

@@ -20,30 +20,36 @@ export const QuestPreviewList = (): JSX.Element => {
 	const listQuests = viewMode === 'rewards' ? quests : testingQuests
 	return (
 		<div className={cls.quest_preview_list}>
-			<div className={cls.title}>Quests</div>
-			<div className={cls.filters}>
-				<Button
-					variant={viewMode == 'rewards' ? 'secondary_color' : 'secondary'}
-					size="m"
-					onClick={() => handleViewModeChange('rewards')}
-				>
-					On Chain
-				</Button>
-				<Button
-					variant={viewMode == 'testing' ? 'secondary_color' : 'secondary'}
-					size="m"
-					onClick={() => handleViewModeChange('testing')}
-				>
-					Testing
-				</Button>
+			<div className={cls.header_list}>
+				<div className={cls.title}>Quests</div>
+				<div className={cls.filters}>
+					<Button
+						variant={viewMode == 'rewards' ? 'secondary_color' : 'secondary'}
+						size="m"
+						onClick={() => handleViewModeChange('rewards')}
+						className={viewMode == 'rewards' ? cls.selected : ''}
+					>
+						On Chain
+					</Button>
+					<Button
+						variant={viewMode == 'testing' ? 'secondary_color' : 'secondary'}
+						size="m"
+						onClick={() => handleViewModeChange('testing')}
+						className={viewMode == 'testing' ? cls.selected : ''}
+					>
+						Testing
+					</Button>
+				</div>
 			</div>
 			{viewMode === 'testing' ? (
 				<div className={cls.testing_start_block}>
 					<TestingPortalIcon />
-					<div className={cls.title}>Welcome to the Testing Portal!</div>
-					<div className={cls.subtitle}>
-						Participate in surveys about products built on our protocol and earn rewards. Your feedback
-						improves these products and supports their growth.{' '}
+					<div className={cls.description_block}>
+						<div className={cls.title}>Welcome to the Testing Portal!</div>
+						<div className={cls.subtitle}>
+							Participate in surveys about products built on our protocol and earn rewards. Your feedback
+							improves these products and supports their growth.
+						</div>
 					</div>
 				</div>
 			) : null}

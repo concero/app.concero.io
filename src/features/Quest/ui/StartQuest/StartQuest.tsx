@@ -1,7 +1,7 @@
 import { TQuest } from '@/entities/Quest'
 import { useAddQuestToProgressMutation } from '@/entities/User'
 import { Button, TButtonProps } from '@concero/ui-kit'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 
 type TProps = {
@@ -13,6 +13,18 @@ type TProps = {
 export const StartQuest = ({ questId, onStart, className, propsButton }: TProps) => {
 	const { address } = useAccount()
 	const { mutate: addQuestInProgress, isPending } = useAddQuestToProgressMutation()
+	const [loadingWithDelay, setLoadingWithDelay] = useState(false)
+	useEffect(() => {
+		if (isPending) {
+			const timer = setTimeout(() => {
+				setLoadingWithDelay(true)
+			}, 2000)
+
+			return () => clearTimeout(timer)
+		} else {
+			setLoadingWithDelay(false)
+		}
+	}, [isPending])
 	const startTheQuest = useCallback(() => {
 		if (address) {
 			addQuestInProgress({ address, questId })
@@ -21,7 +33,7 @@ export const StartQuest = ({ questId, onStart, className, propsButton }: TProps)
 	}, [])
 
 	return (
-		<Button onClick={startTheQuest} className={className} isLoading={isPending} {...propsButton}>
+		<Button onClick={startTheQuest} className={className} isLoading={loadingWithDelay} {...propsButton}>
 			Start quest
 		</Button>
 	)

@@ -3,9 +3,11 @@
 	flex-direction: column;
 	width: 600px;
 	max-width: 100%;
-	gap: var(--space-m);
+	gap: var(--space-s);
+	margin-top: var(--space-m);
 	.header {
 		display: flex;
+		gap: var(--space-xs);
 		.title {
 			font: var(--font-heading-xxlarge);
 			color: var(--color-gray-700);
@@ -15,7 +17,6 @@
 			color: var(--color-gray-500);
 		}
 		.reward_points {
-			margin-top: var(--space-s);
 			font: var(--font-heading-xlarge);
 			color: var(--color-accent-700);
 		}
@@ -34,13 +35,14 @@
 			max-height: 158px;
 			object-fit: contain;
 		}
-		.description {
-			font: var(--font-heading-large);
-			color: var(--color-accent-600);
-		}
-		.controls {
-			display: flex;
-			justify-content: flex-start;
-		}
+	}
+	.description {
+		font: var(--font-body-large);
+		color: var(--color-gray-600);
+	}
+	.controls {
+		display: flex;
+		justify-content: flex-start;
+		margin-top: calc(16px - var(--space-s));
 	}
 }
