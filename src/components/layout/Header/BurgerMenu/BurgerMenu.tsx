@@ -103,12 +103,12 @@ export function BurgerMenu({ user }: Props) {
 		<ul className={classNames.listContainer}>
 			{isTablet && (
 				<>
-					<Button disabled variant="tetrary" className={classNames.rewards_page_btn}>
+					<Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
 						Rewards
 					</Button>
 					<Button
 						isFull
-						disabled
+						isDisabled
 						className={classNames.profile_page_btn}
 						rightIcon={
 							<Tag size="s" variant="neutral">

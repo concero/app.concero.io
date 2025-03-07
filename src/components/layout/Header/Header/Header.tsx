@@ -51,7 +51,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 							</Button>
 						</Link>
 						<Button
-							disabled
+							isDisabled
 							className={classNames.profile}
 							rightIcon={
 								<Tag size="s" variant="neutral">

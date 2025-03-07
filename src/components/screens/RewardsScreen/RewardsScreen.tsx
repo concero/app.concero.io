@@ -10,6 +10,7 @@ import { config } from '../../../constants/config'
 import { TUserResponse } from '@/entities/User'
 import { DailyTaskList } from '@/features/Quest'
 import { QuestPreviewList } from '@/widgets/Quest'
+import { LoginRequired } from '@/features/Auth'
 
 interface Props {
 	user: TUserResponse | null
@@ -20,6 +21,9 @@ export const RewardsScreen = ({ user, loading }: Props) => {
 	const { isConnected } = useAccount()
 	if (config.REWARD_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
+	}
+	if (!isConnected) {
+		return <LoginRequired />
 	}
 	return (
 		<div className={classNames.rewardsScreenContainer}>

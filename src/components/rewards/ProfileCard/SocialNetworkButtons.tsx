@@ -87,6 +87,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 	return (
 		<div className="w-full">
 			<Button
+				as="div"
 				leftIcon={<TwitterIcon />}
 				onClick={handleConnectTwitter}
 				className={classNames.connect_social_btn}
@@ -98,6 +99,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 				Twitter
 			</Button>
 			<Button
+				as="div"
 				leftIcon={<DiscordIcon color="#1DA1F2" />}
 				onClick={handleConnectDiscord}
 				className={classNames.connect_social_btn}

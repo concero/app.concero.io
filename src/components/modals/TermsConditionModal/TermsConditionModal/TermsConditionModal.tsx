@@ -52,7 +52,7 @@ export const TermsConditionModal = (props: TProps): JSX.Element => {
 					.
 				</label>
 			</div>
-			<Button variant="primary" className={cls.block} isFull disabled={!checked} onClick={onVerify} size="l">
+			<Button variant="primary" className={cls.block} isFull isDisabled={!checked} onClick={onVerify} size="l">
 				Verify
 			</Button>
 			{isVerifyLoading && <span className={cls.tip_sign_message}>Please sign the message</span>}

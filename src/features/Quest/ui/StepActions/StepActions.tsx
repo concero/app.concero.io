@@ -191,7 +191,7 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 						Open
 					</Button>
 					<Button
-						disabled={!isOpenedLink}
+						isDisabled={!isOpenedLink}
 						variant={isSingleStep ? 'secondary_color' : 'tetrary_color'}
 						onClick={handleVerify}
 						size="l"
