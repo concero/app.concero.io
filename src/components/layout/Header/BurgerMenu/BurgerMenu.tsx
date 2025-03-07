@@ -169,7 +169,7 @@ export function BurgerMenu({ user }: Props) {
 					style={fadeAnimation}
 					className={classNames.menuContainer}
 				>
-					{isMobile && <WalletButton isFull className={classNames.wallet_btn} />}
+					{isMobile && <WalletButton isFull />}
 					{settings}
 					<Button
 						isFull

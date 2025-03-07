@@ -23,7 +23,11 @@ export const RewardsScreen = ({ user, loading }: Props) => {
 		return <TechWorksScreen />
 	}
 	if (!isConnected) {
-		return <LoginRequired />
+		return (
+			<div className={classNames.rewardsScreenContainer}>
+				<LoginRequired />
+			</div>
+		)
 	}
 	return (
 		<div className={classNames.rewardsScreenContainer}>
