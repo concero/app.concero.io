@@ -26,7 +26,15 @@ export const get = async <TResponse extends any>(url: string, params?: any, head
 		headers,
 	})
 
-export const post = async <TResponse extends any>(url: string, data: any, headers?: any) =>
+export const post = async <TResponse extends any>(url: string, data?: any, headers?: any) =>
+	await request<TResponse>({
+		url,
+		method: 'POST',
+		data,
+		headers,
+	})
+
+export const del = async <TResponse extends any>(url: string, data?: any, headers?: any) =>
 	await request<TResponse>({
 		url,
 		method: 'POST',

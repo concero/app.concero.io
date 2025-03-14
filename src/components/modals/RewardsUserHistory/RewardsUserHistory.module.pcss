@@ -2,11 +2,43 @@
 	max-width: 806px;
 	width: 100%;
 	gap: var(--sp-md);
+	.headerTitle {
+		color: var(--color-grey-700);
+	}
 }
 
 .historyWrapper {
 	height: 100%;
 	gap: var(--sp-md);
+
+	.headerHistory {
+		border-bottom: 1px solid var(--color-grey-100);
+		flex-direction: row;
+		justify-content: space-between;
+		padding: var(--sp-lg) 0;
+		flex-wrap: wrap;
+		gap: var(--sp-sm);
+		.wrapCersDate {
+			flex-direction: row;
+			justify-content: space-between;
+		}
+		.action {
+			color: var(--color-grey-500);
+		}
+		.cers {
+			flex-direction: row;
+			width: 109px;
+			justify-content: flex-start;
+			text-align: left;
+			color: var(--color-grey-500);
+		}
+		.date {
+			flex-direction: row;
+			width: 163px;
+			justify-content: flex-start;
+			color: var(--color-grey-500);
+		}
+	}
 }
 
 .userAction {
@@ -23,14 +55,16 @@
 }
 
 .points {
+	width: 109px;
 	color: var(--color-primary-700);
+	justify-content: flex-start;
 }
 
 .date {
-	width: 171px;
+	width: 163px;
 	max-width: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	color: var(--color-grey-500);
 }

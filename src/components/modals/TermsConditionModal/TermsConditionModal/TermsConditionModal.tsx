@@ -2,9 +2,8 @@ import { useState } from 'react'
 import { Modal } from '../../Modal/Modal'
 import VerifyIcon from '../../../../assets/icons/VerifyIcon.svg?react'
 import cls from './TermsConditionModal.module.pcss'
-import { Checkbox } from '../../../layout/Checkbox/Checkbox'
 import { classNames } from '../../../../utils/classNames/classNames'
-import { Button } from '../../../buttons/Button/Button'
+import { Button, Checkbox } from '@concero/ui-kit'
 
 type TProps = {
 	show: boolean
@@ -53,18 +52,10 @@ export const TermsConditionModal = (props: TProps): JSX.Element => {
 					.
 				</label>
 			</div>
-			<Button
-				variant="secondary"
-				className={cls.block}
-				isFull
-				isDisabled={!checked}
-				onClick={onVerify}
-				isLoading={isVerifyLoading}
-				size="lg"
-			>
+			<Button variant="primary" className={cls.block} isFull isDisabled={!checked} onClick={onVerify} size="l">
 				Verify
 			</Button>
-			{isVerifyLoading && 'Please sign the message'}
+			{isVerifyLoading && <span className={cls.tip_sign_message}>Please sign the message</span>}
 		</Modal>
 	)
 }

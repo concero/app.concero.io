@@ -26,7 +26,7 @@ interface QuestModalProps {
 	rewardIsClaimed: boolean
 	setRewardIsClaimed: Dispatch<SetStateAction<boolean>>
 }
-
+/**@deprecated */
 export const QuestModal = ({
 	setCompletedStepIds,
 	setRewardIsClaimed,

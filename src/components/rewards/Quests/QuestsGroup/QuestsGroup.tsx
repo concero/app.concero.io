@@ -17,7 +17,7 @@ const LoadingPlaceholders = ({ variant, className }: { variant: 'big' | 'normal'
 		<QuestPlaceholder variant={variant} className={className} />
 	</>
 )
-
+/**@deprecated */
 export const QuestsGroup = ({ user }: QuestsCardProps) => {
 	const { address } = useAccount()
 	const [quests, setQuests] = useState<GroupedQuests | null>(null)

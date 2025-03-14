@@ -1,13 +1,13 @@
 import { useAppKit } from '@reown/appkit/react'
 import { action, category } from '../../../../constants/tracking'
 import { useAccount } from 'wagmi'
-import { Button } from '../../../buttons/Button/Button'
 import { truncateWallet } from '../../../../utils/formatting'
 import { useTranslation } from 'react-i18next'
 import classNames from './WalletButton.module.pcss'
 import { trackEvent } from '../../../../hooks/useTracking'
 import { IconWallet } from '@tabler/icons-react'
 import { TrailArrowRightIcon } from '../../../../assets/icons/TrailArrowRightIcon'
+import { Button } from '@concero/ui-kit'
 
 interface Props {
 	className?: string
@@ -39,7 +39,7 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 		<Button
 			isFull={isFull}
 			leftIcon={isConnected ? <IconWallet size={16} color="var(--color-grey-600)" /> : null}
-			className={`${classNames.buttonWallet} ${className}`}
+			className={`${classNames.buttonWallet} ${className} ${isConnected ? classNames.is_connected : ''}`}
 			variant={isConnected ? 'secondary' : 'primary'}
 			rightIcon={isConnected && <TrailArrowRightIcon />}
 			onClick={handleClick}

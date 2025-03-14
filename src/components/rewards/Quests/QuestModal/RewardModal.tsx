@@ -13,7 +13,7 @@ interface Props {
 	points: number
 	showRoleAlert?: boolean
 }
-
+/**@deprecated */
 export const RewardModal = ({ show, setShow, quest, points, showRoleAlert }: Props) => {
 	const questImage = (
 		<div className={classNames.imageFrame}>

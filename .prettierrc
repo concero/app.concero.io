@@ -7,7 +7,7 @@
 	"tabWidth": 4,
 	"useTabs": true,
 	"arrowParens": "avoid",
-	"endOfLine": "auto",
+	"endOfLine": "lf",
 	"overrides": [
 		{
 			"files": "*.json",

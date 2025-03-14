@@ -17,7 +17,7 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 
 	const fetchAndSetUserActions = async () => {
 		const response = await fetchUserActions(user.address)
-		setUserActions(response)
+		setUserActions(response.data)
 	}
 
 	useEffect(() => {

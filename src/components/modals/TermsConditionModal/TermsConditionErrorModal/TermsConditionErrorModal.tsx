@@ -3,7 +3,7 @@ import { Modal } from '../../Modal/Modal'
 import WarningBoxIcon from '../../../../assets/icons/WarningBox.svg?react'
 import cls from './TermsConditionErrorModal.module.pcss'
 import { classNames } from '../../../../utils/classNames/classNames'
-import { Button } from '../../../buttons/Button/Button'
+import { Button } from '@concero/ui-kit'
 
 type TProps = {
 	show: boolean
@@ -24,7 +24,7 @@ export const TermsConditionErrorModal = (props: TProps): JSX.Element => {
 			</div>
 			<p className={classNames(cls.block, {}, [cls.description])}>Something went wrong, try again</p>
 			<div className={classNames(cls.block, {}, [cls.condition])}></div>
-			<Button variant="primary" className={cls.block} isFull onClick={onTryAgain} size="lg">
+			<Button variant="primary" className={cls.block} isFull onClick={onTryAgain} size="l">
 				Try again
 			</Button>
 		</Modal>

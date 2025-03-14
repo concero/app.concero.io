@@ -1,0 +1,56 @@
+.step_wrap {
+	border-radius: var(--space-m);
+	gap: var(--space-m);
+	background-color: var(--color-gray-50);
+	&.single_step {
+		background-color: transparent;
+	}
+
+	/*Self classes*/
+	&.done {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	&.loading {
+		height: 192px;
+		.title {
+			overflow: inherit;
+		}
+		.spinner_wrap {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			svg {
+				width: 24px;
+				height: 24px;
+			}
+		}
+	}
+	.title_wrap {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-xs);
+		.title {
+			font: var(--font-heading-large);
+			color: var(--color-gray-700);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+	.description {
+		font: var(--font-body-medium);
+		color: var(--color-gray-600);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.error_text {
+		font: var(--font-body-medium);
+		color: var(--color-danger-700);
+	}
+}

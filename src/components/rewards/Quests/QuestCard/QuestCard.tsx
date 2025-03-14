@@ -40,7 +40,7 @@ const normalizeEndDate = (endDate: any) => {
 	}
 	return endDate
 }
-
+/**@deprecated */
 export const QuestCard = ({ variant = 'big', quest, user, className }: QuestCardProps) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [completedStepIds, setCompletedStepIds] = useState<number[]>([])

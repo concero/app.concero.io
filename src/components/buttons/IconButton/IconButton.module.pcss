@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 .button {
 	width: fit-content;
 	border-radius: var(--st-br-md);
@@ -27,11 +28,13 @@
 .default {
 	background-color: var(--color-primary-600);
 
-	&:hover {
+	&:hover,
+	&.hovered {
 		background-color: var(--color-primary-700);
 	}
 
-	&:active {
+	&:active,
+	&.pressed {
 		background-color: var(--color-primary-800);
 	}
 }
@@ -39,23 +42,13 @@
 .secondaryColor {
 	background-color: var(--color-primary-600);
 
-	&:hover {
+	&:hover,
+	&.hovered {
 		background-color: var(--color-primary-700);
 	}
 
-	&:active {
-		background-color: var(--color-primary-800);
-	}
-}
-
-.secondaryColor {
-	background-color: var(--color-primary-600);
-
-	&:hover {
-		background-color: var(--color-primary-700);
-	}
-
-	&:active {
+	&:active,
+	&.pressed {
 		background-color: var(--color-primary-800);
 	}
 }
@@ -63,11 +56,13 @@
 .secondary {
 	background-color: var(--color-grey-100);
 
-	&:hover {
+	&:hover,
+	&.hovered {
 		background-color: var(--color-grey-200);
 	}
 
-	&:active {
+	&:active,
+	&.pressed {
 		background-color: var(--color-grey-300);
 	}
 }

@@ -18,7 +18,7 @@ const svgColorMap: Record<Variant, string> = {
 	error: 'var(--color-danger-700)',
 	warning: 'var(--color-warning-700)',
 }
-
+/**@deprecated use from '@concero/ui-kit' */
 export const Alert = ({ icon, title, subtitle, variant = 'info' }: Props) => {
 	return (
 		<div className={`${classNames.container} ${classNames[variant]}`}>

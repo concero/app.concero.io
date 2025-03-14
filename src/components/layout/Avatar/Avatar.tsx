@@ -14,7 +14,7 @@ const getClasses = (size: AvatarProps['size'], className: AvatarProps['className
 
 	return baseClasses.concat(sizeClass, additionalClasses).join(' ')
 }
-
+/**@deprecated */
 export const Avatar: FC<AvatarProps> = ({ size, src, className }) => (
 	<div className={getClasses(size, className)}>
 		<img

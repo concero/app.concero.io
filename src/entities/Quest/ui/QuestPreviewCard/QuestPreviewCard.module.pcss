@@ -1,0 +1,127 @@
+.preview_item {
+	display: flex;
+	gap: var(--space-m);
+	position: relative;
+	transition:
+		color 0.2s ease-in-out,
+		background-color 0.2s ease-in-out,
+		transform 0.2s ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		transform: translateY(-2px);
+	}
+	.header {
+		gap: var(--space-m);
+		.meta_info {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			.category {
+				font: var(--font-body-medium);
+				color: var(--color-gray-500);
+			}
+		}
+		.title_wrap {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-xxs);
+			.title {
+				font: var(--font-heading-xlarge);
+				color: var(--color-gray-700);
+			}
+			.rewards {
+				font: var(--font-heading-large);
+				color: var(--color-accent-700);
+			}
+		}
+	}
+
+	.image_wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		max-width: 100%;
+		max-height: 100%;
+		& > img {
+			user-select: none;
+			pointer-events: none;
+			width: auto;
+			height: auto;
+			max-width: 100%;
+			max-height: 158px;
+			object-fit: contain;
+		}
+	}
+	.footer {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+	}
+	&.size_s {
+		width: 100%;
+		max-width: 189px;
+		.title_wrap {
+			.title {
+				font: var(--font-heading-large);
+			}
+			.rewards {
+				font: var(--font-heading-large);
+			}
+		}
+	}
+	&.size_m {
+		width: 100%;
+		max-width: 291px;
+		@media (max-width: 629px) {
+			max-width: 100%;
+		}
+	}
+	&.size_l {
+		width: 100%;
+		max-width: 291px;
+		@media (max-width: 629px) {
+			max-width: 100%;
+		}
+	}
+	&.size_xl {
+		width: 100%;
+		max-width: 600px;
+		@media (max-width: 629px) {
+			max-width: 100%;
+		}
+	}
+	&.disabled {
+		.header {
+			.meta_info {
+				.category {
+					font: var(--font-body-medium);
+					color: var(--color-gray-500);
+				}
+			}
+			.title_wrap {
+				background-color: var(--color-gray-25);
+				.title {
+					color: var(--color-gray-500);
+				}
+				.rewards {
+					color: var(--color-accent-400);
+				}
+			}
+		}
+		.image_wrap {
+			position: relative;
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				background: rgba(255, 255, 255, 0.5);
+				z-index: 1;
+			}
+		}
+	}
+}

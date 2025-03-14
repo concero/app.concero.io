@@ -4,7 +4,7 @@ interface Props {
 	active: boolean
 	setActive?: () => void
 }
-
+/**@deprecated use from '@concero/ui-kit' */
 export const Switch = ({ active, setActive }: Props) => {
 	const activeClass = active ? classNames.active : ''
 

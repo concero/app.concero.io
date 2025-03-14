@@ -7,7 +7,7 @@ interface ToggleProps {
 	className?: string
 	checkedClassName?: string
 }
-
+/**@deprecated use from '@concero/ui-kit' */
 export const Toggle: FC<ToggleProps> = ({ isChecked, onChange, className, checkedClassName = '' }) => {
 	return (
 		<div

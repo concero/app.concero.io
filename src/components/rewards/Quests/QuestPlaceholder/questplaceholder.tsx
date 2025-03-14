@@ -9,7 +9,7 @@ interface QuestPlaceholderProps {
 	variant?: 'big' | 'normal' | 'small'
 	className?: string
 }
-
+/**@deprecated */
 export const QuestPlaceholder = ({ variant = 'big', className }: QuestPlaceholderProps) => {
 	return (
 		<div style={{ cursor: 'default' }} className={`${classNames.questCard} ${classNames[variant]} ${className}`}>

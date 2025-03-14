@@ -1,0 +1,68 @@
+.quest_preview_list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
+	.header_list {
+		gap: var(--space-s);
+
+		.title {
+			font: var(--font-heading-xxlarge);
+			color: var(--color-gray-700);
+		}
+		.filters {
+			display: flex;
+			gap: var(--space-xxs);
+			flex-direction: row;
+			.selected {
+				pointer-events: none;
+				cursor: pointer;
+			}
+		}
+	}
+	.list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-m);
+		.monthly {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-m);
+		}
+		.primary {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: var(--space-m);
+		}
+		.secondary {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: var(--space-m);
+		}
+	}
+
+	.testing_start_block {
+		display: flex;
+		flex-direction: column;
+		/* gap: var(--space-m); */
+		justify-content: center;
+		align-items: center;
+		.description_block {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-xxs);
+			margin-top: -2px;
+			.title {
+				text-align: center;
+				font: var(--font-heading-large);
+				color: var(--color-gray-700);
+			}
+			.subtitle {
+				text-align: center;
+				font: var(--font-body-large);
+				color: var(--color-gray-600);
+			}
+		}
+	}
+}

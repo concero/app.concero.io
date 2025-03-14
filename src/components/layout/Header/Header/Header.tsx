@@ -6,16 +6,15 @@ import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
-import { Button } from '../../../buttons/Button/Button'
 import buttonClassNames from '../../../buttons/Button/Button.module.pcss'
-import { Tag } from '../../Tag/Tag'
-import { type IUser } from '../../../../api/concero/user/userType'
 import { UserMultipliers } from './UserMultipliers/UserMultipliers'
 import { TooltipWrapper } from '../../WithTooltip/TooltipWrapper'
 import { toLocaleNumber } from '../../../../utils/formatting'
+import { Button, Tag } from '@concero/ui-kit'
+import { TUserResponse } from '@/entities/User'
 
 interface HeaderProps {
-	user: IUser | null
+	user: TUserResponse | null
 	isWalletConnected: boolean
 	children?: ReactNode
 }
@@ -55,7 +54,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 							isDisabled
 							className={classNames.profile}
 							rightIcon={
-								<Tag size="sm" variant="neutral">
+								<Tag size="s" variant="neutral">
 									Coming Soon
 								</Tag>
 							}
@@ -69,13 +68,13 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 			<div className={classNames.headerButtonsContainer}>
 				{user && isWalletConnected && (
 					<>
-						<Tag>{toLocaleNumber(getPoints(user.points), 2)} CERs</Tag>
+						<Tag size="m">{toLocaleNumber(getPoints(user.points), 2)} CERs</Tag>
 						<TooltipWrapper
 							tooltipId={'user-multiplier'}
 							place={isTablet || isMobile ? 'top-end' : 'top'}
 							tooltipContent={<UserMultipliers user={user} />}
 						>
-							<Tag>
+							<Tag size="m">
 								{String(
 									user.multiplier.default +
 										(user.multiplier.dailySwap ?? 0) +

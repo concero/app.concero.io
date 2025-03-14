@@ -1,7 +1,7 @@
 import { post } from '../../client'
 import { type Address } from 'viem'
 import { type IUser } from './userType'
-
+/**@deprecated */
 export const createUser = async (address: Address): Promise<IUser> => {
 	const url = `${process.env.CONCERO_API_URL}/users`
 

@@ -12,7 +12,7 @@ export interface TagProps {
 	children: ReactNode
 	size?: 'sm' | 'md'
 }
-
+/**@deprecated use from '@concero/ui-kit' */
 export const Tag: FC<TagProps> = ({
 	leftIcon,
 	rightIcon,
