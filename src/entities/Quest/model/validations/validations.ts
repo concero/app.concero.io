@@ -2,9 +2,9 @@ import { z } from 'zod'
 
 export const OnChainSourceZod = z.enum(['INFRA', 'POOL'])
 
-export const SocialSourceZod = z.enum(['DISCORD', 'TWITTER'])
+export const SocialSourceZod = z.enum(['DISCORD', 'TWITTER', 'GOOGLE_FORM'])
 
-export const QuestCategoryZod = z.enum(['Socials', 'OnChain', 'Campaign', 'Common'])
+export const QuestCategoryZod = z.enum(['Socials', 'OnChain', 'Common'])
 
 export const QuestTypeZod = z.enum(['Campaign', 'Daily', 'Monthly', 'Big', 'Primary', 'Secondary'])
 

@@ -9,7 +9,9 @@ import { useAccount } from 'wagmi'
 import posthog from 'posthog-js'
 import { CheckTermsOfUseDecorator } from './components/modals/TermsConditionModal/CheckTermsOfUse'
 import { useUserByAddress } from '@/entities/User'
-
+import { ProfilePage } from './pages/ProfilePage'
+import cls from './Navigator.module.pcss'
+import { PageWrap } from './shared/ui/PageWrap/PageWrap'
 const RewardsScreen = lazy(
 	async () =>
 		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
@@ -42,26 +44,38 @@ export const Navigator = () => {
 		>
 			<AppScreen>
 				<Header user={userToUse} isWalletConnected={isConnected} />
-				<Routes>
-					<Route
-						path={routes.rewards}
-						element={
-							<Suspense fallback={<FullScreenLoader />}>
-								<CheckTermsOfUseDecorator>
-									<RewardsScreen loading={isPending} user={userToUse} />
-								</CheckTermsOfUseDecorator>
-							</Suspense>
-						}
-					/>
-					<Route path={routes.root} element={<Navigate to={routes.rewards} />} />
-					<Route path={'/*'} element={<Navigate to={routes.rewards} />} />
-					<Route path={routes.pool} element={<ExternalRedirect url="https://app.lanca.io/pools" />} />
-					<Route
-						path={routes.poolUsdc}
-						element={<ExternalRedirect url="https://app.lanca.io/pools/usdc" />}
-					/>
-				</Routes>
-				<Footer />
+				<div className={cls.wrap_page}>
+					<Routes>
+						<Route
+							path={routes.rewards}
+							element={
+								<Suspense fallback={<FullScreenLoader />}>
+									<CheckTermsOfUseDecorator>
+										<RewardsScreen loading={isPending} user={userToUse} />
+									</CheckTermsOfUseDecorator>
+								</Suspense>
+							}
+						/>
+						<Route
+							path={routes.profile}
+							element={
+								<Suspense fallback={<FullScreenLoader />}>
+									<CheckTermsOfUseDecorator>
+										<ProfilePage user={userToUse} />
+									</CheckTermsOfUseDecorator>
+								</Suspense>
+							}
+						/>
+						<Route path={routes.root} element={<Navigate to={routes.rewards} />} />
+						<Route path={'/*'} element={<Navigate to={routes.rewards} />} />
+						<Route path={routes.pool} element={<ExternalRedirect url="https://app.lanca.io/pools" />} />
+						<Route
+							path={routes.poolUsdc}
+							element={<ExternalRedirect url="https://app.lanca.io/pools/usdc" />}
+						/>
+					</Routes>
+					<Footer />
+				</div>
 			</AppScreen>
 		</BrowserRouter>
 	)

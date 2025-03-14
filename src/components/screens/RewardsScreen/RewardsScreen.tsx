@@ -11,6 +11,7 @@ import { TUserResponse } from '@/entities/User'
 import { DailyTaskList } from '@/features/Quest'
 import { QuestPreviewList } from '@/widgets/Quest'
 import { LoginRequired } from '@/features/Auth'
+import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
 
 interface Props {
 	user: TUserResponse | null
@@ -30,21 +31,23 @@ export const RewardsScreen = ({ user, loading }: Props) => {
 		)
 	}
 	return (
-		<div className={classNames.rewardsScreenContainer}>
-			<div className={classNames.rewardsWrapper}>
-				{isConnected &&
-					(loading ? (
-						<>
-							<ProfilePlaceholder />
-							<StreaksPlaceholders />
-						</>
-					) : (
-						user && <RewardsProfile user={user} />
-					))}
-				<DailyTaskList />
-				<QuestPreviewList />
-				<LeaderboardCard user={user} />
+		<PageWrap>
+			<div className={classNames.rewardsScreenContainer}>
+				<div className={classNames.rewardsWrapper}>
+					{isConnected &&
+						(loading ? (
+							<>
+								<ProfilePlaceholder />
+								<StreaksPlaceholders />
+							</>
+						) : (
+							user && <RewardsProfile user={user} />
+						))}
+					<DailyTaskList />
+					<QuestPreviewList />
+					<LeaderboardCard user={user} />
+				</div>
 			</div>
-		</div>
+		</PageWrap>
 	)
 }

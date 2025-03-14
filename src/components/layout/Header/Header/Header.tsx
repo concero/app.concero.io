@@ -68,13 +68,13 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 			<div className={classNames.headerButtonsContainer}>
 				{user && isWalletConnected && (
 					<>
-						<Tag>{toLocaleNumber(getPoints(user.points), 2)} CERs</Tag>
+						<Tag size="m">{toLocaleNumber(getPoints(user.points), 2)} CERs</Tag>
 						<TooltipWrapper
 							tooltipId={'user-multiplier'}
 							place={isTablet || isMobile ? 'top-end' : 'top'}
 							tooltipContent={<UserMultipliers user={user} />}
 						>
-							<Tag>
+							<Tag size="m">
 								{String(
 									user.multiplier.default +
 										(user.multiplier.dailySwap ?? 0) +

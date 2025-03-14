@@ -14,6 +14,7 @@ type TProps = {
 
 export const QuestCard = (props: TProps) => {
 	const { quest, status, onClaim } = props
+
 	let controls = null
 	let showSteps = false
 	let showOnlyOptionalSteps = false

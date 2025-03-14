@@ -2,7 +2,7 @@ import cls from './StepActions.module.pcss'
 import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 import { TQuest, TQuestStep } from '@/entities/Quest'
 import { TQuestActions } from '@/entities/Quest'
-import { useAddStepInProgressMutation, useUserByAddress, useUserVolume } from '@/entities/User'
+import { getIsStartedQuest, useAddStepInProgressMutation, useUserByAddress, useUserVolume } from '@/entities/User'
 import { useAccount } from 'wagmi'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { config } from '@/constants/config'
@@ -204,7 +204,78 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 		)
 	},
 	ProvideFeedback: function (props: TStepActionProps): JSX.Element {
-		return <></>
+		const { step, quest, setErrorText } = props
+		const { address } = useAccount()
+		const { data: user } = useUserByAddress(address)
+		const { mutateAsync: verifyFn, isPending: isPendingVerify } = useVerifyQuestMutation()
+		const { mutateAsync: addStepInProgress, isPending: isPendingAddStep } = useAddStepInProgressMutation()
+		const isSingleStep = quest.steps.length == 1
+		const isStartedQuest = user ? getIsStartedQuest(quest._id, user) : false
+		const [isOpenedLink, setIsOpenedLink] = useState(isStartedQuest)
+		const handleLink = () => {
+			window.open(step.options?.link, '_blank')
+			setIsOpenedLink(true)
+		}
+		const handleVerify = () => {
+			if (quest && user && address) {
+				verifyFn({
+					address,
+					questId: quest._id,
+					stepId: step.id,
+				})
+					.then(res => {
+						if (!res.status) {
+							setErrorText?.(
+								'You haven’t met the requirements for this task. Please complete it and try again.',
+							)
+							return
+						}
+						addStepInProgress({
+							address,
+							questId: quest._id,
+							stepId: step.id,
+						})
+						trackEvent({
+							category: category.QuestCard,
+							action: action.SuccessQuest,
+							label: 'concero_verify_quest_success',
+							data: { id: quest._id, step },
+						})
+					})
+					.catch(e => {
+						trackEvent({
+							category: category.QuestCard,
+							action: action.FailedQuest,
+							label: 'concero_verify_quest_fail',
+							data: { id: quest._id, step },
+						})
+					})
+				trackEvent({
+					category: category.QuestCard,
+					action: action.BeginQuest,
+					label: 'concero_verify_quest_begin',
+					data: { id: quest._id, step },
+				})
+			}
+		}
+		return (
+			<>
+				<div className={cls.controls}>
+					<Button variant={isSingleStep ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
+						Open
+					</Button>
+					<Button
+						isDisabled={!isOpenedLink}
+						variant={isSingleStep ? 'secondary_color' : 'tetrary_color'}
+						onClick={handleVerify}
+						size="l"
+						isLoading={isPendingVerify || isPendingAddStep}
+					>
+						Verify
+					</Button>
+				</div>
+			</>
+		)
 	},
 	RateExperience: function (props: TStepActionProps): JSX.Element {
 		return <></>

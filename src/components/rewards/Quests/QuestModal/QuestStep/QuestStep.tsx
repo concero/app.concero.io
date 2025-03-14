@@ -80,7 +80,7 @@ const buttonsStyle: Record<StepMode, ButtonStepStyle> = {
 		},
 	},
 }
-
+/**@deprecated */
 export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep, isCompleted, isConnected }: Props) => {
 	const currentStatus = isCompleted ? VerificationStatus.SUCCESS : VerificationStatus.NOT_STARTED
 	const [userVolume, setUserVolume] = useState<number | null>(null)
