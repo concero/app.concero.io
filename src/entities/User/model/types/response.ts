@@ -14,8 +14,7 @@ import {
 
 export type TUserResponse = z.infer<typeof IUserZod>
 export type TGetLeaderBoardReponse = {
-	users: TUserResponse[]
-	currentUserPosition: number
+	users: (TUserResponse & { position: number })[]
 }
 
 export type TUpdateUserDiscord = {

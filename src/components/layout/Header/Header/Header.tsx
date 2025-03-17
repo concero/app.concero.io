@@ -23,6 +23,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 	const isTablet = useMediaQuery('ipad')
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapRewards = useMatch(routes.rewards)
+	const matchSwapProfile = useMatch(routes.profile)
 
 	const getPoints = (points: number | { $numberDecimal: string }): number => {
 		if (typeof points === 'number') {
@@ -50,18 +51,20 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 								Rewards
 							</Button>
 						</Link>
-						<Button
-							isDisabled
-							className={classNames.profile}
-							rightIcon={
-								<Tag size="s" variant="neutral">
-									Coming Soon
-								</Tag>
-							}
-							variant="tetrary"
-						>
-							Profile
-						</Button>
+						<Link style={{ pointerEvents: matchSwapProfile ? 'none' : 'all' }} to={routes.profile}>
+							<Button
+								isDisabled
+								className={classNames.profile}
+								rightIcon={
+									<Tag size="s" variant="neutral">
+										Coming Soon
+									</Tag>
+								}
+								variant="tetrary"
+							>
+								Profile
+							</Button>
+						</Link>
 					</ul>
 				)}
 			</div>

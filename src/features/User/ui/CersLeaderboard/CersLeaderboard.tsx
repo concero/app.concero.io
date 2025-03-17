@@ -1,17 +1,15 @@
-import classNames from './LeaderboardCard.module.pcss'
-import { truncateWallet } from '../../../utils/formatting'
-import BlockiesSvg from 'blockies-react-svg'
+import { TUserResponse, userServiceApi } from '@/entities/User'
 import { useEffect, useState } from 'react'
-import { type IUser } from '../../../api/concero/user/userType'
-import { fetchLeaderboard } from '../../../api/concero/user/fetchLeaderboard'
+import cls from './CersLeaderboard.module.pcss'
+import { Tag } from '@concero/ui-kit'
+import BlockiesSvg from 'blockies-react-svg'
+import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
-import { Tag } from '../../layout/Tag/Tag'
 
 interface MemberProps {
-	user: IUser
+	user: TUserResponse
 	place: number
 }
-
 const Member = ({ user, place }: MemberProps) => {
 	const { address: currentUserAddress } = useAccount()
 	const { address, points } = user
@@ -20,24 +18,24 @@ const Member = ({ user, place }: MemberProps) => {
 	const isCurrentUser = currentUserAddress?.toLowerCase() === address.toLowerCase()
 
 	return (
-		<div className={classNames.tableRow}>
-			<div className={classNames.tableCell}>
+		<div className={cls.table_row}>
+			<div className={cls.table_cell}>
 				<p className="body2">{place}</p>
 			</div>
-			<div className={classNames.tableCell}>
+			<div className={cls.table_cell}>
 				<div className="row ac gap-sm">
-					<BlockiesSvg address={address} className={classNames.avatar} />
+					<BlockiesSvg address={address} className={cls.avatar} />
 					{walletAddress}
-					<div className={classNames.currentUser}>
+					<div className={cls.current_user}>
 						{isCurrentUser && (
-							<Tag size="sm" variant={'neutral'}>
+							<Tag size="s" variant={'neutral'}>
 								You
 							</Tag>
 						)}
 					</div>
 				</div>
 			</div>
-			<div className={classNames.tableCell}>
+			<div className={cls.table_cell}>
 				<p className="body2">{points.toFixed(4)}</p>
 			</div>
 		</div>
@@ -45,24 +43,23 @@ const Member = ({ user, place }: MemberProps) => {
 }
 
 interface LeaderboardCardProps {
-	user: IUser | null | undefined
+	user: TUserResponse | null | undefined
 }
 
 interface LeaderboardTableProps {
-	users: IUser[]
+	users: (TUserResponse & { position: number })[]
 }
-
 const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 	return (
-		<div className={classNames.table}>
-			<div className={classNames.tableRow}>
-				<div className={classNames.tableCell}>
-					<h6>Rank</h6>
+		<div className={cls.table}>
+			<div className={cls.table_row}>
+				<div className={cls.table_cell}>
+					<h6>#</h6>
 				</div>
-				<div className={classNames.tableCell}>
+				<div className={cls.table_cell}>
 					<h6>User</h6>
 				</div>
-				<div className={classNames.tableCell}>
+				<div className={cls.table_cell}>
 					<h6>CERs collected</h6>
 				</div>
 			</div>
@@ -72,12 +69,11 @@ const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 		</div>
 	)
 }
-/**@deprecated use CersLeaderboard*/
-export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
-	const [users, setUsers] = useState<IUser[]>([])
+export const CersLeaderboard = ({ user }: LeaderboardCardProps) => {
+	const [users, setUsers] = useState<(TUserResponse & { position: number })[]>([])
 
 	const handleFetchUsers = async (userAddress: string | undefined) => {
-		const { users } = await fetchLeaderboard(userAddress)
+		const { users } = await userServiceApi.getLeaderboard(userAddress)
 		setUsers(users)
 	}
 
@@ -86,9 +82,9 @@ export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 	}, [user])
 
 	return (
-		<div className="gap-md">
-			<div className={classNames.leaderboardHeader}>
-				<h6>Leaderboard</h6>
+		<div className={cls.leaderboard_wrapper}>
+			<div className={cls.leaderboard_header}>
+				<h6 className={cls.title_board}>Leaderboard</h6>
 			</div>
 			<LeaderboardTable users={users} />
 		</div>

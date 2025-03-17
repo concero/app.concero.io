@@ -7,7 +7,7 @@ import { TGetLeaderBoardReponse, TUpdateUserDiscord, TUpdateUserTwitter, TUserRe
 import { TApiResponse } from '@/types/api'
 
 //--------------------------------Domain
-const userService = {
+export const userServiceApi = {
 	createUser: async (address: Address): Promise<TUserResponse> => {
 		const url = `${process.env.CONCERO_API_URL}/users`
 
@@ -104,7 +104,7 @@ export const useCreateUserMutation = () => {
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		mutationFn: (address: Address) => userService.createUser(address),
+		mutationFn: (address: Address) => userServiceApi.createUser(address),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -114,7 +114,7 @@ export const useCreateUserMutation = () => {
 export const useUserByAddress = (address?: Address) => {
 	return useQuery({
 		queryKey: [tagInvalidation, address],
-		queryFn: () => userService.getUserByAddress(address as Address),
+		queryFn: () => userServiceApi.getUserByAddress(address as Address),
 		enabled: !!address,
 		notifyOnChangeProps: ['data', 'isPending', 'error'],
 	})
@@ -124,7 +124,7 @@ export const useAddQuestToProgressMutation = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (payload: { address: string; questId: string }) =>
-			userService.addQuestToProgress(payload.address, payload.questId),
+			userServiceApi.addQuestToProgress(payload.address, payload.questId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -135,7 +135,7 @@ export const useRemoveQuestFromProgressMutation = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (payload: { address: string; questId: string }) =>
-			userService.removeQuestFromProgress(payload.address, payload.questId),
+			userServiceApi.removeQuestFromProgress(payload.address, payload.questId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -147,7 +147,7 @@ export const useAddStepInProgressMutation = () => {
 
 	return useMutation({
 		mutationFn: (payload: { address: string; questId: string; stepId: string }) =>
-			userService.addStepInProgress(payload.address, payload.questId, payload.stepId),
+			userServiceApi.addStepInProgress(payload.address, payload.questId, payload.stepId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -160,7 +160,7 @@ export const useAddStepInProgressMutation = () => {
 export const useUserVolume = (options?: TUserVolumeArgs) => {
 	return useQuery({
 		queryKey: ['userVolume', options],
-		queryFn: () => userService.getUserVolume(options as TUserVolumeArgs),
+		queryFn: () => userServiceApi.getUserVolume(options as TUserVolumeArgs),
 		enabled: !!options?.address && !!options?.startDate && !!options?.endDate,
 		notifyOnChangeProps: ['data', 'isPending', 'error'],
 	})
@@ -170,7 +170,7 @@ export const useUpdateUserDiscordMutation = () => {
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		mutationFn: (data: TUpdateUserDiscord) => userService.updateUserDiscord(data),
+		mutationFn: (data: TUpdateUserDiscord) => userServiceApi.updateUserDiscord(data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -181,7 +181,7 @@ export const useUpdateUserTwitterMutation = () => {
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		mutationFn: (data: TUpdateUserTwitter) => userService.updateUserTwitter(data),
+		mutationFn: (data: TUpdateUserTwitter) => userServiceApi.updateUserTwitter(data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -191,7 +191,7 @@ export const useUpdateUserTwitterMutation = () => {
 export const useAcceptTermsMutation = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
-		mutationFn: (arg: TAcceptTerms) => userService.acceptTerms(arg.address),
+		mutationFn: (arg: TAcceptTerms) => userServiceApi.acceptTerms(arg.address),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -201,7 +201,7 @@ export const useAcceptTermsMutation = () => {
 export const useGetLeaderboard = (address?: string) => {
 	return useQuery({
 		queryKey: [tagInvalidation, address],
-		queryFn: () => userService.getLeaderboard(address),
+		queryFn: () => userServiceApi.getLeaderboard(address),
 		notifyOnChangeProps: ['data', 'isPending'],
 	})
 }
