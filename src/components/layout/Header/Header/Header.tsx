@@ -20,7 +20,8 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) => {
-	const isTablet = useMediaQuery('ipad')
+	const isDesktop = useMediaQuery('desktop')
+	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapRewards = useMatch(routes.rewards)
 	const matchSwapProfile = useMatch(routes.profile)
@@ -41,7 +42,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 				<div className={classNames.logoContainer}>
 					<Logo />
 				</div>
-				{!isTablet && (
+				{isDesktop && (
 					<ul className="gap-xs">
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
 							<Button

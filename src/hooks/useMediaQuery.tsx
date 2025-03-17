@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react'
 
-const sizes = {
-	mobile: '768px',
-	ipad: '1024px',
+type Screen = 'mobile' | 'tablet' | 'desktop'
+
+const queries: Record<Screen, string> = {
+	mobile: '(max-width: 743px)',
+	tablet: '(min-width: 744px) and (max-width: 1279px)',
+	desktop: '(min-width: 1280px)',
 }
 
-type Screen = 'ipad' | 'mobile'
-
-export const useMediaQuery = (screen: Screen) => {
-	const [matches, setMatches] = useState(() => {
-		const query = `(max-width: ${sizes[screen]})`
-		return window.matchMedia(query).matches
+export const useMediaQuery = (screen: Screen): boolean => {
+	const [matches, setMatches] = useState<boolean>(() => {
+		return window.matchMedia(queries[screen]).matches
 	})
 
 	useEffect(() => {
-		const query = `(max-width: ${sizes[screen]})`
-		const media = window.matchMedia(query)
+		const media = window.matchMedia(queries[screen])
 
 		const listener = (event: MediaQueryListEvent) => {
 			setMatches(event.matches)

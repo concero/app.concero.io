@@ -5,6 +5,8 @@ import { TAcceptTerms, TUserVolumeArgs } from '../model/types/request'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { TGetLeaderBoardReponse, TUpdateUserDiscord, TUpdateUserTwitter, TUserResponse } from '../model/types/response'
 import { TApiResponse } from '@/types/api'
+import { updateUserDiscord, updateUserTwitter } from '@/api/concero/user/updateUser'
+import { config } from '@/constants/config'
 
 //--------------------------------Domain
 export const userServiceApi = {
@@ -97,7 +99,34 @@ export const userServiceApi = {
 		return response.data.data
 	},
 }
+export const socialsServive = {
+	connectDiscord: async (code: string, user: TUserResponse): Promise<string> => {
+		const response = await updateUserDiscord({
+			_id: user._id,
+			code,
+		})
 
+		return response.username
+	},
+	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, user: TUserResponse) => {
+		return (await updateUserTwitter({ _id: user._id, token: oauthToken, verifier: twitterVerifyCode })).screen_name
+	},
+	getRequestToken: async () => {
+		const request = await get(`${config.baseURL}/twitterToken`)
+		const link = request.data.data
+
+		window.location.href = link
+	},
+	disconnectNetwork: async (address: string, network: keyof TUserResponse['connectedSocials']): Promise<boolean> => {
+		const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
+
+		const response = await post(url, {
+			address,
+		})
+		if (response.status !== 200) throw new Error('Something went wrong')
+		return response.data.data
+	},
+}
 const tagInvalidation = 'user'
 
 export const useCreateUserMutation = () => {

@@ -6,17 +6,14 @@ import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
 import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
 import { useState } from 'react'
 import { Button } from '@concero/ui-kit'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 export const QuestPreviewList = (): JSX.Element => {
 	const { data: quests } = useQuests()
 	const { data: testingQuests } = useTestingQuests()
 	const account = useAccount()
 	const { data: user } = useUserByAddress(account.address)
-	let isAdmin = [
-		'0xffb54219e8e4b0e08e5fa503edc1cf3080f73869'.toLowerCase(),
-		'0x5B694fF6592F77958621595F94bFFa05aC0724A1'.toLowerCase(),
-		'0x5040C7AC5D4b2E13b01e0d045f8b4eF37CA4Dea6'.toLowerCase(),
-	].includes(account.address?.toLowerCase() ?? '')
+	let isAdmin = isAdminAddress(account.address)
 	const [viewMode, setViewMode] = useState<TQuestTag>('rewards')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
