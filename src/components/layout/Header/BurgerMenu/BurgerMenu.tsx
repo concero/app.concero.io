@@ -28,7 +28,8 @@ export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
-	const isTablet = useMediaQuery('ipad')
+	const isDecktop = useMediaQuery('desktop')
+	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
 
@@ -101,7 +102,7 @@ export function BurgerMenu({ user }: Props) {
 
 	const settings = (
 		<ul className={classNames.listContainer}>
-			{isTablet && (
+			{(isTablet || isMobile) && (
 				<>
 					<Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
 						Rewards
