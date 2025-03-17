@@ -10,7 +10,7 @@ import posthog from 'posthog-js'
 import { CheckTermsOfUseDecorator } from './components/modals/TermsConditionModal/CheckTermsOfUse'
 import { useUserByAddress } from '@/entities/User'
 import cls from './Navigator.module.pcss'
-import { PageWrap } from './shared/ui/PageWrap/PageWrap'
+import { ProfilePage } from '@/pages/ProfilePage'
 const RewardsScreen = lazy(
 	async () =>
 		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
@@ -55,7 +55,7 @@ export const Navigator = () => {
 								</Suspense>
 							}
 						/>
-						{/* <Route
+						<Route
 							path={routes.profile}
 							element={
 								<Suspense fallback={<FullScreenLoader />}>
@@ -64,7 +64,7 @@ export const Navigator = () => {
 									</CheckTermsOfUseDecorator>
 								</Suspense>
 							}
-						/> */}
+						/>
 						<Route path={routes.root} element={<Navigate to={routes.rewards} />} />
 						<Route path={'/*'} element={<Navigate to={routes.rewards} />} />
 						<Route path={routes.pool} element={<ExternalRedirect url="https://app.lanca.io/pools" />} />
