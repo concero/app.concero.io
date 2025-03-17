@@ -1,9 +1,10 @@
 import type { IUser } from '../user/userType'
 import { post } from '../../client'
-
+import { TUserResponse } from '@/entities/User'
+/**@deprecated */
 export const disconnectNetwork = async (
 	address: string,
-	network: keyof IUser['connectedSocials'],
+	network: keyof TUserResponse['connectedSocials'],
 ): Promise<boolean> => {
 	const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
 

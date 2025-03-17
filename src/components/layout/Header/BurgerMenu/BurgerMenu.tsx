@@ -14,7 +14,7 @@ import { ContactSupportModal } from '../../../modals/ContactSupportModal/Contact
 import { IconBurger } from '../../../../assets/icons/IconBurger'
 import LanguageIcon from '@/shared/assets/icons/monochrome/LanguageIcon.svg?react'
 import CrossCloseIcon from '@/shared/assets/icons/monochrome/CrossClose.svg?react'
-import { SocialNetworkButtons } from '../../../rewards/ProfileCard/SocialNetworkButtons'
+import { SocialNetworkButtons } from '../../../../features/User/ui/SocialNetworkButtons'
 import { Separator } from '../../Separator/Separator'
 import { Button, IconButton, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
@@ -28,7 +28,8 @@ export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
-	const isTablet = useMediaQuery('ipad')
+	const isDecktop = useMediaQuery('desktop')
+	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
 
@@ -101,7 +102,7 @@ export function BurgerMenu({ user }: Props) {
 
 	const settings = (
 		<ul className={classNames.listContainer}>
-			{isTablet && (
+			{(isTablet || isMobile) && (
 				<>
 					<Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
 						Rewards
