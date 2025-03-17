@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { optional, z } from 'zod'
 
 export const UserTierZod = z.object({
 	level: z.string(),
@@ -46,7 +46,7 @@ export const IUserZod = z.object({
 	address: z.string(),
 	tier: UserTierZod,
 	points: z.number(),
-	completedQuests: z.record(z.string(), z.any()),
+	completedQuests: z.record(z.string(), z.any()).optional(),
 	questsInProgress: z.array(QuestInProgressZod),
 	multiplier: UserMultiplierZod,
 	streak: UserStreaksZod,
