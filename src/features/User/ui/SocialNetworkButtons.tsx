@@ -1,17 +1,17 @@
-import type { IUser } from '../../../api/concero/user/userType'
 import { useEffect, useState } from 'react'
-import { connectDiscord } from '../../../api/concero/socialNetworks/connectDiscord'
-import { connectTwitter, getRequestToken } from '../../../api/concero/socialNetworks/connectTwitter'
-import classNames from './ProfileCard.module.pcss'
-import { useMediaQuery } from '../../../hooks/useMediaQuery'
-import { disconnectNetwork } from '../../../api/concero/socialNetworks/disconnectNetwork'
+import { connectDiscord } from '@/api/concero/socialNetworks/connectDiscord'
+import { connectTwitter, getRequestToken } from '@/api/concero/socialNetworks/connectTwitter'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { disconnectNetwork } from '@/api/concero/socialNetworks/disconnectNetwork'
 import TwitterIcon from '@/shared/assets/icons/Social_X.svg?react'
 import DiscordIcon from '@/shared/assets/icons/social_discord.svg?react'
 import { Button, Switch } from '@concero/ui-kit'
-export const discordLink = `https://discord.com/oauth2/authorize?client_id=1267215033025429595&response_type=code&redirect_uri=https%3A%2F%2Fapp.concero.io%2Frewards&scope=identify+guilds+email`
+import cls from './SocialNetworkButtons.module.pcss'
+import { TUserResponse } from '@/entities/User'
+import { DISCORD_LINK_AUTH } from '../config/consts/discordLink'
 
 interface Props {
-	user: IUser
+	user: TUserResponse
 }
 
 export const SocialNetworkButtons = ({ user }: Props) => {
@@ -27,7 +27,7 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 					setDiscordIsConnected(false)
 				}
 			} else {
-				window.location.href = discordLink
+				window.location.href = DISCORD_LINK_AUTH
 			}
 		} catch (err) {
 			console.error(err)
@@ -85,27 +85,27 @@ export const SocialNetworkButtons = ({ user }: Props) => {
 	}, [user])
 
 	return (
-		<div className="w-full">
+		<div className={cls.socials_wrap}>
 			<Button
 				as="div"
-				leftIcon={<TwitterIcon />}
+				leftIcon={<TwitterIcon style={{ height: '100%', width: 'auto' }} />}
 				onClick={handleConnectTwitter}
-				className={classNames.connect_social_btn}
+				className={cls.connect_social_btn}
 				variant="tetrary"
 				isFull
-				size={isMobile ? 'm' : 's'}
+				size={isMobile ? 's' : 'm'}
 				rightIcon={<Switch checked={twitterIsConnected} />}
 			>
 				Twitter
 			</Button>
 			<Button
 				as="div"
-				leftIcon={<DiscordIcon color="#1DA1F2" />}
+				leftIcon={<DiscordIcon color="#1DA1F2" style={{ height: '100%', width: 'auto' }} />}
 				onClick={handleConnectDiscord}
-				className={classNames.connect_social_btn}
+				className={cls.connect_social_btn}
 				variant="tetrary"
 				isFull
-				size={isMobile ? 'm' : 's'}
+				size={isMobile ? 's' : 'm'}
 				rightIcon={<Switch checked={discordIsConnected} />}
 			>
 				Discord

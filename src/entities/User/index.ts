@@ -1,3 +1,5 @@
+export { socialsServive } from './api/userApi'
+
 export { getIsDoneQuest } from './model/lib/getIsDoneQuest'
 
 export { invalidationTagUser } from './api/userApi'
