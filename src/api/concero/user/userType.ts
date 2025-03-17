@@ -40,7 +40,7 @@ export interface IUser {
 	address: string
 	tier: IUserTier
 	points: number
-	completedQuests: ICompletedQuestsMap
+	completedQuests?: ICompletedQuestsMap
 	questsInProgress: IQuestsInProgressMap
 	multiplier: UserMultiplier
 	streak: UserStreaks
