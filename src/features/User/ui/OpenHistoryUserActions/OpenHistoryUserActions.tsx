@@ -1,4 +1,4 @@
-import { Button, Modal, ModalProps, TButtonProps } from '@concero/ui-kit'
+import { Button, Modal, TModalProps, TButtonProps } from '@concero/ui-kit'
 import clsx from 'clsx'
 import cls from './OpenHistoryUserActions.module.pcss'
 import { HistoryUserActions } from '../HistoryUserActions/HistoryUserActions'
@@ -9,7 +9,7 @@ type TProps = {
 	text?: string
 	className?: string
 	buttonProps?: Partial<TButtonProps>
-	modalProps?: Partial<ModalProps>
+	modalProps?: Partial<TModalProps>
 	user?: TUserResponse
 }
 

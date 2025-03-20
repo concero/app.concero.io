@@ -13,7 +13,21 @@ export type TPaginationParams = {
 	limit: number
 }
 
-export type TApiResponse<TData extends any = any> = {
-	success: boolean
+type TErrorGetResponse<TError> = {
+	success: false
+	error: TError
+}
+type TDataGetResponse<TData> = {
+	success: true
 	data: TData
 }
+
+export type TApiResponse<
+	TData extends unknown = unknown,
+	TError extends unknown = unknown,
+	success extends boolean | void = false,
+> = success extends void
+	? TDataGetResponse<TData> | TErrorGetResponse<TError>
+	: success extends true
+		? TDataGetResponse<TData>
+		: TErrorGetResponse<TError>

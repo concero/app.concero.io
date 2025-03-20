@@ -1,7 +1,7 @@
 import { get } from '../../client'
 import { type IUserAction } from './userActionType'
 import { TApiGetResponse, TPaginationParams } from '@/shared/types/api'
-
+/**@deprecated */
 export const fetchUserActions = async (address: string, params: TPaginationParams) => {
 	const url = `${process.env.CONCERO_API_URL}/userActions/${address}`
 

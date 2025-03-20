@@ -14,7 +14,7 @@ import { ContactSupportModal } from '../../../modals/ContactSupportModal/Contact
 import { IconBurger } from '../../../../assets/icons/IconBurger'
 import LanguageIcon from '@/shared/assets/icons/monochrome/LanguageIcon.svg?react'
 import CrossCloseIcon from '@/shared/assets/icons/monochrome/CrossClose.svg?react'
-import { SocialNetworkButtons } from '../../../../features/User/ui/SocialNetworkButtons'
+import { SocialNetworkButtons } from '../../../../features/User/ui/SocialNetworkButtons/SocialNetworkButtons'
 import { Separator } from '../../Separator/Separator'
 import { Button, IconButton, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'

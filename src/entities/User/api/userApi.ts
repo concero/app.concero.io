@@ -1,12 +1,19 @@
 import { Address } from 'viem'
 import { AxiosResponse } from 'axios'
-import { del, get, post } from '@/api/client'
-import { TAcceptTerms, TUserVolumeArgs } from '../model/types/request'
+import { del, get, patch, post } from '@/api/client'
+import { TAcceptTerms, TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { TGetLeaderBoardReponse, TUpdateUserDiscord, TUpdateUserTwitter, TUserResponse } from '../model/types/response'
-import { TApiResponse } from '@/types/api'
+import {
+	IUserAction,
+	NicknameError,
+	TGetLeaderBoardReponse,
+	TUpdateUserDiscord,
+	TUpdateUserTwitter,
+	TUserResponse,
+} from '../model/types/response'
 import { updateUserDiscord, updateUserTwitter } from '@/api/concero/user/updateUser'
 import { config } from '@/constants/config'
+import { TApiGetResponse, TApiResponse, TPaginationParams } from '@/shared/types/api'
 
 //--------------------------------Domain
 export const userServiceApi = {
@@ -23,7 +30,9 @@ export const userServiceApi = {
 
 		const response = await get<TApiResponse<TUserResponse>>(url)
 		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.data
+		if (response.data.success) {
+			return response.data.data
+		}
 	},
 
 	addQuestToProgress: async (address: string, questId: string) => {
@@ -31,6 +40,13 @@ export const userServiceApi = {
 		const response = await post<TApiResponse<string>>(url, {})
 		if (response.status !== 200) throw new Error('Something went wrong')
 		return response.data.success
+	},
+	updateNickname: async (args: TUpdateNicknameArgs) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${args.address}/nickname`
+		const response = await post<TApiResponse<void, NicknameError>>(url, args)
+		if (!response.data.success) {
+			throw new Error(response.data.error)
+		}
 	},
 
 	removeQuestFromProgress: async (address: string, questId: string) => {
@@ -99,20 +115,31 @@ export const userServiceApi = {
 		return response.data.data
 	},
 }
-export const socialsServive = {
+export const userActionsService = {
+	fetchUserActions: async (address: string, params: TPaginationParams) => {
+		const url = `${process.env.CONCERO_API_URL}/v2/userActions/${address}`
+
+		const response = await get<TApiGetResponse<IUserAction[]>>(url, params)
+		if (response.status !== 200) throw new Error('Something went wrong')
+		return response.data
+	},
+}
+export const socialsService = {
 	connectDiscord: async (code: string, user: TUserResponse): Promise<string> => {
 		const response = await updateUserDiscord({
 			_id: user._id,
 			code,
 		})
-
+		// @ts-expect-error TODO: Improve type
 		return response.username
 	},
 	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, user: TUserResponse) => {
+		// @ts-expect-error TODO: Improve type
 		return (await updateUserTwitter({ _id: user._id, token: oauthToken, verifier: twitterVerifyCode })).screen_name
 	},
 	getRequestToken: async () => {
 		const request = await get(`${config.baseURL}/twitterToken`)
+		// @ts-expect-error TODO: Improve type
 		const link = request.data.data
 
 		window.location.href = link
@@ -124,6 +151,7 @@ export const socialsServive = {
 			address,
 		})
 		if (response.status !== 200) throw new Error('Something went wrong')
+		// @ts-expect-error TODO: Improve type
 		return response.data.data
 	},
 }
@@ -182,6 +210,16 @@ export const useAddStepInProgressMutation = () => {
 		},
 		onError: error => {
 			console.error('Failed to add step to quest in progress:', error)
+		},
+	})
+}
+export const useUpdateNicknameMutation = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation<void, AxiosResponse<TApiResponse<void, NicknameError, false>>, TUpdateNicknameArgs>({
+		mutationFn: (payload: TUpdateNicknameArgs) => userServiceApi.updateNickname(payload),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
 	})
 }

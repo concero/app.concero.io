@@ -1,5 +1,5 @@
 import { fetchUserActions } from '@/api/concero/userActions/fetchUserActions'
-import { TUserResponse } from '@/entities/User'
+import { TUserResponse, userActionsService } from '@/entities/User'
 import { Button, Spinner } from '@concero/ui-kit'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
@@ -23,7 +23,8 @@ export const HistoryUserActions = ({ user, className }: TProps) => {
 		refetchOnMount: false,
 		retry: 2,
 		queryKey: ['userActions', user.address],
-		queryFn: ({ pageParam = 1 }) => fetchUserActions(user.address, { limit: LIMIT, page: pageParam }),
+		queryFn: ({ pageParam = 1 }) =>
+			userActionsService.fetchUserActions(user.address, { limit: LIMIT, page: pageParam }),
 		initialPageParam: 1,
 		getNextPageParam: lastPage => {
 			return lastPage.metaData.pageNumber >= lastPage.metaData.totalPage

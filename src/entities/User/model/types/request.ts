@@ -10,3 +10,8 @@ export type TUserVolumeArgs = {
 	isCrossChain?: boolean | undefined
 	chainIds?: string[]
 }
+
+export type TUpdateNicknameArgs = {
+	address: Address
+	newNickname: string
+}

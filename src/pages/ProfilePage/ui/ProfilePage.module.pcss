@@ -39,8 +39,14 @@
 			.account_info {
 				display: flex;
 				flex-direction: column;
+				align-items: center;
 				gap: var(--space-xs);
+				max-width: 100%;
 				.nickname {
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					overflow: hidden;
+
 					font: var(--font-heading-large);
 					color: var(--color-gray-700);
 				}
@@ -68,6 +74,7 @@
 			align-items: center;
 			width: 393px;
 			max-width: 100%;
+			overflow-x: hidden;
 			@media screen and (width < 744px) {
 				width: 311px;
 			}

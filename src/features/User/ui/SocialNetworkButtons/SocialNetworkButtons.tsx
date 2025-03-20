@@ -8,7 +8,7 @@ import DiscordIcon from '@/shared/assets/icons/social_discord.svg?react'
 import { Button, Switch } from '@concero/ui-kit'
 import cls from './SocialNetworkButtons.module.pcss'
 import { TUserResponse } from '@/entities/User'
-import { DISCORD_LINK_AUTH } from '../config/consts/discordLink'
+import { DISCORD_LINK_AUTH } from '../../config/consts/discordLink'
 
 interface Props {
 	user: TUserResponse

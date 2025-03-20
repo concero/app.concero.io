@@ -1,16 +1,16 @@
 import { type Hash } from 'viem'
-
+/**@deprecated */
 export enum TransactionType {
 	ConceroSwapTx = 'ConceroSwapTx',
 	ConceroBridgeTx = 'ConceroBridgeTx',
 }
-
+/**@deprecated */
 export enum ActionType {
 	'transactionReward',
 	'questReward',
 	'specialReward',
 }
-
+/**@deprecated */
 export interface UserActionTxData {
 	type: TransactionType
 	from: {
@@ -25,7 +25,7 @@ export interface UserActionTxData {
 	}
 	txHash: Hash
 }
-
+/**@deprecated */
 export interface UserActionQuestData {
 	name: string
 	points?: number
@@ -34,7 +34,7 @@ export interface UserActionQuestData {
 	completedQuestStepIds?: number[]
 	isCompleted?: boolean
 }
-
+/**@deprecated */
 export interface IUserAction {
 	userAddress: string
 	documentId: string
