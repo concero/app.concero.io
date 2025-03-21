@@ -30,8 +30,8 @@ export const ProfilePage = (props: TProps) => {
 	if (!user) return null
 
 	const addresToShow = truncateWallet(user.address, 4)
-	const Social_X_toShow = user.connectedSocials.twitter?.screen_name ?? '-'
-	const Social_Discord_toShow = user.connectedSocials.discord?.username ?? '-'
+	const Social_X_toShow = user.connectedSocials?.twitter?.screen_name ?? '-'
+	const Social_Discord_toShow = user.connectedSocials?.discord?.username ?? '-'
 	return (
 		<PageWrap className={cls.container}>
 			<div className={cls.profile_card_wrap}>

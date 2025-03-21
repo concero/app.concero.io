@@ -51,7 +51,7 @@ export const AccoutSettings = ({ user }: TProps) => {
 					<div className={cls.social_wrap}>
 						<div className={cls.social_header}>
 							{isDiscordConnected ? <DiscordConnectedIcon /> : <DiscordDisconnectedIcon />}
-							{isDiscordConnected ? user.connectedSocials.discord?.username : 'Discord'}
+							{isDiscordConnected ? user.connectedSocials?.discord?.username : 'Discord'}
 						</div>
 						{isDiscordConnected ? (
 							<Button
@@ -75,7 +75,7 @@ export const AccoutSettings = ({ user }: TProps) => {
 					<div className={cls.social_wrap}>
 						<div className={cls.social_header}>
 							{isTwitterConnected ? <TwitterConnectedIcon /> : <TwitterDisconnectedIcon />}
-							{isTwitterConnected ? user.connectedSocials.twitter?.name : 'X'}
+							{isTwitterConnected ? user.connectedSocials?.twitter?.name : 'X'}
 						</div>
 						{isTwitterConnected ? (
 							<Button
