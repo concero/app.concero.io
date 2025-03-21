@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react'
 import { StyleDecorator } from '../src/storybook/decorators/StyleDecorator/StyleDecorator'
 const preview: Preview = {
-	parameters: {
+    parameters: {
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
@@ -9,7 +9,9 @@ const preview: Preview = {
 			},
 		},
 	},
-	decorators: [StyleDecorator],
+
+    decorators: [StyleDecorator],
+    tags: ['autodocs']
 }
 
 export default preview

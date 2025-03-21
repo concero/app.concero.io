@@ -8,14 +8,14 @@ export default [
 		ignores: ['node_modules', 'clf', 'typechain-types', 'artifacts', 'deployments', 'cache'],
 	},
 	{
-		files: ['src/*','src/**/*.ts', 'src/**/*.tsx'],
+		files: ['src/*', 'src/**/*.ts', 'src/**/*.tsx'],
 		languageOptions: {
 			parser: parserTs,
-		// 	parserOptions: {
-		// 		project: './tsconfig.json',
-		// 	},
+			// 	parserOptions: {
+			// 		project: './tsconfig.json',
+			// 	},
 		},
-		
+
 		plugins: {
 			'@typescript-eslint': pluginTs,
 			prettier: pluginPrettier,
@@ -25,6 +25,7 @@ export default [
 			'prettier/prettier': 'error',
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-unused-vars': 'off',
+			'@typescript-eslint/no-unnecessary-type-constraint': 'off',
 		},
 	},
 	{ ignores: ['!.storybook'] },
@@ -33,7 +34,7 @@ export default [
 			storybook: { version: 'detect' },
 		},
 	},
-	
+
 	{
 		files: ['**/*.stories.{ts,tsx}', '.storybook/**/*.{ts, tsx}'],
 		plugins: {

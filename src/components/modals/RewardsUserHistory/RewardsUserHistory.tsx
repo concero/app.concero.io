@@ -16,7 +16,7 @@ export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {
 	const [userActions, setUserActions] = useState<IUserAction[]>([])
 
 	const fetchAndSetUserActions = async () => {
-		const response = await fetchUserActions(user.address)
+		const response = await fetchUserActions(user.address, {})
 		setUserActions(response.data)
 	}
 

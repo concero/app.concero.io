@@ -4,4 +4,5 @@ export const routes = {
 	pool: '/pool',
 	poolUsdc: '/pool/usdc',
 	rewards: '/rewards',
+	profile: '/profile',
 }

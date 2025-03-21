@@ -8,9 +8,9 @@ const client = axios.create({
 	withCredentials: true,
 })
 
-const request = async <TResponse extends any>(options: AxiosRequestConfig) => {
+const request = async <TResponse extends unknown>(options: AxiosRequestConfig) => {
 	try {
-		const response: AxiosResponse<TResponse, any> = await client(options)
+		const response: AxiosResponse<TResponse, unknown> = await client(options)
 		return response
 	} catch (error) {
 		console.error('Error', error.response)
@@ -18,7 +18,7 @@ const request = async <TResponse extends any>(options: AxiosRequestConfig) => {
 	}
 }
 
-export const get = async <TResponse extends any>(url: string, params?: any, headers?: any) =>
+export const get = async <TResponse extends unknown>(url: string, params?: any, headers?: any) =>
 	await request<TResponse>({
 		url,
 		method: 'GET',
@@ -26,7 +26,7 @@ export const get = async <TResponse extends any>(url: string, params?: any, head
 		headers,
 	})
 
-export const post = async <TResponse extends any>(url: string, data?: any, headers?: any) =>
+export const post = async <TResponse extends unknown>(url: string, data?: any, headers?: any) =>
 	await request<TResponse>({
 		url,
 		method: 'POST',
@@ -34,7 +34,7 @@ export const post = async <TResponse extends any>(url: string, data?: any, heade
 		headers,
 	})
 
-export const del = async <TResponse extends any>(url: string, data?: any, headers?: any) =>
+export const del = async <TResponse extends unknown>(url: string, data?: any, headers?: any) =>
 	await request<TResponse>({
 		url,
 		method: 'POST',
@@ -42,7 +42,7 @@ export const del = async <TResponse extends any>(url: string, data?: any, header
 		headers,
 	})
 
-export const patch = async <TResponse extends any>(url: string, data: any, headers?: any) =>
+export const patch = async <TResponse extends unknown = unknown>(url: string, data: any, headers?: any) =>
 	await request<TResponse>({
 		url,
 		method: 'PATCH',

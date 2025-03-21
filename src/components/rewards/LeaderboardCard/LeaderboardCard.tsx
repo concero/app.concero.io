@@ -57,7 +57,7 @@ const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 		<div className={classNames.table}>
 			<div className={classNames.tableRow}>
 				<div className={classNames.tableCell}>
-					<h6>#</h6>
+					<h6>Rank</h6>
 				</div>
 				<div className={classNames.tableCell}>
 					<h6>User</h6>
@@ -72,7 +72,7 @@ const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 		</div>
 	)
 }
-
+/**@deprecated use CersLeaderboard*/
 export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
 	const [users, setUsers] = useState<IUser[]>([])
 

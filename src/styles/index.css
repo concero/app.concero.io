@@ -16,7 +16,6 @@
 	--sp-xxs: 2px;
 	--sp-screen-v: 20px;
 	--sp-screen-h: 20px;
-
 	/* Spacing */
 	--space-xxs: 4px; /* space-0.25 */
 	--space-xs: 8px; /* space-0.5 */
@@ -60,7 +59,7 @@
 
 	--font-button-large-family: 'DM_Sans', sans-serif;
 	--font-button-large-weight: 500;
-	--font-button-large-size: 14px;
+	--font-button-large-size: 16px;
 	--font-button-large-line-height: 18px;
 
 	--font-button-xlarge-family: 'DM_Sans', sans-serif;
