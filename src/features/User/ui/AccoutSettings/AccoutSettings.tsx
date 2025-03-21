@@ -1,13 +1,17 @@
 import { Button } from '@concero/ui-kit'
-import { AccoutSettingsModal, TUserResponse, DisconnectSocialsModal } from '@/entities/User'
+import {
+	AccoutSettingsModal,
+	TUserResponse,
+	DisconnectSocialsModal,
+	useDiscordConnection,
+	useTwitterConnection,
+} from '@/entities/User'
 import { NicknameConnect } from '../NicknameConnect/NicknameConnect'
 import DiscordConnectedIcon from '@/shared/assets/icons/social_discord.svg?react'
 import DiscordDisconnectedIcon from '@/shared/assets/icons/social_discord_disabled.svg?react'
 import TwitterConnectedIcon from '@/shared/assets/icons/Social_X.svg?react'
 import TwitterDisconnectedIcon from '@/shared/assets/icons/Social_X_disabled.svg?react'
 import cls from './AccoutSettings.module.pcss'
-import { useDiscordConnection } from '../../model/hooks/useDiscordConnection'
-import { useTwitterConnection } from '../../model/hooks/useTwitterConnection'
 import { useState } from 'react'
 type TProps = {
 	user: TUserResponse

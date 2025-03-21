@@ -1,4 +1,4 @@
-export { DISCORD_LINK_AUTH } from './config/consts/discordLink'
+export { DISCORD_LINK_AUTH } from '../../entities/User/config/consts/discordLink'
 
 export { AccoutSettings } from './ui/AccoutSettings/AccoutSettings'
 export { OpenHistoryUserActions } from './ui/OpenHistoryUserActions/OpenHistoryUserActions'

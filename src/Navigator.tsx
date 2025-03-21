@@ -11,6 +11,7 @@ import { CheckTermsOfUseDecorator } from './components/modals/TermsConditionModa
 import { useUserByAddress } from '@/entities/User'
 import cls from './Navigator.module.pcss'
 import { ProfilePage } from '@/pages/ProfilePage'
+import { isAdminAddress } from './shared/lib/tests/isAdminAddress'
 const RewardsScreen = lazy(
 	async () =>
 		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
@@ -21,6 +22,7 @@ const RewardsScreen = lazy(
 export const Navigator = () => {
 	const { address, isConnected } = useAccount()
 	const { data: user, isPending } = useUserByAddress(isConnected ? address : undefined)
+	let isAdmin = isAdminAddress(address)
 	useEffect(() => {
 		if (isConnected && address) {
 			posthog.identify(address)
@@ -55,16 +57,18 @@ export const Navigator = () => {
 								</Suspense>
 							}
 						/>
-						<Route
-							path={routes.profile}
-							element={
-								<Suspense fallback={<FullScreenLoader />}>
-									<CheckTermsOfUseDecorator>
-										<ProfilePage user={userToUse} />
-									</CheckTermsOfUseDecorator>
-								</Suspense>
-							}
-						/>
+						{isAdmin ? (
+							<Route
+								path={routes.profile}
+								element={
+									<Suspense fallback={<FullScreenLoader />}>
+										<CheckTermsOfUseDecorator>
+											<ProfilePage user={userToUse} />
+										</CheckTermsOfUseDecorator>
+									</Suspense>
+								}
+							/>
+						) : null}
 						<Route path={routes.root} element={<Navigate to={routes.rewards} />} />
 						<Route path={'/*'} element={<Navigate to={routes.rewards} />} />
 						<Route path={routes.pool} element={<ExternalRedirect url="https://app.lanca.io/pools" />} />

@@ -12,6 +12,8 @@ import { TooltipWrapper } from '../../WithTooltip/TooltipWrapper'
 import { toLocaleNumber } from '../../../../utils/formatting'
 import { Button, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
+import { useAccount } from 'wagmi'
 
 interface HeaderProps {
 	user: TUserResponse | null
@@ -25,7 +27,8 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapRewards = useMatch(routes.rewards)
 	const matchSwapProfile = useMatch(routes.profile)
-
+	const account = useAccount()
+	let isAdmin = isAdminAddress(account.address)
 	const getPoints = (points: number | { $numberDecimal: string }): number => {
 		if (typeof points === 'number') {
 			return points
@@ -52,7 +55,10 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 								Rewards
 							</Button>
 						</Link>
-						<Link style={{ pointerEvents: matchSwapProfile ? 'none' : 'all' }} to={routes.profile}>
+						<Link
+							style={{ pointerEvents: matchSwapProfile ? 'none' : isAdmin ? 'all' : 'none' }}
+							to={routes.profile}
+						>
 							<Button
 								isDisabled
 								className={classNames.profile}

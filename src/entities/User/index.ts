@@ -1,3 +1,6 @@
+export { useDiscordConnection } from './model/hooks/useDiscordConnection'
+export { useTwitterConnection } from './model/hooks/useTwitterConnection'
+
 export { DisconnectSocialsModal } from './ui/DisconnectSocialsModal/DisconnectSocialsModal'
 export { AccoutSettingsModal } from './ui/AccoutSettingsModal/AccoutSettingsModal'
 

@@ -1,4 +1,4 @@
-import { TUserResponse } from '@/entities/User'
+import { TUserResponse, useDiscordConnection, useTwitterConnection } from '@/entities/User'
 import cls from './ProfilePage.module.pcss'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
@@ -16,8 +16,6 @@ import { AchievementGroupPreview } from '@/entities/Achievement'
 import { Separator } from '@/components/layout/Separator/Separator'
 import { OpenHistoryUserActions } from '@/features/User'
 import { AccoutSettings } from '@/features/User'
-import { useDiscordConnection } from '@/features/User/model/hooks/useDiscordConnection'
-import { useTwitterConnection } from '@/features/User/model/hooks/useTwitterConnection'
 type TProps = {
 	user: TUserResponse | null
 }
