@@ -1,0 +1,29 @@
+.card_modal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-m);
+	padding: var(--space-m);
+	border-radius: var(--space-m);
+	background-color: var(--color-gray-25);
+	max-width: 394px !important;
+	.title {
+		text-align: center;
+		font: var(--font-heading-xlarge);
+		color: var(--color-gray-700);
+	}
+	.description {
+		text-align: center;
+		font: var(--font-body-);
+		color: var(--color-gray-600);
+		.red_text {
+			color: var(--color-danger-600);
+		}
+	}
+	.controls {
+		display: flex;
+		flex-direction: row;
+		gap: var(--space-xs);
+		width: 100% ;
+	}
+}

@@ -17,12 +17,14 @@ import { TApiGetResponse, TApiResponse, TPaginationParams } from '@/shared/types
 
 //--------------------------------Domain
 export const userServiceApi = {
-	createUser: async (address: Address): Promise<TUserResponse> => {
+	createUser: async (address: Address) => {
 		const url = `${process.env.CONCERO_API_URL}/users`
 
 		const response = await post<TApiResponse<TUserResponse>>(url, { address })
 		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.data
+		if (response.data.success) {
+			return response.data.data
+		}
 	},
 
 	getUserByAddress: async (address: Address) => {
@@ -78,23 +80,9 @@ export const userServiceApi = {
 		}
 		const response = await post<TApiResponse<number>>(url, requestBody)
 		if (response.status !== 200) throw new Error(response.statusText)
-		return response.data.data
-	},
-
-	updateUserDiscord: async (data: any) => {
-		const url = `${process.env.CONCERO_API_URL}/connectNetwork/discord`
-
-		const response = await post<TUpdateUserDiscord>(url, data)
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data
-	},
-
-	updateUserTwitter: async (data: any) => {
-		const url = `${process.env.CONCERO_API_URL}/connectNetwork/twitter`
-
-		const response = await post<TUpdateUserTwitter>(url, data)
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data
+		if (response.data.success) {
+			return response.data.data
+		}
 	},
 
 	acceptTerms: async (address: Address): Promise<AxiosResponse<void>> => {
@@ -106,13 +94,15 @@ export const userServiceApi = {
 		return response
 	},
 
-	getLeaderboard: async (userAddress: string | undefined): Promise<TGetLeaderBoardReponse> => {
+	getLeaderboard: async (userAddress: string | undefined) => {
 		const userAddressQuery = userAddress ? `userAddress=${userAddress}` : ''
 		const url = `${process.env.CONCERO_API_URL}/usersLeaderboard?${userAddressQuery}`
 
 		const response = await get<TApiResponse<TGetLeaderBoardReponse>>(url)
 		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.data
+		if (response.data.success) {
+			return response.data.data
+		}
 	},
 }
 export const userActionsService = {
@@ -230,28 +220,6 @@ export const useUserVolume = (options?: TUserVolumeArgs) => {
 		queryFn: () => userServiceApi.getUserVolume(options as TUserVolumeArgs),
 		enabled: !!options?.address && !!options?.startDate && !!options?.endDate,
 		notifyOnChangeProps: ['data', 'isPending', 'error'],
-	})
-}
-
-export const useUpdateUserDiscordMutation = () => {
-	const queryClient = useQueryClient()
-
-	return useMutation({
-		mutationFn: (data: TUpdateUserDiscord) => userServiceApi.updateUserDiscord(data),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-		},
-	})
-}
-
-export const useUpdateUserTwitterMutation = () => {
-	const queryClient = useQueryClient()
-
-	return useMutation({
-		mutationFn: (data: TUpdateUserTwitter) => userServiceApi.updateUserTwitter(data),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-		},
 	})
 }
 

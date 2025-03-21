@@ -25,7 +25,7 @@ type TDataGetResponse<TData> = {
 export type TApiResponse<
 	TData extends unknown = unknown,
 	TError extends unknown = unknown,
-	success extends boolean | void = false,
+	success extends boolean | void = void,
 > = success extends void
 	? TDataGetResponse<TData> | TErrorGetResponse<TError>
 	: success extends true

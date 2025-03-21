@@ -25,5 +25,36 @@
 			font: var(--font-body-large);
 			color: var(--color-gray-600);
 		}
+		& > div {
+			width: 100%;
+		}
+		.discord_wrap {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			width: 100%;
+			height: 64px;
+			padding: var(--space-m);
+			border-radius: var(--space-m);
+			.discord_header {
+				display: flex;
+				flex-direction: row;
+				gap: var(--space-xs);
+				font: var(--font-heading-medium);
+				color: var(--color-gray-700);
+			}
+		}
+		.x_wrap {
+			.x_header {
+				font: var(--font-heading-medium);
+				color: var(--color-gray-700);
+			}
+		}
+		.email_wrap {
+			.email_header {
+				font: var(--font-heading-medium);
+				color: var(--color-gray-700);
+			}
+		}
 	}
 }
