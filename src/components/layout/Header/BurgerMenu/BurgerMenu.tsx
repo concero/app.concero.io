@@ -19,6 +19,9 @@ import { Separator } from '../../Separator/Separator'
 import { Button, IconButton, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
 import { WalletButton } from '../WalletButton/WalletButton'
+import { Link, useMatch } from 'react-router-dom'
+import { routes } from '@/constants/routes'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 interface Props {
 	user: TUserResponse | null
@@ -31,8 +34,11 @@ export function BurgerMenu({ user }: Props) {
 	const isDecktop = useMediaQuery('desktop')
 	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
+	let isAdmin = isAdminAddress(user?.address)
 	const { t } = useTranslation()
 
+	const matchSwapRewards = useMatch(routes.rewards)
+	const matchSwapProfile = useMatch(routes.profile)
 	const handleKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
 		if (event.key === 'Escape') {
 			setIsMenuOpened(false)
@@ -104,7 +110,7 @@ export function BurgerMenu({ user }: Props) {
 		<ul className={classNames.listContainer}>
 			{(isTablet || isMobile) && (
 				<>
-					<Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
+					{/* <Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
 						Rewards
 					</Button>
 					<Button
@@ -119,7 +125,30 @@ export function BurgerMenu({ user }: Props) {
 						variant="tetrary"
 					>
 						Profile
-					</Button>
+					</Button> */}
+					<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
+						<Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
+							Rewards
+						</Button>
+					</Link>
+					<Link
+						style={{ pointerEvents: matchSwapProfile ? 'none' : isAdmin ? 'all' : 'none', width: '100%' }}
+						to={routes.profile}
+					>
+						<Button
+							isFull
+							isDisabled
+							className={classNames.profile_page_btn}
+							rightIcon={
+								<Tag size="s" variant="neutral">
+									Coming Soon
+								</Tag>
+							}
+							variant="tetrary"
+						>
+							Profile
+						</Button>
+					</Link>
 					<Separator />
 				</>
 			)}
