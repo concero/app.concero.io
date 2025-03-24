@@ -65,7 +65,7 @@ export const HistoryUserActions = ({ user, className }: TProps) => {
 							</React.Fragment>
 						))}
 						{hasNextPage && (
-							<div className={cls.load_next_wrap}>
+							<div className={clsx(cls.user_action, cls.load_next_wrap)}>
 								<Button
 									onClick={() => fetchNextPage()}
 									isDisabled={isFetchingNextPage}

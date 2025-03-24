@@ -3,43 +3,40 @@ import clsx from 'clsx'
 import cls from './HistoryUserActions.module.pcss'
 import type { IUserAction } from '@/entities/User'
 import { EActionType } from '@/entities/User'
-import { UserActionQuestData } from '@/entities/User/model/types/response'
+import { ETransactionType } from '@/entities/User'
+import { IUserActionQuestData } from '@/entities/User'
 interface UserActionProps {
 	action: IUserAction
 }
 
-const getTransactionInfo = (action: IUserAction): string => {
+// const getTransactionInfo = (action: IUserAction): string => {
+// 	try {
+// 		const txAction =
+// 			// @ts-expect-error TODO: Improve Typing
+// 			action.data?.type === TransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
+
+// 		// @ts-expect-error TODO: Improve Typing
+// 		if (!action.data?.from || !action.data?.to) {
+// 			return 'Forgotten transaction'
+// 		}
+
+// 		// @ts-expect-error Improve Typing
+// 		const { from, to } = action.data
+// 		return `${txAction} from ${toLocaleNumber(from.amount, 2)} ${from.tokenSymbol} on ${from.chainName} to ${toLocaleNumber(to.amount, 2)} ${to.tokenSymbol} on ${to.chainName}`
+// 	} catch (error) {
+// 		console.log('Error:', error, 'action', action)
+// 		return ''
+// 	}
+// }
+
+const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.Element => {
 	try {
-		const txAction =
-			// @ts-expect-error TODO: Improve Typing
-			action.data?.type === TransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
+		const txAction = action.data?.type === ETransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
 
-		// @ts-expect-error TODO: Improve Typing
-		if (!action.data?.from || !action.data?.to) {
-			return 'Forgotten transaction'
-		}
-
-		// @ts-expect-error Improve Typing
-		const { from, to } = action.data
-		return `${txAction} from ${toLocaleNumber(from.amount, 2)} ${from.tokenSymbol} on ${from.chainName} to ${toLocaleNumber(to.amount, 2)} ${to.tokenSymbol} on ${to.chainName}`
-	} catch (error) {
-		console.log('Error:', error, 'action', action)
-		return ''
-	}
-}
-
-const getActionInfo = (action: IUserAction): JSX.Element => {
-	try {
-		const txAction =
-			// @ts-expect-error TODO: Improve Typing
-			action.data?.type === TransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
-
-		// @ts-expect-error TODO: Improve Typing
 		if (!action.data?.from || !action.data?.to) {
 			return <span>'Forgotten transaction'</span>
 		}
 
-		// @ts-expect-error Improve Typing
 		const { from, to } = action.data
 		return (
 			<span className={cls.action_info}>
@@ -60,20 +57,23 @@ const getActionInfo = (action: IUserAction): JSX.Element => {
 	}
 }
 
-const getQuestInfo = (action: IUserAction): string => {
-	const { name } = action.data as UserActionQuestData
-	return `Quest completed: ${name}`
+const getQuestInfo = (action: IUserAction<EActionType.questReward>) => {
+	const { name } = action.data as IUserActionQuestData
+	return <span className={cls.title}>Quest completed: {name}</span>
 }
 
 export const UserAction = ({ action }: UserActionProps) => {
 	const getValue = (): string | JSX.Element => {
 		switch (action.actionType) {
 			case EActionType.questReward:
-				return getQuestInfo(action)
+				//TODO: Improve type
+				return getQuestInfo(action as IUserAction<EActionType.questReward>)
 			case EActionType.transactionReward:
-				return getActionInfo(action)
+				//TODO: Improve type
+				return getActionInfo(action as IUserAction<EActionType.transactionReward>)
 			case EActionType.specialReward:
-				const { name } = action.data as UserActionQuestData
+				//TODO: Improve type
+				const { name } = action.data as IUserActionQuestData
 				return name
 			default:
 				return ''

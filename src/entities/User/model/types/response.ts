@@ -35,7 +35,7 @@ export type TUpdateUserTwitter = {
 }
 
 // User actions
-export enum TransactionType {
+export enum ETransactionType {
 	ConceroSwapTx = 'ConceroSwapTx',
 	ConceroBridgeTx = 'ConceroBridgeTx',
 }
@@ -47,7 +47,7 @@ export enum EActionType {
 }
 
 export interface UserActionTxData {
-	type: TransactionType
+	type: ETransactionType
 	from: {
 		chainName: string
 		tokenSymbol: string
@@ -61,7 +61,7 @@ export interface UserActionTxData {
 	txHash: Hash
 }
 
-export interface UserActionQuestData {
+export interface IUserActionQuestData {
 	name: string
 	points?: number
 	multiplier?: number
@@ -70,14 +70,14 @@ export interface UserActionQuestData {
 	isCompleted?: boolean
 }
 
-export interface IUserAction {
+export interface IUserAction<TActionType extends EActionType = EActionType> {
 	userAddress: string
 	documentId: string
-	actionType: EActionType
+	actionType: TActionType
 	points?: number
 	multiplier?: number
 	timestamp: number
-	data: UserActionTxData | UserActionQuestData
+	data: TActionType extends EActionType.transactionReward ? UserActionTxData : IUserActionQuestData
 }
 export const enum NicknameError {
 	Short = 'Short',
