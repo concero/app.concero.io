@@ -3,18 +3,18 @@ import { Card } from '../../cards/Card/Card'
 import BlockiesSvg from 'blockies-react-svg'
 import { truncateWallet } from '../../../utils/formatting'
 
-import { type IUser } from '../../../api/concero/user/userType'
 import { Button } from '../../buttons/Button/Button'
 import { UserHistory } from '../../modals/RewardsUserHistory/RewardsUserHistory'
 import { type Dispatch, type SetStateAction, useState } from 'react'
+import { TUserResponse } from '@/entities/User'
 
 interface ProfileHeaderProps {
-	user: IUser
+	user: TUserResponse
 	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 interface ProfileCardProps {
-	user: IUser
+	user: TUserResponse
 }
 
 const ProfileHeader = ({ user, setIsOpen }: ProfileHeaderProps) => {

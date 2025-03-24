@@ -36,7 +36,7 @@ const Member = ({ user, place }: MemberProps) => {
 				</div>
 			</div>
 			<div className={cls.table_cell}>
-				<p className="body2">{points.toFixed(4)}</p>
+				<p className="body2">{points.toFixed(3)}</p>
 			</div>
 		</div>
 	)

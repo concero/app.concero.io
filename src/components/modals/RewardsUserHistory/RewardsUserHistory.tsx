@@ -4,12 +4,12 @@ import classNames from './RewardsUserHistory.module.pcss'
 import { UserAction } from './UserAction'
 import { type IUserAction } from '../../../api/concero/userActions/userActionType'
 import { fetchUserActions } from '../../../api/concero/userActions/fetchUserActions'
-import { type IUser } from '../../../api/concero/user/userType'
+import { TUserResponse } from '@/entities/User'
 
 interface UserHistoryProps {
 	isOpen: boolean
 	setIsOpen: Dispatch<SetStateAction<boolean>>
-	user: IUser
+	user: TUserResponse
 }
 
 export const UserHistory = ({ isOpen, setIsOpen, user }: UserHistoryProps) => {

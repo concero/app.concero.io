@@ -1,8 +1,9 @@
-import type { IUser } from './userType'
+
 import { get } from '../../client'
+import { TUserResponse } from '@/entities/User'
 
 export interface FetchUserResponse {
-	users: IUser[]
+	users: TUserResponse[]
 	currentUserPosition: number
 }
 /**@deprecated */

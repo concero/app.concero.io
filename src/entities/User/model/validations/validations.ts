@@ -18,24 +18,26 @@ export const UserMultiplierZod = z.object({
 	liquidityHold: z.number().nullable(),
 })
 
-export const UserConnectedSocialsZod = z.object({
-	twitter: z
-		.object({
-			id: z.string(),
-			screen_name: z.string(),
-			name: z.string(),
-		})
-		.nullable(),
-	discord: z
-		.object({
-			id: z.string(),
-			username: z.string(),
-			email: z.string(),
-			avatar: z.string(),
-			locale: z.string(),
-		})
-		.nullable(),
-})
+export const UserConnectedSocialsZod = z
+	.object({
+		twitter: z
+			.object({
+				id: z.string(),
+				screen_name: z.string(),
+				name: z.string(),
+			})
+			.nullable(),
+		discord: z
+			.object({
+				id: z.string(),
+				username: z.string(),
+				email: z.string(),
+				avatar: z.string(),
+				locale: z.string(),
+			})
+			.nullable(),
+	})
+	.nullable()
 export const QuestInProgressZod = z.object({
 	questId: z.string(),
 	completedSteps: z.array(z.string()),

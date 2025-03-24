@@ -1,4 +1,3 @@
-import { fetchUserActions } from '@/api/concero/userActions/fetchUserActions'
 import { TUserResponse, userActionsService } from '@/entities/User'
 import { Button, Spinner } from '@concero/ui-kit'
 import { useInfiniteQuery } from '@tanstack/react-query'

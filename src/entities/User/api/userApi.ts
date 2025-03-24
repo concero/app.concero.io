@@ -10,6 +10,7 @@ import {
 	TUpdateUserDiscord,
 	TUpdateUserTwitter,
 	TUserResponse,
+	TUserSocialNetworkType,
 } from '../model/types/response'
 import { updateUserDiscord, updateUserTwitter } from '@/api/concero/user/updateUser'
 import { config } from '@/constants/config'
@@ -134,7 +135,7 @@ export const socialsService = {
 
 		window.location.href = link
 	},
-	disconnectNetwork: async (address: string, network: keyof TUserResponse['connectedSocials']): Promise<boolean> => {
+	disconnectNetwork: async (address: string, network: TUserSocialNetworkType): Promise<boolean> => {
 		const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
 
 		const response = await post(url, {

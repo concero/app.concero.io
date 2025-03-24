@@ -1,7 +1,7 @@
 import classNames from './UserMultipliers.module.pcss'
-import { type IUser } from '../../../../../api/concero/user/userType'
+import { TUserResponse } from '@/entities/User'
 
-export const UserMultipliers = ({ user }: { user: IUser }) => {
+export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
 	const { liquidityHold, dailySwap, default: defaultMultiplier } = user.multiplier
 	const totalMultiplier = defaultMultiplier + (dailySwap || 0) + (liquidityHold || 0)
 	return (

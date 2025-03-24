@@ -13,7 +13,7 @@ export const DisconnectSocialsModal = (props: TProps) => {
 	return (
 		<Modal headless show={show} onClose={() => close?.()}>
 			<div className={cls.card_modal}>
-				<div>
+				<div className={cls.head_wrap}>
 					<span className={cls.title}>Are you shure?</span>
 					<span className={cls.description}>
 						Unlinking an account
