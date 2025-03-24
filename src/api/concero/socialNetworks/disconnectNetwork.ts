@@ -1,11 +1,7 @@
-import type { IUser } from '../user/userType'
 import { post } from '../../client'
-import { TUserResponse } from '@/entities/User'
+import { TUserSocialNetworkType } from '@/entities/User'
 /**@deprecated */
-export const disconnectNetwork = async (
-	address: string,
-	network: keyof TUserResponse['connectedSocials'],
-): Promise<boolean> => {
+export const disconnectNetwork = async (address: string, network: TUserSocialNetworkType): Promise<boolean> => {
 	const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
 
 	const response = await post(url, {

@@ -1,7 +1,9 @@
-import { IUserAction, UserActionQuestData, ActionType, TransactionType } from '@/api/concero/userActions/userActionType'
 import { toLocaleNumber, formatDateTime } from '@/utils/formatting'
 import clsx from 'clsx'
 import cls from './HistoryUserActions.module.pcss'
+import type { IUserAction } from '@/entities/User'
+import { EActionType } from '@/entities/User'
+import { UserActionQuestData } from '@/entities/User/model/types/response'
 interface UserActionProps {
 	action: IUserAction
 }
@@ -66,11 +68,11 @@ const getQuestInfo = (action: IUserAction): string => {
 export const UserAction = ({ action }: UserActionProps) => {
 	const getValue = (): string | JSX.Element => {
 		switch (action.actionType) {
-			case ActionType.questReward:
+			case EActionType.questReward:
 				return getQuestInfo(action)
-			case ActionType.transactionReward:
+			case EActionType.transactionReward:
 				return getActionInfo(action)
-			case ActionType.specialReward:
+			case EActionType.specialReward:
 				const { name } = action.data as UserActionQuestData
 				return name
 			default:

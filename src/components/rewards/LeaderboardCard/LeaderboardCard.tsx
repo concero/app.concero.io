@@ -6,6 +6,7 @@ import { type IUser } from '../../../api/concero/user/userType'
 import { fetchLeaderboard } from '../../../api/concero/user/fetchLeaderboard'
 import { useAccount } from 'wagmi'
 import { Tag } from '../../layout/Tag/Tag'
+import { TUserResponse } from '@/entities/User'
 
 interface MemberProps {
 	user: IUser
@@ -45,11 +46,11 @@ const Member = ({ user, place }: MemberProps) => {
 }
 
 interface LeaderboardCardProps {
-	user: IUser | null | undefined
+	user: TUserResponse | null | undefined
 }
 
 interface LeaderboardTableProps {
-	users: IUser[]
+	users: TUserResponse[]
 }
 
 const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
@@ -74,7 +75,7 @@ const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 }
 /**@deprecated use CersLeaderboard*/
 export const LeaderboardCard = ({ user }: LeaderboardCardProps) => {
-	const [users, setUsers] = useState<IUser[]>([])
+	const [users, setUsers] = useState<TUserResponse[]>([])
 
 	const handleFetchUsers = async (userAddress: string | undefined) => {
 		const { users } = await fetchLeaderboard(userAddress)

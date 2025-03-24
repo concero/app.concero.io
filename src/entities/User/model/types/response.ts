@@ -6,6 +6,7 @@ import {
 	// UserMultiplierZod,
 	// UserConnectedSocialsZod,
 	IUserZod,
+	UserConnectedSocialsZod,
 } from '../validations/validations'
 
 // export type TUserTier = z.infer<typeof UserTierZod>
@@ -14,6 +15,9 @@ import {
 // export type TUserConnectedSocials = z.infer<typeof UserConnectedSocialsZod>
 
 export type TUserResponse = z.infer<typeof IUserZod>
+type ConnectedSocials = z.infer<typeof UserConnectedSocialsZod>
+type NonNullableConnectedSocials = Exclude<ConnectedSocials, null>
+export type TUserSocialNetworkType = keyof NonNullableConnectedSocials
 export type TGetLeaderBoardReponse = {
 	users: (TUserResponse & { position: number })[]
 }
@@ -36,7 +40,7 @@ export enum TransactionType {
 	ConceroBridgeTx = 'ConceroBridgeTx',
 }
 
-export enum ActionType {
+export enum EActionType {
 	'transactionReward',
 	'questReward',
 	'specialReward',
@@ -69,7 +73,7 @@ export interface UserActionQuestData {
 export interface IUserAction {
 	userAddress: string
 	documentId: string
-	actionType: ActionType
+	actionType: EActionType
 	points?: number
 	multiplier?: number
 	timestamp: number

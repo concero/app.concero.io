@@ -39,8 +39,8 @@ export const ProfilePage = (props: TProps) => {
 					<div className={cls.roles}></div>
 					<div className={cls.setting_wrap}>
 						<OpenHistoryUserActions
-							text="History"
 							user={user}
+							text="History"
 							buttonProps={{
 								size: 's',
 								variant: 'secondary',

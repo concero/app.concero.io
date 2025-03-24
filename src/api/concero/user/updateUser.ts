@@ -1,7 +1,7 @@
-import type { IUser } from './userType'
+import { TUserResponse } from '@/entities/User'
 import { post } from '../../client'
 /**@deprecated */
-export const updateUserDiscord = async (data: any): Promise<IUser> => {
+export const updateUserDiscord = async (data: any): Promise<TUserResponse> => {
 	const url = `${process.env.CONCERO_API_URL}/connectNetwork/discord`
 
 	const response = await post(url, data)
@@ -9,7 +9,7 @@ export const updateUserDiscord = async (data: any): Promise<IUser> => {
 	return response.data.data
 }
 /**@deprecated */
-export const updateUserTwitter = async (data: any): Promise<IUser> => {
+export const updateUserTwitter = async (data: any): Promise<TUserResponse> => {
 	const url = `${process.env.CONCERO_API_URL}/connectNetwork/twitter`
 
 	const response = await post(url, data)

@@ -1,3 +1,5 @@
+export { EActionType } from './model/types/response'
+
 export { useDiscordConnection } from './model/hooks/useDiscordConnection'
 export { useTwitterConnection } from './model/hooks/useTwitterConnection'
 
@@ -19,4 +21,4 @@ export {
 } from './api/userApi'
 export { getIsStartedQuest } from './model/lib/getIsStartedQuest'
 export { getCompletedStepsByQuest } from './model/lib/getCompletedStepsByQuest'
-export type { TUserResponse } from './model/types/response'
+export type { TUserResponse, TUserSocialNetworkType, IUserAction } from './model/types/response'

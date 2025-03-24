@@ -7,23 +7,28 @@
 	border-radius: var(--space-m);
 	background-color: var(--color-gray-25);
 	max-width: 394px !important;
-	.title {
-		text-align: center;
-		font: var(--font-heading-xlarge);
-		color: var(--color-gray-700);
-	}
-	.description {
-		text-align: center;
-		font: var(--font-body-);
-		color: var(--color-gray-600);
-		.red_text {
-			color: var(--color-danger-600);
+	.head_wrap {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		.title {
+			text-align: center;
+			font: var(--font-heading-xlarge);
+			color: var(--color-gray-700);
+		}
+		.description {
+			text-align: center;
+			font: var(--font-body-);
+			color: var(--color-gray-600);
+			.red_text {
+				color: var(--color-danger-600);
+			}
 		}
 	}
 	.controls {
 		display: flex;
 		flex-direction: row;
 		gap: var(--space-xs);
-		width: 100% ;
+		width: 100%;
 	}
 }
