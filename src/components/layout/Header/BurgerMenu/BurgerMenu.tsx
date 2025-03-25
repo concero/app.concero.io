@@ -110,23 +110,10 @@ export function BurgerMenu({ user }: Props) {
 		<ul className={classNames.listContainer}>
 			{(isTablet || isMobile) && (
 				<>
-					{/* <Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
-						Rewards
-					</Button>
-					<Button
-						isFull
-						isDisabled
-						className={classNames.profile_page_btn}
-						rightIcon={
-							<Tag size="s" variant="neutral">
-								Coming Soon
-							</Tag>
-						}
-						variant="tetrary"
+					<Link
+						style={{ pointerEvents: matchSwapRewards ? 'none' : 'all', width: '100%' }}
+						to={routes.rewards}
 					>
-						Profile
-					</Button> */}
-					<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
 						<Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
 							Rewards
 						</Button>
@@ -137,12 +124,18 @@ export function BurgerMenu({ user }: Props) {
 					>
 						<Button
 							isFull
-							isDisabled
+							isDisabled={!isAdmin}
 							className={classNames.profile_page_btn}
 							rightIcon={
-								<Tag size="s" variant="neutral">
-									Coming Soon
-								</Tag>
+								isAdmin ? (
+									<Tag size="s" variant="branded">
+										new
+									</Tag>
+								) : (
+									<Tag size="s" variant="neutral">
+										Coming Soon
+									</Tag>
+								)
 							}
 							variant="tetrary"
 						>
@@ -152,10 +145,9 @@ export function BurgerMenu({ user }: Props) {
 					<Separator />
 				</>
 			)}
-			{user && (
+			{user && !isAdmin && (
 				<>
-					<SocialNetworkButtons user={user} />
-					<Separator />
+					<SocialNetworkButtons user={user} /> <Separator />
 				</>
 			)}
 			<li>

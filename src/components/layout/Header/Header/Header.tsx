@@ -48,24 +48,25 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 				{isDesktop && (
 					<ul className="gap-xs">
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
-							<Button
-								className={matchSwapRewards ? buttonClassNames.tetraryColorActive : ''}
-								variant="tetrary"
-							>
-								Rewards
-							</Button>
+							<Button variant="tetrary">Rewards</Button>
 						</Link>
 						<Link
 							style={{ pointerEvents: matchSwapProfile ? 'none' : isAdmin ? 'all' : 'none' }}
 							to={routes.profile}
 						>
 							<Button
-								isDisabled
-								className={classNames.profile}
+								isDisabled={!isAdmin}
+								className={!isAdmin ? classNames.profile : ''}
 								rightIcon={
-									<Tag size="s" variant="neutral">
-										Coming Soon
-									</Tag>
+									isAdmin ? (
+										<Tag size="s" variant="branded">
+											new
+										</Tag>
+									) : (
+										<Tag size="s" variant="neutral">
+											Coming Soon
+										</Tag>
+									)
 								}
 								variant="tetrary"
 							>

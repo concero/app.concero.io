@@ -12,6 +12,7 @@ import { DailyTaskList } from '@/features/Quest'
 import { QuestPreviewList } from '@/widgets/Quest'
 import { LoginRequired } from '@/features/Auth'
 import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 interface Props {
 	user: TUserResponse | null
@@ -19,7 +20,8 @@ interface Props {
 }
 
 export const RewardsScreen = ({ user, loading }: Props) => {
-	const { isConnected } = useAccount()
+	const { isConnected, address } = useAccount()
+	let isAdmin = isAdminAddress(address)
 	if (config.REWARD_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
@@ -45,7 +47,7 @@ export const RewardsScreen = ({ user, loading }: Props) => {
 						))}
 					<DailyTaskList />
 					<QuestPreviewList />
-					<LeaderboardCard user={user} />
+					{!isAdmin ? <LeaderboardCard user={user} /> : null}
 				</div>
 			</div>
 		</PageWrap>
