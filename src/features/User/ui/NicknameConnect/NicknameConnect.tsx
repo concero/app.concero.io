@@ -25,7 +25,7 @@ export const NicknameConnect = (props: TProps) => {
 			})
 		}
 	}
-	const showSaveBtn = newNickname !== user?.nickname && !isError
+	const showSaveBtn = newNickname !== user?.nickname && newNickname.length > 0 && !isError
 	const errorMap: Record<NicknameError, string> = {
 		Error: 'An error occurred while saving the nickname',
 		Exists: 'Nickname is already taken',

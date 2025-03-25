@@ -18,13 +18,17 @@ export const AccoutSettingsUI = (props: TProps) => {
 			</div>
 			<Separator />
 			<div className={cls.wrap_socials}>
-				<span className={cls.socials_title}>Socials</span>
-				<span className={cls.socials_description}>
-					One of each social account can be linked to only one profile
-				</span>
-				<div>{DiscordConnect}</div>
-				<div>{XConnect}</div>
-				<div>{EmailConnect}</div>
+				<div className={cls.wrap_socials_title}>
+					<span className={cls.socials_title}>Socials</span>
+					<span className={cls.socials_description}>
+						One of each social account can be linked to only one profile
+					</span>
+				</div>
+				<div className={cls.wrap_list_socials}>
+					{DiscordConnect ? <div>{DiscordConnect}</div> : null}
+					{XConnect ? <div>{XConnect}</div> : null}
+					{EmailConnect ? <div>{EmailConnect}</div> : null}
+				</div>
 			</div>
 		</div>
 	)

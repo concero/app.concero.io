@@ -42,18 +42,26 @@
 				align-items: center;
 				gap: var(--space-xs);
 				max-width: 100%;
-				.nickname {
-					white-space: nowrap;
-					text-overflow: ellipsis;
-					overflow: hidden;
+				.wrap_nick_address {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					gap: var(--space-xxs);
+					max-width: 100%;
 
-					font: var(--font-heading-large);
-					color: var(--color-gray-700);
-				}
-				.address {
-					text-align: center;
-					font: var(--font-body-medium);
-					color: var(--color-gray-600);
+					.nickname {
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						overflow: hidden;
+
+						font: var(--font-heading-large);
+						color: var(--color-gray-700);
+					}
+					.address {
+						text-align: center;
+						font: var(--font-body-medium);
+						color: var(--color-gray-600);
+					}
 				}
 			}
 			.socials_group {

@@ -30,7 +30,7 @@ export const OpenHistoryUserActions = (props: TProps) => {
 		setShowModal(false)
 	}
 	return (
-		<>
+		<div>
 			<Button {...buttonProps} className={clsx(className)} onClick={handleOpen}>
 				{text}
 			</Button>
@@ -46,6 +46,6 @@ export const OpenHistoryUserActions = (props: TProps) => {
 					<HistoryUserActions user={user} />
 				</Modal>
 			</div>
-		</>
+		</div>
 	)
 }

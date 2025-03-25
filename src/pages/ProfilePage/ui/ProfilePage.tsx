@@ -53,8 +53,10 @@ export const ProfilePage = (props: TProps) => {
 				<div className={cls.user_info}>
 					<div className={cls.account_info}>
 						<Avatar address={user.address as Address} />
-						<span className={cls.nickname}>{user.nickname ?? 'Nickname'}</span>
-						<span className={cls.address}>{addresToShow}</span>
+						<div className={cls.wrap_nick_address}>
+							<span className={cls.nickname}>{user.nickname ?? 'Nickname'}</span>
+							<span className={cls.address}>{addresToShow}</span>
+						</div>
 					</div>
 					<div className={cls.socials_group}>
 						<div className={cls.social_item}>
