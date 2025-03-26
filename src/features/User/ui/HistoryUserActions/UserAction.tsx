@@ -9,26 +9,6 @@ interface UserActionProps {
 	action: IUserAction
 }
 
-// const getTransactionInfo = (action: IUserAction): string => {
-// 	try {
-// 		const txAction =
-// 			// @ts-expect-error TODO: Improve Typing
-// 			action.data?.type === TransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
-
-// 		// @ts-expect-error TODO: Improve Typing
-// 		if (!action.data?.from || !action.data?.to) {
-// 			return 'Forgotten transaction'
-// 		}
-
-// 		// @ts-expect-error Improve Typing
-// 		const { from, to } = action.data
-// 		return `${txAction} from ${toLocaleNumber(from.amount, 2)} ${from.tokenSymbol} on ${from.chainName} to ${toLocaleNumber(to.amount, 2)} ${to.tokenSymbol} on ${to.chainName}`
-// 	} catch (error) {
-// 		console.log('Error:', error, 'action', action)
-// 		return ''
-// 	}
-// }
-
 const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.Element => {
 	try {
 		const txAction = action.data?.type === ETransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
