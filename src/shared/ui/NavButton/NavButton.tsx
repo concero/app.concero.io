@@ -24,7 +24,7 @@ export const NavButton = (props: TProps) => {
 					</Tag>
 				) : newFlag ? (
 					<Tag size="s" variant="branded">
-						new
+						New!
 					</Tag>
 				) : null
 			}

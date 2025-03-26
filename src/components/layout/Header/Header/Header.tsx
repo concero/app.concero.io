@@ -48,17 +48,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 				{isDesktop && (
 					<ul className="gap-xs">
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
-							{/* <Button
-								buttonProps={{
-									style: {
-										color: matchSwapRewards ? 'var(--color-accent-600)' : '',
-									},
-								}}
-								variant="tetrary"
-							>
-								Rewards
-							</Button> */}
-							<NavButton active={Boolean(matchSwapRewards)} text="Profile" />
+							<NavButton active={Boolean(matchSwapRewards)} text="Rewards" />
 						</Link>
 						<Link
 							style={{ pointerEvents: matchSwapProfile ? 'none' : isAdmin ? 'all' : 'none' }}
