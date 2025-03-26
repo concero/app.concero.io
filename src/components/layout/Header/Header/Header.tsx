@@ -1,19 +1,19 @@
 import { type FC, type ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import classNames from './Header.module.pcss'
-import { routes } from '../../../../constants/routes'
+import { routes } from '@/constants/routes'
 import { Logo } from '../../Logo/Logo'
-import { useMediaQuery } from '../../../../hooks/useMediaQuery'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
-import buttonClassNames from '../../../buttons/Button/Button.module.pcss'
 import { UserMultipliers } from './UserMultipliers/UserMultipliers'
 import { TooltipWrapper } from '../../WithTooltip/TooltipWrapper'
-import { toLocaleNumber } from '../../../../utils/formatting'
+import { toLocaleNumber } from '@/utils/formatting'
 import { Button, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
 import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 import { useAccount } from 'wagmi'
+import { NavButton } from '@/shared/ui'
 
 interface HeaderProps {
 	user: TUserResponse | null
@@ -48,7 +48,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 				{isDesktop && (
 					<ul className="gap-xs">
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
-							<Button
+							{/* <Button
 								buttonProps={{
 									style: {
 										color: matchSwapRewards ? 'var(--color-accent-600)' : '',
@@ -57,35 +57,19 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 								variant="tetrary"
 							>
 								Rewards
-							</Button>
+							</Button> */}
+							<NavButton active={Boolean(matchSwapRewards)} text="Profile" />
 						</Link>
 						<Link
 							style={{ pointerEvents: matchSwapProfile ? 'none' : isAdmin ? 'all' : 'none' }}
 							to={routes.profile}
 						>
-							<Button
+							<NavButton
+								active={Boolean(matchSwapProfile)}
+								newFlag={isAdmin}
 								isDisabled={!isAdmin}
-								className={!isAdmin ? classNames.profile : ''}
-								buttonProps={{
-									style: {
-										color: matchSwapProfile ? 'var(--color-accent-600)' : '',
-									},
-								}}
-								rightIcon={
-									isAdmin ? (
-										<Tag size="s" variant="branded">
-											new
-										</Tag>
-									) : (
-										<Tag size="s" variant="neutral">
-											Coming Soon
-										</Tag>
-									)
-								}
-								variant="tetrary"
-							>
-								Profile
-							</Button>
+								text="Profile"
+							/>
 						</Link>
 					</ul>
 				)}

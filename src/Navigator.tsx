@@ -77,8 +77,8 @@ export const Navigator = () => {
 							element={<ExternalRedirect url="https://app.lanca.io/pools/usdc" />}
 						/>
 					</Routes>
+					<Footer />
 				</div>
-				<Footer />
 			</AppScreen>
 		</BrowserRouter>
 	)
