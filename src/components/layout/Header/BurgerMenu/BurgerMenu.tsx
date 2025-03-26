@@ -114,7 +114,17 @@ export function BurgerMenu({ user }: Props) {
 						style={{ pointerEvents: matchSwapRewards ? 'none' : 'all', width: '100%' }}
 						to={routes.rewards}
 					>
-						<Button isDisabled variant="tetrary" className={classNames.rewards_page_btn}>
+						<Button
+							isDisabled={!isAdmin}
+							isFull
+							buttonProps={{
+								style: {
+									color: matchSwapRewards ? 'var(--color-accent-600)' : '',
+								},
+							}}
+							variant="tetrary"
+							className={classNames.rewards_page_btn}
+						>
 							Rewards
 						</Button>
 					</Link>
@@ -126,6 +136,11 @@ export function BurgerMenu({ user }: Props) {
 							isFull
 							isDisabled={!isAdmin}
 							className={classNames.profile_page_btn}
+							buttonProps={{
+								style: {
+									color: matchSwapProfile ? 'var(--color-accent-600)' : '',
+								},
+							}}
 							rightIcon={
 								isAdmin ? (
 									<Tag size="s" variant="branded">
