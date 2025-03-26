@@ -85,7 +85,7 @@ export const UserAction = ({ action }: UserActionProps) => {
 
 	return (
 		<div className={clsx(cls.user_action)}>
-			<p className={clsx(cls.title)}>{getValue()}</p>
+			{getValue()}
 
 			<div className={cls.meta_wrap}>
 				<span className={clsx(cls.points)}>
