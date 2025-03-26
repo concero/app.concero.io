@@ -1,14 +1,30 @@
 .user_actions_modal {
-	width: 100% !important;
+	box-sizing: border-box;
 	transform: translateY(20px);
 	opacity: 0;
 	transition: all 0.3s ease-in-out;
 	max-height: 90vh;
-	max-width: 806px !important;
+	width: 806px !important;
+	max-width: 100%;
 	overflow-y: hidden;
 	& > * {
 		flex-direction: row;
 	}
+
+	/* Mobile styles (375px - 743px) */
+	@media screen and (max-width: 743px) {
+		max-width: 343px !important; 
+	}
+
+	/* Tablet styles (744px - 1279px) */
+	@media screen and (min-width: 744px) and (max-width: 1279px) {
+		max-width: 715px !important; 
+	}
+	/* Desktop styles (1280px and above) */
+	@media screen and (min-width: 1280px) {
+		max-width: 806px !important; 
+	}
+
 	/*header of modal*/
 	& > div:first-child > h2 {
 		font: var(--font-heading-xlarge) !important;
