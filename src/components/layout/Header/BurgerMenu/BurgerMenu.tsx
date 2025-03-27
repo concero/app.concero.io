@@ -21,7 +21,6 @@ import { TUserResponse } from '@/entities/User'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { Link, useMatch } from 'react-router-dom'
 import { routes } from '@/constants/routes'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 interface Props {
 	user: TUserResponse | null
@@ -34,7 +33,6 @@ export function BurgerMenu({ user }: Props) {
 	const isDecktop = useMediaQuery('desktop')
 	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
-	let isAdmin = isAdminAddress(user?.address)
 	const { t } = useTranslation()
 
 	const matchSwapRewards = useMatch(routes.rewards)
@@ -115,7 +113,6 @@ export function BurgerMenu({ user }: Props) {
 						to={routes.rewards}
 					>
 						<Button
-							isDisabled={!isAdmin}
 							isFull
 							buttonProps={{
 								style: {
@@ -129,12 +126,11 @@ export function BurgerMenu({ user }: Props) {
 						</Button>
 					</Link>
 					<Link
-						style={{ pointerEvents: matchSwapProfile ? 'none' : isAdmin ? 'all' : 'none', width: '100%' }}
+						style={{ pointerEvents: matchSwapProfile ? 'none' : 'all', width: '100%' }}
 						to={routes.profile}
 					>
 						<Button
 							isFull
-							isDisabled={!isAdmin}
 							className={classNames.profile_page_btn}
 							buttonProps={{
 								style: {
@@ -142,15 +138,9 @@ export function BurgerMenu({ user }: Props) {
 								},
 							}}
 							rightIcon={
-								isAdmin ? (
-									<Tag size="s" variant="branded">
-										new
-									</Tag>
-								) : (
-									<Tag size="s" variant="neutral">
-										Coming Soon
-									</Tag>
-								)
+								<Tag size="s" variant="branded">
+									New!
+								</Tag>
 							}
 							variant="tetrary"
 						>
@@ -160,11 +150,7 @@ export function BurgerMenu({ user }: Props) {
 					<Separator />
 				</>
 			)}
-			{user && !isAdmin && (
-				<>
-					<SocialNetworkButtons user={user} /> <Separator />
-				</>
-			)}
+
 			<li>
 				<Button
 					leftIcon={<LanguageIcon />}

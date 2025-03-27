@@ -11,8 +11,6 @@ import { TooltipWrapper } from '../../WithTooltip/TooltipWrapper'
 import { toLocaleNumber } from '@/utils/formatting'
 import { Button, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
-import { useAccount } from 'wagmi'
 import { NavButton } from '@/shared/ui'
 
 interface HeaderProps {
@@ -27,8 +25,6 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 	const isMobile = useMediaQuery('mobile')
 	const matchSwapRewards = useMatch(routes.rewards)
 	const matchSwapProfile = useMatch(routes.profile)
-	const account = useAccount()
-	let isAdmin = isAdminAddress(account.address)
 	const getPoints = (points: number | { $numberDecimal: string }): number => {
 		if (typeof points === 'number') {
 			return points
@@ -50,16 +46,8 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>
 							<NavButton active={Boolean(matchSwapRewards)} text="Rewards" />
 						</Link>
-						<Link
-							style={{ pointerEvents: matchSwapProfile ? 'none' : isAdmin ? 'all' : 'none' }}
-							to={routes.profile}
-						>
-							<NavButton
-								active={Boolean(matchSwapProfile)}
-								newFlag={isAdmin}
-								isDisabled={!isAdmin}
-								text="Profile"
-							/>
+						<Link style={{ pointerEvents: matchSwapProfile ? 'none' : 'all' }} to={routes.profile}>
+							<NavButton active={Boolean(matchSwapProfile)} newFlag={true} text="Profile" />
 						</Link>
 					</ul>
 				)}
