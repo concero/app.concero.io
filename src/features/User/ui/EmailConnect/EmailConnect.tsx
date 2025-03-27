@@ -1,16 +1,17 @@
 import { useUpdateNicknameMutation, useUserByAddress } from '@/entities/User'
 import { Button, Input } from '@concero/ui-kit'
 import { useState } from 'react'
+import { useAccount } from 'wagmi'
 import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
 import SuccessIcon from '@/shared/assets/icons/monochrome/success.svg?react'
-import cls from './NicknameConnect.module.pcss'
+import cls from './EmailConnect.module.pcss'
 import { NicknameError, TUserResponse } from '@/entities/User/model/types/response'
 import { Address } from 'viem'
 type TProps = {
 	user: TUserResponse
 }
 
-export const NicknameConnect = (props: TProps) => {
+export const EmailConnect = (props: TProps) => {
 	const { user } = props
 	const { mutate, isPending, isError, isSuccess, error, reset } = useUpdateNicknameMutation()
 
