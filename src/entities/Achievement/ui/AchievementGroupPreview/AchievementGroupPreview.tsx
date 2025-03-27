@@ -12,11 +12,11 @@ export const AchievementGroupPreview = () => {
 				Coming soon
 			</Tag>
 			<div className={cls.images_wrap}>
-				<img src={noob} alt="achievement low" width={56} height={56} style={{ opacity: '50%' }} />
-				<img src={sigma} alt="achievement low" width={56} height={56} style={{ opacity: '50%' }} />
-				<img src={chad} alt="achievement low" width={56} height={56} style={{ opacity: '50%' }} />
-				<img src={gigachad} alt="achievement low" width={56} height={56} style={{ opacity: '50%' }} />
-				<img src={lancardio} alt="achievement low" width={56} height={56} style={{ opacity: '50%' }} />
+				<img src={noob} alt="achievement 1" width={56} height={56} style={{ opacity: '50%' }} />
+				<img src={sigma} alt="achievement 2" width={56} height={56} style={{ opacity: '50%' }} />
+				<img src={chad} alt="achievement 3" width={56} height={56} style={{ opacity: '50%' }} />
+				<img src={gigachad} alt="achievement 4" width={56} height={56} style={{ opacity: '50%' }} />
+				<img src={lancardio} alt="achievement 5" width={56} height={56} style={{ opacity: '50%' }} />
 			</div>
 			<div>
 				<Button variant="tetrary_color" size="s" isDisabled>
