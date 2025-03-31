@@ -18,6 +18,7 @@ import cls from './AccoutSettings.module.pcss'
 import { useState } from 'react'
 import { Address } from 'viem'
 import { EmailConnectModal } from '../EmailConnectModal/EmailConnectModal'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 type TProps = {
 	user: TUserResponse
 }
@@ -33,6 +34,7 @@ export const AccoutSettings = ({ user }: TProps) => {
 	const handleOpenWarningDisconnect = () => {
 		setShowDisconnect(true)
 	}
+	const isAdmin = isAdminAddress(user.address)
 
 	const handleDisconnect = () => {
 		switch (currentSocial) {
@@ -107,28 +109,30 @@ export const AccoutSettings = ({ user }: TProps) => {
 					</div>
 				}
 				EmailConnect={
-					<div className={cls.social_wrap}>
-						<div className={cls.social_header}>
-							{IsEmailConnected ? <EmailConnectedIconIcon /> : <EmailDiconnectedIconIcon />}
-							{IsEmailConnected ? user.email : 'Email'}
+					isAdmin ? (
+						<div className={cls.social_wrap}>
+							<div className={cls.social_header}>
+								{IsEmailConnected ? <EmailConnectedIconIcon /> : <EmailDiconnectedIconIcon />}
+								{IsEmailConnected ? user.email : 'Email'}
+							</div>
+							{IsEmailConnected ? (
+								<Button
+									variant="secondary"
+									size="s"
+									onClick={() => {
+										setCurrentSocial('email')
+										handleOpenWarningDisconnect()
+									}}
+								>
+									Disconnect
+								</Button>
+							) : (
+								<Button variant="secondary_color" size="s" onClick={() => setShowEmailModal(true)}>
+									Connect
+								</Button>
+							)}
 						</div>
-						{IsEmailConnected ? (
-							<Button
-								variant="secondary"
-								size="s"
-								onClick={() => {
-									setCurrentSocial('email')
-									handleOpenWarningDisconnect()
-								}}
-							>
-								Disconnect
-							</Button>
-						) : (
-							<Button variant="secondary_color" size="s" onClick={() => setShowEmailModal(true)}>
-								Connect
-							</Button>
-						)}
-					</div>
+					) : null
 				}
 			/>
 			<EmailConnectModal user={user} show={showEmailModal} onClose={() => setShowEmailModal(false)} />

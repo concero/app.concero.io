@@ -10,7 +10,8 @@ import DiscordConnectedIcon from '@/shared/assets/icons/social_discord.svg?react
 import DiscordDisconnectedIcon from '@/shared/assets/icons/social_discord_disabled.svg?react'
 import TwitterConnectedIcon from '@/shared/assets/icons/Social_X.svg?react'
 import TwitterDisconnectedIcon from '@/shared/assets/icons/Social_X_disabled.svg?react'
-import Social_Email_Icon from '@/shared/assets/icons/Email_disabled.svg?react'
+import EmailDisconnectedIcon from '@/shared/assets/icons/Email_disabled.svg?react'
+import EmailConnectedIcon from '@/shared/assets/icons/Email_connected.svg?react'
 import { Address } from 'viem'
 import { AchievementGroupPreview } from '@/entities/Achievement'
 import { Separator } from '@/components/layout/Separator/Separator'
@@ -24,6 +25,7 @@ export const ProfilePage = (props: TProps) => {
 	const { isConnected } = useAccount()
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
+	const IsEmailConnected = user?.email && user.email.length > 0
 	if (!isConnected) {
 		return <LoginRequired />
 	}
@@ -32,6 +34,7 @@ export const ProfilePage = (props: TProps) => {
 	const addresToShow = truncateWallet(user.address, 4)
 	const Social_X_toShow = user.connectedSocials?.twitter?.screen_name ?? '-'
 	const Social_Discord_toShow = user.connectedSocials?.discord?.username ?? '-'
+	const Social_Email_toShow = user.email ?? '-'
 	return (
 		<PageWrap className={cls.container}>
 			<div className={cls.profile_card_wrap}>
@@ -68,8 +71,8 @@ export const ProfilePage = (props: TProps) => {
 							<span>{Social_Discord_toShow}</span>
 						</div>
 						<div className={cls.social_item}>
-							<Social_Email_Icon />
-							<span>-</span>
+							{IsEmailConnected ? <EmailConnectedIcon /> : <EmailDisconnectedIcon />}
+							<span>{Social_Email_toShow}</span>
 						</div>
 					</div>
 				</div>
