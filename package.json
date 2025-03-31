@@ -27,7 +27,7 @@
 		}
 	},
 	"dependencies": {
-		"@concero/ui-kit": "^0.2.11",
+		"@concero/ui-kit": "^0.2.13",
 		"@lifi/sdk": "^2.5.0",
 		"@react-spring/web": "^9.7.3",
 		"@reown/appkit": "^1.5.3",

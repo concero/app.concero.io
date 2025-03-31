@@ -42,7 +42,7 @@ export const QuestStepGroup = (props: TProps) => {
 
 	return (
 		<div className={cls.group}>
-			{!isSingleStep && `Progress: ${completedSteps.length}`}
+			{/* {!isSingleStep && `Progress: ${completedSteps.length}`} */}
 			{listStepToShow.map((step, index) => (
 				<div key={index} className={cls.step_wrap}>
 					<QuestStep

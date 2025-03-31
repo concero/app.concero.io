@@ -17,7 +17,7 @@ import {
 export type TUserResponse = z.infer<typeof IUserZod>
 type ConnectedSocials = z.infer<typeof UserConnectedSocialsZod>
 type NonNullableConnectedSocials = Exclude<ConnectedSocials, null>
-export type TUserSocialNetworkType = keyof NonNullableConnectedSocials
+export type TUserSocialNetworkType = keyof NonNullableConnectedSocials | 'email'
 export type TGetLeaderBoardReponse = {
 	users: (TUserResponse & { position: number })[]
 }
