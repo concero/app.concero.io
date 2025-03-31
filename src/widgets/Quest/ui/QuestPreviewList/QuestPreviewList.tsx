@@ -6,14 +6,12 @@ import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
 import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
 import { useState } from 'react'
 import { Button } from '@concero/ui-kit'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 export const QuestPreviewList = (): JSX.Element => {
 	const { data: quests } = useQuests()
 	const { data: testingQuests } = useTestingQuests()
 	const account = useAccount()
 	const { data: user } = useUserByAddress(account.address)
-	let isAdmin = isAdminAddress(account.address)
 	const [viewMode, setViewMode] = useState<TQuestTag>('rewards')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
@@ -24,28 +22,26 @@ export const QuestPreviewList = (): JSX.Element => {
 		<div className={cls.quest_preview_list}>
 			<div className={cls.header_list}>
 				<div className={cls.title}>Quests</div>
-				{isAdmin && (
-					<div className={cls.filters}>
-						<Button
-							variant={viewMode == 'rewards' ? 'secondary_color' : 'secondary'}
-							size="m"
-							onClick={() => handleViewModeChange('rewards')}
-							className={viewMode == 'rewards' ? cls.selected : ''}
-						>
-							On Chain
-						</Button>
-						<Button
-							variant={viewMode == 'testing' ? 'secondary_color' : 'secondary'}
-							size="m"
-							onClick={() => handleViewModeChange('testing')}
-							className={viewMode == 'testing' ? cls.selected : ''}
-						>
-							Testing
-						</Button>
-					</div>
-				)}
+				<div className={cls.filters}>
+					<Button
+						variant={viewMode == 'rewards' ? 'secondary_color' : 'secondary'}
+						size="m"
+						onClick={() => handleViewModeChange('rewards')}
+						className={viewMode == 'rewards' ? cls.selected : ''}
+					>
+						On Chain
+					</Button>
+					<Button
+						variant={viewMode == 'testing' ? 'secondary_color' : 'secondary'}
+						size="m"
+						onClick={() => handleViewModeChange('testing')}
+						className={viewMode == 'testing' ? cls.selected : ''}
+					>
+						Testing
+					</Button>
+				</div>
 			</div>
-			{viewMode === 'testing' && isAdmin ? (
+			{viewMode === 'testing' ? (
 				<div className={cls.testing_start_block}>
 					<TestingPortalIcon />
 					<div className={cls.description_block}>

@@ -58,26 +58,21 @@ $tablet_break: 1279px;
 		min-height: 50px;
 
 		.title {
-			flex-grow: 1;
-			flex-shrink: 1;
-			flex-basis: 0;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			line-height: 50px;
-			.action_info {
-				.action {
-					font: var(--font-heading-small);
-					color: var(--color-gray-700);
-				}
-				.from_to {
-					font: var(--font-body-medium);
-					color: var(--color-gray-600);
-				}
-				.amount_value {
-					font: var(--font-heading-small);
-					color: var(--color-gray-700);
-				}
+			font: var(--font-heading-small);
+			color: var(--color-gray-700);
+		}
+		.action_info {
+			.action {
+				font: var(--font-heading-small);
+				color: var(--color-gray-700);
+			}
+			.from_to {
+				font: var(--font-body-medium);
+				color: var(--color-gray-500);
+			}
+			.amount_value {
+				font: var(--font-heading-small);
+				color: var(--color-gray-700);
 			}
 		}
 
@@ -114,15 +109,12 @@ $tablet_break: 1279px;
 
 			min-height: auto;
 			.title {
-				box-sizing: initial;
-				text-align: left;
-				color: var(--color-gray-700);
 				padding-top: var(--space-m);
 				padding-bottom: var(--space-xxs);
-				min-height: 36px;
-				width: 100%;
-				line-height: normal;
-				white-space: initial;
+			}
+			.action_info {
+				padding-top: var(--space-m);
+				padding-bottom: var(--space-xxs);
 			}
 			.meta_wrap {
 				width: 100%;
