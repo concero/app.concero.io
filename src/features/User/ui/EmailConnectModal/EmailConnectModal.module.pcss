@@ -1,6 +1,26 @@
 .wrap_connect_email {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
+	padding: var(--space-m);
+	border-radius: var(--space-l);
+	background-color: var(--color-gray-25);
+}
+.wrap_header_modal {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+
+	.title {
+		font: var(--font-heading-large);
+		color: var(--color-gray-700);
+	}
 }
 .wrap_first_step {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
 	.wrap_info_content {
 		display: flex;
 		flex-direction: column;
@@ -28,6 +48,9 @@
 	}
 }
 .wrap_second_step {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
 	.wrap_info_content {
 		display: flex;
 		flex-direction: column;
@@ -50,6 +73,13 @@
 				font: var(--font-body-large);
 				color: var(--color-gray-600);
 				text-align: center;
+			}
+		}
+		.otp_input_wrap {
+			& > div {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
 			}
 		}
 	}

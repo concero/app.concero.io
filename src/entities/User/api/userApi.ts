@@ -1,14 +1,12 @@
 import { Address } from 'viem'
 import { AxiosResponse } from 'axios'
-import { del, get, patch, post } from '@/api/client'
+import { del, get, post } from '@/api/client'
 import { TAcceptTerms, TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
 	IUserAction,
 	NicknameError,
 	TGetLeaderBoardReponse,
-	TUpdateUserDiscord,
-	TUpdateUserTwitter,
 	TUserResponse,
 	TUserSocialNetworkType,
 } from '../model/types/response'
@@ -145,6 +143,40 @@ export const socialsService = {
 		// @ts-expect-error TODO: Improve type
 		return response.data.data
 	},
+	disconnectEmail: async (address: string): Promise<boolean> => {
+		const url = `${process.env.CONCERO_API_URL}/disconnectEmail/${address}`
+
+		const response = await post(url, {
+			address,
+		})
+		if (response.status !== 200) throw new Error('Something went wrong')
+		// @ts-expect-error TODO: Improve type
+		return response.data.data
+	},
+	sendEmail: async (address: string, email: string) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/register-email`
+
+		const { data } = await post<TApiResponse<void, string>>(url, {
+			email,
+		})
+		if (data.success == true) {
+			return true
+		} else {
+			throw new Error(data.error)
+		}
+	},
+	verifyOTP: async (address: string, otp: string): Promise<boolean> => {
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/verify-email`
+
+		const { data } = await post<TApiResponse<void, string>>(url, {
+			otp,
+		})
+		if (data.success == true) {
+			return true
+		} else {
+			throw new Error(data.error)
+		}
+	},
 }
 const tagInvalidation = 'user'
 
@@ -228,6 +260,44 @@ export const useAcceptTermsMutation = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (arg: TAcceptTerms) => userServiceApi.acceptTerms(arg.address),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+		},
+	})
+}
+
+export const useSendEmailMutation = () => {
+	const queryClient = useQueryClient()
+	return useMutation({
+		mutationFn: (arg: { address: Address; email: string }) => socialsService.sendEmail(arg.address, arg.email),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+		},
+	})
+}
+export const useVerifyOTPMutation = () => {
+	const queryClient = useQueryClient()
+	return useMutation({
+		mutationFn: (arg: { address: Address; otp: string }) => socialsService.verifyOTP(arg.address, arg.otp),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+		},
+	})
+}
+export const useDisconnectSocialNetworkMutation = () => {
+	const queryClient = useQueryClient()
+	return useMutation({
+		mutationFn: (arg: { address: Address; network: TUserSocialNetworkType }) =>
+			socialsService.disconnectNetwork(arg.address, arg.network),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+		},
+	})
+}
+export const useDisconnectEmailMutation = () => {
+	const queryClient = useQueryClient()
+	return useMutation({
+		mutationFn: (arg: { address: Address }) => socialsService.disconnectEmail(arg.address),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},

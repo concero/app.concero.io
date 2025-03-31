@@ -47,6 +47,7 @@ export const IUserZod = z.object({
 	_id: z.string(),
 	address: z.string(),
 	nickname: z.string().optional(),
+	email: z.string().optional(),
 	tier: UserTierZod,
 	points: z.number(),
 	completedQuests: z.record(z.string(), z.any()).optional(),

@@ -16,6 +16,8 @@ export {
 	useUserByAddress,
 	useUserVolume,
 	useUpdateNicknameMutation,
+	useDisconnectSocialNetworkMutation,
+	useDisconnectEmailMutation,
 } from './api/userApi'
 export { getIsStartedQuest } from './model/lib/getIsStartedQuest'
 export { getCompletedStepsByQuest } from './model/lib/getCompletedStepsByQuest'
