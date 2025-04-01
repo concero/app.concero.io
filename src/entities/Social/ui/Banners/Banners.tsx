@@ -19,24 +19,28 @@ export const Banners = () => {
 	return (
 		<div className={cls.banners_wrap}>
 			<Banner className={cls.lanca_banner_wrap}>
-				<div className={cls.heading_wrap}>
+				<div className={cls.heading_wrap_with_icon}>
 					<LancaIcon />
-					<span className={cls.title}>Lanca</span>
-					<span className={cls.description}>Swap, and earn CERs </span>
+					<div className={cls.heading_wrap}>
+						<span className={cls.title}>Lanca</span>
+						<span className={cls.description}>Swap, and earn CERs </span>
+					</div>
 				</div>
 				<Button variant="primary" size="m" className={cls.btn} onClick={handleLancaClick}>
 					Swap
 				</Button>
 			</Banner>
-			{/* <Banner className={cls.testnet_banner_wrap}>
-				<div className={cls.heading_wrap}>
+			<Banner className={cls.testnet_banner_wrap}>
+				<div className={cls.heading_wrap_with_icon}>
 					<ConceroIcon />
-					<span className={cls.title}>Concero Testnet is live!</span>
+					<div className={cls.heading_wrap}>
+						<span className={cls.title}>Concero Testnet is live!</span>
+					</div>
 				</div>
-				<Button variant="primary" size="m" onClick={handleTestnetClick}>
+				<Button variant="primary" size="m" className={cls.btn} onClick={handleTestnetClick}>
 					Open Testnet
 				</Button>
-			</Banner> */}
+			</Banner>
 		</div>
 	)
 }
