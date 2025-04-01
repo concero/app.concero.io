@@ -3,8 +3,13 @@ import LancaIcon from '@/shared/assets/icons/Lanca_logomark.svg?react'
 import ConceroIcon from '@/shared/assets/icons/Concero_icon_banner.svg?react'
 import { Banner } from '@/shared/ui'
 import cls from './Banners.module.pcss'
+import { useAccount } from 'wagmi'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 export const Banners = () => {
+	const { isConnected, address } = useAccount()
+	const isAdmin = isAdminAddress(address)
+	if (!isAdmin) return null
 	const handleLancaClick = () => {
 		window.open('https://app.lanca.io', '_blank')
 	}
