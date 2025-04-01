@@ -7,7 +7,11 @@ export const DailyTaskList = (): JSX.Element => {
 	const { data: quests } = useAllQuests()
 	const account = useAccount()
 	const { data: user } = useUserByAddress(account.address)
-	const DailyQuests = quests?.filter(q => q.type == 'Daily')
+	const DailyQuests = quests
+		?.filter(q => q.type == 'Daily')
+		.toSorted((a, b) => {
+			return (b?.priority || 0) - (a?.priority || 0)
+		})
 	if (!quests || !DailyQuests) {
 		return <></>
 	}

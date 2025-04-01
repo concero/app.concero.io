@@ -1,14 +1,11 @@
-import { useAccount } from 'wagmi'
-import { TGetQuestsResponse, TQuest, TQuestTag } from '@/entities/Quest'
-import { useUserByAddress } from '@/entities/User'
-import cls from './QuestPreviewList.module.pcss'
-import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
-import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Button } from '@concero/ui-kit'
-import { useAllQuests } from '@/entities/Quest'
-import { sortQuestsByPrior } from '../../model/sortQuestsByPrior'
-import { TQuestSize, TQuestType } from '@/entities/Quest/model/types/schema'
+import { useAccount } from 'wagmi'
+import { TQuestTag, TQuestSize, TQuestType, useAllQuests } from '@/entities/Quest'
+import { useUserByAddress } from '@/entities/User'
+import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
+import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
+import cls from './QuestPreviewList.module.pcss'
 
 type WithoutUndefined<T> = T extends undefined ? never : T
 
@@ -88,29 +85,27 @@ export const QuestPreviewList = (): JSX.Element => {
 				</div>
 			) : null}
 			<div className={cls.list}>
-				<div className={cls.monthly}>
-					{quest_size_xl ? (
-						<div className={cls.size_xl}>
-							{quest_size_xl.map(quest => (
-								<QuestPreviewItem quest={quest} user={user} key={quest._id} size="xl" />
-							))}
-						</div>
-					) : null}
-					{quest_size_l ? (
-						<div className={cls.size_l}>
-							{quest_size_l.map(quest => (
-								<QuestPreviewItem quest={quest} user={user} key={quest._id} size="l" />
-							))}
-						</div>
-					) : null}
-					{quest_size_m ? (
-						<div className={cls.size_m}>
-							{quest_size_m.map(quest => (
-								<QuestPreviewItem quest={quest} user={user} key={quest._id} size="m" />
-							))}
-						</div>
-					) : null}
-				</div>
+				{quest_size_xl ? (
+					<div className={cls.size_xl}>
+						{quest_size_xl.map(quest => (
+							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="xl" />
+						))}
+					</div>
+				) : null}
+				{quest_size_l ? (
+					<div className={cls.size_l}>
+						{quest_size_l.map(quest => (
+							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="l" />
+						))}
+					</div>
+				) : null}
+				{quest_size_m ? (
+					<div className={cls.size_m}>
+						{quest_size_m.map(quest => (
+							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="m" />
+						))}
+					</div>
+				) : null}
 			</div>
 		</div>
 	)
