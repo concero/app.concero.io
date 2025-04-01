@@ -17,12 +17,15 @@ import { AchievementGroupPreview } from '@/entities/Achievement'
 import { Separator } from '@/components/layout/Separator/Separator'
 import { OpenHistoryUserActions } from '@/features/User'
 import { AccoutSettings } from '@/features/User'
+import { Banners } from '@/entities/Social'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 type TProps = {
 	user: TUserResponse | null
 }
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
-	const { isConnected } = useAccount()
+	const { isConnected, address } = useAccount()
+	const isAdmin = isAdminAddress(address)
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
@@ -37,6 +40,7 @@ export const ProfilePage = (props: TProps) => {
 	const Social_Email_toShow = user.email ?? '-'
 	return (
 		<PageWrap className={cls.container}>
+			{isAdmin ? <Banners /> : null}
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>
 					<div className={cls.roles}></div>
