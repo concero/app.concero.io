@@ -1,0 +1,62 @@
+.banners_wrap {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+	.lanca_banner_wrap {
+		background-color: #e8f7fe;
+		.heading_wrap {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: var(--space-xs);
+			padding-right: var(--space-s);
+
+			.title {
+				color: var(--color-accent-700);
+				font: var(--font-heading-large);
+			}
+			.description {
+				color: var(--color-accent-600);
+				font: var(--font-body-xlarge);
+			}
+		}
+		.btn {
+			background-color: #097bb3;
+		}
+		@media screen and (max-width: 743px) {
+			flex-direction: column;
+			.heading_wrap {
+				flex-direction: column;
+			}
+		}
+	}
+
+	.testnet_banner_wrap {
+		background-color: var(--color-accent-50);
+		.heading_wrap {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: var(--space-xs);
+			padding-right: var(--space-s);
+
+			.title {
+				color: var(--color-accent-700);
+				font: var(--font-heading-large);
+			}
+			.description {
+				color: var(--color-accent-600);
+				font: var(--font-body-xlarge);
+			}
+		}
+		.btn {
+			background-color: #097bb3;
+		}
+		@media screen and (max-width: 743px) {
+			flex-direction: column;
+			.heading_wrap {
+				flex-direction: column;
+			}
+		}
+	}
+}
