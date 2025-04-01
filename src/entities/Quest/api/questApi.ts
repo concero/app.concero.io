@@ -1,16 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { get, post } from '@/api/client'
-import { TApiResponse } from '@/types/api'
-import { TClaimResponse, TGetQuestsResponse, TVerifyResponse } from '../model/types/response'
+import { TClaimResponse, TGetAllQuestsResponse, TGetQuestsResponse, TVerifyResponse } from '../model/types/response'
 import { TClaimArgs, TVerifyArgs } from '../model/types/request'
 import { invalidationTagUser } from '@/entities/User'
+import { TApiResponse } from '@/shared/types/api'
 
 const questService = {
-	getQuests: async (): Promise<TGetQuestsResponse> => {
-		const url = `${process.env.CONCERO_API_URL}/quests`
-		const response = await get<TApiResponse<TGetQuestsResponse>>(url)
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.data
+	getAllQuests: async () => {
+		const url = `${process.env.CONCERO_API_URL}/v2/quests`
+		const { data, status } = await get<TApiResponse<TGetAllQuestsResponse>>(url)
+		if (data.success === false || status !== 200) throw new Error('Something went wrong')
+		return data.data
 	},
 
 	getTestingQuests: async (): Promise<TGetQuestsResponse> => {
@@ -39,8 +39,8 @@ const questService = {
 
 const tagInvalidation = 'quests'
 
-export const useQuests = () => {
-	return useQuery({ queryKey: [tagInvalidation], queryFn: questService.getQuests })
+export const useAllQuests = () => {
+	return useQuery({ queryKey: [tagInvalidation], queryFn: questService.getAllQuests })
 }
 
 export const useTestingQuests = () => {

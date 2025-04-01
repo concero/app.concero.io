@@ -25,6 +25,7 @@ type TProps = {
 
 export const QuestPreviewCard = (props: TProps) => {
 	const { size = 's', quest, user, onClick, onClaim } = props
+
 	if (!quest) return null
 
 	const [isHovered, setIsHovered] = useState<boolean>(false)
@@ -47,7 +48,7 @@ export const QuestPreviewCard = (props: TProps) => {
 	}
 
 	const showMetaInfo = size !== 's'
-	const showImage = size !== 's'
+	const showImage = size !== 's' && size !== 'm'
 	const rewardIsClaimed = getIsClaimedQuest(quest._id, user)
 	const isDone = getIsDoneQuest(quest, user)
 	return (
