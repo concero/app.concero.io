@@ -11,7 +11,7 @@ export const Banners = () => {
 	const { address } = useAccount()
 	const isAdmin = isAdminAddress(address)
 	const { data: isShowCersEidi } = useCheckCersEidi({ address })
-	const { mutateAsync } = useClaimCersEidiMutation()
+	const { mutateAsync, isPending } = useClaimCersEidiMutation()
 	if (!isAdmin) return null
 	const handleLancaClick = () => {
 		window.open('https://app.lanca.io', '_blank')
@@ -64,7 +64,18 @@ export const Banners = () => {
 							<span className={cls.description}>Given by your beloved Lancan Intern </span>
 						</div>
 					</div>
-					<Button variant="primary" size="m" className={cls.btn} onClick={handleClaimCersEidi}>
+					<Button
+						variant="primary"
+						size="m"
+						className={cls.btn}
+						buttonProps={{
+							style: {
+								width: 'auto',
+							},
+						}}
+						onClick={handleClaimCersEidi}
+						isLoading={isPending}
+					>
 						Claim
 					</Button>
 				</Banner>
