@@ -10,8 +10,8 @@ import { useCheckCersEidi, useClaimCersEidiMutation } from '../../api/SocialApi'
 export const Banners = () => {
 	const { address } = useAccount()
 	const isAdmin = isAdminAddress(address)
-	const { data: isShowCersEidi } = useCheckCersEidi({ address })
-	const { mutateAsync, isPending } = useClaimCersEidiMutation()
+	const { data: isShowCersEidi, isFetching } = useCheckCersEidi({ address })
+	const { mutateAsync, isPending, isSuccess } = useClaimCersEidiMutation()
 	if (!isAdmin) return null
 	const handleLancaClick = () => {
 		window.open('https://app.lanca.io', '_blank')
@@ -74,7 +74,8 @@ export const Banners = () => {
 							},
 						}}
 						onClick={handleClaimCersEidi}
-						isLoading={isPending}
+						isLoading={isPending || isFetching}
+						isDisabled={isSuccess}
 					>
 						Claim
 					</Button>
