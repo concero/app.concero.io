@@ -7,16 +7,15 @@ import { useEffect } from 'react'
 import { I18Provider } from './i18n/I18nextProvider'
 import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { queryClient } from './shared/api/tanstackClient'
 
 function App() {
 	useEffect(() => {
 		initPosthog()
 		bigNumberSettings()
 	}, [])
-
-	const queryClient = new QueryClient()
 
 	return (
 		<PostHogProvider>

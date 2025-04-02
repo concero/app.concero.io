@@ -3,6 +3,7 @@ import { get, post } from '@/api/client'
 import { TApiGetResponse, TApiResponse } from '@/shared/types/api'
 import { Address } from 'viem'
 import { invalidationTagUser } from '@/entities/User'
+import { queryClient } from '@/shared/api/tanstackClient'
 
 const socialService = {
 	checkCersEidi: async ({ address }: { address: Address }) => {
@@ -43,11 +44,11 @@ export const useCheckCersEidi = (args: { address?: Address }) => {
 }
 
 export const useClaimCersEidiMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: ({ address }: { address: Address }) => socialService.claimCersEidi({ address }),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation, invalidationTagUser] })
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [invalidationTagUser] })
 		},
 	})
 }

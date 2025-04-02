@@ -7,13 +7,11 @@ import cls from './Banners.module.pcss'
 import { useAccount } from 'wagmi'
 import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 import { useCheckCersEidi, useClaimCersEidiMutation } from '../../api/SocialApi'
-
 export const Banners = () => {
 	const { address } = useAccount()
 	const isAdmin = isAdminAddress(address)
 	const { data: isShowCersEidi } = useCheckCersEidi({ address })
-	const { mutate } = useClaimCersEidiMutation()
-
+	const { mutateAsync } = useClaimCersEidiMutation()
 	if (!isAdmin) return null
 	const handleLancaClick = () => {
 		window.open('https://app.lanca.io', '_blank')
@@ -23,7 +21,7 @@ export const Banners = () => {
 	}
 	const handleClaimCersEidi = () => {
 		if (address) {
-			mutate({ address })
+			mutateAsync({ address })
 		}
 	}
 	return (
