@@ -41,6 +41,10 @@ const getQuestInfo = (action: IUserAction<EActionType.questReward>) => {
 	const { name } = action.data as IUserActionQuestData
 	return <span className={cls.title}>Quest completed: {name}</span>
 }
+const getSpecialRewardInfo = (action: IUserAction<EActionType.specialReward>) => {
+	const { name } = action.data as { name: string }
+	return <span className={cls.title}>Quest completed: {name}</span>
+}
 
 export const UserAction = ({ action }: UserActionProps) => {
 	const getValue = (): string | JSX.Element => {
@@ -53,8 +57,7 @@ export const UserAction = ({ action }: UserActionProps) => {
 				return getActionInfo(action as IUserAction<EActionType.transactionReward>)
 			case EActionType.specialReward:
 				//TODO: Improve type
-				const { name } = action.data as IUserActionQuestData
-				return name
+				return getSpecialRewardInfo(action as IUserAction<EActionType.specialReward>)
 			default:
 				return ''
 		}
