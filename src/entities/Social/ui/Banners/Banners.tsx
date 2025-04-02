@@ -13,7 +13,6 @@ export const Banners = () => {
 	const isAdmin = isAdminAddress(address)
 	const { data: isShowCersEidi } = useCheckCersEidi({ address })
 	const { mutate } = useClaimCersEidiMutation()
-	console.log('isShowCersEidi:', isShowCersEidi)
 
 	if (!isAdmin) return null
 	const handleLancaClick = () => {
@@ -31,7 +30,9 @@ export const Banners = () => {
 		<div className={cls.banners_wrap}>
 			<Banner className={cls.lanca_banner_wrap}>
 				<div className={cls.heading_wrap_with_icon}>
-					<LancaIcon />
+					<div className={cls.wrap_icon}>
+						<LancaIcon />
+					</div>
 					<div className={cls.heading_wrap}>
 						<span className={cls.title}>Lanca</span>
 						<span className={cls.description}>Swap, and earn CERs </span>
@@ -41,9 +42,11 @@ export const Banners = () => {
 					Swap
 				</Button>
 			</Banner>
-			<Banner className={cls.testnet_banner_wrap}>
+			{/* <Banner className={cls.testnet_banner_wrap}>
 				<div className={cls.heading_wrap_with_icon}>
-					<ConceroIcon />
+					<div className={cls.wrap_icon}>
+						<ConceroIcon />
+					</div>
 					<div className={cls.heading_wrap}>
 						<span className={cls.title}>Concero Testnet is live!</span>
 					</div>
@@ -51,11 +54,13 @@ export const Banners = () => {
 				<Button variant="primary" size="m" className={cls.btn} onClick={handleTestnetClick}>
 					Open Testnet
 				</Button>
-			</Banner>
+			</Banner> */}
 			{isShowCersEidi && (
 				<Banner className={cls.testnet_banner_wrap}>
 					<div className={cls.heading_wrap_with_icon}>
-						<CersEidiIcon />
+						<div className={cls.wrap_icon}>
+							<CersEidiIcon />
+						</div>
 						<div className={cls.heading_wrap}>
 							<span className={cls.title}>CERs Eidi</span>
 							<span className={cls.description}>Given by your beloved Lancan Intern </span>
