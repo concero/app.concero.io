@@ -61,6 +61,7 @@ export const QuestPreviewItem = (props: TProps) => {
 			</Modal>
 		)
 	}
+
 	return (
 		<>
 			<QuestPreviewCard

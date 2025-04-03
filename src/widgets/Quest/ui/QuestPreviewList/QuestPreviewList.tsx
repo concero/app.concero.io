@@ -1,23 +1,54 @@
-import { useAccount } from 'wagmi'
-import { TQuestTag, useQuests, useTestingQuests } from '@/entities/Quest'
-import { useUserByAddress } from '@/entities/User'
-import cls from './QuestPreviewList.module.pcss'
-import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
-import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Button } from '@concero/ui-kit'
+import { useAccount } from 'wagmi'
+import { TQuestTag, TQuestSize, TQuestType, useAllQuests } from '@/entities/Quest'
+import { useUserByAddress } from '@/entities/User'
+import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
+import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
+import cls from './QuestPreviewList.module.pcss'
+
+type WithoutUndefined<T> = T extends undefined ? never : T
 
 export const QuestPreviewList = (): JSX.Element => {
-	const { data: quests } = useQuests()
-	const { data: testingQuests } = useTestingQuests()
+	const { data: quests, isFetching } = useAllQuests()
 	const account = useAccount()
 	const { data: user } = useUserByAddress(account.address)
-	const [viewMode, setViewMode] = useState<TQuestTag>('rewards')
+	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
 		setViewMode(mode)
 	}
-	const listQuests = viewMode === 'rewards' ? quests : testingQuests
+	const sizeMap: Record<TQuestType, TQuestSize> = {
+		Big: 'xl',
+		Campaign: 'xl',
+		Daily: 's',
+		Monthly: 'xl',
+		Primary: 'l',
+		Secondary: 'm',
+	}
+	// groupByView
+	const groupedQuests = useMemo(
+		() => quests?.filter(q => (q?.tag ? q.tag === viewMode : viewMode === 'rewards')),
+		[viewMode, isFetching],
+	)
+	const quest_size_m = useMemo(() => {
+		return groupedQuests
+			?.filter(q => (q.size ? q.size === 'm' : sizeMap[q.type] == 'm'))
+			.toSorted((a, b) => (b?.priority || 0) - (a?.priority || 0))
+	}, [isFetching, groupedQuests])
+	const quest_size_l = useMemo(() => {
+		return groupedQuests
+			?.filter(q => (q.size ? q.size === 'l' : sizeMap[q.type] == 'l'))
+			.toSorted((a, b) => (b?.priority || 0) - (a?.priority || 0))
+	}, [isFetching, groupedQuests])
+	const quest_size_xl = useMemo(() => {
+		return groupedQuests
+			?.filter(q => (q.size ? q.size === 'xl' : sizeMap[q.type] == 'xl'))
+			.toSorted((a, b) => {
+				return (b?.priority || 0) - (a?.priority || 0)
+			})
+	}, [isFetching, groupedQuests])
+
 	return (
 		<div className={cls.quest_preview_list}>
 			<div className={cls.header_list}>
@@ -29,7 +60,7 @@ export const QuestPreviewList = (): JSX.Element => {
 						onClick={() => handleViewModeChange('rewards')}
 						className={viewMode == 'rewards' ? cls.selected : ''}
 					>
-						On Chain
+						Rewards
 					</Button>
 					<Button
 						variant={viewMode == 'testing' ? 'secondary_color' : 'secondary'}
@@ -54,23 +85,23 @@ export const QuestPreviewList = (): JSX.Element => {
 				</div>
 			) : null}
 			<div className={cls.list}>
-				{listQuests?.Monthly ? (
-					<div className={cls.monthly}>
-						{listQuests.Monthly.map(quest => (
+				{quest_size_xl ? (
+					<div className={cls.size_xl}>
+						{quest_size_xl.map(quest => (
 							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="xl" />
 						))}
 					</div>
 				) : null}
-				{listQuests?.Primary ? (
-					<div className={cls.primary}>
-						{listQuests.Primary.map(quest => (
+				{quest_size_l ? (
+					<div className={cls.size_l}>
+						{quest_size_l.map(quest => (
 							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="l" />
 						))}
 					</div>
 				) : null}
-				{listQuests?.Secondary ? (
-					<div className={cls.secondary}>
-						{listQuests.Secondary.map(quest => (
+				{quest_size_m ? (
+					<div className={cls.size_m}>
+						{quest_size_m.map(quest => (
 							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="m" />
 						))}
 					</div>

@@ -39,8 +39,9 @@ export const IQuestStepZod = z.object({
 	order: z.number().optional(),
 	optional: z.boolean().optional(),
 })
-const questTags = ['rewards', 'testing'] as const
-export type TTagQuest = (typeof questTags)[number]
+export const questTags = ['rewards', 'testing'] as const
+
+export const questSizes = ['s', 'm', 'l', 'xl'] as const
 
 export const IQuestZod = z.object({
 	_id: z.string(),
@@ -57,6 +58,8 @@ export const IQuestZod = z.object({
 		role: z.boolean().optional(),
 	}),
 	type: QuestTypeZod,
+	priority: z.number().optional(),
+	size: z.enum(questSizes).optional(),
 	category: QuestCategoryZod,
 	userAction: z.any().optional(),
 	tag: z.enum(questTags).optional(),
