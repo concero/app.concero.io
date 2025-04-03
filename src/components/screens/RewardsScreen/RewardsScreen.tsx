@@ -10,6 +10,7 @@ import { DailyTaskList } from '@/features/Quest'
 import { QuestPreviewList } from '@/widgets/Quest'
 import { LoginRequired } from '@/features/Auth'
 import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
+import { Banners } from '@/entities/Social'
 
 interface Props {
 	user: TUserResponse | null
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export const RewardsScreen = ({ user, loading }: Props) => {
-	const { isConnected, address } = useAccount()
+	const { isConnected } = useAccount()
 	if (config.REWARD_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
@@ -32,6 +33,7 @@ export const RewardsScreen = ({ user, loading }: Props) => {
 		<PageWrap>
 			<div className={classNames.rewardsScreenContainer}>
 				<div className={classNames.rewardsWrapper}>
+					<Banners />
 					{isConnected &&
 						(loading ? (
 							<>

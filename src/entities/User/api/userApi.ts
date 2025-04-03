@@ -13,6 +13,7 @@ import {
 import { updateUserDiscord, updateUserTwitter } from '@/api/concero/user/updateUser'
 import { config } from '@/constants/config'
 import { TApiGetResponse, TApiResponse, TPaginationParams } from '@/shared/types/api'
+import { queryClient } from '@/shared/api/tanstackClient'
 
 //--------------------------------Domain
 export const userServiceApi = {
@@ -181,8 +182,6 @@ export const socialsService = {
 const tagInvalidation = 'user'
 
 export const useCreateUserMutation = () => {
-	const queryClient = useQueryClient()
-
 	return useMutation({
 		mutationFn: (address: Address) => userServiceApi.createUser(address),
 		onSuccess: () => {
@@ -201,7 +200,6 @@ export const useUserByAddress = (address?: Address) => {
 }
 
 export const useAddQuestToProgressMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (payload: { address: string; questId: string }) =>
 			userServiceApi.addQuestToProgress(payload.address, payload.questId),
@@ -212,7 +210,6 @@ export const useAddQuestToProgressMutation = () => {
 }
 
 export const useRemoveQuestFromProgressMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (payload: { address: string; questId: string }) =>
 			userServiceApi.removeQuestFromProgress(payload.address, payload.questId),
@@ -223,8 +220,6 @@ export const useRemoveQuestFromProgressMutation = () => {
 }
 
 export const useAddStepInProgressMutation = () => {
-	const queryClient = useQueryClient()
-
 	return useMutation({
 		mutationFn: (payload: { address: string; questId: string; stepId: string }) =>
 			userServiceApi.addStepInProgress(payload.address, payload.questId, payload.stepId),
@@ -237,8 +232,6 @@ export const useAddStepInProgressMutation = () => {
 	})
 }
 export const useUpdateNicknameMutation = () => {
-	const queryClient = useQueryClient()
-
 	return useMutation<void, AxiosResponse<TApiResponse<void, NicknameError, false>>, TUpdateNicknameArgs>({
 		mutationFn: (payload: TUpdateNicknameArgs) => userServiceApi.updateNickname(payload),
 		onSuccess: () => {
@@ -257,7 +250,6 @@ export const useUserVolume = (options?: TUserVolumeArgs) => {
 }
 
 export const useAcceptTermsMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (arg: TAcceptTerms) => userServiceApi.acceptTerms(arg.address),
 		onSuccess: () => {
@@ -267,7 +259,6 @@ export const useAcceptTermsMutation = () => {
 }
 
 export const useSendEmailMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (arg: { address: Address; email: string }) => socialsService.sendEmail(arg.address, arg.email),
 		onSuccess: () => {
@@ -276,7 +267,6 @@ export const useSendEmailMutation = () => {
 	})
 }
 export const useVerifyOTPMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (arg: { address: Address; otp: string }) => socialsService.verifyOTP(arg.address, arg.otp),
 		onSuccess: () => {
@@ -285,7 +275,6 @@ export const useVerifyOTPMutation = () => {
 	})
 }
 export const useDisconnectSocialNetworkMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (arg: { address: Address; network: TUserSocialNetworkType }) =>
 			socialsService.disconnectNetwork(arg.address, arg.network),
@@ -295,7 +284,6 @@ export const useDisconnectSocialNetworkMutation = () => {
 	})
 }
 export const useDisconnectEmailMutation = () => {
-	const queryClient = useQueryClient()
 	return useMutation({
 		mutationFn: (arg: { address: Address }) => socialsService.disconnectEmail(arg.address),
 		onSuccess: () => {
