@@ -40,7 +40,7 @@ export const ProfilePage = (props: TProps) => {
 	const Social_Email_toShow = user.email ?? '-'
 	return (
 		<PageWrap className={cls.container}>
-			{isAdmin ? <Banners /> : null}
+			<Banners />
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>
 					<div className={cls.roles}></div>

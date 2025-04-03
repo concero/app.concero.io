@@ -12,7 +12,6 @@ export const Banners = () => {
 	const isAdmin = isAdminAddress(address)
 	const { data: isShowCersEidi, isFetching } = useCheckCersEidi({ address })
 	const { mutateAsync, isPending, isSuccess } = useClaimCersEidiMutation()
-	if (!isAdmin) return null
 	const handleLancaClick = () => {
 		window.open('https://app.lanca.io', '_blank')
 	}
