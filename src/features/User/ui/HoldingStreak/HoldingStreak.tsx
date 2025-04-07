@@ -1,11 +1,12 @@
 import clsx from 'clsx'
-import cls from './HoldingStreak.module.pcss'
+import { Button, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
 import { TooltipWrapper } from '@/components/layout/WithTooltip/TooltipWrapper'
 import { StreakTooltip } from '@/components/rewards/StreaksCard/StreakTooltip/StreakTooltip'
 import { InfoIcon } from '../../../../assets/icons/InfoIcon'
 import TrophyIcon from '@/shared/assets/icons/monochrome/Trophy.svg?react'
-import { Button, Tag } from '@concero/ui-kit'
+import LpHoldingStreak from '@/shared/assets/images/streaks/holding_placeholder.png'
+import cls from './HoldingStreak.module.pcss'
 
 type TProps = {
 	className?: string
@@ -32,24 +33,35 @@ export const HoldingStreak = (props: TProps) => {
 					</TooltipWrapper>
 				</div>
 			</div>
-			<div className={cls.wrap_with_days}>
-				<div className={cls.streak_head_wrap}>
-					<div className={cls.title_counter_month}>1st month</div>
-					<div className={cls.reward_wrap}>
-						<div className={cls.reward_text}>Reward</div>
-						<Tag size="s" variant="neutral">
-							2x
-						</Tag>
+			{user ? (
+				<div className={cls.wrap_with_days}>
+					<div className={cls.streak_head_wrap}>
+						<div className={cls.title_counter_month}>1st month</div>
+						<div className={cls.reward_wrap}>
+							<div className={cls.reward_text}>Reward</div>
+							<Tag size="s" variant="neutral">
+								2x
+							</Tag>
+						</div>
+					</div>
+					<div className={cls.streak_progress_wrap}>
+						<div className={cls.progress_days}>
+							<span className={cls.current_days_number}>3&nbsp;</span>
+							<span>&nbsp;/ 30 days</span>
+						</div>
+						<div className={cls.progress_grid_days}>
+							{user ? (
+								<>USer</>
+							) : (
+								<img width={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
+							)}
+						</div>
 					</div>
 				</div>
-				<div className={cls.streak_progress_wrap}>
-					<div className={cls.progress_days}>
-						<span className={cls.current_days_number}>3&nbsp;</span>
-						<span>&nbsp;/ 30 days</span>
-					</div>
-					<div className={cls.progress_grid_days}></div>
-				</div>
-			</div>
+			) : (
+				<img width={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
+			)}
+
 			<div className={cls.wrap_support_text}>
 				<TrophyIcon className={cls.trophy_icon} />
 				<div className={cls.wrap_text}>

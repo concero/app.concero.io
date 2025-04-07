@@ -49,7 +49,7 @@ export const RewardsPage = ({ user, loading }: Props) => {
 										flexDirection: 'row',
 									}}
 								>
-									<HoldingStreak user={user} />
+									<HoldingStreak user={undefined} />
 									<SwappingStreak user={user} />
 								</div>
 							)

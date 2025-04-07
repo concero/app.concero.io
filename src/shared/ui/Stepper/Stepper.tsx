@@ -17,9 +17,10 @@ const StepItem = ({ variant = 'default' }: TStepItemProps) => {
 	return <div className={clsx(cls.step_item, variantMap[variant])}></div>
 }
 
-
 type TProps = {
-    currentProgress: 
+	currentProgress: number
+	max: number
+	
 }
 
 export const Stepper = () => {}
