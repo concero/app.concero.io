@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { optional, z } from 'zod'
 
 export const OnChainSourceZod = z.enum(['INFRA', 'POOL'])
 
@@ -63,4 +63,5 @@ export const IQuestZod = z.object({
 	category: QuestCategoryZod,
 	userAction: z.any().optional(),
 	tag: z.enum(questTags).optional(),
+	isNew: z.boolean().optional(),
 })

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import cls from './QuestPreviewItem.module.pcss'
 import { useAccount } from 'wagmi'
 import {
 	categoryQuestNameMap,
@@ -14,6 +13,7 @@ import { getCompletedStepsByQuest, getIsStartedQuest, type TUserResponse } from 
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
 import { Modal } from '@/components/modals/Modal/Modal'
+import cls from './QuestPreviewItem.module.pcss'
 
 type TProps = {
 	quest: TQuest
