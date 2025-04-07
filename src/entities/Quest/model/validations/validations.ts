@@ -4,7 +4,7 @@ export const OnChainSourceZod = z.enum(['INFRA', 'POOL'])
 
 export const SocialSourceZod = z.enum(['DISCORD', 'TWITTER', 'GOOGLE_FORM'])
 
-export const QuestCategoryZod = z.enum(['Socials', 'OnChain', 'Common'])
+export const QuestCategoryZod = z.enum(['Socials', 'OnChain', 'Common', 'Lanca', 'Testnet'])
 
 export const QuestTypeZod = z.enum(['Campaign', 'Daily', 'Monthly', 'Big', 'Primary', 'Secondary'])
 
