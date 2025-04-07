@@ -4,4 +4,6 @@ export const categoryQuestNameMap: Record<TQuestCategory, string> = {
 	OnChain: 'On-chain',
 	Socials: 'Socials',
 	Common: 'Common',
+	Lanca: 'Lanca',
+	Testnet: 'Testnet',
 }

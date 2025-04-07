@@ -87,7 +87,7 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 			startDate,
 			endDate,
 			isCrossChain: step.options?.isCrossChain,
-			chainIds: step.options?.chainIds,
+			chainIds: step.options?.chainId,
 		})
 		const handleSwap = () => {
 			window.open(config.lancanURL, '_blank')
