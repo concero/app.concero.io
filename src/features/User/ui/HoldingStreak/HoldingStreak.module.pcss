@@ -1,0 +1,113 @@
+.lp_main_wrap {
+	display: flex;
+	height: 391px;
+	padding: var(--space-m);
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-m);
+	align-self: stretch;
+	border-radius: var(--space-m);
+	background: var(--color-gray-25);
+	width: 300px;
+	.head_wrap {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		.title {
+			color: var(--color-gray-700);
+			font: var(--font-heading-large);
+		}
+		.swap_tooltip {
+		}
+	}
+	.wrap_with_days {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xs);
+		flex: 1 0 0;
+		align-self: stretch;
+		.streak_head_wrap {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row;
+			height: 20px;
+			align-items: center;
+			align-self: stretch;
+			.title_counter_month {
+				color: var(--color-gray-600);
+				font: var(--font-heading-medium);
+			}
+			.reward_wrap {
+				display: flex;
+				flex-direction: row;
+				height: 18px;
+				align-items: center;
+				gap: var(--space-xs);
+				.reward_text {
+					color: var(--color-gray-600);
+					font: var(--font-body-medium);
+				}
+			}
+		}
+		.streak_progress_wrap {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--space-xs);
+			flex: 1 0 0;
+			align-self: stretch;
+			.progress_days {
+				display: flex;
+				flex-direction: row;
+				align-items: flex-end;
+				align-self: stretch;
+				color: var(--color-gray-500);
+				font: var(--font-heading-medium);
+				.current_days_number {
+					color: var(--color-gray-700);
+					font: var(--font-heading-xlarge);
+				}
+			}
+			.progress_grid_days {
+			}
+		}
+	}
+	.wrap_support_text {
+		display: flex;
+		align-items: flex-start;
+		flex-direction: row;
+		gap: var(--space-xs);
+		align-self: stretch;
+		width: 100%;
+		.trophy_icon {
+			min-width: 18px !important;
+			height: 18px !important;
+			color: var(--color-accent-600);
+		}
+		.wrap_text {
+			display: block;
+			width: 100%;
+			.hold_text {
+				color: var(--color-gray-700);
+				font: var(--font-body-medium);
+			}
+			.text {
+				color: var(--color-gray-600);
+				font: var(--font-body-medium);
+			}
+			.text_cers {
+				color: var(--color-accent-700);
+				font: var(--font-heading-small);
+			}
+		}
+	}
+	.provide_btn {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+}

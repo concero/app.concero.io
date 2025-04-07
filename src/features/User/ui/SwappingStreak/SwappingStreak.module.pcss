@@ -1,0 +1,46 @@
+.swapping_streak_wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-m);
+	padding: var(--space-m);
+	flex: 1 0 0;
+	border-radius: var(--space-l);
+	background: var(--color-gray-25);
+
+	.title_wrap {
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row;
+		align-items: center;
+		align-self: stretch;
+		height: 22px;
+		.title {
+			color: var(--color-gray-700);
+			font: var(--font-heading-large);
+		}
+		.icon {
+		}
+	}
+	.current_value_wrap {
+	}
+	.progress_value_wrap {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xs);
+		align-self: stretch;
+        .progress_days {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            align-self: stretch;
+            color: var(--color-gray-500);
+            font: var(--font-heading-medium);
+            .current_days_number {
+                color: var(--color-gray-700);
+                font: var(--font-heading-xlarge);
+            }
+        }
+	}
+}

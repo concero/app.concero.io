@@ -1,3 +1,5 @@
+export { HoldingStreak } from './ui/HoldingStreak/HoldingStreak'
+
 export { DISCORD_LINK_AUTH } from '../../entities/User/config/consts/discordLink'
 
 export { AccoutSettings } from './ui/AccoutSettings/AccoutSettings'
