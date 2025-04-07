@@ -31,7 +31,7 @@ export const IQuestStepZod = z.object({
 			link: z.string().optional(),
 			value: z.string().optional(),
 			isCrossChain: z.boolean().optional(),
-			chainIds: z.array(z.string()).optional(),
+			chainId: z.array(z.string()).optional(),
 		})
 		.optional(),
 	category: QuestCategoryZod,
