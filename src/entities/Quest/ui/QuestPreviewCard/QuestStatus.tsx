@@ -1,10 +1,10 @@
 import { TQuestType } from '../../model/types/schema'
-import { Tag } from '@/components/layout/Tag/Tag'
 import dayjs from 'dayjs'
 import { normalizeEndDate } from '../../model/lib/normalizeEndDate'
 import { getQuestDaysLeft } from '../../model/lib/getQuestDaysLeft'
 import { TUserResponse } from '@/entities/User/model/types/response'
 import { TQuest } from '../../model/types/response'
+import { Tag } from '@concero/ui-kit'
 
 export const getDateUnitMap = (type: TQuestType) => {
 	if (type === 'Daily') return 'day'
@@ -27,14 +27,13 @@ export const QuestStatus = ({ quest, isClaimed, questsInProgress }: Props) => {
 		: []
 	const completedStepIds = questInProgress ?? []
 	const isStarted = completedStepIds.length > 0
-	const isOpQuest = name === 'Lancan OP' //                           ------------ IS TEMP ROW !!!
 	const normalizedEndDate = normalizeEndDate(endDate)
 	const normalizedStartDate = normalizeEndDate(startDate)
 	const readyToClaim = completedStepIds.length === steps.length
-	const isNewQuest = isOpQuest && dayjs().diff(dayjs(normalizedStartDate), 'day') <= 7 //------------ isOpQuest IS TEMP !!!
+	const isNewQuest = quest.isNew && dayjs().diff(dayjs(normalizedStartDate), 'day') <= 7
 	const daysLeft = getQuestDaysLeft(normalizedEndDate)
 	const dayText = daysLeft > 1 ? 'days' : 'day'
-	const isRepeat = isOpQuest ? false : !!getDateUnitMap(questType)
+	const isRepeat = !!getDateUnitMap(questType)
 	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} ${isRepeat ? 'to reset' : 'left'}`
 
 	let status = `${isStarted ? 'Started, ' : ''} ${daysLeftText}`
@@ -55,11 +54,11 @@ export const QuestStatus = ({ quest, isClaimed, questsInProgress }: Props) => {
 	return (
 		<div className="row gap-xs">
 			{isNewQuest && (
-				<Tag size="sm" variant={'branded'}>
-					New
+				<Tag size="s" variant={'branded'}>
+					New!
 				</Tag>
 			)}
-			<Tag size="sm" variant={variant}>
+			<Tag size="s" variant={variant}>
 				{status}
 			</Tag>
 		</div>

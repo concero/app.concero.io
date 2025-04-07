@@ -2,9 +2,7 @@ import { config } from '@/constants/config'
 import cls from './QuestCard.module.pcss'
 import { ConnectWallet } from '@/features/Auth'
 import { TQuest, TQuestCardStatus } from '@/entities/Quest'
-import { QuestStepGroup } from '@/features/Quest'
-import { ClaimReward } from '@/features/Quest'
-import { StartQuest } from '@/features/Quest'
+import { QuestStepGroup, ClaimReward, StartQuest } from '@/features/Quest'
 
 type TProps = {
 	quest: TQuest
