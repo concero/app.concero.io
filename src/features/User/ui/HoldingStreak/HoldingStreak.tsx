@@ -7,6 +7,7 @@ import { InfoIcon } from '../../../../assets/icons/InfoIcon'
 import TrophyIcon from '@/shared/assets/icons/monochrome/Trophy.svg?react'
 import LpHoldingStreak from '@/shared/assets/images/streaks/holding_placeholder.png'
 import cls from './HoldingStreak.module.pcss'
+import { Stepper } from '@/shared/ui/Stepper/Stepper'
 
 type TProps = {
 	className?: string
@@ -51,7 +52,7 @@ export const HoldingStreak = (props: TProps) => {
 						</div>
 						<div className={cls.progress_grid_days}>
 							{user ? (
-								<>USer</>
+								<Stepper currentProgress={20} isDanger />
 							) : (
 								<img width={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
 							)}

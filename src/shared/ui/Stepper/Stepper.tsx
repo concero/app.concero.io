@@ -19,8 +19,35 @@ const StepItem = ({ variant = 'default' }: TStepItemProps) => {
 
 type TProps = {
 	currentProgress: number
-	max: number
-	
+	max?: number
+	isDanger?: boolean
 }
 
-export const Stepper = () => {}
+export const Stepper = ({ currentProgress, isDanger, max = 28 }: TProps) => {
+	const rows = Math.ceil(max / 7)
+
+	return (
+		<div className={cls.stepper_grid}>
+			{Array.from({ length: rows }).map((_, rowIndex) => (
+				<div key={rowIndex} className={cls.stepper_row}>
+					{Array.from({ length: 7 }).map((_, cellIndex) => {
+						const index = rowIndex * 7 + cellIndex + 1
+						if (index > max) return null
+						let variant: TStepVariant = 'default'
+						if (index < currentProgress) {
+							variant = 'complited'
+						} else if (index === currentProgress) {
+							if (isDanger) {
+								variant = 'danger'
+							} else {
+								variant = 'current_active'
+							}
+						}
+
+						return <StepItem key={cellIndex} variant={variant} />
+					})}
+				</div>
+			))}
+		</div>
+	)
+}

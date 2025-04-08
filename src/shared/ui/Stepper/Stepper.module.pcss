@@ -1,5 +1,5 @@
 .step_item {
-	width: 40px;
+	min-width: 10px;
 	height: 40px;
 	border-radius: var(--space-s);
 	&.default {
@@ -17,4 +17,16 @@
 	&.danger {
 		background-color: var(--color-danger-500);
 	}
+}
+.stepper_grid {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xxs);
+	width: 100%;
+}
+
+.stepper_row {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: var(--space-xxs);
 }
