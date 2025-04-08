@@ -40,7 +40,7 @@ export const config = {
 
 	// POOLS & LP
 	POOL_IS_NOT_AVAILABLE: false,
-	REWARD_IS_NOT_AVAILABLE: false,
+	REWARD_IS_NOT_AVAILABLE: true,
 
 	AUTOMATION_ADDRESS: IS_TESTNET ? automationsBaseSepolia : automationsBase,
 	LPTOKEN: IS_TESTNET ? lpTokenBaseSepolia : lpTokenBase,
