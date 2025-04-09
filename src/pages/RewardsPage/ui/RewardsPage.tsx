@@ -35,12 +35,10 @@ export const RewardsPage = ({ user, loading }: Props) => {
 			<div className={cls.rewards_screen_container}>
 				<div className={cls.rewards_wrapper}>
 					<Banners />
-					{user && (
-						<div className={cls.streak_wrap}>
-							<SwappingStreak user={undefined} />
-							<HoldingStreak user={undefined} />
-						</div>
-					)}
+					<div className={cls.streak_wrap}>
+						<SwappingStreak user={undefined} />
+						<HoldingStreak user={undefined} />
+					</div>
 					<DailyTaskList />
 					<QuestPreviewList />
 				</div>
