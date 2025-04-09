@@ -1,4 +1,4 @@
-.rewardsScreenContainer {
+.rewards_screen_container {
 	min-height: 100vh;
 	justify-content: space-between;
 	align-items: center;
@@ -7,38 +7,18 @@
 	padding-top: var(--sp-xxl);
 }
 
-.rewardsWrapper {
+.rewards_wrapper {
 	max-width: 600px;
 	width: 100%;
 	gap: var(--sp-xxl);
 }
-
-.infoTitle {
-	position: relative;
-	text-align: center;
-	margin-bottom: 60px;
-	z-index: 1;
-
-	h5 {
-		color: var(--color-primary-450);
-	}
-
-	span {
-		color: var(--color-primary-600);
-		font-size: 0.775rem;
-		font-weight: normal;
-	}
-
-	&:after {
-		content: ' ';
-		z-index: -1;
-		position: absolute;
-		background: var(--color-primary-750);
-		filter: blur(15px);
-		top: -20px;
-		left: 30%;
-		width: 200px;
-		height: 100px;
-		border-radius: 50%;
+.streak_wrap {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	gap: 16px;
+	align-self: stretch;
+	& > div {
+		width: 50%;
 	}
 }

@@ -18,7 +18,11 @@ const request = async <TResponse extends unknown>(options: AxiosRequestConfig) =
 	}
 }
 
-export const get = async <TResponse extends unknown>(url: string, params?: any, headers?: any) =>
+export const get = async <TResponse extends unknown>(
+	url: string,
+	params?: AxiosRequestConfig['params'],
+	headers?: AxiosRequestConfig['headers'],
+) =>
 	await request<TResponse>({
 		url,
 		method: 'GET',

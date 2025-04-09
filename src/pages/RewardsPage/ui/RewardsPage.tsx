@@ -25,7 +25,7 @@ export const RewardsPage = ({ user, loading }: Props) => {
 	}
 	if (!isConnected) {
 		return (
-			<div className={cls.rewardsScreenContainer}>
+			<div className={cls.rewards_screen_container}>
 				<LoginRequired />
 			</div>
 		)
@@ -33,7 +33,7 @@ export const RewardsPage = ({ user, loading }: Props) => {
 	return (
 		<PageWrap>
 			<div className={cls.rewardsScreenContainer}>
-				<div className={cls.rewardsWrapper}>
+				<div className={cls.rewards_wrapper}>
 					<Banners />
 					{isConnected &&
 						(loading ? (
@@ -43,14 +43,9 @@ export const RewardsPage = ({ user, loading }: Props) => {
 							</>
 						) : (
 							user && (
-								<div
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-									}}
-								>
-									<HoldingStreak user={user} />
+								<div className={cls.streak_wrap}>
 									<SwappingStreak user={user} />
+									<HoldingStreak user={user} />
 								</div>
 							)
 						))}

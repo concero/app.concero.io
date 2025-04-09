@@ -49,4 +49,10 @@ export const config = {
 	CHILD_POOL_POLYGON: childPoolPolygon,
 	CHILD_POOL_AVALANCHE: IS_TESTNET ? childPoolAvalancheFuji : childPoolAvalanche,
 	CHILD_POOL_OPTIMISM: childPoolOptimism,
+
+	/* Next lines copied from webapp */
+	CHILD_POOLS_COUNT: 5,
+	IS_TESTNET: false,
+	APP_IS_NOT_AVAILABLE: false,
+	POOLS_ARE_NOT_AVAILABLE: false,
 }
