@@ -32,7 +32,7 @@ export const RewardsPage = ({ user, loading }: Props) => {
 	}
 	return (
 		<PageWrap>
-			<div className={cls.rewardsScreenContainer}>
+			<div className={cls.rewards_screen_container}>
 				<div className={cls.rewards_wrapper}>
 					<Banners />
 					{isConnected &&

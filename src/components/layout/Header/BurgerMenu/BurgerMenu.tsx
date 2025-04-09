@@ -65,6 +65,7 @@ export function BurgerMenu({ user }: Props) {
 		},
 		from: {
 			opacity: 0,
+			zIndex: -10,
 			pointerEvents: 'none' as const,
 		},
 	})
@@ -73,6 +74,8 @@ export function BurgerMenu({ user }: Props) {
 		to: {
 			opacity: isMenuOpened ? 1 : 0,
 			pointerEvents: isMenuOpened ? 'auto' : ('none' as const),
+
+			zIndex: isMenuOpened ? 'initial' : -10,
 		},
 		config: {
 			mass: 1,
@@ -81,6 +84,7 @@ export function BurgerMenu({ user }: Props) {
 		},
 		from: {
 			opacity: 0,
+			zIndex: -10,
 			pointerEvents: 'none' as const,
 		},
 	})
