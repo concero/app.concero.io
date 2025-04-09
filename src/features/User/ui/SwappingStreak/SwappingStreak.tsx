@@ -10,6 +10,8 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import clsx from 'clsx'
 import { ProgressStepper } from '@/shared/ui/ProgressStepper/ProgressStepper'
+
+import StreakPlaceholder from '@/shared/assets/images/streaks/holding_placeholder.png'
 const swapDescription = 'Perform swaps of at least $50 every day to get a multiplier. '
 const tooltipTitle = 'Daily Swapping Rewards'
 dayjs.extend(utc)
@@ -58,35 +60,39 @@ export const SwappingStreak = (props: TProps) => {
 				</div>
 			</div>
 			<div className={cls.current_value_wrap}>
-				<CircleBar
-					progress={currentVolumePercent}
-					variant={successSwap ? 'success' : dangerTime ? 'danger' : warningTime ? 'warning' : 'default'}
-				>
-					<div className={cls.circle_value_wrap}>
-						{warningTime && (
-							<Tag variant="warning" size="s">
-								{Math.ceil(timeLeft / oneHourInSecond)}h. left
-							</Tag>
-						)}
-						{dangerTime && (
-							<Tag variant="negative" size="s">
-								{Math.ceil(timeLeft / 60)}m. left
-							</Tag>
-						)}
-						{successSwap && (
-							<Tag variant="positive" size="s">
-								Done
-							</Tag>
-						)}
-						<div>
-							<span className={cls.current_progress_text}>{currentVolume}$</span>
-							<div className={cls.current_progress_text_from_wrap}>
-								<span className={cls.separator}>/</span>
-								<span className={cls.from_value}>$50</span>
+				{user ? (
+					<CircleBar
+						progress={currentVolumePercent}
+						variant={successSwap ? 'success' : dangerTime ? 'danger' : warningTime ? 'warning' : 'default'}
+					>
+						<div className={cls.circle_value_wrap}>
+							{warningTime && (
+								<Tag variant="warning" size="s">
+									{Math.ceil(timeLeft / oneHourInSecond)}h. left
+								</Tag>
+							)}
+							{dangerTime && (
+								<Tag variant="negative" size="s">
+									{Math.ceil(timeLeft / 60)}m. left
+								</Tag>
+							)}
+							{successSwap && (
+								<Tag variant="positive" size="s">
+									Done
+								</Tag>
+							)}
+							<div>
+								<span className={cls.current_progress_text}>{currentVolume}$</span>
+								<div className={cls.current_progress_text_from_wrap}>
+									<span className={cls.separator}>/</span>
+									<span className={cls.from_value}>$50</span>
+								</div>
 							</div>
 						</div>
-					</div>
-				</CircleBar>
+					</CircleBar>
+				) : (
+					<img width={'100%'} src={StreakPlaceholder} loading="lazy" alt="Quest image" />
+				)}
 			</div>
 			<Separator />
 			<div className={cls.streak_wrap}>

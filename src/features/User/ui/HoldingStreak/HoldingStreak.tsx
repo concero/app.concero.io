@@ -77,7 +77,7 @@ export const HoldingStreak = (props: TProps) => {
 						<div className={cls.wrap_text}>
 							<span className={cls.hold_text}>Hold a minimum of 100$</span>
 							<span className={cls.text}> for one month to get your</span>
-							<span className={cls.text_cers}>2x CERs multiplier!</span>
+							<span className={cls.text_cers}> 2x CERs multiplier!</span>
 						</div>
 					</>
 				)}
