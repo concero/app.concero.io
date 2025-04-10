@@ -6,8 +6,6 @@ import { QuestPreviewList } from '@/widgets/Quest'
 import { LoginRequired } from '@/features/Auth'
 import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
 import { Banners } from '@/entities/Social'
-import { ProfilePlaceholder } from '@/components/rewards/ProfileCard/ProfilePlaceholder/ProfilePlaceholder'
-import { StreaksPlaceholders } from '@/components/rewards/StreaksCard/StreakCard/StreakPlaceholder/StreakPlaceholder'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
 import { config } from '@/constants/config'
 import { HoldingStreak } from '@/features/User'
@@ -36,8 +34,8 @@ export const RewardsPage = ({ user, loading }: Props) => {
 				<div className={cls.rewards_wrapper}>
 					<Banners />
 					<div className={cls.streak_wrap}>
-						<SwappingStreak user={undefined} />
-						<HoldingStreak user={undefined} />
+						<SwappingStreak user={user} />
+						<HoldingStreak user={user} />
 					</div>
 					<DailyTaskList />
 					<QuestPreviewList />

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Button, Tag } from '@concero/ui-kit'
-import { getCountMonthText, TUserResponse, useGetUserLPBalance } from '@/entities/User'
+import { getCountStreakPeriodText, TUserResponse, useGetUserLPBalance } from '@/entities/User'
 import { TooltipWrapper } from '@/components/layout/WithTooltip/TooltipWrapper'
 import { StreakTooltip } from '@/components/rewards/StreaksCard/StreakTooltip/StreakTooltip'
 import { InfoIcon } from '../../../../assets/icons/InfoIcon'
@@ -10,22 +10,29 @@ import LpHoldingStreak from '@/shared/assets/images/streaks/holding_placeholder.
 import cls from './HoldingStreak.module.pcss'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { Address } from 'viem'
+import { streak_config } from '../../config/streak'
 
 type TProps = {
 	className?: string
-	user?: TUserResponse
+	user: TUserResponse | null
 }
 const lpDescription = 'Hold a minimum of 100$ for one month to get your CERs multiplier reward!'
 const tooltipTitle = 'LP holding Rewards'
 
 export const HoldingStreak = (props: TProps) => {
 	const { className, user } = props
+	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
 	const lpBalance = useGetUserLPBalance(user?.address as Address)
 
-	const showDefaultTip = lpBalance.balance === null || lpBalance.balance === 0 || lpBalance.balance > 100
-	const showWarningTip = lpBalance.balance ? lpBalance.balance > 0 && lpBalance.balance < 100 : false
-	const countMonth = Math.ceil((user?.streak?.liquidityHold || 1) / 28)
-	const monthCounterText = getCountMonthText(countMonth)
+	const showDefaultTip =
+		(user && lpBalance.balance === null) || lpBalance.balance === 0 || (lpBalance.balance || 0) > 100
+	const showWarning = user && lpBalance.balance ? lpBalance.balance > 0 && lpBalance.balance < 100 : false
+	const showWithoutUserTip = !user
+
+	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
+	const monthCounterText = getCountStreakPeriodText(currentStreak)
+	/** Adding one because the current streak has already occurred and is confirmed,
+	 * but we need to display the new day that will be confirmed tonight. */
 	return (
 		<div className={clsx(cls.lp_main_wrap, className)}>
 			<div className={cls.head_wrap}>
@@ -54,20 +61,44 @@ export const HoldingStreak = (props: TProps) => {
 					</div>
 					<div className={cls.streak_progress_wrap}>
 						<div className={cls.progress_days}>
-							<span className={cls.current_days_number}>{user.streak.liquidityHold % 28}&nbsp;</span>
-							<span>&nbsp;/ 28 days</span>
+							<span className={cls.current_days_number}>
+								{currentStreak % currentPeriodStreak == 0
+									? Math.min(currentStreak, currentPeriodStreak)
+									: currentStreak % currentPeriodStreak}
+								&nbsp;
+							</span>
+							<span>&nbsp;/ {currentPeriodStreak} days</span>
 						</div>
-						<div className={cls.progress_grid_days}>
+						<div
+							className={clsx(cls.progress_grid_days, {
+								[cls.progress_grid_days_one_line]: currentStreak <= streak_config.ONE_WEEK,
+							})}
+						>
 							{user ? (
-								<Stepper currentProgress={user.streak.liquidityHold % 28} />
+								<Stepper
+									currentProgress={
+										currentStreak % currentPeriodStreak == 0
+											? Math.min(currentStreak, currentPeriodStreak)
+											: currentStreak % currentPeriodStreak
+									}
+									max={currentPeriodStreak}
+								/>
 							) : (
-								<img width={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
+								<img
+									width={'100%'}
+									height={'100%'}
+									src={LpHoldingStreak}
+									loading="lazy"
+									alt="Quest image"
+								/>
 							)}
 						</div>
 					</div>
 				</div>
 			) : (
-				<img width={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
+				<div className={cls.placeholder_image_wrap}>
+					<img width={'100%'} height={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
+				</div>
 			)}
 
 			<div className={cls.wrap_support_text}>
@@ -81,7 +112,7 @@ export const HoldingStreak = (props: TProps) => {
 						</div>
 					</>
 				)}
-				{showWarningTip && (
+				{showWarning && (
 					<>
 						<WarningIcon className={cls.warning_icon} />
 						<div className={cls.wrap_text}>
@@ -90,8 +121,19 @@ export const HoldingStreak = (props: TProps) => {
 						</div>
 					</>
 				)}
+				{showWithoutUserTip && (
+					<>
+						<Tag variant="branded" size="m">
+							1.5x
+						</Tag>
+						<div className={cls.wrap_text}>
+							<span className={cls.text}>Hold LP for one week to get your </span>
+							<span className={cls.text_cers}>1,5x CERs multiplier!</span>
+						</div>
+					</>
+				)}
 			</div>
-			<Button className={cls.provide_btn} variant="secondary" size="m">
+			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size="m">
 				Provide Liquidity
 			</Button>
 		</div>

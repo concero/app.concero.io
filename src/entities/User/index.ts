@@ -1,4 +1,4 @@
-export { getCountMonthText } from './model/lib/getCountMonthText'
+export { getCountStreakPeriodText } from './model/lib/getCountStreakPeriodText'
 export { useGetUserLPBalance } from './model/hooks/useLPBalanceUser'
 export { useDiscordConnection } from './model/hooks/useDiscordConnection'
 export { useTwitterConnection } from './model/hooks/useTwitterConnection'

@@ -4,7 +4,6 @@
 	align-items: flex-start;
 	gap: var(--space-m);
 	width: 100%;
-	min-width:;
 	padding: var(--space-m);
 	flex: 1 0 0;
 	border-radius: var(--space-l);
@@ -56,6 +55,13 @@
 				}
 			}
 		}
+		.placeholder_image_wrap {
+			display: flex;
+			padding: 25px 6px 24px 5px;
+			justify-content: center;
+			align-items: center;
+			flex: 1 0 0;
+		}
 	}
 	.streak_wrap {
 		display: flex;
@@ -92,6 +98,7 @@
 			align-items: flex-start;
 			gap: var(--space-xs);
 			align-self: stretch;
+			height: 44px;
 			.progress_days {
 				display: flex;
 				flex-direction: row;
@@ -102,6 +109,24 @@
 				.current_days_number {
 					color: var(--color-gray-700);
 					font: var(--font-heading-xlarge);
+				}
+			}
+		}
+
+		.no_user_wrap_tip {
+			display: flex;
+			flex-direction: row;
+			width: 300px;
+			align-items: center;
+			gap: var(--space-xs);
+			.no_user_text_wrap {
+				.no_user_text {
+					color: var(--color-gray-600);
+					font: var(--font-body-large);
+				}
+				.no_user_text_cers {
+					color: var(--color-accent-700);
+					font: var(--font-heading-medium);
 				}
 			}
 		}
