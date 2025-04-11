@@ -27,8 +27,7 @@ export const SwappingStreak = (props: TProps) => {
 
 	const todayStart = dayjs().utc().startOf('day').valueOf()
 	const todayEnd = dayjs().utc().endOf('day').valueOf()
-	// const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
-	const currentVolume = 50
+	const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
 	const currentVolumePercent = Math.min(((currentVolume || 0) / SWAP_VOLUME) * 100, 100)
 	const isNotEnough = (currentVolume || 0) < 50
 	const nowLondon = dayjs().utc().valueOf()
