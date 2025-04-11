@@ -122,15 +122,16 @@ export const HoldingStreak = (props: TProps) => {
 					</>
 				)}
 				{showWithoutUserTip && (
-					<>
+					<div className={cls.no_user_wrap_tip}>
 						<Tag variant="branded" size="m">
 							1.5x
 						</Tag>
-						<div className={cls.wrap_text}>
-							<span className={cls.text}>Hold LP for one week to get your </span>
-							<span className={cls.text_cers}>1,5x CERs multiplier!</span>
+
+						<div className={cls.no_user_text_wrap}>
+							<span className={cls.no_user_text}>Swap for one week to get your</span>
+							<span className={cls.no_user_text_cers}>1,5x CERs multiplier!</span>
 						</div>
-					</>
+					</div>
 				)}
 			</div>
 			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size="m">

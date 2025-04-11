@@ -9,8 +9,11 @@ interface Props {
 export const StreakTooltip = ({ title, description }: Props) => {
 	return (
 		<div className={cls.streak_tooltip_wrap}>
+			<div className={cls.head_wrap}>
+
 			<h6 className={cls.title}>{title}</h6>
 			<p className={`${cls.description} body2`}>{description}</p>
+			</div>
 			<div className={cls.list}>
 				<div className={cls.item}>
 					<span>1st week</span>

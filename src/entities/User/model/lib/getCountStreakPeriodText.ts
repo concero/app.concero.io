@@ -4,7 +4,7 @@ export const getCountStreakPeriodText = (countDays: number) => {
 	if (countDays <= streak_config.ONE_WEEK) {
 		return `1st week`
 	}
-	const countMonth = Math.max(Math.floor(countDays / streak_config.ONE_MONTH), 1)
+	const countMonth = Math.max(Math.ceil(countDays / streak_config.ONE_MONTH), 1)
 
 	const exceptions = [11, 12, 13]
 	const lastDigit = countMonth % 10
