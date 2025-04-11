@@ -10,6 +10,10 @@ import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksS
 import { config } from '@/constants/config'
 import { HoldingStreak } from '@/features/User'
 import { SwappingStreak } from '@/features/User/ui/SwappingStreak/SwappingStreak'
+import { ProfilePlaceholder } from '@/components/rewards/ProfileCard/ProfilePlaceholder/ProfilePlaceholder'
+import { StreaksPlaceholders } from '@/components/rewards/StreaksCard/StreakCard/StreakPlaceholder/StreakPlaceholder'
+import { RewardsProfile } from '@/components/rewards/RewardsProfile/RewardsProfile'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 interface Props {
 	user: TUserResponse | null
@@ -17,7 +21,8 @@ interface Props {
 }
 
 export const RewardsPage = ({ user, loading }: Props) => {
-	const { isConnected } = useAccount()
+	const { isConnected, address } = useAccount()
+	const isAdmin = isAdminAddress(address)
 	if (config.REWARD_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
@@ -33,10 +38,22 @@ export const RewardsPage = ({ user, loading }: Props) => {
 			<div className={cls.rewards_screen_container}>
 				<div className={cls.rewards_wrapper}>
 					<Banners />
-					<div className={cls.streak_wrap}>
-						<SwappingStreak user={user} />
-						<HoldingStreak user={user} />
-					</div>
+					{isAdmin ? (
+						<div className={cls.streak_wrap}>
+							<SwappingStreak user={user} />
+							<HoldingStreak user={user} />
+						</div>
+					) : (
+						isConnected &&
+						(loading ? (
+							<>
+								<ProfilePlaceholder />
+								<StreaksPlaceholders />
+							</>
+						) : (
+							user && <RewardsProfile user={user} />
+						))
+					)}
 					<DailyTaskList />
 					<QuestPreviewList />
 				</div>
