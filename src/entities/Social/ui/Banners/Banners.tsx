@@ -9,20 +9,20 @@ import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 import { useCheckCersEidi, useClaimCersEidiMutation } from '../../api/SocialApi'
 export const Banners = () => {
 	const { address } = useAccount()
-	const isAdmin = isAdminAddress(address)
-	const { data: isShowCersEidi, isFetching } = useCheckCersEidi({ address })
-	const { mutateAsync, isPending, isSuccess } = useClaimCersEidiMutation()
+	// const isAdmin = isAdminAddress(address)
+	// const { data: isShowCersEidi, isFetching } = useCheckCersEidi({ address })
+	// const { mutateAsync, isPending, isSuccess } = useClaimCersEidiMutation()
 	const handleLancaClick = () => {
 		window.open('https://app.lanca.io', '_blank')
 	}
-	const handleTestnetClick = () => {
-		window.open('https://testnet.concero.io', '_blank')
-	}
-	const handleClaimCersEidi = () => {
-		if (address) {
-			mutateAsync({ address })
-		}
-	}
+	// const handleTestnetClick = () => {
+	// 	window.open('https://testnet.concero.io', '_blank')
+	// }
+	// const handleClaimCersEidi = () => {
+	// 	if (address) {
+	// 		mutateAsync({ address })
+	// 	}
+	// }
 	return (
 		<div className={cls.banners_wrap}>
 			<Banner className={cls.lanca_banner_wrap}>
@@ -32,7 +32,7 @@ export const Banners = () => {
 					</div>
 					<div className={cls.heading_wrap}>
 						<span className={cls.title}>Lanca</span>
-						<span className={cls.description}>Swap, and earn CERs </span>
+						<span className={cls.description}>Swap, hold liquidity and earn CERs</span>
 					</div>
 				</div>
 				<Button variant="primary" size="m" className={cls.btn} onClick={handleLancaClick}>
@@ -52,7 +52,7 @@ export const Banners = () => {
 					Open Testnet
 				</Button>
 			</Banner> */}
-			{isShowCersEidi && (
+			{/* {isShowCersEidi && (
 				<Banner className={cls.testnet_banner_wrap}>
 					<div className={cls.heading_wrap_with_icon}>
 						<div className={cls.wrap_icon}>
@@ -79,7 +79,7 @@ export const Banners = () => {
 						Claim
 					</Button>
 				</Banner>
-			)}
+			)} */}
 		</div>
 	)
 }
