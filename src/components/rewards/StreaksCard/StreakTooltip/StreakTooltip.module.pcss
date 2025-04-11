@@ -1,7 +1,42 @@
-.title {
-	color: var(--color-grey-100);
-}
+.streak_tooltip_wrap {
+	display: flex;
+	gap: var(--space-s);
+	width: 229px !important;
+	.head_wrap {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xxs);
+		align-self: stretch;
+		.title {
+			color: var(--color-grey-200);
+		}
 
-.description {
-	color: var(--color-grey-200);
+		.description {
+			color: var(--color-grey-200);
+		}
+	}
+
+	.list {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xs);
+		align-self: stretch;
+		.item {
+			display: flex;
+			flex-direction: row;
+			height: 26px;
+			justify-content: space-between;
+			align-items: center;
+			align-self: stretch;
+			color: var(--color-gray-100);
+			font: var(--font-heading-small);
+		}
+		.separator {
+			height: 1px;
+			align-self: stretch;
+			background: var(--color-gray-800);
+		}
+	}
 }

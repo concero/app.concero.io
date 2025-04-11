@@ -1,0 +1,159 @@
+.lp_main_wrap {
+	display: flex;
+	padding: var(--space-m);
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-m);
+	align-self: stretch;
+	border-radius: var(--space-m);
+	background: var(--color-gray-25);
+	width: 100%;
+	.head_wrap {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		.title {
+			color: var(--color-gray-700);
+			font: var(--font-heading-large);
+		}
+		.swap_tooltip {
+		}
+	}
+	.wrap_with_days {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xs);
+		flex: 1 0 0;
+		align-self: stretch;
+		.streak_head_wrap {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row;
+			height: 20px;
+			align-items: center;
+			align-self: stretch;
+			.title_counter_month {
+				color: var(--color-gray-600);
+				font: var(--font-heading-medium);
+			}
+			.reward_wrap {
+				display: flex;
+				flex-direction: row;
+				height: 18px;
+				align-items: center;
+				gap: var(--space-xs);
+				.reward_text {
+					color: var(--color-gray-600);
+					font: var(--font-body-medium);
+				}
+			}
+		}
+		.streak_progress_wrap {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--space-xs);
+			flex: 1 0 0;
+			align-self: stretch;
+			.progress_days {
+				display: flex;
+				flex-direction: row;
+				align-items: flex-end;
+				align-self: stretch;
+				color: var(--color-gray-500);
+				font: var(--font-heading-medium);
+				.current_days_number {
+					color: var(--color-gray-700);
+					font: var(--font-heading-xlarge);
+				}
+			}
+			.progress_grid_days {
+				width: 100%;
+				height: 100%;
+				&.progress_grid_days_one_line {
+					height: 40px;
+				}
+			}
+		}
+	}
+	.placeholder_image_wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		overflow: auto;
+		padding: 25px 6px 24px 5px;
+		flex: 1 0 0;
+		align-self: stretch;
+	}
+
+	.wrap_support_text {
+		display: flex;
+		align-items: flex-start;
+		flex-direction: row;
+		gap: var(--space-xs);
+		align-self: stretch;
+		width: 100%;
+		.trophy_icon {
+			min-width: 18px !important;
+			height: 18px !important;
+			color: var(--color-accent-600);
+		}
+		.warning_icon {
+			min-width: 18px !important;
+			height: 18px !important;
+			color: var(--color-warning-600);
+		}
+		.wrap_text {
+			display: block;
+			width: 100%;
+			.hold_text {
+				color: var(--color-gray-700);
+				font: var(--font-body-medium);
+			}
+			.text {
+				color: var(--color-gray-600);
+				font: var(--font-body-medium);
+			}
+			.text_cers {
+				color: var(--color-accent-700);
+				font: var(--font-heading-small);
+			}
+
+			.balance_text {
+				color: var(--color-warning-700);
+				font: var(--font-heading-small);
+			}
+			.hold_text_warning {
+				color: var(--color-gray-600);
+				font: var(--font-body-medium);
+			}
+		}
+	}
+	.no_user_wrap_tip {
+		display: flex;
+		flex-direction: row;
+		max-width: 100%;
+		align-items: center;
+		gap: var(--space-xs);
+		.no_user_text_wrap {
+			.no_user_text {
+				color: var(--color-gray-600);
+				font: var(--font-body-large);
+			}
+			.no_user_text_cers {
+				color: var(--color-accent-700);
+				font: var(--font-heading-medium);
+			}
+		}
+	}
+	.provide_btn {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+}

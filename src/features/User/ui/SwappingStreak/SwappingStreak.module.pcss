@@ -1,0 +1,135 @@
+.swapping_streak_wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-m);
+	width: 100%;
+	padding: var(--space-m);
+	flex: 1 0 0;
+	border-radius: var(--space-l);
+	background: var(--color-gray-25);
+	.title_wrap {
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row;
+		align-items: center;
+		align-self: stretch;
+		height: 22px;
+		.title {
+			color: var(--color-gray-700);
+			font: var(--font-heading-large);
+		}
+		.icon {
+		}
+	}
+	.current_value_wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		overflow: auto;
+		.circle_value_wrap {
+			display: inline-flex;
+			height: 88px;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: var(--space-xxs);
+			flex-shrink: 0;
+			.current_progress_text {
+				color: var(--color-gray-700);
+				font: var(--font-heading-xxlarge);
+			}
+			.current_progress_text_from_wrap {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: var(--space-xxs);
+				.separator {
+					color: var(--color-gray-200);
+					font: var(--font-body-medium);
+				}
+				.from_value {
+					color: var(--color-gray-500);
+					font: var(--font-body-medium);
+				}
+			}
+		}
+		.placeholder_image_wrap {
+			display: flex;
+			padding: 25px 6px 24px 5px;
+			width: 100%;
+			justify-content: center;
+			align-items: center;
+			flex: 1 0 0;
+		}
+	}
+	.streak_wrap {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xs);
+		align-self: stretch;
+		.streak_head_wrap {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row;
+			height: 20px;
+			align-items: center;
+			align-self: stretch;
+			.title_counter_month {
+				color: var(--color-gray-600);
+				font: var(--font-heading-medium);
+			}
+			.reward_wrap {
+				display: flex;
+				flex-direction: row;
+				height: 18px;
+				align-items: center;
+				gap: var(--space-xs);
+				.reward_text {
+					color: var(--color-gray-600);
+					font: var(--font-body-medium);
+				}
+			}
+		}
+		.progress_value_wrap {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--space-xs);
+			align-self: stretch;
+			height: 44px;
+			.progress_days {
+				display: flex;
+				flex-direction: row;
+				align-items: flex-end;
+				align-self: stretch;
+				color: var(--color-gray-500);
+				font: var(--font-heading-medium);
+				.current_days_number {
+					color: var(--color-gray-700);
+					font: var(--font-heading-xlarge);
+				}
+			}
+		}
+
+		.no_user_wrap_tip {
+			display: flex;
+			flex-direction: row;
+			max-width: 100%;
+			align-items: center;
+			gap: var(--space-xs);
+			.no_user_text_wrap {
+				.no_user_text {
+					color: var(--color-gray-600);
+					font: var(--font-body-large);
+				}
+				.no_user_text_cers {
+					color: var(--color-accent-700);
+					font: var(--font-heading-medium);
+				}
+			}
+		}
+	}
+}

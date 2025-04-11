@@ -11,12 +11,7 @@ import { CheckTermsOfUseDecorator } from './components/modals/TermsConditionModa
 import { useUserByAddress } from '@/entities/User'
 import cls from './Navigator.module.pcss'
 import { ProfilePage } from '@/pages/ProfilePage'
-const RewardsScreen = lazy(
-	async () =>
-		await import('./components/screens/RewardsScreen/RewardsScreen').then(module => ({
-			default: module.RewardsScreen,
-		})),
-)
+import { RewardsPage } from '@/pages/RewardsPage'
 
 export const Navigator = () => {
 	const { address, isConnected } = useAccount()
@@ -50,7 +45,7 @@ export const Navigator = () => {
 							element={
 								<Suspense fallback={<FullScreenLoader />}>
 									<CheckTermsOfUseDecorator>
-										<RewardsScreen loading={isPending} user={userToUse} />
+										<RewardsPage loading={isPending} user={userToUse} />
 									</CheckTermsOfUseDecorator>
 								</Suspense>
 							}

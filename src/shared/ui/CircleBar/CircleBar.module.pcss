@@ -1,0 +1,61 @@
+@namespace cls;
+
+.circle_bar {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 160px;
+	width: 100%;
+	height: auto;
+
+	& .svg {
+		transform: rotate(-90deg);
+		width: 96%;
+		height: 100%;
+		overflow: visible;
+
+		& .track {
+			fill: none;
+			stroke: #e0e0e0;
+			stroke-width: 8px;
+			stroke-linecap: round;
+		}
+
+		& .progress {
+			fill: none;
+			stroke: #3498db;
+			stroke-width: 8px;
+			stroke-linecap: round;
+			stroke-dasharray: 301.6;
+		}
+		.default_start {
+			stop-color: var(--color-accent-500);
+		}
+		.default_end {
+			stop-color: var(--color-accent-100);
+		}
+		.warning_start {
+			stop-color: var(--color-warning-500);
+		}
+		.warning_end {
+			stop-color: var(--color-warning-100);
+		}
+		.danger_start {
+			stop-color: var(--color-danger-500);
+		}
+		.danger_end {
+			stop-color: var(--color-danger-100);
+		}
+		.success_start {
+			stop-color: var(--color-success-200);
+		}
+		.success_end {
+			stop-color: var(--color-success-50);
+		}
+	}
+
+	& .value_wrap {
+		position: absolute;
+	}
+}
