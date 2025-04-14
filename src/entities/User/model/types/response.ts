@@ -69,7 +69,9 @@ export interface IUserActionQuestData {
 	completedQuestStepIds?: number[]
 	isCompleted?: boolean
 }
-
+// Synchronization with backend and rewards FE is required upon modification
+const tagsArr = ['testnet', 'lanca'] as const
+export type TTagUserAction = (typeof tagsArr)[number][]
 export interface IUserAction<TActionType extends EActionType = EActionType> {
 	userAddress: string
 	documentId: string
@@ -78,6 +80,7 @@ export interface IUserAction<TActionType extends EActionType = EActionType> {
 	multiplier?: number
 	timestamp: number
 	data: TActionType extends EActionType.transactionReward ? UserActionTxData : IUserActionQuestData
+	tags?: TTagUserAction
 }
 export const enum NicknameError {
 	Short = 'Short',

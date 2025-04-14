@@ -11,16 +11,20 @@ interface UserActionProps {
 
 const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.Element => {
 	try {
+		const isTestnet = action.tags?.includes('testnet')
 		const txAction = action.data?.type === ETransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
 
 		if (!action.data?.from || !action.data?.to) {
-			return <span>'Forgotten transaction'</span>
+			return <span>Forgotten transaction</span>
 		}
 
 		const { from, to } = action.data
 		return (
 			<span className={cls.action_info}>
-				<span className={cls.action}>{txAction}</span>
+				<span className={cls.action}>
+					{isTestnet ? 'Testnet ' : null}
+					{txAction}
+				</span>
 				<span className={cls.from_to}> from </span>
 				<span className={cls.amount_value}>
 					{toLocaleNumber(from.amount, 2)} {from.tokenSymbol} on {from.chainName}
@@ -43,7 +47,7 @@ const getQuestInfo = (action: IUserAction<EActionType.questReward>) => {
 }
 const getSpecialRewardInfo = (action: IUserAction<EActionType.specialReward>) => {
 	const { name } = action.data as { name: string }
-	return <span className={cls.title}>Quest completed: {name}</span>
+	return <span className={cls.title}>Special reward: {name}</span>
 }
 
 export const UserAction = ({ action }: UserActionProps) => {
