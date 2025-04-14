@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import cls from './Input.module.pcss'
 import { ComponentProps, forwardRef, ReactNode, useEffect, useId, useRef, useState } from 'react'
 import { MetaInput } from '../MetaInput/MetaInput'
-import { useCombinedRef } from '@/shared/lib/useCombinedRef/useCombinedRef'
+import { useCombinedRef } from '@/shared/lib/hooks/useCombinedRef'
 export type TInputSize = 'm' | 'l' | 'xl'
 type TClassname = string
 type TCountConfig = {

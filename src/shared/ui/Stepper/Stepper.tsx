@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import cls from './Stepper.module.pcss'
 
-type TStepVariant = 'default' | 'complited' | 'current_active' | 'warning' | 'danger'
+type TStepVariant = 'default' | 'complited' | 'current_active' | 'warning' | 'danger' | 'success'
 
 type TStepItemProps = {
 	variant?: TStepVariant
@@ -14,6 +14,7 @@ const StepItem = ({ variant = 'default' }: TStepItemProps) => {
 		danger: cls.danger,
 		default: cls.default,
 		warning: cls.warning,
+		success: cls.success,
 	}
 	return <div className={clsx(cls.step_item, variantMap[variant])}></div>
 }
@@ -23,11 +24,12 @@ type TProps = {
 	max?: number
 	warningCells?: number[]
 	dangerCells?: number[]
+	successCells?: number[]
 	maxColumns?: number
 }
 
 export const Stepper = (props: TProps) => {
-	const { currentProgress, max = 28, warningCells = [], dangerCells = [], maxColumns = 7 } = props
+	const { currentProgress, max = 30, warningCells = [], dangerCells = [], successCells = [], maxColumns = 7 } = props
 	const rows = Math.ceil(max / 7)
 
 	return (
@@ -48,6 +50,8 @@ export const Stepper = (props: TProps) => {
 							variant = 'danger'
 						} else if (warningCells.includes(index)) {
 							variant = 'warning'
+						} else if (successCells.includes(index)) {
+							variant = 'success'
 						} else if (index < currentProgress) {
 							variant = 'complited'
 						} else if (index === currentProgress) {

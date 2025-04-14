@@ -23,13 +23,15 @@ export const CircleBar = (props: TCircleBarProps) => {
 						<stop offset="100%" className={cls[`${variant || 'default'}_end`]} />
 					</linearGradient>
 				</defs>
-				<circle
-					className={cls.progress}
-					cx="50"
-					cy="50"
-					r="48"
-					style={{ strokeDashoffset: offset, stroke: 'url(#gradient)' }}
-				></circle>
+				{progress != 0 ? (
+					<circle
+						className={cls.progress}
+						cx="50"
+						cy="50"
+						r="48"
+						style={{ strokeDashoffset: offset, stroke: 'url(#gradient)' }}
+					></circle>
+				) : null}
 			</svg>
 			<div className={cls.value_wrap}>{children}</div>
 		</div>

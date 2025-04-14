@@ -99,7 +99,15 @@
 			align-items: flex-start;
 			gap: var(--space-xs);
 			align-self: stretch;
-			height: 44px;
+			&.week_stepper {
+				height: 44px;
+			}
+			&.month_line {
+				height: none;
+			}
+			& > * {
+				width: 100%;
+			}
 			.progress_days {
 				display: flex;
 				flex-direction: row;
@@ -110,6 +118,10 @@
 				.current_days_number {
 					color: var(--color-gray-700);
 					font: var(--font-heading-xlarge);
+				}
+				.slash {
+					color: var(--color-gray-200);
+					font: var(--font-heading-medium);
 				}
 			}
 		}

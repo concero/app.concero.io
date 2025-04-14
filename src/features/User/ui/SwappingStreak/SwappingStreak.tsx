@@ -11,8 +11,10 @@ import utc from 'dayjs/plugin/utc'
 import clsx from 'clsx'
 
 import StreakPlaceholder from '@/shared/assets/images/streaks/holding_placeholder.png'
-import { streak_config } from '../../config/streak'
+import { streak_config } from '../../../../entities/User/config/streak'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
+import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
+import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
 const swapDescription = 'Perform swaps of at least $50 every day to get a multiplier. '
 const tooltipTitle = 'Daily Swapping Rewards'
 dayjs.extend(utc)
@@ -24,7 +26,7 @@ type TProps = {
 const SWAP_VOLUME = 50
 export const SwappingStreak = (props: TProps) => {
 	const { className, user } = props
-
+	const isDesktop = useMediaQuery('desktop')
 	const todayStart = dayjs().utc().startOf('day').valueOf()
 	const todayEnd = dayjs().utc().endOf('day').valueOf()
 	const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
@@ -110,17 +112,46 @@ export const SwappingStreak = (props: TProps) => {
 								</Tag>
 							</div>
 						</div>
-						<div className={cls.progress_value_wrap}>
+						<div
+							className={clsx(cls.progress_value_wrap, {
+								[cls.week_stepper]: current_streak <= 7,
+								[cls.month_line]: current_streak > 7,
+							})}
+						>
 							<div className={cls.progress_days}>
-								<span className={cls.current_days_number}>{currentProgressForStepper}&nbsp;</span>
-								<span>&nbsp;/ 7 days</span>
+								<span className={cls.current_days_number}>
+									{current_streak <= 7 ? currentProgressForStepper : current_streak - 7}&nbsp;
+								</span>
+								<span>
+									<span className={cls.slash}>&nbsp;/&nbsp;</span>
+									{current_streak <= 7 ? '7' : '30'} days
+								</span>
 							</div>
-							<Stepper
-								currentProgress={currentProgressForStepper}
-								max={streak_config.ONE_WEEK}
-								warningCells={warningTime ? [currentProgressForStepper] : undefined}
-								dangerCells={dangerTime ? [currentProgressForStepper] : undefined}
-							/>
+							{current_streak <= 7 ? (
+								<Stepper
+									currentProgress={currentProgressForStepper}
+									max={streak_config.ONE_WEEK}
+									warningCells={warningTime ? [currentProgressForStepper] : undefined}
+									dangerCells={dangerTime ? [currentProgressForStepper] : undefined}
+									successCells={successSwap ? [currentProgressForStepper] : undefined}
+								/>
+							) : (
+								<ProgressBar
+									currentValue={current_streak - 7}
+									maxValue={30}
+									symbol="days"
+									type="big"
+									status={
+										warningTime
+											? 'warning'
+											: dangerTime
+												? 'danger'
+												: successSwap
+													? 'success'
+													: 'default'
+									}
+								/>
+							)}
 						</div>
 					</>
 				) : (
@@ -136,7 +167,10 @@ export const SwappingStreak = (props: TProps) => {
 					</div>
 				)}
 			</div>
-			<Button variant={warningTime || dangerTime ? 'primary' : !user ? 'primary' : 'secondary_color'} size="m">
+			<Button
+				variant={warningTime || dangerTime ? 'primary' : !user ? 'primary' : 'secondary_color'}
+				size={isDesktop ? 'm' : 'l'}
+			>
 				Swap
 			</Button>
 		</div>

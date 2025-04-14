@@ -7,7 +7,7 @@ const queries: Record<Screen, string> = {
 	tablet: '(min-width: 744px) and (max-width: 1279px)',
 	desktop: '(min-width: 1280px)',
 }
-/**@deprecated */
+
 export const useMediaQuery = (screen: Screen): boolean => {
 	const [matches, setMatches] = useState<boolean>(() => {
 		return window.matchMedia(queries[screen]).matches

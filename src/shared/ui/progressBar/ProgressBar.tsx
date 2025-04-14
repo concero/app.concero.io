@@ -1,10 +1,11 @@
 import classNames from './ProgressBar.module.pcss'
 import { toLocaleNumber } from '../../../utils/formatting'
 import { SkeletonLoader } from '../SkeletonLoader/SkeletonLoader'
-import { Tag } from '../Tag/Tag'
 import { useEffect, useRef, useState } from 'react'
+import { Tag } from '@concero/ui-kit'
+import clsx from 'clsx'
 
-/**@deprecated */
+type TProgressStatus = 'default' | 'success' | 'danger' | 'warning'
 export interface ProgressBarProps {
 	type?: 'big' | 'medium' | 'float'
 	width?: number | string
@@ -13,12 +14,14 @@ export interface ProgressBarProps {
 	minValue?: number
 	currentValue: number
 	maxValue: number
+	status?: TProgressStatus
 }
-/**@deprecated */
+
 export function ProgressBar({
 	width = '100%',
 	type = 'big',
 	symbol = '$',
+	status = 'default',
 	isLoading,
 	currentValue,
 	minValue = 0,
@@ -45,45 +48,19 @@ export function ProgressBar({
 
 	const percent = (currentValue / maxValue) * 100
 
-	const progressValueBig = isLoading ? (
-		<SkeletonLoader width={128} height={27.5} />
-	) : (
-		<h3 className={classNames.value1}>
-			{toLocaleNumber(currentValue)} <span className={classNames.maxValue1}>/{toLocaleNumber(maxValue)}</span>
-		</h3>
-	)
-
-	const progressValueMedium = isLoading ? (
-		<SkeletonLoader width={64} height={20} />
-	) : (
-		<h3 className={classNames.value2}>
-			{toLocaleNumber(currentValue)} <span className={classNames.maxValue2}>/{toLocaleNumber(maxValue)}</span>
-		</h3>
-	)
-
 	const progressLine = isLoading ? (
 		<SkeletonLoader height={8} />
 	) : (
 		<div ref={lineRef} className={classNames.progressBar} style={{ maxWidth: width, width: '100%' }}>
-			<span className={classNames.progressLine} style={{ maxWidth: width, width: `${percent}%` }}></span>
-		</div>
-	)
-
-	const progressRange = (
-		<div className="row jsb ac">
-			<p className="body1">{toLocaleNumber(minValue)}</p>
-			<p className="body1">{toLocaleNumber(maxValue)}</p>
+			<span
+				className={clsx(classNames.progress_line, classNames[status])}
+				style={{ maxWidth: width, width: `${percent}%` }}
+			></span>
 		</div>
 	)
 
 	if (type === 'big' || type === 'medium') {
-		return (
-			<div className="gap-sm">
-				{type === 'big' ? progressValueBig : progressValueMedium}
-				{progressLine}
-				{progressRange}
-			</div>
-		)
+		return <div className="gap-sm">{progressLine}</div>
 	}
 
 	const marginQuery =
@@ -104,7 +81,7 @@ export function ProgressBar({
 							marginLeft: marginQuery,
 						}}
 					>
-						<Tag size="md" variant="branded">
+						<Tag size="m" variant="branded">
 							{toLocaleNumber(currentValue)}
 							{symbol}
 						</Tag>
@@ -113,7 +90,6 @@ export function ProgressBar({
 			)}
 
 			{progressLine}
-			{progressRange}
 		</div>
 	)
 }

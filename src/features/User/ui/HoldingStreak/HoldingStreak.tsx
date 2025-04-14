@@ -10,7 +10,8 @@ import LpHoldingStreak from '@/shared/assets/images/streaks/holding_placeholder.
 import cls from './HoldingStreak.module.pcss'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { Address } from 'viem'
-import { streak_config } from '../../config/streak'
+import { streak_config } from '../../../../entities/User/config/streak'
+import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 
 type TProps = {
 	className?: string
@@ -21,12 +22,13 @@ const tooltipTitle = 'LP holding Rewards'
 
 export const HoldingStreak = (props: TProps) => {
 	const { className, user } = props
+	const isDesktop = useMediaQuery('desktop')
 	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
 	const lpBalance = useGetUserLPBalance(user?.address as Address)
 
 	const showDefaultTip =
 		(user && lpBalance.balance === null) || lpBalance.balance === 0 || (lpBalance.balance || 0) > 100
-	const showWarning = user && lpBalance.balance ? lpBalance.balance > 0 && lpBalance.balance < 100 : false
+	const showDanger = user && lpBalance.balance ? lpBalance.balance > 0 && lpBalance.balance < 100 : false
 	const showWithoutUserTip = !user
 
 	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
@@ -36,7 +38,7 @@ export const HoldingStreak = (props: TProps) => {
 	return (
 		<div className={clsx(cls.lp_main_wrap, className)}>
 			<div className={cls.head_wrap}>
-				<div className={cls.title}>LP Holdling Streak</div>
+				<div className={cls.title}>LP Holding Streak</div>
 				<div className={cls.swap_tooltip}>
 					<TooltipWrapper
 						place={'bottom-start'}
@@ -65,9 +67,11 @@ export const HoldingStreak = (props: TProps) => {
 								{currentStreak % currentPeriodStreak == 0
 									? Math.min(currentStreak, currentPeriodStreak)
 									: currentStreak % currentPeriodStreak}
-								&nbsp;
 							</span>
-							<span>&nbsp;/ {currentPeriodStreak} days</span>
+							<span>
+								<span className={cls.slash}>&nbsp;/&nbsp;</span>
+								{currentPeriodStreak} days
+							</span>
 						</div>
 						<div
 							className={clsx(cls.progress_grid_days, {
@@ -82,6 +86,15 @@ export const HoldingStreak = (props: TProps) => {
 											: currentStreak % currentPeriodStreak
 									}
 									max={currentPeriodStreak}
+									dangerCells={
+										showDanger
+											? [
+													currentStreak % currentPeriodStreak == 0
+														? Math.min(currentStreak, currentPeriodStreak)
+														: currentStreak % currentPeriodStreak,
+												]
+											: []
+									}
 								/>
 							) : (
 								<img
@@ -112,12 +125,12 @@ export const HoldingStreak = (props: TProps) => {
 						</div>
 					</>
 				)}
-				{showWarning && (
+				{showDanger && (
 					<>
 						<WarningIcon className={cls.warning_icon} />
 						<div className={cls.wrap_text}>
-							<span className={cls.balance_text}>LP balance is below 100$.</span>
-							<span className={cls.hold_text_warning}>Top up in 7 days to save your streak </span>
+							<span className={cls.balance_text}>Last chance to save your streak</span>
+							<span className={cls.hold_text_warning}>, top up your balance to stay on track</span>
 						</div>
 					</>
 				)}
@@ -134,7 +147,7 @@ export const HoldingStreak = (props: TProps) => {
 					</div>
 				)}
 			</div>
-			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size="m">
+			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size={isDesktop ? 'm' : 'l'}>
 				Provide Liquidity
 			</Button>
 		</div>

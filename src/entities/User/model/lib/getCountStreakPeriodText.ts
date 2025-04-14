@@ -1,10 +1,11 @@
-import { streak_config } from '@/features/User/config/streak'
+import { streak_config } from '../../config/streak'
 
 export const getCountStreakPeriodText = (countDays: number) => {
 	if (countDays <= streak_config.ONE_WEEK) {
 		return `1st week`
 	}
-	const countMonth = Math.max(Math.ceil(countDays / streak_config.ONE_MONTH), 1)
+	let localCounterDays = countDays - 7
+	const countMonth = Math.max(Math.ceil(localCounterDays / streak_config.ONE_MONTH), 1)
 
 	const exceptions = [11, 12, 13]
 	const lastDigit = countMonth % 10
