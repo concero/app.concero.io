@@ -23,6 +23,8 @@ const tooltipTitle = 'LP holding Rewards'
 export const HoldingStreak = (props: TProps) => {
 	const { className, user } = props
 	const isDesktop = useMediaQuery('desktop')
+	/** Adding one because the current streak has already occurred and is confirmed,
+	 * but we need to display the new day that will be confirmed tonight. */
 	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
 	const lpBalance = useGetUserLPBalance(user?.address as Address)
 
@@ -33,8 +35,7 @@ export const HoldingStreak = (props: TProps) => {
 
 	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
 	const monthCounterText = getCountStreakPeriodText(currentStreak)
-	/** Adding one because the current streak has already occurred and is confirmed,
-	 * but we need to display the new day that will be confirmed tonight. */
+
 	return (
 		<div className={clsx(cls.lp_main_wrap, className)}>
 			<div className={cls.head_wrap}>
@@ -64,9 +65,11 @@ export const HoldingStreak = (props: TProps) => {
 					<div className={cls.streak_progress_wrap}>
 						<div className={cls.progress_days}>
 							<span className={cls.current_days_number}>
-								{currentStreak % currentPeriodStreak == 0
-									? Math.min(currentStreak, currentPeriodStreak)
-									: currentStreak % currentPeriodStreak}
+								{currentStreak < 7
+									? currentStreak % currentPeriodStreak
+									: currentStreak === 7
+										? currentStreak
+										: (currentStreak - 7) % currentPeriodStreak}
 							</span>
 							<span>
 								<span className={cls.slash}>&nbsp;/&nbsp;</span>
@@ -81,9 +84,11 @@ export const HoldingStreak = (props: TProps) => {
 							{user ? (
 								<Stepper
 									currentProgress={
-										currentStreak % currentPeriodStreak == 0
-											? Math.min(currentStreak, currentPeriodStreak)
-											: currentStreak % currentPeriodStreak
+										currentStreak < 7
+											? currentStreak % currentPeriodStreak
+											: currentStreak === 7
+												? currentStreak
+												: (currentStreak - 7) % currentPeriodStreak
 									}
 									max={currentPeriodStreak}
 									dangerCells={
