@@ -6,7 +6,7 @@ import { StreakTooltip } from '@/components/rewards/StreaksCard/StreakTooltip/St
 import { InfoIcon } from '../../../../assets/icons/InfoIcon'
 import TrophyIcon from '@/shared/assets/icons/monochrome/Trophy.svg?react'
 import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
-import LpHoldingStreak from '@/shared/assets/images/streaks/holding_placeholder.png'
+import LpHoldingStreak from '@/shared/assets/images/streaks/holding_placeholder.webp'
 import cls from './HoldingStreak.module.pcss'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { Address } from 'viem'

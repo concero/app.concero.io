@@ -10,7 +10,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import clsx from 'clsx'
 
-import StreakPlaceholder from '@/shared/assets/images/streaks/holding_placeholder.png'
+import StreakPlaceholder from '@/shared/assets/images/streaks/holding_placeholder.webp'
 import { streak_config } from '../../../../entities/User/config/streak'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
