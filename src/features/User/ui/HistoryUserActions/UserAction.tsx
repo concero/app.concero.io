@@ -5,20 +5,43 @@ import type { IUserAction } from '@/entities/User'
 import { EActionType } from '@/entities/User'
 import { ETransactionType } from '@/entities/User'
 import { IUserActionQuestData } from '@/entities/User'
+import { useMemo } from 'react'
+import { format, formatTokenAmount } from '@/shared/lib/utils/format'
+type TAmount = {
+	low: number
+	high: number
+	unsigned: boolean
+}
+function convertLongToObject(amount: TAmount) {
+	const high = amount.high
+	const low = amount.low
+	const unsigned = amount.unsigned
+
+	let result = high * Math.pow(2, 32) + low
+
+	if (!unsigned && high < 0) {
+		result = result - Math.pow(2, 64)
+	}
+
+	return result.toString()
+}
 interface UserActionProps {
 	action: IUserAction
 }
-
 const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.Element => {
 	try {
-		const isTestnet = action.tags?.includes('testnet')
+		const { from, to } = action.data
 		const txAction = action.data?.type === ETransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
+		const isTestnet = action.tags?.includes('testnet')
+		const formattedTestnetBalanceFrom = useMemo(
+			() => (isTestnet ? formatTokenAmount(`${from.amount}`) : 0),
+			[from.amount],
+		)
 
 		if (!action.data?.from || !action.data?.to) {
 			return <span>Forgotten transaction</span>
 		}
 
-		const { from, to } = action.data
 		return (
 			<span className={cls.action_info}>
 				<span className={cls.action}>
@@ -27,11 +50,13 @@ const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.
 				</span>
 				<span className={cls.from_to}> from </span>
 				<span className={cls.amount_value}>
-					{toLocaleNumber(from.amount, 2)} {from.tokenSymbol} on {from.chainName}
+					{isTestnet ? format(Number(formattedTestnetBalanceFrom), 4) : toLocaleNumber(from.amount, 2)}{' '}
+					{from.tokenSymbol} on {from.chainName}
 				</span>
 				<span className={cls.from_to}> to </span>
 				<span className={cls.amount_value}>
-					{toLocaleNumber(to.amount, 2)} {to.tokenSymbol} on {to.chainName}
+					{isTestnet ? format(Number(formattedTestnetBalanceFrom), 4) : toLocaleNumber(to.amount, 2)}{' '}
+					{to.tokenSymbol} on {to.chainName}
 				</span>
 			</span>
 		)
