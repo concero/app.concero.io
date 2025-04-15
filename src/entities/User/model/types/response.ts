@@ -36,8 +36,8 @@ export type TUpdateUserTwitter = {
 
 // User actions
 export enum ETransactionType {
-	ConceroSwapTx = 'ConceroSwapTx',
-	ConceroBridgeTx = 'ConceroBridgeTx',
+	ConceroSwapTx = '0',
+	ConceroBridgeTx = '1',
 }
 
 export enum EActionType {
