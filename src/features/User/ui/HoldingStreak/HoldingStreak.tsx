@@ -12,6 +12,7 @@ import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { Address } from 'viem'
 import { streak_config } from '../../../../entities/User/config/streak'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
+import { toLocaleNumber } from '@/utils/formatting'
 
 type TProps = {
 	className?: string
@@ -150,7 +151,7 @@ export const HoldingStreak = (props: TProps) => {
 					</div>
 				)}
 			</div>
-			Amount: {userEarnings?.earnings || 0}
+			Amount: {toLocaleNumber(userEarnings?.earnings || 0, 2)}
 			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size={isDesktop ? 'm' : 'l'}>
 				Provide Liquidity
 			</Button>
