@@ -18,6 +18,7 @@ export {
 	useUpdateNicknameMutation,
 	useDisconnectSocialNetworkMutation,
 	useDisconnectEmailMutation,
+	useGetUserEarnings,
 } from './api/userApi'
 
 export { getIsStartedQuest } from './model/lib/getIsStartedQuest'

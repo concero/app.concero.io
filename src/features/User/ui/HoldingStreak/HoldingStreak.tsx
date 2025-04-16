@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Button, Tag } from '@concero/ui-kit'
-import { getCountStreakPeriodText, TUserResponse, useGetUserLPBalance } from '@/entities/User'
+import { getCountStreakPeriodText, TUserResponse, useGetUserEarnings } from '@/entities/User'
 import { TooltipWrapper } from '@/components/layout/WithTooltip/TooltipWrapper'
 import { StreakTooltip } from '@/components/rewards/StreaksCard/StreakTooltip/StreakTooltip'
 import { InfoIcon } from '../../../../assets/icons/InfoIcon'
@@ -26,11 +26,10 @@ export const HoldingStreak = (props: TProps) => {
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
 	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
-	const lpBalance = useGetUserLPBalance(user?.address as Address)
+	const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
 
-	const showDefaultTip =
-		(user && lpBalance.balance === null) || lpBalance.balance === 0 || (lpBalance.balance || 0) > 100
-	const showDanger = user && lpBalance.balance ? lpBalance.balance > 0 && lpBalance.balance < 100 : false
+	const showDefaultTip = user
+	const showDanger = user && userEarnings ? userEarnings.earnings > 0 && userEarnings.earnings < 100 : false
 	const showWithoutUserTip = !user
 
 	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
@@ -118,9 +117,8 @@ export const HoldingStreak = (props: TProps) => {
 					<img width={'100%'} height={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
 				</div>
 			)}
-
 			<div className={cls.wrap_support_text}>
-				{showDefaultTip && (
+				{showDefaultTip && !showDanger && !showWithoutUserTip && (
 					<>
 						<TrophyIcon className={cls.trophy_icon} />
 						<div className={cls.wrap_text}>
@@ -152,6 +150,7 @@ export const HoldingStreak = (props: TProps) => {
 					</div>
 				)}
 			</div>
+			Amount: {userEarnings?.earnings || 0}
 			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size={isDesktop ? 'm' : 'l'}>
 				Provide Liquidity
 			</Button>

@@ -9,11 +9,13 @@ import {
 	TGetLeaderBoardReponse,
 	TUserResponse,
 	TUserSocialNetworkType,
+	UserEarnings,
 } from '../model/types/response'
 import { updateUserDiscord, updateUserTwitter } from '@/api/concero/user/updateUser'
 import { config } from '@/constants/config'
 import { TApiGetResponse, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
+import { useCallback, useEffect, useState } from 'react'
 
 //--------------------------------Domain
 export const userServiceApi = {
@@ -103,6 +105,13 @@ export const userServiceApi = {
 		if (response.data.success) {
 			return response.data.data
 		}
+	},
+
+	fetchUserEarnings: async (address: Address): Promise<UserEarnings> => {
+		const url = `${process.env.CONCERO_API_URL}/userPoolEarnings?address=${address}`
+		const response = await get(url)
+		if (response.status !== 200) throw new Error('No earnings found')
+		return response.data.data
 	},
 }
 export const userActionsService = {
@@ -297,6 +306,17 @@ export const useGetLeaderboard = (address?: string) => {
 		queryKey: [tagInvalidation, address],
 		queryFn: () => userServiceApi.getLeaderboard(address),
 		notifyOnChangeProps: ['data', 'isPending'],
+	})
+}
+export const useGetUserEarnings = (address: Address | null | undefined) => {
+	return useQuery({
+		queryKey: ['userEarnings', address],
+		queryFn: async () => {
+			if (!address) throw new Error('Address is required')
+			return userServiceApi.fetchUserEarnings(address)
+		},
+		enabled: !!address,
+		notifyOnChangeProps: ['data', 'isPending', 'error', 'isError'],
 	})
 }
 

@@ -89,3 +89,8 @@ export const enum NicknameError {
 	Exists = 'Exists',
 	Error = 'Error',
 }
+export interface UserEarnings {
+	earnings: number
+	percents: number
+	deposit: number
+}
