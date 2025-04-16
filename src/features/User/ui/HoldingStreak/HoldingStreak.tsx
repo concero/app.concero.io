@@ -28,9 +28,9 @@ export const HoldingStreak = (props: TProps) => {
 	 * but we need to display the new day that will be confirmed tonight. */
 	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
 	const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
-
-	const showDefaultTip = user
-	const showDanger = true //user && userEarnings ? userEarnings.earnings > 0 && userEarnings.earnings < 100 : false
+	const balance = userEarnings ? Number(toLocaleNumber(userEarnings.earnings + userEarnings.deposit, 2)) : 0
+	const showDefaultTip = user && (balance > 100 || balance === 0)
+	const showDanger = user && balance ? balance > 0 && balance < 100 : false
 	const showWithoutUserTip = !user
 
 	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
@@ -153,7 +153,6 @@ export const HoldingStreak = (props: TProps) => {
 					</div>
 				)}
 			</div>
-			Amount: {toLocaleNumber(userEarnings?.earnings || 0, 2)}
 			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size={isDesktop ? 'm' : 'l'}>
 				Provide Liquidity
 			</Button>
