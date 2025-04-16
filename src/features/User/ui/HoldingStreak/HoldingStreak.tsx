@@ -30,7 +30,7 @@ export const HoldingStreak = (props: TProps) => {
 	const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
 
 	const showDefaultTip = user
-	const showDanger = user && userEarnings ? userEarnings.earnings > 0 && userEarnings.earnings < 100 : false
+	const showDanger = true //user && userEarnings ? userEarnings.earnings > 0 && userEarnings.earnings < 100 : false
 	const showWithoutUserTip = !user
 
 	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
@@ -94,9 +94,11 @@ export const HoldingStreak = (props: TProps) => {
 									dangerCells={
 										showDanger
 											? [
-													currentStreak % currentPeriodStreak == 0
-														? Math.min(currentStreak, currentPeriodStreak)
-														: currentStreak % currentPeriodStreak,
+													currentStreak < 7
+														? currentStreak % currentPeriodStreak
+														: currentStreak === 7
+															? currentStreak
+															: (currentStreak - 7) % currentPeriodStreak,
 												]
 											: []
 									}
