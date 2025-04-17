@@ -9,7 +9,6 @@ import {
 import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
-import { useMediaQuery } from '../../../../hooks/useMediaQuery'
 import { ContactSupportModal } from '../../../modals/ContactSupportModal/ContactSupportModal'
 import { IconBurger } from '../../../../assets/icons/IconBurger'
 import LanguageIcon from '@/shared/assets/icons/monochrome/LanguageIcon.svg?react'
@@ -21,6 +20,7 @@ import { TUserResponse } from '@/entities/User'
 import { WalletButton } from '../WalletButton/WalletButton'
 import { Link, useMatch } from 'react-router-dom'
 import { routes } from '@/constants/routes'
+import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 
 interface Props {
 	user: TUserResponse | null
@@ -30,7 +30,6 @@ export function BurgerMenu({ user }: Props) {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false)
 	const [isContactSupportModalVisible, setIsModalContactSupportModalVisible] = useState(false)
-	const isDecktop = useMediaQuery('desktop')
 	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()

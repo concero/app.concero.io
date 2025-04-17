@@ -3,8 +3,8 @@ import { ListModal } from '../ListModal/ListModal'
 import { useState } from 'react'
 import { Button } from '../../buttons/Button/Button'
 import classNames from '../../layout/Header/WalletButton/WalletButton.module.pcss'
-import { type Language, languages } from '../../../i18n/languages'
 import { setItem } from '../../../utils/localStorage'
+import { Language, languages } from '@/shared/i18n/languages'
 
 interface LanguageModalProps {
 	setShow: (value: boolean) => void

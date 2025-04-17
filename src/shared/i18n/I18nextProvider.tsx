@@ -2,7 +2,7 @@ import i18next from 'i18next'
 import { type ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { translations } from './translations'
-import { getItem } from '../utils/localStorage'
+import { getItem } from '@/utils/localStorage'
 
 interface i18nextProviderProps {
 	children: ReactNode
