@@ -1,13 +1,14 @@
 .lp_main_wrap {
 	display: flex;
-	padding: var(--space-m);
 	flex-direction: column;
 	align-items: flex-start;
 	gap: var(--space-m);
-	align-self: stretch;
-	border-radius: var(--space-m);
+	padding: var(--space-m);
+	flex: 1 0 0;
+	border-radius: var(--space-l);
 	background: var(--color-gray-25);
 	width: 100%;
+	height: 100%;
 	.head_wrap {
 		display: flex;
 		flex-direction: row;
@@ -23,11 +24,11 @@
 	}
 	.wrap_with_days {
 		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: var(--space-xs);
-		flex: 1 0 0;
-		align-self: stretch;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
 		.streak_head_wrap {
 			display: flex;
 			justify-content: space-between;
@@ -77,6 +78,7 @@
 			.progress_grid_days {
 				width: 100%;
 				height: 100%;
+				min-height: 149px;
 				&.progress_grid_days_one_line {
 					height: 40px;
 				}
