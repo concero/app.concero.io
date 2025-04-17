@@ -37,8 +37,8 @@ export const RewardsPage = ({ user, loading }: Props) => {
 			<Banners />
 			{isAdmin ? (
 				<div className={cls.streak_wrap}>
-					<SwappingStreak user={null} />
-					<HoldingStreak user={null} />
+					<SwappingStreak user={user} />
+					<HoldingStreak user={user} />
 				</div>
 			) : (
 				isConnected &&
