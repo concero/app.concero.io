@@ -51,37 +51,37 @@ export const HoldingStreak = (props: TProps) => {
 					</TooltipWrapper>
 				</div>
 			</div>
-			{user ? (
-				<div className={cls.wrap_with_days}>
-					<div className={cls.streak_head_wrap}>
-						<div className={cls.title_counter_month}>{monthCounterText}</div>
-						<div className={cls.reward_wrap}>
-							<div className={cls.reward_text}>Reward</div>
-							<Tag size="s" variant="neutral">
-								{user?.multiplier?.liquidityHold || 2}x
-							</Tag>
+			<div className={cls.wrap_with_days}>
+				{user ? (
+					<>
+						<div className={cls.streak_head_wrap}>
+							<div className={cls.title_counter_month}>{monthCounterText}</div>
+							<div className={cls.reward_wrap}>
+								<div className={cls.reward_text}>Reward</div>
+								<Tag size="s" variant="neutral">
+									{user?.multiplier?.liquidityHold || 2}x
+								</Tag>
+							</div>
 						</div>
-					</div>
-					<div className={cls.streak_progress_wrap}>
-						<div className={cls.progress_days}>
-							<span className={cls.current_days_number}>
-								{currentStreak < 7
-									? currentStreak % currentPeriodStreak
-									: currentStreak === 7
-										? currentStreak
-										: (currentStreak - 7) % currentPeriodStreak}
-							</span>
-							<span>
-								<span className={cls.slash}>&nbsp;/&nbsp;</span>
-								{currentPeriodStreak} days
-							</span>
-						</div>
-						<div
-							className={clsx(cls.progress_grid_days, {
-								[cls.progress_grid_days_one_line]: currentStreak <= streak_config.ONE_WEEK,
-							})}
-						>
-							{user ? (
+						<div className={cls.streak_progress_wrap}>
+							<div className={cls.progress_days}>
+								<span className={cls.current_days_number}>
+									{currentStreak < 7
+										? currentStreak % currentPeriodStreak
+										: currentStreak === 7
+											? currentStreak
+											: (currentStreak - 7) % currentPeriodStreak}
+								</span>
+								<span>
+									<span className={cls.slash}>&nbsp;/&nbsp;</span>
+									{currentPeriodStreak} days
+								</span>
+							</div>
+							<div
+								className={clsx(cls.progress_grid_days, {
+									[cls.progress_grid_days_one_line]: currentStreak <= streak_config.ONE_WEEK,
+								})}
+							>
 								<Stepper
 									currentProgress={
 										currentStreak < 7
@@ -103,23 +103,15 @@ export const HoldingStreak = (props: TProps) => {
 											: []
 									}
 								/>
-							) : (
-								<img
-									width={'100%'}
-									height={'100%'}
-									src={LpHoldingStreak}
-									loading="lazy"
-									alt="Quest image"
-								/>
-							)}
+							</div>
 						</div>
+					</>
+				) : (
+					<div className={cls.placeholder_image_wrap}>
+						<img width={'100%'} height={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
 					</div>
-				</div>
-			) : (
-				<div className={cls.placeholder_image_wrap}>
-					<img width={'100%'} height={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
-				</div>
-			)}
+				)}
+			</div>
 			<div className={cls.wrap_support_text}>
 				{showDefaultTip && !showDanger && !showWithoutUserTip && (
 					<>
