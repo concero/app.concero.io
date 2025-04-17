@@ -35,29 +35,25 @@ export const RewardsPage = ({ user, loading }: Props) => {
 	}
 	return (
 		<PageWrap>
-			<div className={cls.rewards_screen_container}>
-				<div className={cls.rewards_wrapper}>
-					<Banners />
-					{isAdmin ? (
-						<div className={cls.streak_wrap}>
-							<SwappingStreak user={user} />
-							<HoldingStreak user={user} />
-						</div>
-					) : (
-						isConnected &&
-						(loading ? (
-							<>
-								<ProfilePlaceholder />
-								<StreaksPlaceholders />
-							</>
-						) : (
-							user && <RewardsProfile user={user} />
-						))
-					)}
-					<DailyTaskList />
-					<QuestPreviewList />
+			<Banners />
+			{isAdmin ? (
+				<div className={cls.streak_wrap}>
+					<SwappingStreak user={user} />
+					<HoldingStreak user={user} />
 				</div>
-			</div>
+			) : (
+				isConnected &&
+				(loading ? (
+					<>
+						<ProfilePlaceholder />
+						<StreaksPlaceholders />
+					</>
+				) : (
+					user && <RewardsProfile user={user} />
+				))
+			)}
+			<DailyTaskList />
+			<QuestPreviewList />
 		</PageWrap>
 	)
 }

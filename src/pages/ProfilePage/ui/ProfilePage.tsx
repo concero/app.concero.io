@@ -39,7 +39,7 @@ export const ProfilePage = (props: TProps) => {
 	const Social_Discord_toShow = user.connectedSocials?.discord?.username ?? '-'
 	const Social_Email_toShow = user.email ?? '-'
 	return (
-		<PageWrap className={cls.container}>
+		<PageWrap>
 			<Banners />
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>

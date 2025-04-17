@@ -19,10 +19,11 @@ type TProps = {
 	quest: TQuest
 	user?: TUserResponse
 	size?: TQuestPreviewSize
+	className?: string
 }
 
 export const QuestPreviewItem = (props: TProps) => {
-	const { quest, user, size } = props
+	const { quest, user, size, className } = props
 	const { address } = useAccount()
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
@@ -72,6 +73,7 @@ export const QuestPreviewItem = (props: TProps) => {
 					setIsOpenQuestCard(true)
 				}}
 				onClaim={handleClaimReward}
+				className={className}
 			/>
 			<Modal
 				position="top"
