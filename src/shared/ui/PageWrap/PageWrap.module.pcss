@@ -1,12 +1,15 @@
 div.page {
 	display: flex;
-	flex-direction: column;
-	gap: var(--space-xl);
-	max-width: 100%;
 	width: 702px;
-	min-height: 500px;
-	
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: var(--space-xl);
+
 	@media screen and (width < 1280px) {
 		width: 100%;
+	}
+	@media screen and (width < 744px) {
+		gap: var(--space-l);
 	}
 }

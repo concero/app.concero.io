@@ -20,7 +20,15 @@ export const DailyTaskList = (): JSX.Element => {
 			<span className={cls.title}>Daily tasks</span>
 			<div className={cls.list}>
 				{DailyQuests.map(quest => {
-					return <QuestPreviewItem quest={quest} user={user} key={quest._id} size="s" />
+					return (
+						<QuestPreviewItem
+							quest={quest}
+							user={user}
+							key={quest._id}
+							size="s"
+							className={cls.preview_item}
+						/>
+					)
 				})}
 			</div>
 		</div>

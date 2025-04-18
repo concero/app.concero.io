@@ -21,10 +21,11 @@ type TProps = {
 	user?: TUserResponse
 	onClick?: () => void
 	onClaim?: () => void
+	className?: string
 }
 
 export const QuestPreviewCard = (props: TProps) => {
-	const { size = 's', quest, user, onClick, onClaim } = props
+	const { size = 's', quest, user, onClick, onClaim, className } = props
 
 	if (!quest) return null
 
@@ -53,7 +54,7 @@ export const QuestPreviewCard = (props: TProps) => {
 	const isDone = getIsDoneQuest(quest, user)
 	return (
 		<Card
-			className={clsx(cls.preview_item, sizeClassMap[size], { [cls.disabled]: rewardIsClaimed })}
+			className={clsx(cls.preview_item, sizeClassMap[size], { [cls.disabled]: rewardIsClaimed }, className)}
 			onClick={onClick}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}

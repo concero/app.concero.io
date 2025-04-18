@@ -88,21 +88,39 @@ export const QuestPreviewList = (): JSX.Element => {
 				{quest_size_xl ? (
 					<div className={cls.size_xl}>
 						{quest_size_xl.map(quest => (
-							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="xl" />
+							<QuestPreviewItem
+								quest={quest}
+								user={user}
+								key={quest._id}
+								size="xl"
+								className={cls.preview_item}
+							/>
 						))}
 					</div>
 				) : null}
 				{quest_size_l ? (
 					<div className={cls.size_l}>
 						{quest_size_l.map(quest => (
-							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="l" />
+							<QuestPreviewItem
+								quest={quest}
+								user={user}
+								key={quest._id}
+								size="l"
+								className={cls.preview_item}
+							/>
 						))}
 					</div>
 				) : null}
 				{quest_size_m ? (
 					<div className={cls.size_m}>
 						{quest_size_m.map(quest => (
-							<QuestPreviewItem quest={quest} user={user} key={quest._id} size="m" />
+							<QuestPreviewItem
+								quest={quest}
+								user={user}
+								key={quest._id}
+								size="m"
+								className={cls.preview_item}
+							/>
 						))}
 					</div>
 				) : null}
