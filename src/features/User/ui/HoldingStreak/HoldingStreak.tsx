@@ -71,10 +71,13 @@ export const HoldingStreak = (props: TProps) => {
 							<div className={cls.progress_days}>
 								<span className={cls.current_days_number}>
 									{currentStreak < 7
-										? currentStreak % currentPeriodStreak
+										? currentStreak % currentPeriodStreak || 1
 										: currentStreak === 7
 											? currentStreak
-											: (currentStreak - 7) % currentPeriodStreak || currentStreak - 7}
+											: Math.min(
+													(currentStreak - 7) % currentPeriodStreak || currentStreak - 7,
+													30,
+												)}
 								</span>
 								<span>
 									<span className={cls.slash}>&nbsp;/&nbsp;</span>
@@ -89,21 +92,27 @@ export const HoldingStreak = (props: TProps) => {
 								<Stepper
 									currentProgress={
 										currentStreak < 7
-											? currentStreak % currentPeriodStreak
+											? currentStreak % currentPeriodStreak || 1
 											: currentStreak === 7
 												? currentStreak
-												: (currentStreak - 7) % currentPeriodStreak || currentStreak - 7
+												: Math.min(
+														(currentStreak - 7) % currentPeriodStreak || currentStreak - 7,
+														30,
+													)
 									}
 									max={currentPeriodStreak}
 									dangerCells={
 										showDanger
 											? [
 													currentStreak < 7
-														? currentStreak % currentPeriodStreak
+														? currentStreak % currentPeriodStreak || 1
 														: currentStreak === 7
 															? currentStreak
-															: (currentStreak - 7) % currentPeriodStreak ||
-																currentStreak - 7,
+															: Math.min(
+																	(currentStreak - 7) % currentPeriodStreak ||
+																		currentStreak - 7,
+																	30,
+																),
 												]
 											: []
 									}
