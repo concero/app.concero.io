@@ -13,6 +13,7 @@ import { Address } from 'viem'
 import { streak_config } from '../../../../entities/User/config/streak'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { toLocaleNumber } from '@/utils/formatting'
+import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
 
 type TProps = {
 	className?: string
@@ -62,7 +63,7 @@ export const HoldingStreak = (props: TProps) => {
 							<div className={cls.reward_wrap}>
 								<div className={cls.reward_text}>Reward</div>
 								<Tag size="s" variant="neutral">
-									{user?.multiplier?.liquidityHold || 2}x
+									{getUserFutureMultiplier(user.streak.liquidityHold)}x
 								</Tag>
 							</div>
 						</div>
@@ -73,7 +74,7 @@ export const HoldingStreak = (props: TProps) => {
 										? currentStreak % currentPeriodStreak
 										: currentStreak === 7
 											? currentStreak
-											: (currentStreak - 7) % currentPeriodStreak}
+											: (currentStreak - 7) % currentPeriodStreak || currentStreak - 7}
 								</span>
 								<span>
 									<span className={cls.slash}>&nbsp;/&nbsp;</span>
@@ -91,7 +92,7 @@ export const HoldingStreak = (props: TProps) => {
 											? currentStreak % currentPeriodStreak
 											: currentStreak === 7
 												? currentStreak
-												: (currentStreak - 7) % currentPeriodStreak
+												: (currentStreak - 7) % currentPeriodStreak || currentStreak - 7
 									}
 									max={currentPeriodStreak}
 									dangerCells={
@@ -101,7 +102,8 @@ export const HoldingStreak = (props: TProps) => {
 														? currentStreak % currentPeriodStreak
 														: currentStreak === 7
 															? currentStreak
-															: (currentStreak - 7) % currentPeriodStreak,
+															: (currentStreak - 7) % currentPeriodStreak ||
+																currentStreak - 7,
 												]
 											: []
 									}
@@ -121,8 +123,14 @@ export const HoldingStreak = (props: TProps) => {
 						<TrophyIcon className={cls.trophy_icon} />
 						<div className={cls.wrap_text}>
 							<span className={cls.hold_text}>Hold a minimum of 100$</span>
-							<span className={cls.text}> for one month to get your</span>
-							<span className={cls.text_cers}> 2x CERs multiplier!</span>
+							<span className={cls.text}>
+								{' '}
+								{currentStreak <= 7 ? 'for one week to get your' : 'for one month to get your'}
+							</span>
+							<span className={cls.text_cers}>
+								{' '}
+								{getUserFutureMultiplier(user.streak.liquidityHold)}x CERs multiplier!
+							</span>
 						</div>
 					</>
 				)}
