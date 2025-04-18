@@ -36,6 +36,9 @@ export const HoldingStreak = (props: TProps) => {
 	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
 	const monthCounterText = getCountStreakPeriodText(currentStreak)
 
+	const handleLiquidityClick = () => {
+		window.open('https://app.lanca.io/pools', '_blank')
+	}
 	return (
 		<div className={clsx(cls.lp_main_wrap, className)}>
 			<div className={cls.head_wrap}>
@@ -145,7 +148,12 @@ export const HoldingStreak = (props: TProps) => {
 					</div>
 				)}
 			</div>
-			<Button className={cls.provide_btn} variant={!user ? 'primary' : 'secondary'} size={isDesktop ? 'm' : 'l'}>
+			<Button
+				className={cls.provide_btn}
+				variant={!user ? 'primary' : 'secondary'}
+				size={isDesktop ? 'm' : 'l'}
+				onClick={handleLiquidityClick}
+			>
 				Provide Liquidity
 			</Button>
 		</div>

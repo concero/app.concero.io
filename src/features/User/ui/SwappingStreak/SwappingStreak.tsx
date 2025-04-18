@@ -47,6 +47,10 @@ export const SwappingStreak = (props: TProps) => {
 	const dangerTime = isNotEnough && timeLeft < oneHourInSecond
 	const monthCounterText = getCountStreakPeriodText(current_streak)
 	const currentProgressForStepper = current_streak % 7 == 0 ? Math.min(current_streak, 7) : current_streak % 7
+
+	const handleSwapClick = () => {
+		window.open('https://app.lanca.io', '_blank')
+	}
 	return (
 		<div className={clsx(cls.swapping_streak_wrap, className)}>
 			<div className={cls.title_wrap}>
@@ -170,6 +174,7 @@ export const SwappingStreak = (props: TProps) => {
 			<Button
 				variant={warningTime || dangerTime ? 'primary' : !user ? 'primary' : 'secondary_color'}
 				size={isDesktop ? 'm' : 'l'}
+				onClick={handleSwapClick}
 			>
 				Swap
 			</Button>
