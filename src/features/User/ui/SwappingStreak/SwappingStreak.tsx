@@ -15,6 +15,7 @@ import { streak_config } from '../../../../entities/User/config/streak'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
+import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
 const swapDescription = 'Perform swaps of at least $50 every day to get a multiplier. '
 const tooltipTitle = 'Daily Swapping Rewards'
 dayjs.extend(utc)
@@ -46,7 +47,13 @@ export const SwappingStreak = (props: TProps) => {
 	const warningTime = isNotEnough && timeLeft > oneHourInSecond && timeLeft <= threeHoursInSeconds
 	const dangerTime = isNotEnough && timeLeft < oneHourInSecond
 	const monthCounterText = getCountStreakPeriodText(current_streak)
-	const currentProgressForStepper = current_streak % 7 == 0 ? Math.min(current_streak, 7) : current_streak % 7
+	const currentPeriodStreak = current_streak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
+	const currentProgressForStepper =
+		current_streak < 7
+			? current_streak % currentPeriodStreak || 1
+			: current_streak === 7
+				? current_streak
+				: Math.min((current_streak - 7) % currentPeriodStreak || current_streak - 7, 30)
 
 	const handleSwapClick = () => {
 		window.open('https://app.lanca.io', '_blank')
@@ -112,7 +119,7 @@ export const SwappingStreak = (props: TProps) => {
 							<div className={cls.reward_wrap}>
 								<div className={cls.reward_text}>Reward</div>
 								<Tag size="s" variant="neutral">
-									{user?.multiplier?.dailySwap || 2}x
+									{getUserFutureMultiplier(user.streak.dailySwap)}x
 								</Tag>
 							</div>
 						</div>
@@ -123,9 +130,7 @@ export const SwappingStreak = (props: TProps) => {
 							})}
 						>
 							<div className={cls.progress_days}>
-								<span className={cls.current_days_number}>
-									{current_streak <= 7 ? currentProgressForStepper : current_streak - 7}&nbsp;
-								</span>
+								<span className={cls.current_days_number}>{currentProgressForStepper}&nbsp;</span>
 								<span>
 									<span className={cls.slash}>&nbsp;/&nbsp;</span>
 									{current_streak <= 7 ? '7' : '30'} days
@@ -141,7 +146,7 @@ export const SwappingStreak = (props: TProps) => {
 								/>
 							) : (
 								<ProgressBar
-									currentValue={current_streak - 7}
+									currentValue={currentProgressForStepper}
 									maxValue={30}
 									symbol="days"
 									type="big"
