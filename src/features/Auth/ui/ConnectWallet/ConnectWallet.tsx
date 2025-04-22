@@ -7,7 +7,7 @@ export const ConnectWallet = () => {
 		<Button
 			size="l"
 			onClick={async () => {
-				await open()
+				await open({ view: 'Connect' })
 			}}
 		>
 			Connect wallet

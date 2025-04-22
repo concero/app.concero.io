@@ -19,12 +19,13 @@ import { OpenHistoryUserActions } from '@/features/User'
 import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
 import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
+import { useAppKitAccount } from '@reown/appkit/react'
 type TProps = {
 	user: TUserResponse | null
 }
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
-	const { isConnected, address } = useAccount()
+	const { address, isConnected } = useAppKitAccount()
 	const isAdmin = isAdminAddress(address)
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
