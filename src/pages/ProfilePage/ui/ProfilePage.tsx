@@ -30,10 +30,13 @@ export const ProfilePage = (props: TProps) => {
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
 	if (!isConnected) {
-		console.log('info:', {
-			address,
-			isConnected,
-		})
+		console.log(
+			'info:',
+			JSON.stringify({
+				address,
+				isConnected,
+			}),
+		)
 
 		return <LoginRequired />
 	}
