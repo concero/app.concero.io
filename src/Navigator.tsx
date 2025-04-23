@@ -12,10 +12,12 @@ import { useUserByAddress } from '@/entities/User'
 import cls from './Navigator.module.pcss'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { RewardsPage } from '@/pages/RewardsPage'
+import { useAppKitAccount } from '@reown/appkit/react'
+import { Address } from 'viem'
 
 export const Navigator = () => {
-	const { address, isConnected } = useAccount()
-	const { data: user, isPending } = useUserByAddress(isConnected ? address : undefined)
+	const { address, isConnected } = useAppKitAccount()
+	const { data: user, isPending } = useUserByAddress(isConnected && address ? (address as Address) : undefined)
 	useEffect(() => {
 		if (isConnected && address) {
 			posthog.identify(address)

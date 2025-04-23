@@ -1,4 +1,4 @@
-import { useAppKit } from '@reown/appkit/react'
+import { useAppKit, useAppKitAccount } from '@reown/appkit/react'
 import { action, category } from '../../../../constants/tracking'
 import { useAccount } from 'wagmi'
 import { truncateWallet } from '../../../../utils/formatting'
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const WalletButton = ({ className, isFull = false }: Props) => {
-	const { address, isConnected, isDisconnected, isConnecting } = useAccount()
+	const { address, isConnected } = useAppKitAccount()
 	const { open } = useAppKit()
 	const { t } = useTranslation()
 
@@ -30,8 +30,6 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 
 	const getStatus = () => {
 		if (isConnected) return truncateWallet(address!, 4)
-		if (isConnecting) return t('walletButton.connecting')
-		if (isDisconnected) return t('walletButton.connectWallet')
 		return t('walletButton.connectWallet')
 	}
 
