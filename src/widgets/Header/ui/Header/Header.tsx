@@ -1,17 +1,17 @@
 import { type FC, type ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
+import { Button, Tag } from '@concero/ui-kit'
 import classNames from './Header.module.pcss'
 import { routes } from '@/constants/routes'
-import { Logo } from '../../Logo/Logo'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { WalletButton } from '../WalletButton/WalletButton'
-import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
-import { UserMultipliers } from './UserMultipliers/UserMultipliers'
-import { TooltipWrapper } from '../../WithTooltip/TooltipWrapper'
 import { toLocaleNumber } from '@/utils/formatting'
-import { Button, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
 import { NavButton } from '@/shared/ui'
+import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
+import { UserMultipliers } from './UserMultipliers/UserMultipliers'
+import { TooltipWrapper } from '@/components/layout/WithTooltip/TooltipWrapper'
+import { Logo } from '../Logo/Logo'
+import { WalletButton } from '@/features/Auth'
 
 interface HeaderProps {
 	user: TUserResponse | null

@@ -515,45 +515,9 @@ a {
 	font-weight: 500;
 }
 
-.tagBody {
-	color: var(--color-grey-500);
-	font-size: 0.85rem;
-}
-
 button {
 	border: none;
 	cursor: pointer;
 	font-weight: 500;
 	outline: none;
-}
-
-#tv-attr-logo {
-	display: none;
-}
-
-.cardHeaderTitle {
-	color: var(--color-grey-500);
-}
-
-.cerpTestText {
-	text-align: center;
-	margin: 0 auto;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-
-	h1 {
-		margin: 0 20px;
-	}
-}
-
-@media (max-width: 768px) {
-	.cerpTestText {
-		h1 {
-			font-size: 2rem;
-			margin: 0 20px;
-		}
-	}
 }

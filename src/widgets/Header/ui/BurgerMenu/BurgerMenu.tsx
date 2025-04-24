@@ -6,21 +6,21 @@ import {
 	useEffect,
 	useState,
 } from 'react'
-import { LanguageModal } from '../../../modals/LanguageModal/LanguageModal'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
-import { ContactSupportModal } from '../../../modals/ContactSupportModal/ContactSupportModal'
 import { IconBurger } from '../../../../assets/icons/IconBurger'
 import LanguageIcon from '@/shared/assets/icons/monochrome/LanguageIcon.svg?react'
 import CrossCloseIcon from '@/shared/assets/icons/monochrome/CrossClose.svg?react'
-import { SocialNetworkButtons } from '../../../../features/User/ui/SocialNetworkButtons/SocialNetworkButtons'
-import { Separator } from '../../Separator/Separator'
 import { Button, IconButton, Tag } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
-import { WalletButton } from '../WalletButton/WalletButton'
 import { Link, useMatch } from 'react-router-dom'
 import { routes } from '@/constants/routes'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
+import { Separator } from '@/components/layout/Separator/Separator'
+import { WalletButton } from '@/features/Auth'
+import { LanguageModal } from '@/components/modals/LanguageModal/LanguageModal'
+import { ContactSupportModal } from '@/components/modals/ContactSupportModal/ContactSupportModal'
+import { ThemeSwitcher } from '@/features/ThemeSwitcher/ui/ThemeSwitcher'
 
 interface Props {
 	user: TUserResponse | null
@@ -154,6 +154,9 @@ export function BurgerMenu({ user }: Props) {
 				</>
 			)}
 
+			<li>
+				<ThemeSwitcher className={classNames.listButton} />
+			</li>
 			<li>
 				<Button
 					leftIcon={<LanguageIcon />}

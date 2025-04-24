@@ -1,13 +1,12 @@
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react'
-import { action, category } from '../../../../constants/tracking'
-import { useAccount } from 'wagmi'
-import { truncateWallet } from '../../../../utils/formatting'
 import { useTranslation } from 'react-i18next'
 import classNames from './WalletButton.module.pcss'
-import { trackEvent } from '../../../../hooks/useTracking'
 import { IconWallet } from '@tabler/icons-react'
-import { TrailArrowRightIcon } from '../../../../assets/icons/TrailArrowRightIcon'
 import { Button } from '@concero/ui-kit'
+import { trackEvent } from '@/hooks/useTracking'
+import { action, category } from '@/constants/tracking'
+import { truncateWallet } from '@/utils/formatting'
+import { TrailArrowRightIcon } from '@/assets/icons/TrailArrowRightIcon'
 
 interface Props {
 	className?: string

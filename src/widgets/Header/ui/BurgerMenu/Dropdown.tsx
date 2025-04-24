@@ -1,8 +1,8 @@
 import { type ReactNode, useState } from 'react'
 import { TrailArrowDownIcon } from '../../../../assets/icons/TrailArrowDownIcon'
 import { TrailArrowUpIcon } from '../../../../assets/icons/TrailArrowUpIcon'
-import { Button } from '../../../buttons/Button/Button'
 import classNames from './BurgerMenu.module.pcss'
+import { Button } from '@concero/ui-kit'
 
 interface Props {
 	children: ReactNode
@@ -19,7 +19,7 @@ export const Dropdown = ({ children }: Props) => {
 		<div>
 			<Button
 				variant="tetrary"
-				size="md"
+				size="m"
 				isFull
 				rightIcon={open ? <TrailArrowUpIcon /> : <TrailArrowDownIcon />}
 				onClick={toggleOpen}
