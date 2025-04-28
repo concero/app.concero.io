@@ -35,7 +35,7 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 	return (
 		<Button
 			isFull={isFull}
-			leftIcon={isConnected ? <IconWallet size={16} color="var(--color-grey-600)" /> : null}
+			leftIcon={isConnected ? <IconWallet size={16} color="var(--color-gray-600)" /> : null}
 			className={`${classNames.buttonWallet} ${className} ${isConnected ? classNames.is_connected : ''}`}
 			variant={isConnected ? 'secondary' : 'primary'}
 			rightIcon={isConnected && <TrailArrowRightIcon />}

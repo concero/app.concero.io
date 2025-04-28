@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { Address } from 'viem'
 import { Button } from '@concero/ui-kit'
 import {
 	AccoutSettingsModal,
@@ -15,8 +17,6 @@ import TwitterDisconnectedIcon from '@/shared/assets/icons/Social_X_disabled.svg
 import EmailDiconnectedIconIcon from '@/shared/assets/icons/Email_disabled.svg?react'
 import EmailConnectedIconIcon from '@/shared/assets/icons/Email_connected.svg?react'
 import cls from './AccoutSettings.module.pcss'
-import { useState } from 'react'
-import { Address } from 'viem'
 import { EmailConnectModal } from '../EmailConnectModal/EmailConnectModal'
 import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 type TProps = {

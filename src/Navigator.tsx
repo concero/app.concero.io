@@ -11,20 +11,20 @@ import { Header } from '@/widgets/Header'
 import { AppRouter } from '@/app/AppRouter'
 
 export const Navigator = () => {
-	const { address, isConnected } = useAppKitAccount()
+	const { address } = useAppKitAccount()
 
-	const { data: user } = useUserByAddress(isConnected && address ? (address as Address) : undefined)
+	const { data: user } = useUserByAddress(address ? (address as Address) : undefined)
 	useEffect(() => {
-		if (isConnected && address) {
+		if (address) {
 			posthog.identify(address)
 		}
-	}, [isConnected, address])
+	}, [address])
 
 	const userToUse = user ?? null
 
 	return (
 		<AppScreen>
-			<Header user={userToUse} isWalletConnected={isConnected} />
+			<Header user={userToUse} isWalletConnected={!!address} />
 			<div className={cls.wrap_page}>
 				<AppRouter user={userToUse} />
 				<Footer />

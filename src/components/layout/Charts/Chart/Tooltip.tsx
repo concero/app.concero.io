@@ -35,7 +35,7 @@ export function updateTooltip(param, mainSeries, toolTip, chartElement) {
 		let content = ''
 
 		content += `<b>${toLocaleNumber(price)}</b>`
-		content += `<p style='font-size: 0.875rem; font-weight: 400; color: var(--color-grey-500);'>${formatTime(
+		content += `<p style='font-size: 0.875rem; font-weight: 400; color: var(--color-gray-500);'>${formatTime(
 			param.time,
 			'DD MMM. YYYY',
 		)}</p>`

@@ -217,77 +217,12 @@ body::-webkit-scrollbar {
 }
 
 .light {
-	/* accent colors */
-	--color-accent-500: #9e80f1;
-	--color-accent-600: #7e54f1;
-	--color-accent-700: #5925e6;
-	--color-accent-800: #3b13a8;
-
 	--color-base-background: #fbfbfb;
 	--color-base-black: #fbfbfb;
 	--color-base-white: #fbfbfb;
 	--color-base-transparent: rgba(255, 255, 255, 0);
-	--color-accent-700: #5925e6;
-	/* primary colors */
-	--color-primary-25: #f8f7fe;
-	--color-primary-50: #f3f1fe;
-	--color-primary-100: #efebfe;
-	--color-primary-200: #d9d2fb;
-	--color-primary-300: #c6bcf9;
-	--color-primary-400: #ad9ff6;
-	--color-primary-500: #9e80f1;
-	--color-primary-600: #7e54f1;
-	--color-primary-700: #5925e6;
-	--color-primary-800: #3b13a8;
-	--color-primary-900: #210b5f;
-	/* grey */
-	--color-grey-25: #fcfcfd;
-	--color-grey-50: #f3f5f6;
-	--color-grey-100: #eceff0;
-	--color-grey-200: #d2d8db;
-	--color-grey-300: #bcc5c9;
-	--color-grey-400: #a2aeb3;
-	--color-grey-500: #88939d;
-	--color-grey-600: #66767d;
-	--color-grey-700: #4b575c;
-	--color-grey-800: #313c41;
-	--color-grey-900: #1a2022;
-	/* success */
-	--color-success-25: #e9fcf2;
-	--color-success-50: #dafbea;
-	--color-success-100: #c5f8dd;
-	--color-success-200: #75eeaf;
-	--color-success-300: #42de8c;
-	--color-success-400: #22c474;
-	--color-success-500: #1da562;
-	--color-success-600: #17854f;
-	--color-success-700: #11633b;
-	--color-success-800: #0c4228;
-	--color-success-900: #062416;
-	/* warning */
-	--color-warning-25: #fff7e6;
-	--color-warning-50: #fff2d6;
-	--color-warning-100: #ffeabc;
-	--color-warning-200: #ffd16e;
-	--color-warning-300: #ffb71c;
-	--color-warning-400: #e79e00;
-	--color-warning-500: #c38500;
-	--color-warning-600: #9b6a00;
-	--color-warning-700: #755000;
-	--color-warning-800: #4d3500;
-	--color-warning-900: #291c00;
-	/* danger */
-	--color-danger-25: #fef7f7;
-	--color-danger-50: #feefef;
-	--color-danger-100: #fde8e8;
-	--color-danger-200: #fccccc;
-	--color-danger-300: #fbb1b1;
-	--color-danger-400: #f98d8d;
-	--color-danger-500: #f75e5e;
-	--color-danger-600: #e80c0c;
-	--color-danger-700: #b10909;
-	--color-danger-800: #780606;
-	--color-danger-900: #6f0d06;
+
+
 	/* text */
 	--color-text-primary: #4b575c;
 	--color-text-secondary: #66767d;
@@ -300,71 +235,6 @@ body::-webkit-scrollbar {
 	--color-pool-card-gradient: rgba(115, 53, 247, 0.15); */
 	--color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0);
 	--color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0);
-}
-
-.dark {
-	/* accent colors */
-	--color-accent-500: #9e80f1;
-	--color-accent-600: #7e54f1;
-	--color-accent-700: #5925e6;
-	--color-accent-800: #3b13a8;
-
-	--color-base-background: #000000;
-	--color-base-black: #000000;
-	--color-base-white: #fbfbfb;
-	--color-base-transparent: 'rgba(0, 0, 0, 0)';
-
-	/* primary colors */
-	--color-primary-25: #3e1c96;
-	--color-primary-50: #4a1fb8;
-	--color-primary-100: #5925dc;
-	--color-primary-200: #6938ef;
-	--color-primary-300: #7a5af8;
-	--color-primary-400: #9b8afb;
-	--color-primary-500: #bdb4fe;
-	--color-primary-600: #d9d6fe;
-	--color-primary-700: #ebe9fe;
-	--color-primary-800: #f4f3ff;
-	--color-primary-900: #fafaff;
-
-	/* grey */
-	--color-grey-25: #101828;
-	--color-grey-50: #1d2939;
-	--color-grey-100: #344054;
-	--color-grey-200: #475467;
-	--color-grey-300: #667085;
-	--color-grey-400: #98a2b3;
-	--color-grey-500: #d0d5dd;
-	--color-grey-600: #eaecf0;
-	--color-grey-700: #f2f4f7;
-	--color-grey-800: #f9fafb;
-	--color-grey-900: #fcfcfd;
-
-	/* green */
-	--color-success-25: #054f31;
-	--color-success-50: #05603a;
-	--color-success-100: #027a48;
-	--color-success-200: #039855;
-	--color-success-300: #12b76a;
-	--color-success-400: #32d583;
-	--color-success-500: #6ce9a6;
-	--color-success-600: #a6f4c5;
-	--color-success-700: #d1fadf;
-	--color-success-800: #ecfdf3;
-	--color-success-900: #f6fef9;
-
-	/* text */
-	--color-text-primary: #f7f7f7;
-	--color-button-text-primary: #fbfbfb;
-	--color-text-secondary: #7e7b86;
-	--color-primary-to-lightest: #e3d7fd;
-
-	/* gradients */
-	--color-main-card-gradient: rgba(40, 40, 40, 0.5);
-	--color-convex-card-gradient: rgba(0, 0, 0, 0.02);
-	--color-pool-card-gradient: rgb(65 35 130 / 50%);
-	--color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0.2);
-	--color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0.2);
 }
 
 div#root {
@@ -380,7 +250,7 @@ div#root {
 
 div {
 	box-sizing: border-box;
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	display: flex;
 	flex-direction: column;
 	scrollbar-width: none;
@@ -403,7 +273,7 @@ input,
 label,
 li {
 	box-sizing: border-box;
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-family: inherit;
 	margin: 0;
 	padding: 0;
@@ -415,7 +285,7 @@ li {
 
 textarea {
 	box-sizing: border-box;
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-family: inherit;
 	margin: 0;
 	padding: 0;
@@ -487,14 +357,14 @@ a {
 }
 
 .body1 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 0.875rem;
 	flex: none;
 	line-height: 1rem;
 }
 
 .body2 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 0.875rem;
 	flex: none;
 	font-weight: 400;
@@ -502,14 +372,14 @@ a {
 }
 
 .body3 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 1rem;
 	flex: none;
 	line-height: 1.25rem;
 }
 
 .body4 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 15px;
 	flex: none;
 	font-weight: 500;
