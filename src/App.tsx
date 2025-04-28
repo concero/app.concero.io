@@ -9,9 +9,9 @@ import { bigNumberSettings } from './utils/bigNumberSettings'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './shared/api/tanstackClient'
 import { I18Provider } from './shared/i18n/I18nextProvider'
-import { ThemeProvider } from './shared/ui/Theme'
 import { BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from '@/app/providers/ErrorBoundary/ErrorBoundary'
+import { ThemeProvider } from '@concero/ui-kit'
 
 function App() {
 	useEffect(() => {
