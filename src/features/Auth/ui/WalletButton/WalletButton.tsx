@@ -6,7 +6,7 @@ import { Button } from '@concero/ui-kit'
 import { trackEvent } from '@/hooks/useTracking'
 import { action, category } from '@/constants/tracking'
 import { truncateWallet } from '@/utils/formatting'
-import { TrailArrowRightIcon } from '@/assets/icons/TrailArrowRightIcon'
+import TrailArrowRightIcon from '@/shared/assets/icons/monochrome/TrailArrowRight.svg?react'
 
 interface Props {
 	className?: string

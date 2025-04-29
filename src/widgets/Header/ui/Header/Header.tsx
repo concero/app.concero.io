@@ -1,6 +1,6 @@
 import { type FC, type ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
-import { Button, Tag } from '@concero/ui-kit'
+import { Button, Tag, useTheme } from '@concero/ui-kit'
 import classNames from './Header.module.pcss'
 import { routes } from '@/constants/routes'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
@@ -11,6 +11,7 @@ import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 import { UserMultipliers } from './UserMultipliers/UserMultipliers'
 import { TooltipWrapper } from '@/components/layout/WithTooltip/TooltipWrapper'
 import { Logo } from '../Logo/Logo'
+import LogoDark from '@/shared/assets/images/Logo/ConceroLogoDark.svg?react'
 import { WalletButton } from '@/features/Auth'
 
 interface HeaderProps {
@@ -23,6 +24,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 	const isDesktop = useMediaQuery('desktop')
 	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
+	const { theme } = useTheme()
 	const matchSwapRewards = useMatch(routes.rewards)
 	const matchSwapProfile = useMatch(routes.profile)
 	const getPoints = (points: number | { $numberDecimal: string }): number => {
@@ -38,9 +40,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 		<header className={classNames.header}>
 			{children}
 			<div className={classNames.navigatorContainer}>
-				<div className={classNames.logoContainer}>
-					<Logo />
-				</div>
+				<div className={classNames.logoContainer}>{theme == 'light' ? <Logo /> : <LogoDark />}</div>
 				{isDesktop && (
 					<ul className="gap-xs">
 						<Link style={{ pointerEvents: matchSwapRewards ? 'none' : 'all' }} to={routes.rewards}>

@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import cls from './PageError.module.pcss'
-import { useTranslation } from 'react-i18next'
 import { Button } from '@concero/ui-kit'
 
 interface PageErrorProps {
@@ -14,8 +13,13 @@ export const PageError = ({ className = '' }: PageErrorProps): JSX.Element => {
 
 	return (
 		<div className={clsx(cls.page_error ?? '', {}, [className])}>
-			<h4>Error on page</h4>
-			<Button variant="secondary" onClick={reloadPage}>
+			<h4>Sorry, we are already fixing this issue </h4>
+			<a target="_blank" rel="noreferrer" href="https://concero.io/">
+				<Button variant="secondary_color" size="m">
+					Main Page
+				</Button>
+			</a>
+			<Button variant="tetrary" onClick={reloadPage}>
 				Reload page
 			</Button>
 		</div>

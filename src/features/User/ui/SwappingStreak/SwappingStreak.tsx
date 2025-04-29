@@ -3,7 +3,7 @@ import cls from './SwappingStreak.module.pcss'
 import { InfoIcon } from '../../../../assets/icons/InfoIcon'
 import { StreakTooltip } from '@/components/rewards/StreaksCard/StreakTooltip/StreakTooltip'
 import { getCountStreakPeriodText, TUserResponse, useUserVolume } from '@/entities/User'
-import { Button, Tag } from '@concero/ui-kit'
+import { Button, Tag, useTheme } from '@concero/ui-kit'
 import { Separator } from '@/components/layout/Separator/Separator'
 import { CircleBar } from '@/shared/ui/CircleBar/CircleBar'
 import dayjs from 'dayjs'
@@ -11,6 +11,7 @@ import utc from 'dayjs/plugin/utc'
 import clsx from 'clsx'
 
 import StreakPlaceholder from '@/shared/assets/images/streaks/holding_placeholder.webp'
+import StreakPlaceholderDark from '@/shared/assets/images/streaks/holding_placeholder_dark.webp'
 import { streak_config } from '../../../../entities/User/config/streak'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
@@ -28,6 +29,7 @@ const SWAP_VOLUME = 50
 export const SwappingStreak = (props: TProps) => {
 	const { className, user } = props
 	const isDesktop = useMediaQuery('desktop')
+	const { theme } = useTheme()
 	const todayStart = dayjs().utc().startOf('day').valueOf()
 	const todayEnd = dayjs().utc().endOf('day').valueOf()
 	const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
@@ -106,7 +108,13 @@ export const SwappingStreak = (props: TProps) => {
 					</CircleBar>
 				) : (
 					<div className={cls.placeholder_image_wrap}>
-						<img width={'100%'} height={'100%'} src={StreakPlaceholder} loading="lazy" alt="Quest image" />
+						<img
+							width={'100%'}
+							height={'100%'}
+							src={theme === 'light' ? StreakPlaceholder : StreakPlaceholderDark}
+							loading="lazy"
+							alt="Quest image"
+						/>
 					</div>
 				)}
 			</div>

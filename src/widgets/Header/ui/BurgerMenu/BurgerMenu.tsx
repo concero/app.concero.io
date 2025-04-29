@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import { useTranslation } from 'react-i18next'
-import { IconBurger } from '../../../../assets/icons/IconBurger'
+import IconBurger from '@/shared/assets/icons/monochrome/BurgerMenu.svg?react'
 import LanguageIcon from '@/shared/assets/icons/monochrome/LanguageIcon.svg?react'
 import CrossCloseIcon from '@/shared/assets/icons/monochrome/CrossClose.svg?react'
 import { Button, IconButton, Tag } from '@concero/ui-kit'
@@ -185,6 +185,9 @@ export function BurgerMenu({ user }: Props) {
 				htmlButtonProps={{
 					//@ts-expect-error dadw
 					onClick: handleMenuOpen,
+					style: {
+						zIndex: 1,
+					},
 				}}
 			>
 				{isMenuOpened ? <CrossCloseIcon /> : <IconBurger />}
