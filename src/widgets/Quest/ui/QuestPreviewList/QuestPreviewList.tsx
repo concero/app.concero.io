@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
-import { Button } from '@concero/ui-kit'
+import { Button, useTheme } from '@concero/ui-kit'
 import { useAccount } from 'wagmi'
 import { TQuestTag, TQuestSize, TQuestType, useAllQuests } from '@/entities/Quest'
 import { useUserByAddress } from '@/entities/User'
 import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
+import TestingPortalLightImage from '@/shared/assets/icons/light_testing_portal_rocket.png'
+import TestingPortalDarkImage from '@/shared/assets/icons/dark_testing_portal_rocket.png'
 import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
 import cls from './QuestPreviewList.module.pcss'
 
@@ -12,6 +14,7 @@ type WithoutUndefined<T> = T extends undefined ? never : T
 export const QuestPreviewList = (): JSX.Element => {
 	const { data: quests, isFetching } = useAllQuests()
 	const account = useAccount()
+	const { theme } = useTheme()
 	const { data: user } = useUserByAddress(account.address)
 	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
 
@@ -74,7 +77,10 @@ export const QuestPreviewList = (): JSX.Element => {
 			</div>
 			{viewMode === 'testing' ? (
 				<div className={cls.testing_start_block}>
-					<TestingPortalIcon />
+					<img
+						src={theme === 'light' ? TestingPortalLightImage : TestingPortalDarkImage}
+						alt="Rocket of testing portal"
+					/>
 					<div className={cls.description_block}>
 						<div className={cls.title}>Welcome to the Testing Portal!</div>
 						<div className={cls.subtitle}>
