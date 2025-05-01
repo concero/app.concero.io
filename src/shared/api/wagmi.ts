@@ -130,7 +130,6 @@ export const transports = createTransports()
 export const wagmiAdapter = new WagmiAdapter({
 	networks: chains,
 	transports,
-	ssr: true,
 	projectId,
 })
 
