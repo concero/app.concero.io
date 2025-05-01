@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import IconBurger from '@/shared/assets/icons/monochrome/BurgerMenu.svg?react'
 import LanguageIcon from '@/shared/assets/icons/monochrome/LanguageIcon.svg?react'
 import CrossCloseIcon from '@/shared/assets/icons/monochrome/CrossClose.svg?react'
-import { Button, IconButton, Tag } from '@concero/ui-kit'
+import { Button, IconButton, Tag, useTheme } from '@concero/ui-kit'
 import { TUserResponse } from '@/entities/User'
 import { Link, useMatch } from 'react-router-dom'
 import { routes } from '@/constants/routes'
@@ -21,6 +21,8 @@ import { WalletButton } from '@/features/Auth'
 import { LanguageModal } from '@/components/modals/LanguageModal/LanguageModal'
 import { ContactSupportModal } from '@/components/modals/ContactSupportModal/ContactSupportModal'
 import { ThemeSwitcher } from '@/features/ThemeSwitcher/ui/ThemeSwitcher'
+import { useAppKitAccount } from '@reown/appkit/react'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 interface Props {
 	user: TUserResponse | null
@@ -33,7 +35,9 @@ export function BurgerMenu({ user }: Props) {
 	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
-
+	const { address } = useAppKitAccount()
+	const { theme } = useTheme()
+	const isAdmin = isAdminAddress(address)
 	const matchSwapRewards = useMatch(routes.rewards)
 	const matchSwapProfile = useMatch(routes.profile)
 	const handleKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -154,9 +158,11 @@ export function BurgerMenu({ user }: Props) {
 				</>
 			)}
 
-			<li>
-				<ThemeSwitcher className={classNames.listButton} />
-			</li>
+			{isAdmin && (
+				<li>
+					<ThemeSwitcher className={classNames.listButton} />
+				</li>
+			)}
 			<li>
 				<Button
 					leftIcon={<LanguageIcon />}

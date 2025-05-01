@@ -31,7 +31,7 @@ function App() {
 									v7_relativeSplatPath: true,
 								}}
 							>
-								<ThemeProvider>
+								<ThemeProvider initialTheme="light" storageSettings={{ persist: false }}>
 									<Navigator />
 								</ThemeProvider>
 							</BrowserRouter>
