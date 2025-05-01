@@ -5,9 +5,11 @@ import { TermsConditionModal } from './TermsConditionModal/TermsConditionModal'
 import { termsIsActual } from './model/lib/termsIsActual'
 import { TermsConditionErrorModal } from './TermsConditionErrorModal/TermsConditionErrorModal'
 import { verifyUser } from './model/lib/verifyUser'
+import { useAppKitAccount } from '@reown/appkit/react'
+import { Address } from 'viem'
 
 export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
-	const { address } = useAccount()
+	const { address } = useAppKitAccount()
 
 	const { signMessageAsync } = useSignMessage()
 	const [showModal, setShowModal] = useState<boolean>(false)
@@ -16,7 +18,7 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 
 	useEffect(() => {
 		if (address) {
-			fetchUserByAddress(address)
+			fetchUserByAddress(address as Address)
 				.catch(err => {
 					if (err.status == 403) {
 						setShowModal(true)
@@ -36,7 +38,7 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 			return
 		}
 		setIsLoadingTerms(true)
-		verifyUser(address, signMessageAsync)
+		verifyUser(address as Address, signMessageAsync)
 			.catch(err => {
 				setIsError(true)
 			})
