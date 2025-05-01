@@ -1,4 +1,4 @@
-import { TUserResponse, useDiscordConnection, useTwitterConnection } from '@/entities/User'
+import { TUserResponse, useDiscordConnection, useTwitterConnection, useUserByAddress } from '@/entities/User'
 import cls from './ProfilePage.module.pcss'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
@@ -19,18 +19,33 @@ import { OpenHistoryUserActions } from '@/features/User'
 import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
 import { useAppKitAccount } from '@reown/appkit/react'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 type TProps = {
 	user: TUserResponse | null
 }
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
 	const { address } = useAppKitAccount()
+	const { data: userFromFetch, isPending, error } = useUserByAddress(address ? (address as Address) : undefined)
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
 	if (!address || !user) {
-		console.log('address:', address)
-		console.log('user_id:', user?._id)
+		if (address && isAdminAddress(address)) {
+			return (
+				<div>
+					<LoginRequired />
+					<span>Error: </span>
+					{JSON.stringify({
+						address,
+						user,
+						userFromFetch,
+						isPending,
+						error,
+					})}
+				</div>
+			)
+		}
 
 		return <LoginRequired />
 	}
