@@ -62,7 +62,7 @@ const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.
 		)
 	} catch (error) {
 		console.log('Error:', error, 'action', action)
-		return <></>
+		return <span>Forgotten transaction</span>
 	}
 }
 
