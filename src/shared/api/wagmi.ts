@@ -1,4 +1,4 @@
-import { http } from 'wagmi'
+import { http, createConfig } from 'wagmi'
 import { createPublicClient, fallback, createWalletClient } from 'viem'
 import {
 	type AppKitNetwork,
@@ -130,6 +130,7 @@ export const transports = createTransports()
 export const wagmiAdapter = new WagmiAdapter({
 	networks: chains,
 	transports,
+	ssr: true,
 	projectId,
 })
 

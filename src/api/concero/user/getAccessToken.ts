@@ -20,7 +20,7 @@ export const getAccessToken = async (
 			throw new Error('No nonce received')
 		}
 
-		const signature = await signMessageAsync({ message: nonce })
+		const signature = await signMessageAsync({ message: nonce, account: address })
 
 		const verifyResponse = await post(`${process.env.CONCERO_API_URL}/auth/verify`, {
 			address,

@@ -11,7 +11,7 @@ import { Address } from 'viem'
 export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 	const { address } = useAppKitAccount()
 
-	const { signMessageAsync } = useSignMessage()
+	const { signMessageAsync,  } = useSignMessage()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isLoadingTerms, setIsLoadingTerms] = useState<boolean>(false)
