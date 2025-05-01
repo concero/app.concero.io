@@ -26,27 +26,10 @@ type TProps = {
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
 	const { address } = useAppKitAccount()
-	const { data: userFromFetch, isPending, error } = useUserByAddress(address ? (address as Address) : undefined)
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
 	if (!address || !user) {
-		if (address && isAdminAddress(address)) {
-			return (
-				<div>
-					<LoginRequired />
-					<span>Error: </span>
-					{JSON.stringify({
-						address,
-						user,
-						userFromFetch,
-						isPending,
-						error,
-					})}
-				</div>
-			)
-		}
-
 		return <LoginRequired />
 	}
 

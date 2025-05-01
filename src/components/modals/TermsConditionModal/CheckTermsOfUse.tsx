@@ -15,7 +15,7 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isLoadingTerms, setIsLoadingTerms] = useState<boolean>(false)
-
+	const [error, setError] = useState<string>('')
 	useEffect(() => {
 		if (address) {
 			fetchUserByAddress(address as Address)
@@ -41,6 +41,7 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 		verifyUser(address as Address, signMessageAsync)
 			.catch(err => {
 				setIsError(true)
+				setError(err)
 			})
 			.finally(() => {
 				setShowModal(false)
@@ -53,6 +54,7 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 			{children}
 			{isError ? (
 				<TermsConditionErrorModal
+					error={error}
 					show={isError}
 					setShow={newValue => {
 						setIsError(newValue)

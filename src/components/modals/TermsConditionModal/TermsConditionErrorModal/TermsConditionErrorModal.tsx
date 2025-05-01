@@ -9,9 +9,10 @@ type TProps = {
 	show: boolean
 	setShow: (newShow: boolean) => void
 	onTryAgain: () => void
+	error?: string
 }
 export const TermsConditionErrorModal = (props: TProps): JSX.Element => {
-	const { setShow, show, onTryAgain } = props
+	const { setShow, show, onTryAgain, error } = props
 	return (
 		<Modal
 			className={cls.modal_block}
@@ -23,7 +24,7 @@ export const TermsConditionErrorModal = (props: TProps): JSX.Element => {
 				<WarningBoxIcon />
 			</div>
 			<p className={classNames(cls.block, {}, [cls.description])}>Something went wrong, try again</p>
-			<div className={classNames(cls.block, {}, [cls.condition])}></div>
+			<div className={classNames(cls.block, {}, [cls.condition])}>Error: {error}</div>
 			<Button variant="primary" className={cls.block} isFull onClick={onTryAgain} size="l">
 				Try again
 			</Button>
