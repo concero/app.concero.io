@@ -12,7 +12,7 @@ export const verifyUser = async (address: Address, signMessageAsync: SignMessage
 			try {
 				await getAccessToken(address, signMessageAsync)
 				isIdleVerify = false
-				verifyUser(address, signMessageAsync)
+				return verifyUser(address, signMessageAsync)
 			} catch (error) {
 				console.error('Error during get access token', errObj)
 				throw new Error(err)
