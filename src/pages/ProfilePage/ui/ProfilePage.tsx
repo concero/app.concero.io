@@ -24,14 +24,16 @@ type TProps = {
 }
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
-	const { address, isConnected } = useAppKitAccount()
+	const { address } = useAppKitAccount()
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
-	if (!isConnected) {
+	if (!address || !user) {
+		console.log('address:', address)
+		console.log('user_id:', user?._id)
+
 		return <LoginRequired />
 	}
-	if (!user) return null
 
 	const addresToShow = truncateWallet(user.address, 4)
 	const Social_X_toShow = user.connectedSocials?.twitter?.screen_name ?? '-'
