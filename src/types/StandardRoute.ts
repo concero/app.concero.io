@@ -2,16 +2,6 @@ import { type Execution } from '@lifi/types/dist/step'
 import type * as lifiTypes from '@lifi/sdk/dist/types'
 import type { BestRouteResponse } from 'rango-types/src/api/main/routing'
 
-export interface Providers {
-	name: string
-	symbol: string
-	_id: string
-}
-
-interface Insurance {
-	state: string
-	fee_amount_usd: string
-}
 
 export enum FeeTypes {
 	gas = 'gas',

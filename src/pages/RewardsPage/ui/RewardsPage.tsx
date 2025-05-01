@@ -10,7 +10,6 @@ import { config } from '@/constants/config'
 
 interface Props {
 	user: TUserResponse | null
-	loading: boolean
 }
 
 export const RewardsPage = ({ user }: Props) => {

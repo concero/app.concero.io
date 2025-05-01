@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { ListModal } from '../ListModal/ListModal'
 import { useState } from 'react'
-import { Button } from '../../buttons/Button/Button'
-import classNames from '../../layout/Header/WalletButton/WalletButton.module.pcss'
-import { setItem } from '../../../utils/localStorage'
+// import classNames from '../../layout/Header/WalletButton/WalletButton.module.pcss'
+import classNames from '@/features/Auth/ui/WalletButton/WalletButton.module.pcss'
+
 import { Language, languages } from '@/shared/i18n/languages'
+import { Button } from '@concero/ui-kit'
+import { setItem } from '@/utils/localStorage'
 
 interface LanguageModalProps {
 	setShow: (value: boolean) => void
@@ -32,7 +34,7 @@ export function LanguageModal({ setShow, show }: LanguageModalProps) {
 				onClick={() => {
 					onSelect(item)
 				}}
-				variant={isSelected ? 'secondaryColor' : 'secondary'}
+				variant={isSelected ? 'secondary_color' : 'secondary'}
 				className={classNames.renderItemContainer}
 			>
 				{item.title}

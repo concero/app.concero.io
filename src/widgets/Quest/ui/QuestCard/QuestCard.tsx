@@ -3,6 +3,7 @@ import cls from './QuestCard.module.pcss'
 import { ConnectWallet } from '@/features/Auth'
 import { TQuest, TQuestCardStatus } from '@/entities/Quest'
 import { QuestStepGroup, ClaimReward, StartQuest } from '@/features/Quest'
+import { useTheme } from '@concero/ui-kit'
 
 type TProps = {
 	quest: TQuest
@@ -12,7 +13,7 @@ type TProps = {
 
 export const QuestCard = (props: TProps) => {
 	const { quest, status, onClaim } = props
-
+	const { theme } = useTheme()
 	let controls = null
 	let showSteps = false
 	let showOnlyOptionalSteps = false
@@ -56,7 +57,7 @@ export const QuestCard = (props: TProps) => {
 					width={'100%'}
 					src={
 						quest.image
-							? `${config.assetsURI}/icons/quests/${quest.image}`
+							? `${config.assetsURI}/icons/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`
 							: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
 					}
 					onError={(e: any) => {

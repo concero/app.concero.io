@@ -11,7 +11,7 @@ import { getIsClaimedQuest } from '../../model/lib/getIsClaimedQuest'
 import { getIsDoneQuest } from '@/entities/User'
 import { ClaimReward } from '@/features/Quest'
 import { useEffect, useRef, useState } from 'react'
-import { IconButton } from '@concero/ui-kit'
+import { IconButton, useTheme } from '@concero/ui-kit'
 
 type TClassname = string
 export type TQuestPreviewSize = 's' | 'm' | 'l' | 'xl'
@@ -26,7 +26,7 @@ type TProps = {
 
 export const QuestPreviewCard = (props: TProps) => {
 	const { size = 's', quest, user, onClick, onClaim, className } = props
-
+	const { theme } = useTheme()
 	if (!quest) return null
 
 	const [isHovered, setIsHovered] = useState<boolean>(false)
@@ -85,7 +85,7 @@ export const QuestPreviewCard = (props: TProps) => {
 						width={'100%'}
 						src={
 							quest.image
-								? `${config.assetsURI}/icons/quests/${quest.image}`
+								? `${config.assetsURI}/icons/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`
 								: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
 						}
 						onError={(e: any) => {

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Button, Tag } from '@concero/ui-kit'
+import { Button, Tag, useTheme } from '@concero/ui-kit'
 import { getCountStreakPeriodText, TUserResponse, useGetUserEarnings } from '@/entities/User'
 import { TooltipWrapper } from '@/components/layout/WithTooltip/TooltipWrapper'
 import { StreakTooltip } from '@/components/rewards/StreaksCard/StreakTooltip/StreakTooltip'
@@ -7,6 +7,7 @@ import { InfoIcon } from '../../../../assets/icons/InfoIcon'
 import TrophyIcon from '@/shared/assets/icons/monochrome/Trophy.svg?react'
 import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
 import LpHoldingStreak from '@/shared/assets/images/streaks/holding_placeholder.webp'
+import LpHoldingStreakDark from '@/shared/assets/images/streaks/holding_placeholder_dark.webp'
 import cls from './HoldingStreak.module.pcss'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { Address } from 'viem'
@@ -24,6 +25,7 @@ const tooltipTitle = 'LP holding Rewards'
 
 export const HoldingStreak = (props: TProps) => {
 	const { className, user } = props
+	const { theme } = useTheme()
 	const isDesktop = useMediaQuery('desktop')
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
@@ -122,7 +124,13 @@ export const HoldingStreak = (props: TProps) => {
 					</>
 				) : (
 					<div className={cls.placeholder_image_wrap}>
-						<img width={'100%'} height={'100%'} src={LpHoldingStreak} loading="lazy" alt="Quest image" />
+						<img
+							width={'100%'}
+							height={'100%'}
+							src={theme === 'light' ? LpHoldingStreak : LpHoldingStreakDark}
+							loading="lazy"
+							alt="Quest image"
+						/>
 					</div>
 				)}
 			</div>

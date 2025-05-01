@@ -16,158 +16,9 @@
 	--sp-xxs: 2px;
 	--sp-screen-v: 20px;
 	--sp-screen-h: 20px;
-	/* Spacing */
-	--space-xxs: 4px; /* space-0.25 */
-	--space-xs: 8px; /* space-0.5 */
-	--space-s: 12px; /* space-0.75 */
-	--space-m: 16px; /* space-1 */
-	--space-l: 24px; /* space-1.5 */
-	--space-xl: 32px; /* space-2 */
-	--space-xxl: 40px; /* space-2.5 */
-	--space-xxxl: 48px; /* space-3 */
-	--space-xxxxl: 64px; /* space-4 */
-	--space-xxxxxl: 96px; /* space-6 */
-	--space-xxxxxxl: 128px; /* space-8 */
 
-	/*Fonts*/
-	/* General font styling */
-	--font-body-small-family: 'DM_Sans', sans-serif;
-	--font-body-small-weight: 400;
-	--font-body-small-size: 12px;
-	--font-body-small-line-height: 16px;
-
-	--font-body-medium-family: 'DM_Sans', sans-serif;
-	--font-body-medium-weight: 400;
-	--font-body-medium-size: 14px;
-	--font-body-medium-line-height: 18px;
-
-	--font-body-large-family: 'DM_Sans', sans-serif;
-	--font-body-large-weight: 400;
-	--font-body-large-size: 16px;
-	--font-body-large-line-height: 20px;
-
-	--font-body-xlarge-family: 'DM_Sans', sans-serif;
-	--font-body-xlarge-weight: 400;
-	--font-body-xlarge-size: 18px;
-	--font-body-xlarge-line-height: 22px;
-
-	/* Button font */
-	--font-button-medium-family: 'DM_Sans', sans-serif;
-	--font-button-medium-weight: 500;
-	--font-button-medium-size: 14px;
-	--font-button-medium-line-height: 18px;
-
-	--font-button-large-family: 'DM_Sans', sans-serif;
-	--font-button-large-weight: 500;
-	--font-button-large-size: 16px;
-	--font-button-large-line-height: 18px;
-
-	--font-button-xlarge-family: 'DM_Sans', sans-serif;
-	--font-button-xlarge-weight: 500;
-	--font-button-xlarge-size: 18px;
-	--font-button-xlarge-line-height: 22px;
-
-	/* Heading */
-	--font-heading-small-family: 'DM_Sans', sans-serif;
-	--font-heading-small-weight: 500;
-	--font-heading-small-size: 14px;
-	--font-heading-small-line-height: 18px;
-	--font-heading-small-letter-spacing: 0%;
-
-	--font-heading-medium-family: 'DM_Sans', sans-serif;
-	--font-heading-medium-weight: 500;
-	--font-heading-medium-size: 16px;
-	--font-heading-medium-line-height: 20px;
-	--font-heading-medium-letter-spacing: 0%;
-
-	--font-heading-large-family: 'DM_Sans', sans-serif;
-	--font-heading-large-weight: 500;
-	--font-heading-large-size: 18px;
-	--font-heading-large-line-height: 22px;
-	--font-heading-large-letter-spacing: 0%;
-
-	--font-heading-xlarge-family: 'DM_Sans', sans-serif;
-	--font-heading-xlarge-weight: 500;
-	--font-heading-xlarge-size: 24px;
-	--font-heading-xlarge-line-height: 28px;
-	--font-heading-xlarge-letter-spacing: -2%;
-
-	--font-heading-xxlarge-family: 'DM_Sans', sans-serif;
-	--font-heading-xxlarge-weight: 500;
-	--font-heading-xxlarge-size: 32px;
-	--font-heading-xxlarge-line-height: 36px;
-	--font-heading-xxlarge-letter-spacing: -2%;
-
-	--font-heading-xxxlarge-family: 'DM_Sans', sans-serif;
-	--font-heading-xxxlarge-weight: 500;
-	--font-heading-xxxlarge-size: 48px;
-	--font-heading-xxxlarge-line-height: 56px;
-	--font-heading-xxxlarge-letter-spacing: -2%;
-
-	--font-heading-xxxxlarge-family: 'DM_Sans', sans-serif;
-	--font-heading-xxxxlarge-weight: 500;
-	--font-heading-xxxxlarge-size: 64px;
-	--font-heading-xxxxlarge-line-height: 68px;
-	--font-heading-xxxxlarge-letter-spacing: -2%;
-
-	/*Fonts to use*/
-	/* Body */
-
-	--font-body-small: var(--font-body-small-weight) var(--font-body-small-size) / var(--font-body-small-line-height)
-		var(--font-body-small-family);
-
-	--font-body-medium: var(--font-body-medium-weight) var(--font-body-medium-size) /
-		var(--font-body-medium-line-height) var(--font-body-medium-family);
-
-	--font-body-large: var(--font-body-large-weight) var(--font-body-large-size) / var(--font-body-large-line-height)
-		var(--font-body-large-family);
-
-	--font-body-xlarge: var(--font-body-xlarge-weight) var(--font-body-xlarge-size) /
-		var(--font-body-xlarge-line-height) var(--font-body-xlarge-family);
-
-	/* Button */
-
-	--font-button-medium: var(--font-button-medium-weight) var(--font-button-medium-size) /
-		var(--font-button-medium-line-height) var(--font-button-medium-family);
-
-	--font-button-large: var(--font-button-large-weight) var(--font-button-large-size) /
-		var(--font-button-large-line-height) var(--font-button-large-family);
-
-	--font-button-xlarge: var(--font-button-xlarge-weight) var(--font-button-xlarge-size) /
-		var(--font-button-xlarge-line-height) var(--font-button-xlarge-family);
-
-	/* Heading */
-
-	--font-heading-small: var(--font-heading-small-weight) var(--font-heading-small-size) /
-		var(--font-heading-small-line-height) var(--font-heading-small-family);
-
-	--font-heading-medium: var(--font-heading-medium-weight) var(--font-heading-medium-size) /
-		var(--font-heading-medium-line-height) var(--font-heading-medium-family);
-	--font-heading-large: var(--font-heading-large-weight) var(--font-heading-large-size) /
-		var(--font-heading-large-line-height) var(--font-heading-large-family);
-
-	--font-heading-xlarge: var(--font-heading-xlarge-weight) var(--font-heading-xlarge-size) /
-		var(--font-heading-xlarge-line-height) var(--font-heading-xlarge-family);
-	--font-heading-xxlarge: var(--font-heading-xxlarge-weight) var(--font-heading-xxlarge-size) /
-		var(--font-heading-xxlarge-line-height) var(--font-heading-xxlarge-family);
-	--font-heading-xxxlarge: var(--font-heading-xxxlarge-weight) var(--font-heading-xxxlarge-size) /
-		var(--font-heading-xxxlarge-line-height) var(--font-heading-xxxlarge-family);
-	--font-heading-xxxxlarge: var(--font-heading-xxxxlarge-weight) var(--font-heading-xxxxlarge-size) /
-		var(--font-heading-xxxxlarge-line-height) var(--font-heading-xxxxlarge-family);
 	color-scheme: light dark;
 
-	/*color gray*/
-	--color-gray-25: #fcfcfd;
-	--color-gray-50: #f3f5f6;
-	--color-gray-100: #eceff0;
-	--color-gray-200: #d2d8db;
-	--color-gray-300: #bcc5c9;
-	--color-gray-400: #a2aeb3;
-	--color-gray-500: #88939d;
-	--color-gray-600: #66767d;
-	--color-gray-700: #4b575c;
-	--color-gray-800: #313c41;
-	--color-gray-900: #1a2022;
 	font-family: DM_Sans, sans-serif;
 	font-size: 16px; /* base font size, 1rem */
 	-webkit-font-smoothing: antialiased;
@@ -217,81 +68,14 @@ body::-webkit-scrollbar {
 }
 
 .light {
-	/* accent colors */
-	--color-accent-500: #9e80f1;
-	--color-accent-600: #7e54f1;
-	--color-accent-700: #5925e6;
-	--color-accent-800: #3b13a8;
-
-	--color-base-background: #fbfbfb;
-	--color-base-black: #fbfbfb;
-	--color-base-white: #fbfbfb;
+	--color-base-background: var(--color-gray-25);
+	--color-base-black:  var(--color-gray-25);
+	--color-base-white: var(--color-gray-25);
 	--color-base-transparent: rgba(255, 255, 255, 0);
-	--color-accent-700: #5925e6;
-	/* primary colors */
-	--color-primary-25: #f8f7fe;
-	--color-primary-50: #f3f1fe;
-	--color-primary-100: #efebfe;
-	--color-primary-200: #d9d2fb;
-	--color-primary-300: #c6bcf9;
-	--color-primary-400: #ad9ff6;
-	--color-primary-500: #9e80f1;
-	--color-primary-600: #7e54f1;
-	--color-primary-700: #5925e6;
-	--color-primary-800: #3b13a8;
-	--color-primary-900: #210b5f;
-	/* grey */
-	--color-grey-25: #fcfcfd;
-	--color-grey-50: #f3f5f6;
-	--color-grey-100: #eceff0;
-	--color-grey-200: #d2d8db;
-	--color-grey-300: #bcc5c9;
-	--color-grey-400: #a2aeb3;
-	--color-grey-500: #88939d;
-	--color-grey-600: #66767d;
-	--color-grey-700: #4b575c;
-	--color-grey-800: #313c41;
-	--color-grey-900: #1a2022;
-	/* success */
-	--color-success-25: #e9fcf2;
-	--color-success-50: #dafbea;
-	--color-success-100: #c5f8dd;
-	--color-success-200: #75eeaf;
-	--color-success-300: #42de8c;
-	--color-success-400: #22c474;
-	--color-success-500: #1da562;
-	--color-success-600: #17854f;
-	--color-success-700: #11633b;
-	--color-success-800: #0c4228;
-	--color-success-900: #062416;
-	/* warning */
-	--color-warning-25: #fff7e6;
-	--color-warning-50: #fff2d6;
-	--color-warning-100: #ffeabc;
-	--color-warning-200: #ffd16e;
-	--color-warning-300: #ffb71c;
-	--color-warning-400: #e79e00;
-	--color-warning-500: #c38500;
-	--color-warning-600: #9b6a00;
-	--color-warning-700: #755000;
-	--color-warning-800: #4d3500;
-	--color-warning-900: #291c00;
-	/* danger */
-	--color-danger-25: #fef7f7;
-	--color-danger-50: #feefef;
-	--color-danger-100: #fde8e8;
-	--color-danger-200: #fccccc;
-	--color-danger-300: #fbb1b1;
-	--color-danger-400: #f98d8d;
-	--color-danger-500: #f75e5e;
-	--color-danger-600: #e80c0c;
-	--color-danger-700: #b10909;
-	--color-danger-800: #780606;
-	--color-danger-900: #6f0d06;
+
 	/* text */
 	--color-text-primary: #4b575c;
 	--color-text-secondary: #66767d;
-	/* --color-button-text-primary: #fbfbfb; */
 	--color-primary-to-lightest: #7335f7;
 
 	/* gradients */
@@ -300,71 +84,6 @@ body::-webkit-scrollbar {
 	--color-pool-card-gradient: rgba(115, 53, 247, 0.15); */
 	--color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0);
 	--color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0);
-}
-
-.dark {
-	/* accent colors */
-	--color-accent-500: #9e80f1;
-	--color-accent-600: #7e54f1;
-	--color-accent-700: #5925e6;
-	--color-accent-800: #3b13a8;
-
-	--color-base-background: #000000;
-	--color-base-black: #000000;
-	--color-base-white: #fbfbfb;
-	--color-base-transparent: 'rgba(0, 0, 0, 0)';
-
-	/* primary colors */
-	--color-primary-25: #3e1c96;
-	--color-primary-50: #4a1fb8;
-	--color-primary-100: #5925dc;
-	--color-primary-200: #6938ef;
-	--color-primary-300: #7a5af8;
-	--color-primary-400: #9b8afb;
-	--color-primary-500: #bdb4fe;
-	--color-primary-600: #d9d6fe;
-	--color-primary-700: #ebe9fe;
-	--color-primary-800: #f4f3ff;
-	--color-primary-900: #fafaff;
-
-	/* grey */
-	--color-grey-25: #101828;
-	--color-grey-50: #1d2939;
-	--color-grey-100: #344054;
-	--color-grey-200: #475467;
-	--color-grey-300: #667085;
-	--color-grey-400: #98a2b3;
-	--color-grey-500: #d0d5dd;
-	--color-grey-600: #eaecf0;
-	--color-grey-700: #f2f4f7;
-	--color-grey-800: #f9fafb;
-	--color-grey-900: #fcfcfd;
-
-	/* green */
-	--color-success-25: #054f31;
-	--color-success-50: #05603a;
-	--color-success-100: #027a48;
-	--color-success-200: #039855;
-	--color-success-300: #12b76a;
-	--color-success-400: #32d583;
-	--color-success-500: #6ce9a6;
-	--color-success-600: #a6f4c5;
-	--color-success-700: #d1fadf;
-	--color-success-800: #ecfdf3;
-	--color-success-900: #f6fef9;
-
-	/* text */
-	--color-text-primary: #f7f7f7;
-	--color-button-text-primary: #fbfbfb;
-	--color-text-secondary: #7e7b86;
-	--color-primary-to-lightest: #e3d7fd;
-
-	/* gradients */
-	--color-main-card-gradient: rgba(40, 40, 40, 0.5);
-	--color-convex-card-gradient: rgba(0, 0, 0, 0.02);
-	--color-pool-card-gradient: rgb(65 35 130 / 50%);
-	--color-tr-odd-row-gradient-from: rgba(60, 60, 60, 0.2);
-	--color-tr-odd-row-gradient-to: rgba(17, 17, 17, 0.2);
 }
 
 div#root {
@@ -380,7 +99,7 @@ div#root {
 
 div {
 	box-sizing: border-box;
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	display: flex;
 	flex-direction: column;
 	scrollbar-width: none;
@@ -403,7 +122,7 @@ input,
 label,
 li {
 	box-sizing: border-box;
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-family: inherit;
 	margin: 0;
 	padding: 0;
@@ -415,7 +134,7 @@ li {
 
 textarea {
 	box-sizing: border-box;
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-family: inherit;
 	margin: 0;
 	padding: 0;
@@ -487,14 +206,14 @@ a {
 }
 
 .body1 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 0.875rem;
 	flex: none;
 	line-height: 1rem;
 }
 
 .body2 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 0.875rem;
 	flex: none;
 	font-weight: 400;
@@ -502,22 +221,17 @@ a {
 }
 
 .body3 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 1rem;
 	flex: none;
 	line-height: 1.25rem;
 }
 
 .body4 {
-	color: var(--color-grey-500);
+	color: var(--color-gray-500);
 	font-size: 15px;
 	flex: none;
 	font-weight: 500;
-}
-
-.tagBody {
-	color: var(--color-grey-500);
-	font-size: 0.85rem;
 }
 
 button {
@@ -525,35 +239,4 @@ button {
 	cursor: pointer;
 	font-weight: 500;
 	outline: none;
-}
-
-#tv-attr-logo {
-	display: none;
-}
-
-.cardHeaderTitle {
-	color: var(--color-grey-500);
-}
-
-.cerpTestText {
-	text-align: center;
-	margin: 0 auto;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-
-	h1 {
-		margin: 0 20px;
-	}
-}
-
-@media (max-width: 768px) {
-	.cerpTestText {
-		h1 {
-			font-size: 2rem;
-			margin: 0 20px;
-		}
-	}
 }
