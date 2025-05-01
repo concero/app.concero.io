@@ -10,8 +10,8 @@ import { Address } from 'viem'
 
 export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 	const { address } = useAppKitAccount()
-
-	const { signMessageAsync,  } = useSignMessage()
+	const { isConnected } = useAccount()
+	const { signMessageAsync } = useSignMessage()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isLoadingTerms, setIsLoadingTerms] = useState<boolean>(false)
@@ -67,7 +67,7 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 				/>
 			) : (
 				<TermsConditionModal
-					show={showModal}
+					show={showModal && isConnected}
 					setShow={setShowModal}
 					onVerify={handleVerify}
 					isVerifyLoading={isLoadingTerms}
