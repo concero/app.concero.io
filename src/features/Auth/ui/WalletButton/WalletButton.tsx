@@ -8,9 +8,10 @@ import { action, category } from '@/constants/tracking'
 import { truncateWallet } from '@/utils/formatting'
 import TrailArrowRightIcon from '@/shared/assets/icons/monochrome/TrailArrowRight.svg?react'
 import { injected, useAccount, useConnect, useDisconnect } from 'wagmi'
+import { walletConnect } from 'wagmi/connectors'
 import { useEffect } from 'react'
 import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
-
+import { projectId } from '@/shared/api/wagmi'
 interface Props {
 	className?: string
 	isFull?: boolean
@@ -18,7 +19,7 @@ interface Props {
 
 export const WalletButton = ({ className, isFull = false }: Props) => {
 	const { address } = useAppKitAccount()
-	const { open } = useAppKit()
+	// const { open } = useAppKit()
 	const { isConnected } = useAccount()
 	const { connect, error } = useConnect()
 	const { disconnect } = useDisconnect()
@@ -28,7 +29,11 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 		if (isConnected) {
 			disconnect()
 		} else {
-			connect({ connector: injected() })
+			if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+				connect({ connector: injected() })
+			} else {
+				connect({ connector: walletConnect({ projectId: projectId }) })
+			}
 		}
 		void trackEvent({
 			category: category.Wallet,
@@ -37,11 +42,12 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 		})
 	}
 	useEffect(() => {
-		if (address && isAdminAddress(address))
+		if (address && isAdminAddress(address)) {
 			console.log('@WalletButton:', {
 				address,
 				error,
 			})
+		}
 	}, [error])
 	const getStatus = () => {
 		if (address && isConnected) return truncateWallet(address, 4)

@@ -9,9 +9,10 @@ import { useAppKitAccount } from '@reown/appkit/react'
 import { Address } from 'viem'
 import { Header } from '@/widgets/Header'
 import { AppRouter } from '@/app/AppRouter'
+import { useAccount } from 'wagmi'
 
 export const Navigator = () => {
-	const { address } = useAppKitAccount()
+	const { address } = useAccount()
 
 	const { data: user } = useUserByAddress(address ? (address as Address) : undefined)
 	useEffect(() => {
