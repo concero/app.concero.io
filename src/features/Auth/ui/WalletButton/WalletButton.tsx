@@ -8,6 +8,8 @@ import { action, category } from '@/constants/tracking'
 import { truncateWallet } from '@/utils/formatting'
 import TrailArrowRightIcon from '@/shared/assets/icons/monochrome/TrailArrowRight.svg?react'
 import { injected, useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useEffect } from 'react'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 interface Props {
 	className?: string
@@ -18,7 +20,7 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 	const { address } = useAppKitAccount()
 	const { open } = useAppKit()
 	const { isConnected } = useAccount()
-	const { connect } = useConnect()
+	const { connect, error } = useConnect()
 	const { disconnect } = useDisconnect()
 	const { t } = useTranslation()
 
@@ -34,7 +36,13 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 			label: 'Clicked Connect Wallet',
 		})
 	}
-
+	useEffect(() => {
+		if (address && isAdminAddress(address))
+			console.log('@WalletButton:', {
+				address,
+				error,
+			})
+	}, [error])
 	const getStatus = () => {
 		if (address && isConnected) return truncateWallet(address, 4)
 		return t('walletButton.connectWallet')

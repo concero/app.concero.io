@@ -1,10 +1,20 @@
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 import { Button } from '@concero/ui-kit'
 import { useAppKit } from '@reown/appkit/react'
-import { injected, useConnect } from 'wagmi'
+import { useEffect } from 'react'
+import { injected, useAccount, useConnect } from 'wagmi'
 
 export const ConnectWallet = () => {
 	// const { open } = useAppKit()
-	const { connect } = useConnect()
+	const { address } = useAccount()
+	const { connect, error } = useConnect()
+	useEffect(() => {
+		if (address && isAdminAddress(address))
+			console.log('@ConnectWallet:', {
+				address,
+				error,
+			})
+	}, [error])
 	return (
 		<Button
 			size="l"
