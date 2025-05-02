@@ -18,14 +18,12 @@ import { Separator } from '@/components/layout/Separator/Separator'
 import { OpenHistoryUserActions } from '@/features/User'
 import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
-import { useAppKitAccount } from '@reown/appkit/react'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 type TProps = {
 	user: TUserResponse | null
 }
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
-	const { address } = useAppKitAccount()
+	const { address } = useAccount()
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
