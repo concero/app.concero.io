@@ -18,9 +18,7 @@ interface Props {
 }
 
 export const WalletButton = ({ className, isFull = false }: Props) => {
-	const { address } = useAppKitAccount()
-	// const { open } = useAppKit()
-	const { isConnected } = useAccount()
+	const { isConnected, address } = useAccount()
 	const { connect, error } = useConnect()
 	const { disconnect } = useDisconnect()
 	const { t } = useTranslation()

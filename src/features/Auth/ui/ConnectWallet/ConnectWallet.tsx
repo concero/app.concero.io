@@ -1,8 +1,9 @@
+import { projectId } from '@/shared/api/wagmi'
 import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 import { Button } from '@concero/ui-kit'
-import { useAppKit } from '@reown/appkit/react'
 import { useEffect } from 'react'
 import { injected, useAccount, useConnect } from 'wagmi'
+import { walletConnect } from 'wagmi/connectors'
 
 export const ConnectWallet = () => {
 	// const { open } = useAppKit()
@@ -19,7 +20,11 @@ export const ConnectWallet = () => {
 		<Button
 			size="l"
 			onClick={async () => {
-				connect({ connector: injected() })
+				if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+					connect({ connector: injected() })
+				} else {
+					connect({ connector: walletConnect({ projectId: projectId }) })
+				}
 			}}
 		>
 			Connect wallet
