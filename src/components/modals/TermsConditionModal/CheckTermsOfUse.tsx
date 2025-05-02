@@ -7,10 +7,19 @@ import { TermsConditionErrorModal } from './TermsConditionErrorModal/TermsCondit
 import { verifyUser } from './model/lib/verifyUser'
 import { useAppKitAccount } from '@reown/appkit/react'
 import { Address } from 'viem'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 	const { address } = useAppKitAccount()
-	const { isConnected } = useAccount()
+	const { address: wagmiAddress, isConnected } = useAccount()
+	useEffect(() => {
+		if (address && isAdminAddress(address))
+			console.log('@CheckTermsOfUseDecorator:', {
+				address,
+				wagmiAddress,
+				isConnected,
+			})
+	}, [address, wagmiAddress, isConnected])
 	const { signMessageAsync } = useSignMessage()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
