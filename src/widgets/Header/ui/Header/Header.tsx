@@ -73,7 +73,7 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 					</>
 				)}
 				{!isMobile && <WalletButton />}
-				<BurgerMenu user={user} />
+				<BurgerMenu />
 			</div>
 		</header>
 	)

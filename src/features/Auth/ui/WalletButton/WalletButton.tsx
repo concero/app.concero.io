@@ -1,4 +1,3 @@
-import { useAppKit, useAppKitAccount } from '@reown/appkit/react'
 import { useTranslation } from 'react-i18next'
 import classNames from './WalletButton.module.pcss'
 import { IconWallet } from '@tabler/icons-react'
@@ -10,16 +9,16 @@ import TrailArrowRightIcon from '@/shared/assets/icons/monochrome/TrailArrowRigh
 import { injected, useAccount, useConnect, useDisconnect } from 'wagmi'
 import { walletConnect } from 'wagmi/connectors'
 import { useEffect } from 'react'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 import { projectId } from '@/shared/api/wagmi'
 interface Props {
 	className?: string
 	isFull?: boolean
+	setLoading?: (isLoading: boolean) => void
 }
 
-export const WalletButton = ({ className, isFull = false }: Props) => {
+export const WalletButton = ({ className, isFull = false, setLoading }: Props) => {
 	const { isConnected, address } = useAccount()
-	const { connect, error } = useConnect()
+	const { connect, error, isPending } = useConnect()
 	const { disconnect } = useDisconnect()
 	const { t } = useTranslation()
 
@@ -40,13 +39,8 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 		})
 	}
 	useEffect(() => {
-		if (address && isAdminAddress(address)) {
-			console.log('@WalletButton:', {
-				address,
-				error,
-			})
-		}
-	}, [error])
+		setLoading?.(isPending)
+	}, [isPending])
 	const getStatus = () => {
 		if (address && isConnected) return truncateWallet(address, 4)
 		return t('walletButton.connectWallet')

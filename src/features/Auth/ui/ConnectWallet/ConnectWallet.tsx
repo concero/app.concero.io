@@ -1,21 +1,10 @@
 import { projectId } from '@/shared/api/wagmi'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 import { Button } from '@concero/ui-kit'
-import { useEffect } from 'react'
 import { injected, useAccount, useConnect } from 'wagmi'
 import { walletConnect } from 'wagmi/connectors'
 
 export const ConnectWallet = () => {
-	// const { open } = useAppKit()
-	const { address } = useAccount()
-	const { connect, error } = useConnect()
-	useEffect(() => {
-		if (address && isAdminAddress(address))
-			console.log('@ConnectWallet:', {
-				address,
-				error,
-			})
-	}, [error])
+	const { connect } = useConnect()
 	return (
 		<Button
 			size="l"
