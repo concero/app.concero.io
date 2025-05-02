@@ -7,6 +7,7 @@ import { trackEvent } from '@/hooks/useTracking'
 import { action, category } from '@/constants/tracking'
 import { truncateWallet } from '@/utils/formatting'
 import TrailArrowRightIcon from '@/shared/assets/icons/monochrome/TrailArrowRight.svg?react'
+import { injected, useAccount, useConnect, useDisconnect } from 'wagmi'
 
 interface Props {
 	className?: string
@@ -14,12 +15,19 @@ interface Props {
 }
 
 export const WalletButton = ({ className, isFull = false }: Props) => {
-	const { address, isConnected } = useAppKitAccount()
+	const { address } = useAppKitAccount()
 	const { open } = useAppKit()
+	const { isConnected } = useAccount()
+	const { connect } = useConnect()
+	const { disconnect } = useDisconnect()
 	const { t } = useTranslation()
 
 	function handleClick() {
-		void open()
+		if (isConnected) {
+			disconnect()
+		} else {
+			connect({ connector: injected() })
+		}
 		void trackEvent({
 			category: category.Wallet,
 			action: action.ClickConnectWallet,
@@ -28,7 +36,7 @@ export const WalletButton = ({ className, isFull = false }: Props) => {
 	}
 
 	const getStatus = () => {
-		if (isConnected) return truncateWallet(address!, 4)
+		if (address && isConnected) return truncateWallet(address, 4)
 		return t('walletButton.connectWallet')
 	}
 
