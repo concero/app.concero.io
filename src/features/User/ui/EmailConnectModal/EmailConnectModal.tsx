@@ -1,6 +1,6 @@
 import { ReactNode, useRef, useState } from 'react'
 import cls from './EmailConnectModal.module.pcss'
-import { Button, IconButton, Modal } from '@concero/ui-kit'
+import { Button, IconButton, Input, Modal } from '@concero/ui-kit'
 import { useSendEmailMutation, useVerifyOTPMutation } from '@/entities/User/api/userApi'
 import { Address } from 'viem'
 
@@ -8,7 +8,6 @@ import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
 import CrossIcon from '@/shared/assets/icons/monochrome/CrossClose.svg?react'
 import ArrowLeftIcon from '@/shared/assets/icons/monochrome/ArrowLeft.svg?react'
 import { TUserResponse } from '@/entities/User'
-import { Input } from '@/shared/ui/Input'
 
 const StepOne = ({ onSuccessSend, user }: { onSuccessSend?: () => void; user: TUserResponse }) => {
 	const emailRef = useRef('')
