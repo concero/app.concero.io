@@ -107,11 +107,14 @@ export const userServiceApi = {
 		}
 	},
 
-	fetchUserEarnings: async (address: Address): Promise<UserEarnings> => {
+	fetchUserEarnings: async (address: Address): Promise<UserEarnings | null> => {
 		const url = `${process.env.CONCERO_API_URL}/userPoolEarnings?address=${address}`
-		const response = await get(url)
-		if (response.status !== 200) throw new Error('No earnings found')
-		return response.data.data
+		try {
+			const response = await get(url)
+		} catch (error) {
+			return null
+		}
+		return null
 	},
 }
 export const userActionsService = {

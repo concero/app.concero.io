@@ -13,7 +13,7 @@ export const VerificationStatusZod = z.enum(['SUCCESS', 'PENDING', 'FAILED', 'NO
 export const QuestSocialActionZod = z.enum(['ConnectSocialNetwork', 'ConnectGroup', 'Repost', 'LikeTweet'])
 export const QuestTestingActionZod = z.enum(['ProvideFeedback', 'RateExperience'])
 
-export const QuestOnChainActionZod = z.enum(['CheckVolume', 'ProvideLiquidity'])
+export const QuestOnChainActionZod = z.enum(['CheckVolume', 'CheckCount', 'ProvideLiquidity'])
 
 export const QuestDateFilterZod = z.object({
 	dateStart: z.number(),

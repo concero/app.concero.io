@@ -13,7 +13,6 @@ const request = async <TResponse extends unknown>(options: AxiosRequestConfig) =
 		const response: AxiosResponse<TResponse, unknown> = await client(options)
 		return response
 	} catch (error) {
-		console.error('Error', error.response)
 		throw error.response
 	}
 }

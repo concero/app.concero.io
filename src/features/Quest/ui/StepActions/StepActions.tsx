@@ -149,6 +149,31 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 			</>
 		)
 	},
+	CheckCount: function (props: TStepActionProps): JSX.Element {
+		const { step, quest, setErrorText } = props
+		const { handleVerify, isPendingAddStep, isPendingVerify } = useVerifyQuest()
+		const isSingleStep = quest.steps.length == 1
+		const handleLink = () => {
+			window.open(step.options?.link, '_blank')
+		}
+		return (
+			<>
+				<div className={cls.controls}>
+					<Button variant={isSingleStep ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
+						Open Testnet
+					</Button>
+					<Button
+						variant={isSingleStep ? 'secondary_color' : 'tetrary_color'}
+						onClick={() => handleVerify({ quest, setErrorText, step })}
+						size="l"
+						isLoading={isPendingVerify || isPendingAddStep}
+					>
+						Verify
+					</Button>
+				</div>
+			</>
+		)
+	},
 	ProvideFeedback: function (props: TStepActionProps): JSX.Element {
 		const { step, quest, setErrorText } = props
 		const { address } = useAccount()
@@ -166,7 +191,7 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 			<>
 				<div className={cls.controls}>
 					<Button variant={isSingleStep ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
-						Open
+						Open Form
 					</Button>
 					<Button
 						isDisabled={!isOpenedLink}
