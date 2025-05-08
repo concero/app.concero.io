@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi'
 
 type TProps = {
 	questId: TQuest['_id']
-	onStart?: (points?: number) => void
+	onStart?: () => void
 	propsButton?: TButtonProps
 	className?: string
 }

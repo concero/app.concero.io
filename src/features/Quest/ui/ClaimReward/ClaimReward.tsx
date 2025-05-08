@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi'
 
 type TProps = {
 	questId: TQuest['_id']
-	onClaim?: (points?: number) => void
+	onClaim?: () => void
 	propsButton?: TButtonProps
 	className?: string
 }
@@ -30,7 +30,7 @@ export const ClaimReward = ({ questId, onClaim, className, propsButton }: TProps
 		if (address) {
 			claimQuest({ address, questId })
 				.then(res => {
-					onClaim?.(res.points)
+					onClaim?.()
 				})
 				.catch(err => {
 					console.error('@ClaimReward: ', err)

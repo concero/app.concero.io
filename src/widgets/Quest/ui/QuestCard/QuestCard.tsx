@@ -8,7 +8,7 @@ import { useTheme } from '@concero/ui-kit'
 type TProps = {
 	quest: TQuest
 	status: TQuestCardStatus
-	onClaim?: () => void
+	onClaim?: (quest: TQuest) => void
 }
 
 export const QuestCard = (props: TProps) => {
@@ -32,7 +32,7 @@ export const QuestCard = (props: TProps) => {
 			showOnlyOptionalSteps = false
 			break
 		case 'READY_TO_CLAIM':
-			controls = <ClaimReward questId={quest._id} onClaim={onClaim} propsButton={{ size: 'l' }} />
+			controls = <ClaimReward questId={quest._id} onClaim={() => onClaim?.(quest)} propsButton={{ size: 'l' }} />
 			showSteps = true
 			showOnlyOptionalSteps = true
 			break

@@ -24,6 +24,8 @@ import { SkeletonLoader } from '../../../../layout/SkeletonLoader/SkeletonLoader
 import { toLocaleNumber } from '../../../../../utils/formatting'
 import { termsIsActual } from '../../../../modals/TermsConditionModal/model/lib/termsIsActual'
 import { Address } from 'viem'
+import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
+import { TQuest } from '@/entities/Quest'
 
 type StepMode = 'group' | 'one'
 
@@ -165,7 +167,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 					category: category.QuestCard,
 					action: action.BeginQuest,
 					label: 'concero_verify_quest_begin',
-					data: { id: quest._id, step },
+					data: { id: quest._id, step, type: getEventTypeQuest(quest as TQuest) },
 				}),
 			])
 
@@ -176,7 +178,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 					category: category.QuestCard,
 					action: action.SuccessQuest,
 					label: 'concero_verify_quest_success',
-					data: { id: quest._id, step },
+					data: { id: quest._id, step, type: getEventTypeQuest(quest as TQuest) },
 				})
 			} else {
 				setVerifyStatus(VerificationStatus.FAILED)
@@ -188,7 +190,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 				category: category.QuestCard,
 				action: action.FailedQuest,
 				label: 'concero_verify_quest_fail',
-				data: { id: quest._id, step },
+				data: { id: quest._id, step, type: getEventTypeQuest(quest as TQuest) },
 			})
 		}
 	}

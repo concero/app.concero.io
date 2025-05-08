@@ -14,6 +14,9 @@ import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
 import { Modal } from '@/components/modals/Modal/Modal'
 import cls from './QuestPreviewItem.module.pcss'
+import { action, category } from '@/constants/tracking'
+import { trackEvent } from '@/hooks/useTracking'
+import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 
 type TProps = {
 	quest: TQuest
@@ -42,7 +45,13 @@ export const QuestPreviewItem = (props: TProps) => {
 		statusOfQuest = 'FINISHED'
 	}
 
-	const handleClaimReward = () => {
+	const handleClaimReward = async (quest: TQuest) => {
+		await trackEvent({
+			category: category.QuestCard,
+			action: action.ClaimQuest,
+			label: 'concero_claim_quest',
+			data: { id: quest._id, type: getEventTypeQuest(quest as TQuest) },
+		})
 		setIsOpenQuestCard(false)
 		setIsOpenRewardModal(true)
 	}

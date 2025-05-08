@@ -61,6 +61,7 @@ export enum action {
 	BeginQuest = 'action_begin_quest',
 	SuccessQuest = 'action_success_quest',
 	FailedQuest = 'action_failed_quest',
+	ClaimQuest = 'action_claim_quest',
 	SwapFailed = 'action_swap_failed',
 	SwapSuccess = 'action_swap_success',
 	SwapRejected = 'action_swap_rejected',

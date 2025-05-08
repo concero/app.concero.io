@@ -20,7 +20,7 @@ type TProps = {
 	quest?: TQuest
 	user?: TUserResponse
 	onClick?: () => void
-	onClaim?: () => void
+	onClaim?: (quest: TQuest) => void
 	className?: string
 }
 
@@ -102,7 +102,7 @@ export const QuestPreviewCard = (props: TProps) => {
 						<ArrowRightIcon />
 					</IconButton>
 				)}
-				{isDone && <ClaimReward questId={quest._id} onClaim={onClaim} />}
+				{isDone && <ClaimReward questId={quest._id} onClaim={() => onClaim?.(quest)} />}
 			</div>
 		</Card>
 	)
