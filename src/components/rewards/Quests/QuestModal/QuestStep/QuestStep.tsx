@@ -165,7 +165,7 @@ export const QuestStep = ({ step, mode = 'group', user, quest, addCompletedStep,
 				verifyQuest(quest._id, step.id, user.address as Address),
 				trackEvent({
 					category: category.QuestCard,
-					action: action.BeginQuest,
+					action: action.BeginVerifyQuest,
 					label: 'concero_verify_quest_begin',
 					data: { id: quest._id, step, type: getEventTypeQuest(quest as TQuest) },
 				}),

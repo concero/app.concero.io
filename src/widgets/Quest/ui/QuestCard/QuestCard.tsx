@@ -4,6 +4,9 @@ import { ConnectWallet } from '@/features/Auth'
 import { TQuest, TQuestCardStatus } from '@/entities/Quest'
 import { QuestStepGroup, ClaimReward, StartQuest } from '@/features/Quest'
 import { useTheme } from '@concero/ui-kit'
+import { action, category } from '@/constants/tracking'
+import { trackEvent } from '@/hooks/useTracking'
+import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 
 type TProps = {
 	quest: TQuest
@@ -17,13 +20,27 @@ export const QuestCard = (props: TProps) => {
 	let controls = null
 	let showSteps = false
 	let showOnlyOptionalSteps = false
+	const handleEventPosthogOnStart = async (quest: TQuest) => {
+		await trackEvent({
+			category: category.QuestCard,
+			action: action.BeginQuest,
+			label: 'concero_quest_begin',
+			data: { id: quest._id, type: getEventTypeQuest(quest as TQuest) },
+		})
+	}
 	switch (status) {
 		case 'NOT_CONNECT':
 			controls = <ConnectWallet />
 			showSteps = false
 			break
 		case 'READY_TO_START':
-			controls = <StartQuest questId={quest._id} propsButton={{ size: 'l', isFull: false }} />
+			controls = (
+				<StartQuest
+					questId={quest._id}
+					onStart={() => handleEventPosthogOnStart(quest)}
+					propsButton={{ size: 'l', isFull: false }}
+				/>
+			)
 			showSteps = false
 			break
 		case 'STARTED':

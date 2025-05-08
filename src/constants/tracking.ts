@@ -59,6 +59,7 @@ export enum action {
 	FailedRetryWithdrawalRequest = 'action_failed_deposit_request',
 
 	BeginQuest = 'action_begin_quest',
+	BeginVerifyQuest = 'action_begin_verify_quest',
 	SuccessQuest = 'action_success_quest',
 	FailedQuest = 'action_failed_quest',
 	ClaimQuest = 'action_claim_quest',
