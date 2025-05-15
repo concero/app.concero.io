@@ -11,7 +11,7 @@ import {
 	TUserSocialNetworkType,
 	UserEarnings,
 } from '../model/types/response'
-import { updateUserDiscord, updateUserTwitter } from '@/api/concero/user/updateUser'
+import { updateUserTwitter } from '@/api/concero/user/updateUser'
 import { config } from '@/constants/config'
 import { TApiGetResponse, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
@@ -127,13 +127,11 @@ export const userActionsService = {
 	},
 }
 export const socialsService = {
-	connectDiscord: async (code: string, user: TUserResponse): Promise<string> => {
-		const response = await updateUserDiscord({
-			_id: user._id,
-			code,
-		})
-		// @ts-expect-error TODO: Improve type
-		return response.username
+	connectDiscord: async (code: string, user_id: TUserResponse['_id']): Promise<string> => {
+		const url = `${process.env.CONCERO_API_URL}/connectNetwork/discord`
+		const response = await post(url, { _id: user_id, code })
+		if (response.status !== 200) throw new Error('Something went wrong')
+		return response.data.data.username
 	},
 	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, user: TUserResponse) => {
 		// @ts-expect-error TODO: Improve type
@@ -281,6 +279,15 @@ export const useSendEmailMutation = () => {
 export const useVerifyOTPMutation = () => {
 	return useMutation({
 		mutationFn: (arg: { address: Address; otp: string }) => socialsService.verifyOTP(arg.address, arg.otp),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+		},
+	})
+}
+export const useConnectDiscordMutation = () => {
+	return useMutation({
+		mutationFn: (arg: { code: string; userId: TUserResponse['_id'] }) =>
+			socialsService.connectDiscord(arg.code, arg.userId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},

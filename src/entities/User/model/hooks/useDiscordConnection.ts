@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { DISCORD_LINK_AUTH } from '../../config/consts/discordLink'
 import { TUserResponse } from '@/entities/User'
 import { socialsService } from '@/entities/User'
+import { useSearchParams } from 'react-router-dom'
+import { useConnectDiscordMutation } from '../../api/userApi'
 
 type TUseDiscordConnectionProps = {
 	user?: TUserResponse
@@ -9,7 +11,8 @@ type TUseDiscordConnectionProps = {
 
 export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const [isConnected, setIsConnected] = useState<boolean>(false)
-
+	const [searchParams] = useSearchParams()
+	const { mutateAsync } = useConnectDiscordMutation()
 	useEffect(() => {
 		if (user?.connectedSocials?.discord?.username) {
 			setIsConnected(true)
@@ -32,18 +35,17 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	}
 
 	const listenDiscordConnection = async () => {
-		const params = new URL(document.location.href).searchParams
-		const discordCode = params.get('code')
+		const code = searchParams.get('code')
 
-		if (discordCode && user) {
-			const fetchedNickname = await socialsService.connectDiscord(discordCode, user)
+		if (code && user) {
+			const fetchedNickname = await mutateAsync({ code, userId: user._id })
 			setIsConnected(!!fetchedNickname)
 		}
 	}
 
 	useEffect(() => {
 		if (!user?.connectedSocials?.discord?.username) {
-			listenDiscordConnection().then()
+			listenDiscordConnection()
 		}
 	}, [])
 

@@ -18,7 +18,7 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 		if (address) {
 			fetchUserByAddress(address as Address)
 				.catch(err => {
-					if (err.status == 403) {
+					if (err?.status == 403) {
 						setShowModal(true)
 					}
 				})
