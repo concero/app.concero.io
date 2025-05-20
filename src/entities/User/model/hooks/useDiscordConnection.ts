@@ -3,8 +3,9 @@ import { DISCORD_LINK_AUTH } from '../../config/consts/discordLink'
 import { TUserResponse } from '@/entities/User'
 import { socialsService } from '@/entities/User'
 import { useSearchParams } from 'react-router-dom'
-import { useConnectDiscordMutation } from '../../api/userApi'
+import { useConnectDiscordMutation, useDisconnectSocialNetworkMutation } from '../../api/userApi'
 import { useNavigate } from 'react-router-dom'
+import { Address } from 'viem'
 
 type TUseDiscordConnectionProps = {
 	user?: TUserResponse
@@ -14,6 +15,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const [isConnected, setIsConnected] = useState<boolean>(false)
 	const [searchParams] = useSearchParams()
 	const { mutateAsync } = useConnectDiscordMutation()
+	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation()
 	const navigate = useNavigate()
 	useEffect(() => {
 		if (user?.connectedSocials?.discord?.username) {
@@ -24,7 +26,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const toggleDiscordConnection = async () => {
 		try {
 			if (isConnected && user) {
-				const isDisconnected = await socialsService.disconnectNetwork(user.address, 'discord')
+				const isDisconnected = await disconnectSocial({ address: user.address as Address, network: 'discord' })
 				if (isDisconnected) {
 					setIsConnected(false)
 				}
