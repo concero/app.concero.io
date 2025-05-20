@@ -296,12 +296,12 @@ export const useConnectDiscordMutation = () => {
 		},
 	})
 }
-export const useDisconnectSocialNetworkMutation = () => {
+export const useDisconnectSocialNetworkMutation = (address?: string) => {
 	return useMutation({
-		mutationFn: (arg: { address: Address; network: TUserSocialNetworkType }) =>
-			socialsService.disconnectNetwork(arg.address, arg.network),
+		mutationFn: (arg: { network: TUserSocialNetworkType }) =>
+			socialsService.disconnectNetwork(address ?? '', arg.network),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation, address] })
 		},
 	})
 }
