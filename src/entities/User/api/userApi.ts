@@ -301,7 +301,7 @@ export const useDisconnectSocialNetworkMutation = (address?: string) => {
 		mutationFn: (arg: { network: TUserSocialNetworkType }) =>
 			socialsService.disconnectNetwork(address ?? '', arg.network),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation, address] })
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
 	})
 }
