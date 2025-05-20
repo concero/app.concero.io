@@ -4,6 +4,7 @@ import { TUserResponse } from '@/entities/User'
 import { socialsService } from '@/entities/User'
 import { useSearchParams } from 'react-router-dom'
 import { useConnectDiscordMutation } from '../../api/userApi'
+import { useNavigate } from 'react-router-dom'
 
 type TUseDiscordConnectionProps = {
 	user?: TUserResponse
@@ -13,6 +14,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const [isConnected, setIsConnected] = useState<boolean>(false)
 	const [searchParams] = useSearchParams()
 	const { mutateAsync } = useConnectDiscordMutation()
+	const navigate = useNavigate()
 	useEffect(() => {
 		if (user?.connectedSocials?.discord?.username) {
 			setIsConnected(true)
@@ -40,6 +42,9 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 		if (code && user) {
 			const fetchedNickname = await mutateAsync({ code, userId: user._id })
 			setIsConnected(!!fetchedNickname)
+			if (fetchedNickname) {
+				navigate('/profile')
+			}
 		}
 	}
 
