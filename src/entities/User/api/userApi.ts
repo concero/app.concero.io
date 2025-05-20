@@ -129,9 +129,12 @@ export const userActionsService = {
 export const socialsService = {
 	connectDiscord: async (code: string, user_id: TUserResponse['_id']): Promise<string> => {
 		const url = `${process.env.CONCERO_API_URL}/connectNetwork/discord`
-		const response = await post(url, { _id: user_id, code })
+		const response = await post<{ message: string; success: boolean; username: string }>(url, {
+			_id: user_id,
+			code,
+		})
 		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.data.username
+		return response.data.username
 	},
 	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, user: TUserResponse) => {
 		// @ts-expect-error TODO: Improve type
