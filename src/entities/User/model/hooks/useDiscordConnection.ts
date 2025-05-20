@@ -19,8 +19,15 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	useEffect(() => {
 		if (user?.connectedSocials?.discord?.username) {
 			setIsConnected(true)
+		} else if (
+			!user ||
+			!user.connectedSocials ||
+			!user.connectedSocials.discord ||
+			!user.connectedSocials.discord.username
+		) {
+			setIsConnected(false)
 		}
-	}, [user?.connectedSocials?.discord?.username])
+	}, [user])
 
 	const toggleDiscordConnection = async () => {
 		try {
