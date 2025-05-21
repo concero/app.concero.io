@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { socialsService, TUserResponse } from '@/entities/User'
+import { socialsService, TUserResponse, useDisconnectSocialNetworkMutation } from '@/entities/User'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useConnectTwitterMutation } from '../../api/userApi'
 
 interface UseTwitterConnectionProps {
 	user?: TUserResponse
@@ -7,17 +9,27 @@ interface UseTwitterConnectionProps {
 
 export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	const [isConnected, setIsConnected] = useState<boolean>(false)
-
+	const [searchParams] = useSearchParams()
+	const { mutateAsync } = useConnectTwitterMutation()
+	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation(user?.address)
+	const navigate = useNavigate()
 	useEffect(() => {
-		if (user?.connectedSocials?.twitter?.screen_name) {
+		if (user?.connectedSocials?.twitter?.name) {
 			setIsConnected(true)
+		} else if (
+			!user ||
+			!user.connectedSocials ||
+			!user.connectedSocials.twitter ||
+			!user.connectedSocials.twitter.name
+		) {
+			setIsConnected(false)
 		}
 	}, [user])
 
 	const toggleTwitterConnection = async () => {
 		try {
 			if (isConnected && user) {
-				const isDisconnected = await socialsService.disconnectNetwork(user.address, 'twitter')
+				const isDisconnected = await disconnectSocial({ network: 'twitter' })
 				if (isDisconnected) {
 					setIsConnected(false)
 				}
@@ -30,19 +42,27 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	}
 
 	const listenTwitterConnection = async () => {
-		const params = new URL(document.location.href).searchParams
-		const twitterCode = params.get('oauth_token')
-		const twitterVerifyCode = params.get('oauth_verifier')
+		const twitterCode = searchParams.get('oauth_token')
+		const twitterVerifyCode = searchParams.get('oauth_verifier')
 
 		if (twitterCode && twitterVerifyCode && user) {
-			const fetchedNickname = await socialsService.connectTwitter(twitterCode, twitterVerifyCode, user)
-			setIsConnected(!!fetchedNickname)
+			const result = await mutateAsync({
+				oauthToken: twitterCode,
+				twitterVerifyCode: twitterVerifyCode,
+				user,
+			})
+			setIsConnected(!!result.success)
+			if (result.username) {
+				navigate('/profile')
+			}
 		}
 	}
 
 	useEffect(() => {
 		if (!user?.connectedSocials?.twitter?.screen_name) {
 			listenTwitterConnection().then()
+		} else if (searchParams.get('oauth_token') || searchParams.get('oauth_verifier')) {
+			navigate('/profile')
 		}
 	}, [])
 

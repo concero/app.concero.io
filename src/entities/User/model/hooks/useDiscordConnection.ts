@@ -4,7 +4,6 @@ import { TUserResponse } from '@/entities/User'
 import { useSearchParams } from 'react-router-dom'
 import { useConnectDiscordMutation, useDisconnectSocialNetworkMutation } from '../../api/userApi'
 import { useNavigate } from 'react-router-dom'
-import { Address } from 'viem'
 
 type TUseDiscordConnectionProps = {
 	user?: TUserResponse

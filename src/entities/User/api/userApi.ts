@@ -136,16 +136,22 @@ export const socialsService = {
 		if (response.status !== 200) throw new Error('Something went wrong')
 		return response.data.username
 	},
-	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, user: TUserResponse) => {
-		// @ts-expect-error TODO: Improve type
-		return (await updateUserTwitter({ _id: user._id, token: oauthToken, verifier: twitterVerifyCode })).screen_name
+	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, userId: TUserResponse['_id']) => {
+		const url = `${process.env.CONCERO_API_URL}/connectNetwork/twitter`
+
+		const response = await post<{ message: string; success: boolean; username: string }>(url, {
+			oauthToken,
+			twitterVerifyCode,
+			_id: userId,
+		})
+		if (response.status !== 200) throw new Error('Something went wrong')
+		return response.data
 	},
 	getRequestToken: async () => {
 		const request = await get(`${config.baseURL}/twitterToken`)
-		// @ts-expect-error TODO: Improve type
 		const link = request.data.data
 
-		window.location.href = link
+		// window.location.href = link
 	},
 	disconnectNetwork: async (address: string, network: TUserSocialNetworkType): Promise<boolean> => {
 		const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
@@ -291,6 +297,15 @@ export const useConnectDiscordMutation = () => {
 	return useMutation({
 		mutationFn: (arg: { code: string; userId: TUserResponse['_id'] }) =>
 			socialsService.connectDiscord(arg.code, arg.userId),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+		},
+	})
+}
+export const useConnectTwitterMutation = () => {
+	return useMutation({
+		mutationFn: (arg: { oauthToken: string; twitterVerifyCode: string; user: TUserResponse }) =>
+			socialsService.connectTwitter(arg.oauthToken, arg.twitterVerifyCode, arg.user),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
