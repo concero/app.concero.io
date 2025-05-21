@@ -148,10 +148,8 @@ export const socialsService = {
 		return response.data
 	},
 	getRequestToken: async () => {
-		const request = await get(`${config.baseURL}/twitterToken`)
-		const link = request.data.data
-
-		// window.location.href = link
+		const request = await get<{ data: string; success: boolean }>(`${config.baseURL}/twitterToken`)
+		return request.data.data
 	},
 	disconnectNetwork: async (address: string, network: TUserSocialNetworkType): Promise<boolean> => {
 		const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`

@@ -34,7 +34,8 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 					setIsConnected(false)
 				}
 			} else {
-				await socialsService.getRequestToken()
+				const link = await socialsService.getRequestToken()
+				window.location.href = link
 			}
 		} catch (err) {
 			console.error(err)
