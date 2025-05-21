@@ -140,8 +140,8 @@ export const socialsService = {
 		const url = `${process.env.CONCERO_API_URL}/connectNetwork/twitter`
 
 		const response = await post<{ message: string; success: boolean; username: string }>(url, {
-			oauthToken,
-			twitterVerifyCode,
+			token: oauthToken,
+			verifier: twitterVerifyCode,
 			_id: userId,
 		})
 		if (response.status !== 200) throw new Error('Something went wrong')
@@ -302,8 +302,8 @@ export const useConnectDiscordMutation = () => {
 }
 export const useConnectTwitterMutation = () => {
 	return useMutation({
-		mutationFn: (arg: { oauthToken: string; twitterVerifyCode: string; user: TUserResponse }) =>
-			socialsService.connectTwitter(arg.oauthToken, arg.twitterVerifyCode, arg.user),
+		mutationFn: (arg: { oauthToken: string; twitterVerifyCode: string; userId: TUserResponse['_id'] }) =>
+			socialsService.connectTwitter(arg.oauthToken, arg.twitterVerifyCode, arg.userId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},

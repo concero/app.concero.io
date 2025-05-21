@@ -50,7 +50,7 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 			const result = await mutateAsync({
 				oauthToken: twitterCode,
 				twitterVerifyCode: twitterVerifyCode,
-				user,
+				userId: user._id,
 			})
 			setIsConnected(!!result.success)
 			if (result.username) {
