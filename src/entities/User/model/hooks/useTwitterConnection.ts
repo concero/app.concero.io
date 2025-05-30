@@ -47,13 +47,17 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 		const twitterVerifyCode = searchParams.get('oauth_verifier')
 
 		if (twitterCode && twitterVerifyCode && user) {
-			const result = await mutateAsync({
-				oauthToken: twitterCode,
-				twitterVerifyCode: twitterVerifyCode,
-				userId: user._id,
-			})
-			setIsConnected(!!result.success)
-			if (result.username) {
+			try {
+				const result = await mutateAsync({
+					oauthToken: twitterCode,
+					twitterVerifyCode: twitterVerifyCode,
+					userId: user._id,
+				})
+				setIsConnected(!!result.success)
+				if (result.username) {
+					navigate('/profile')
+				}
+			} catch (error) {
 				navigate('/profile')
 			}
 		}
