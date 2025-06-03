@@ -161,10 +161,12 @@ export function BurgerMenu() {
 						</Button>
 					</Link>
 					<Separator />
-					<ThemeSwitcher className={classNames.listButton} />
 				</>
 			)}
 
+			<li>
+				<ThemeSwitcher className={classNames.listButton} />
+			</li>
 			<li>
 				<Button
 					leftIcon={<LanguageIcon />}
