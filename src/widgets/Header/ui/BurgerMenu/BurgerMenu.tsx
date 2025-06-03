@@ -19,9 +19,7 @@ import { Separator } from '@/components/layout/Separator/Separator'
 import { WalletButton } from '@/features/Auth'
 import { LanguageModal } from '@/components/modals/LanguageModal/LanguageModal'
 import { ContactSupportModal } from '@/components/modals/ContactSupportModal/ContactSupportModal'
-import { ThemeSwitcher } from '@/features/ThemeSwitcher/ui/ThemeSwitcher'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
-import { useAccount } from 'wagmi'
+import { ThemeSwitcher } from '@/features/ThemeSwitcher'
 
 export function BurgerMenu() {
 	const [isMenuOpened, setIsMenuOpened] = useState(false)
@@ -30,8 +28,6 @@ export function BurgerMenu() {
 	const isTablet = useMediaQuery('tablet')
 	const isMobile = useMediaQuery('mobile')
 	const { t } = useTranslation()
-	const { address } = useAccount()
-	const isAdmin = isAdminAddress(address)
 	const matchSwapRewards = useMatch(routes.rewards)
 	const matchSwapProfile = useMatch(routes.profile)
 	const handleKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -165,14 +161,10 @@ export function BurgerMenu() {
 						</Button>
 					</Link>
 					<Separator />
+					<ThemeSwitcher className={classNames.listButton} />
 				</>
 			)}
 
-			{isAdmin && (
-				<li>
-					<ThemeSwitcher className={classNames.listButton} />
-				</li>
-			)}
 			<li>
 				<Button
 					leftIcon={<LanguageIcon />}

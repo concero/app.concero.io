@@ -1,14 +1,13 @@
 import { Button } from '@concero/ui-kit'
 import LancaIcon from '@/shared/assets/icons/Lanca_logomark.svg?react'
-import ConceroIcon from '@/shared/assets/icons/Concero_icon_banner.svg?react'
-import CersEidiIcon from '@/shared/assets/icons/CersEidi.svg?react'
+// import ConceroIcon from '@/shared/assets/icons/Concero_icon_banner.svg?react'
+// import CersEidiIcon from '@/shared/assets/icons/CersEidi.svg?react'
 import { Banner } from '@/shared/ui'
 import cls from './Banners.module.pcss'
-import { useAccount } from 'wagmi'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
-import { useCheckCersEidi, useClaimCersEidiMutation } from '../../api/SocialApi'
+// import { useAccount } from 'wagmi'
+// import { useCheckCersEidi, useClaimCersEidiMutation } from '../../api/SocialApi'
 export const Banners = () => {
-	const { address } = useAccount()
+	// const { address } = useAccount()
 	// const isAdmin = isAdminAddress(address)
 	// const { data: isShowCersEidi, isFetching } = useCheckCersEidi({ address })
 	// const { mutateAsync, isPending, isSuccess } = useClaimCersEidiMutation()
