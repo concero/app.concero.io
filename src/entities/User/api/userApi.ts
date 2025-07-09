@@ -1,8 +1,7 @@
 import { Address } from 'viem'
 import { AxiosResponse } from 'axios'
-import { del, get, post } from '@/api/client'
 import { TAcceptTerms, TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
 	IUserAction,
 	NicknameError,
@@ -11,11 +10,10 @@ import {
 	TUserSocialNetworkType,
 	UserEarnings,
 } from '../model/types/response'
-import { updateUserTwitter } from '@/api/concero/user/updateUser'
 import { config } from '@/constants/config'
 import { TApiGetResponse, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
-import { useCallback, useEffect, useState } from 'react'
+import { del, get, post } from '@/shared/api/axiosClient'
 
 //--------------------------------Domain
 export const userServiceApi = {
