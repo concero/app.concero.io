@@ -26,7 +26,7 @@ const SocialIconWrap = ({ children, variant, href }: SocialIconWrapProps) => {
 		</a>
 	)
 }
-
+/**@deprecated */
 export const Footer = () => {
 	return (
 		<footer className={classNames.footer}>

@@ -1,15 +1,13 @@
 import { useEffect } from 'react'
-import { BrowserRouter } from 'react-router-dom'
 import { AppScreen } from './components/screens/AppScreen/AppScreen'
-import { Footer } from './components/layout/Footer/Footer'
 import posthog from 'posthog-js'
 import { useUserByAddress } from '@/entities/User'
 import cls from './Navigator.module.pcss'
-import { useAppKitAccount } from '@reown/appkit/react'
 import { Address } from 'viem'
 import { Header } from '@/widgets/Header'
 import { AppRouter } from '@/app/AppRouter'
 import { useAccount } from 'wagmi'
+import { Footer } from './widgets/Footer/ui/Footer'
 
 export const Navigator = () => {
 	const { address } = useAccount()
