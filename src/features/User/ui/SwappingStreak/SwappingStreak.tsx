@@ -45,6 +45,7 @@ export const SwappingStreak = (props: TProps) => {
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
 	const current_streak = user?.streak.dailySwap ? user?.streak.dailySwap + 1 : 0
+	const showStreakPlaceholder = !user || current_streak < 1
 	const successSwap = (formattedVolume || 0) >= SWAP_VOLUME
 	const warningTime = isNotEnough && timeLeft > oneHourInSecond && timeLeft <= threeHoursInSeconds
 	const dangerTime = isNotEnough && timeLeft < oneHourInSecond
@@ -76,7 +77,7 @@ export const SwappingStreak = (props: TProps) => {
 				</div>
 			</div>
 			<div className={cls.current_value_wrap}>
-				{user ? (
+				{!showStreakPlaceholder ? (
 					<CircleBar
 						progress={currentVolumePercent}
 						variant={successSwap ? 'success' : dangerTime ? 'danger' : warningTime ? 'warning' : 'default'}
@@ -118,9 +119,9 @@ export const SwappingStreak = (props: TProps) => {
 					</div>
 				)}
 			</div>
-			{user ? <Separator /> : null}
+			{!showStreakPlaceholder ? <Separator /> : null}
 			<div className={cls.streak_wrap}>
-				{user ? (
+				{!showStreakPlaceholder ? (
 					<>
 						<div className={cls.streak_head_wrap}>
 							<div className={cls.title_counter_month}>{monthCounterText}</div>
@@ -185,7 +186,7 @@ export const SwappingStreak = (props: TProps) => {
 				)}
 			</div>
 			<Button
-				variant={warningTime || dangerTime ? 'primary' : !user ? 'primary' : 'secondary_color'}
+				variant={warningTime || dangerTime ? 'primary' : showStreakPlaceholder ? 'primary' : 'secondary_color'}
 				size={isDesktop ? 'm' : 'l'}
 				onClick={handleSwapClick}
 			>

@@ -19,10 +19,12 @@ export const RewardsPage = ({ user }: Props) => {
 	return (
 		<PageWrap>
 			<Banners />
-			<div className={cls.streak_wrap}>
-				<SwappingStreak user={user} />
-				<HoldingStreak user={user} />
-			</div>
+			{user && (
+				<div className={cls.streak_wrap}>
+					<SwappingStreak user={user} />
+					<HoldingStreak user={user} />
+				</div>
+			)}
 			<DailyTaskList />
 			<QuestPreviewList />
 		</PageWrap>

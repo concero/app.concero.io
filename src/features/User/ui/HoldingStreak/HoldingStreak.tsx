@@ -30,11 +30,12 @@ export const HoldingStreak = (props: TProps) => {
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
 	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
+	const showStreakPlaceholder = !user || currentStreak < 1
 	const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
 	const balance = userEarnings ? Number(toLocaleNumber(userEarnings.earnings + userEarnings.deposit, 2)) : 0
-	const showDefaultTip = user && (balance > 100 || balance === 0)
-	const showDanger = user && balance ? balance > 0 && balance < 100 : false
-	const showWithoutUserTip = !user
+	const showDefaultTip = !showStreakPlaceholder && (balance > 100 || balance === 0)
+	const showDanger = !showStreakPlaceholder && balance ? balance > 0 && balance < 100 : false
+	const showWithoutUserTip = showStreakPlaceholder
 
 	const currentPeriodStreak = currentStreak <= 7 ? streak_config.ONE_WEEK : streak_config.ONE_MONTH
 	const monthCounterText = getCountStreakPeriodText(currentStreak)
@@ -58,14 +59,14 @@ export const HoldingStreak = (props: TProps) => {
 				</div>
 			</div>
 			<div className={cls.wrap_with_days}>
-				{user ? (
+				{!showStreakPlaceholder ? (
 					<>
 						<div className={cls.streak_head_wrap}>
 							<div className={cls.title_counter_month}>{monthCounterText}</div>
 							<div className={cls.reward_wrap}>
 								<div className={cls.reward_text}>Reward</div>
 								<Tag size="s" variant="neutral">
-									{getUserFutureMultiplier(user.streak.liquidityHold)}x
+									{getUserFutureMultiplier(user?.streak.liquidityHold ?? 0)}x
 								</Tag>
 							</div>
 						</div>
@@ -175,7 +176,7 @@ export const HoldingStreak = (props: TProps) => {
 			</div>
 			<Button
 				className={cls.provide_btn}
-				variant={!user ? 'primary' : 'secondary'}
+				variant={showStreakPlaceholder ? 'primary' : 'secondary'}
 				size={isDesktop ? 'm' : 'l'}
 				onClick={handleLiquidityClick}
 			>
