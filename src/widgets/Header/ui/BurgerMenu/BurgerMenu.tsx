@@ -193,7 +193,7 @@ export function BurgerMenu() {
 				onClick={handleMenuOpen}
 				size="m"
 				htmlButtonProps={{
-					//@ts-expect-error dadw
+					//@ts-expect-error TODO: fix
 					onClick: handleMenuOpen,
 					style: {
 						zIndex: 1,
