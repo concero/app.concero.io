@@ -10,9 +10,8 @@ export const StreakTooltip = ({ title, description }: Props) => {
 	return (
 		<div className={cls.streak_tooltip_wrap}>
 			<div className={cls.head_wrap}>
-
-			<h6 className={cls.title}>{title}</h6>
-			<p className={`${cls.description} body2`}>{description}</p>
+				<h6 className={cls.title}>{title}</h6>
+				<p className={`${cls.description} body2`}>{description}</p>
 			</div>
 			<div className={cls.list}>
 				<div className={cls.item}>
@@ -44,7 +43,7 @@ export const StreakTooltip = ({ title, description }: Props) => {
 				</div>
 				<div className={cls.separator}></div>
 				<div className={cls.item}>
-					<span>4d month</span>
+					<span>4th month</span>
 					<Tag variant="branded" size="s">
 						4x
 					</Tag>
