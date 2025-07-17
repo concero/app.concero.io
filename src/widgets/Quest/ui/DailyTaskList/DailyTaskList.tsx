@@ -8,6 +8,7 @@ export const DailyTaskList = (): JSX.Element => {
 	const { data: quests } = useAllQuests()
 	const account = useAccount()
 	const { data: user } = useUserByAddress(account.address)
+	//TODO: remove checking admin
 	const DailyQuests = quests
 		?.filter(q => q.type == 'Daily' && (q.name === 'Testnet Daily' ? isAdminAddress(account.address) : true))
 		.toSorted((a, b) => {

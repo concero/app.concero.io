@@ -8,6 +8,7 @@ import TestingPortalLightImage from '@/shared/assets/icons/light_testing_portal_
 import TestingPortalDarkImage from '@/shared/assets/icons/dark_testing_portal_rocket.png'
 import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
 import cls from './QuestPreviewList.module.pcss'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 type WithoutUndefined<T> = T extends undefined ? never : T
 
@@ -30,8 +31,14 @@ export const QuestPreviewList = (): JSX.Element => {
 		Secondary: 'm',
 	}
 	// groupByView
+	//TODO: remove check for admin
 	const groupedQuests = useMemo(
-		() => quests?.filter(q => (q?.tag ? q.tag === viewMode : viewMode === 'rewards')),
+		() =>
+			quests?.filter(
+				q =>
+					(q?.tag ? q.tag === viewMode : viewMode === 'rewards') &&
+					(q.name.toLowerCase().trim().includes('testnet') ? isAdminAddress(account.address) : true),
+			),
 		[viewMode, isFetching],
 	)
 	const quest_size_m = useMemo(() => {
