@@ -3,12 +3,10 @@ import { Button, useTheme } from '@concero/ui-kit'
 import { useAccount } from 'wagmi'
 import { TQuestTag, TQuestSize, TQuestType, useAllQuests } from '@/entities/Quest'
 import { useUserByAddress } from '@/entities/User'
-import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
 import TestingPortalLightImage from '@/shared/assets/icons/light_testing_portal_rocket.png'
 import TestingPortalDarkImage from '@/shared/assets/icons/dark_testing_portal_rocket.png'
 import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
 import cls from './QuestPreviewList.module.pcss'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 type WithoutUndefined<T> = T extends undefined ? never : T
 
@@ -33,12 +31,7 @@ export const QuestPreviewList = (): JSX.Element => {
 	// groupByView
 	//TODO: remove check for admin
 	const groupedQuests = useMemo(
-		() =>
-			quests?.filter(
-				q =>
-					(q?.tag ? q.tag === viewMode : viewMode === 'rewards') &&
-					(q.name.toLowerCase().trim().includes('testnet') ? isAdminAddress(account.address) : true),
-			),
+		() => quests?.filter(q => (q?.tag ? q.tag === viewMode : viewMode === 'rewards')),
 		[viewMode, isFetching],
 	)
 	const quest_size_m = useMemo(() => {
