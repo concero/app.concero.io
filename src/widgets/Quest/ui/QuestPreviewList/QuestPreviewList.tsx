@@ -17,7 +17,7 @@ export const QuestPreviewList = (): JSX.Element => {
 	const account = useAccount()
 	const { theme } = useTheme()
 	const { data: user } = useUserByAddress(account.address)
-	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
+	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('testing')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
 		setViewMode(mode)
