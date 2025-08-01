@@ -22,7 +22,7 @@ export const useVerifyQuest = () => {
 		if (quest && address) {
 			verifyFn({
 				address,
-				questId: quest._id,
+				questId: quest.id,
 				stepId: step.id,
 			})
 				.then(res => {
@@ -34,14 +34,14 @@ export const useVerifyQuest = () => {
 					}
 					addStepInProgress({
 						address,
-						questId: quest._id,
+						questId: quest.id,
 						stepId: step.id,
 					})
 					trackEvent({
 						category: category.QuestCard,
 						action: action.SuccessQuest,
 						label: 'concero_verify_quest_success',
-						data: { id: quest._id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
+						data: { id: quest.id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
 					})
 				})
 				.catch(e => {
@@ -50,14 +50,14 @@ export const useVerifyQuest = () => {
 						category: category.QuestCard,
 						action: action.FailedQuest,
 						label: 'concero_verify_quest_fail',
-						data: { id: quest._id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
+						data: { id: quest.id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
 					})
 				})
 			trackEvent({
 				category: category.QuestCard,
 				action: action.BeginQuest,
 				label: 'concero_verify_quest_begin',
-				data: { id: quest._id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
+				data: { id: quest.id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
 			})
 		}
 	}

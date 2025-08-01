@@ -1,16 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { get, post } from '@/api/client'
 import { TClaimResponse, TGetAllQuestsResponse, TGetQuestsResponse, TVerifyResponse } from '../model/types/response'
 import { TClaimArgs, TVerifyArgs } from '../model/types/request'
 import { invalidationTagUser } from '@/entities/User'
 import { TApiResponse } from '@/shared/types/api'
+import { get } from '@/shared/api/axiosClient'
 
 const questService = {
 	getAllQuests: async () => {
-		const url = `${process.env.CONCERO_API_URL}/v2/quests`
-		const { data, status } = await get<TApiResponse<TGetAllQuestsResponse>>(url)
-		if (data.success === false || status !== 200) throw new Error('Something went wrong')
-		return data.data
+		const url = `${process.env.CONCERO_API_URL}/quest`
+		const { payload } = await get<TApiResponse<TGetAllQuestsResponse>>(url, { skip: 0, take: 10 })
+		// if (data.success === false || status !== 200) throw new Error('Something went wrong')
+		return payload
 	},
 
 	getTestingQuests: async (): Promise<TGetQuestsResponse> => {

@@ -25,7 +25,7 @@ export const QuestCard = (props: TProps) => {
 			category: category.QuestCard,
 			action: action.BeginQuest,
 			label: 'concero_quest_begin',
-			data: { id: quest._id, type: getEventTypeQuest(quest as TQuest) },
+			data: { id: quest.id, type: getEventTypeQuest(quest as TQuest) },
 		})
 	}
 	switch (status) {
@@ -36,7 +36,7 @@ export const QuestCard = (props: TProps) => {
 		case 'READY_TO_START':
 			controls = (
 				<StartQuest
-					questId={quest._id}
+					questId={quest.id}
 					onStart={() => handleEventPosthogOnStart(quest)}
 					propsButton={{ size: 'l', isFull: false }}
 				/>
@@ -49,7 +49,7 @@ export const QuestCard = (props: TProps) => {
 			showOnlyOptionalSteps = false
 			break
 		case 'READY_TO_CLAIM':
-			controls = <ClaimReward questId={quest._id} onClaim={() => onClaim?.(quest)} propsButton={{ size: 'l' }} />
+			controls = <ClaimReward questId={quest.id} onClaim={() => onClaim?.(quest)} propsButton={{ size: 'l' }} />
 			showSteps = true
 			showOnlyOptionalSteps = true
 			break
@@ -64,9 +64,16 @@ export const QuestCard = (props: TProps) => {
 	return (
 		<div className={cls.quest_card}>
 			<div className={cls.header}>
-				<div className={cls.title}>{quest.name}</div>
+				<div className={cls.title}>{quest.title}</div>
 				{quest.subtitle ? <div className={cls.subtitle}>{quest.subtitle}</div> : ''}
-				<div className={cls.reward_points}>+ {quest.rewards.points} CERs</div>
+				<div className={cls.reward_points}>
+					+{' '}
+					{Math.max(
+						quest.quest_reward.tokenReward?.min_value ?? 0,
+						quest.quest_reward.tokenReward?.max_value ?? 0,
+					)}{' '}
+					CERs
+				</div>
 			</div>
 
 			<div className={cls.image_wrap}>

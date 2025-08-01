@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Modal } from '../../Modal/Modal'
-import VerifyIcon from '../../../../assets/icons/VerifyIcon.svg?react'
+import { Modal } from '@/components/modals/Modal/Modal'
+import VerifyIcon from '@/assets/icons/VerifyIcon.svg?react'
 import cls from './TermsConditionModal.module.pcss'
-import { classNames } from '../../../../utils/classNames/classNames'
 import { Button, Checkbox } from '@concero/ui-kit'
+import clsx from 'clsx'
 
 type TProps = {
 	show: boolean
@@ -24,11 +24,11 @@ export const TermsConditionModal = (props: TProps): JSX.Element => {
 			<div className={`${cls.icon} ${cls.block}`}>
 				<VerifyIcon />
 			</div>
-			<p className={classNames(cls.block, {}, [cls.description])}>
+			<p className={clsx(cls.block, {}, [cls.description])}>
 				Please sign the message to verify that this account belongs to you. Without this verification, you will
 				not be able to use the site
 			</p>
-			<div className={classNames(cls.block, {}, [cls.condition])}>
+			<div className={clsx(cls.block, {}, [cls.condition])}>
 				<Checkbox onChange={setChecked} />
 				<label htmlFor="checkbox" className={cls.condition_description}>
 					I have read and agree to the

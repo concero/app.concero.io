@@ -32,15 +32,16 @@ export const QuestPreviewItem = (props: TProps) => {
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
 
 	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
-	if (user && getIsStartedQuest(quest._id, user)) {
+	if (user && getIsStartedQuest(quest.id, user)) {
 		statusOfQuest = 'STARTED'
 	}
-	const completedSteps = user ? getCompletedStepsByQuest(quest._id, user) : []
+	const completedSteps = user ? getCompletedStepsByQuest(quest.id, user) : []
 
-	if (completedSteps.length >= quest.steps.filter(step => !step.optional).length) {
+	if (completedSteps.length >= quest.tasks.filter(task => task.is_required).length) {
 		statusOfQuest = 'READY_TO_CLAIM'
 	}
-	const rewardIsClaimed = getIsClaimedQuest(quest._id, user)
+
+	const rewardIsClaimed = getIsClaimedQuest(quest.id, user)
 	if (rewardIsClaimed) {
 		statusOfQuest = 'FINISHED'
 	}
@@ -50,7 +51,7 @@ export const QuestPreviewItem = (props: TProps) => {
 			category: category.QuestCard,
 			action: action.ClaimQuest,
 			label: 'concero_claim_quest',
-			data: { id: quest._id, type: getEventTypeQuest(quest as TQuest) },
+			data: { id: quest.id, type: getEventTypeQuest(quest as TQuest) },
 		})
 		setIsOpenQuestCard(false)
 		setIsOpenRewardModal(true)

@@ -50,8 +50,12 @@ export const QuestPreviewCard = (props: TProps) => {
 
 	const showMetaInfo = size !== 's'
 	const showImage = size !== 's' && size !== 'm'
-	const rewardIsClaimed = getIsClaimedQuest(quest._id, user)
+	const rewardIsClaimed = getIsClaimedQuest(quest.id, user)
 	const isDone = getIsDoneQuest(quest, user)
+	const reward = Math.max(
+		quest.quest_reward?.tokenReward?.min_value ?? 0,
+		quest.quest_reward?.tokenReward?.max_value ?? 0,
+	)
 	return (
 		<Card
 			className={clsx(cls.preview_item, sizeClassMap[size], { [cls.disabled]: rewardIsClaimed }, className)}
@@ -75,8 +79,8 @@ export const QuestPreviewCard = (props: TProps) => {
 					</div>
 				)}
 				<div className={cls.title_wrap}>
-					<span className={cls.title}>{quest.name}</span>
-					<span className={cls.rewards}>+{quest.rewards.points} CERs</span>
+					<span className={cls.title}>{quest.title}</span>
+					<span className={cls.rewards}>+{reward} CERs</span>
 				</div>
 			</div>
 			{showImage && (
@@ -102,7 +106,7 @@ export const QuestPreviewCard = (props: TProps) => {
 						<ArrowRightIcon />
 					</IconButton>
 				)}
-				{isDone && <ClaimReward questId={quest._id} onClaim={() => onClaim?.(quest)} />}
+				{isDone && <ClaimReward questId={quest.id} onClaim={() => onClaim?.(quest)} />}
 			</div>
 		</Card>
 	)

@@ -8,47 +8,82 @@ const client = axios.create({
 	withCredentials: true,
 })
 
-const request = async <TResponse extends unknown>(options: AxiosRequestConfig) => {
+// client.interceptors.request.use(
+// 	config => {
+// 		const token = localStorage.getItem(LOCALSTORAGE_ACCESS_TOKEN_NAME)
+// 		if (token) {
+// 			config.headers.Authorization = `Bearer ${token}`
+// 		}
+// 		return config
+// 	},
+// 	error => Promise.reject(error),
+// )
+// client.interceptors.response.use(
+// 	response => response,
+// 	async error => {
+// 		const originalRequest = error.config
+// 		if (error.response?.status === 401) {
+// 			try {
+// 				const { data } = await axios.get('/api/v1/auth/refresh', { withCredentials: true })
+// 				localStorage.setItem('accessToken', data.token)
+// 				originalRequest.headers.Authorization = `Bearer ${data.token}`
+// 				return axios(originalRequest)
+// 			} catch {
+// 				localStorage.removeItem('accessToken')
+// 			}
+// 		}
+// 		return Promise.reject(error)
+// 	},
+// )
+
+const request = async <TResponse>(options: AxiosRequestConfig): Promise<TResponse> => {
 	try {
-		const response: AxiosResponse<TResponse, unknown> = await client(options)
-		return response
-	} catch (error) {
-		throw error.response
+		const response: AxiosResponse<TResponse> = await client(options)
+		return response.data
+	} catch (error: any) {
+		const response = error?.response
+		if (response) throw response.data || response
+		throw error
 	}
 }
-
-export const get = async <TResponse extends unknown>(
+export const get = <TResponse>(
 	url: string,
 	params?: AxiosRequestConfig['params'],
 	headers?: AxiosRequestConfig['headers'],
 ) =>
-	await request<TResponse>({
+	request<TResponse>({
 		url,
 		method: 'GET',
 		params,
 		headers,
 	})
 
-export const post = async <TResponse extends unknown>(url: string, data?: any, headers?: any) =>
-	await request<TResponse>({
+export const post = <TResponse, TData = unknown>(url: string, data?: TData, headers?: AxiosRequestConfig['headers']) =>
+	request<TResponse>({
 		url,
 		method: 'POST',
 		data,
 		headers,
 	})
 
-export const del = async <TResponse extends unknown>(url: string, data?: any, headers?: any) =>
-	await request<TResponse>({
+export const del = <TResponse, TData = unknown>(url: string, data?: TData, headers?: AxiosRequestConfig['headers']) =>
+	request<TResponse>({
 		url,
-		method: 'POST',
+		method: 'DELETE',
 		data,
 		headers,
 	})
-
-export const patch = async <TResponse extends unknown = unknown>(url: string, data: any, headers?: any) =>
-	await request<TResponse>({
+export const patch = <TResponse, TData = unknown>(url: string, data?: TData, headers?: AxiosRequestConfig['headers']) =>
+	request<TResponse>({
 		url,
 		method: 'PATCH',
+		data,
+		headers,
+	})
+export const put = <TResponse, TData = unknown>(url: string, data?: TData, headers?: AxiosRequestConfig['headers']) =>
+	request<TResponse>({
+		url,
+		method: 'PUT',
 		data,
 		headers,
 	})

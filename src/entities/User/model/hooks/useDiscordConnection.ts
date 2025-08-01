@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { DISCORD_LINK_AUTH } from '../../config/consts/discordLink'
 import { TUserResponse } from '@/entities/User'
 import { useSearchParams } from 'react-router-dom'
-import { useConnectDiscordMutation, useDisconnectSocialNetworkMutation } from '../../api/userApi'
+import { useConnectDiscordMutation, useDisconnectSocialNetworkMutation, useSocials } from '../../api/userApi'
 import { useNavigate } from 'react-router-dom'
+import { UserSocialType } from '../validations/validations'
 
 type TUseDiscordConnectionProps = {
 	user?: TUserResponse
@@ -14,19 +15,13 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const [searchParams] = useSearchParams()
 	const { mutateAsync } = useConnectDiscordMutation()
 	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation(user?.address)
+	const { data: socials } = useSocials(user?.address)
 	const navigate = useNavigate()
 	useEffect(() => {
-		if (user?.connectedSocials?.discord?.username) {
+		if (socials && socials.find(social => social.type === UserSocialType.Discord)) {
 			setIsConnected(true)
-		} else if (
-			!user ||
-			!user.connectedSocials ||
-			!user.connectedSocials.discord ||
-			!user.connectedSocials.discord.username
-		) {
-			setIsConnected(false)
 		}
-	}, [user])
+	}, [user, socials])
 
 	const toggleDiscordConnection = async () => {
 		try {
@@ -47,7 +42,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 		const code = searchParams.get('code')
 
 		if (code && user) {
-			const fetchedNickname = await mutateAsync({ code, userId: user._id })
+			const fetchedNickname = await mutateAsync({ code, userId: user.id })
 			setIsConnected(!!fetchedNickname)
 			if (fetchedNickname) {
 				navigate('/profile')
@@ -56,7 +51,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	}
 
 	useEffect(() => {
-		if (!user?.connectedSocials?.discord?.username) {
+		if (!socials || socials.find(social => social.type === UserSocialType.Discord)) {
 			listenDiscordConnection()
 		}
 	}, [])

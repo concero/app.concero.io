@@ -32,7 +32,8 @@ export const SwappingStreak = (props: TProps) => {
 	const { theme } = useTheme()
 	const todayStart = dayjs().utc().startOf('day').valueOf()
 	const todayEnd = dayjs().utc().endOf('day').valueOf()
-	const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
+	// const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
+	const currentVolume = 0
 	const formattedVolume = Math.floor(currentVolume || 0)
 	const currentVolumePercent = Math.min(((formattedVolume || 0) / SWAP_VOLUME) * 100, 100)
 	const isNotEnough = (formattedVolume || 0) < 50
@@ -44,7 +45,7 @@ export const SwappingStreak = (props: TProps) => {
 
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
-	const current_streak = user?.streak.dailySwap ? user?.streak.dailySwap + 1 : 0
+	const current_streak = user?.streak?.liquidity_pool ? user?.streak?.daily_swap + 1 : 0
 	const showStreakPlaceholder = !user || current_streak < 1
 	const successSwap = (formattedVolume || 0) >= SWAP_VOLUME
 	const warningTime = isNotEnough && timeLeft > oneHourInSecond && timeLeft <= threeHoursInSeconds

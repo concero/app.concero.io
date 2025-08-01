@@ -1,34 +1,33 @@
 import { PropsWithChildren, useEffect, useState } from 'react'
 import { useAccount, useSignMessage } from 'wagmi'
-import { fetchUserByAddress } from '../../../api/concero/user/fetchUserByAddress'
 import { TermsConditionModal } from './TermsConditionModal/TermsConditionModal'
 import { termsIsActual } from './model/lib/termsIsActual'
 import { TermsConditionErrorModal } from './TermsConditionErrorModal/TermsConditionErrorModal'
 import { verifyUser } from './model/lib/verifyUser'
 import { Address } from 'viem'
+import { CheckTermsModalProvider, useCheckTermsModal } from './CheckTermsModalContext'
+import { useUserByAddress } from '@/entities/User/api/userApi'
+import { Http } from '@/shared/types/api'
 
-export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
+const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 	const { address, isConnected } = useAccount()
 	const { signMessageAsync } = useSignMessage()
-	const [showModal, setShowModal] = useState<boolean>(false)
+	const { opened: showModal, setOpen: setShowModal } = useCheckTermsModal()
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isLoadingTerms, setIsLoadingTerms] = useState<boolean>(false)
 	const [error, setError] = useState<string>('')
+	const user = useUserByAddress(address)
 	useEffect(() => {
-		if (address) {
-			fetchUserByAddress(address as Address)
-				.catch(err => {
-					if (err?.status == 403) {
-						setShowModal(true)
-					}
-				})
-				.then(user => {
-					if (user && !termsIsActual(user)) {
-						setShowModal(true)
-					}
-				})
+		if (user.data && !termsIsActual(user.data.payload)) {
+			setShowModal(true)
 		}
-	}, [address])
+		if (
+			user.error &&
+			(user.error.code === Http.Code.Enum.TOKEN_NOT_PROVIDED || user.error.code === Http.Code.Enum.TOKEN_INVALID)
+		) {
+			setShowModal(true)
+		}
+	}, [user])
 	const handleVerify = async () => {
 		if (!address) {
 			console.error('Wallet not connected')
@@ -36,8 +35,9 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 			return
 		}
 		setIsLoadingTerms(true)
+
 		verifyUser(address as Address, signMessageAsync)
-			.catch(err => {
+			.catch((err: any) => {
 				setIsError(true)
 				setError(err)
 			})
@@ -72,5 +72,13 @@ export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
 				/>
 			)}
 		</>
+	)
+}
+
+export const CheckTermsOfUseDecorator = ({ children }: PropsWithChildren) => {
+	return (
+		<CheckTermsModalProvider>
+			<CheckTermsOfUseDecoratorInner>{children}</CheckTermsOfUseDecoratorInner>
+		</CheckTermsModalProvider>
 	)
 }

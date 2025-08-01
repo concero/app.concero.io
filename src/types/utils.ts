@@ -6,3 +6,4 @@ export interface ChartData {
 	value: number
 	time: number
 }
+export type Union<T extends string | number | boolean> = `${T}`

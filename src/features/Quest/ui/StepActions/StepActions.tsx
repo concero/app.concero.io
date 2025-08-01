@@ -82,13 +82,15 @@ const StepActions: Record<TQuestActions, (props: TStepActionProps) => JSX.Elemen
 			startDate = dates.startDate
 			endDate = dates.endDate
 		}
-		const { data: volume } = useUserVolume({
-			address: user?.address,
-			startDate,
-			endDate,
-			isCrossChain: step.options?.isCrossChain,
-			chainIds: step.options?.chainId,
-		})
+		// const { data: volume } = useUserVolume({
+		// 	address: user?.address,
+		// 	startDate,
+		// 	endDate,
+		// 	isCrossChain: step.options?.isCrossChain,
+		// 	chainIds: step.options?.chainId,
+		// })
+		// TODO: return useUserVolume
+		const volume = 0
 		const handleSwap = () => {
 			window.open(config.lancanURL, '_blank')
 		}

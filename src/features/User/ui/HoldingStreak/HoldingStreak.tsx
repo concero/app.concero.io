@@ -29,9 +29,11 @@ export const HoldingStreak = (props: TProps) => {
 	const isDesktop = useMediaQuery('desktop')
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
-	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
+	const currentStreak = user?.streak?.liquidity_pool ? user?.streak?.liquidity_pool + 1 : 0
 	const showStreakPlaceholder = !user || currentStreak < 1
-	const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
+	// const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
+	//TODO: FIX
+	const userEarnings = 0
 	const balance = userEarnings ? Number(toLocaleNumber(userEarnings.earnings + userEarnings.deposit, 2)) : 0
 	const showDefaultTip = !showStreakPlaceholder && (balance > 100 || balance === 0)
 	const showDanger = !showStreakPlaceholder && balance ? balance > 0 && balance < 100 : false

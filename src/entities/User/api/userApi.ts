@@ -1,108 +1,138 @@
-import { Address } from 'viem'
-import { AxiosResponse } from 'axios'
+import { Address, http } from 'viem'
 import { TAcceptTerms, TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 import {
-	IUserAction,
 	NicknameError,
 	TGetLeaderBoardReponse,
+	TUserActionResponse,
+	TUserNicknameCheckResponse,
 	TUserResponse,
-	TUserSocialNetworkType,
+	TUserSocialsResponse,
 	UserEarnings,
 } from '../model/types/response'
 import { config } from '@/constants/config'
-import { TApiGetResponse, TApiResponse, TPaginationParams } from '@/shared/types/api'
+import {
+	ApiSuccess,
+	createApiHandler,
+	handleUnknownError,
+	Http,
+	isApiErrorResponse,
+	TApiResponse,
+	TPaginationParams,
+} from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
-import { del, get, post } from '@/shared/api/axiosClient'
+import { del, get, patch, post } from '@/shared/api/axiosClient'
 
 //--------------------------------Domain
+export const userAuthServiceApi = {
+	/** Request to get a nonce */
+	authorize: async (address: Address) => {
+		const url = `${process.env.CONCERO_API_URL}/auth/authorize`
+		let response: TApiResponse<{ nonce: string }>
+		try {
+			response = await post<TApiResponse<{ nonce: string }>>(url, { walletAddress: address })
+		} catch (error) {
+			throw {
+				code: Http.Code.Enum.UNHANDLED_ERROR,
+				payload: null,
+				message: Http.Code.Enum.UNHANDLED_ERROR,
+			} satisfies TApiResponse<any, string>
+		}
+		if (!response?.code) {
+			throw {
+				code: Http.Code.Enum.UNHANDLED_ERROR,
+				message: Http.Code.Enum.UNHANDLED_ERROR,
+				payload: null,
+			} satisfies TApiResponse<null, string>
+		}
+		if (response.code !== Http.Code.Enum.OK) {
+			throw response satisfies TApiResponse<any, string>
+		}
+		return response.payload.nonce
+	},
+
+	/** Verify user nonce */
+	verify: async ({ address, signature }: { address: Address; signature: string }): Promise<string | null> => {
+		const url = `${process.env.CONCERO_API_URL}/auth/verify`
+		const response = await post<TApiResponse<{ token: string }>>(url, { walletAddress: address, signature })
+		if (response.code !== 'ok') {
+			console.error('Request verify executed with error, response:', response)
+			return null
+		}
+		return response.payload.token
+	},
+}
+export function isSuccessResponse<TData>(response: TApiResponse<TData, any>): response is ApiSuccess<TData> {
+	return response.code === Http.Code.Enum.OK
+}
 export const userServiceApi = {
 	createUser: async (address: Address) => {
 		const url = `${process.env.CONCERO_API_URL}/users`
 
 		const response = await post<TApiResponse<TUserResponse>>(url, { address })
-		if (response.status !== 200) throw new Error('Something went wrong')
-		if (response.data.success) {
-			return response.data.data
-		}
+		if (response.code !== 'ok') throw new Error('Something went wrong')
+		return response.payload
 	},
-
-	getUserByAddress: async (address: Address) => {
+	findUserByAddress: async (address: Address) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}`
-
-		const response = await get<TApiResponse<TUserResponse>>(url)
-		if (response.status !== 200) throw new Error('Something went wrong')
-		if (response.data.success) {
-			return response.data.data
-		}
+		return createApiHandler(() => get<TApiResponse<TUserResponse | null>>(url))
+	},
+	acceptTerms: async (address: Address) => {
+		const url = `${process.env.CONCERO_API_URL}/users/acceptTerms`
+		return createApiHandler(() =>
+			patch<TApiResponse<{ terms_of_use_signed_version: string }>>(url, {
+				address,
+			}),
+		)
 	},
 
 	addQuestToProgress: async (address: string, questId: string) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}`
 		const response = await post<TApiResponse<string>>(url, {})
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.success
+		return response.payload
 	},
 	updateNickname: async (args: TUpdateNicknameArgs) => {
-		const url = `${process.env.CONCERO_API_URL}/users/${args.address}/nickname`
-		const response = await post<TApiResponse<void, NicknameError>>(url, args)
-		if (!response.data.success) {
-			throw new Error(response.data.error)
-		}
+		const url = `${process.env.CONCERO_API_URL}/users/${args.address}/nickname/${args.newNickname}`
+
+		return createApiHandler(
+			() => get<TApiResponse<TUserNicknameCheckResponse, NicknameError>>(url),
+			NicknameError.Error,
+		)
 	},
 
 	removeQuestFromProgress: async (address: string, questId: string) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/remove-quest-from-progress/${questId}`
 		const response = await del<TApiResponse<string>>(url, {})
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.success
+		return response.payload
 	},
 
 	addStepInProgress: async (address: string, questId: string, stepId: string) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}/steps`
 		const response = await post<TApiResponse<string>>(url, { stepId })
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.success
+		return response.payload
 	},
 
 	getUserVolume: async ({ address, startDate, endDate, isCrossChain, chainIds }: TUserVolumeArgs) => {
-		const startDateValue = typeof startDate === 'object' ? Number(startDate.$numberDecimal) : startDate
-		const endDateValue = typeof endDate === 'object' ? Number(endDate.$numberDecimal) : endDate
-
-		const url = `${process.env.CONCERO_API_URL}/userVolume`
+		const url = `${process.env.CONCERO_API_URL}/users/volume`
 
 		const requestBody = {
 			address,
-			startDate: startDateValue,
-			endDate: endDateValue,
+			from: startDate,
+			to: endDate,
 			isCrossChain,
 			chainIds,
 		}
 		const response = await post<TApiResponse<number>>(url, requestBody)
-		if (response.status !== 200) throw new Error(response.statusText)
-		if (response.data.success) {
-			return response.data.data
-		}
+		return response.payload
 	},
 
-	acceptTerms: async (address: Address): Promise<AxiosResponse<void>> => {
-		const url = `${process.env.CONCERO_API_URL}/users/accept_terms`
+	getLeaderboard: async ({ limit, userAddress }: { userAddress: string | undefined; limit?: number }) => {
+		const url = new URL(`${process.env.CONCERO_API_URL}/users/leaderboard`)
 
-		const response = await post<void>(url, {
-			address,
-		})
-		return response
-	},
-
-	getLeaderboard: async (userAddress: string | undefined) => {
-		const userAddressQuery = userAddress ? `userAddress=${userAddress}` : ''
-		const url = `${process.env.CONCERO_API_URL}/usersLeaderboard?${userAddressQuery}`
-
-		const response = await get<TApiResponse<TGetLeaderBoardReponse>>(url)
-		if (response.status !== 200) throw new Error('Something went wrong')
-		if (response.data.success) {
-			return response.data.data
-		}
+		if (userAddress) url.searchParams.append('address', userAddress)
+		url.searchParams.append('limit', limit?.toString() ?? '10')
+		const response = await get<TApiResponse<TGetLeaderBoardReponse>>(url.toString())
+		return response.payload
 	},
 
 	fetchUserEarnings: async (address: Address): Promise<UserEarnings | null> => {
@@ -115,26 +145,51 @@ export const userServiceApi = {
 		return null
 	},
 }
+
 export const userActionsService = {
 	fetchUserActions: async (address: string, params: TPaginationParams) => {
-		const url = `${process.env.CONCERO_API_URL}/v2/userActions/${address}`
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/actions`
 
-		const response = await get<TApiGetResponse<IUserAction[]>>(url, params)
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data
+		return createApiHandler(() => get<TApiResponse<TUserActionResponse>>(url, params))
 	},
 }
+
 export const socialsService = {
-	connectDiscord: async (code: string, user_id: TUserResponse['_id']): Promise<string> => {
+	findUserSocials: async ({ address }: { address: string }) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials`
+		let response: TApiResponse<TUserSocialsResponse>
+
+		try {
+			response = await get<TApiResponse<TUserSocialsResponse>>(url)
+		} catch (error) {
+			throw {
+				code: Http.Code.Enum.UNHANDLED_ERROR,
+				payload: null,
+				message: Http.Code.Enum.UNHANDLED_ERROR,
+			} satisfies TApiResponse<any, string>
+		}
+		if (!response?.code) {
+			throw {
+				code: Http.Code.Enum.UNHANDLED_ERROR,
+				message: Http.Code.Enum.UNHANDLED_ERROR,
+				payload: null,
+			} satisfies TApiResponse<null, string>
+		}
+		if (response.code !== Http.Code.Enum.OK) {
+			throw response satisfies TApiResponse<any, string>
+		}
+		return response.payload?.socials
+	},
+
+	connectDiscord: async (code: string, user_id: TUserResponse['id']): Promise<string> => {
 		const url = `${process.env.CONCERO_API_URL}/connectNetwork/discord`
 		const response = await post<{ message: string; success: boolean; username: string }>(url, {
 			_id: user_id,
 			code,
 		})
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data.username
+		return response.username
 	},
-	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, userId: TUserResponse['_id']) => {
+	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, userId: TUserResponse['id']) => {
 		const url = `${process.env.CONCERO_API_URL}/connectNetwork/twitter`
 
 		const response = await post<{ message: string; success: boolean; username: string }>(url, {
@@ -142,20 +197,18 @@ export const socialsService = {
 			verifier: twitterVerifyCode,
 			_id: userId,
 		})
-		if (response.status !== 200) throw new Error('Something went wrong')
-		return response.data
+		return response
 	},
 	getRequestToken: async () => {
 		const request = await get<{ data: string; success: boolean }>(`${config.baseURL}/twitterToken`)
-		return request.data.data
+		return request.data
 	},
-	disconnectNetwork: async (address: string, network: TUserSocialNetworkType): Promise<boolean> => {
+	disconnectNetwork: async (address: string, network: any): Promise<boolean> => {
 		const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
 
 		const response = await post(url, {
 			address,
 		})
-		if (response.status !== 200) throw new Error('Something went wrong')
 		// @ts-expect-error TODO: Improve type
 		return response.data.data
 	},
@@ -165,32 +218,31 @@ export const socialsService = {
 		const response = await post(url, {
 			address,
 		})
-		if (response.status !== 200) throw new Error('Something went wrong')
 		// @ts-expect-error TODO: Improve type
 		return response.data.data
 	},
 	sendEmail: async (address: string, email: string) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/register-email`
 
-		const { data } = await post<TApiResponse<void, string>>(url, {
+		const response = await post<any>(url, {
 			email,
 		})
-		if (data.success == true) {
+		if (response.code == 'ok') {
 			return true
 		} else {
-			throw new Error(data.error)
+			throw new Error(response.message)
 		}
 	},
 	verifyOTP: async (address: string, otp: string): Promise<boolean> => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/verify-email`
 
-		const { data } = await post<TApiResponse<void, string>>(url, {
+		const response = await post<any>(url, {
 			otp,
 		})
-		if (data.success == true) {
+		if (response.code == 'ok') {
 			return true
 		} else {
-			throw new Error(data.error)
+			throw new Error(response.message)
 		}
 	},
 }
@@ -206,14 +258,26 @@ export const useCreateUserMutation = () => {
 }
 
 export const useUserByAddress = (address?: Address) => {
-	return useQuery({
-		queryKey: [tagInvalidation, address],
-		queryFn: () => userServiceApi.getUserByAddress(address as Address),
+	return useQuery<TApiResponse<TUserResponse | null>, TApiResponse<any, string>>({
+		queryKey: [tagInvalidation, address, 'useUserByAddress'],
+		queryFn: () => userServiceApi.findUserByAddress(address as Address),
 		enabled: !!address,
 		notifyOnChangeProps: ['data', 'isPending', 'error'],
 	})
 }
 
+export const useUserAction = ({ address, take }: { address: string; take: number }) => {
+	return useInfiniteQuery({
+		refetchOnMount: false,
+		retry: 2,
+		queryKey: [address, 'userActions'],
+		queryFn: ({ pageParam = 1 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
+		initialPageParam: 1,
+		getNextPageParam: (lastPage, _, lastPageParam) => {
+			return lastPage.payload.pagination.count >= lastPage.payload.pagination.take ? lastPageParam + 1 : undefined
+		},
+	})
+}
 export const useAddQuestToProgressMutation = () => {
 	return useMutation({
 		mutationFn: (payload: { address: string; questId: string }) =>
@@ -247,12 +311,14 @@ export const useAddStepInProgressMutation = () => {
 	})
 }
 export const useUpdateNicknameMutation = () => {
-	return useMutation<void, AxiosResponse<TApiResponse<void, NicknameError, false>>, TUpdateNicknameArgs>({
-		mutationFn: (payload: TUpdateNicknameArgs) => userServiceApi.updateNickname(payload),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+	return useMutation<TApiResponse<TUserNicknameCheckResponse>, TApiResponse<any, NicknameError>, TUpdateNicknameArgs>(
+		{
+			mutationFn: (payload: TUpdateNicknameArgs) => userServiceApi.updateNickname(payload),
+			onSuccess: () => {
+				queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			},
 		},
-	})
+	)
 }
 
 export const useUserVolume = (options?: TUserVolumeArgs) => {
@@ -289,9 +355,23 @@ export const useVerifyOTPMutation = () => {
 		},
 	})
 }
+
+//Socials
+
+export const useSocials = (address?: string) => {
+	return useQuery({
+		queryKey: ['useSocials', tagInvalidation, address],
+		queryFn: async () => {
+			if (!address) throw new Error('Address is required')
+			return socialsService.findUserSocials({ address })
+		},
+		enabled: !!address,
+		notifyOnChangeProps: ['data', 'isPending'],
+	})
+}
 export const useConnectDiscordMutation = () => {
 	return useMutation({
-		mutationFn: (arg: { code: string; userId: TUserResponse['_id'] }) =>
+		mutationFn: (arg: { code: string; userId: TUserResponse['id'] }) =>
 			socialsService.connectDiscord(arg.code, arg.userId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
@@ -300,7 +380,7 @@ export const useConnectDiscordMutation = () => {
 }
 export const useConnectTwitterMutation = () => {
 	return useMutation({
-		mutationFn: (arg: { oauthToken: string; twitterVerifyCode: string; userId: TUserResponse['_id'] }) =>
+		mutationFn: (arg: { oauthToken: string; twitterVerifyCode: string; userId: TUserResponse['id'] }) =>
 			socialsService.connectTwitter(arg.oauthToken, arg.twitterVerifyCode, arg.userId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
@@ -309,8 +389,7 @@ export const useConnectTwitterMutation = () => {
 }
 export const useDisconnectSocialNetworkMutation = (address?: string) => {
 	return useMutation({
-		mutationFn: (arg: { network: TUserSocialNetworkType }) =>
-			socialsService.disconnectNetwork(address ?? '', arg.network),
+		mutationFn: (arg: { network: any }) => socialsService.disconnectNetwork(address ?? '', arg.network),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
@@ -327,14 +406,18 @@ export const useDisconnectEmailMutation = () => {
 
 export const useGetLeaderboard = (address?: string) => {
 	return useQuery({
-		queryKey: [tagInvalidation, address],
-		queryFn: () => userServiceApi.getLeaderboard(address),
+		queryKey: [tagInvalidation, address, 'useGetLeaderboard'],
+		queryFn: async () => {
+			if (!address) throw new Error('Address is required')
+			return userServiceApi.getLeaderboard({ userAddress: address })
+		},
+		enabled: !!address,
 		notifyOnChangeProps: ['data', 'isPending'],
 	})
 }
 export const useGetUserEarnings = (address: Address | null | undefined) => {
 	return useQuery({
-		queryKey: ['userEarnings', address],
+		queryKey: [address, 'userEarnings'],
 		queryFn: async () => {
 			if (!address) throw new Error('Address is required')
 			return userServiceApi.fetchUserEarnings(address)

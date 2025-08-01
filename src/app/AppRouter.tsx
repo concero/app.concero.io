@@ -1,5 +1,4 @@
 import { FullScreenLoader } from '@/components/layout/FullScreenLoader/FullScreenLoader'
-import { CheckTermsOfUseDecorator } from '@/components/modals/TermsConditionModal/CheckTermsOfUse'
 import { routes } from '@/constants/routes'
 import { TUserResponse } from '@/entities/User'
 import { ProfilePage } from '@/pages/ProfilePage'
@@ -24,9 +23,7 @@ export const AppRouter = (props: TProps) => {
 				path={routes.rewards}
 				element={
 					<Suspense fallback={<FullScreenLoader />}>
-						<CheckTermsOfUseDecorator>
-							<RewardsPage user={user} />
-						</CheckTermsOfUseDecorator>
+						<RewardsPage user={user} />
 					</Suspense>
 				}
 			/>
@@ -35,9 +32,7 @@ export const AppRouter = (props: TProps) => {
 				path={routes.profile}
 				element={
 					<Suspense fallback={<FullScreenLoader />}>
-						<CheckTermsOfUseDecorator>
-							<ProfilePage user={user} />
-						</CheckTermsOfUseDecorator>
+						<ProfilePage user={user} />
 					</Suspense>
 				}
 			/>

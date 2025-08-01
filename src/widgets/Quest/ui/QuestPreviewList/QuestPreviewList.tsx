@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Button, useTheme } from '@concero/ui-kit'
 import { useAccount } from 'wagmi'
-import { TQuestTag, TQuestSize, TQuestType, useAllQuests } from '@/entities/Quest'
+import { TQuestTag, useAllQuests } from '@/entities/Quest'
 import { useUserByAddress } from '@/entities/User'
 import TestingPortalLightImage from '@/shared/assets/icons/light_testing_portal_rocket.png'
 import TestingPortalDarkImage from '@/shared/assets/icons/dark_testing_portal_rocket.png'
@@ -11,44 +11,35 @@ import cls from './QuestPreviewList.module.pcss'
 type WithoutUndefined<T> = T extends undefined ? never : T
 
 export const QuestPreviewList = (): JSX.Element => {
-	const { data: quests, isFetching } = useAllQuests()
+	const { data: questsWrap, isFetching } = useAllQuests()
 	const account = useAccount()
 	const { theme } = useTheme()
 	const { data: user } = useUserByAddress(account.address)
-	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('testing')
+	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
 		setViewMode(mode)
 	}
-	const sizeMap: Record<TQuestType, TQuestSize> = {
-		Big: 'xl',
-		Campaign: 'xl',
-		Daily: 's',
-		Monthly: 'xl',
-		Primary: 'l',
-		Secondary: 'm',
-	}
+
 	// groupByView
-	//TODO: remove check for admin
+	const quests = questsWrap?.quests
+
 	const groupedQuests = useMemo(
-		() => quests?.filter(q => (q?.tag ? q.tag === viewMode : viewMode === 'rewards')),
+		() => quests?.filter(q => (q.group ? q.group === viewMode : viewMode === 'rewards')),
 		[viewMode, isFetching],
 	)
 	const quest_size_m = useMemo(() => {
-		return groupedQuests
-			?.filter(q => (q.size ? q.size === 'm' : sizeMap[q.type] == 'm'))
-			.toSorted((a, b) => (b?.priority || 0) - (a?.priority || 0))
+		return groupedQuests?.filter(q => q.size === 'm').toSorted((a, b) => (b.index || 0) - (a.index || 0))
 	}, [isFetching, groupedQuests])
 	const quest_size_l = useMemo(() => {
-		return groupedQuests
-			?.filter(q => (q.size ? q.size === 'l' : sizeMap[q.type] == 'l'))
-			.toSorted((a, b) => (b?.priority || 0) - (a?.priority || 0))
+		return groupedQuests?.filter(q => q.size === 'l').toSorted((a, b) => (b.index || 0) - (a.index || 0))
 	}, [isFetching, groupedQuests])
+
 	const quest_size_xl = useMemo(() => {
 		return groupedQuests
-			?.filter(q => (q.size ? q.size === 'xl' : sizeMap[q.type] == 'xl'))
+			?.filter(q => q.size === 'xl')
 			.toSorted((a, b) => {
-				return (b?.priority || 0) - (a?.priority || 0)
+				return (b.index || 0) - (a.index || 0)
 			})
 	}, [isFetching, groupedQuests])
 
@@ -97,7 +88,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								user={user}
-								key={quest._id}
+								key={quest.id}
 								size="xl"
 								className={cls.preview_item}
 							/>
@@ -110,7 +101,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								user={user}
-								key={quest._id}
+								key={quest.id}
 								size="l"
 								className={cls.preview_item}
 							/>
@@ -123,7 +114,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								user={user}
-								key={quest._id}
+								key={quest.id}
 								size="m"
 								className={cls.preview_item}
 							/>

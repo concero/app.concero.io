@@ -1,63 +1,52 @@
-import { optional, z } from 'zod'
+import { Nullable } from '@/shared/types/zod/utility'
+import { z } from 'zod'
 
-export const UserTierZod = z.object({
-	level: z.string(),
-	title: z.string(),
-	bonuses: z.array(z.string()),
-	pointsRequired: z.number(),
+export enum UserSocialType {
+	X = 'x',
+	Discord = 'discord',
+}
+
+const UserSocialTypeSchema = z.union([z.literal(UserSocialType.X), z.literal(UserSocialType.Discord)])
+
+export const UserSocialSchema = z.object({
+	id: z.string(),
+	type: UserSocialTypeSchema,
+	name: z.string(),
+	shortname: z.string(),
+	originalId: z.string(),
+	connectedAt: z.number().int().nonnegative(), // timestamp in seconds
+	disconnectedAt: Nullable(z.number().int().nonnegative()),
 })
 
-export const UserStreaksZod = z.object({
-	dailySwap: z.number(),
-	liquidityHold: z.number(),
+export const UserDetailsThemeVariantSchema = z.enum(['light', 'dark', 'system'])
+
+export const UserDetailsSchema = z.object({
+	termsOfUseSignedVersion: z.string().nullable(),
+	uiThemeVariant: UserDetailsThemeVariantSchema.nullable(),
+})
+const UserMultiplierFieldSchema = z.number().min(1).optional()
+
+const UserMultiplierSchema = z.object({
+	base: UserMultiplierFieldSchema,
+	liquidity_pool: UserMultiplierFieldSchema,
+	daily_swap: UserMultiplierFieldSchema,
 })
 
-export const UserMultiplierZod = z.object({
-	default: z.number(),
-	dailySwap: z.number().nullable(),
-	liquidityHold: z.number().nullable(),
+const UserStreakFieldSchema = z.number().min(1)
+const UserStreakSchema = z.object({
+	liquidity_pool: UserStreakFieldSchema,
+	daily_swap: UserStreakFieldSchema,
 })
-
-export const UserConnectedSocialsZod = z
-	.object({
-		twitter: z
-			.object({
-				id: z.string(),
-				screen_name: z.string(),
-				name: z.string(),
-			})
-			.nullable(),
-		discord: z
-			.object({
-				id: z.string(),
-				username: z.string(),
-				email: z.string(),
-				avatar: z.string(),
-				locale: z.string(),
-			})
-			.nullable(),
-	})
-	.nullable()
-export const QuestInProgressZod = z.object({
-	questId: z.string(),
-	completedSteps: z.array(z.string()),
-})
-
-export const IUserZod = z.object({
-	_id: z.string(),
+export const UserSchema = z.object({
+	id: z.string(),
 	address: z.string(),
-	nickname: z.string().optional(),
-	email: z.string().optional(),
-	tier: UserTierZod,
+	locale: z.string(),
+	timezone: z.string(),
+	nickname: z.string().nullable(),
 	points: z.number(),
-	completedQuests: z.record(z.string(), z.any()).optional(),
-	questsInProgress: z.array(QuestInProgressZod),
-	multiplier: UserMultiplierZod,
-	streak: UserStreaksZod,
-	connectedSocials: UserConnectedSocialsZod,
-	termsOfUse: z
-		.object({
-			accepted_version: z.string().nullable(),
-		})
-		.optional(),
+	email: z.string().nullable(),
+	emailVerifiedAt: z.number().nullable(),
+	multiplier: UserMultiplierSchema,
+	streak: UserStreakSchema,
+	details: UserDetailsSchema,
 })

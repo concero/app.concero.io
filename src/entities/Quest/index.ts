@@ -9,5 +9,5 @@ export { useClaimQuestMutation, useVerifyQuestMutation, useTestingQuests, useAll
 export { getIsClaimedQuest } from './model/lib/getIsClaimedQuest'
 export type { TQuestPreviewSize } from './ui/QuestPreviewCard/QuestPreviewCard'
 export { categoryQuestNameMap } from './config/nameMaps'
-export type { TQuestCardStatus, TQuestActions, TQuestSize, TQuestType } from './model/types/schema'
-export type { TQuestStep, TGetQuestsResponse, TQuest, TQuestTag } from './model/types/response'
+export type { TQuestCardStatus, TQuestSize } from './model/types/schema'
+export type { TQuestStep, TQuest, TQuestTag } from './model/types/response'

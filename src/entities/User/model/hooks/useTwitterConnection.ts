@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { socialsService, TUserResponse, useDisconnectSocialNetworkMutation } from '@/entities/User'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useConnectTwitterMutation } from '../../api/userApi'
+import { useConnectTwitterMutation, useSocials } from '../../api/userApi'
+import { UserSocialType } from '../validations/validations'
 
 interface UseTwitterConnectionProps {
 	user?: TUserResponse
@@ -12,19 +13,13 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	const [searchParams] = useSearchParams()
 	const { mutateAsync } = useConnectTwitterMutation()
 	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation(user?.address)
+	const { data: socials } = useSocials(user?.address)
 	const navigate = useNavigate()
 	useEffect(() => {
-		if (user?.connectedSocials?.twitter?.name) {
+		if (socials && socials.find(social => social.type === UserSocialType.X)) {
 			setIsConnected(true)
-		} else if (
-			!user ||
-			!user.connectedSocials ||
-			!user.connectedSocials.twitter ||
-			!user.connectedSocials.twitter.name
-		) {
-			setIsConnected(false)
 		}
-	}, [user])
+	}, [user, socials])
 
 	const toggleTwitterConnection = async () => {
 		try {
@@ -51,7 +46,7 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 				const result = await mutateAsync({
 					oauthToken: twitterCode,
 					twitterVerifyCode: twitterVerifyCode,
-					userId: user._id,
+					userId: user.id,
 				})
 				setIsConnected(!!result.success)
 				if (result.username) {
@@ -64,7 +59,7 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	}
 
 	useEffect(() => {
-		if (!user?.connectedSocials?.twitter?.screen_name) {
+		if (!socials || socials.find(social => social.type === UserSocialType.X)) {
 			listenTwitterConnection().then()
 		} else if (searchParams.get('oauth_token') || searchParams.get('oauth_verifier')) {
 			navigate('/profile')

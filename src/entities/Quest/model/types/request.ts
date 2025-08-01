@@ -1,8 +1,7 @@
 import { Address } from 'viem'
 
 export type TVerifyArgs = {
-	questId: string
-	stepId: string
+	user_step_id: string
 	address: Address
 }
 export type TClaimArgs = {

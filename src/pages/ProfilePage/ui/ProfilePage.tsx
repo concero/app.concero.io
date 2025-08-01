@@ -1,4 +1,4 @@
-import { TUserResponse, useDiscordConnection, useTwitterConnection, useUserByAddress } from '@/entities/User'
+import { TUserResponse, useDiscordConnection, useSocials, useTwitterConnection } from '@/entities/User'
 import cls from './ProfilePage.module.pcss'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
@@ -20,25 +20,31 @@ import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
 import { config } from '@/constants/config'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
+import { UserSocialType } from '@/entities/User/model/validations/validations'
 type TProps = {
 	user: TUserResponse | null
 }
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
 	const { address } = useAccount()
+	const { data: socials } = useSocials(address)
+
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
+
 	if (config.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
 	if (!address || !user) {
 		return <LoginRequired />
 	}
+	const socialX = socials?.find(social => social.type === UserSocialType.X)
+	const socialDiscord = socials?.find(social => social.type === UserSocialType.Discord)
 
 	const addresToShow = truncateWallet(user.address, 4)
-	const Social_X_toShow = user.connectedSocials?.twitter?.screen_name ?? '-'
-	const Social_Discord_toShow = user.connectedSocials?.discord?.username ?? '-'
+	const Social_X_toShow = socialX?.shortname ?? '-'
+	const Social_Discord_toShow = socialDiscord?.shortname ?? '-'
 	const Social_Email_toShow = user.email ?? '-'
 	return (
 		<PageWrap>

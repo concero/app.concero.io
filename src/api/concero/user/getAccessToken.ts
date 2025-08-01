@@ -2,6 +2,7 @@ import { Address } from 'viem'
 import { post } from '../../client'
 import { SignMessageMutateAsync } from 'wagmi/query'
 
+/**@deprecated */
 export const getAccessToken = async (
 	address: Address,
 	signMessageAsync: SignMessageMutateAsync<unknown>,

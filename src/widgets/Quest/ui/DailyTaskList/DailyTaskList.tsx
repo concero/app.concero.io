@@ -8,10 +8,10 @@ export const DailyTaskList = (): JSX.Element => {
 	const account = useAccount()
 	const { data: user } = useUserByAddress(account.address)
 	//TODO: remove checking admin
-	const DailyQuests = quests
-		?.filter(q => q.type == 'Daily')
+	const DailyQuests = quests?.quests
+		?.filter(q => q.interval == 'daily')
 		.toSorted((a, b) => {
-			return (b?.priority || 0) - (a?.priority || 0)
+			return b.index - a.index
 		})
 	if (!quests || !DailyQuests) {
 		return <></>
@@ -25,7 +25,7 @@ export const DailyTaskList = (): JSX.Element => {
 						<QuestPreviewItem
 							quest={quest}
 							user={user}
-							key={quest._id}
+							key={quest.id}
 							size="s"
 							className={cls.preview_item}
 						/>
