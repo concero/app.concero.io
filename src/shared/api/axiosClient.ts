@@ -8,34 +8,6 @@ const client = axios.create({
 	withCredentials: true,
 })
 
-// client.interceptors.request.use(
-// 	config => {
-// 		const token = localStorage.getItem(LOCALSTORAGE_ACCESS_TOKEN_NAME)
-// 		if (token) {
-// 			config.headers.Authorization = `Bearer ${token}`
-// 		}
-// 		return config
-// 	},
-// 	error => Promise.reject(error),
-// )
-// client.interceptors.response.use(
-// 	response => response,
-// 	async error => {
-// 		const originalRequest = error.config
-// 		if (error.response?.status === 401) {
-// 			try {
-// 				const { data } = await axios.get('/api/v1/auth/refresh', { withCredentials: true })
-// 				localStorage.setItem('accessToken', data.token)
-// 				originalRequest.headers.Authorization = `Bearer ${data.token}`
-// 				return axios(originalRequest)
-// 			} catch {
-// 				localStorage.removeItem('accessToken')
-// 			}
-// 		}
-// 		return Promise.reject(error)
-// 	},
-// )
-
 const request = async <TResponse>(options: AxiosRequestConfig): Promise<TResponse> => {
 	try {
 		const response: AxiosResponse<TResponse> = await client(options)
