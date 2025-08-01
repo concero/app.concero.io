@@ -64,7 +64,7 @@ export default defineConfig(({ mode }) => {
 		},
 		define: {
 			// __IS_DEV__:  mode === 'development',
-			// TODO: Remove after release
+			// TODO: Remove after release 1
 			__IS_DEV__: true,
 		},
 		build: {
