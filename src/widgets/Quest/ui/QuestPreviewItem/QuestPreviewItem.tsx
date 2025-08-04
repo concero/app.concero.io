@@ -6,10 +6,8 @@ import {
 	QuestStatus,
 	TQuest,
 	type TQuestCardStatus,
-	type TQuestPreviewSize,
-	getIsClaimedQuest,
+	TUserQuest,
 } from '@/entities/Quest'
-import { getCompletedStepsByQuest, getIsStartedQuest, type TUserResponse } from '@/entities/User'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
 import { Modal } from '@/components/modals/Modal/Modal'
@@ -17,31 +15,28 @@ import cls from './QuestPreviewItem.module.pcss'
 import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
+import { getIsCanClaimQuest } from '@/entities/User'
 
 type TProps = {
 	quest: TQuest
-	user?: TUserResponse
-	size?: TQuestPreviewSize
+	userQuest?: TUserQuest
 	className?: string
 }
 
 export const QuestPreviewItem = (props: TProps) => {
-	const { quest, user, size, className } = props
+	const { quest, userQuest, className } = props
 	const { address } = useAccount()
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
-
+	const rewardIsClaimed = !!userQuest?.finished_at
 	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
-	if (user && getIsStartedQuest(quest.id, user)) {
+	if (userQuest?.started_at) {
 		statusOfQuest = 'STARTED'
 	}
-	const completedSteps = user ? getCompletedStepsByQuest(quest.id, user) : []
-
-	if (completedSteps.length >= quest.tasks.filter(task => task.is_required).length) {
+	if (userQuest && getIsCanClaimQuest({ quest, userQuest })) {
 		statusOfQuest = 'READY_TO_CLAIM'
 	}
 
-	const rewardIsClaimed = getIsClaimedQuest(quest.id, user)
 	if (rewardIsClaimed) {
 		statusOfQuest = 'FINISHED'
 	}
@@ -77,8 +72,7 @@ export const QuestPreviewItem = (props: TProps) => {
 		<>
 			<QuestPreviewCard
 				quest={quest}
-				size={size}
-				user={user}
+				userQuest={userQuest}
 				onClick={() => {
 					setIsOpenQuestCard(true)
 				}}
@@ -96,16 +90,12 @@ export const QuestPreviewItem = (props: TProps) => {
 					<div className={cls.meta_info}>
 						<span className={cls.category}>{categoryQuestNameMap[quest.category]}</span>
 						<span className={cls.quest}>
-							<QuestStatus
-								quest={quest}
-								isClaimed={rewardIsClaimed}
-								questsInProgress={user?.questsInProgress}
-							/>
+							<QuestStatus quest={quest} isClaimed={rewardIsClaimed} userQuest={userQuest} />
 						</span>
 					</div>
 				}
 			>
-				<QuestCard onClaim={handleClaimReward} quest={quest} status={statusOfQuest} />
+				<QuestCard onClaim={handleClaimReward} quest={quest} userQuest={userQuest} />
 			</Modal>
 		</>
 	)

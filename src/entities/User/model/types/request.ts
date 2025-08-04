@@ -8,7 +8,7 @@ export type TUserVolumeArgs = {
 	startDate: { $numberDecimal: string } | number
 	endDate: { $numberDecimal: string } | number
 	isCrossChain?: boolean | undefined
-	chainIds?: string[]
+	chainIds?: number[]
 }
 
 export type TUpdateNicknameArgs = {

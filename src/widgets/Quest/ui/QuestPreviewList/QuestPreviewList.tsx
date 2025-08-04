@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Button, useTheme } from '@concero/ui-kit'
 import { useAccount } from 'wagmi'
-import { TQuestTag, useAllQuests } from '@/entities/Quest'
+import { TQuestTag, useAllQuests, useUserQuests } from '@/entities/Quest'
 import { useUserByAddress } from '@/entities/User'
 import TestingPortalLightImage from '@/shared/assets/icons/light_testing_portal_rocket.png'
 import TestingPortalDarkImage from '@/shared/assets/icons/dark_testing_portal_rocket.png'
@@ -12,9 +12,11 @@ type WithoutUndefined<T> = T extends undefined ? never : T
 
 export const QuestPreviewList = (): JSX.Element => {
 	const { data: questsWrap, isFetching } = useAllQuests()
-	const account = useAccount()
+	const { address } = useAccount()
 	const { theme } = useTheme()
-	const { data: user } = useUserByAddress(account.address)
+	const { data: user } = useUserByAddress(address)
+	const quest_ids = questsWrap?.quests.map(quest => quest.id)
+	const { data: userQuestsResponse } = useUserQuests({ address, quest_ids, skip: 0, take: 50 })
 	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
@@ -85,13 +87,7 @@ export const QuestPreviewList = (): JSX.Element => {
 				{quest_size_xl ? (
 					<div className={cls.size_xl}>
 						{quest_size_xl.map(quest => (
-							<QuestPreviewItem
-								quest={quest}
-								user={user}
-								key={quest.id}
-								size="xl"
-								className={cls.preview_item}
-							/>
+							<QuestPreviewItem quest={quest} key={quest.id} userQuest={} className={cls.preview_item} />
 						))}
 					</div>
 				) : null}

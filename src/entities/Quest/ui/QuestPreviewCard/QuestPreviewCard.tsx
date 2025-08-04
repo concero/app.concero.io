@@ -1,34 +1,30 @@
 import { Card } from '@/shared/ui/Card/Card'
-import type { TQuest } from '../../model/types/response'
+import type { TQuest, TQuestSize, TUserQuest } from '../../model/types/response'
 import cls from './QuestPreviewCard.module.pcss'
 import { QuestStatus } from './QuestStatus'
 import { config } from '@/constants/config'
 import ArrowRightIcon from '@/shared/assets/icons/monochrome/ArrowRight.svg?react'
-import { TUserResponse } from '@/entities/User'
 import clsx from 'clsx'
 import { categoryQuestNameMap } from '../../config/nameMaps'
-import { getIsClaimedQuest } from '../../model/lib/getIsClaimedQuest'
-import { getIsDoneQuest } from '@/entities/User'
 import { ClaimReward } from '@/features/Quest'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IconButton, useTheme } from '@concero/ui-kit'
+import { getIsCanClaimQuest } from '@/entities/User'
 
 type TClassname = string
-export type TQuestPreviewSize = 's' | 'm' | 'l' | 'xl'
 type TProps = {
-	size?: TQuestPreviewSize
 	quest?: TQuest
-	user?: TUserResponse
+	userQuest?: TUserQuest
 	onClick?: () => void
 	onClaim?: (quest: TQuest) => void
 	className?: string
 }
 
 export const QuestPreviewCard = (props: TProps) => {
-	const { size = 's', quest, user, onClick, onClaim, className } = props
+	const { quest, onClick, onClaim, userQuest, className } = props
 	const { theme } = useTheme()
 	if (!quest) return null
-
+	const size = quest.size
 	const [isHovered, setIsHovered] = useState<boolean>(false)
 	const [isPressed, setIsPressed] = useState<boolean>(false)
 
@@ -41,7 +37,7 @@ export const QuestPreviewCard = (props: TProps) => {
 			document.removeEventListener('mouseup', handleMouseUp)
 		}
 	}, [])
-	const sizeClassMap: Record<TQuestPreviewSize, TClassname> = {
+	const sizeClassMap: Record<TQuestSize, TClassname> = {
 		s: cls.size_s,
 		m: cls.size_m,
 		l: cls.size_l,
@@ -50,8 +46,8 @@ export const QuestPreviewCard = (props: TProps) => {
 
 	const showMetaInfo = size !== 's'
 	const showImage = size !== 's' && size !== 'm'
-	const rewardIsClaimed = getIsClaimedQuest(quest.id, user)
-	const isDone = getIsDoneQuest(quest, user)
+	const rewardIsClaimed = Boolean(userQuest?.finished_at)
+	const isCanClaimQuest = getIsCanClaimQuest({ quest, userQuest })
 	const reward = Math.max(
 		quest.quest_reward?.tokenReward?.min_value ?? 0,
 		quest.quest_reward?.tokenReward?.max_value ?? 0,
@@ -70,11 +66,7 @@ export const QuestPreviewCard = (props: TProps) => {
 					<div className={cls.meta_info}>
 						<span className={cls.category}>{categoryQuestNameMap[quest.category]}</span>
 						<span className={cls.quest}>
-							<QuestStatus
-								quest={quest}
-								isClaimed={rewardIsClaimed}
-								questsInProgress={user?.questsInProgress}
-							/>
+							<QuestStatus quest={quest} isClaimed={rewardIsClaimed} userQuest={userQuest} />
 						</span>
 					</div>
 				)}
@@ -101,12 +93,14 @@ export const QuestPreviewCard = (props: TProps) => {
 				</div>
 			)}
 			<div className={cls.footer}>
-				{!rewardIsClaimed && !isDone && (
+				{!rewardIsClaimed && !isCanClaimQuest && (
 					<IconButton size="s" variant="secondary" isHovered={isHovered} isPressed={isPressed}>
 						<ArrowRightIcon />
 					</IconButton>
 				)}
-				{isDone && <ClaimReward questId={quest.id} onClaim={() => onClaim?.(quest)} />}
+				{userQuest && isCanClaimQuest && (
+					<ClaimReward userQuestId={userQuest.id} onClaim={() => onClaim?.(quest)} />
+				)}
 			</div>
 		</Card>
 	)

@@ -1,4 +1,4 @@
-import { Address, http } from 'viem'
+import { Address } from 'viem'
 import { TAcceptTerms, TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 import {
@@ -11,17 +11,9 @@ import {
 	UserEarnings,
 } from '../model/types/response'
 import { config } from '@/constants/config'
-import {
-	ApiSuccess,
-	createApiHandler,
-	handleUnknownError,
-	Http,
-	isApiErrorResponse,
-	TApiResponse,
-	TPaginationParams,
-} from '@/shared/types/api'
+import { ApiSuccess, createApiHandler, Http, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
-import { del, get, patch, post } from '@/shared/api/axiosClient'
+import { get, patch, post } from '@/shared/api/axiosClient'
 
 //--------------------------------Domain
 export const userAuthServiceApi = {
@@ -86,11 +78,11 @@ export const userServiceApi = {
 		)
 	},
 
-	addQuestToProgress: async (address: string, questId: string) => {
-		const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}`
-		const response = await post<TApiResponse<string>>(url, {})
-		return response.payload
-	},
+	// addQuestToProgress: async (address: string, questId: string) => {
+	// 	const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}`
+	// 	const response = await post<TApiResponse<string>>(url, {})
+	// 	return response.payload
+	// },
 	updateNickname: async (args: TUpdateNicknameArgs) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${args.address}/nickname/${args.newNickname}`
 
@@ -100,17 +92,17 @@ export const userServiceApi = {
 		)
 	},
 
-	removeQuestFromProgress: async (address: string, questId: string) => {
-		const url = `${process.env.CONCERO_API_URL}/users/${address}/remove-quest-from-progress/${questId}`
-		const response = await del<TApiResponse<string>>(url, {})
-		return response.payload
-	},
+	// removeQuestFromProgress: async (address: string, questId: string) => {
+	// 	const url = `${process.env.CONCERO_API_URL}/users/${address}/remove-quest-from-progress/${questId}`
+	// 	const response = await del<TApiResponse<string>>(url, {})
+	// 	return response.payload
+	// },
 
-	addStepInProgress: async (address: string, questId: string, stepId: string) => {
-		const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}/steps`
-		const response = await post<TApiResponse<string>>(url, { stepId })
-		return response.payload
-	},
+	// addStepInProgress: async (address: string, questId: string, stepId: string) => {
+	// 	const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}/steps`
+	// 	const response = await post<TApiResponse<string>>(url, { stepId })
+	// 	return response.payload
+	// },
 
 	getUserVolume: async ({ address, startDate, endDate, isCrossChain, chainIds }: TUserVolumeArgs) => {
 		const url = `${process.env.CONCERO_API_URL}/users/volume`
@@ -278,38 +270,38 @@ export const useUserAction = ({ address, take }: { address: string; take: number
 		},
 	})
 }
-export const useAddQuestToProgressMutation = () => {
-	return useMutation({
-		mutationFn: (payload: { address: string; questId: string }) =>
-			userServiceApi.addQuestToProgress(payload.address, payload.questId),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-		},
-	})
-}
+// export const useAddQuestToProgressMutation = () => {
+// 	return useMutation({
+// 		mutationFn: (payload: { address: string; questId: string }) =>
+// 			userServiceApi.addQuestToProgress(payload.address, payload.questId),
+// 		onSuccess: () => {
+// 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+// 		},
+// 	})
+// }
 
-export const useRemoveQuestFromProgressMutation = () => {
-	return useMutation({
-		mutationFn: (payload: { address: string; questId: string }) =>
-			userServiceApi.removeQuestFromProgress(payload.address, payload.questId),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-		},
-	})
-}
+// export const useRemoveQuestFromProgressMutation = () => {
+// 	return useMutation({
+// 		mutationFn: (payload: { address: string; questId: string }) =>
+// 			userServiceApi.removeQuestFromProgress(payload.address, payload.questId),
+// 		onSuccess: () => {
+// 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+// 		},
+// 	})
+// }
 
-export const useAddStepInProgressMutation = () => {
-	return useMutation({
-		mutationFn: (payload: { address: string; questId: string; stepId: string }) =>
-			userServiceApi.addStepInProgress(payload.address, payload.questId, payload.stepId),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-		},
-		onError: error => {
-			console.error('Failed to add step to quest in progress:', error)
-		},
-	})
-}
+// export const useAddStepInProgressMutation = () => {
+// 	return useMutation({
+// 		mutationFn: (payload: { address: string; questId: string; stepId: string }) =>
+// 			userServiceApi.addStepInProgress(payload.address, payload.questId, payload.stepId),
+// 		onSuccess: () => {
+// 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+// 		},
+// 		onError: error => {
+// 			console.error('Failed to add step to quest in progress:', error)
+// 		},
+// 	})
+// }
 export const useUpdateNicknameMutation = () => {
 	return useMutation<TApiResponse<TUserNicknameCheckResponse>, TApiResponse<any, NicknameError>, TUpdateNicknameArgs>(
 		{

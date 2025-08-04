@@ -1,10 +1,8 @@
 import dayjs from 'dayjs'
-import { normalizeEndDate } from '../../model/lib/normalizeEndDate'
 import { getQuestDaysLeft } from '../../model/lib/getQuestDaysLeft'
-import { TUserResponse } from '@/entities/User/model/types/response'
-import { TQuest } from '../../model/types/response'
+import { TQuest, TQuestInterval, TUserQuest } from '../../model/types/response'
 import { Tag } from '@concero/ui-kit'
-import { TQuestInterval } from '../../model/types/schema'
+import { getIsCanClaimQuest } from '@/entities/User'
 
 export const getDateUnitMap = (interval: TQuestInterval) => {
 	if (interval === 'daily') return 'day'
@@ -17,23 +15,16 @@ export const getDateUnitMap = (interval: TQuestInterval) => {
 interface Props {
 	quest: TQuest
 	isClaimed?: boolean
-	questsInProgress?: TUserResponse['questsInProgress']
+	userQuest?: TUserQuest
 }
-export const QuestStatus = ({ quest, isClaimed, questsInProgress }: Props) => {
-	const { title, finished_at, started_at, interval, tasks, id } = quest
-
-	const questInProgress = questsInProgress
-		? questsInProgress.find(({ questId }) => questId === id.toString())?.completedSteps
-		: []
-	const completedStepIds = questInProgress ?? []
-	const stepsCount = tasks
-		.filter(task => task.is_required)
-		.reduce((sum, task) => {
-			return sum + task.steps.length
-		}, 0)
+export const QuestStatus = ({ quest, isClaimed, userQuest }: Props) => {
+	const { finished_at, started_at, interval } = quest
+	if (!userQuest) return null
+	const completedStepIds = userQuest?.steps ?? []
 
 	const isStarted = completedStepIds.length > 0
-	const readyToClaim = completedStepIds.length === stepsCount
+
+	const readyToClaim = getIsCanClaimQuest({ quest, userQuest })
 	const isNewQuest = quest.is_new && dayjs().diff(dayjs(started_at), 'day') <= 7
 	const daysLeft = getQuestDaysLeft(finished_at)
 

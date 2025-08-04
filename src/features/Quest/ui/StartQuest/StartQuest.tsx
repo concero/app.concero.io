@@ -1,18 +1,18 @@
 import { TQuest } from '@/entities/Quest'
-import { useAddQuestToProgressMutation } from '@/entities/User'
+import { useStartQuestMutation } from '@/entities/Quest/api/questApi'
 import { Button, TButtonProps } from '@concero/ui-kit'
 import { useCallback, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 
 type TProps = {
-	questId: TQuest['_id']
+	questId: TQuest['id']
 	onStart?: () => void
 	propsButton?: TButtonProps
 	className?: string
 }
 export const StartQuest = ({ questId, onStart, className, propsButton }: TProps) => {
 	const { address } = useAccount()
-	const { mutate: addQuestInProgress, isPending } = useAddQuestToProgressMutation()
+	const { mutate: addQuestInProgress, isPending } = useStartQuestMutation()
 	const [loadingWithDelay, setLoadingWithDelay] = useState(false)
 	useEffect(() => {
 		if (isPending) {

@@ -1,66 +1,58 @@
-import { action, category } from '@/constants/tracking'
-import { TQuest, TQuestStep, useVerifyQuestMutation } from '@/entities/Quest'
-import { useAddStepInProgressMutation } from '@/entities/User'
-import { trackEvent } from '@/hooks/useTracking'
-import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
+import { TUserQuest, TUserStep, useVerifyQuestMutation } from '@/entities/Quest'
+import { useVerifyQuestStepMutation } from '@/entities/Quest'
 import { useAccount } from 'wagmi'
 
 export const useVerifyQuest = () => {
 	const { address } = useAccount()
-	const { mutateAsync: verifyFn, isPending: isPendingVerify } = useVerifyQuestMutation()
-	const { mutateAsync: addStepInProgress, isPending: isPendingAddStep } = useAddStepInProgressMutation()
+	const { mutateAsync: handleVerifyStep, isPending: isPendingStep } = useVerifyQuestStepMutation()
+	const { mutateAsync: verifyFn, isPending: isPendingQuest } = useVerifyQuestMutation()
 
 	const handleVerify = ({
-		quest,
 		setErrorText,
-		step,
+		onSuccessVerify,
+		userStep,
+		userQuest,
 	}: {
-		quest: TQuest
 		setErrorText: ((text: string) => void) | undefined
-		step: TQuestStep
+		onSuccessVerify: () => void
+		userStep: TUserStep
+		userQuest: TUserQuest
 	}) => {
-		if (quest && address) {
-			verifyFn({
+		if (address) {
+			handleVerifyStep({
 				address,
-				questId: quest.id,
-				stepId: step.id,
+				user_step_id: userStep.id,
 			})
 				.then(res => {
-					if (!res.status) {
+					if (!res.payload.verified) {
 						setErrorText?.(
 							'You haven’t met the requirements for this task. Please complete it and try again.',
 						)
 						return
 					}
-					addStepInProgress({
-						address,
-						questId: quest.id,
-						stepId: step.id,
-					})
-					trackEvent({
-						category: category.QuestCard,
-						action: action.SuccessQuest,
-						label: 'concero_verify_quest_success',
-						data: { id: quest.id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
-					})
+
+					verifyFn({ address, user_quest_id: userQuest.id })
+						.then(res => {
+							if (!res.payload.verified) {
+								setErrorText?.(
+									'You haven’t met the requirements for this task. Please complete it and try again.',
+								)
+								return
+							}
+						})
+						.catch(err => {
+							setErrorText?.(
+								'You haven’t met the requirements for this task. Please complete it and try again.',
+							)
+						})
+
+					onSuccessVerify()
 				})
 				.catch(e => {
 					setErrorText?.('You haven’t met the requirements for this task. Please complete it and try again.')
-					trackEvent({
-						category: category.QuestCard,
-						action: action.FailedQuest,
-						label: 'concero_verify_quest_fail',
-						data: { id: quest.id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
-					})
 				})
-			trackEvent({
-				category: category.QuestCard,
-				action: action.BeginQuest,
-				label: 'concero_verify_quest_begin',
-				data: { id: quest.id, step: step.id, type: getEventTypeQuest(quest as TQuest) },
-			})
 		}
 	}
 
-	return { handleVerify, isPendingVerify, isPendingAddStep }
+	return { handleVerifyQuest: handleVerify, isPending: isPendingQuest || isPendingStep }
 }

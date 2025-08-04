@@ -1,24 +1,29 @@
 import { config } from '@/constants/config'
 import cls from './QuestCard.module.pcss'
 import { ConnectWallet } from '@/features/Auth'
-import { TQuest, TQuestCardStatus } from '@/entities/Quest'
-import { QuestStepGroup, ClaimReward, StartQuest } from '@/features/Quest'
+import { TQuest, TQuestCardStatus, TUserQuest } from '@/entities/Quest'
+import { ClaimReward, StartQuest } from '@/features/Quest'
 import { useTheme } from '@concero/ui-kit'
 import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 
+import { useAccount } from 'wagmi'
+import { getIsCanClaimQuest } from '@/entities/User'
+import { QuestTaskGroup } from '@/features/Quest'
+
 type TProps = {
 	quest: TQuest
-	status: TQuestCardStatus
+	userQuest?: TUserQuest
 	onClaim?: (quest: TQuest) => void
 }
 
 export const QuestCard = (props: TProps) => {
-	const { quest, status, onClaim } = props
+	const { quest, userQuest, onClaim } = props
 	const { theme } = useTheme()
+	const { address } = useAccount()
 	let controls = null
-	let showSteps = false
+	let showTasks = false
 	let showOnlyOptionalSteps = false
 	const handleEventPosthogOnStart = async (quest: TQuest) => {
 		await trackEvent({
@@ -28,10 +33,24 @@ export const QuestCard = (props: TProps) => {
 			data: { id: quest.id, type: getEventTypeQuest(quest as TQuest) },
 		})
 	}
-	switch (status) {
+
+	const rewardIsClaimed = !!userQuest?.finished_at
+	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
+	if (userQuest?.started_at) {
+		statusOfQuest = 'STARTED'
+	}
+	if (userQuest && getIsCanClaimQuest({ quest, userQuest })) {
+		statusOfQuest = 'READY_TO_CLAIM'
+	}
+
+	if (rewardIsClaimed) {
+		statusOfQuest = 'FINISHED'
+	}
+
+	switch (statusOfQuest) {
 		case 'NOT_CONNECT':
 			controls = <ConnectWallet />
-			showSteps = false
+			showTasks = false
 			break
 		case 'READY_TO_START':
 			controls = (
@@ -41,24 +60,32 @@ export const QuestCard = (props: TProps) => {
 					propsButton={{ size: 'l', isFull: false }}
 				/>
 			)
-			showSteps = false
+			showTasks = false
 			break
 		case 'STARTED':
 			controls = null
-			showSteps = true
+			showTasks = true
 			showOnlyOptionalSteps = false
 			break
 		case 'READY_TO_CLAIM':
-			controls = <ClaimReward questId={quest.id} onClaim={() => onClaim?.(quest)} propsButton={{ size: 'l' }} />
-			showSteps = true
-			showOnlyOptionalSteps = true
+			if (userQuest) {
+				controls = (
+					<ClaimReward
+						userQuestId={userQuest?.id}
+						onClaim={() => onClaim?.(quest)}
+						propsButton={{ size: 'l' }}
+					/>
+				)
+				showTasks = true
+				showOnlyOptionalSteps = true
+			}
 			break
 		case 'FINISHED':
 			controls = null
-			showSteps = false
+			showTasks = false
 			break
 		default:
-			showSteps = false
+			showTasks = false
 			controls = null
 	}
 	return (
@@ -93,7 +120,7 @@ export const QuestCard = (props: TProps) => {
 			</div>
 
 			<div className={cls.description}>{quest.description}</div>
-			{showSteps && <QuestStepGroup quest={quest} onlyOptional={showOnlyOptionalSteps} />}
+			{showTasks && <QuestTaskGroup quest={quest} onlyOptional={showOnlyOptionalSteps} />}
 			{controls ? <div className={cls.controls}>{controls}</div> : null}
 		</div>
 	)

@@ -10,6 +10,7 @@ export const taskTypeSchema = z.union([
 	z.literal('textarea'),
 	z.literal('rate'),
 	z.literal('google_form'),
+	z.literal('like_x'),
 ])
 
 export const taskSchema = z.object({
