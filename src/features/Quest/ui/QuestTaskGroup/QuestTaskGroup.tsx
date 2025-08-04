@@ -28,7 +28,7 @@ export const QuestTaskGroup = (props: TProps) => {
 		listTaskToShow = quest.tasks.filter(task => task.is_required)
 	}
 
-	const isSingleStep = listTaskToShow.length < 2
+	const isSingleStep = listTaskToShow.length === 1
 	if (isSingleStep) {
 		if (!listTaskToShow[0]) return null
 		const task = listTaskToShow[0]

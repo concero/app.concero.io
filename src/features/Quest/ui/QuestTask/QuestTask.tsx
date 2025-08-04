@@ -54,7 +54,7 @@ export const QuestTask = (props: TProps) => {
 	const isDone = userQuest.steps
 		.filter(userStep => task.steps.find(step => step.id === userStep.stepId))
 		.every(step => step.status === 'done')
-	const isOptional = task.is_required
+	const isOptional = !task.is_required
 	if (isDone) {
 		return (
 			<div className={clsx(cls.step_wrap, cls.done)}>
