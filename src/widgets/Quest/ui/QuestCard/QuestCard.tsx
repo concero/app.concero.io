@@ -88,6 +88,7 @@ export const QuestCard = (props: TProps) => {
 			showTasks = false
 			controls = null
 	}
+
 	return (
 		<div className={cls.quest_card}>
 			<div className={cls.header}>
@@ -120,7 +121,7 @@ export const QuestCard = (props: TProps) => {
 			</div>
 
 			<div className={cls.description}>{quest.description}</div>
-			{showTasks && <QuestTaskGroup quest={quest} onlyOptional={showOnlyOptionalSteps} />}
+			{showTasks && <QuestTaskGroup quest={quest} userQuest={userQuest} onlyOptional={showOnlyOptionalSteps} />}
 			{controls ? <div className={cls.controls}>{controls}</div> : null}
 		</div>
 	)

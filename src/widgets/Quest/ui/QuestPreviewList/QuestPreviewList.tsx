@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Button, useTheme } from '@concero/ui-kit'
 import { useAccount } from 'wagmi'
-import { TQuestTag, useAllQuests, useUserQuests } from '@/entities/Quest'
+import { TQuestTag, TUserQuest, useAllQuests, useUserQuests } from '@/entities/Quest'
 import { useUserByAddress } from '@/entities/User'
 import TestingPortalLightImage from '@/shared/assets/icons/light_testing_portal_rocket.png'
 import TestingPortalDarkImage from '@/shared/assets/icons/dark_testing_portal_rocket.png'
@@ -45,6 +45,13 @@ export const QuestPreviewList = (): JSX.Element => {
 			})
 	}, [isFetching, groupedQuests])
 
+	const questId_userQuest_map: Record<string, TUserQuest> = userQuestsResponse?.payload.userQuests
+		? userQuestsResponse.payload.userQuests.reduce(
+				(sum, userQuest) => ({ ...sum, [userQuest.id]: userQuest }),
+				{} as Record<string, TUserQuest>,
+			)
+		: {}
+
 	return (
 		<div className={cls.quest_preview_list}>
 			<div className={cls.header_list}>
@@ -87,7 +94,12 @@ export const QuestPreviewList = (): JSX.Element => {
 				{quest_size_xl ? (
 					<div className={cls.size_xl}>
 						{quest_size_xl.map(quest => (
-							<QuestPreviewItem quest={quest} key={quest.id} userQuest={} className={cls.preview_item} />
+							<QuestPreviewItem
+								quest={quest}
+								key={quest.id}
+								userQuest={questId_userQuest_map[quest.id]}
+								className={cls.preview_item}
+							/>
 						))}
 					</div>
 				) : null}
@@ -96,9 +108,8 @@ export const QuestPreviewList = (): JSX.Element => {
 						{quest_size_l.map(quest => (
 							<QuestPreviewItem
 								quest={quest}
-								user={user}
 								key={quest.id}
-								size="l"
+								userQuest={questId_userQuest_map[quest.id]}
 								className={cls.preview_item}
 							/>
 						))}
@@ -109,9 +120,8 @@ export const QuestPreviewList = (): JSX.Element => {
 						{quest_size_m.map(quest => (
 							<QuestPreviewItem
 								quest={quest}
-								user={user}
 								key={quest.id}
-								size="m"
+								userQuest={questId_userQuest_map[quest.id]}
 								className={cls.preview_item}
 							/>
 						))}

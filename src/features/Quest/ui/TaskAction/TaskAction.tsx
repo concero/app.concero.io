@@ -3,11 +3,6 @@ import { Button } from '@concero/ui-kit'
 import cls from './TaskAction.module.pcss'
 import { useState } from 'react'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
-import { useAccount } from 'wagmi'
-import { config } from '@/constants/config'
-import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
-import { useUserByAddress, useUserVolume } from '@/entities/User'
-import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask

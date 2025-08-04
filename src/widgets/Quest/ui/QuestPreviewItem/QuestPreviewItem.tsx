@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
 import {
