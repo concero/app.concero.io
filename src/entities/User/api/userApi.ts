@@ -1,5 +1,5 @@
 import { Address } from 'viem'
-import { TAcceptTerms, TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
+import { TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 import {
 	NicknameError,
@@ -14,6 +14,7 @@ import { config } from '@/constants/config'
 import { ApiSuccess, createApiHandler, Http, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
 import { get, patch, post } from '@/shared/api/axiosClient'
+import { UserApi } from '../model/types/api'
 
 //--------------------------------Domain
 export const userAuthServiceApi = {
@@ -58,6 +59,7 @@ export function isSuccessResponse<TData>(response: TApiResponse<TData, any>): re
 	return response.code === Http.Code.Enum.OK
 }
 export const userServiceApi = {
+	/**@deprecated */
 	createUser: async (address: Address) => {
 		const url = `${process.env.CONCERO_API_URL}/users`
 
@@ -69,20 +71,11 @@ export const userServiceApi = {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}`
 		return createApiHandler(() => get<TApiResponse<TUserResponse | null>>(url))
 	},
-	acceptTerms: async (address: Address) => {
+	acceptTerms: async (arg: UserApi.AcceptTerms.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/acceptTerms`
-		return createApiHandler(() =>
-			patch<TApiResponse<{ terms_of_use_signed_version: string }>>(url, {
-				address,
-			}),
-		)
+		return createApiHandler(() => patch<TApiResponse<UserApi.AcceptTerms.RequestBody>>(url, arg))
 	},
 
-	// addQuestToProgress: async (address: string, questId: string) => {
-	// 	const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}`
-	// 	const response = await post<TApiResponse<string>>(url, {})
-	// 	return response.payload
-	// },
 	updateNickname: async (args: TUpdateNicknameArgs) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${args.address}/nickname/${args.newNickname}`
 
@@ -91,18 +84,6 @@ export const userServiceApi = {
 			NicknameError.Error,
 		)
 	},
-
-	// removeQuestFromProgress: async (address: string, questId: string) => {
-	// 	const url = `${process.env.CONCERO_API_URL}/users/${address}/remove-quest-from-progress/${questId}`
-	// 	const response = await del<TApiResponse<string>>(url, {})
-	// 	return response.payload
-	// },
-
-	// addStepInProgress: async (address: string, questId: string, stepId: string) => {
-	// 	const url = `${process.env.CONCERO_API_URL}/users/${address}/quests-in-progress/${questId}/steps`
-	// 	const response = await post<TApiResponse<string>>(url, { stepId })
-	// 	return response.payload
-	// },
 
 	getUserVolume: async ({ address, startDate, endDate, isCrossChain, chainIds }: TUserVolumeArgs) => {
 		const url = `${process.env.CONCERO_API_URL}/users/volume`
@@ -263,45 +244,14 @@ export const useUserAction = ({ address, take }: { address: string; take: number
 		refetchOnMount: false,
 		retry: 2,
 		queryKey: [address, 'userActions'],
-		queryFn: ({ pageParam = 1 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
+		queryFn: ({ pageParam = 0 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
 		initialPageParam: 1,
 		getNextPageParam: (lastPage, _, lastPageParam) => {
 			return lastPage.payload.pagination.count >= lastPage.payload.pagination.take ? lastPageParam + 1 : undefined
 		},
 	})
 }
-// export const useAddQuestToProgressMutation = () => {
-// 	return useMutation({
-// 		mutationFn: (payload: { address: string; questId: string }) =>
-// 			userServiceApi.addQuestToProgress(payload.address, payload.questId),
-// 		onSuccess: () => {
-// 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-// 		},
-// 	})
-// }
 
-// export const useRemoveQuestFromProgressMutation = () => {
-// 	return useMutation({
-// 		mutationFn: (payload: { address: string; questId: string }) =>
-// 			userServiceApi.removeQuestFromProgress(payload.address, payload.questId),
-// 		onSuccess: () => {
-// 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-// 		},
-// 	})
-// }
-
-// export const useAddStepInProgressMutation = () => {
-// 	return useMutation({
-// 		mutationFn: (payload: { address: string; questId: string; stepId: string }) =>
-// 			userServiceApi.addStepInProgress(payload.address, payload.questId, payload.stepId),
-// 		onSuccess: () => {
-// 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-// 		},
-// 		onError: error => {
-// 			console.error('Failed to add step to quest in progress:', error)
-// 		},
-// 	})
-// }
 export const useUpdateNicknameMutation = () => {
 	return useMutation<TApiResponse<TUserNicknameCheckResponse>, TApiResponse<any, NicknameError>, TUpdateNicknameArgs>(
 		{
@@ -324,7 +274,7 @@ export const useUserVolume = (options?: TUserVolumeArgs) => {
 
 export const useAcceptTermsMutation = () => {
 	return useMutation({
-		mutationFn: (arg: TAcceptTerms) => userServiceApi.acceptTerms(arg.address),
+		mutationFn: (arg: UserApi.AcceptTerms.RequestBody) => userServiceApi.acceptTerms(arg),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},

@@ -35,7 +35,7 @@ export const questSchema = z.object({
 	lifetime: z.number().int().positive().nullable(),
 	is_new: z.boolean(),
 	size: questSizeSchema,
-	index: z.number().int().nonnegative(),
+	sort_index: z.number().int().nonnegative(),
 	quest_reward: rewardSchema,
 	blocker: blockerSchema.nullable(),
 	tasks: z.array(taskSchema).min(1),

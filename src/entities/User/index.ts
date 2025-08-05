@@ -1,5 +1,4 @@
 export { UserSocialType } from './model/validations/validations'
-
 export { getCountStreakPeriodText } from './model/lib/getCountStreakPeriodText'
 export { useGetUserLPBalance } from './model/hooks/useLPBalanceUser'
 export { useDiscordConnection } from './model/hooks/useDiscordConnection'
@@ -25,3 +24,4 @@ export {
 } from './api/userApi'
 
 export type { TUserResponse, TUserAction } from './model/types/response'
+export type { UserApi } from './model/types/api'

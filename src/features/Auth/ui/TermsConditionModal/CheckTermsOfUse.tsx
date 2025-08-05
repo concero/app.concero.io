@@ -4,15 +4,16 @@ import { TermsConditionModal } from './TermsConditionModal/TermsConditionModal'
 import { termsIsActual } from './model/lib/termsIsActual'
 import { TermsConditionErrorModal } from './TermsConditionErrorModal/TermsConditionErrorModal'
 import { verifyUser } from './model/lib/verifyUser'
-import { Address } from 'viem'
 import { CheckTermsModalProvider, useCheckTermsModal } from './CheckTermsModalContext'
-import { useUserByAddress } from '@/entities/User/api/userApi'
+import { useAcceptTermsMutation, useUserByAddress } from '@/entities/User/api/userApi'
 import { Http } from '@/shared/types/api'
 
 const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 	const { address, isConnected } = useAccount()
 	const { signMessageAsync } = useSignMessage()
 	const { opened: showModal, setOpen: setShowModal } = useCheckTermsModal()
+	const { mutateAsync: acceptTerms } = useAcceptTermsMutation()
+
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isLoadingTerms, setIsLoadingTerms] = useState<boolean>(false)
 	const [error, setError] = useState<string>('')
@@ -25,6 +26,7 @@ const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 			user.error &&
 			(user.error.code === Http.Code.Enum.TOKEN_NOT_PROVIDED || user.error.code === Http.Code.Enum.TOKEN_INVALID)
 		) {
+			console.log('error:', user.error)
 			setShowModal(true)
 		}
 	}, [user])
@@ -36,7 +38,7 @@ const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 		}
 		setIsLoadingTerms(true)
 
-		verifyUser(address as Address, signMessageAsync)
+		verifyUser({ address, signMessageAsync, acceptTerms })
 			.catch((err: any) => {
 				setIsError(true)
 				setError(err)

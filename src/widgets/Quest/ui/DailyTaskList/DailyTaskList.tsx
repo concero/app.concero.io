@@ -17,7 +17,7 @@ export const DailyTaskList = (): JSX.Element => {
 	const DailyQuests = quests?.quests
 		?.filter(q => q.interval == 'daily')
 		.toSorted((a, b) => {
-			return b.index - a.index
+			return b.sort_index - a.sort_index
 		})
 	if (!quests || !DailyQuests || !user?.payload) {
 		return <></>

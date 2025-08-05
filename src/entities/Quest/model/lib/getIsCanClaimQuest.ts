@@ -9,7 +9,8 @@ export const getIsCanClaimQuest = ({ userQuest, quest }: { userQuest?: TUserQues
 		.reduce((sum, task) => {
 			return sum + task.steps.length
 		}, 0)
-	if (completedSteps.length === stepsCount) {
+
+	if (completedSteps.length === stepsCount && !userQuest.finished_at) {
 		return true
 	}
 	return false

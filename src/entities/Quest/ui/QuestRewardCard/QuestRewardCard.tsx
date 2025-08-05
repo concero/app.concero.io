@@ -11,7 +11,11 @@ type TProps = {
 export const QuestRewardCard = (props: TProps) => {
 	const { quest, onDone } = props
 
-	const showRoleAlert = quest.rewards.role == true
+	const showRoleAlert = !!quest.quest_reward.roleReward?.name == true
+	const pointsToShow = Math.max(
+		quest.quest_reward.tokenReward?.min_value ?? 0,
+		quest.quest_reward.tokenReward?.max_value ?? 0,
+	)
 	return (
 		<div className={cls.reward_card}>
 			<div className={cls.wrap_inner_card}>
@@ -32,8 +36,8 @@ export const QuestRewardCard = (props: TProps) => {
 					/>
 				</div>
 				<div className={cls.description_wrap}>
-					<div className={cls.points}>+ {quest.rewards.points} CERs </div>
-					<div className={cls.description}>For completing "{quest.name}" </div>
+					<div className={cls.points}>+ {pointsToShow} CERs </div>
+					<div className={cls.description}>For completing "{quest.title}" </div>
 				</div>
 			</div>
 			{showRoleAlert && (

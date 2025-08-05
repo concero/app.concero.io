@@ -31,17 +31,17 @@ export const QuestPreviewList = (): JSX.Element => {
 		[viewMode, isFetching],
 	)
 	const quest_size_m = useMemo(() => {
-		return groupedQuests?.filter(q => q.size === 'm').toSorted((a, b) => (b.index || 0) - (a.index || 0))
+		return groupedQuests?.filter(q => q.size === 'm').toSorted((a, b) => (b.sort_index || 0) - (a.sort_index || 0))
 	}, [isFetching, groupedQuests])
 	const quest_size_l = useMemo(() => {
-		return groupedQuests?.filter(q => q.size === 'l').toSorted((a, b) => (b.index || 0) - (a.index || 0))
+		return groupedQuests?.filter(q => q.size === 'l').toSorted((a, b) => (b.sort_index || 0) - (a.sort_index || 0))
 	}, [isFetching, groupedQuests])
 
 	const quest_size_xl = useMemo(() => {
 		return groupedQuests
 			?.filter(q => q.size === 'xl')
 			.toSorted((a, b) => {
-				return (b.index || 0) - (a.index || 0)
+				return (b.sort_index || 0) - (a.sort_index || 0)
 			})
 	}, [isFetching, groupedQuests])
 
