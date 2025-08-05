@@ -26,7 +26,6 @@ const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 			user.error &&
 			(user.error.code === Http.Code.Enum.TOKEN_NOT_PROVIDED || user.error.code === Http.Code.Enum.TOKEN_INVALID)
 		) {
-			console.log('error:', user.error)
 			setShowModal(true)
 		}
 	}, [user])

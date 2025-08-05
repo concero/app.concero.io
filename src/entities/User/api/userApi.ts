@@ -245,7 +245,7 @@ export const useUserAction = ({ address, take }: { address: string; take: number
 		retry: 2,
 		queryKey: [address, 'userActions'],
 		queryFn: ({ pageParam = 0 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
-		initialPageParam: 1,
+		initialPageParam: 0,
 		getNextPageParam: (lastPage, _, lastPageParam) => {
 			return lastPage.payload.pagination.count >= lastPage.payload.pagination.take ? lastPageParam + 1 : undefined
 		},
