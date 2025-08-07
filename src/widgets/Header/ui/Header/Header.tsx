@@ -27,11 +27,9 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 	const { theme } = useTheme()
 	const matchSwapRewards = useMatch(routes.rewards)
 	const matchSwapProfile = useMatch(routes.profile)
-	const getPoints = (points: number | { $numberDecimal: string }): number => {
+	const getPoints = (points: number): number => {
 		if (typeof points === 'number') {
 			return points
-		} else if (typeof points === 'object' && '$numberDecimal' in points) {
-			return parseFloat(points.$numberDecimal)
 		}
 		return 0
 	}
