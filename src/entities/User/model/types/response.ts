@@ -1,6 +1,4 @@
 import { z } from 'zod'
-import { type Hash } from 'viem'
-
 import { UserSchema, UserSocialSchema } from '../validations/validations'
 import { UserLeaderboardResponseSchema } from '../validations/leaderboard'
 import { OmitTyped } from '@/shared/types/utils'
@@ -14,10 +12,7 @@ import {
 import { TPaginationResponse } from '@/shared/types/api'
 
 export type TUserResponse = z.infer<typeof UserSchema>
-type TUserSocial = z.infer<typeof UserSocialSchema>
-export type TUserSocialsResponse = {
-	socials: TUserSocial[]
-}
+export type TUserSocial = z.infer<typeof UserSocialSchema>
 export type TGetLeaderBoardReponse = z.infer<typeof UserLeaderboardResponseSchema>
 
 // Socials

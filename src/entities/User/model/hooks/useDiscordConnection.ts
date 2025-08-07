@@ -15,13 +15,16 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const [searchParams] = useSearchParams()
 	const { mutateAsync } = useConnectDiscordMutation()
 	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation(user?.address)
-	const { data: socials } = useSocials(user?.address)
+	const { data: socialsResponse } = useSocials(user?.address)
 	const navigate = useNavigate()
 	useEffect(() => {
-		if (socials && socials.find(social => social.type === UserSocialType.Discord)) {
+		if (
+			socialsResponse?.payload &&
+			socialsResponse.payload.socials.find(social => social.type === UserSocialType.Discord)
+		) {
 			setIsConnected(true)
 		}
-	}, [user, socials])
+	}, [user, socialsResponse])
 
 	const toggleDiscordConnection = async () => {
 		try {
@@ -42,7 +45,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 		const code = searchParams.get('code')
 
 		if (code && user) {
-			const fetchedNickname = await mutateAsync({ code, userId: user.id })
+			const fetchedNickname = await mutateAsync({ token: code, address: user.address })
 			setIsConnected(!!fetchedNickname)
 			if (fetchedNickname) {
 				navigate('/profile')
@@ -51,7 +54,10 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	}
 
 	useEffect(() => {
-		if (!socials || socials.find(social => social.type === UserSocialType.Discord)) {
+		if (
+			!socialsResponse?.payload ||
+			socialsResponse.payload.socials.find(social => social.type === UserSocialType.Discord)
+		) {
 			listenDiscordConnection()
 		}
 	}, [])

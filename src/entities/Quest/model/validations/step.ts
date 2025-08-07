@@ -2,16 +2,14 @@ import { z } from 'zod'
 import { blockerSchema } from './blocker'
 import { rewardSchema } from '@/entities/Reward'
 
-export const stepDetailsSchema = z
-	.object({
-		link: z.string().url().optional(),
-		chainIds: z.array(z.number().int()).optional(),
-		isCrossChain: z.boolean().optional(),
-		value: z.any().optional(),
-	})
-	.refine(data => 'link' in data || 'chainIds' in data, {
-		message: 'Either "link" or "chainIds" must be provided',
-	})
+export const stepDetailsSchema = z.object({
+	fromChainIds: z.array(z.number().int()).optional(),
+	toChainIds: z.array(z.number().int()).optional(),
+	isTestnet: z.boolean().optional(),
+	isCrossChain: z.boolean().optional(),
+	link: z.string().url().optional(),
+	value: z.string().optional(),
+})
 export const stepSchema = z.object({
 	id: z.string().uuid(),
 	sort_index: z.number().int().nonnegative(),

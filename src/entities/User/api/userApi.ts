@@ -7,7 +7,6 @@ import {
 	TUserActionResponse,
 	TUserNicknameCheckResponse,
 	TUserResponse,
-	TUserSocialsResponse,
 	UserEarnings,
 } from '../model/types/response'
 import { ApiSuccess, createApiHandler, Http, TApiResponse, TPaginationParams } from '@/shared/types/api'
@@ -59,14 +58,6 @@ export function isSuccessResponse<TData>(response: TApiResponse<TData, any>): re
 	return response.code === Http.Code.Enum.OK
 }
 export const userServiceApi = {
-	/**@deprecated */
-	createUser: async (address: Address) => {
-		const url = `${process.env.CONCERO_API_URL}/users`
-
-		const response = await post<TApiResponse<TUserResponse>>(url, { address })
-		if (response.code !== 'ok') throw new Error('Something went wrong')
-		return response.payload
-	},
 	findUserByAddress: async (address: Address) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}`
 		return createApiHandler(() => get<TApiResponse<TUserResponse | null>>(url))
@@ -120,49 +111,30 @@ export const userActionsService = {
 }
 
 export const socialsService = {
-	findUserSocials: async ({ address }: { address: string }) => {
+	findUserSocials: async ({ address }: UserApi.Socials.FindMany.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials`
-		let response: TApiResponse<TUserSocialsResponse>
-
-		try {
-			response = await get<TApiResponse<TUserSocialsResponse>>(url)
-		} catch (error) {
-			throw {
-				code: Http.Code.Enum.UNHANDLED_ERROR,
-				payload: null,
-				message: Http.Code.Enum.UNHANDLED_ERROR,
-			} satisfies TApiResponse<any, string>
-		}
-		if (!response?.code) {
-			throw {
-				code: Http.Code.Enum.UNHANDLED_ERROR,
-				message: Http.Code.Enum.UNHANDLED_ERROR,
-				payload: null,
-			} satisfies TApiResponse<null, string>
-		}
-		if (response.code !== Http.Code.Enum.OK) {
-			throw response satisfies TApiResponse<any, string>
-		}
-		return response.payload?.socials
+		return createApiHandler(() => get<TApiResponse<UserApi.Socials.FindMany.ResponsePayload>>(url))
 	},
 
-	connectDiscord: async (code: string, user_id: TUserResponse['id']): Promise<string> => {
-		const url = `${process.env.CONCERO_API_URL}/connectNetwork/discord`
-		const response = await post<{ message: string; success: boolean; username: string }>(url, {
-			_id: user_id,
-			code,
-		})
-		return response.username
+	connectDiscord: async ({
+		body,
+		params,
+	}: {
+		body: UserApi.Socials.ConnectDiscord.RequestBody
+		params: UserApi.Socials.ConnectDiscord.RequestParams
+	}) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${params.address}/socials/discord`
+		return createApiHandler(() => post<TApiResponse<UserApi.Socials.ConnectDiscord.ResponsePayload>>(url, body))
 	},
-	connectTwitter: async (oauthToken: string, twitterVerifyCode: string, userId: TUserResponse['id']) => {
-		const url = `${process.env.CONCERO_API_URL}/connectNetwork/twitter`
-
-		const response = await post<{ message: string; success: boolean; username: string }>(url, {
-			token: oauthToken,
-			verifier: twitterVerifyCode,
-			_id: userId,
-		})
-		return response
+	connectX: async ({
+		body,
+		params,
+	}: {
+		body: UserApi.Socials.ConnectX.RequestBody
+		params: UserApi.Socials.ConnectX.RequestParams
+	}) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${params.address}/socials/x`
+		return createApiHandler(() => post<TApiResponse<UserApi.Socials.ConnectX.ResponsePayload>>(url, body))
 	},
 	getRequestToken: async () => {
 		const request = await get<{ data: string; success: boolean }>(`${configEnvs.baseURL}/twitterToken`)
@@ -213,15 +185,6 @@ export const socialsService = {
 }
 const tagInvalidation = 'user'
 
-export const useCreateUserMutation = () => {
-	return useMutation({
-		mutationFn: (address: Address) => userServiceApi.createUser(address),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
-		},
-	})
-}
-
 export const useUserByAddress = (address?: Address) => {
 	return useQuery<TApiResponse<TUserResponse | null>, TApiResponse<any, string>>({
 		queryKey: [tagInvalidation, 'useUserByAddress', address],
@@ -259,7 +222,7 @@ export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
 	return useQuery({
 		queryKey: ['userVolume', options],
 		queryFn: () => userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody),
-		enabled: !!options?.address && !!options?.startDate && !!options?.endDate,
+		enabled: !!options?.address && !!options?.from && !!options?.to,
 		notifyOnChangeProps: ['data', 'isPending', 'error'],
 	})
 }
@@ -294,28 +257,49 @@ export const useVerifyOTPMutation = () => {
 
 export const useSocials = (address?: string) => {
 	return useQuery({
-		queryKey: ['useSocials', tagInvalidation, address],
+		queryKey: [tagInvalidation, 'useSocials', address],
 		queryFn: async () => {
 			if (!address) throw new Error('Address is required')
 			return socialsService.findUserSocials({ address })
 		},
 		enabled: !!address,
-		notifyOnChangeProps: ['data', 'isPending'],
 	})
 }
 export const useConnectDiscordMutation = () => {
 	return useMutation({
-		mutationFn: (arg: { code: string; userId: TUserResponse['id'] }) =>
-			socialsService.connectDiscord(arg.code, arg.userId),
+		mutationFn: ({
+			token,
+			address,
+		}: UserApi.Socials.ConnectDiscord.RequestBody & UserApi.Socials.ConnectDiscord.RequestParams) =>
+			socialsService.connectDiscord({
+				body: {
+					token: token,
+				},
+				params: {
+					address: address,
+				},
+			}),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},
 	})
 }
-export const useConnectTwitterMutation = () => {
+export const useConnectXMutation = () => {
 	return useMutation({
-		mutationFn: (arg: { oauthToken: string; twitterVerifyCode: string; userId: TUserResponse['id'] }) =>
-			socialsService.connectTwitter(arg.oauthToken, arg.twitterVerifyCode, arg.userId),
+		mutationFn: ({
+			token,
+			verifier,
+			address,
+		}: UserApi.Socials.ConnectX.RequestBody & UserApi.Socials.ConnectX.RequestParams) =>
+			socialsService.connectX({
+				body: {
+					token,
+					verifier,
+				},
+				params: {
+					address,
+				},
+			}),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},

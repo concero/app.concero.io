@@ -90,22 +90,36 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			startDate = dates.startDate
 			endDate = dates.endDate
 		}
+		// console.log('Step:', step)
+
+		// console.log('Volume:', {
+		// 	address: userResponse?.payload?.address,
+		// 	from: startDate,
+		// 	to: endDate,
+		// 	isCrossChain: step.details.isCrossChain,
+		// 	isTestnet: step.details.isTestnet,
+		// 	fromChainIds: step.details.fromChainIds,
+		// 	toChainIds: step.details.toChainIds,
+		// })
+
 		const { data: volumeResponse } = useUserVolume({
 			address: userResponse?.payload?.address,
-			startDate,
-			endDate,
-			isCrossChain: step?.details?.isCrossChain,
-			chainIds: step?.details.chainIds,
+			from: startDate,
+			to: endDate,
+			isCrossChain: step.details.isCrossChain,
+			isTestnet: step.details.isTestnet,
+			fromChainIds: step.details.fromChainIds,
+			toChainIds: step.details.toChainIds,
 		})
 
-		if (__IS_DEV__ && (typeof step?.details?.value !== 'string' || typeof step?.details?.value !== 'number')) {
+		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
 		}
 		return (
 			<>
 				<ProgressBar
 					type="float"
-					currentValue={volumeResponse?.payload.volumeUSD ?? Number(0)}
+					currentValue={volumeResponse?.payload?.volumeUSD ?? Number(0)}
 					maxValue={Number(step?.details?.value)}
 					minValue={0}
 				/>

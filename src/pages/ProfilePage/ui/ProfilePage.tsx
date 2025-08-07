@@ -27,8 +27,8 @@ type TProps = {
 export const ProfilePage = (props: TProps) => {
 	const { user } = props
 	const { address } = useAccount()
-	const { data: socials } = useSocials(address)
-
+	const { data: socialsResponse } = useSocials(address)
+	const socials = socialsResponse?.payload.socials
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0

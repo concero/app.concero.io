@@ -30,16 +30,17 @@ export const SwappingStreak = (props: TProps) => {
 	const { className, user } = props
 	const isDesktop = useMediaQuery('desktop')
 	const { theme } = useTheme()
-	const todayStart = dayjs().utc().startOf('day').valueOf()
-	const todayEnd = dayjs().utc().endOf('day').valueOf()
-	// const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
-	const currentVolume = 0
+	const todayStart = dayjs().utc().startOf('day').unix()
+	const todayEnd = dayjs().utc().endOf('day').unix()
+	const { data: currentVolumeResponse } = useUserVolume({ address: user?.address, from: todayStart, to: todayEnd })
+
+	const currentVolume = currentVolumeResponse?.payload?.volumeUSD
 	const formattedVolume = Math.floor(currentVolume || 0)
 	const currentVolumePercent = Math.min(((formattedVolume || 0) / SWAP_VOLUME) * 100, 100)
 	const isNotEnough = (formattedVolume || 0) < 50
-	const nowLondon = dayjs().utc().valueOf()
+	const nowLondon = dayjs().utc().unix()
 	/**seconds */
-	const timeLeft = (todayEnd - nowLondon) / 1000
+	const timeLeft = todayEnd - nowLondon
 	const oneHourInSecond = 60 * 60
 	const threeHoursInSeconds = 3 * oneHourInSecond
 

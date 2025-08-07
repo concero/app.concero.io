@@ -1,3 +1,5 @@
+import { TUserSocial } from './response'
+
 export namespace UserApi {
 	export namespace AcceptTerms {
 		export type RequestBody = {
@@ -8,15 +10,45 @@ export namespace UserApi {
 	export namespace GetUserVolume {
 		export type RequestBody = {
 			address?: string
-			/** Timestamp seconds */
-			startDate: number
-			/** Timestamp seconds */
-			endDate: number
+			from: number
+			to: number
 			isCrossChain?: boolean
-			chainIds?: number[]
+			isTestnet?: boolean
+			toChainIds?: number[]
+			fromChainIds?: number[]
 		}
 		export type ResponsePayload = {
 			volumeUSD: number
+		}
+	}
+
+	export namespace Socials {
+		export namespace FindMany {
+			export type RequestBody = {
+				address?: string
+			}
+			export type ResponsePayload = {
+				socials: TUserSocial[]
+			}
+		}
+		export namespace ConnectDiscord {
+			export type RequestParams = {
+				address?: string
+			}
+			export type RequestBody = {
+				token: string
+			}
+			export type ResponsePayload = { message: string; success: boolean; username: string }
+		}
+		export namespace ConnectX {
+			export type RequestParams = {
+				address?: string
+			}
+			export type RequestBody = {
+				token: string
+				verifier: string
+			}
+			export type ResponsePayload = { message: string; success: boolean; username: string }
 		}
 	}
 }
