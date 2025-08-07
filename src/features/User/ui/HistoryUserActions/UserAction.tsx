@@ -9,7 +9,12 @@ interface UserActionProps {
 }
 const getActionInfo = (action: TUserAction): JSX.Element => {
 	try {
-		const { from, isTestnet, to } = action.data as TUserActionTxData
+		const actionData = action.data as TUserActionTxData | null
+
+		if (!actionData) {
+			return <span>Forgotten transaction</span>
+		}
+		const { from, isTestnet, to } = actionData
 		if (!from || !to) {
 			return <span>Forgotten transaction</span>
 		}
@@ -40,12 +45,12 @@ const getActionInfo = (action: TUserAction): JSX.Element => {
 }
 
 const getQuestInfo = (action: TUserAction) => {
-	const { name } = action.data as TUserActionQuestData
-	return <span className={cls.title}>Quest completed: {name}</span>
+	const actionData = action.data as TUserActionQuestData | null
+	return <span className={cls.title}>Quest completed: {actionData?.name}</span>
 }
 const getQuestStepInfo = (action: TUserAction) => {
-	const { name } = action.data as TUserActionQuestData
-	return <span className={cls.title}>Quest step completed: {name}</span>
+	const actionData = action.data as TUserActionQuestData | null
+	return <span className={cls.title}>Quest step completed: {actionData?.name}</span>
 }
 const getSocialConnectInfo = (action: TUserAction) => {
 	const { type } = action
@@ -73,8 +78,8 @@ const getSocialDisconnectInfo = (action: TUserAction) => {
 }
 
 const getSpecialRewardInfo = (action: TUserAction) => {
-	const { name } = action.data as { name: string }
-	return <span className={cls.title}>Special reward: {name}</span>
+	const actionData = action.data as { name: string } | null
+	return <span className={cls.title}>Special reward: {actionData?.name}</span>
 }
 
 export const UserAction = ({ action }: UserActionProps) => {

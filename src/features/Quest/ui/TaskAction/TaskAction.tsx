@@ -3,11 +3,11 @@ import { Button } from '@concero/ui-kit'
 import cls from './TaskAction.module.pcss'
 import { useState } from 'react'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
-import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
 import { useAccount } from 'wagmi'
 import { configEnvs } from '@/shared/consts/config/config'
+import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -90,17 +90,6 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			startDate = dates.startDate
 			endDate = dates.endDate
 		}
-		// console.log('Step:', step)
-
-		// console.log('Volume:', {
-		// 	address: userResponse?.payload?.address,
-		// 	from: startDate,
-		// 	to: endDate,
-		// 	isCrossChain: step.details.isCrossChain,
-		// 	isTestnet: step.details.isTestnet,
-		// 	fromChainIds: step.details.fromChainIds,
-		// 	toChainIds: step.details.toChainIds,
-		// })
 
 		const { data: volumeResponse } = useUserVolume({
 			address: userResponse?.payload?.address,

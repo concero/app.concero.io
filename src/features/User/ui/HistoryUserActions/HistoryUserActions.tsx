@@ -50,9 +50,10 @@ export const HistoryUserActions = ({ user, className }: TProps) => {
 					<>
 						{data.pages.map((page, pageIndex) => (
 							<React.Fragment key={pageIndex}>
-								{page.payload.actions.map(action => (
-									<UserAction key={JSON.stringify(action)} action={action} />
-								))}
+								{page.payload &&
+									page.payload.actions.map(action => (
+										<UserAction key={JSON.stringify(action)} action={action} />
+									))}
 							</React.Fragment>
 						))}
 						{hasNextPage && (

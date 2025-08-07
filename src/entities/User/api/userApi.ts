@@ -106,7 +106,7 @@ export const userActionsService = {
 	fetchUserActions: async (address: string, params: TPaginationParams) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/actions`
 
-		return createApiHandler(() => get<TApiResponse<TUserActionResponse>>(url, params))
+		return createApiHandler(() => get<TApiResponse<TUserActionResponse | null>>(url, params))
 	},
 }
 
@@ -202,7 +202,11 @@ export const useUserAction = ({ address, take }: { address: string; take: number
 		queryFn: ({ pageParam = 0 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, _, lastPageParam) => {
-			return lastPage.payload.pagination.count >= lastPage.payload.pagination.take ? lastPageParam + 1 : undefined
+			if (lastPage && lastPage.payload) {
+				return lastPage.payload.pagination.count >= lastPage.payload.pagination.take
+					? lastPageParam + 1
+					: undefined
+			} else return undefined
 		},
 	})
 }
