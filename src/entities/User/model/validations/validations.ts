@@ -34,8 +34,8 @@ const UserMultiplierSchema = z.object({
 
 const UserStreakFieldSchema = z.number().min(1)
 const UserStreakSchema = z.object({
-	liquidity_pool: UserStreakFieldSchema,
-	daily_swap: UserStreakFieldSchema,
+	liquidity_pool: UserStreakFieldSchema.optional(),
+	daily_swap: UserStreakFieldSchema.optional(),
 })
 export const UserSchema = z.object({
 	id: z.string(),

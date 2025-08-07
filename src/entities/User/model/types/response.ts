@@ -1,11 +1,6 @@
 import { z } from 'zod'
 import { type Hash } from 'viem'
 
-// UserTierZod,
-// UserStreaksZod,
-// UserMultiplierZod,
-// IUserZod,
-// '../validations/validations'
 import { UserSchema, UserSocialSchema } from '../validations/validations'
 import { UserLeaderboardResponseSchema } from '../validations/leaderboard'
 import { OmitTyped } from '@/shared/types/utils'
@@ -17,10 +12,6 @@ import {
 	UserActionTypeSchema,
 } from '../validations/user-action'
 import { TPaginationResponse } from '@/shared/types/api'
-
-// export type TUserTier = z.infer<typeof UserTierZod>
-// export type TUserStreak = z.infer<typeof UserStreaksZod>
-// export type TUserMultiplaier = z.infer<typeof UserMultiplierZod>
 
 export type TUserResponse = z.infer<typeof UserSchema>
 type TUserSocial = z.infer<typeof UserSocialSchema>

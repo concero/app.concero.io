@@ -45,7 +45,7 @@ export const SwappingStreak = (props: TProps) => {
 
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
-	const current_streak = user?.streak?.liquidity_pool ? user?.streak?.daily_swap + 1 : 0
+	const current_streak = user?.streak?.daily_swap ? user?.streak?.daily_swap + 1 : 0
 	const showStreakPlaceholder = !user || current_streak < 1
 	const successSwap = (formattedVolume || 0) >= SWAP_VOLUME
 	const warningTime = isNotEnough && timeLeft > oneHourInSecond && timeLeft <= threeHoursInSeconds
@@ -129,7 +129,7 @@ export const SwappingStreak = (props: TProps) => {
 							<div className={cls.reward_wrap}>
 								<div className={cls.reward_text}>Reward</div>
 								<Tag size="s" variant="neutral">
-									{getUserFutureMultiplier(user.streak.dailySwap)}x
+									{getUserFutureMultiplier(user.streak?.daily_swap ?? 0)}x
 								</Tag>
 							</div>
 						</div>

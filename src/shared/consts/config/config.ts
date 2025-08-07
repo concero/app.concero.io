@@ -10,8 +10,8 @@ import {
 
 export const IS_TESTNET = false
 export const PARENT_POOL_CHAIN_ID = IS_TESTNET ? baseSepolia.id : base.id
-/**@deprecated */
-export const config = {
+
+export const configEnvs = {
 	baseURL: process.env.CONCERO_API_URL!,
 	assetsURI: process.env.CONCERO_ASSETS_URI,
 	lancanURL: process.env.LANCAN_DOMAIN_URL ?? 'https://app.lanca.io',

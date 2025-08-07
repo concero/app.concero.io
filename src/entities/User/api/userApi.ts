@@ -1,5 +1,5 @@
 import { Address } from 'viem'
-import { TUpdateNicknameArgs, TUserVolumeArgs } from '../model/types/request'
+import { TUpdateNicknameArgs } from '../model/types/request'
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 import {
 	NicknameError,
@@ -10,11 +10,11 @@ import {
 	TUserSocialsResponse,
 	UserEarnings,
 } from '../model/types/response'
-import { config } from '@/constants/config'
 import { ApiSuccess, createApiHandler, Http, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
 import { get, patch, post } from '@/shared/api/axiosClient'
 import { UserApi } from '../model/types/api'
+import { configEnvs } from '@/shared/consts/config/config'
 
 //--------------------------------Domain
 export const userAuthServiceApi = {
@@ -85,25 +85,17 @@ export const userServiceApi = {
 		)
 	},
 
-	getUserVolume: async ({ address, startDate, endDate, isCrossChain, chainIds }: TUserVolumeArgs) => {
+	getUserVolume: async (requestBody: UserApi.GetUserVolume.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/volume`
 
-		const requestBody = {
-			address,
-			from: startDate,
-			to: endDate,
-			isCrossChain,
-			chainIds,
-		}
-		const response = await post<TApiResponse<number>>(url, requestBody)
-		return response.payload
+		return createApiHandler(() => post<TApiResponse<UserApi.GetUserVolume.ResponsePayload>>(url, requestBody))
 	},
 
 	getLeaderboard: async ({ limit, userAddress }: { userAddress: string | undefined; limit?: number }) => {
 		const url = new URL(`${process.env.CONCERO_API_URL}/users/leaderboard`)
 
 		if (userAddress) url.searchParams.append('address', userAddress)
-		url.searchParams.append('limit', limit?.toString() ?? '10')
+		url.searchParams.append('limit', limit?.toString() ?? '5')
 		const response = await get<TApiResponse<TGetLeaderBoardReponse>>(url.toString())
 		return response.payload
 	},
@@ -173,7 +165,7 @@ export const socialsService = {
 		return response
 	},
 	getRequestToken: async () => {
-		const request = await get<{ data: string; success: boolean }>(`${config.baseURL}/twitterToken`)
+		const request = await get<{ data: string; success: boolean }>(`${configEnvs.baseURL}/twitterToken`)
 		return request.data
 	},
 	disconnectNetwork: async (address: string, network: any): Promise<boolean> => {
@@ -232,7 +224,7 @@ export const useCreateUserMutation = () => {
 
 export const useUserByAddress = (address?: Address) => {
 	return useQuery<TApiResponse<TUserResponse | null>, TApiResponse<any, string>>({
-		queryKey: [tagInvalidation, address, 'useUserByAddress'],
+		queryKey: [tagInvalidation, 'useUserByAddress', address],
 		queryFn: () => userServiceApi.findUserByAddress(address as Address),
 		enabled: !!address,
 		notifyOnChangeProps: ['data', 'isPending', 'error'],
@@ -243,7 +235,7 @@ export const useUserAction = ({ address, take }: { address: string; take: number
 	return useInfiniteQuery({
 		refetchOnMount: false,
 		retry: 2,
-		queryKey: [address, 'userActions'],
+		queryKey: ['userActions', address],
 		queryFn: ({ pageParam = 0 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, _, lastPageParam) => {
@@ -263,10 +255,10 @@ export const useUpdateNicknameMutation = () => {
 	)
 }
 
-export const useUserVolume = (options?: TUserVolumeArgs) => {
+export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
 	return useQuery({
 		queryKey: ['userVolume', options],
-		queryFn: () => userServiceApi.getUserVolume(options as TUserVolumeArgs),
+		queryFn: () => userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody),
 		enabled: !!options?.address && !!options?.startDate && !!options?.endDate,
 		notifyOnChangeProps: ['data', 'isPending', 'error'],
 	})

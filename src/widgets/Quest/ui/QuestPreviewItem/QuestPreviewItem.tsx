@@ -26,6 +26,7 @@ type TProps = {
 
 export const QuestPreviewItem = (props: TProps) => {
 	const { quest, userQuest, className } = props
+
 	const { address } = useAccount()
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)

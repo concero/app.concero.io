@@ -1,8 +1,13 @@
-import { TQuest, TQuestStep, TQuestTask, TTaskType, TUserQuest, TUserStep } from '@/entities/Quest'
+import { TQuest, TQuestTask, TTaskType, TUserQuest } from '@/entities/Quest'
 import { Button } from '@concero/ui-kit'
 import cls from './TaskAction.module.pcss'
 import { useState } from 'react'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
+import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
+import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
+import { useUserByAddress, useUserVolume } from '@/entities/User'
+import { useAccount } from 'wagmi'
+import { configEnvs } from '@/shared/consts/config/config'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -56,83 +61,106 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		)
 	},
 	progress_line: function (props: TTaskActionProps): JSX.Element {
-		// const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
-		// const { address } = useAccount()
-		// const { data: userResponse } = useUserByAddress(address)
-		// let step: TQuestStep | null = null
-		// for (const task of quest.tasks) {
-		// 	for (const stepItem of task.steps) {
-		// 		if (stepItem.id === userStep.id) {
-		// 			step = stepItem
-		// 			break
-		// 		}
-		// 	}
-		// }
-		// const isDailyQuest = quest.interval === 'daily'
-		// const isWeeklyQuest = quest.interval === 'weekly'
-		// const isSingleTask = quest.tasks.length == 1
-		// const { handleVerifyQuest, isPending } = useVerifyQuest()
-		// const handleVerify = () => {
-		// 	if (userStep) {
-		// 		onStartVerify()
-		// 		handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
-		// 	}
-		// }
-		// let startDate = quest.started_at
-		// let endDate = quest.finished_at
-		// if (isDailyQuest) {
-		// 	const dates = getDayRangeDates()
-		// 	startDate = dates.startDate
-		// 	endDate = dates.endDate
-		// } else if (isWeeklyQuest) {
-		// 	const dates = getWeekRangeDates()
-		// 	startDate = dates.startDate
-		// 	endDate = dates.endDate
-		// }
-		// const { data: volume } = useUserVolume({
-		// 	address: userResponse?.payload?.address,
-		// 	startDate,
-		// 	endDate,
-		// 	isCrossChain: step?.details?.isCrossChain,
-		// 	chainIds: step?.details.chainIds,
-		// })
-		// const handleSwap = () => {
-		// 	window.open(config.lancanURL, '_blank')
-		// }
-		// if (__IS_DEV__ && (typeof step?.details?.value !== 'string' || typeof step?.details?.value !== 'number')) {
-		// 	console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
-		// }
-		// return (
-		// 	<>
-		// 		<ProgressBar
-		// 			type="float"
-		// 			currentValue={volume ?? Number(0)}
-		// 			maxValue={Number(step?.details?.value)}
-		// 			minValue={0}
-		// 		/>
-		// 		<div className={cls.controls}>
-		// 			<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
-		// 				Swap
-		// 			</Button>
-		// 			<Button
-		// 				variant={'tetrary_color'}
-		// 				onClick={() => handleVerifyQuest({ quest, setErrorText, userQuest, userStep })}
-		// 				isLoading={isPending}
-		// 				size="l"
-		// 			>
-		// 				Verify
-		// 			</Button>
-		// 		</div>
-		// 	</>
-		// )
+		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
+		const { address } = useAccount()
+		const { data: userResponse } = useUserByAddress(address)
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const isDailyQuest = quest.interval === 'daily'
+		const isWeeklyQuest = quest.interval === 'weekly'
+		const isSingleTask = quest.tasks.length == 1
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		const handleSwap = () => {
+			window.open(configEnvs.lancanURL, '_blank')
+		}
+		let startDate = quest.started_at
+		let endDate = quest.finished_at
+		if (isDailyQuest) {
+			const dates = getDayRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		} else if (isWeeklyQuest) {
+			const dates = getWeekRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		}
+		const { data: volumeResponse } = useUserVolume({
+			address: userResponse?.payload?.address,
+			startDate,
+			endDate,
+			isCrossChain: step?.details?.isCrossChain,
+			chainIds: step?.details.chainIds,
+		})
 
-		return <span>progress_line</span>
+		if (__IS_DEV__ && (typeof step?.details?.value !== 'string' || typeof step?.details?.value !== 'number')) {
+			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
+		}
+		return (
+			<>
+				<ProgressBar
+					type="float"
+					currentValue={volumeResponse?.payload.volumeUSD ?? Number(0)}
+					maxValue={Number(step?.details?.value)}
+					minValue={0}
+				/>
+				<div className={cls.controls}>
+					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
+						Swap
+					</Button>
+					<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
+						Verify
+					</Button>
+				</div>
+			</>
+		)
 	},
 	connect_discord: function (props: TTaskActionProps): JSX.Element {
-		return <span>progress_line</span>
+		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		if (__IS_DEV__ && task.steps.length > 1) {
+			console.warn(`DEVELOPER!!! Expected 1 Step, but given  ${task.steps.length} steps `)
+		}
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const isSingleTask = quest.tasks.length == 1
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		return (
+			<>
+				<div className={cls.controls}>connect_discord</div>
+			</>
+		)
 	},
 	connect_x: function (props: TTaskActionProps): JSX.Element {
-		return <span>connect_x</span>
+		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		if (__IS_DEV__ && task.steps.length > 1) {
+			console.warn(`DEVELOPER!!! Expected 1 Step, but given  ${task.steps.length} steps `)
+		}
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const isSingleTask = quest.tasks.length == 1
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		return (
+			<>
+				<div className={cls.controls}>connect_x</div>
+			</>
+		)
 	},
 	connect_email: function (props: TTaskActionProps): JSX.Element {
 		return <span>connect_email</span>
@@ -147,6 +175,44 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		return <span>rate</span>
 	},
 	google_form: function (props: TTaskActionProps): JSX.Element {
-		return <span>google_form</span>
+		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const isStartedQuest = !!userQuest.started_at
+		const [isOpenedLink, setIsOpenedLink] = useState<boolean>(isStartedQuest)
+
+		if (__IS_DEV__ && task.steps.length > 1) {
+			console.warn(`DEVELOPER!!! Expected 1 Step, but given  ${task.steps.length} steps `)
+		}
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const isSingleTask = quest.tasks.length == 1
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		const handleLink = () => {
+			window.open(step.details?.link, '_blank')
+			setIsOpenedLink(true)
+		}
+		return (
+			<>
+				<div className={cls.controls}>
+					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
+						Open Form
+					</Button>
+					<Button
+						isDisabled={!isOpenedLink}
+						variant={isSingleTask ? 'secondary_color' : 'tetrary_color'}
+						onClick={handleVerify}
+						size="l"
+						isLoading={isPending}
+					>
+						Verify
+					</Button>
+				</div>
+			</>
+		)
 	},
 }

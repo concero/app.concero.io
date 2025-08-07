@@ -1,8 +1,7 @@
 import { config } from '@/constants/config'
 import { TQuest } from '../../model/types/response'
 import cls from './QuestRewardCard.module.pcss'
-import { Alert } from '@/components/layout/Alert/Alert'
-import { Button } from '@concero/ui-kit'
+import { Alert, Button } from '@concero/ui-kit'
 type TProps = {
 	quest: TQuest
 	onDone?: () => void
@@ -42,8 +41,9 @@ export const QuestRewardCard = (props: TProps) => {
 			</div>
 			{showRoleAlert && (
 				<Alert
+					type="neutral"
 					title="Role Coming This Week!"
-					subtitle="Your Discord role will be assigned automatically by the end of the week"
+					description="Your Discord role will be assigned automatically by the end of the week"
 				/>
 			)}
 			<Button isFull size="l" onClick={onDone}>

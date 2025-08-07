@@ -14,7 +14,6 @@ export const QuestPreviewList = (): JSX.Element => {
 	const { data: questsWrap, isFetching } = useAllQuests()
 	const { address } = useAccount()
 	const { theme } = useTheme()
-	const { data: user } = useUserByAddress(address)
 	const quest_ids = questsWrap?.quests.map(quest => quest.id)
 	const { data: userQuestsResponse } = useUserQuests({ address, quest_ids, skip: 0, take: 50 })
 	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
@@ -47,7 +46,7 @@ export const QuestPreviewList = (): JSX.Element => {
 
 	const questId_userQuest_map: Record<string, TUserQuest> = userQuestsResponse?.payload.userQuests
 		? userQuestsResponse.payload.userQuests.reduce(
-				(sum, userQuest) => ({ ...sum, [userQuest.id]: userQuest }),
+				(sum, userQuest) => ({ ...sum, [userQuest.questId]: userQuest }),
 				{} as Record<string, TUserQuest>,
 			)
 		: {}

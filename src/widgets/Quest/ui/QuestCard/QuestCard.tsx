@@ -36,6 +36,7 @@ export const QuestCard = (props: TProps) => {
 
 	const rewardIsClaimed = !!userQuest?.finished_at
 	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
+
 	if (userQuest?.started_at) {
 		statusOfQuest = 'STARTED'
 	}
