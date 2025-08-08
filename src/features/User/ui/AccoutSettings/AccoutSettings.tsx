@@ -37,7 +37,8 @@ export const AccoutSettings = ({ user }: TProps) => {
 		setShowDisconnect(true)
 	}
 	const { data: socialsResponse } = useSocials(user.address)
-	const socialX = socialsResponse?.payload.socials.find(social => social.type === UserSocialType.Discord)
+	const socialX = socialsResponse?.payload.socials.find(social => social.type === UserSocialType.X)
+
 	const socialDiscord = socialsResponse?.payload.socials.find(social => social.type === UserSocialType.Discord)
 	const isAdmin = isAdminAddress(user.address)
 

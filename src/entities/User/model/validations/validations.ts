@@ -6,7 +6,7 @@ export enum UserSocialType {
 	Discord = 'discord',
 }
 
-const UserSocialTypeSchema = z.union([z.literal(UserSocialType.X), z.literal(UserSocialType.Discord)])
+export const UserSocialTypeSchema = z.union([z.literal(UserSocialType.X), z.literal(UserSocialType.Discord)])
 
 export const UserSocialSchema = z.object({
 	id: z.string(),
@@ -29,13 +29,13 @@ const UserMultiplierFieldSchema = z.number().min(1).optional()
 const UserMultiplierSchema = z.object({
 	base: UserMultiplierFieldSchema,
 	liquidity_pool: UserMultiplierFieldSchema,
-	daily_swap: UserMultiplierFieldSchema,
+	daily_swaps: UserMultiplierFieldSchema,
 })
 
 const UserStreakFieldSchema = z.number().min(1)
 const UserStreakSchema = z.object({
 	liquidity_pool: UserStreakFieldSchema.optional(),
-	daily_swap: UserStreakFieldSchema.optional(),
+	daily_swaps: UserStreakFieldSchema.optional(),
 })
 export const UserSchema = z.object({
 	id: z.string(),
