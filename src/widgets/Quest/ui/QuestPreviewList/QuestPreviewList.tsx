@@ -17,6 +17,12 @@ export const QuestPreviewList = (): JSX.Element => {
 	const { data: user } = useUserByAddress(account.address)
 	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('testing')
 
+	// let isShowQuests = true
+	// if (viewMode === 'rewards') {
+	// 	isShowQuests = false
+	// 	if (user) {
+	// 	}
+	// }
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
 		setViewMode(mode)
 	}
@@ -29,9 +35,17 @@ export const QuestPreviewList = (): JSX.Element => {
 		Secondary: 'm',
 	}
 	// groupByView
-	//TODO: remove check for admin
 	const groupedQuests = useMemo(
-		() => quests?.filter(q => (q?.tag ? q.tag === viewMode : viewMode === 'rewards')),
+		() =>
+			quests?.filter(q => {
+				if (q?.tag === 'rewards' && user) {
+					const isQuestInProgress = user.questsInProgress.some(
+						questInProgress => questInProgress.questId === q._id,
+					)
+					return isQuestInProgress
+				}
+				return q?.tag ? q.tag === viewMode : viewMode === 'rewards'
+			}),
 		[viewMode, isFetching],
 	)
 	const quest_size_m = useMemo(() => {
