@@ -7,13 +7,15 @@ import {
 	TUserActionResponse,
 	TUserNicknameCheckResponse,
 	TUserResponse,
+	TUserSocialType,
 	UserEarnings,
 } from '../model/types/response'
 import { ApiSuccess, createApiHandler, Http, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
-import { get, patch, post } from '@/shared/api/axiosClient'
+import { del, get, patch, post } from '@/shared/api/axiosClient'
 import { UserApi } from '../model/types/api'
 import { configEnvs } from '@/shared/consts/config/config'
+import { UserSocialType } from '../model/validations/validations'
 
 //--------------------------------Domain
 export const userAuthServiceApi = {
@@ -140,14 +142,13 @@ export const socialsService = {
 		const request = await get<{ data: string; success: boolean }>(`${configEnvs.baseURL}/twitterToken`)
 		return request.data
 	},
-	disconnectNetwork: async (address: string, network: any): Promise<boolean> => {
-		const url = `${process.env.CONCERO_API_URL}/disconnectNetwork/${network}`
-
-		const response = await post(url, {
-			address,
-		})
-		// @ts-expect-error TODO: Improve type
-		return response.data.data
+	disconnectNetwork: async ({ socialType, address }: UserApi.Socials.DisconnectSocial.RequestParams) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/${socialType}`
+		return createApiHandler(() =>
+			del<TApiResponse<UserApi.Socials.DisconnectSocial.ResponsePayload>>(url, {
+				address,
+			}),
+		)
 	},
 	disconnectEmail: async (address: string): Promise<boolean> => {
 		const url = `${process.env.CONCERO_API_URL}/disconnectEmail/${address}`

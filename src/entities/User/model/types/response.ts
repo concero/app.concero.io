@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { UserSchema, UserSocialSchema } from '../validations/validations'
+import { UserSchema, UserSocialSchema, UserSocialTypeSchema } from '../validations/validations'
 import { UserLeaderboardResponseSchema } from '../validations/leaderboard'
 import { OmitTyped } from '@/shared/types/utils'
 import {
@@ -13,6 +13,7 @@ import { TPaginationResponse } from '@/shared/types/api'
 
 export type TUserResponse = z.infer<typeof UserSchema>
 export type TUserSocial = z.infer<typeof UserSocialSchema>
+export type TUserSocialType = z.infer<typeof UserSocialTypeSchema>
 export type TGetLeaderBoardReponse = z.infer<typeof UserLeaderboardResponseSchema>
 
 // Socials

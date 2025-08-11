@@ -1,4 +1,4 @@
-import { http, createConfig } from 'wagmi'
+import { http } from 'wagmi'
 import { createPublicClient, fallback, createWalletClient } from 'viem'
 import {
 	type AppKitNetwork,
@@ -27,7 +27,7 @@ import {
 	sepolia,
 	zkSync,
 } from '@reown/appkit/networks'
-import { config as appConfig } from '@/constants/config'
+import { configEnvs as appConfig } from '@/shared/consts/config/config'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { createAppKit } from '@reown/appkit/react'
 
@@ -139,12 +139,12 @@ createAppKit({
 	metadata,
 	projectId,
 	features: {
-		send: false,
-		socials: false,
 		analytics: true,
-		email: false,
-		onramp: false,
-		swaps: false,
+		// send: false,
+		// socials: false,
+		// email: false,
+		// onramp: false,
+		// swaps: false,
 	},
 })
 

@@ -1,4 +1,4 @@
-import { TUserSocial } from './response'
+import { TUserSocial, TUserSocialType } from './response'
 
 export namespace UserApi {
 	export namespace AcceptTerms {
@@ -49,6 +49,13 @@ export namespace UserApi {
 				verifier: string
 			}
 			export type ResponsePayload = { message: string; success: boolean; username: string }
+		}
+		export namespace DisconnectSocial {
+			export type RequestParams = {
+				address?: string
+				socialType: TUserSocialType
+			}
+			export type ResponsePayload = { disconnected: boolean }
 		}
 	}
 }
