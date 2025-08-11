@@ -50,7 +50,7 @@ export const QuestPreviewList = (): JSX.Element => {
 				}
 				return q?.tag ? q.tag === viewMode : viewMode === 'rewards'
 			}),
-		[viewMode, isFetching],
+		[viewMode, user, isFetching],
 	)
 	const quest_size_m = useMemo(() => {
 		return groupedQuests
