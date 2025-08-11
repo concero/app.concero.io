@@ -38,11 +38,15 @@ export const QuestPreviewList = (): JSX.Element => {
 	const groupedQuests = useMemo(
 		() =>
 			quests?.filter(q => {
-				if (q?.tag === 'rewards' && user) {
-					const isQuestInProgress = user.questsInProgress.some(
-						questInProgress => questInProgress.questId === q._id,
-					)
-					return isQuestInProgress
+				if (q?.tag === 'rewards') {
+					if (user) {
+						const isQuestInProgress = user.questsInProgress.some(
+							questInProgress => questInProgress.questId === q._id,
+						)
+						return isQuestInProgress
+					} else {
+						return false
+					}
 				}
 				return q?.tag ? q.tag === viewMode : viewMode === 'rewards'
 			}),
