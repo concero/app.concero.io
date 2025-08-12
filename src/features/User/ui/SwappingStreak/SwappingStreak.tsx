@@ -27,7 +27,6 @@ type TProps = {
 
 const SWAP_VOLUME = 50
 export const SwappingStreak = (props: TProps) => {
-	console.log('SwappingStreak')
 	const { className, user } = props
 	const isDesktop = useMediaQuery('desktop')
 	const { theme } = useTheme()
