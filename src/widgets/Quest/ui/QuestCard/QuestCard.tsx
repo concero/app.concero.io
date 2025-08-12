@@ -1,4 +1,3 @@
-import { config } from '@/constants/config'
 import cls from './QuestCard.module.pcss'
 import { ConnectWallet } from '@/features/Auth'
 import { TQuest, TQuestCardStatus, TUserQuest } from '@/entities/Quest'
@@ -11,6 +10,7 @@ import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 import { useAccount } from 'wagmi'
 import { getIsCanClaimQuest } from '@/entities/User'
 import { QuestTaskGroup } from '@/features/Quest'
+import { configEnvs } from '@/shared/consts/config/config'
 
 type TProps = {
 	quest: TQuest
@@ -110,11 +110,11 @@ export const QuestCard = (props: TProps) => {
 					width={'100%'}
 					src={
 						quest.image
-							? `${config.assetsURI}/icons/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`
-							: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+							? `${configEnvs.assetsURI}/icons/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`
+							: `${configEnvs.assetsURI}/icons/quests/QuestPlaceholder.webp`
 					}
 					onError={(e: any) => {
-						e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
+						e.target.src = `${configEnvs.assetsURI}/icons/quests/QuestPlaceholder.webp`
 					}}
 					loading="lazy"
 					alt="Quest image"

@@ -12,6 +12,31 @@ export const getDateUnitMap = (interval: TQuestInterval) => {
 	return null
 }
 
+export const QuestTagIsNew = (props: { started_at: number; isNew: boolean }) => {
+	const { isNew, started_at } = props
+	if (!isNew) {
+		return null
+	}
+	if (dayjs().diff(dayjs(started_at * 1000), 'day') > 7) {
+		return null
+	}
+	return (
+		<Tag size="s" variant={'branded'}>
+			New!
+		</Tag>
+	)
+}
+
+const getColorVariant = (args: { daysLeft: number; readyToClaim: boolean; isClaimed?: boolean }) => {
+	const { daysLeft, isClaimed, readyToClaim } = args
+	let variant: 'neutral' | 'warning' | 'negative' | 'positive' = 'neutral'
+	if (daysLeft <= 3) variant = 'warning'
+	if (daysLeft <= 1) variant = 'negative'
+	if (readyToClaim) variant = 'positive'
+	if (isClaimed) variant = 'neutral'
+	return variant
+}
+
 interface Props {
 	quest: TQuest
 	isClaimed?: boolean
@@ -19,13 +44,20 @@ interface Props {
 }
 export const QuestStatus = ({ quest, isClaimed, userQuest }: Props) => {
 	const { finished_at, started_at, interval } = quest
-	if (!userQuest) return null
+
+	if (!userQuest) {
+		return (
+			<div className="row gap-xs">
+				<QuestTagIsNew isNew={quest.is_new} started_at={started_at} />
+			</div>
+		)
+	}
 	const completedStepIds = userQuest?.steps ?? []
 
 	const isStarted = completedStepIds.length > 0
 
 	const readyToClaim = getIsCanClaimQuest({ quest, userQuest })
-	const isNewQuest = quest.is_new && dayjs().diff(dayjs(started_at), 'day') <= 7
+
 	const daysLeft = getQuestDaysLeft(finished_at)
 
 	const dayText = daysLeft > 1 ? 'days' : 'day'
@@ -37,23 +69,13 @@ export const QuestStatus = ({ quest, isClaimed, userQuest }: Props) => {
 	if (readyToClaim) status = ' Done'
 	if (isClaimed) status = 'Completed!'
 
-	let variant: 'neutral' | 'warning' | 'negative' | 'positive' = 'neutral'
-	if (daysLeft <= 3) variant = 'warning'
-	if (daysLeft <= 1) variant = 'negative'
-	if (readyToClaim) variant = 'positive'
-	if (isClaimed) variant = 'neutral'
-
 	if (interval === 'daily' && !readyToClaim && !isClaimed) {
 		return null
 	}
-
+	const variant = getColorVariant({ daysLeft, isClaimed, readyToClaim })
 	return (
 		<div className="row gap-xs">
-			{isNewQuest && (
-				<Tag size="s" variant={'branded'}>
-					New!
-				</Tag>
-			)}
+			<QuestTagIsNew isNew={quest.is_new} started_at={started_at} />
 			<Tag size="s" variant={variant}>
 				{status}
 			</Tag>
