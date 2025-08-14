@@ -21,6 +21,20 @@ export namespace UserApi {
 			volumeUSD: number
 		}
 	}
+	export namespace GetUserCountTx {
+		export type RequestBody = {
+			address?: string
+			from: number
+			to: number
+			isCrossChain?: boolean
+			isTestnet?: boolean
+			toChainIds?: number[]
+			fromChainIds?: number[]
+		}
+		export type ResponsePayload = {
+			count: number
+		}
+	}
 
 	export namespace Socials {
 		export namespace FindMany {

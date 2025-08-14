@@ -79,9 +79,14 @@ export const userServiceApi = {
 	},
 
 	getUserVolume: async (requestBody: UserApi.GetUserVolume.RequestBody) => {
-		const url = `${process.env.CONCERO_API_URL}/users/volume`
+		const url = `${process.env.CONCERO_API_URL}/users/tx/volume`
 
 		return createApiHandler(() => post<TApiResponse<UserApi.GetUserVolume.ResponsePayload>>(url, requestBody))
+	},
+	getUserCountTx: async (requestBody: UserApi.GetUserCountTx.RequestBody) => {
+		const url = `${process.env.CONCERO_API_URL}/users/tx/count`
+
+		return createApiHandler(() => post<TApiResponse<UserApi.GetUserCountTx.ResponsePayload>>(url, requestBody))
 	},
 
 	getLeaderboard: async ({ limit, userAddress }: { userAddress: string | undefined; limit?: number }) => {
@@ -191,7 +196,6 @@ export const useUserByAddress = (address?: Address) => {
 		queryKey: [tagInvalidation, 'useUserByAddress', address],
 		queryFn: () => userServiceApi.findUserByAddress(address as Address),
 		enabled: !!address,
-		notifyOnChangeProps: ['data', 'isPending', 'error'],
 	})
 }
 
@@ -228,7 +232,19 @@ export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
 		queryKey: ['userVolume', options],
 		queryFn: () => userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody),
 		enabled: !!options?.address && !!options?.from && !!options?.to,
-		notifyOnChangeProps: ['data', 'isPending', 'error'],
+		refetchOnWindowFocus: true,
+		refetchInterval: 10_000,
+		refetchIntervalInBackground: true,
+	})
+}
+export const useUserCountTx = (options?: UserApi.GetUserCountTx.RequestBody) => {
+	return useQuery({
+		queryKey: ['userVolume', options],
+		queryFn: () => userServiceApi.getUserCountTx(options as UserApi.GetUserCountTx.RequestBody),
+		enabled: !!options?.address && !!options?.from && !!options?.to,
+		refetchOnWindowFocus: true,
+		refetchInterval: 10_000,
+		refetchIntervalInBackground: true,
 	})
 }
 
@@ -312,7 +328,7 @@ export const useConnectXMutation = () => {
 }
 export const useDisconnectSocialNetworkMutation = (address?: string) => {
 	return useMutation({
-		mutationFn: (arg: { network: any }) => socialsService.disconnectNetwork(address ?? '', arg.network),
+		mutationFn: (arg: { network: any }) => socialsService.disconnectNetwork({ socialType: arg.network, address }),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},

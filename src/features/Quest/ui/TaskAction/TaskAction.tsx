@@ -8,6 +8,7 @@ import { useUserByAddress, useUserVolume } from '@/entities/User'
 import { useAccount } from 'wagmi'
 import { configEnvs } from '@/shared/consts/config/config'
 import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
+import { useUserCountTx } from '@/entities/User/api/userApi'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -60,6 +61,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			</>
 		)
 	},
+	/**@deprecated */
 	progress_line: function (props: TTaskActionProps): JSX.Element {
 		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
 		const { address } = useAccount()
@@ -77,7 +79,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			}
 		}
 		const handleSwap = () => {
-			window.open(configEnvs.lancanURL, '_blank')
+			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
 		let startDate = quest.started_at
 		let endDate = quest.finished_at
@@ -109,6 +111,132 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 				<ProgressBar
 					type="float"
 					currentValue={volumeResponse?.payload?.volumeUSD ?? Number(0)}
+					maxValue={Number(step?.details?.value)}
+					minValue={0}
+				/>
+				<div className={cls.controls}>
+					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
+						Swap
+					</Button>
+					<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
+						Verify
+					</Button>
+				</div>
+			</>
+		)
+	},
+	check_volume: function (props: TTaskActionProps): JSX.Element {
+		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
+		const { address } = useAccount()
+		const { data: userResponse } = useUserByAddress(address)
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const isDailyQuest = quest.interval === 'daily'
+		const isWeeklyQuest = quest.interval === 'weekly'
+		const isSingleTask = quest.tasks.length == 1
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		const handleSwap = () => {
+			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
+		}
+		let startDate = quest.started_at
+		let endDate = quest.finished_at
+		if (isDailyQuest) {
+			const dates = getDayRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		} else if (isWeeklyQuest) {
+			const dates = getWeekRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		}
+
+		const { data: volumeResponse } = useUserVolume({
+			address: userResponse?.payload?.address,
+			from: startDate,
+			to: endDate,
+			isCrossChain: step.details.isCrossChain,
+			isTestnet: step.details.isTestnet,
+			fromChainIds: step.details.fromChainIds,
+			toChainIds: step.details.toChainIds,
+		})
+
+		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
+			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
+		}
+		return (
+			<>
+				<ProgressBar
+					type="float"
+					currentValue={volumeResponse?.payload?.volumeUSD ?? Number(0)}
+					maxValue={Number(step?.details?.value)}
+					minValue={0}
+				/>
+				<div className={cls.controls}>
+					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
+						Swap
+					</Button>
+					<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
+						Verify
+					</Button>
+				</div>
+			</>
+		)
+	},
+	check_count_tx: function (props: TTaskActionProps): JSX.Element {
+		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
+		const { address } = useAccount()
+		const { data: userResponse } = useUserByAddress(address)
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const isDailyQuest = quest.interval === 'daily'
+		const isWeeklyQuest = quest.interval === 'weekly'
+		const isSingleTask = quest.tasks.length == 1
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		const handleSwap = () => {
+			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
+		}
+		let startDate = quest.started_at
+		let endDate = quest.finished_at
+		if (isDailyQuest) {
+			const dates = getDayRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		} else if (isWeeklyQuest) {
+			const dates = getWeekRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		}
+
+		const { data: countResponse } = useUserCountTx({
+			address: userResponse?.payload?.address,
+			from: startDate,
+			to: endDate,
+			isCrossChain: step.details.isCrossChain,
+			isTestnet: step.details.isTestnet,
+			fromChainIds: step.details.fromChainIds,
+			toChainIds: step.details.toChainIds,
+		})
+
+		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
+			console.warn('DEVELOPER!!! step?.details?.value is not a number or string')
+		}
+		return (
+			<>
+				<ProgressBar
+					type="float"
+					currentValue={countResponse?.payload?.count ?? Number(0)}
 					maxValue={Number(step?.details?.value)}
 					minValue={0}
 				/>

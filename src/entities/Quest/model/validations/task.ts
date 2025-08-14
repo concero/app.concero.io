@@ -3,6 +3,8 @@ import { stepSchema } from './step'
 
 export const taskTypeSchema = z.union([
 	z.literal('progress_line'),
+	z.literal('check_volume'),
+	z.literal('check_count_tx'),
 	z.literal('connect_discord'),
 	z.literal('connect_x'),
 	z.literal('connect_email'),
