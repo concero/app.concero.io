@@ -114,7 +114,11 @@ export const UserAction = ({ action }: UserActionProps) => {
 
 			<div className={cls.meta_wrap}>
 				<span className={clsx(cls.points)}>
-					+ {action.points ? toLocaleNumber(action.points, 2) : 'n/a'} CERs
+					+{' '}
+					{typeof action.points === 'string' || typeof action.points === 'number'
+						? toLocaleNumber(action.points, 2)
+						: 'n/a'}{' '}
+					CERs
 				</span>
 				<p className={clsx(cls.date)}>{formattedDate}</p>
 			</div>
