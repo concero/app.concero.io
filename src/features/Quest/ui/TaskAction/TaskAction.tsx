@@ -9,6 +9,7 @@ import { useAccount } from 'wagmi'
 import { configEnvs } from '@/shared/consts/config/config'
 import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 import { useUserCountTx } from '@/entities/User/api/userApi'
+import { roundDownToPrecision } from '@/shared/lib/utils/number'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -173,7 +174,12 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			<>
 				<ProgressBar
 					type="float"
-					currentValue={volumeResponse?.payload?.volumeUSD ?? Number(0)}
+					currentValue={
+						roundDownToPrecision(
+							volumeResponse?.payload?.volumeUSD ?? 0,
+							Number(step?.details?.value) ?? 0,
+						) ?? Number(0)
+					}
 					maxValue={Number(step?.details?.value)}
 					minValue={0}
 				/>
