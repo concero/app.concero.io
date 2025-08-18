@@ -39,6 +39,7 @@ export const questSchema = z.object({
 	quest_reward: rewardSchema,
 	blocker: blockerSchema.nullable(),
 	tasks: z.array(taskSchema).min(1),
+	questInstanceId: z.string(),
 	started_at: z.number(),
 	finished_at: z.number(),
 })

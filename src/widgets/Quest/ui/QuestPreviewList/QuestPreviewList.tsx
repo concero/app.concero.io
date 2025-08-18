@@ -44,9 +44,9 @@ export const QuestPreviewList = (): JSX.Element => {
 			})
 	}, [isFetching, groupedQuests])
 
-	const questId_userQuest_map: Record<string, TUserQuest> = userQuestsResponse?.payload.userQuests
+	const questInstanceId_userQuest_map: Record<string, TUserQuest> = userQuestsResponse?.payload.userQuests
 		? userQuestsResponse.payload.userQuests.reduce(
-				(sum, userQuest) => ({ ...sum, [userQuest.questId]: userQuest }),
+				(sum, userQuest) => ({ ...sum, [userQuest.id]: userQuest }),
 				{} as Record<string, TUserQuest>,
 			)
 		: {}
@@ -96,7 +96,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								key={quest.id}
-								userQuest={questId_userQuest_map[quest.id]}
+								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
 								className={cls.preview_item}
 							/>
 						))}
@@ -108,7 +108,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								key={quest.id}
-								userQuest={questId_userQuest_map[quest.id]}
+								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
 								className={cls.preview_item}
 							/>
 						))}
@@ -120,7 +120,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								key={quest.id}
-								userQuest={questId_userQuest_map[quest.id]}
+								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
 								className={cls.preview_item}
 							/>
 						))}
