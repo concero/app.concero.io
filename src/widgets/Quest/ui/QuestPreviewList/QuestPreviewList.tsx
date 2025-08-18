@@ -46,7 +46,7 @@ export const QuestPreviewList = (): JSX.Element => {
 
 	const questInstanceId_userQuest_map: Record<string, TUserQuest> = userQuestsResponse?.payload.userQuests
 		? userQuestsResponse.payload.userQuests.reduce(
-				(sum, userQuest) => ({ ...sum, [userQuest.id]: userQuest }),
+				(sum, userQuest) => ({ ...sum, [userQuest.questInstanceId]: userQuest }),
 				{} as Record<string, TUserQuest>,
 			)
 		: {}
