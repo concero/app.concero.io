@@ -82,7 +82,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const handleSwap = () => {
 			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
-		let startDate = quest.started_at
+		let startDate = userQuest.started_at
 		let endDate = quest.finished_at
 		if (isDailyQuest) {
 			const dates = getDayRangeDates()
