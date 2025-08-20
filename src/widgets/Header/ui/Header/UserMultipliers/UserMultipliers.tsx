@@ -21,7 +21,7 @@ export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
 				</div>
 				<div className={classNames.item}>
 					<span>Daily Swapping Multiplier:</span>
-					<p>{daily_swaps|| 0}x</p>
+					<p>{daily_swaps || 0}x</p>
 				</div>
 			</div>
 		</div>

@@ -28,7 +28,7 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	const toggleTwitterConnection = async () => {
 		try {
 			if (isConnected && user) {
-				const isDisconnected = await disconnectSocial({ network: 'twitter' })
+				const isDisconnected = await disconnectSocial({ network: UserSocialType.X })
 				if (isDisconnected) {
 					setIsConnected(false)
 				}

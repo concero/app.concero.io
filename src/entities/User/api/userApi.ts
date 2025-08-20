@@ -328,7 +328,8 @@ export const useConnectXMutation = () => {
 }
 export const useDisconnectSocialNetworkMutation = (address?: string) => {
 	return useMutation({
-		mutationFn: (arg: { network: any }) => socialsService.disconnectNetwork({ socialType: arg.network, address }),
+		mutationFn: (arg: { network: UserSocialType }) =>
+			socialsService.disconnectNetwork({ socialType: arg.network, address }),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
 		},

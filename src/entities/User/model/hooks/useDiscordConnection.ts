@@ -29,7 +29,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const toggleDiscordConnection = async () => {
 		try {
 			if (isConnected && user) {
-				const isDisconnected = await disconnectSocial({ network: 'discord' })
+				const isDisconnected = await disconnectSocial({ network: UserSocialType.Discord })
 				if (isDisconnected) {
 					setIsConnected(false)
 				}

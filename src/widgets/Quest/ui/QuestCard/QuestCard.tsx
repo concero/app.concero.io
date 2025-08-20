@@ -6,12 +6,13 @@ import { useTheme } from '@concero/ui-kit'
 import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
-
 import { useAccount } from 'wagmi'
 import { getIsCanClaimQuest } from '@/entities/User'
 import { QuestTaskGroup } from '@/features/Quest'
 import { configEnvs } from '@/shared/consts/config/config'
+import { AppImage } from '@/shared/ui/AppImage'
 
+import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
 type TProps = {
 	quest: TQuest
 	userQuest?: TUserQuest
@@ -106,18 +107,11 @@ export const QuestCard = (props: TProps) => {
 			</div>
 
 			<div className={cls.image_wrap}>
-				<img
-					width={'100%'}
-					src={
-						quest.image
-							? `${configEnvs.assetsURI}/icons/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`
-							: `${configEnvs.assetsURI}/icons/quests/QuestPlaceholder.webp`
-					}
-					onError={(e: any) => {
-						e.target.src = `${configEnvs.assetsURI}/icons/quests/QuestPlaceholder.webp`
-					}}
-					loading="lazy"
+				<AppImage
+					src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
 					alt="Quest image"
+					fallbackSrc={QuestPlaceholder}
+					retryTimeout={5000}
 				/>
 			</div>
 

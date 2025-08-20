@@ -2,7 +2,6 @@ import { Card } from '@/shared/ui/Card/Card'
 import type { TQuest, TQuestSize, TUserQuest } from '../../model/types/response'
 import cls from './QuestPreviewCard.module.pcss'
 import { QuestStatus } from './QuestStatus'
-import { config } from '@/constants/config'
 import ArrowRightIcon from '@/shared/assets/icons/monochrome/ArrowRight.svg?react'
 import clsx from 'clsx'
 import { categoryQuestNameMap } from '../../config/nameMaps'
@@ -10,7 +9,9 @@ import { ClaimReward } from '@/features/Quest'
 import { useEffect, useState } from 'react'
 import { IconButton, useTheme } from '@concero/ui-kit'
 import { getIsCanClaimQuest } from '@/entities/User'
-
+import { configEnvs } from '@/shared/consts/config/config'
+import { AppImage } from '@/shared/ui/AppImage'
+import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
 type TClassname = string
 type TProps = {
 	quest?: TQuest
@@ -77,18 +78,11 @@ export const QuestPreviewCard = (props: TProps) => {
 			</div>
 			{showImage && (
 				<div className={cls.image_wrap}>
-					<img
-						width={'100%'}
-						src={
-							quest.image
-								? `${config.assetsURI}/icons/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`
-								: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
-						}
-						onError={(e: any) => {
-							e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
-						}}
-						loading="lazy"
+					<AppImage
+						src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
 						alt="Quest image"
+						fallbackSrc={QuestPlaceholder}
+						retryTimeout={5000}
 					/>
 				</div>
 			)}
