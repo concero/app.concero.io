@@ -15,6 +15,7 @@ import { streak_config } from '../../../../entities/User/config/streak'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { toLocaleNumber } from '@/utils/formatting'
 import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
+import { deposit } from 'viem/zksync'
 
 type TProps = {
 	className?: string
@@ -29,9 +30,11 @@ export const HoldingStreak = (props: TProps) => {
 	const isDesktop = useMediaQuery('desktop')
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
-	const currentStreak = user?.streak.liquidityHold ? user?.streak.liquidityHold + 1 : 0
+	const currentStreak = user?.streak?.liquidity_pool ? user?.streak?.liquidity_pool + 1 : 0
 	const showStreakPlaceholder = !user || currentStreak < 1
-	const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
+	// const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
+	//TODO: FIX
+	const userEarnings = { earnings: 0, deposit: 0 }
 	const balance = userEarnings ? Number(toLocaleNumber(userEarnings.earnings + userEarnings.deposit, 2)) : 0
 	const showDefaultTip = !showStreakPlaceholder && (balance > 100 || balance === 0)
 	const showDanger = !showStreakPlaceholder && balance ? balance > 0 && balance < 100 : false
@@ -66,7 +69,7 @@ export const HoldingStreak = (props: TProps) => {
 							<div className={cls.reward_wrap}>
 								<div className={cls.reward_text}>Reward</div>
 								<Tag size="s" variant="neutral">
-									{getUserFutureMultiplier(user?.streak.liquidityHold ?? 0)}x
+									{getUserFutureMultiplier(user?.streak.liquidity_pool ?? 0)}x
 								</Tag>
 							</div>
 						</div>

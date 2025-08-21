@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
 import { Button, useTheme } from '@concero/ui-kit'
 import { useAccount } from 'wagmi'
-import { TQuestTag, TQuestSize, TQuestType, useAllQuests } from '@/entities/Quest'
+import { TQuestTag, TUserQuest, useAllQuests, useUserQuests } from '@/entities/Quest'
 import { useUserByAddress } from '@/entities/User'
-import TestingPortalIcon from '@/shared/assets/icons/testing_portal_rocketsvg.svg?react'
 import TestingPortalLightImage from '@/shared/assets/icons/light_testing_portal_rocket.png'
 import TestingPortalDarkImage from '@/shared/assets/icons/dark_testing_portal_rocket.png'
 import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
@@ -12,45 +11,45 @@ import cls from './QuestPreviewList.module.pcss'
 type WithoutUndefined<T> = T extends undefined ? never : T
 
 export const QuestPreviewList = (): JSX.Element => {
-	const { data: quests, isFetching } = useAllQuests()
-	const account = useAccount()
+	const { data: questsWrap, isFetching } = useAllQuests()
+	const { address } = useAccount()
 	const { theme } = useTheme()
-	const { data: user } = useUserByAddress(account.address)
+	const quest_ids = questsWrap?.quests.map(quest => quest.id)
+	const { data: userQuestsResponse } = useUserQuests({ address, quest_ids, skip: 0, take: 50 })
 	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
 		setViewMode(mode)
 	}
-	const sizeMap: Record<TQuestType, TQuestSize> = {
-		Big: 'xl',
-		Campaign: 'xl',
-		Daily: 's',
-		Monthly: 'xl',
-		Primary: 'l',
-		Secondary: 'm',
-	}
+
 	// groupByView
+	const quests = questsWrap?.quests
+
 	const groupedQuests = useMemo(
-		() => quests?.filter(q => (q?.tag ? q.tag === viewMode : viewMode === 'rewards')),
+		() => quests?.filter(q => (q.group ? q.group === viewMode : viewMode === 'rewards')),
 		[viewMode, isFetching],
 	)
 	const quest_size_m = useMemo(() => {
-		return groupedQuests
-			?.filter(q => (q.size ? q.size === 'm' : sizeMap[q.type] == 'm'))
-			.toSorted((a, b) => (b?.priority || 0) - (a?.priority || 0))
+		return groupedQuests?.filter(q => q.size === 'm').toSorted((a, b) => (b.sort_index || 0) - (a.sort_index || 0))
 	}, [isFetching, groupedQuests])
 	const quest_size_l = useMemo(() => {
-		return groupedQuests
-			?.filter(q => (q.size ? q.size === 'l' : sizeMap[q.type] == 'l'))
-			.toSorted((a, b) => (b?.priority || 0) - (a?.priority || 0))
+		return groupedQuests?.filter(q => q.size === 'l').toSorted((a, b) => (b.sort_index || 0) - (a.sort_index || 0))
 	}, [isFetching, groupedQuests])
+
 	const quest_size_xl = useMemo(() => {
 		return groupedQuests
-			?.filter(q => (q.size ? q.size === 'xl' : sizeMap[q.type] == 'xl'))
+			?.filter(q => q.size === 'xl')
 			.toSorted((a, b) => {
-				return (b?.priority || 0) - (a?.priority || 0)
+				return (b.sort_index || 0) - (a.sort_index || 0)
 			})
 	}, [isFetching, groupedQuests])
+
+	const questInstanceId_userQuest_map: Record<string, TUserQuest> = userQuestsResponse?.payload.userQuests
+		? userQuestsResponse.payload.userQuests.reduce(
+				(sum, userQuest) => ({ ...sum, [userQuest.questInstanceId]: userQuest }),
+				{} as Record<string, TUserQuest>,
+			)
+		: {}
 
 	return (
 		<div className={cls.quest_preview_list}>
@@ -96,9 +95,8 @@ export const QuestPreviewList = (): JSX.Element => {
 						{quest_size_xl.map(quest => (
 							<QuestPreviewItem
 								quest={quest}
-								user={user}
-								key={quest._id}
-								size="xl"
+								key={quest.id}
+								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
 								className={cls.preview_item}
 							/>
 						))}
@@ -109,9 +107,8 @@ export const QuestPreviewList = (): JSX.Element => {
 						{quest_size_l.map(quest => (
 							<QuestPreviewItem
 								quest={quest}
-								user={user}
-								key={quest._id}
-								size="l"
+								key={quest.id}
+								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
 								className={cls.preview_item}
 							/>
 						))}
@@ -122,9 +119,8 @@ export const QuestPreviewList = (): JSX.Element => {
 						{quest_size_m.map(quest => (
 							<QuestPreviewItem
 								quest={quest}
-								user={user}
-								key={quest._id}
-								size="m"
+								key={quest.id}
+								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
 								className={cls.preview_item}
 							/>
 						))}

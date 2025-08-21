@@ -1,4 +1,4 @@
-import { useUpdateNicknameMutation, useUserByAddress } from '@/entities/User'
+import { useUpdateNicknameMutation } from '@/entities/User'
 import { Button, Input } from '@concero/ui-kit'
 import { useState } from 'react'
 import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
@@ -12,8 +12,7 @@ type TProps = {
 
 export const NicknameConnect = (props: TProps) => {
 	const { user } = props
-	const { mutate, isPending, isError, isSuccess, error, reset } = useUpdateNicknameMutation()
-
+	const { mutate, isPending, data, isError, isSuccess, error, reset } = useUpdateNicknameMutation()
 	const [newNickname, setNewNickname] = useState(user?.nickname ?? '')
 
 	const saveHandler = () => {
@@ -32,8 +31,13 @@ export const NicknameConnect = (props: TProps) => {
 		Long: 'Nickname must be less than 60 characters',
 		Short: 'Nickname must be greater than 1 character',
 	}
-	const hintText = isError ? errorMap[error.data.error] : isSuccess ? 'Nickname successfully updated ' : null
-	const hintIcon = isError ? <WarningIcon /> : isSuccess ? <SuccessIcon /> : null
+	const hintText =
+		isError && error.message
+			? (errorMap?.[error.message as keyof typeof errorMap] ?? 'Unknown Error ')
+			: isSuccess
+				? 'Nickname successfully updated '
+				: null
+	const hintIcon = error ? <WarningIcon /> : isSuccess ? <SuccessIcon /> : null
 	return (
 		<div className={cls.wrap_input_btn}>
 			<Input

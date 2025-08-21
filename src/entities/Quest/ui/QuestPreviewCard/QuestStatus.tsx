@@ -1,39 +1,67 @@
-import { TQuestType } from '../../model/types/schema'
 import dayjs from 'dayjs'
-import { normalizeEndDate } from '../../model/lib/normalizeEndDate'
 import { getQuestDaysLeft } from '../../model/lib/getQuestDaysLeft'
-import { TUserResponse } from '@/entities/User/model/types/response'
-import { TQuest } from '../../model/types/response'
+import { TQuest, TQuestInterval, TUserQuest } from '../../model/types/response'
 import { Tag } from '@concero/ui-kit'
+import { getIsCanClaimQuest } from '@/entities/User'
 
-export const getDateUnitMap = (type: TQuestType) => {
-	if (type === 'Daily') return 'day'
-	if (type === 'Primary' || type === 'Secondary') return 'week'
-	if (type === 'Monthly') return 'month'
+export const getDateUnitMap = (interval: TQuestInterval) => {
+	if (interval === 'daily') return 'day'
+	if (interval === 'weekly') return 'week'
+	if (interval === 'monthly') return 'month'
 
 	return null
+}
+
+export const QuestTagIsNew = (props: { started_at: number; isNew: boolean }) => {
+	const { isNew, started_at } = props
+	if (!isNew) {
+		return null
+	}
+	if (dayjs().diff(dayjs(started_at * 1000), 'day') > 7) {
+		return null
+	}
+	return (
+		<Tag size="s" variant={'branded'}>
+			New!
+		</Tag>
+	)
+}
+
+const getColorVariant = (args: { daysLeft: number; readyToClaim: boolean; isClaimed?: boolean }) => {
+	const { daysLeft, isClaimed, readyToClaim } = args
+	let variant: 'neutral' | 'warning' | 'negative' | 'positive' = 'neutral'
+	if (daysLeft <= 3) variant = 'warning'
+	if (daysLeft <= 1) variant = 'negative'
+	if (readyToClaim) variant = 'positive'
+	if (isClaimed) variant = 'neutral'
+	return variant
 }
 
 interface Props {
 	quest: TQuest
 	isClaimed?: boolean
-	questsInProgress?: TUserResponse['questsInProgress']
+	userQuest?: TUserQuest
 }
-export const QuestStatus = ({ quest, isClaimed, questsInProgress }: Props) => {
-	const { name, endDate, startDate, type: questType, steps, _id } = quest
+export const QuestStatus = ({ quest, isClaimed, userQuest }: Props) => {
+	const { finished_at, started_at, interval } = quest
 
-	const questInProgress = questsInProgress
-		? questsInProgress.find(({ questId }) => questId === _id.toString())?.completedSteps
-		: []
-	const completedStepIds = questInProgress ?? []
+	if (!userQuest) {
+		return (
+			<div className="row gap-xs">
+				<QuestTagIsNew isNew={quest.is_new} started_at={started_at} />
+			</div>
+		)
+	}
+	const completedStepIds = userQuest?.steps ?? []
+
 	const isStarted = completedStepIds.length > 0
-	const normalizedEndDate = normalizeEndDate(endDate)
-	const normalizedStartDate = normalizeEndDate(startDate)
-	const readyToClaim = completedStepIds.length === steps.length
-	const isNewQuest = quest.isNew && dayjs().diff(dayjs(normalizedStartDate), 'day') <= 7
-	const daysLeft = getQuestDaysLeft(normalizedEndDate)
+
+	const readyToClaim = getIsCanClaimQuest({ quest, userQuest })
+
+	const daysLeft = getQuestDaysLeft(finished_at)
+
 	const dayText = daysLeft > 1 ? 'days' : 'day'
-	const isRepeat = !!getDateUnitMap(questType)
+	const isRepeat = !!getDateUnitMap(interval)
 	const daysLeftText = daysLeft === 0 ? 'Ends today' : `${daysLeft} ${dayText} ${isRepeat ? 'to reset' : 'left'}`
 
 	let status = `${isStarted ? 'Started, ' : ''} ${daysLeftText}`
@@ -41,23 +69,13 @@ export const QuestStatus = ({ quest, isClaimed, questsInProgress }: Props) => {
 	if (readyToClaim) status = ' Done'
 	if (isClaimed) status = 'Completed!'
 
-	let variant: 'neutral' | 'warning' | 'negative' | 'positive' = 'neutral'
-	if (daysLeft <= 3) variant = 'warning'
-	if (daysLeft <= 1) variant = 'negative'
-	if (readyToClaim) variant = 'positive'
-	if (isClaimed) variant = 'neutral'
-
-	if (questType === 'Daily' && !readyToClaim && !isClaimed) {
+	if (interval === 'daily' && !readyToClaim && !isClaimed) {
 		return null
 	}
-
+	const variant = getColorVariant({ daysLeft, isClaimed, readyToClaim })
 	return (
 		<div className="row gap-xs">
-			{isNewQuest && (
-				<Tag size="s" variant={'branded'}>
-					New!
-				</Tag>
-			)}
+			<QuestTagIsNew isNew={quest.is_new} started_at={started_at} />
 			<Tag size="s" variant={variant}>
 				{status}
 			</Tag>

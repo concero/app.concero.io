@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import stylelint from 'vite-plugin-stylelint'
 import react from '@vitejs/plugin-react-swc'
 import precss from 'precss'
@@ -29,39 +29,47 @@ const convertColorsToCurrentColorPlugin = {
 		}
 	},
 }
-export default defineConfig({
-	plugins: [
-		react(),
-		tsconfigPaths(),
-		stylelint({
-			fix: true,
-			include: ['./src/**/*.css', './src/**/*.pcss'],
-			configFile: './.stylelintrc.json',
-			emitErrorAsWarning: true,
-		}),
-		EnvironmentPlugin('all'),
-		svgr({
-			svgrOptions: {
-				plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
-				svgo: true,
-				svgoConfig: {
-					path: 'monochrome',
-					plugins: [
-						//@ts-ignore
-						convertColorsToCurrentColorPlugin,
-					],
-					floatPrecision: 4,
+export default defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd())
+	return {
+		plugins: [
+			react(),
+			tsconfigPaths(),
+			stylelint({
+				fix: true,
+				include: ['./src/**/*.css', './src/**/*.pcss'],
+				configFile: './.stylelintrc.json',
+				emitErrorAsWarning: true,
+			}),
+			EnvironmentPlugin('all'),
+			svgr({
+				svgrOptions: {
+					plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+					svgo: true,
+					svgoConfig: {
+						path: 'monochrome',
+						plugins: [
+							//@ts-ignore
+							convertColorsToCurrentColorPlugin,
+						],
+						floatPrecision: 4,
+					},
 				},
+			}),
+		],
+		css: {
+			postcss: {
+				plugins: [precss()],
 			},
-		}),
-	],
-	css: {
-		postcss: {
-			plugins: [precss()],
 		},
-	},
-	build: {
-		outDir: './dist',
-		emptyOutDir: true,
-	},
+		define: {
+			// __IS_DEV__:  mode === 'development',
+			// TODO: Remove after release 1
+			__IS_DEV__: true,
+		},
+		build: {
+			outDir: './dist',
+			emptyOutDir: true,
+		},
+	}
 })

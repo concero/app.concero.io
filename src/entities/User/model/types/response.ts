@@ -1,26 +1,20 @@
 import { z } from 'zod'
-import { type Hash } from 'viem'
+import { UserSchema, UserSocialSchema, UserSocialTypeSchema } from '../validations/validations'
+import { UserLeaderboardResponseSchema } from '../validations/leaderboard'
+import { OmitTyped } from '@/shared/types/utils'
 import {
-	// UserTierZod,
-	// UserStreaksZod,
-	// UserMultiplierZod,
-	// UserConnectedSocialsZod,
-	IUserZod,
-	UserConnectedSocialsZod,
-} from '../validations/validations'
+	UserActionQuestDataSchema,
+	UserActionSchema,
+	UserActionSpecialRewardDataSchema,
+	UserActionTxDataSchema,
+	UserActionTypeSchema,
+} from '../validations/user-action'
+import { TPaginationResponse } from '@/shared/types/api'
 
-// export type TUserTier = z.infer<typeof UserTierZod>
-// export type TUserStreak = z.infer<typeof UserStreaksZod>
-// export type TUserMultiplaier = z.infer<typeof UserMultiplierZod>
-// export type TUserConnectedSocials = z.infer<typeof UserConnectedSocialsZod>
-
-export type TUserResponse = z.infer<typeof IUserZod>
-type ConnectedSocials = z.infer<typeof UserConnectedSocialsZod>
-type NonNullableConnectedSocials = Exclude<ConnectedSocials, null>
-export type TUserSocialNetworkType = keyof NonNullableConnectedSocials | 'email'
-export type TGetLeaderBoardReponse = {
-	users: (TUserResponse & { position: number })[]
-}
+export type TUserResponse = z.infer<typeof UserSchema>
+export type TUserSocial = z.infer<typeof UserSocialSchema>
+export type TUserSocialType = z.infer<typeof UserSocialTypeSchema>
+export type TGetLeaderBoardReponse = z.infer<typeof UserLeaderboardResponseSchema>
 
 // Socials
 export type TUpdateUserDiscord = {
@@ -34,53 +28,15 @@ export type TUpdateUserTwitter = {
 	username: string
 }
 
-// User actions
-export enum ETransactionType {
-	ConceroSwapTx = '0',
-	ConceroBridgeTx = '1',
-}
+export type TUserActionType = z.infer<typeof UserActionTypeSchema>
+export type TUserActionQuestData = z.infer<typeof UserActionQuestDataSchema>
+export type TUserActionSpecialRewardData = z.infer<typeof UserActionSpecialRewardDataSchema>
+export type TUserActionTxData = z.infer<typeof UserActionTxDataSchema>
 
-export enum EActionType {
-	'transactionReward',
-	'questReward',
-	'specialReward',
-}
-
-export interface UserActionTxData {
-	type: ETransactionType
-	from: {
-		chainName: string
-		tokenSymbol: string
-		amount: number
-	}
-	to: {
-		chainName: string
-		tokenSymbol: string
-		amount: number
-	}
-	txHash: Hash
-}
-
-export interface IUserActionQuestData {
-	name: string
-	points?: number
-	multiplier?: number
-	timestamp: number
-	completedQuestStepIds?: number[]
-	isCompleted?: boolean
-}
-// Synchronization with backend and rewards FE is required upon modification
-const tagsArr = ['testnet', 'lanca'] as const
-export type TTagUserAction = (typeof tagsArr)[number][]
-export interface IUserAction<TActionType extends EActionType = EActionType> {
-	userAddress: string
-	documentId: string
-	actionType: TActionType
-	points?: number
-	multiplier?: number
-	timestamp: number
-	data: TActionType extends EActionType.transactionReward ? UserActionTxData : IUserActionQuestData
-	tags?: TTagUserAction
+export type TUserAction = z.infer<typeof UserActionSchema>
+export type TUserActionResponse = {
+	actions: TUserAction[]
+	pagination: TPaginationResponse
 }
 export const enum NicknameError {
 	Short = 'Short',
@@ -88,6 +44,9 @@ export const enum NicknameError {
 	Invalid = 'Invalid',
 	Exists = 'Exists',
 	Error = 'Error',
+}
+export type TUserNicknameCheckResponse = {
+	user: OmitTyped<TUserResponse, 'multiplier' | 'streak'>
 }
 export interface UserEarnings {
 	earnings: number

@@ -1,92 +1,122 @@
-import { config } from '@/constants/config'
 import cls from './QuestCard.module.pcss'
 import { ConnectWallet } from '@/features/Auth'
-import { TQuest, TQuestCardStatus } from '@/entities/Quest'
-import { QuestStepGroup, ClaimReward, StartQuest } from '@/features/Quest'
+import { TQuest, TQuestCardStatus, TUserQuest } from '@/entities/Quest'
+import { ClaimReward, StartQuest } from '@/features/Quest'
 import { useTheme } from '@concero/ui-kit'
 import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
+import { useAccount } from 'wagmi'
+import { getIsCanClaimQuest } from '@/entities/User'
+import { QuestTaskGroup } from '@/features/Quest'
+import { configEnvs } from '@/shared/consts/config/config'
+import { AppImage } from '@/shared/ui/AppImage'
 
+import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
 type TProps = {
 	quest: TQuest
-	status: TQuestCardStatus
+	userQuest?: TUserQuest
 	onClaim?: (quest: TQuest) => void
 }
 
 export const QuestCard = (props: TProps) => {
-	const { quest, status, onClaim } = props
+	const { quest, userQuest, onClaim } = props
 	const { theme } = useTheme()
+	const { address } = useAccount()
 	let controls = null
-	let showSteps = false
+	let showTasks = false
 	let showOnlyOptionalSteps = false
 	const handleEventPosthogOnStart = async (quest: TQuest) => {
 		await trackEvent({
 			category: category.QuestCard,
 			action: action.BeginQuest,
 			label: 'concero_quest_begin',
-			data: { id: quest._id, type: getEventTypeQuest(quest as TQuest) },
+			data: { id: quest.id, type: getEventTypeQuest(quest as TQuest) },
 		})
 	}
-	switch (status) {
+
+	const rewardIsClaimed = !!userQuest?.finished_at
+	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
+
+	if (userQuest?.started_at) {
+		statusOfQuest = 'STARTED'
+	}
+	if (userQuest && getIsCanClaimQuest({ quest, userQuest })) {
+		statusOfQuest = 'READY_TO_CLAIM'
+	}
+
+	if (rewardIsClaimed) {
+		statusOfQuest = 'FINISHED'
+	}
+
+	switch (statusOfQuest) {
 		case 'NOT_CONNECT':
 			controls = <ConnectWallet />
-			showSteps = false
+			showTasks = false
 			break
 		case 'READY_TO_START':
 			controls = (
 				<StartQuest
-					questId={quest._id}
+					questId={quest.id}
 					onStart={() => handleEventPosthogOnStart(quest)}
 					propsButton={{ size: 'l', isFull: false }}
 				/>
 			)
-			showSteps = false
+			showTasks = false
 			break
 		case 'STARTED':
 			controls = null
-			showSteps = true
+			showTasks = true
 			showOnlyOptionalSteps = false
 			break
 		case 'READY_TO_CLAIM':
-			controls = <ClaimReward questId={quest._id} onClaim={() => onClaim?.(quest)} propsButton={{ size: 'l' }} />
-			showSteps = true
-			showOnlyOptionalSteps = true
+			if (userQuest) {
+				controls = (
+					<ClaimReward
+						userQuestId={userQuest?.id}
+						onClaim={() => onClaim?.(quest)}
+						propsButton={{ size: 'l' }}
+					/>
+				)
+				showTasks = true
+				showOnlyOptionalSteps = true
+			}
 			break
 		case 'FINISHED':
 			controls = null
-			showSteps = false
+			showTasks = false
 			break
 		default:
-			showSteps = false
+			showTasks = false
 			controls = null
 	}
+
 	return (
 		<div className={cls.quest_card}>
 			<div className={cls.header}>
-				<div className={cls.title}>{quest.name}</div>
+				<div className={cls.title}>{quest.title}</div>
 				{quest.subtitle ? <div className={cls.subtitle}>{quest.subtitle}</div> : ''}
-				<div className={cls.reward_points}>+ {quest.rewards.points} CERs</div>
+				<div className={cls.reward_points}>
+					+{' '}
+					{Math.max(
+						quest.quest_reward.tokenReward?.min_value ?? 0,
+						quest.quest_reward.tokenReward?.max_value ?? 0,
+					)}{' '}
+					CERs
+				</div>
 			</div>
 
 			<div className={cls.image_wrap}>
-				<img
-					width={'100%'}
-					src={
-						quest.image
-							? `${config.assetsURI}/icons/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`
-							: `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
-					}
-					onError={(e: any) => {
-						e.target.src = `${config.assetsURI}/icons/quests/QuestPlaceholder.webp`
-					}}
-					loading="lazy"
+				<AppImage
+					src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
 					alt="Quest image"
+					fallbackSrc={QuestPlaceholder}
+					retryTimeout={5000}
 				/>
 			</div>
 
 			<div className={cls.description}>{quest.description}</div>
-			{showSteps && <QuestStepGroup quest={quest} onlyOptional={showOnlyOptionalSteps} />}
+			{showTasks && <QuestTaskGroup quest={quest} userQuest={userQuest} onlyOptional={showOnlyOptionalSteps} />}
 			{controls ? <div className={cls.controls}>{controls}</div> : null}
 		</div>
 	)

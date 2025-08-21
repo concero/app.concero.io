@@ -1,46 +1,24 @@
 import { toLocaleNumber, formatDateTime } from '@/utils/formatting'
 import clsx from 'clsx'
 import cls from './HistoryUserActions.module.pcss'
-import type { IUserAction } from '@/entities/User'
-import { EActionType } from '@/entities/User'
-import { ETransactionType } from '@/entities/User'
-import { IUserActionQuestData } from '@/entities/User'
-import { useMemo } from 'react'
-import { format, formatTokenAmount } from '@/shared/lib/utils/format'
-type TAmount = {
-	low: number
-	high: number
-	unsigned: boolean
-}
-function convertLongToObject(amount: TAmount) {
-	const high = amount.high
-	const low = amount.low
-	const unsigned = amount.unsigned
+import { TUserAction } from '@/entities/User'
+import { TUserActionQuestData, TUserActionTxData, TUserActionType } from '@/entities/User/model/types/response'
 
-	let result = high * Math.pow(2, 32) + low
-
-	if (!unsigned && high < 0) {
-		result = result - Math.pow(2, 64)
-	}
-
-	return result.toString()
-}
 interface UserActionProps {
-	action: IUserAction
+	action: TUserAction
 }
-const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.Element => {
+const getActionInfo = (action: TUserAction): JSX.Element => {
 	try {
-		const { from, to } = action.data
-		const txAction = action.data?.type === ETransactionType.ConceroBridgeTx ? 'Bridge' : 'Swap'
-		const isTestnet = action.tags?.includes('testnet')
-		const formattedTestnetBalanceFrom = useMemo(
-			() => (isTestnet ? formatTokenAmount(`${from.amount}`) : 0),
-			[from.amount],
-		)
+		const actionData = action.data as TUserActionTxData | null
 
-		if (!action.data?.from || !action.data?.to) {
+		if (!actionData) {
 			return <span>Forgotten transaction</span>
 		}
+		const { from, isTestnet, to } = actionData
+		if (!from || !to) {
+			return <span>Forgotten transaction</span>
+		}
+		const txAction = action.type === 'bridge' ? 'Bridge' : 'Swap'
 
 		return (
 			<span className={cls.action_info}>
@@ -50,49 +28,84 @@ const getActionInfo = (action: IUserAction<EActionType.transactionReward>): JSX.
 				</span>
 				<span className={cls.from_to}> from </span>
 				<span className={cls.amount_value}>
-					{isTestnet ? format(Number(formattedTestnetBalanceFrom), 4) : toLocaleNumber(from.amount, 2)}{' '}
-					{from.tokenSymbol} on {from.chainName}
+					{toLocaleNumber(from.amount, 2)} {from.tokenSymbol} on {from.chainName}
 				</span>
 				<span className={cls.from_to}> to </span>
 				<span className={cls.amount_value}>
-					{isTestnet ? format(Number(formattedTestnetBalanceFrom), 4) : toLocaleNumber(to.amount, 2)}{' '}
-					{to.tokenSymbol} on {to.chainName}
+					{toLocaleNumber(to.amount, 2)} {to.tokenSymbol} on {to.chainName}
 				</span>
 			</span>
 		)
 	} catch (error) {
-		console.log('Error:', error, 'action', action)
+		if (__IS_DEV__) {
+			console.log('Error:', error, 'action', action)
+		}
 		return <span>Forgotten transaction</span>
 	}
 }
 
-const getQuestInfo = (action: IUserAction<EActionType.questReward>) => {
-	const { name } = action.data as IUserActionQuestData
-	return <span className={cls.title}>Quest completed: {name}</span>
+const getQuestInfo = (action: TUserAction) => {
+	const actionData = action.data as TUserActionQuestData | null
+	return <span className={cls.title}>Quest completed: {actionData?.name}</span>
 }
-const getSpecialRewardInfo = (action: IUserAction<EActionType.specialReward>) => {
-	const { name } = action.data as { name: string }
-	return <span className={cls.title}>Special reward: {name}</span>
+const getQuestStepInfo = (action: TUserAction) => {
+	const actionData = action.data as TUserActionQuestData | null
+	return <span className={cls.title}>Quest step completed: {actionData?.name}</span>
+}
+const getSocialConnectInfo = (action: TUserAction) => {
+	const { type } = action
+
+	let name = ''
+	if (type === 'x_connected') {
+		name = 'X'
+	}
+	if (type === 'discord_connected') {
+		name = 'Discord'
+	}
+	return <span className={cls.title}>Connected social: {name}</span>
+}
+const getSocialDisconnectInfo = (action: TUserAction) => {
+	const { type } = action
+
+	let name = ''
+	if (type === 'x_disconnected') {
+		name = 'X'
+	}
+	if (type === 'discord_disconnected') {
+		name = 'Discord'
+	}
+	return <span className={cls.title}>Disconnected social: {name}</span>
+}
+
+const getSpecialRewardInfo = (action: TUserAction) => {
+	const actionData = action.data as { name: string } | null
+	return <span className={cls.title}>Special reward: {actionData?.name}</span>
 }
 
 export const UserAction = ({ action }: UserActionProps) => {
 	const getValue = (): string | JSX.Element => {
-		switch (action.actionType) {
-			case EActionType.questReward:
-				//TODO: Improve type
-				return getQuestInfo(action as IUserAction<EActionType.questReward>)
-			case EActionType.transactionReward:
-				//TODO: Improve type
-				return getActionInfo(action as IUserAction<EActionType.transactionReward>)
-			case EActionType.specialReward:
-				//TODO: Improve type
-				return getSpecialRewardInfo(action as IUserAction<EActionType.specialReward>)
+		switch (action.type) {
+			case 'quest_completed':
+				return getQuestInfo(action)
+			case 'quest_step_completed':
+				return getQuestStepInfo(action)
+			case 'swap':
+			case 'bridge':
+				return getActionInfo(action)
+			case 'special_reward_applied':
+				return getSpecialRewardInfo(action)
+			case 'x_connected':
+			case 'discord_connected':
+				return getSocialConnectInfo(action)
+			case 'x_disconnected':
+			case 'discord_disconnected':
+				return getSocialDisconnectInfo(action)
 			default:
-				return ''
+				return <span>Unknown action</span>
 		}
 	}
 
-	const timestampInMs = action.timestamp.toString().length === 10 ? action.timestamp * 1000 : action.timestamp
+	const timestampInMs = action.executedAt.toString().length === 10 ? action.executedAt * 1000 : action.executedAt
 	const formattedDate = formatDateTime(new Date(timestampInMs), 'D MMM YYYY, HH:mm')
 
 	return (
@@ -101,7 +114,11 @@ export const UserAction = ({ action }: UserActionProps) => {
 
 			<div className={cls.meta_wrap}>
 				<span className={clsx(cls.points)}>
-					+ {action.points ? toLocaleNumber(action.points, 2) : 'n/a'} CERs
+					+{' '}
+					{typeof action.points === 'string' || typeof action.points === 'number'
+						? toLocaleNumber(action.points, 2)
+						: 'n/a'}{' '}
+					CERs
 				</span>
 				<p className={clsx(cls.date)}>{formattedDate}</p>
 			</div>

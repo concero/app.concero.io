@@ -2,7 +2,6 @@ import './styles/App.css'
 import { PostHogProvider } from 'posthog-js/react'
 import { WagmiProvider } from 'wagmi'
 import { Navigator } from './Navigator'
-import { config } from './utils/web3/wagmi'
 import { useEffect } from 'react'
 import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
@@ -12,6 +11,7 @@ import { I18Provider } from './shared/i18n/I18nextProvider'
 import { BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from '@/app/providers/ErrorBoundary/ErrorBoundary'
 import { ThemeProvider } from '@concero/ui-kit'
+import { config } from './shared/api/wagmi'
 
 function App() {
 	useEffect(() => {

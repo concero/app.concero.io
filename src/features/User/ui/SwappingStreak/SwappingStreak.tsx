@@ -30,21 +30,23 @@ export const SwappingStreak = (props: TProps) => {
 	const { className, user } = props
 	const isDesktop = useMediaQuery('desktop')
 	const { theme } = useTheme()
-	const todayStart = dayjs().utc().startOf('day').valueOf()
-	const todayEnd = dayjs().utc().endOf('day').valueOf()
-	const { data: currentVolume } = useUserVolume({ address: user?.address, startDate: todayStart, endDate: todayEnd })
+	const todayStart = dayjs().utc().startOf('day').unix()
+	const todayEnd = dayjs().utc().endOf('day').unix()
+	const { data: currentVolumeResponse } = useUserVolume({ address: user?.address, from: todayStart, to: todayEnd })
+
+	const currentVolume = currentVolumeResponse?.payload?.volumeUSD
 	const formattedVolume = Math.floor(currentVolume || 0)
 	const currentVolumePercent = Math.min(((formattedVolume || 0) / SWAP_VOLUME) * 100, 100)
 	const isNotEnough = (formattedVolume || 0) < 50
-	const nowLondon = dayjs().utc().valueOf()
+	const nowLondon = dayjs().utc().unix()
 	/**seconds */
-	const timeLeft = (todayEnd - nowLondon) / 1000
+	const timeLeft = todayEnd - nowLondon
 	const oneHourInSecond = 60 * 60
 	const threeHoursInSeconds = 3 * oneHourInSecond
 
 	/** Adding one because the current streak has already occurred and is confirmed,
 	 * but we need to display the new day that will be confirmed tonight. */
-	const current_streak = user?.streak.dailySwap ? user?.streak.dailySwap + 1 : 0
+	const current_streak = user?.streak?.daily_swaps ? user?.streak?.daily_swaps + 1 : 0
 	const showStreakPlaceholder = !user || current_streak < 1
 	const successSwap = (formattedVolume || 0) >= SWAP_VOLUME
 	const warningTime = isNotEnough && timeLeft > oneHourInSecond && timeLeft <= threeHoursInSeconds
@@ -128,7 +130,7 @@ export const SwappingStreak = (props: TProps) => {
 							<div className={cls.reward_wrap}>
 								<div className={cls.reward_text}>Reward</div>
 								<Tag size="s" variant="neutral">
-									{getUserFutureMultiplier(user.streak.dailySwap)}x
+									{getUserFutureMultiplier(user.streak?.daily_swaps ?? 0)}x
 								</Tag>
 							</div>
 						</div>

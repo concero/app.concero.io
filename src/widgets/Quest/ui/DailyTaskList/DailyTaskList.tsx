@@ -1,31 +1,39 @@
 import cls from './DailyTaskList.module.pcss'
 import { useAccount } from 'wagmi'
-import { useUserByAddress } from '@/entities/User'
+import { useAllQuests, useUserQuests } from '@/entities/Quest'
 import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
-import { useAllQuests } from '@/entities/Quest'
 export const DailyTaskList = (): JSX.Element => {
 	const { data: quests } = useAllQuests()
-	const account = useAccount()
-	const { data: user } = useUserByAddress(account.address)
-	const DailyQuests = quests
-		?.filter(q => q.type == 'Daily')
+	const { address } = useAccount()
+	const { data: userQuests } = useUserQuests({
+		address,
+		quest_ids: quests?.quests.map(quest => quest.id),
+		skip: 0,
+		take: 50,
+	})
+	//TODO: remove checking admin
+	const dailyQuests = quests?.quests
+		?.filter(q => q.interval == 'daily')
 		.toSorted((a, b) => {
-			return (b?.priority || 0) - (a?.priority || 0)
+			return b.sort_index - a.sort_index
 		})
-	if (!quests || !DailyQuests) {
+	if (!quests || !dailyQuests) {
 		return <></>
 	}
+
 	return (
 		<div className={cls.daily_tasks}>
 			<span className={cls.title}>Daily tasks</span>
 			<div className={cls.list}>
-				{DailyQuests.map(quest => {
+				{dailyQuests.map(quest => {
+					const userQuest = userQuests?.payload.userQuests.find(
+						userQuest => userQuest.questInstanceId === quest.questInstanceId,
+					)
 					return (
 						<QuestPreviewItem
 							quest={quest}
-							user={user}
-							key={quest._id}
-							size="s"
+							userQuest={userQuest}
+							key={quest.id}
 							className={cls.preview_item}
 						/>
 					)

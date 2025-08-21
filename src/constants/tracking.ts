@@ -9,11 +9,7 @@ export enum category {
 	ChartCard = 'cat_chart_card',
 	Wallet = 'cat_wallet',
 }
-export enum param {
-	// Transaction:
-	Status = 'param_status',
-	Error = 'param_error',
-}
+
 export enum action {
 	// API
 	APIError = 'action_api_error',

@@ -7,27 +7,30 @@ import { Address } from 'viem'
 import { Header } from '@/widgets/Header'
 import { AppRouter } from '@/app/AppRouter'
 import { useAccount } from 'wagmi'
-import { Footer } from './widgets/Footer/ui/Footer'
+import { CheckTermsOfUseDecorator } from './features/Auth'
 
 export const Navigator = () => {
 	const { address } = useAccount()
 
 	const { data: user } = useUserByAddress(address ? (address as Address) : undefined)
+
 	useEffect(() => {
 		if (address) {
 			posthog.identify(address)
 		}
 	}, [address])
 
-	const userToUse = user ?? null
+	const userToUse = user?.payload ?? null
 
 	return (
 		<AppScreen>
-			<Header user={userToUse} isWalletConnected={!!address} />
-			<div className={cls.wrap_page}>
-				<AppRouter user={userToUse} />
-				<Footer />
-			</div>
+			<CheckTermsOfUseDecorator>
+				<Header user={userToUse} isWalletConnected={!!address} />
+				<div className={cls.wrap_page}>
+					<AppRouter user={userToUse} />
+					<Footer />
+				</div>
+			</CheckTermsOfUseDecorator>
 		</AppScreen>
 	)
 }

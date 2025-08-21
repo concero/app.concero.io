@@ -1,6 +1,8 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 
-const client = axios.create({
+export const apiClient = axios.create({
+	baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+	timeout: 10000,
 	headers: {
 		'Content-Type': 'application/json',
 		Accept: 'application/json',
@@ -8,9 +10,37 @@ const client = axios.create({
 	withCredentials: true,
 })
 
+apiClient.interceptors.request.use(
+	config => {
+		const token = localStorage.getItem('accessToken')
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`
+		}
+		return config
+	},
+	error => Promise.reject(error),
+)
+
+// const http = {
+// 	get: <T>(url: string, config?: Parameters<typeof apiClient.get>[1]) =>
+// 		apiClient.get<T, AxiosResponse<T>>(url, config).then(res => res.data),
+
+// 	post: <T, B>(url: string, body: B, config?: Parameters<typeof apiClient.post>[2]) =>
+// 		apiClient.post<T, AxiosResponse<T>, B>(url, body, config as any).then(res => res.data),
+
+// 	put: <T, B>(url: string, body: B, config?: Parameters<typeof apiClient.put>[2]) =>
+// 		apiClient.put<T, AxiosResponse<T>, B>(url, body, config as any).then(res => res.data),
+
+// 	patch: <T, B>(url: string, body: B, config?: Parameters<typeof apiClient.patch>[2]) =>
+// 		apiClient.patch<T, AxiosResponse<T>, B>(url, body, config as any).then(res => res.data),
+
+// 	delete: <T>(url: string, config?: Parameters<typeof apiClient.delete>[1]) =>
+// 		apiClient.delete<T, AxiosResponse<T>>(url, config).then(res => res.data),
+// }
+
 const request = async <TResponse extends unknown>(options: AxiosRequestConfig) => {
 	try {
-		const response: AxiosResponse<TResponse, unknown> = await client(options)
+		const response: AxiosResponse<TResponse, unknown> = await apiClient(options)
 		return response
 	} catch (error) {
 		throw error.response
@@ -40,7 +70,7 @@ export const post = async <TResponse extends unknown>(url: string, data?: any, h
 export const del = async <TResponse extends unknown>(url: string, data?: any, headers?: any) =>
 	await request<TResponse>({
 		url,
-		method: 'POST',
+		method: 'DELETE',
 		data,
 		headers,
 	})
