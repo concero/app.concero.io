@@ -7,3 +7,6 @@ export interface ChartData {
 	time: number
 }
 export type Union<T extends string | number | boolean> = `${T}`
+export type HintedString<KnownValues extends string, AllowedTemplate extends string = string> =
+	| (AllowedTemplate & {})
+	| KnownValues

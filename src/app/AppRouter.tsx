@@ -1,8 +1,8 @@
 import { FullScreenLoader } from '@/components/layout/FullScreenLoader/FullScreenLoader'
-import { routes } from '@/constants/routes'
 import { TUserResponse } from '@/entities/User'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { RewardsPage } from '@/pages/RewardsPage'
+import { routes } from '@/shared/consts/routing/routes'
 import { Suspense, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
@@ -20,7 +20,15 @@ export const AppRouter = (props: TProps) => {
 	return (
 		<Routes>
 			<Route
-				path={routes.rewards}
+				path={routes.quests}
+				element={
+					<Suspense fallback={<FullScreenLoader />}>
+						<RewardsPage user={user} />
+					</Suspense>
+				}
+			/>
+			<Route
+				path={routes.testing}
 				element={
 					<Suspense fallback={<FullScreenLoader />}>
 						<RewardsPage user={user} />

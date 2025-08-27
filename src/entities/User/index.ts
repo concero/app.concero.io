@@ -21,6 +21,7 @@ export {
 	useDisconnectEmailMutation,
 	useGetUserEarnings,
 	useSocials,
+	useGetLeaderboard,
 } from './api/userApi'
 
 export type { TUserResponse, TUserAction } from './model/types/response'

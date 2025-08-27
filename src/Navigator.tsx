@@ -8,6 +8,7 @@ import { Header } from '@/widgets/Header'
 import { AppRouter } from '@/app/AppRouter'
 import { useAccount } from 'wagmi'
 import { CheckTermsOfUseDecorator } from './features/Auth'
+import { Footer } from './widgets/Footer/ui/Footer'
 
 export const Navigator = () => {
 	const { address } = useAccount()

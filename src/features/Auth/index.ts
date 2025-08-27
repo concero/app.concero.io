@@ -1,3 +1,5 @@
+export { LogoutButton } from './ui/LogoutButton/LogoutButton'
+export { ProfileButton } from './ui/ProfileButton/ProfileButton'
 export { CheckTermsOfUseDecorator } from './ui/TermsConditionModal/CheckTermsOfUse'
 export { WalletButton } from './ui/WalletButton/WalletButton'
 export { LoginRequired } from './ui/LoginRequired'

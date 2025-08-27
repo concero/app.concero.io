@@ -1,0 +1,37 @@
+.overlay {
+	width: 100vw;
+	height: 100vh;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	position: fixed;
+	bottom: 0;
+	z-index: 2;
+}
+.hidden {
+	z-index: -10 !important;
+}
+.menu_container {
+	position: absolute;
+	right: 25px;
+	top: 60px;
+	width: 320px;
+	background-color: var(--color-gray-25);
+	border-radius: var(--space-l);
+	padding: var(--space-m);
+	gap: var(--space-m);
+	box-shadow:
+		0 4px 24px 0 rgba(52, 64, 84, 0.15),
+		0 2px 12px 0 rgba(52, 64, 84, 0.1);
+
+	@media (max-width: 743px) {
+		width: 100%;
+		right: 0;
+		top: 56px;
+		height: 100vh;
+		border-radius: 0;
+		box-shadow: none;
+	}
+}

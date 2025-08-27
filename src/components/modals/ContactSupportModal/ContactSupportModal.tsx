@@ -8,7 +8,7 @@ interface ContactSupportModalProps {
 	isShow: boolean
 	setIsShow: (isShow: boolean) => void
 }
-
+/**@deprecated */
 export function ContactSupportModal({ isShow, setIsShow }: ContactSupportModalProps) {
 	const infoToCopy = { replay_id: posthog.get_distinct_id(), session_id: posthog.get_session_id() }
 	const { t } = useTranslation()

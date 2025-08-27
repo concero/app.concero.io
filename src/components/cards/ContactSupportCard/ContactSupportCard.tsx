@@ -10,7 +10,7 @@ interface ContactSupportProps {
 	infoToCopy: any
 	handleGoBackClick?: () => void
 }
-
+/**@deprecated */
 export function ContactSupportCard({ infoToCopy, handleGoBackClick }: ContactSupportProps) {
 	const [isCopied, setIsCopied] = useState(false)
 	const { t } = useTranslation()
