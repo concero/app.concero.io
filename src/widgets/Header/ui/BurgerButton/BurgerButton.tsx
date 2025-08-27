@@ -58,6 +58,7 @@ export const BurgerButton = (props: TProps) => {
 						zIndex: 1,
 					},
 				}}
+				className={clsx({ [cls.opened]: isMenuOpened })}
 			>
 				{isMenuOpened ? <CrossCloseIcon /> : <IconBurger />}
 			</IconButton>
