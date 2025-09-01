@@ -62,12 +62,7 @@ export const BurgerButton = (props: TProps) => {
 			>
 				{isMenuOpened ? <CrossCloseIcon /> : <IconBurger />}
 			</IconButton>
-			<animated.div
-				style={overlayFadeAnimation}
-				// className={clsx(cls.overlay, { [cls.hidden]: !isMenuOpened })}
-				className={clsx(cls.overlay)}
-				onClick={handleMenuClose}
-			>
+			<animated.div style={overlayFadeAnimation} className={clsx(cls.overlay)} onClick={handleMenuClose}>
 				<animated.div
 					onClick={(e: MouseEvent<HTMLDivElement>) => {
 						e.stopPropagation()

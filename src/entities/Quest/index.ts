@@ -18,6 +18,7 @@ export type {
 	TUserQuest,
 	TQuest,
 	TQuestTag,
+	TQuestGroup,
 	TTaskType,
 	TQuestSize,
 	TQuestTask,

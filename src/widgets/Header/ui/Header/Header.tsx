@@ -1,13 +1,13 @@
+import { useAccount } from 'wagmi'
 import LogoFilled from '@/shared/assets/icons/Logo_filled.svg?react'
+import { HStack } from '@/shared/ui/Stack'
+import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
+import { useUserByAddress } from '@/entities/User'
 import { LinkList } from '../LinkList/LinkList'
 import { UserInfo } from '../UserInfo/UserInfo'
-import { HStack } from '@/shared/ui/Stack'
-import cls from './Header.module.pcss'
-import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 import { BurgerButton } from '../BurgerButton/BurgerButton'
-import { useAccount } from 'wagmi'
-import { useUserByAddress } from '@/entities/User'
+import cls from './Header.module.pcss'
 
 export const Header = () => {
 	const { address } = useAccount()

@@ -3,4 +3,5 @@ export const routes = {
 	quests: '/quests',
 	profile: '/profile',
 	testing: '/testing',
+	pools: '/pools',
 }

@@ -1,4 +1,4 @@
-import { TUserResponse, useDiscordConnection, useSocials, useTwitterConnection } from '@/entities/User'
+import { useDiscordConnection, useSocials, useTwitterConnection, useUserByAddress } from '@/entities/User'
 import cls from './ProfilePage.module.pcss'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
@@ -18,22 +18,21 @@ import { Separator } from '@/components/layout/Separator/Separator'
 import { OpenHistoryUserActions } from '@/features/User'
 import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
-import { config } from '@/constants/config'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
 import { UserSocialType } from '@/entities/User/model/validations/validations'
-type TProps = {
-	user: TUserResponse | null
-}
-export const ProfilePage = (props: TProps) => {
-	const { user } = props
+import { configEnvs } from '@/shared/consts/config/config'
+
+export const ProfilePage = () => {
 	const { address } = useAccount()
+	const { data: userResponse } = useUserByAddress(address ? (address as Address) : undefined)
+	const user = userResponse?.payload
 	const { data: socialsResponse } = useSocials(address)
 	const socials = socialsResponse?.payload.socials
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
 
-	if (config.PROFILE_IS_NOT_AVAILABLE) {
+	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
 	if (!address || !user) {
@@ -67,7 +66,7 @@ export const ProfilePage = (props: TProps) => {
 				</div>
 				<div className={cls.user_info}>
 					<div className={cls.account_info}>
-						<Avatar address={user.address as Address} />
+						<Avatar address={user.address as Address} className={cls.avatar} />
 						<div className={cls.wrap_nick_address}>
 							<span className={cls.nickname}>{user.nickname ?? 'Nickname'}</span>
 							<span className={cls.address}>{addresToShow}</span>

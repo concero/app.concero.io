@@ -1,15 +1,22 @@
 div.page {
 	display: flex;
-	width: 702px;
+	width: 1544px;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: var(--space-xl);
 
+	@media screen and (width < 1920px) {
+		width: 1010px;
+	}
+	@media screen and (width < 1280px) {
+		width: 100%;
+	}
 	@media screen and (width < 1280px) {
 		width: 100%;
 	}
 	@media screen and (width < 744px) {
-		gap: var(--space-l);
+		gap: var(--space-xl);
+		width: 100%;
 	}
 }

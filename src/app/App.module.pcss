@@ -1,0 +1,14 @@
+.wrap_page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-xl);
+	width: 100%;
+	height: 100%;
+	padding: var(--space-xl) var(--space-xl) var(--space-xxxxl) var(--space-xl);
+	background: linear-gradient(180deg, var(--color-gray-25) 0%, var(--color-gray-50) 30%);
+
+	@media screen and (width < 744px) {
+		padding: var(--space-m) var(--space-m) var(--space-xxxxl) var(--space-m);
+	}
+}

@@ -3,7 +3,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: var(--space-l);
-	width: 100%;
+	width: 1216px;
 	min-height: 136px;
 
 	.logo_wrap {
@@ -16,5 +16,9 @@
 		display: flex;
 		flex-direction: row;
 		gap: var(--space-xs);
+	}
+
+	@media screen and (width < 1280px) {
+		width: 100%;
 	}
 }

@@ -10,75 +10,65 @@
 			font: var(--font-heading-xxlarge);
 			color: var(--color-gray-700);
 		}
-		.filters {
-			display: flex;
-			gap: var(--space-xxs);
-			flex-direction: row;
-			.selected {
-				pointer-events: none;
-				cursor: pointer;
-			}
-		}
 	}
 	.list {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-m);
-		.monthly,
+		display: grid;
+		gap: 16px;
+		grid-auto-flow: row;
+		grid-template-columns: repeat(4, 1fr);
+		width: 100%;
+
 		.size_xl {
-			display: flex;
-			flex-direction: column;
-			gap: var(--space-m);
+			grid-column: span 2;
+			grid-row: span 2;
+			width: 764px;
+			height: 716px;
 		}
-		.primary,
 		.size_l {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			gap: var(--space-m);
-			& > .preview_item {
-				width: calc(50% - var(--space-m) / 2);
-				@media screen and (width < 744px) {
-					width: 100%;
-				}
+			width: 374px;
+			height: 350px;
+		}
+
+		@media screen and (width < 1920px) {
+			grid-template-columns: repeat(3, 1fr);
+			.size_xl {
+				width: 668px;
+				height: 716px;
+			}
+			.size_l {
+				width: 326px;
+				height: 350px;
 			}
 		}
-		.secondary,
-		.size_m {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			gap: var(--space-m);
-			& > .preview_item {
-				width: calc(50% - var(--space-m) / 2);
-				@media screen and (width < 744px) {
-					width: 100%;
-				}
+		@media screen and (width < 1280px) {
+			grid-template-columns: repeat(2, 1fr);
+			.size_xl {
+				width: 100%;
+				height: 716px;
+			}
+			.size_l {
+				width: 100%;
+				height: 350px;
+			}
+		}
+		@media screen and (width < 744px) {
+			grid-template-columns: 1fr;
+			.size_xl {
+				width: 100%;
+				height: 512px;
+				grid-column: span 1;
+				grid-row: span 1;
+			}
+			.size_l {
+				width: 100%;
+				height: 350px;
 			}
 		}
 	}
-
-	.testing_start_block {
-		display: flex;
-		flex-direction: column;
-		/* gap: var(--space-m); */
-		justify-content: center;
-		align-items: center;
-		.description_block {
-			display: flex;
-			flex-direction: column;
-			gap: var(--space-xxs);
-			margin-top: -2px;
-			.title {
-				text-align: center;
-				font: var(--font-heading-large);
-				color: var(--color-gray-700);
-			}
-			.subtitle {
-				text-align: center;
-				font: var(--font-body-large);
-				color: var(--color-gray-600);
-			}
+	.size_m {
+		width: 326px;
+		@media screen and (width < 744px) {
+			width: 100%;
 		}
 	}
 }

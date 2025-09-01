@@ -12,6 +12,9 @@ import { getIsCanClaimQuest } from '@/entities/User'
 import { configEnvs } from '@/shared/consts/config/config'
 import { AppImage } from '@/shared/ui/AppImage'
 import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
+import CersIcon from '@/shared/assets/icons/CersIcon.svg?react'
+import { Text } from '@/shared/ui'
+import { HStack } from '@/shared/ui/Stack'
 type TClassname = string
 type TProps = {
 	quest?: TQuest
@@ -73,7 +76,12 @@ export const QuestPreviewCard = (props: TProps) => {
 				)}
 				<div className={cls.title_wrap}>
 					<span className={cls.title}>{quest.title}</span>
-					<span className={cls.rewards}>+{reward} CERs</span>
+					<HStack align="center" gap="space_0_25">
+						<Text variant="heading_large" className={cls.rewards}>
+							+{reward}
+						</Text>
+						<CersIcon className={cls.icon} />
+					</HStack>
 				</div>
 			</div>
 			{showImage && (

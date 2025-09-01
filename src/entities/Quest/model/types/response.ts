@@ -20,7 +20,9 @@ export type TGetAllQuestsResponse = {
 export type TQuestSize = z.infer<typeof questSizeSchema>
 export type TQuestStep = z.infer<typeof stepSchema>
 export type TQuestTask = z.infer<typeof taskSchema>
+/**@deprecated */
 export type TQuestTag = TQuest['group']
+export type TQuestGroup = TQuest['group']
 export type TQuestCategory = z.infer<typeof questCategorySchema>
 export type TQuestInterval = z.infer<typeof questIntervalSchema>
 export type TUserQuest = z.infer<typeof userQuestSchema>
