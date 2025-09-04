@@ -90,7 +90,6 @@ export const QuestCard = (props: TProps) => {
 			showTasks = false
 			controls = null
 	}
-
 	return (
 		<div className={cls.quest_card}>
 			<div className={cls.header}>
@@ -107,12 +106,21 @@ export const QuestCard = (props: TProps) => {
 			</div>
 
 			<div className={cls.image_wrap}>
-				<AppImage
-					src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
-					alt="Quest image"
-					fallbackSrc={QuestPlaceholder}
-					retryTimeout={5000}
-				/>
+				{quest.image ? (
+					<AppImage
+						src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
+						alt="Quest image"
+						fallbackSrc={QuestPlaceholder}
+						retryTimeout={5000}
+					/>
+				) : (
+					<AppImage
+						src={QuestPlaceholder}
+						alt="Quest image"
+						fallbackSrc={QuestPlaceholder}
+						retryTimeout={5000}
+					/>
+				)}
 			</div>
 
 			<div className={cls.description}>{quest.description}</div>

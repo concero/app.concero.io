@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useState } from 'react'
-import { useAccount } from 'wagmi'
-import {
-	categoryQuestNameMap,
-	QuestPreviewCard,
-	QuestStatus,
-	TQuest,
-	type TQuestCardStatus,
-	TUserQuest,
-} from '@/entities/Quest'
+import { categoryQuestNameMap, QuestPreviewCard, QuestStatus, TQuest, TUserQuest } from '@/entities/Quest'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
 import { Modal } from '@/components/modals/Modal/Modal'
@@ -16,7 +8,6 @@ import cls from './QuestPreviewItem.module.pcss'
 import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
-import { getIsCanClaimQuest } from '@/entities/User'
 
 type TProps = {
 	quest: TQuest
@@ -26,22 +17,9 @@ type TProps = {
 
 export const QuestPreviewItem = (props: TProps) => {
 	const { quest, userQuest, className } = props
-
-	const { address } = useAccount()
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
 	const rewardIsClaimed = !!userQuest?.finished_at
-	// let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
-	// if (userQuest?.started_at) {
-	// 	statusOfQuest = 'STARTED'
-	// }
-	// if (userQuest && getIsCanClaimQuest({ quest, userQuest })) {
-	// 	statusOfQuest = 'READY_TO_CLAIM'
-	// }
-
-	// if (rewardIsClaimed) {
-	// 	statusOfQuest = 'FINISHED'
-	// }
 
 	const handleClaimReward = async (quest: TQuest) => {
 		await trackEvent({

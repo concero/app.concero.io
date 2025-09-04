@@ -114,9 +114,13 @@ export const UserAction = ({ action }: UserActionProps) => {
 
 			<div className={cls.meta_wrap}>
 				<span className={clsx(cls.points)}>
-					+{' '}
 					{typeof action.points === 'string' || typeof action.points === 'number'
-						? toLocaleNumber(action.points, 2)
+						? action.points > 0
+							? '+'
+							: '-'
+						: null}{' '}
+					{typeof action.points === 'string' || typeof action.points === 'number'
+						? toLocaleNumber(Math.abs(action.points), 2)
 						: 'n/a'}{' '}
 					CERs
 				</span>
