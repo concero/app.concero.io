@@ -235,6 +235,14 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			fromChainIds: step.details.fromChainIds,
 			toChainIds: step.details.toChainIds,
 		})
+		const probablyCount = countResponse?.payload.count || 0
+
+		const stepValue = Number(step.details?.value)
+		const probablyStepValue = stepValue ? (isNaN(stepValue) ? 0 : stepValue) : 0
+
+		if (probablyCount >= probablyStepValue) {
+			handleVerify()
+		}
 
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!! step?.details?.value is not a number or string')

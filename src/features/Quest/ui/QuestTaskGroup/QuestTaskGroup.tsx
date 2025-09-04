@@ -13,12 +13,11 @@ type TProps = {
 }
 export const QuestTaskGroup = (props: TProps) => {
 	const { quest, userQuest, onlyOptional } = props
-	const { address } = useAccount()
-	const { data: user } = useUserByAddress(address)
+	// const { address } = useAccount()
 	if (!quest || !userQuest) {
 		return null
 	}
-	const completedSteps = getCountCompletedSteps({ userQuest })
+	// const completedSteps = getCountCompletedSteps({ userQuest })
 
 	let listTaskToShow = []
 
