@@ -10,6 +10,7 @@ import { configEnvs } from '@/shared/consts/config/config'
 import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 import { useUserCountTx } from '@/entities/User/api/userApi'
 import { roundDownToPrecision } from '@/shared/lib/utils/number'
+import dayjs from 'dayjs'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -145,17 +146,17 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const handleSwap = () => {
 			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
-		let startDate = quest.started_at
-		let endDate = quest.finished_at
-		if (isDailyQuest) {
-			const dates = getDayRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		} else if (isWeeklyQuest) {
-			const dates = getWeekRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		}
+		let startDate = userQuest.started_at
+		let endDate = dayjs().unix()
+		// if (isDailyQuest) {
+		// 	const dates = getDayRangeDates()
+		// 	startDate = dates.startDate
+		// 	endDate = dates.endDate
+		// } else if (isWeeklyQuest) {
+		// 	const dates = getWeekRangeDates()
+		// 	startDate = dates.startDate
+		// 	endDate = dates.endDate
+		// }
 
 		const { data: volumeResponse } = useUserVolume({
 			address: userResponse?.payload?.address,
