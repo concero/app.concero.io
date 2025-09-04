@@ -10,14 +10,6 @@ export const getIsCanClaimQuest = ({ userQuest, quest }: { userQuest?: TUserQues
 			return sum + task.steps.length
 		}, 0)
 
-	if (quest.title == 'Daily Swap') {
-		console.log('LOG:', {
-			completedSteps,
-			stepsCount,
-			quest,
-			userQuest,
-		})
-	}
 	if (completedSteps.length === stepsCount && !userQuest.finished_at) {
 		return true
 	}

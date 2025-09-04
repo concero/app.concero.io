@@ -4,7 +4,7 @@ export namespace TFindManyUserQuest {
 	export type RequestQuery = TPaginationParams
 	export type RequestBody = {
 		address: string
-		quest_ids: string[]
+		quest_instance_ids: string[]
 	}
 }
 export namespace TStartQuest {
