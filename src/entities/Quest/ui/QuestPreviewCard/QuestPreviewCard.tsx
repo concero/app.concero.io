@@ -92,7 +92,7 @@ export const QuestPreviewCard = (props: TProps) => {
 						<ArrowRightIcon />
 					</IconButton>
 				)}
-				{userQuest && isCanClaimQuest && (
+				{userQuest && isCanClaimQuest && !rewardIsClaimed && (
 					<ClaimReward userQuestId={userQuest.id} onClaim={() => onClaim?.(quest)} />
 				)}
 			</div>

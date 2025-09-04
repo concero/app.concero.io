@@ -31,17 +31,17 @@ export const QuestPreviewItem = (props: TProps) => {
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
 	const rewardIsClaimed = !!userQuest?.finished_at
-	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
-	if (userQuest?.started_at) {
-		statusOfQuest = 'STARTED'
-	}
-	if (userQuest && getIsCanClaimQuest({ quest, userQuest })) {
-		statusOfQuest = 'READY_TO_CLAIM'
-	}
+	// let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
+	// if (userQuest?.started_at) {
+	// 	statusOfQuest = 'STARTED'
+	// }
+	// if (userQuest && getIsCanClaimQuest({ quest, userQuest })) {
+	// 	statusOfQuest = 'READY_TO_CLAIM'
+	// }
 
-	if (rewardIsClaimed) {
-		statusOfQuest = 'FINISHED'
-	}
+	// if (rewardIsClaimed) {
+	// 	statusOfQuest = 'FINISHED'
+	// }
 
 	const handleClaimReward = async (quest: TQuest) => {
 		await trackEvent({
