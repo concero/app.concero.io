@@ -14,8 +14,8 @@ export const QuestPreviewList = (): JSX.Element => {
 	const { data: questsWrap, isFetching } = useAllQuests()
 	const { address } = useAccount()
 	const { theme } = useTheme()
-	const quest_ids = questsWrap?.quests.map(quest => quest.questInstanceId)
-	const { data: userQuestsResponse } = useUserQuests({ address, quest_ids, skip: 0, take: 50 })
+	const quest_instance_ids = questsWrap?.quests.map(quest => quest.quest_instance_id)
+	const { data: userQuestsResponse } = useUserQuests({ address, quest_instance_ids, skip: 0, take: 50 })
 	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
 
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
@@ -96,7 +96,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								key={quest.id}
-								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+								userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 								className={cls.preview_item}
 							/>
 						))}
@@ -108,7 +108,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								key={quest.id}
-								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+								userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 								className={cls.preview_item}
 							/>
 						))}
@@ -120,7 +120,7 @@ export const QuestPreviewList = (): JSX.Element => {
 							<QuestPreviewItem
 								quest={quest}
 								key={quest.id}
-								userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+								userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 								className={cls.preview_item}
 							/>
 						))}
