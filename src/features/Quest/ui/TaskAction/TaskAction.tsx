@@ -1,7 +1,7 @@
 import { TQuest, TQuestTask, TTaskType, TUserQuest } from '@/entities/Quest'
 import { Button } from '@concero/ui-kit'
 import cls from './TaskAction.module.pcss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
@@ -133,8 +133,6 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const { data: userResponse } = useUserByAddress(address)
 		const step = task.steps[0]
 		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
-		const isDailyQuest = quest.interval === 'daily'
-		const isWeeklyQuest = quest.interval === 'weekly'
 		const isSingleTask = quest.tasks.length == 1
 		const { handleVerifyQuest, isPending } = useVerifyQuest()
 		const handleVerify = () => {
@@ -148,15 +146,6 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		}
 		let startDate = userQuest.started_at
 		let endDate = dayjs().unix()
-		// if (isDailyQuest) {
-		// 	const dates = getDayRangeDates()
-		// 	startDate = dates.startDate
-		// 	endDate = dates.endDate
-		// } else if (isWeeklyQuest) {
-		// 	const dates = getWeekRangeDates()
-		// 	startDate = dates.startDate
-		// 	endDate = dates.endDate
-		// }
 
 		const { data: volumeResponse } = useUserVolume({
 			address: userResponse?.payload?.address,
@@ -167,6 +156,16 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			fromChainIds: step.details.fromChainIds,
 			toChainIds: step.details.toChainIds,
 		})
+		useEffect(() => {
+			const probablyCount = volumeResponse?.payload.volumeUSD || 0
+
+			const stepValue = Number(step.details?.value)
+			const probablyStepValue = stepValue ? (isNaN(stepValue) ? 0 : stepValue) : 0
+
+			if (probablyCount >= probablyStepValue) {
+				handleVerify()
+			}
+		}, [volumeResponse?.payload.volumeUSD])
 
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
@@ -201,8 +200,6 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const { data: userResponse } = useUserByAddress(address)
 		const step = task.steps[0]
 		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
-		const isDailyQuest = quest.interval === 'daily'
-		const isWeeklyQuest = quest.interval === 'weekly'
 		const isSingleTask = quest.tasks.length == 1
 		const { handleVerifyQuest, isPending } = useVerifyQuest()
 		const handleVerify = () => {
@@ -214,17 +211,8 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const handleSwap = () => {
 			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
-		let startDate = quest.started_at
-		let endDate = quest.finished_at
-		if (isDailyQuest) {
-			const dates = getDayRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		} else if (isWeeklyQuest) {
-			const dates = getWeekRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		}
+		let startDate = userQuest.started_at
+		let endDate = dayjs().unix()
 
 		const { data: countResponse } = useUserCountTx({
 			address: userResponse?.payload?.address,
@@ -235,14 +223,17 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			fromChainIds: step.details.fromChainIds,
 			toChainIds: step.details.toChainIds,
 		})
-		const probablyCount = countResponse?.payload.count || 0
 
-		const stepValue = Number(step.details?.value)
-		const probablyStepValue = stepValue ? (isNaN(stepValue) ? 0 : stepValue) : 0
+		useEffect(() => {
+			const probablyCount = countResponse?.payload.count || 0
 
-		if (probablyCount >= probablyStepValue) {
-			handleVerify()
-		}
+			const stepValue = Number(step.details?.value)
+			const probablyStepValue = stepValue ? (isNaN(stepValue) ? 0 : stepValue) : 0
+
+			if (probablyCount >= probablyStepValue) {
+				handleVerify()
+			}
+		}, [countResponse?.payload.count])
 
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!! step?.details?.value is not a number or string')
