@@ -66,7 +66,7 @@ export const userServiceApi = {
 	},
 	acceptTerms: async (arg: UserApi.AcceptTerms.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/acceptTerms`
-		return createApiHandler(() => patch<TApiResponse<UserApi.AcceptTerms.RequestBody>>(url, arg))
+		return createApiHandler(() => patch<TApiResponse<UserApi.AcceptTerms.ResponseBody>>(url, arg))
 	},
 
 	updateNickname: async (args: TUpdateNicknameArgs) => {
@@ -120,7 +120,7 @@ export const userActionsService = {
 export const socialsService = {
 	findUserSocials: async ({ address }: UserApi.Socials.FindMany.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials`
-		return createApiHandler(() => get<TApiResponse<UserApi.Socials.FindMany.ResponsePayload>>(url))
+		return createApiHandler(() => get<TApiResponse<UserApi.Socials.FindMany.ResponsePayload | null>>(url))
 	},
 
 	connectDiscord: async ({

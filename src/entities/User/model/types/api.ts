@@ -5,6 +5,9 @@ export namespace UserApi {
 		export type RequestBody = {
 			address: string
 		}
+		export type ResponseBody = {
+			terms_of_use_signed_version: string | null
+		}
 	}
 
 	export namespace GetUserVolume {

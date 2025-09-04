@@ -1,7 +1,7 @@
-import { config } from '@/constants/config'
 import { TQuest } from '../../model/types/response'
 import cls from './QuestRewardCard.module.pcss'
 import { Alert, Button } from '@concero/ui-kit'
+import { configEnvs } from '@/shared/consts/config/config'
 type TProps = {
 	quest: TQuest
 	onDone?: () => void
@@ -24,11 +24,11 @@ export const QuestRewardCard = (props: TProps) => {
 						width={'100%'}
 						src={
 							quest.image
-								? `${config.assetsURI}/icons/quests/${quest.image}`
-								: `${config.assetsURI}/icons/quests/QuestRewardPlaceholder.webp`
+								? `${configEnvs.assetsURI}/icons/quests/${quest.image}`
+								: `${configEnvs.assetsURI}/icons/quests/QuestRewardPlaceholder.webp`
 						}
 						onError={(e: any) => {
-							e.target.src = `${config.assetsURI}/icons/quests/QuestRewardPlaceholder.webp`
+							e.target.src = `${configEnvs.assetsURI}/icons/quests/QuestRewardPlaceholder.webp`
 						}}
 						loading="lazy"
 						alt="Quest image"

@@ -11,13 +11,14 @@ export const verifyUser = async ({
 }: {
 	address: Address
 	signMessageAsync: SignMessageMutateAsync<unknown>
-	acceptTerms: (arg: UserApi.AcceptTerms.RequestBody) => Promise<any>
+	acceptTerms: (arg: UserApi.AcceptTerms.RequestBody) => Promise<UserApi.AcceptTerms.ResponseBody>
 	retry?: boolean
 }): Promise<boolean> => {
 	retry ??= true
 	try {
-		await acceptTerms({ address })
-		return true
+		const result = await acceptTerms({ address })
+		if (result.terms_of_use_signed_version) return true
+		throw new Error()
 	} catch (errObj: unknown) {
 		if (retry) {
 			try {

@@ -18,9 +18,9 @@ import { Separator } from '@/components/layout/Separator/Separator'
 import { OpenHistoryUserActions } from '@/features/User'
 import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
-import { config } from '@/constants/config'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
 import { UserSocialType } from '@/entities/User/model/validations/validations'
+import { configEnvs } from '@/shared/consts/config/config'
 type TProps = {
 	user: TUserResponse | null
 }
@@ -28,12 +28,12 @@ export const ProfilePage = (props: TProps) => {
 	const { user } = props
 	const { address } = useAccount()
 	const { data: socialsResponse } = useSocials(address)
-	const socials = socialsResponse?.payload.socials
+	const socials = socialsResponse?.payload?.socials
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
 
-	if (config.PROFILE_IS_NOT_AVAILABLE) {
+	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
 	if (!address || !user) {

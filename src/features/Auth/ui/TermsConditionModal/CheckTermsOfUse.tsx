@@ -23,8 +23,10 @@ const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 			setShowModal(true)
 		}
 		if (
-			user.error &&
-			(user.error.code === Http.Code.Enum.TOKEN_NOT_PROVIDED || user.error.code === Http.Code.Enum.TOKEN_INVALID)
+			!user ||
+			(user.error &&
+				(user.error.code === Http.Code.Enum.TOKEN_NOT_PROVIDED ||
+					user.error.code === Http.Code.Enum.TOKEN_INVALID))
 		) {
 			setShowModal(true)
 		}
@@ -36,7 +38,7 @@ const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 			return
 		}
 		setIsLoadingTerms(true)
-
+		//@ts-expect-error TODO: Fix this type
 		verifyUser({ address, signMessageAsync, acceptTerms })
 			.catch((err: any) => {
 				setIsError(true)
