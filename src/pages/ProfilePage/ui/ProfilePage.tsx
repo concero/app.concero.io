@@ -21,6 +21,7 @@ import { Banners } from '@/entities/Social'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
 import { UserSocialType } from '@/entities/User/model/validations/validations'
 import { configEnvs } from '@/shared/consts/config/config'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 type TProps = {
 	user: TUserResponse | null
 }
@@ -33,7 +34,7 @@ export const ProfilePage = (props: TProps) => {
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
 
-	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
+	if (configEnvs.PROFILE_IS_NOT_AVAILABLE && !isAdminAddress(address)) {
 		return <TechWorksScreen />
 	}
 	if (!address || !user) {

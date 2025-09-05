@@ -99,7 +99,7 @@ export const userServiceApi = {
 	},
 
 	fetchUserEarnings: async (address: Address): Promise<UserEarnings | null> => {
-		const url = `${process.env.CONCERO_API_URL}/userPoolEarnings?address=${address}`
+		const url = `${process.env.CONCERO_API_OLD_URL}/userPoolEarnings?address=${address}`
 		try {
 			const response = await get(url)
 		} catch (error) {

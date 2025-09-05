@@ -1,6 +1,7 @@
 declare namespace NodeJS {
 	export interface ProcessEnv {
 		CONCERO_API_URL?: string
+		CONCERO_API_OLD_URL?: string
 		CONCERO_ASSETS_URI?: string
 		CONCERO_DOMAIN_URL?: string
 		LANCAN_DOMAIN_URL?: string
