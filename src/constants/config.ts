@@ -1,24 +1,16 @@
 import { base, baseSepolia } from 'wagmi/chains'
+import { childPoolArbitrumSepolia, childPoolAvalancheFuji, parentPoolBaseSepolia } from './poolTestnetAddresses'
 import {
-	automationsBaseSepolia,
-	childPoolArbitrumSepolia,
-	childPoolAvalancheFuji,
-	lpTokenBaseSepolia,
-	parentPoolBaseSepolia,
-} from './poolTestnetAddresses'
-import {
-	automationsBase,
 	childPoolArbitrum,
 	childPoolAvalanche,
 	childPoolOptimism,
 	childPoolPolygon,
-	lpTokenBase,
 	parentPoolBase,
 } from './poolMainnetAddresses'
 
 export const IS_TESTNET = false
 export const PARENT_POOL_CHAIN_ID = IS_TESTNET ? baseSepolia.id : base.id
-
+/**@deprecated */
 export const config = {
 	baseURL: process.env.CONCERO_API_URL!,
 	assetsURI: process.env.CONCERO_ASSETS_URI,
@@ -43,8 +35,6 @@ export const config = {
 	REWARD_IS_NOT_AVAILABLE: false,
 	PROFILE_IS_NOT_AVAILABLE: false,
 
-	AUTOMATION_ADDRESS: IS_TESTNET ? automationsBaseSepolia : automationsBase,
-	LPTOKEN: IS_TESTNET ? lpTokenBaseSepolia : lpTokenBase,
 	PARENT_POOL_CONTRACT: IS_TESTNET ? parentPoolBaseSepolia : parentPoolBase,
 	CHILD_POOL_ARBITRUM: IS_TESTNET ? childPoolArbitrumSepolia : childPoolArbitrum,
 	CHILD_POOL_POLYGON: childPoolPolygon,
@@ -52,8 +42,6 @@ export const config = {
 	CHILD_POOL_OPTIMISM: childPoolOptimism,
 
 	/* Next lines copied from webapp */
-	CHILD_POOLS_COUNT: 5,
 	IS_TESTNET: false,
 	APP_IS_NOT_AVAILABLE: false,
-	POOLS_ARE_NOT_AVAILABLE: false,
 }

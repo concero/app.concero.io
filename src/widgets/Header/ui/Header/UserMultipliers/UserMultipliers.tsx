@@ -2,8 +2,8 @@ import classNames from './UserMultipliers.module.pcss'
 import { TUserResponse } from '@/entities/User'
 
 export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
-	const { liquidityHold, dailySwap, default: defaultMultiplier } = user.multiplier
-	const totalMultiplier = defaultMultiplier + (dailySwap || 0) + (liquidityHold || 0)
+	const { base, daily_swaps, liquidity_pool } = user.multiplier
+	const totalMultiplier = base ?? 0 + (daily_swaps || 0) + (liquidity_pool || 0)
 	return (
 		<div className={classNames.userMultipliers}>
 			<div className={classNames.multiplierHeading}>
@@ -13,15 +13,15 @@ export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
 			<div className={classNames.multiplierComponents}>
 				<div className={classNames.item}>
 					<span className="body1">Base:</span>
-					<p>{defaultMultiplier || 0}x</p>
+					<p>{base || 0}x</p>
 				</div>
 				<div className={classNames.item}>
 					<span>Liquidity Holding Multiplier:</span>
-					<p>{liquidityHold || 0}x</p>
+					<p>{liquidity_pool || 0}x</p>
 				</div>
 				<div className={classNames.item}>
 					<span>Daily Swapping Multiplier:</span>
-					<p>{dailySwap || 0}x</p>
+					<p>{daily_swaps || 0}x</p>
 				</div>
 			</div>
 		</div>

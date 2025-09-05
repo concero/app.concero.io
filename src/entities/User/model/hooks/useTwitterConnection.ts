@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { socialsService, TUserResponse, useDisconnectSocialNetworkMutation } from '@/entities/User'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useConnectTwitterMutation } from '../../api/userApi'
+import { useConnectXMutation, useSocials } from '../../api/userApi'
+import { UserSocialType } from '../validations/validations'
+import { Http } from '@/shared/types/api'
 
 interface UseTwitterConnectionProps {
 	user?: TUserResponse
@@ -10,26 +12,23 @@ interface UseTwitterConnectionProps {
 export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	const [isConnected, setIsConnected] = useState<boolean>(false)
 	const [searchParams] = useSearchParams()
-	const { mutateAsync } = useConnectTwitterMutation()
+	const { mutateAsync } = useConnectXMutation()
 	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation(user?.address)
+	const { data: socialsResponse } = useSocials(user?.address)
 	const navigate = useNavigate()
 	useEffect(() => {
-		if (user?.connectedSocials?.twitter?.name) {
-			setIsConnected(true)
-		} else if (
-			!user ||
-			!user.connectedSocials ||
-			!user.connectedSocials.twitter ||
-			!user.connectedSocials.twitter.name
+		if (
+			socialsResponse?.payload &&
+			socialsResponse.payload.socials.find(social => social.type === UserSocialType.X)
 		) {
-			setIsConnected(false)
+			setIsConnected(true)
 		}
-	}, [user])
+	}, [user, socialsResponse])
 
 	const toggleTwitterConnection = async () => {
 		try {
 			if (isConnected && user) {
-				const isDisconnected = await disconnectSocial({ network: 'twitter' })
+				const isDisconnected = await disconnectSocial({ network: UserSocialType.X })
 				if (isDisconnected) {
 					setIsConnected(false)
 				}
@@ -49,12 +48,12 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 		if (twitterCode && twitterVerifyCode && user) {
 			try {
 				const result = await mutateAsync({
-					oauthToken: twitterCode,
-					twitterVerifyCode: twitterVerifyCode,
-					userId: user._id,
+					token: twitterCode,
+					verifier: twitterVerifyCode,
+					address: user.address,
 				})
-				setIsConnected(!!result.success)
-				if (result.username) {
+				setIsConnected(result.code === Http.Code.Enum.OK)
+				if (result.payload?.username) {
 					navigate('/profile')
 				}
 			} catch (error) {
@@ -64,7 +63,10 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	}
 
 	useEffect(() => {
-		if (!user?.connectedSocials?.twitter?.screen_name) {
+		if (
+			!socialsResponse?.payload ||
+			socialsResponse.payload.socials.find(social => social.type === UserSocialType.X)
+		) {
 			listenTwitterConnection().then()
 		} else if (searchParams.get('oauth_token') || searchParams.get('oauth_verifier')) {
 			navigate('/profile')

@@ -1,35 +1,26 @@
 import { TUserResponse, userActionsService } from '@/entities/User'
 import { Button, Spinner } from '@concero/ui-kit'
-import { useInfiniteQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import cls from './HistoryUserActions.module.pcss'
 import { useTranslation } from 'react-i18next'
 import React from 'react'
 import { UserAction } from './UserAction'
 import { Separator } from '@/components/layout/Separator/Separator'
+import { useUserAction } from '@/entities/User/api/userApi'
 
 type TProps = {
 	className?: string
 	user: TUserResponse
 }
 
-const LIMIT = 10
+const TAKE = 10
 
 export const HistoryUserActions = ({ user, className }: TProps) => {
 	const { t } = useTranslation()
 
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
-		refetchOnMount: false,
-		retry: 2,
-		queryKey: ['userActions', user.address],
-		queryFn: ({ pageParam = 1 }) =>
-			userActionsService.fetchUserActions(user.address, { limit: LIMIT, page: pageParam }),
-		initialPageParam: 1,
-		getNextPageParam: lastPage => {
-			return lastPage.metaData.pageNumber >= lastPage.metaData.totalPage
-				? undefined
-				: lastPage.metaData.pageNumber + 1
-		},
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useUserAction({
+		address: user.address,
+		take: TAKE,
 	})
 
 	if (status === 'pending') {
@@ -59,9 +50,10 @@ export const HistoryUserActions = ({ user, className }: TProps) => {
 					<>
 						{data.pages.map((page, pageIndex) => (
 							<React.Fragment key={pageIndex}>
-								{page.data.map(action => (
-									<UserAction key={JSON.stringify(action)} action={action} />
-								))}
+								{page.payload &&
+									page.payload.actions.map(action => (
+										<UserAction key={JSON.stringify(action)} action={action} />
+									))}
 							</React.Fragment>
 						))}
 						{hasNextPage && (

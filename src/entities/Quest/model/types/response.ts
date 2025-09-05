@@ -1,14 +1,33 @@
 import { z } from 'zod'
-import { TQuestType } from './schema'
-import { IQuestStepZod, IQuestZod } from '../validations/validations'
+
+import { TPaginationResponse } from '@/shared/types/api'
+import { questCategorySchema, questIntervalSchema, questSchema, questSizeSchema } from '../validations/validations'
+import { stepSchema } from '../validations/step'
+import { userQuestSchema } from '../validations/userQuest'
+import { taskSchema, taskTypeSchema } from '../validations/task'
+import { userStepSchema } from '../validations/userStep'
 
 export type TVerifyResponse = { success: boolean; status: boolean }
 export type TClaimResponse = {
 	success: boolean
 	points: number
 }
-export type TQuest = z.infer<typeof IQuestZod>
-export type TGetQuestsResponse = Partial<Record<TQuestType, TQuest[]>>
-export type TGetAllQuestsResponse = TQuest[]
-export type TQuestStep = z.infer<typeof IQuestStepZod>
-export type TQuestTag = TQuest['tag']
+export type TQuest = z.infer<typeof questSchema>
+export type TGetAllQuestsResponse = {
+	quests: TQuest[]
+	pagination: TPaginationResponse
+}
+export type TQuestSize = z.infer<typeof questSizeSchema>
+export type TQuestStep = z.infer<typeof stepSchema>
+export type TQuestTask = z.infer<typeof taskSchema>
+export type TQuestTag = TQuest['group']
+export type TQuestCategory = z.infer<typeof questCategorySchema>
+export type TQuestInterval = z.infer<typeof questIntervalSchema>
+export type TUserQuest = z.infer<typeof userQuestSchema>
+export type TUserStep = z.infer<typeof userStepSchema>
+export type TUserQuestResponse = {
+	userQuests: TUserQuest[]
+	pagination: TPaginationResponse
+}
+
+export type TTaskType = z.infer<typeof taskTypeSchema>

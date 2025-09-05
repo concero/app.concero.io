@@ -69,7 +69,7 @@ body::-webkit-scrollbar {
 
 .light {
 	--color-base-background: var(--color-gray-25);
-	--color-base-black:  var(--color-gray-25);
+	--color-base-black: var(--color-gray-25);
 	--color-base-white: var(--color-gray-25);
 	--color-base-transparent: rgba(255, 255, 255, 0);
 

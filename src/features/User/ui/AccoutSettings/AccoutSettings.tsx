@@ -8,6 +8,8 @@ import {
 	useDiscordConnection,
 	useTwitterConnection,
 	useDisconnectEmailMutation,
+	useSocials,
+	UserSocialType,
 } from '@/entities/User'
 import { NicknameConnect } from '../NicknameConnect/NicknameConnect'
 import DiscordConnectedIcon from '@/shared/assets/icons/social_discord.svg?react'
@@ -34,6 +36,10 @@ export const AccoutSettings = ({ user }: TProps) => {
 	const handleOpenWarningDisconnect = () => {
 		setShowDisconnect(true)
 	}
+	const { data: socialsResponse } = useSocials(user.address)
+	const socialX = socialsResponse?.payload.socials.find(social => social.type === UserSocialType.X)
+
+	const socialDiscord = socialsResponse?.payload.socials.find(social => social.type === UserSocialType.Discord)
 	const isAdmin = isAdminAddress(user.address)
 
 	const handleDisconnect = () => {
@@ -64,7 +70,7 @@ export const AccoutSettings = ({ user }: TProps) => {
 					<div className={cls.social_wrap}>
 						<div className={cls.social_header}>
 							{isDiscordConnected ? <DiscordConnectedIcon /> : <DiscordDisconnectedIcon />}
-							{isDiscordConnected ? user.connectedSocials?.discord?.username : 'Discord'}
+							{isDiscordConnected ? socialDiscord?.name : 'Discord'}
 						</div>
 						{isDiscordConnected ? (
 							<Button
@@ -88,7 +94,7 @@ export const AccoutSettings = ({ user }: TProps) => {
 					<div className={cls.social_wrap}>
 						<div className={cls.social_header}>
 							{isTwitterConnected ? <TwitterConnectedIcon /> : <TwitterDisconnectedIcon />}
-							{isTwitterConnected ? user.connectedSocials?.twitter?.name : 'X'}
+							{isTwitterConnected ? socialX?.name : 'X'}
 						</div>
 						{isTwitterConnected ? (
 							<Button

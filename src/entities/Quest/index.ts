@@ -3,11 +3,23 @@ export { QuestStatus } from './ui/QuestPreviewCard/QuestStatus'
 export { QuestPreviewCard } from './ui/QuestPreviewCard/QuestPreviewCard'
 export { QuestRewardCard } from './ui/QuestRewardCard/QuestRewardCard'
 
-/**Others */
+/** Api */
+export { useUserQuests } from './api/questApi'
 export { invalidationTagQuest } from './api/questApi'
-export { useClaimQuestMutation, useVerifyQuestMutation, useTestingQuests, useAllQuests } from './api/questApi'
-export { getIsClaimedQuest } from './model/lib/getIsClaimedQuest'
-export type { TQuestPreviewSize } from './ui/QuestPreviewCard/QuestPreviewCard'
+export { useClaimQuestMutation, useVerifyQuestMutation, useAllQuests, useVerifyQuestStepMutation } from './api/questApi'
+
+/** Others */
 export { categoryQuestNameMap } from './config/nameMaps'
-export type { TQuestCardStatus, TQuestActions, TQuestSize, TQuestType } from './model/types/schema'
-export type { TQuestStep, TGetQuestsResponse, TQuest, TQuestTag } from './model/types/response'
+export { getCountRequiredSteps } from './model/lib/getCountRequiredSteps'
+export { getCountCompletedSteps } from './model/lib/getCountCompletedSteps'
+export type { TQuestCardStatus } from './model/types/schema'
+export type {
+	TQuestStep,
+	TUserQuest,
+	TQuest,
+	TQuestTag,
+	TTaskType,
+	TQuestSize,
+	TQuestTask,
+	TUserStep,
+} from './model/types/response'

@@ -5,9 +5,10 @@ import { Tag } from '@concero/ui-kit'
 import BlockiesSvg from 'blockies-react-svg'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
+import { TGetLeaderBoardReponse } from '@/entities/User/model/types/response'
 
 interface MemberProps {
-	user: TUserResponse
+	user: TGetLeaderBoardReponse['users'][number]
 	place: number
 }
 const Member = ({ user, place }: MemberProps) => {
@@ -47,7 +48,7 @@ interface LeaderboardCardProps {
 }
 
 interface LeaderboardTableProps {
-	users: (TUserResponse & { position: number })[]
+	users: TGetLeaderBoardReponse['users']
 }
 const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 	return (
@@ -64,16 +65,16 @@ const LeaderboardTable = ({ users }: LeaderboardTableProps) => {
 				</div>
 			</div>
 			{users.map(user => (
-				<Member key={user.address} place={user.position} user={user} />
+				<Member key={user.address} place={user.rank} user={user} />
 			))}
 		</div>
 	)
 }
 export const CersLeaderboard = ({ user }: LeaderboardCardProps) => {
-	const [users, setUsers] = useState<(TUserResponse & { position: number })[]>([])
+	const [users, setUsers] = useState<TGetLeaderBoardReponse['users']>([])
 
 	const handleFetchUsers = async (userAddress: string | undefined) => {
-		const { users } = await userServiceApi.getLeaderboard(userAddress)
+		const { users } = await userServiceApi.getLeaderboard({ userAddress })
 		setUsers(users)
 	}
 
