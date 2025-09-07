@@ -27,7 +27,7 @@ export const DailyTaskList = (): JSX.Element => {
 			<span className={cls.title}>Daily tasks</span>
 			<div className={cls.list}>
 				{dailyQuests.map(quest => {
-					const userQuest = userQuests?.payload.userQuests.find(
+					const userQuest = userQuests?.payload?.userQuests.find(
 						userQuest => userQuest.questInstanceId === quest.quest_instance_id,
 					)
 					return (
