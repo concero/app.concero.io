@@ -3,7 +3,7 @@ import { TUserResponse } from '@/entities/User'
 
 export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
 	const { base, daily_swaps, liquidity_pool } = user.multiplier
-	const totalMultiplier = base ?? 0 + (daily_swaps || 0) + (liquidity_pool || 0)
+	const totalMultiplier = (base ?? 0) + (daily_swaps || 0) + (liquidity_pool || 0)
 	return (
 		<div className={classNames.userMultipliers}>
 			<div className={classNames.multiplierHeading}>
