@@ -61,10 +61,9 @@ export const Header: FC<HeaderProps> = ({ children, user, isWalletConnected }) =
 						>
 							<Tag size="m">
 								{String(
-									user.multiplier?.base ??
-										1 +
-											(user.multiplier?.daily_swaps ?? 0) +
-											(user.multiplier?.liquidity_pool ?? 0),
+									(user.multiplier?.base ?? 1) +
+										(user.multiplier?.daily_swaps ?? 0) +
+										(user.multiplier?.liquidity_pool ?? 0),
 								)}
 								x
 							</Tag>
