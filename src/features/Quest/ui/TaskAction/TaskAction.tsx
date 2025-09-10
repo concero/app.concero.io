@@ -144,7 +144,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const handleSwap = () => {
 			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
-		let startDate = userQuest.started_at
+		let startDate = quest.started_at
 		let endDate = dayjs().unix()
 
 		const { data: volumeResponse } = useUserVolume({
@@ -211,7 +211,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const handleSwap = () => {
 			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
-		let startDate = userQuest.started_at
+		let startDate = quest.started_at
 		let endDate = dayjs().unix()
 
 		const { data: countResponse } = useUserCountTx({
