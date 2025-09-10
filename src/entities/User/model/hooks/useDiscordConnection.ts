@@ -45,9 +45,9 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 		const code = searchParams.get('code')
 
 		if (code && user) {
-			const fetchedNickname = await mutateAsync({ token: code, address: user.address })
-			setIsConnected(!!fetchedNickname)
-			if (fetchedNickname) {
+			const { payload } = await mutateAsync({ token: code, address: user.address })
+			setIsConnected(!!payload?.username)
+			if (payload?.username) {
 				navigate('/profile')
 			}
 		}
