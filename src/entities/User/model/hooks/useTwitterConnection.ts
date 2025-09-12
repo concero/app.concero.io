@@ -23,8 +23,10 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 			socialsResponse.payload.socials.find(social => social.type === UserSocialType.X)
 		) {
 			setIsConnected(true)
+		} else {
+			setIsConnected(false)
 		}
-	}, [user, socialsResponse])
+	}, [socialsResponse])
 
 	const toggleTwitterConnection = async () => {
 		try {

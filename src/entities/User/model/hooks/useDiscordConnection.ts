@@ -23,8 +23,10 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 			socialsResponse.payload.socials.find(social => social.type === UserSocialType.Discord)
 		) {
 			setIsConnected(true)
+		} else {
+			setIsConnected(false)
 		}
-	}, [user, socialsResponse])
+	}, [socialsResponse])
 
 	const toggleDiscordConnection = async () => {
 		try {
