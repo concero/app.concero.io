@@ -198,12 +198,12 @@ export const useUserByAddress = (address?: Address) => {
 		enabled: !!address,
 	})
 }
-
+const userActionsTag = 'user_actions'
 export const useUserAction = ({ address, take }: { address: string; take: number }) => {
 	return useInfiniteQuery({
 		refetchOnMount: false,
 		retry: 2,
-		queryKey: ['userActions', address],
+		queryKey: [userActionsTag, address],
 		queryFn: ({ pageParam = 0 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, _, lastPageParam) => {
@@ -302,6 +302,7 @@ export const useConnectDiscordMutation = () => {
 			}),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }
@@ -323,6 +324,7 @@ export const useConnectXMutation = () => {
 			}),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }
@@ -332,6 +334,7 @@ export const useDisconnectSocialNetworkMutation = (address?: string) => {
 			socialsService.disconnectNetwork({ socialType: arg.network, address }),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }
@@ -340,6 +343,7 @@ export const useDisconnectEmailMutation = () => {
 		mutationFn: (arg: { address: Address }) => socialsService.disconnectEmail(arg.address),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }
