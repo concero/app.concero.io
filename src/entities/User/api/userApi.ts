@@ -143,10 +143,6 @@ export const socialsService = {
 		const url = `${process.env.CONCERO_API_URL}/users/${params.address}/socials/x`
 		return createApiHandler(() => post<TApiResponse<UserApi.Socials.ConnectX.ResponsePayload>>(url, body))
 	},
-	getRequestToken: async () => {
-		const request = await get<{ data: string; success: boolean }>(`${configEnvs.baseURL}/twitterToken`)
-		return request.data
-	},
 	getAuthXLink: async ({ address }: { address: string }) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/x/link`
 		return createApiHandler(() => get<TApiResponse<UserApi.Socials.GetAuthLinkX.ResponsePayload, any>>(url))
