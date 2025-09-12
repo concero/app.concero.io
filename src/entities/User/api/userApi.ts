@@ -147,6 +147,10 @@ export const socialsService = {
 		const request = await get<{ data: string; success: boolean }>(`${configEnvs.baseURL}/twitterToken`)
 		return request.data
 	},
+	getAuthXLink: async ({ address }: { address: string }) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/x/link`
+		return createApiHandler(() => get<TApiResponse<UserApi.Socials.GetAuthLinkX.ResponsePayload, any>>(url))
+	},
 	disconnectNetwork: async ({ socialType, address }: UserApi.Socials.DisconnectSocial.RequestParams) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/${socialType}`
 		return createApiHandler(() =>

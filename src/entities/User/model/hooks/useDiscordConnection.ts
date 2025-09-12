@@ -47,9 +47,7 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 		if (code && user) {
 			const { payload } = await mutateAsync({ token: code, address: user.address })
 			setIsConnected(!!payload?.username)
-			if (payload?.username) {
-				navigate('/profile')
-			}
+			navigate('/profile')
 		}
 	}
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { socialsService, TUserResponse, useDisconnectSocialNetworkMutation } from '@/entities/User'
+import { socialsService, useDisconnectSocialNetworkMutation } from '../../api/userApi'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useConnectXMutation, useSocials } from '../../api/userApi'
 import { UserSocialType } from '../validations/validations'
 import { Http } from '@/shared/types/api'
+import { TUserResponse } from '../types/response'
 
 interface UseTwitterConnectionProps {
 	user?: TUserResponse

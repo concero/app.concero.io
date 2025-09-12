@@ -57,6 +57,12 @@ export namespace UserApi {
 			}
 			export type ResponsePayload = { message: string; success: boolean; username: string }
 		}
+		export namespace GetAuthLinkX {
+			export type RequestParams = {
+				address?: string
+			}
+			export type ResponsePayload = { link: string }
+		}
 		export namespace ConnectX {
 			export type RequestParams = {
 				address?: string
