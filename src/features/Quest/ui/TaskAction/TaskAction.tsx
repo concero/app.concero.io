@@ -11,6 +11,7 @@ import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 import { useUserCountTx } from '@/entities/User/api/userApi'
 import { roundDownToPrecision } from '@/shared/lib/utils/number'
 import dayjs from 'dayjs'
+import { VStack } from '@/shared/ui/Stack'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -171,7 +172,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
 		}
 		return (
-			<>
+			<VStack gap="space_0_75">
 				<ProgressBar
 					type="float"
 					currentValue={
@@ -191,7 +192,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 						Verify
 					</Button>
 				</div>
-			</>
+			</VStack>
 		)
 	},
 	check_count_tx: function (props: TTaskActionProps): JSX.Element {
@@ -238,14 +239,8 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!! step?.details?.value is not a number or string')
 		}
-		return (
-			<>
-				<ProgressBar
-					type="float"
-					currentValue={countResponse?.payload?.count ?? Number(0)}
-					maxValue={Number(step?.details?.value)}
-					minValue={0}
-				/>
+		if ((Number(step?.details?.value) || 1) <= 1) {
+			return (
 				<div className={cls.controls}>
 					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
 						Swap
@@ -254,8 +249,28 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 						Verify
 					</Button>
 				</div>
-			</>
-		)
+			)
+		} else {
+			return (
+				<VStack gap="space_0_75">
+					<ProgressBar
+						type="float"
+						symbol=""
+						currentValue={countResponse?.payload?.count ?? Number(0)}
+						maxValue={Number(step?.details?.value)}
+						minValue={0}
+					/>
+					<div className={cls.controls}>
+						<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
+							Swap
+						</Button>
+						<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
+							Verify
+						</Button>
+					</div>
+				</VStack>
+			)
+		}
 	},
 	connect_discord: function (props: TTaskActionProps): JSX.Element {
 		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props

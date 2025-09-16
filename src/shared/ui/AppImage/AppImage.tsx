@@ -104,7 +104,14 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 	}
 
 	return (
-		<VStack align="center" justify="center" className={className} style={style}>
+		<VStack
+			align="center"
+			justify="center"
+			className={className}
+			htmlProps={{
+				style,
+			}}
+		>
 			{renderFallback()}
 			<img
 				className={clsx(

@@ -1,6 +1,26 @@
 .group {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-s);
 	width: 100%;
+
+	.group_heading {
+		width: 100%;
+		.title {
+			color: var(--color-gray-600);
+		}
+		.completed_steps {
+			color: var(--color-gray-700);
+		}
+		.separator {
+			color: var(--color-gray-200);
+		}
+		.step_count {
+			color: var(--color-gray-500);
+		}
+		.stepper {
+			width: 100%;
+			height: 8px;
+		}
+	}
+	.step_wrap {
+		width: 100%;
+	}
 }

@@ -25,15 +25,27 @@ type TProps = {
 	warningCells?: number[]
 	dangerCells?: number[]
 	successCells?: number[]
+	activeCells?: number[]
 	maxColumns?: number
+
+	className?: string
 }
 
 export const Stepper = (props: TProps) => {
-	const { currentProgress, max = 30, warningCells = [], dangerCells = [], successCells = [], maxColumns = 7 } = props
+	const {
+		currentProgress,
+		max = 30,
+		warningCells = [],
+		dangerCells = [],
+		successCells = [],
+		activeCells = [],
+		maxColumns = 7,
+		className,
+	} = props
 	const rows = Math.ceil(max / 7)
 
 	return (
-		<div className={cls.stepper_grid}>
+		<div className={clsx(cls.stepper_grid, className)}>
 			{Array.from({ length: rows }).map((_, rowIndex) => (
 				<div
 					key={rowIndex}
@@ -52,6 +64,8 @@ export const Stepper = (props: TProps) => {
 							variant = 'warning'
 						} else if (successCells.includes(index)) {
 							variant = 'success'
+						} else if (activeCells.includes(index)) {
+							variant = 'current_active'
 						} else if (index < currentProgress) {
 							variant = 'complited'
 						} else if (index === currentProgress) {

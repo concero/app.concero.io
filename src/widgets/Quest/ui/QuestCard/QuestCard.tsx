@@ -13,6 +13,7 @@ import { configEnvs } from '@/shared/consts/config/config'
 import { AppImage } from '@/shared/ui/AppImage'
 
 import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
+import { HStack } from '@/shared/ui/Stack'
 type TProps = {
 	quest: TQuest
 	userQuest?: TUserQuest
@@ -95,14 +96,14 @@ export const QuestCard = (props: TProps) => {
 			<div className={cls.header}>
 				<div className={cls.title}>{quest.title}</div>
 				{quest.subtitle ? <div className={cls.subtitle}>{quest.subtitle}</div> : ''}
-				<div className={cls.reward_points}>
+				<HStack gap="space_0_5" className={cls.reward_points}>
 					+{' '}
 					{Math.max(
 						quest.quest_reward.tokenReward?.min_value ?? 0,
 						quest.quest_reward.tokenReward?.max_value ?? 0,
-					)}{' '}
-					CERs
-				</div>
+					)}
+					<span>CERs</span>
+				</HStack>
 			</div>
 
 			<div className={cls.image_wrap}>
