@@ -30,7 +30,6 @@ export const QuestTaskGroup = (props: TProps) => {
 
 	/**On claim this array is empty */
 	const isSingleStep = listTaskToShow.length <= 1
-	console.log('listTaskToShow:', listTaskToShow)
 
 	if (isSingleStep) {
 		if (!listTaskToShow[0]) return null
