@@ -5,7 +5,6 @@ import { QuestTask } from '../QuestTask/QuestTask'
 import { TaskActions } from '../TaskAction/TaskAction'
 import { HStack, VStack } from '@/shared/ui/Stack'
 import { Text } from '@/shared/ui/Text/Text'
-import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 
 type TProps = {
@@ -29,7 +28,10 @@ export const QuestTaskGroup = (props: TProps) => {
 	}
 	listTaskToShow.sort((a, b) => (a?.sort_index ?? 0) - (b?.sort_index ?? 0))
 
-	const isSingleStep = listTaskToShow.length === 1
+	/**On claim this array is empty */
+	const isSingleStep = listTaskToShow.length <= 1
+	console.log('listTaskToShow:', listTaskToShow)
+
 	if (isSingleStep) {
 		if (!listTaskToShow[0]) return null
 		const task = listTaskToShow[0]
