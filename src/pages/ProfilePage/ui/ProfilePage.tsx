@@ -40,6 +40,7 @@ export const ProfilePage = (props: TProps) => {
 	if (!address || !user) {
 		return <LoginRequired />
 	}
+
 	const socialX = socials?.find(social => social.type === UserSocialType.X)
 	const socialDiscord = socials?.find(social => social.type === UserSocialType.Discord)
 
