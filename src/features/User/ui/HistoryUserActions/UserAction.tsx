@@ -1,8 +1,7 @@
 import { toLocaleNumber, formatDateTime } from '@/utils/formatting'
 import clsx from 'clsx'
 import cls from './HistoryUserActions.module.pcss'
-import { TUserAction } from '@/entities/User'
-import { TUserActionQuestData, TUserActionTxData, TUserActionType } from '@/entities/User/model/types/response'
+import { TUserAction, TUserActionQuestData, TUserActionTxData } from '@/entities/User'
 
 interface UserActionProps {
 	action: TUserAction
@@ -81,6 +80,10 @@ const getSpecialRewardInfo = (action: TUserAction) => {
 	const actionData = action.data as { name: string } | null
 	return <span className={cls.title}>Special reward: {actionData?.name}</span>
 }
+const getAdminRewardInfo = (action: TUserAction) => {
+	const actionData = action.data as { name: string } | null
+	return <span className={cls.title}>CERs from the Team</span>
+}
 
 export const UserAction = ({ action }: UserActionProps) => {
 	const getValue = (): string | JSX.Element => {
@@ -100,6 +103,8 @@ export const UserAction = ({ action }: UserActionProps) => {
 			case 'x_disconnected':
 			case 'discord_disconnected':
 				return getSocialDisconnectInfo(action)
+			case 'admin_reward_applied':
+				return getAdminRewardInfo(action)
 			default:
 				return <span>Unknown action</span>
 		}

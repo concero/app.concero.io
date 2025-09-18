@@ -23,5 +23,5 @@ export {
 	useSocials,
 } from './api/userApi'
 
-export type { TUserResponse, TUserAction } from './model/types/response'
+export type { TUserResponse, TUserAction, TUserActionTxData, TUserActionQuestData } from './model/types/response'
 export type { UserApi } from './model/types/api'
