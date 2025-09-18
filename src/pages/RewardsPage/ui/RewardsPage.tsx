@@ -19,6 +19,7 @@ export const RewardsPage = ({ user }: Props) => {
 	if (configEnvs.REWARD_IS_NOT_AVAILABLE && !isAdminAddress(address)) {
 		return <TechWorksScreen />
 	}
+
 	return (
 		<PageWrap>
 			<Banners />

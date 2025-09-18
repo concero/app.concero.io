@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useState } from 'react'
 import { categoryQuestNameMap, QuestPreviewCard, QuestStatus, TQuest, TUserQuest } from '@/entities/Quest'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
-import { Modal } from '@/components/modals/Modal/Modal'
+// import { Modal } from '@/components/modals/Modal/Modal'
 import cls from './QuestPreviewItem.module.pcss'
 import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
+import { Modal } from '@concero/ui-kit'
 
 type TProps = {
 	quest: TQuest
@@ -32,22 +32,6 @@ export const QuestPreviewItem = (props: TProps) => {
 		setIsOpenRewardModal(true)
 	}
 
-	if (isOpenRewardModal) {
-		return (
-			<Modal
-				isHeaderVisible={false}
-				position="top"
-				className={cls.rewards_modal}
-				show={true}
-				setShow={(arg: boolean) => {
-					arg ? setIsOpenRewardModal(true) : setIsOpenRewardModal(false)
-				}}
-			>
-				<QuestRewardCard quest={quest} onDone={() => setIsOpenRewardModal(false)} />
-			</Modal>
-		)
-	}
-
 	return (
 		<>
 			<QuestPreviewCard
@@ -59,23 +43,32 @@ export const QuestPreviewItem = (props: TProps) => {
 				onClaim={handleClaimReward}
 				className={className}
 			/>
+			<div className={cls.wrap_modal}>
+				<Modal
+					position="top"
+					className={cls.quest_modal}
+					show={isOpenQuestCard}
+					onClose={() => setIsOpenQuestCard(false)}
+					title={
+						<div className={cls.meta_info}>
+							<span className={cls.category}>{categoryQuestNameMap[quest.category]}</span>
+							<span className={cls.quest}>
+								<QuestStatus quest={quest} isClaimed={rewardIsClaimed} userQuest={userQuest} />
+							</span>
+						</div>
+					}
+				>
+					<QuestCard onClaim={handleClaimReward} quest={quest} userQuest={userQuest} />
+				</Modal>
+			</div>
 			<Modal
+				headless
+				onClose={() => setIsOpenRewardModal(false)}
 				position="top"
-				className={cls.questModal}
-				show={isOpenQuestCard}
-				setShow={(arg: boolean) => {
-					arg ? setIsOpenQuestCard(true) : setIsOpenQuestCard(false)
-				}}
-				title={
-					<div className={cls.meta_info}>
-						<span className={cls.category}>{categoryQuestNameMap[quest.category]}</span>
-						<span className={cls.quest}>
-							<QuestStatus quest={quest} isClaimed={rewardIsClaimed} userQuest={userQuest} />
-						</span>
-					</div>
-				}
+				className={cls.rewards_modal}
+				show={isOpenRewardModal}
 			>
-				<QuestCard onClaim={handleClaimReward} quest={quest} userQuest={userQuest} />
+				<QuestRewardCard quest={quest} onDone={() => setIsOpenRewardModal(false)} />
 			</Modal>
 		</>
 	)

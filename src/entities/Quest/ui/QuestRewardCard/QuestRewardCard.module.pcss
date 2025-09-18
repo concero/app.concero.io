@@ -1,28 +1,26 @@
 .reward_card {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-m);
 	width: 395px;
+	padding-top: var(--space-l);
+	padding-right: var(--space-m);
+	padding-bottom: var(--space-m);
+	padding-left: var(--space-m);
+	border-radius: var(--space-l);
+	background-color: var(--color-gray-25);
 	.wrap_inner_card {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: var(--space-s);
-		.image_wrap {
-			min-height: 208px;
-			.image {
-				width: 208px;
-				object-fit: contain;
-			}
-			.placeholder_image {
-				width: 208px;
-				height: 262px;
-			}
+		.image {
+			/* width: 208px; */
+			object-fit: contain;
 		}
+
 		.description_wrap {
 			display: flex;
 			flex-direction: column;
 			gap: var(--space-xs);
+			margin-top: -40px;
 			.points {
 				text-align: center;
 				font: var(--font-heading-xlarge);
@@ -33,6 +31,14 @@
 				font: var(--font-body-large);
 				color: var(--color-gray-600);
 			}
+		}
+	}
+	.alert {
+		flex-direction: row;
+		width: 100%;
+
+		& > :nth-child(2) {
+			width: 100%;
 		}
 	}
 }

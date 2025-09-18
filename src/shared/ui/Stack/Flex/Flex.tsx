@@ -1,6 +1,7 @@
-import { type MutableRefObject, type RefObject, type HTMLAttributes, type ReactNode } from 'react'
+import { type MutableRefObject, type RefObject, type HTMLAttributes, type ReactNode, CSSProperties } from 'react'
 import cls from './Flex.module.pcss'
 import clsx from 'clsx'
+import { HintedString, OmitTyped } from '@/shared/types/utils'
 
 export type FlexJustify = 'start' | 'center' | 'end' | 'between'
 export type FlexAlign = 'start' | 'center' | 'end'
@@ -23,24 +24,31 @@ const directionClasses: Record<FlexDirection, string> = {
 	column: cls.directionColumn ?? '',
 }
 
-const gapClasses: Record<FlexGap, string> = {
-	4: cls.gap4 ?? '',
-	8: cls.gap8 ?? '',
-	16: cls.gap16 ?? '',
-	24: cls.gap24 ?? '',
-	32: cls.gap32 ?? '',
-}
-
-export interface FlexProps extends HTMLAttributes<HTMLElement> {
+const flexGapValues = [
+	'space_0_25',
+	'space_0_5',
+	'space_0_75',
+	'space_1',
+	'space_1_5',
+	'space_2',
+	'space_2_5',
+	'space_3',
+	'space_4',
+	'space_6',
+	'space_8',
+] as const
+type CssGapValue = `${0}` | `${number}${'rem' | 'em' | 'px' | 'vh' | 'vw'}` | 'auto'
+export interface FlexProps {
 	className?: string
 	children: ReactNode
 	justify?: FlexJustify
 	align?: FlexAlign
 	direction?: FlexDirection
 	wrap?: FlexWrap
-	gap?: FlexGap
+	gap?: HintedString<(typeof flexGapValues)[number], `${CssGapValue}`>
 	max?: boolean
 	flexref?: MutableRefObject<HTMLElement> | null | RefObject<HTMLElement | null>
+	htmlProps?: OmitTyped<HTMLAttributes<HTMLElement>, 'className' | 'children'>
 }
 
 export const getFlexStyle = (props: Omit<FlexProps, 'children'>) => {
@@ -52,20 +60,27 @@ export const getFlexStyle = (props: Omit<FlexProps, 'children'>) => {
 		wrap = 'nowrap',
 		gap,
 		max: maxProp,
-		...otherProps
+		htmlProps,
 	} = props
 
 	const classes = [className, justifyClasses[justify], alignClasses[align], directionClasses[direction], cls[wrap]]
-	if (gap !== undefined) {
-		classes.push(gapClasses[gap])
-	}
 
 	const mods = {
 		[cls.max ?? '']: maxProp,
 	}
+	const styles: CSSProperties = {}
+	if (gap && flexGapValues.find(el => el === gap)) {
+		mods[cls[gap]] = true
+	} else {
+		styles['gap'] = gap
+	}
 	return {
-		className: clsx(cls.Flex, mods, classes),
-		...otherProps,
+		className: clsx(cls.flex, mods, classes),
+		...htmlProps,
+		style: {
+			...styles,
+			...htmlProps?.style,
+		},
 	}
 }
 export const Flex = (props: FlexProps) => {
