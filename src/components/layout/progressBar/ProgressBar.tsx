@@ -43,7 +43,7 @@ export function ProgressBar({
 		}
 	}, [isLoading, currentValue, floatRef])
 
-	const percent = (currentValue / maxValue) * 100
+	const percent = maxValue > 0 ? (currentValue / maxValue) * 100 : 0
 
 	const progressValueBig = isLoading ? (
 		<SkeletonLoader width={128} height={27.5} />
