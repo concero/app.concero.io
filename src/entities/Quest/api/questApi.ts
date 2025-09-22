@@ -7,7 +7,7 @@ import { queryClient } from '@/shared/api/tanstackClient'
 const questService = {
 	getAllQuests: async () => {
 		const url = `${process.env.CONCERO_API_URL}/quest`
-		const { payload } = await get<TApiResponse<TGetAllQuestsResponse>>(url, { skip: 0, take: 5 })
+		const { payload } = await get<TApiResponse<TGetAllQuestsResponse>>(url, { skip: 0, take: 10 })
 		return payload
 	},
 	getUserQuests: async ({
