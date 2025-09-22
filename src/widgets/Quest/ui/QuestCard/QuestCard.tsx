@@ -11,7 +11,6 @@ import { getIsCanClaimQuest } from '@/entities/User'
 import { QuestTaskGroup } from '@/features/Quest'
 import { configEnvs } from '@/shared/consts/config/config'
 import { AppImage } from '@/shared/ui/AppImage'
-
 import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
 import { HStack } from '@/shared/ui/Stack'
 type TProps = {
@@ -24,6 +23,7 @@ export const QuestCard = (props: TProps) => {
 	const { quest, userQuest, onClaim } = props
 	const { theme } = useTheme()
 	const { address } = useAccount()
+
 	let controls = null
 	let showTasks = false
 	let showOnlyOptionalSteps = false

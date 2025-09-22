@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { categoryQuestNameMap, QuestPreviewCard, QuestStatus, TQuest, TUserQuest } from '@/entities/Quest'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
@@ -20,6 +20,39 @@ export const QuestPreviewItem = (props: TProps) => {
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
 	const rewardIsClaimed = !!userQuest?.finished_at
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.ctrlKey && event.key === 'q' && event.code === 'KeyQ') {
+				event.preventDefault()
+				navigator.clipboard
+					.writeText(quest.id)
+					.then(() => {
+						console.log('Quest ID copied to clipboard:', quest.id)
+					})
+					.catch(error => {
+						console.error('Failed to copy Quest ID:', error)
+					})
+			}
+			if (event.ctrlKey && event.key === 'i' && event.code === 'KeyI') {
+				event.preventDefault()
+				navigator.clipboard
+					.writeText(quest.quest_instance_id)
+					.then(() => {
+						console.log('Quest Instance ID copied to clipboard:', quest.quest_instance_id)
+					})
+					.catch(error => {
+						console.error('Failed to copy Quest ID:', error)
+					})
+			}
+		}
+		if (isOpenQuestCard && quest?.id) {
+			document.addEventListener('keydown', handleKeyDown)
+		}
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [quest.id, isOpenQuestCard])
 
 	const handleClaimReward = async (quest: TQuest) => {
 		await trackEvent({
