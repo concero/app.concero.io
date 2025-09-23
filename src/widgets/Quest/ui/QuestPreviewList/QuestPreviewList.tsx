@@ -16,14 +16,8 @@ export const QuestPreviewList = (): JSX.Element => {
 	const { theme } = useTheme()
 	const quest_instance_ids = questsWrap?.quests.map(quest => quest.quest_instance_id)
 	const { data: userQuestsResponse } = useUserQuests({ address, quest_instance_ids, skip: 0, take: 50 })
-	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('rewards')
+	const [viewMode, setViewMode] = useState<WithoutUndefined<TQuestTag>>('testing')
 
-	// let isShowQuests = true
-	// if (viewMode === 'rewards') {
-	// 	isShowQuests = false
-	// 	if (user) {
-	// 	}
-	// }
 	const handleViewModeChange = (mode: 'rewards' | 'testing') => {
 		setViewMode(mode)
 	}
