@@ -252,7 +252,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			)
 		} else {
 			return (
-				<VStack gap="space_0_75">
+				<VStack gap="space_0_75" className={cls.full_width}>
 					<ProgressBar
 						type="float"
 						symbol=""
