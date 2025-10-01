@@ -23,7 +23,7 @@ export const QuestPreviewItem = (props: TProps) => {
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.ctrlKey && event.key === 'q' && event.code === 'KeyQ') {
+			if ((event.ctrlKey || event.metaKey) && event.key === 'q' && event.code === 'KeyQ') {
 				event.preventDefault()
 				navigator.clipboard
 					.writeText(quest.id)

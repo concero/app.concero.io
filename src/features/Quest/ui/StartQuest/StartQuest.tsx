@@ -12,13 +12,13 @@ type TProps = {
 }
 export const StartQuest = ({ questId, onStart, className, propsButton }: TProps) => {
 	const { address } = useAccount()
-	const { mutate: addQuestInProgress, isPending } = useStartQuestMutation()
+	const { mutateAsync: addQuestInProgress, isPending, isError: startQuestIsError } = useStartQuestMutation()
 	const [loadingWithDelay, setLoadingWithDelay] = useState(false)
 	useEffect(() => {
 		if (isPending) {
 			const timer = setTimeout(() => {
 				setLoadingWithDelay(true)
-			}, 2000)
+			}, 1000)
 
 			return () => clearTimeout(timer)
 		} else {
