@@ -8,7 +8,21 @@ type TProps = {
 	show: boolean
 	setShow: (newShow: boolean) => void
 	onTryAgain: () => void
-	error?: string
+	error?: unknown
+}
+
+const getErrorMessage = (error: unknown): string => {
+	if (error instanceof Error) {
+		return error.message
+	}
+	if (typeof error === 'string') {
+		return error
+	}
+	if (error && typeof error === 'object') {
+		// Например, axios error или { message: '...' }
+		return (error as any).message || 'Unknown error'
+	}
+	return 'Unknown error'
 }
 export const TermsConditionErrorModal = (props: TProps): JSX.Element => {
 	const { setShow, show, onTryAgain, error } = props
@@ -23,7 +37,10 @@ export const TermsConditionErrorModal = (props: TProps): JSX.Element => {
 				<WarningBoxIcon />
 			</div>
 			<p className={clsx(cls.block, {}, [cls.description])}>Something went wrong, try again</p>
-			<div className={clsx(cls.block, {}, [cls.condition])}>Error: {error}</div>
+			<div className={clsx(cls.block, {}, [cls.condition])}>
+				{' '}
+				Error: {error ? getErrorMessage(error) : 'No details'}
+			</div>
 			<Button variant="primary" className={cls.block} isFull onClick={onTryAgain} size="l">
 				Try again
 			</Button>

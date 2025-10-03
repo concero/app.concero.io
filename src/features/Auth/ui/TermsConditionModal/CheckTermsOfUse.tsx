@@ -38,9 +38,10 @@ const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 			return
 		}
 		setIsLoadingTerms(true)
-		//@ts-expect-error TODO: Fix this type
 		verifyUser({ address, signMessageAsync, acceptTerms })
 			.catch((err: any) => {
+				console.error(`CheckTermsOfUseDecoratorInner | verfiyUser process with error`, err)
+
 				setIsError(true)
 				setError(err)
 			})

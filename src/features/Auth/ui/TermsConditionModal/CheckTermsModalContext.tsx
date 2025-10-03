@@ -1,4 +1,5 @@
-import { createContext, useContext, ReactNode, useState } from 'react'
+import { useGlobalEvent } from '@/shared/lib/store/globalState'
+import { createContext, useContext, ReactNode, useState, useEffect, useMemo } from 'react'
 
 interface ModalContextType {
 	opened: boolean
@@ -13,14 +14,28 @@ interface CheckTermsModalProviderProps {
 }
 
 export const CheckTermsModalProvider = ({ children }: CheckTermsModalProviderProps) => {
-	const [opened, setOpen] = useState(false)
+	const termsEvent = useGlobalEvent('SHOW_TERMS_MODAL')
+	const [opened, setOpen] = useState(!!termsEvent)
+
+	useEffect(() => {
+		if (termsEvent) {
+			setOpen(true)
+		}
+	}, [termsEvent])
+
 	const open = () => {
 		setOpen(true)
 	}
-
-	return (
-		<CheckTermsModalContext.Provider value={{ open, opened, setOpen }}>{children}</CheckTermsModalContext.Provider>
+	const contextValue = useMemo(
+		() => ({
+			open: () => setOpen(true),
+			opened: opened,
+			setOpen: setOpen,
+		}),
+		[opened],
 	)
+
+	return <CheckTermsModalContext.Provider value={contextValue}>{children}</CheckTermsModalContext.Provider>
 }
 
 export const useCheckTermsModal = (): ModalContextType => {

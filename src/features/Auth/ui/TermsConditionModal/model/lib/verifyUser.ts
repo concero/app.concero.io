@@ -2,7 +2,7 @@ import { Address } from 'viem'
 import { SignMessageMutateAsync } from 'wagmi/query'
 import { getAccessToken } from '@/entities/User'
 import { UserApi } from '@/entities/User'
-
+import { TApiResponse } from '@/shared/types/api'
 export const verifyUser = async ({
 	address,
 	retry,
@@ -11,14 +11,16 @@ export const verifyUser = async ({
 }: {
 	address: Address
 	signMessageAsync: SignMessageMutateAsync<unknown>
-	acceptTerms: (arg: UserApi.AcceptTerms.RequestBody) => Promise<UserApi.AcceptTerms.ResponseBody>
+	acceptTerms: (arg: UserApi.AcceptTerms.RequestBody) => Promise<TApiResponse<UserApi.AcceptTerms.ResponseBody>>
 	retry?: boolean
 }): Promise<boolean> => {
 	retry ??= true
 	try {
 		const result = await acceptTerms({ address })
-		if (result.terms_of_use_signed_version) return true
-		throw new Error()
+		if (!result.payload?.terms_of_use_signed_version) {
+			throw new Error()
+		}
+		return true
 	} catch (errObj: unknown) {
 		if (retry) {
 			try {
