@@ -7,6 +7,7 @@ import { verifyUser } from './model/lib/verifyUser'
 import { CheckTermsModalProvider, useCheckTermsModal } from './CheckTermsModalContext'
 import { useAcceptTermsMutation, useUserByAddress } from '@/entities/User/api/userApi'
 import { Http } from '@/shared/types/api'
+import { queryClient } from '@/shared/api/tanstackClient'
 
 const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 	const { address, isConnected } = useAccount()
@@ -39,6 +40,13 @@ const CheckTermsOfUseDecoratorInner = ({ children }: PropsWithChildren) => {
 		}
 		setIsLoadingTerms(true)
 		verifyUser({ address, signMessageAsync, acceptTerms })
+			.then(() => {
+				queryClient.resetQueries()
+
+				queryClient.refetchQueries({
+					type: 'all',
+				})
+			})
 			.catch((err: any) => {
 				console.error(`CheckTermsOfUseDecoratorInner | verfiyUser process with error`, err)
 
