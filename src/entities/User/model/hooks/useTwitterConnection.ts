@@ -72,7 +72,9 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 			!socialsResponse?.payload ||
 			socialsResponse.payload.socials.find(social => social.type === UserSocialType.X)
 		) {
-			listenTwitterConnection().then()
+			listenTwitterConnection().catch(err => {
+				console.error('useTwitterConnection: err:', err)
+			})
 		} else if (searchParams.get('oauth_token') || searchParams.get('oauth_verifier')) {
 			navigate('/profile')
 		}

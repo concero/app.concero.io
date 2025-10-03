@@ -58,7 +58,9 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 			!socialsResponse?.payload ||
 			socialsResponse.payload.socials.find(social => social.type === UserSocialType.Discord)
 		) {
-			listenDiscordConnection()
+			listenDiscordConnection().catch(err => {
+				console.error('useDiscordConnection: err:', err)
+			})
 		}
 	}, [])
 
