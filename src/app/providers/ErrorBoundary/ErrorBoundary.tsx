@@ -3,6 +3,7 @@ import React, { Suspense, type ErrorInfo, type ReactNode } from 'react'
 
 interface ErrorBoundaryProps {
 	children: ReactNode
+	fallback?: ReactNode
 }
 
 interface ErrorBoundaryState {
@@ -27,13 +28,12 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
 	override render(): JSX.Element | ReactNode {
 		const { hasError } = this.state
-		const { children } = this.props
+		const { children, fallback } = this.props
 
 		if (hasError) {
-			// You can render any custom fallback UI
 			return (
-				<Suspense fallback={''}>
-					<PageError />
+				<Suspense fallback={'Loading...'}>
+					{fallback || <PageError />} {/* Используем fallback, если он передан */}
 				</Suspense>
 			)
 		}

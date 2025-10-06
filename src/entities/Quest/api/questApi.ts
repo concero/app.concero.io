@@ -12,12 +12,12 @@ const questService = {
 	},
 	getUserQuests: async ({
 		address,
-		quest_ids,
+		quest_instance_ids,
 		skip,
 		take,
 	}: TFindManyUserQuest.RequestBody & TFindManyUserQuest.RequestQuery) => {
 		const url = `${process.env.CONCERO_API_URL}/users/quest?skip=${skip}&take=${take}`
-		return createApiHandler(() => post<TApiResponse<TUserQuestResponse>>(url, { address, quest_ids }))
+		return createApiHandler(() => post<TApiResponse<TUserQuestResponse>>(url, { address, quest_instance_ids }))
 	},
 
 	startQuest: async (body: TStartQuest.RequestBody) => {
@@ -47,9 +47,16 @@ export const useAllQuests = () => {
 }
 export const useUserQuests = (params: Partial<TFindManyUserQuest.RequestBody> & TFindManyUserQuest.RequestQuery) => {
 	return useQuery({
-		queryKey: [tagInvalidationUserQuest, 'user_quests', params.address, params.quest_ids, params.skip, params.take],
+		queryKey: [
+			tagInvalidationUserQuest,
+			'user_quests',
+			params.address,
+			params.quest_instance_ids,
+			params.skip,
+			params.take,
+		],
 		queryFn: () => {
-			if (!params.address || !params.quest_ids || !params.quest_ids.length)
+			if (!params.address || !params.quest_instance_ids || !params.quest_instance_ids.length)
 				throw new Error('Address and quest_ids is required')
 			return questService.getUserQuests(
 				params as TFindManyUserQuest.RequestBody & TFindManyUserQuest.RequestQuery,

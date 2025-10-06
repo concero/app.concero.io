@@ -21,5 +21,6 @@ export const taskSchema = z.object({
 	description: z.string().min(1),
 	is_required: z.boolean(),
 	type: taskTypeSchema,
+	sort_index: z.number().int().nonnegative().optional(),
 	steps: z.array(stepSchema).min(1),
 })

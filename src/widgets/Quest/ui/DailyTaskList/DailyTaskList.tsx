@@ -5,9 +5,10 @@ import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
 export const DailyTaskList = (): JSX.Element => {
 	const { data: quests } = useAllQuests()
 	const { address } = useAccount()
+
 	const { data: userQuests } = useUserQuests({
 		address,
-		quest_ids: quests?.quests.map(quest => quest.id),
+		quest_instance_ids: quests?.quests.map(quest => quest.quest_instance_id),
 		skip: 0,
 		take: 50,
 	})
@@ -26,9 +27,13 @@ export const DailyTaskList = (): JSX.Element => {
 			<span className={cls.title}>Daily tasks</span>
 			<div className={cls.list}>
 				{dailyQuests.map(quest => {
-					const userQuest = userQuests?.payload.userQuests.find(
-						userQuest => userQuest.questInstanceId === quest.questInstanceId,
-					)
+					let userQuest = undefined
+
+					if (userQuests?.payload?.userQuests && userQuests?.payload?.userQuests.length) {
+						userQuest = userQuests?.payload?.userQuests.find(
+							userQuest => userQuest.questInstanceId === quest.quest_instance_id,
+						)
+					}
 					return (
 						<QuestPreviewItem
 							quest={quest}

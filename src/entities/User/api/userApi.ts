@@ -1,6 +1,6 @@
 import { Address } from 'viem'
 import { TUpdateNicknameArgs } from '../model/types/request'
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
 	NicknameError,
 	TGetLeaderBoardReponse,
@@ -16,6 +16,7 @@ import { del, get, patch, post } from '@/shared/api/axiosClient'
 import { UserApi } from '../model/types/api'
 import { configEnvs } from '@/shared/consts/config/config'
 import { UserSocialType } from '../model/validations/validations'
+import { useEffect, useRef } from 'react'
 
 //--------------------------------Domain
 export const userAuthServiceApi = {
@@ -66,7 +67,7 @@ export const userServiceApi = {
 	},
 	acceptTerms: async (arg: UserApi.AcceptTerms.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/acceptTerms`
-		return createApiHandler(() => patch<TApiResponse<UserApi.AcceptTerms.RequestBody>>(url, arg))
+		return createApiHandler(() => patch<TApiResponse<UserApi.AcceptTerms.ResponseBody>>(url, arg))
 	},
 
 	updateNickname: async (args: TUpdateNicknameArgs) => {
@@ -99,7 +100,7 @@ export const userServiceApi = {
 	},
 
 	fetchUserEarnings: async (address: Address): Promise<UserEarnings | null> => {
-		const url = `${process.env.CONCERO_API_URL}/userPoolEarnings?address=${address}`
+		const url = `${process.env.CONCERO_API_OLD_URL}/userPoolEarnings?address=${address}`
 		try {
 			const response = await get(url)
 		} catch (error) {
@@ -120,7 +121,7 @@ export const userActionsService = {
 export const socialsService = {
 	findUserSocials: async ({ address }: UserApi.Socials.FindMany.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials`
-		return createApiHandler(() => get<TApiResponse<UserApi.Socials.FindMany.ResponsePayload>>(url))
+		return createApiHandler(() => get<TApiResponse<UserApi.Socials.FindMany.ResponsePayload | null>>(url))
 	},
 
 	connectDiscord: async ({
@@ -143,9 +144,9 @@ export const socialsService = {
 		const url = `${process.env.CONCERO_API_URL}/users/${params.address}/socials/x`
 		return createApiHandler(() => post<TApiResponse<UserApi.Socials.ConnectX.ResponsePayload>>(url, body))
 	},
-	getRequestToken: async () => {
-		const request = await get<{ data: string; success: boolean }>(`${configEnvs.baseURL}/twitterToken`)
-		return request.data
+	getAuthXLink: async ({ address }: { address: string }) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/x/link`
+		return createApiHandler(() => get<TApiResponse<UserApi.Socials.GetAuthLinkX.ResponsePayload, any>>(url))
 	},
 	disconnectNetwork: async ({ socialType, address }: UserApi.Socials.DisconnectSocial.RequestParams) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/${socialType}`
@@ -198,12 +199,12 @@ export const useUserByAddress = (address?: Address) => {
 		enabled: !!address,
 	})
 }
-
+const userActionsTag = 'user_actions'
 export const useUserAction = ({ address, take }: { address: string; take: number }) => {
 	return useInfiniteQuery({
 		refetchOnMount: false,
 		retry: 2,
-		queryKey: ['userActions', address],
+		queryKey: [userActionsTag, address],
 		queryFn: ({ pageParam = 0 }) => userActionsService.fetchUserActions(address, { take, skip: pageParam * take }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, _, lastPageParam) => {
@@ -227,15 +228,58 @@ export const useUpdateNicknameMutation = () => {
 	)
 }
 
+type UserVolumeQueryKey = readonly ['userVolume', UserApi.GetUserVolume.RequestBody | undefined]
+
 export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
-	return useQuery({
-		queryKey: ['userVolume', options],
-		queryFn: () => userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody),
-		enabled: !!options?.address && !!options?.from && !!options?.to,
-		refetchOnWindowFocus: true,
-		refetchInterval: 10_000,
-		refetchIntervalInBackground: true,
+	const lastDurationRef = useRef<number>(0)
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+	const enabled = !!options?.address && !!options?.from && !!options?.to
+
+	const query = useQuery({
+		queryKey: ['userVolume', options] satisfies UserVolumeQueryKey,
+		queryFn: async () => {
+			const start = Date.now()
+			try {
+				return await userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody)
+			} finally {
+				lastDurationRef.current = Date.now() - start
+			}
+		},
+		enabled: false,
+		staleTime: 5_000,
+		gcTime: 60_000,
+		retry: 1,
 	})
+
+	useEffect(() => {
+		if (!enabled) {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current)
+				timeoutRef.current = null
+			}
+			return
+		}
+
+		const executeRefetch = async () => {
+			await query.refetch()
+			const slowThreshold = 5_000
+			const nextInterval = lastDurationRef.current > slowThreshold ? 30_000 : 10_000
+
+			timeoutRef.current = setTimeout(executeRefetch, nextInterval)
+		}
+
+		executeRefetch()
+
+		return () => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current)
+				timeoutRef.current = null
+			}
+		}
+	}, [enabled, query.refetch])
+
+	return query
 }
 export const useUserCountTx = (options?: UserApi.GetUserCountTx.RequestBody) => {
 	return useQuery({
@@ -302,6 +346,7 @@ export const useConnectDiscordMutation = () => {
 			}),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }
@@ -323,6 +368,7 @@ export const useConnectXMutation = () => {
 			}),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }
@@ -332,6 +378,7 @@ export const useDisconnectSocialNetworkMutation = (address?: string) => {
 			socialsService.disconnectNetwork({ socialType: arg.network, address }),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }
@@ -340,6 +387,7 @@ export const useDisconnectEmailMutation = () => {
 		mutationFn: (arg: { address: Address }) => socialsService.disconnectEmail(arg.address),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [tagInvalidation] })
+			queryClient.invalidateQueries({ queryKey: [userActionsTag] })
 		},
 	})
 }

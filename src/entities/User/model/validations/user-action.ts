@@ -14,6 +14,7 @@ export const UserActionTypeSchema = z.union([
 	z.literal('quest_step_completed'),
 	z.literal('quest_completed'),
 	z.literal('special_reward_applied'),
+	z.literal('admin_reward_applied'),
 ])
 
 // DTO Schemas

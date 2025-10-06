@@ -78,7 +78,7 @@ export function ProgressBar({
 
 	if (type === 'big' || type === 'medium') {
 		return (
-			<div className="gap-sm">
+			<div className={classNames.full_width}>
 				{type === 'big' ? progressValueBig : progressValueMedium}
 				{progressLine}
 				{progressRange}
@@ -92,7 +92,7 @@ export function ProgressBar({
 			: `clamp(0px, calc(${percent}% - ${floatValueMargin}px), calc(${progressLineWidth}px - ${floatValueWidth}px))`
 
 	return (
-		<div className="gap-sm">
+		<div className={classNames.full_width}>
 			{isLoading ? (
 				<SkeletonLoader width={64} height={34} />
 			) : (

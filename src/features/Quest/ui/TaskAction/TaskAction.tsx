@@ -1,7 +1,7 @@
 import { TQuest, TQuestTask, TTaskType, TUserQuest } from '@/entities/Quest'
 import { Button } from '@concero/ui-kit'
 import cls from './TaskAction.module.pcss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
@@ -10,6 +10,8 @@ import { configEnvs } from '@/shared/consts/config/config'
 import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 import { useUserCountTx } from '@/entities/User/api/userApi'
 import { roundDownToPrecision } from '@/shared/lib/utils/number'
+import dayjs from 'dayjs'
+import { VStack } from '@/shared/ui/Stack'
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -132,8 +134,6 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const { data: userResponse } = useUserByAddress(address)
 		const step = task.steps[0]
 		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
-		const isDailyQuest = quest.interval === 'daily'
-		const isWeeklyQuest = quest.interval === 'weekly'
 		const isSingleTask = quest.tasks.length == 1
 		const { handleVerifyQuest, isPending } = useVerifyQuest()
 		const handleVerify = () => {
@@ -146,16 +146,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
 		let startDate = quest.started_at
-		let endDate = quest.finished_at
-		if (isDailyQuest) {
-			const dates = getDayRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		} else if (isWeeklyQuest) {
-			const dates = getWeekRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		}
+		let endDate = dayjs().unix()
 
 		const { data: volumeResponse } = useUserVolume({
 			address: userResponse?.payload?.address,
@@ -166,12 +157,22 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			fromChainIds: step.details.fromChainIds,
 			toChainIds: step.details.toChainIds,
 		})
+		useEffect(() => {
+			const probablyCount = volumeResponse?.payload.volumeUSD || 0
+
+			const stepValue = Number(step.details?.value)
+			const probablyStepValue = stepValue ? (isNaN(stepValue) ? 0 : stepValue) : 0
+
+			if (probablyCount >= probablyStepValue) {
+				handleVerify()
+			}
+		}, [volumeResponse?.payload.volumeUSD])
 
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
 		}
 		return (
-			<>
+			<VStack gap="space_0_75">
 				<ProgressBar
 					type="float"
 					currentValue={
@@ -191,7 +192,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 						Verify
 					</Button>
 				</div>
-			</>
+			</VStack>
 		)
 	},
 	check_count_tx: function (props: TTaskActionProps): JSX.Element {
@@ -200,8 +201,6 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		const { data: userResponse } = useUserByAddress(address)
 		const step = task.steps[0]
 		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
-		const isDailyQuest = quest.interval === 'daily'
-		const isWeeklyQuest = quest.interval === 'weekly'
 		const isSingleTask = quest.tasks.length == 1
 		const { handleVerifyQuest, isPending } = useVerifyQuest()
 		const handleVerify = () => {
@@ -214,16 +213,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
 		}
 		let startDate = quest.started_at
-		let endDate = quest.finished_at
-		if (isDailyQuest) {
-			const dates = getDayRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		} else if (isWeeklyQuest) {
-			const dates = getWeekRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		}
+		let endDate = dayjs().unix()
 
 		const { data: countResponse } = useUserCountTx({
 			address: userResponse?.payload?.address,
@@ -235,17 +225,22 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			toChainIds: step.details.toChainIds,
 		})
 
+		useEffect(() => {
+			const probablyCount = countResponse?.payload.count || 0
+
+			const stepValue = Number(step.details?.value)
+			const probablyStepValue = stepValue ? (isNaN(stepValue) ? 0 : stepValue) : 0
+
+			if (probablyCount >= probablyStepValue) {
+				handleVerify()
+			}
+		}, [countResponse?.payload.count])
+
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!! step?.details?.value is not a number or string')
 		}
-		return (
-			<>
-				<ProgressBar
-					type="float"
-					currentValue={countResponse?.payload?.count ?? Number(0)}
-					maxValue={Number(step?.details?.value)}
-					minValue={0}
-				/>
+		if ((Number(step?.details?.value) || 1) <= 1) {
+			return (
 				<div className={cls.controls}>
 					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
 						Swap
@@ -254,8 +249,28 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 						Verify
 					</Button>
 				</div>
-			</>
-		)
+			)
+		} else {
+			return (
+				<VStack gap="space_0_75" className={cls.full_width}>
+					<ProgressBar
+						type="float"
+						symbol=""
+						currentValue={countResponse?.payload?.count ?? Number(0)}
+						maxValue={Number(step?.details?.value)}
+						minValue={0}
+					/>
+					<div className={cls.controls}>
+						<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
+							Swap
+						</Button>
+						<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
+							Verify
+						</Button>
+					</div>
+				</VStack>
+			)
+		}
 	},
 	connect_discord: function (props: TTaskActionProps): JSX.Element {
 		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props

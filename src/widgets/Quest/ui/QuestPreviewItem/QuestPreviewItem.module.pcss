@@ -10,8 +10,22 @@
 	}
 }
 .rewards_modal {
-	/* width: 100%; */
-	/* max-width: 395px; */
 	align-items: center;
 	gap: var(--sp-xl);
+}
+
+.quest_modal {
+	min-height: min-content;
+	max-width: 100%;
+	width: min(100%, calc(100% - 16px * 2));
+	margin-right: 16px;
+	margin-left: 16px;
+	margin-bottom: 96px;
+	margin-top: 48px;
+}
+.wrap_modal {
+	position: absolute;
+	& > * {
+		max-height: 100%;
+	}
 }

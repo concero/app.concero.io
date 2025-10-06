@@ -18,8 +18,7 @@ export const getAccessToken = async (
 			console.error('No nonce received')
 			throw new Error('No nonce received')
 		}
-		// @ts-expect-error TODO: Fix
-		const signature = await signMessageAsync({ message: nonce, account: address.toLowerCase() })
+		const signature = await signMessageAsync({ message: nonce, account: address.toLowerCase() as Address })
 
 		const token = await userAuthServiceApi.verify({
 			address,

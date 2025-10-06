@@ -1,4 +1,5 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
+import { GlobalEventsDispatcher } from '../lib/store/globalState'
 
 const client = axios.create({
 	headers: {
@@ -7,6 +8,15 @@ const client = axios.create({
 	},
 	withCredentials: true,
 })
+client.interceptors.response.use(
+	response => response,
+	error => {
+		if (error.response?.status === 401) {
+			GlobalEventsDispatcher.showTermsModal()
+		}
+		return Promise.reject(error)
+	},
+)
 
 const request = async <TResponse>(options: AxiosRequestConfig): Promise<TResponse> => {
 	try {

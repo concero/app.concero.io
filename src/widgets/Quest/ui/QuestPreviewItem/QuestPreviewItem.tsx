@@ -1,22 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-import { useState } from 'react'
-import { useAccount } from 'wagmi'
-import {
-	categoryQuestNameMap,
-	QuestPreviewCard,
-	QuestStatus,
-	TQuest,
-	type TQuestCardStatus,
-	TUserQuest,
-} from '@/entities/Quest'
+import { useEffect, useState } from 'react'
+import { categoryQuestNameMap, QuestPreviewCard, QuestStatus, TQuest, TUserQuest } from '@/entities/Quest'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
-import { Modal } from '@/components/modals/Modal/Modal'
 import cls from './QuestPreviewItem.module.pcss'
 import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
-import { getIsCanClaimQuest } from '@/entities/User'
+import { Modal } from '@concero/ui-kit'
 
 type TProps = {
 	quest: TQuest
@@ -26,22 +16,42 @@ type TProps = {
 
 export const QuestPreviewItem = (props: TProps) => {
 	const { quest, userQuest, className } = props
-
-	const { address } = useAccount()
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
 	const rewardIsClaimed = !!userQuest?.finished_at
-	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
-	if (userQuest?.started_at) {
-		statusOfQuest = 'STARTED'
-	}
-	if (userQuest && getIsCanClaimQuest({ quest, userQuest })) {
-		statusOfQuest = 'READY_TO_CLAIM'
-	}
 
-	if (rewardIsClaimed) {
-		statusOfQuest = 'FINISHED'
-	}
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if ((event.ctrlKey || event.metaKey) && event.key === 'q' && event.code === 'KeyQ') {
+				event.preventDefault()
+				navigator.clipboard
+					.writeText(quest.id)
+					.then(() => {
+						console.log('Quest ID copied to clipboard:', quest.id)
+					})
+					.catch(error => {
+						console.error('Failed to copy Quest ID:', error)
+					})
+			}
+			if (event.ctrlKey && event.key === 'i' && event.code === 'KeyI') {
+				event.preventDefault()
+				navigator.clipboard
+					.writeText(quest.quest_instance_id)
+					.then(() => {
+						console.log('Quest Instance ID copied to clipboard:', quest.quest_instance_id)
+					})
+					.catch(error => {
+						console.error('Failed to copy Quest ID:', error)
+					})
+			}
+		}
+		if (isOpenQuestCard && quest?.id) {
+			document.addEventListener('keydown', handleKeyDown)
+		}
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [quest.id, isOpenQuestCard])
 
 	const handleClaimReward = async (quest: TQuest) => {
 		await trackEvent({
@@ -52,22 +62,6 @@ export const QuestPreviewItem = (props: TProps) => {
 		})
 		setIsOpenQuestCard(false)
 		setIsOpenRewardModal(true)
-	}
-
-	if (isOpenRewardModal) {
-		return (
-			<Modal
-				isHeaderVisible={false}
-				position="top"
-				className={cls.rewards_modal}
-				show={true}
-				setShow={(arg: boolean) => {
-					arg ? setIsOpenRewardModal(true) : setIsOpenRewardModal(false)
-				}}
-			>
-				<QuestRewardCard quest={quest} onDone={() => setIsOpenRewardModal(false)} />
-			</Modal>
-		)
 	}
 
 	return (
@@ -81,23 +75,32 @@ export const QuestPreviewItem = (props: TProps) => {
 				onClaim={handleClaimReward}
 				className={className}
 			/>
+			<div className={cls.wrap_modal}>
+				<Modal
+					position="top"
+					className={cls.quest_modal}
+					show={isOpenQuestCard}
+					onClose={() => setIsOpenQuestCard(false)}
+					title={
+						<div className={cls.meta_info}>
+							<span className={cls.category}>{categoryQuestNameMap[quest.category]}</span>
+							<span className={cls.quest}>
+								<QuestStatus quest={quest} isClaimed={rewardIsClaimed} userQuest={userQuest} />
+							</span>
+						</div>
+					}
+				>
+					<QuestCard onClaim={handleClaimReward} quest={quest} userQuest={userQuest} />
+				</Modal>
+			</div>
 			<Modal
+				headless
+				onClose={() => setIsOpenRewardModal(false)}
 				position="top"
-				className={cls.questModal}
-				show={isOpenQuestCard}
-				setShow={(arg: boolean) => {
-					arg ? setIsOpenQuestCard(true) : setIsOpenQuestCard(false)
-				}}
-				title={
-					<div className={cls.meta_info}>
-						<span className={cls.category}>{categoryQuestNameMap[quest.category]}</span>
-						<span className={cls.quest}>
-							<QuestStatus quest={quest} isClaimed={rewardIsClaimed} userQuest={userQuest} />
-						</span>
-					</div>
-				}
+				className={cls.rewards_modal}
+				show={isOpenRewardModal}
 			>
-				<QuestCard onClaim={handleClaimReward} quest={quest} userQuest={userQuest} />
+				<QuestRewardCard quest={quest} onDone={() => setIsOpenRewardModal(false)} />
 			</Modal>
 		</>
 	)

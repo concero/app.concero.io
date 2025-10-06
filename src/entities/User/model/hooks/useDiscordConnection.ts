@@ -23,8 +23,10 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 			socialsResponse.payload.socials.find(social => social.type === UserSocialType.Discord)
 		) {
 			setIsConnected(true)
+		} else {
+			setIsConnected(false)
 		}
-	}, [user, socialsResponse])
+	}, [socialsResponse])
 
 	const toggleDiscordConnection = async () => {
 		try {
@@ -45,11 +47,9 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 		const code = searchParams.get('code')
 
 		if (code && user) {
-			const fetchedNickname = await mutateAsync({ token: code, address: user.address })
-			setIsConnected(!!fetchedNickname)
-			if (fetchedNickname) {
-				navigate('/profile')
-			}
+			const { payload } = await mutateAsync({ token: code, address: user.address })
+			setIsConnected(!!payload?.username)
+			navigate('/profile')
 		}
 	}
 
@@ -58,7 +58,9 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 			!socialsResponse?.payload ||
 			socialsResponse.payload.socials.find(social => social.type === UserSocialType.Discord)
 		) {
-			listenDiscordConnection()
+			listenDiscordConnection().catch(err => {
+				console.error('useDiscordConnection: err:', err)
+			})
 		}
 	}, [])
 

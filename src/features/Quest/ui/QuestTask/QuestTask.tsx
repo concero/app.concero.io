@@ -7,6 +7,7 @@ import { TTaskActionProps } from '../TaskAction/TaskAction'
 import { trackEvent } from '@/hooks/useTracking'
 import { action, category } from '@/constants/tracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
+import { VStack } from '@/shared/ui/Stack'
 type TProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -82,15 +83,18 @@ export const QuestTask = (props: TProps) => {
 			</div>
 		)
 	}
+	/** TODO: Change name step => task */
 	return (
-		<div className={cls.step_wrap}>
-			<div className={cls.title_wrap}>
-				<span className={cls.title} title={task.title}>
-					{task.title}
-				</span>
-				{isOptional && <Tag variant="neutral">Optional</Tag>}
-			</div>
-			<div className={cls.description}>{task.description}</div>
+		<VStack gap="space_0_75" className={cls.step_wrap}>
+			<VStack gap="space_0_25">
+				<div className={cls.title_wrap}>
+					<span className={cls.title} title={task.title}>
+						{task.title}
+					</span>
+					{isOptional && <Tag variant="neutral">Optional</Tag>}
+				</div>
+				<div className={cls.description}>{task.description}</div>
+			</VStack>
 			{TaskAction ? (
 				<TaskAction
 					userQuest={userQuest}
@@ -102,6 +106,6 @@ export const QuestTask = (props: TProps) => {
 				/>
 			) : null}
 			{errorText ? <span className={cls.error_text}>{errorText}</span> : null}
-		</div>
+		</VStack>
 	)
 }

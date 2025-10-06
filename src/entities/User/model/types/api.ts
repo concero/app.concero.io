@@ -5,6 +5,9 @@ export namespace UserApi {
 		export type RequestBody = {
 			address: string
 		}
+		export type ResponseBody = {
+			terms_of_use_signed_version: string | null
+		}
 	}
 
 	export namespace GetUserVolume {
@@ -53,6 +56,12 @@ export namespace UserApi {
 				token: string
 			}
 			export type ResponsePayload = { message: string; success: boolean; username: string }
+		}
+		export namespace GetAuthLinkX {
+			export type RequestParams = {
+				address?: string
+			}
+			export type ResponsePayload = { link: string }
 		}
 		export namespace ConnectX {
 			export type RequestParams = {
