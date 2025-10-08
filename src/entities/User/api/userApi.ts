@@ -396,7 +396,6 @@ export const useGetLeaderboard = (address?: string) => {
 	return useQuery({
 		queryKey: [tagInvalidation, address, 'useGetLeaderboard'],
 		queryFn: async () => {
-			if (!address) throw new Error('Address is required')
 			return userServiceApi.getLeaderboard({ userAddress: address })
 		},
 		enabled: !!address,

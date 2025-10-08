@@ -30,6 +30,10 @@ export const ProfileButton = (props: TProps) => {
 				className={clsx(cls.profile_avatar, cls.big_avatar)}
 				isHovered={isHovered}
 				htmlProps={{
+					onClick: () => {
+						navigate(routes.profile)
+						onClick?.()
+					},
 					onMouseEnter: () => setIsHovered(true),
 					onMouseLeave: () => setIsHovered(false),
 				}}

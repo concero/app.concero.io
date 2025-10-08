@@ -21,25 +21,27 @@ import { Banners } from '@/entities/Social'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
 import { UserSocialType } from '@/entities/User/model/validations/validations'
 import { configEnvs } from '@/shared/consts/config/config'
+import { Table } from '@/shared/ui/Table/Table'
+import { Leaderboard } from './Leaderboard/Leaderboard'
 
 export const ProfilePage = () => {
 	const { address } = useAccount()
 	const { data: userResponse } = useUserByAddress(address ? (address as Address) : undefined)
 	const user = userResponse?.payload
 	const { data: socialsResponse } = useSocials(address)
-	const socials = socialsResponse?.payload.socials
+	const socials = socialsResponse?.payload?.socials
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
-
+	console.log('is dev?: ', __IS_DEV__)
 	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
 	if (!address || !user) {
 		return <LoginRequired />
 	}
-	const socialX = socials?.find(social => social.type === UserSocialType.X)
-	const socialDiscord = socials?.find(social => social.type === UserSocialType.Discord)
+	const socialX = socials ? socials.find(social => social.type === UserSocialType.X) : null
+	const socialDiscord = socials ? socials.find(social => social.type === UserSocialType.Discord) : null
 
 	const addresToShow = truncateWallet(user.address, 4)
 	const Social_X_toShow = socialX?.shortname ?? '-'
@@ -92,7 +94,8 @@ export const ProfilePage = () => {
 					<AchievementGroupPreview />
 				</div>
 			</div>
-			<CersLeaderboard user={user} />
+			{/* <CersLeaderboard user={user} /> */}
+			<Leaderboard />
 		</PageWrap>
 	)
 }

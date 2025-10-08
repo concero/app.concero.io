@@ -1,3 +1,5 @@
+export { useUser } from './model/hooks/useUser'
+
 export { UserSocialType } from './model/validations/validations'
 export { getCountStreakPeriodText } from './model/lib/getCountStreakPeriodText'
 export { useGetUserLPBalance } from './model/hooks/useLPBalanceUser'

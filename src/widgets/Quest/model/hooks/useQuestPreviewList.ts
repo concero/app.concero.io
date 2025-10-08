@@ -12,11 +12,10 @@ export const useQuestPreviewList = (props: UseQuestPreviewListProps) => {
 	const { data: questsWrap, isFetching } = useAllQuests()
 	const { address } = useAccount()
 
-	const quest_ids = questsWrap?.quests.map(quest => quest.id)
-	const { data: userQuestsResponse } = useUserQuests({ address, quest_ids, skip: 0, take: 50 })
+	const quest_instance_ids = questsWrap?.quests.map(quest => quest.quest_instance_id)
+	const { data: userQuestsResponse } = useUserQuests({ address, quest_instance_ids, skip: 0, take: 50 })
 
 	const quests = questsWrap?.quests.filter(q => groups.includes(q.group))
-	console.table(quests)
 
 	const quest_size_m = useMemo(() => {
 		return quests?.filter(q => q.size === 'm').toSorted((a, b) => (b.sort_index || 0) - (a.sort_index || 0))

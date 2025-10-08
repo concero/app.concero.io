@@ -61,15 +61,26 @@ export default defineConfig(({ mode }) => {
 			postcss: {
 				plugins: [precss()],
 			},
+			preprocessorOptions: {
+				postcss: {
+					api: 'modern-compiler', // or "modern"
+				},
+			},
 		},
 		define: {
-			// __IS_DEV__:  mode === 'development',
-			// TODO: Remove after release 1
-			__IS_DEV__: true,
+			__IS_DEV__: mode === 'development',
 		},
 		build: {
 			outDir: './dist',
 			emptyOutDir: true,
+		},
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					vendor: ['react', 'react-dom'],
+					utils: ['axios'],
+				},
+			},
 		},
 	}
 })

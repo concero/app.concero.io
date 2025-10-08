@@ -32,8 +32,9 @@ export const BurgerButton = (props: TProps) => {
 	})
 	const fadeAnimation = useSpring({
 		to: {
+			zIndex: 1,
 			opacity: isMenuOpened ? 1 : 0,
-			transform: isMenuOpened ? 'translateY(0)' : 'translateY(-100px)',
+			transform: isMenuOpened ? 'translateY(0)' : 'translateY(-200%)',
 			pointerEvents: isMenuOpened ? ('auto' as const) : ('none' as const),
 		},
 		config: {
@@ -68,7 +69,7 @@ export const BurgerButton = (props: TProps) => {
 						e.stopPropagation()
 					}}
 					style={fadeAnimation}
-					className={cls.menu_container}
+					className={clsx(cls.menu_container, cls.hidden)}
 				>
 					<BurgerMenuContext.Provider value={{ closeMenu: handleMenuClose }}>
 						{menuContent}

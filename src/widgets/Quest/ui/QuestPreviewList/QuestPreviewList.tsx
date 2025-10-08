@@ -31,7 +31,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 					<QuestPreviewItem
 						quest={quest}
 						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 						className={clsx(cls.preview_item, cls.size_xl)}
 					/>
 				))}
@@ -39,7 +39,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 					<QuestPreviewItem
 						quest={quest}
 						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 						className={clsx(cls.preview_item, cls.size_l)}
 					/>
 				))}
@@ -47,7 +47,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 					<QuestPreviewItem
 						quest={quest}
 						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 						className={clsx(cls.preview_item, cls.size_l)}
 					/>
 				))}
@@ -55,7 +55,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 					<QuestPreviewItem
 						quest={quest}
 						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 						className={clsx(cls.preview_item, cls.size_l)}
 					/>
 				))}
@@ -65,7 +65,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 					<QuestPreviewItem
 						quest={quest}
 						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.questInstanceId]}
+						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
 						className={clsx(cls.preview_item, cls.size_m)}
 					/>
 				))}

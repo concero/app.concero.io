@@ -23,5 +23,5 @@ interface TextProps {
 }
 
 export const Text = ({ variant, children, className, ellipsis }: TextProps) => {
-	return <span className={`${cls[variant]} ${ellipsis ? cls.ellipsis : ''} ${className}`}>{children}</span>
+	return <span className={`${cls[variant]} ${ellipsis ? cls.ellipsis : ''} ${className ?? ''}`}>{children}</span>
 }

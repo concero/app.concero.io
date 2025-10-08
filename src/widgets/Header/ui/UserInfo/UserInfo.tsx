@@ -27,7 +27,7 @@ export const UserInfo = (props: TProps) => {
 		leaderList?.users && address
 			? (leaderList.users.find(user => user.address.toLowerCase() === address.toLowerCase())?.rank ?? null)
 			: null
-	const isUserTop1K = userRank ?? Infinity < 1000
+	const isUserTop1K = (userRank ?? Infinity) < 1000
 	const userRankToShow = userRank ? (userRank > 1000 ? '1K+' : userRank) : '...'
 
 	if (!user) {
@@ -44,9 +44,6 @@ export const UserInfo = (props: TProps) => {
 				<Tag variant="branded" className={clsx(cls.gradient, cls.cers_icon)}>
 					<CersIcon width={'24px'} height={'24px'} />
 				</Tag>
-				{/* <Tag variant="branded" size="m" className={clsx(cls.gradient)}>
-					{summaryMultiplier}x
-				</Tag> */}
 
 				<TooltipWrapper
 					tooltipId={'user-multiplier'}

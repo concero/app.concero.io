@@ -10,9 +10,6 @@
 	bottom: 0;
 	z-index: 2;
 }
-.hidden {
-	z-index: -10 !important;
-}
 .opened {
 	outline: 2px solid var(--color-accent-500) !important;
 	outline-offset: 2px !important;
@@ -37,5 +34,12 @@
 		height: 100vh;
 		border-radius: 0;
 		box-shadow: none;
+	}
+}
+.hidden {
+	z-index: -10 !important;
+	transform: translateY(-200%);
+	& > * {
+		pointer-events: none;
 	}
 }

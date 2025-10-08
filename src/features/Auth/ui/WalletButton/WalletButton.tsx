@@ -50,7 +50,7 @@ export const WalletButton = ({ className, isFull = false, setLoading }: Props) =
 		<Button
 			isFull={isFull}
 			leftIcon={isConnected ? <IconWallet size={16} color="var(--color-gray-600)" /> : null}
-			className={`${classNames.buttonWallet} ${className} ${isConnected ? classNames.is_connected : ''}`}
+			className={`${classNames.button_wallet} ${className} ${isConnected ? classNames.is_connected : ''}`}
 			variant={isConnected ? 'secondary' : 'primary'}
 			rightIcon={isConnected && <TrailArrowRightIcon />}
 			onClick={handleClick}
