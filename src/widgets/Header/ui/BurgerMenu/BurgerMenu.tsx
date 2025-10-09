@@ -29,7 +29,12 @@ export const BurgerMenu = (props: TBurgeMenuProps) => {
 		<VStack gap="space_0_75" className={cls.mobile_view}>
 			{address && isTabletOrLess && (
 				<>
-					<ProfileButton address={address} nickname={nickname ?? null} onClick={closeMenu} />
+					<ProfileButton
+						address={address}
+						nickname={nickname ?? null}
+						onClick={closeMenu}
+						classNameAvatar={cls.avatar}
+					/>
 					<div className={cls.spliiter}></div>
 				</>
 			)}
@@ -42,14 +47,12 @@ export const BurgerMenu = (props: TBurgeMenuProps) => {
 						className={cls.quest_link}
 						to={routes.quests}
 						onClick={() => {
-							console.log('redirect')
-
 							if (!isQuestsPage) {
 								closeMenu?.()
 							}
 						}}
 					>
-						<IconButton variant={isQuestsPage ? 'secondary_color' : 'secondary'}>
+						<IconButton variant={isQuestsPage ? 'secondary_color' : 'secondary'} className={cls.icon}>
 							<GoalIcon />
 						</IconButton>
 						<div className={clsx(cls.link_btn, { [cls.active]: isQuestsPage })}>Quests</div>
@@ -67,12 +70,13 @@ export const BurgerMenu = (props: TBurgeMenuProps) => {
 							}
 						}}
 					>
-						<IconButton variant={isTestingPage ? 'secondary_color' : 'secondary'}>
+						<IconButton variant={isTestingPage ? 'secondary_color' : 'secondary'} className={cls.icon}>
 							<RocketIcon />
 						</IconButton>
 
 						<div className={clsx(cls.link_btn, { [cls.active]: isTestingPage })}>Testing</div>
 					</Link>
+					<div className={cls.spliiter}></div>
 				</>
 			)}
 			<ThemeSwitcher />

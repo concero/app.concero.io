@@ -16,10 +16,11 @@ type TProps = {
 	nickname: TUserResponse['nickname']
 	shortView?: boolean
 	onClick?: () => void
+	classNameAvatar?: string
 }
 
 export const ProfileButton = (props: TProps) => {
-	const { address, nickname, shortView, onClick } = props
+	const { address, nickname, shortView, onClick, classNameAvatar } = props
 	const navigate = useNavigate()
 	const [isHovered, setIsHovered] = useState<boolean>(false)
 
@@ -27,7 +28,7 @@ export const ProfileButton = (props: TProps) => {
 		return (
 			<Avatar
 				address={address as Address}
-				className={clsx(cls.profile_avatar, cls.big_avatar)}
+				className={clsx(cls.profile_avatar, cls.big_avatar, classNameAvatar)}
 				isHovered={isHovered}
 				htmlProps={{
 					onClick: () => {
@@ -45,6 +46,7 @@ export const ProfileButton = (props: TProps) => {
 	return (
 		<HStack
 			justify="between"
+			gap="space_0_5"
 			className={cls.profile_button}
 			htmlProps={{
 				onClick: () => {
@@ -55,14 +57,18 @@ export const ProfileButton = (props: TProps) => {
 				onMouseLeave: () => setIsHovered(false),
 			}}
 		>
-			<HStack gap={'space_0_5'}>
-				<Avatar address={address as Address} className={cls.profile_avatar} isHovered={isHovered} />
+			<HStack gap={'space_0_5'} className={cls.wrap_avatar_text}>
+				<Avatar
+					address={address as Address}
+					className={clsx(cls.profile_avatar, classNameAvatar)}
+					isHovered={isHovered}
+				/>
 				{nickname ? (
 					<VStack>
-						<Text variant="heading_medium" ellipsis>
+						<Text variant="heading_medium" ellipsis className={cls.nickname}>
 							{nickname}
 						</Text>
-						<Text variant="body_small" className={cls.address}>
+						<Text variant="body_medium" className={cls.address}>
 							{addressToShow}
 						</Text>
 					</VStack>

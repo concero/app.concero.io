@@ -3,11 +3,19 @@
 	&:hover {
 		cursor: pointer;
 	}
+	.nickname {
+		color: var(--color-gray-700);
+	}
 	.address {
 		color: var(--color-gray-600);
 	}
 	.only_address {
 		color: var(--color-gray-700);
+	}
+	.wrap_avatar_text {
+		& > :nth-child(2) {
+			max-width: 98px;
+		}
 	}
 }
 

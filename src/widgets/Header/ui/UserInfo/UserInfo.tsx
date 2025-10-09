@@ -28,7 +28,8 @@ export const UserInfo = (props: TProps) => {
 			? (leaderList.users.find(user => user.address.toLowerCase() === address.toLowerCase())?.rank ?? null)
 			: null
 	const isUserTop1K = (userRank ?? Infinity) < 1000
-	const userRankToShow = userRank ? (userRank > 1000 ? '1K+' : userRank) : '...'
+
+	const userRankToShow = userRank ? (userRank > 999 ? `${Math.round(userRank / 1000)}K+` : userRank) : '...'
 
 	if (!user) {
 		return <WalletButton />

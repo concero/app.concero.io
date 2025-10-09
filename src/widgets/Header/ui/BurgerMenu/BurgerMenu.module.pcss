@@ -1,3 +1,7 @@
+.avatar {
+	width: 48px;
+	height: 48px;
+}
 .spliiter {
 	height: 1px;
 	width: 100%;
@@ -10,6 +14,10 @@
 	justify-content: flex-start;
 	gap: var(--space-s);
 	width: 100%;
+	button.icon {
+		min-width: 48px;
+		min-height: 48px;
+	}
 	.active {
 		color: var(--color-accent-600);
 	}
@@ -19,5 +27,7 @@
 		justify-content: flex-start;
 		align-items: center;
 		width: 100%;
+		color: var(--color-gray-600);
+		font: var(--font-button-large);
 	}
 }

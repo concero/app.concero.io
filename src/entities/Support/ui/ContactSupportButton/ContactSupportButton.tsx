@@ -22,7 +22,7 @@ export const ContactSupportButton = () => {
 			>
 				Contact support
 			</Button>
-			{createPortal(<ContactSupportModal isShow={isOpen} setIsShow={setIsOpen} />, document.body)}
+			{isOpen && createPortal(<ContactSupportModal isShow={isOpen} setIsShow={setIsOpen} />, document.body)}
 		</>
 	)
 }

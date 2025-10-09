@@ -108,7 +108,6 @@ export const Leaderboard = () => {
 	const isMobileView = useMediaQuery('mobile', 'only')
 	const { data: leaders } = useGetLeaderboard(user.data?.payload?.address)
 	const userList = leaders?.users
-	console.log({ userList })
 
 	return (
 		<VStack gap="space_1" className={cls.card}>
