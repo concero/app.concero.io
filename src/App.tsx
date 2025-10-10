@@ -3,7 +3,6 @@ import { PostHogProvider } from 'posthog-js/react'
 import { WagmiProvider } from 'wagmi'
 import { Navigator } from './Navigator'
 import { useEffect } from 'react'
-import { initPosthog } from './utils/initPosthog'
 import { bigNumberSettings } from './utils/bigNumberSettings'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './shared/api/tanstackClient'
@@ -12,6 +11,7 @@ import { BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from '@/app/providers/ErrorBoundary/ErrorBoundary'
 import { ThemeProvider } from '@concero/ui-kit'
 import { config } from './shared/api/wagmi'
+import { initPosthog } from './shared/posthog/initPosthog'
 
 function App() {
 	useEffect(() => {
@@ -21,7 +21,11 @@ function App() {
 
 	return (
 		<ErrorBoundary>
-			<PostHogProvider>
+			<PostHogProvider
+				options={{
+					disable_session_recording: true,
+				}}
+			>
 				<I18Provider>
 					<WagmiProvider config={config}>
 						<QueryClientProvider client={queryClient}>
