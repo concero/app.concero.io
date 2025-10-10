@@ -6,6 +6,7 @@ export function initPosthog() {
 		posthog.init(config.POSTHOG_API_KEY, {
 			api_host: `${config.CONCERO_DOMAIN_URL}/posthog`,
 			autocapture: false,
+			disable_session_recording: true,
 		})
 
 		localStorage.setItem('app-concero-session-id', posthog.get_session_id())

@@ -13,7 +13,11 @@ import { App } from './app/App'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<ErrorBoundary>
-		<PostHogProvider>
+		<PostHogProvider
+			options={{
+				disable_session_recording: true,
+			}}
+		>
 			<I18Provider>
 				<WagmiProvider config={config}>
 					<QueryClientProvider client={queryClient}>
