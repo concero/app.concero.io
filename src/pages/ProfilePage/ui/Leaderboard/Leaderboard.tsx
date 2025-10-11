@@ -121,7 +121,7 @@ export const Leaderboard = () => {
 						columns={isMobileView ? columnsMobileView : columns}
 						showHeader={!isMobileView}
 						className={cls.table}
-						data={[...userList, ...userList, ...userList, ...userList, ...userList]}
+						data={userList}
 					/>
 				) : null}
 			</VStack>

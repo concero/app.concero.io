@@ -1,12 +1,16 @@
-import { TUserResponse, userActionsService } from '@/entities/User'
+import { TUserResponse } from '@/entities/User'
 import { Button, Spinner } from '@concero/ui-kit'
 import clsx from 'clsx'
 import cls from './HistoryUserActions.module.pcss'
-import { useTranslation } from 'react-i18next'
-import React from 'react'
-import { UserAction } from './UserAction'
-import { Separator } from '@/components/layout/Separator/Separator'
 import { useUserAction } from '@/entities/User/api/userApi'
+import { Text } from '@/shared/ui'
+import { Separator } from '@/components/layout/Separator/Separator'
+import { HStack } from '@/shared/ui/Stack'
+import { Table, TColumn } from '@/shared/ui/Table/Table'
+import { TUserActionResponse } from '@/entities/User'
+import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
+import { getUserActionName } from '../../model/lib/history/getUserActionName'
+import { getUserActionPoints } from '../../model/lib/history/getUserActionPoints'
 
 type TProps = {
 	className?: string
@@ -15,14 +19,51 @@ type TProps = {
 
 const TAKE = 10
 
-export const HistoryUserActions = ({ user, className }: TProps) => {
-	const { t } = useTranslation()
+const columns: TColumn<TUserActionResponse['actions'][number], keyof TUserActionResponse['actions'][number]>[] = [
+	{
+		key: 'data',
+		title: 'Action',
+		renderCell: (value: string, record) => {
+			return getUserActionName({ action: record })
+		},
+	},
+	{
+		key: 'points',
+		title: 'CERs',
+		renderCell: (value: string, record) => {
+			return <HStack gap="space_0_5">{getUserActionPoints(value)}</HStack>
+		},
+	},
+	{
+		key: 'executedAt',
+		title: 'Date',
+		renderCell: (value: string) => (
+			<Text variant="body_medium" className={cls.text}>
+				{value}
+			</Text>
+		),
+	},
+]
+const columnsMobileView: TColumn<TUserActionResponse['actions'][number]>[] = [
+	{
+		key: 'data',
+		title: 'User',
+		renderCell: (value: string, record) => {
+			return (
+				<HStack gap="space_0_75" align="start">
+					ad
+				</HStack>
+			)
+		},
+	},
+]
 
+export const HistoryUserActions = ({ user, className }: TProps) => {
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useUserAction({
 		address: user.address,
 		take: TAKE,
 	})
-
+	const isMobileView = useMediaQuery('mobile', 'only')
 	if (status === 'pending') {
 		return (
 			<div className={clsx(cls.loader_wrap)}>
@@ -32,8 +73,17 @@ export const HistoryUserActions = ({ user, className }: TProps) => {
 	}
 
 	if (status === 'error') {
-		return <p>{t('utils.couldNotLoadData')}</p>
+		return <Text variant="body_medium">Couldn’t load data</Text>
 	}
+	const prepareForTableData: TUserActionResponse['actions'] = []
+	for (const page of data.pages) {
+		if (page.payload?.actions) {
+			for (const action of page.payload?.actions) {
+				prepareForTableData.push(action)
+			}
+		}
+	}
+	console.log({ prepareForTableData })
 
 	return (
 		<div className={clsx(cls.history_wrapper, className)}>
@@ -48,14 +98,12 @@ export const HistoryUserActions = ({ user, className }: TProps) => {
 			<div className={cls.scrollable_content}>
 				{data && (
 					<>
-						{data.pages.map((page, pageIndex) => (
-							<React.Fragment key={pageIndex}>
-								{page.payload &&
-									page.payload.actions.map(action => (
-										<UserAction key={JSON.stringify(action)} action={action} />
-									))}
-							</React.Fragment>
-						))}
+						<Table
+							columns={isMobileView ? columnsMobileView : columns}
+							showHeader={!isMobileView}
+							className={cls.table}
+							data={prepareForTableData}
+						/>
 						{hasNextPage && (
 							<div className={clsx(cls.user_action, cls.load_next_wrap)}>
 								<Button

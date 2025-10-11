@@ -3,8 +3,8 @@ import { HStack, VStack } from '../Stack'
 import cls from './Table.module.pcss'
 import clsx from 'clsx'
 
-export type TColumn<TData> = {
-	key: string
+export type TColumn<TData, TKey extends string = string> = {
+	key: TKey
 	title: React.ReactNode
 	width?: number
 	renderHeader?: () => React.ReactNode

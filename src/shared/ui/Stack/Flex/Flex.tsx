@@ -1,25 +1,13 @@
 import { type MutableRefObject, type RefObject, type HTMLAttributes, type ReactNode, CSSProperties } from 'react'
 import cls from './Flex.module.pcss'
 import clsx from 'clsx'
-import { HintedString } from '@/types/utils'
-import { OmitTyped } from '@/shared/types/utils'
+import { HintedString, OmitTyped } from '@/shared/types/utils'
 
 export type FlexJustify = 'start' | 'center' | 'end' | 'between'
 export type FlexAlign = 'start' | 'center' | 'end'
 export type FlexDirection = 'row' | 'column'
 export type FlexWrap = 'nowrap' | 'wrap'
-type FlexGap =
-	| 'space_0_25'
-	| 'space_0_5'
-	| 'space_0_75'
-	| 'space_1'
-	| 'space_1_5'
-	| 'space_2'
-	| 'space_2_5'
-	| 'space_3'
-	| 'space_4'
-	| 'space_6'
-	| 'space_8'
+
 const flexGapValues = [
 	'space_0_25',
 	'space_0_5',

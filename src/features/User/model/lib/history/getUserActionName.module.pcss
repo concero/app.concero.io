@@ -1,0 +1,29 @@
+.title {
+	font: var(--font-heading-small);
+	color: var(--color-gray-700);
+}
+.action_info {
+	.action {
+		font: var(--font-heading-small);
+		color: var(--color-gray-700);
+	}
+	.from_to {
+		font: var(--font-body-medium);
+		color: var(--color-gray-500);
+	}
+	.amount_value {
+		font: var(--font-heading-small);
+		color: var(--color-gray-700);
+	}
+}
+
+@media (max-width: $mobile_break) {
+	.title {
+		padding-top: var(--space-m);
+		padding-bottom: var(--space-xxs);
+	}
+	.action_info {
+		padding-top: var(--space-m);
+		padding-bottom: var(--space-xxs);
+	}
+}
