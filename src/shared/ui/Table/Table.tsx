@@ -16,16 +16,23 @@ export type TTableProps<TData = any> = {
 	columns: TColumn<TData>[]
 	data?: TData[]
 	showHeader?: boolean
+	onScrollEnd?: () => void
+	scrollThreshold?: number
 }
 
 export const Table = (props: TTableProps) => {
-	const { className, columns, data = [], showHeader = true } = props
+	const { className, columns, data = [], showHeader = true, onScrollEnd, scrollThreshold = 100 } = props
 	const [showShadow, setShowShadow] = useState(true)
 	const bodyRef = useRef<HTMLDivElement>(null)
 	const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
 		const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
 		const isScrolledToBottom = scrollTop + clientHeight >= scrollHeight - 2
+		// const isScrolledToBottom = scrollHeight - scrollTop - clientHeight <= scrollThreshold
 		setShowShadow(!isScrolledToBottom)
+
+		if (isScrolledToBottom && onScrollEnd) {
+			onScrollEnd()
+		}
 	}
 
 	useEffect(() => {
