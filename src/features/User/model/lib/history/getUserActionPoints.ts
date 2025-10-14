@@ -6,6 +6,7 @@ const returnValue = ['n/a'] as const
 export const getUserActionPoints = (
 	points?: string | number | null,
 ): HintedString<(typeof returnValue)[number], `${'+' | '-'}${string | number}`> => {
+	if (points == 0) return '+0'
 	if (!points) return 'n/a'
 
 	const convertedPoints = Number(points)

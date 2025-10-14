@@ -106,7 +106,7 @@ const numberFormat = new Intl.NumberFormat('en-US', {
 export const Leaderboard = () => {
 	const user = useUser()
 	const isMobileView = useMediaQuery('mobile', 'only')
-	const { data: leaders } = useGetLeaderboard(user.data?.payload?.address)
+	const { data: leaders } = useGetLeaderboard(user.data?.payload?.address, 100)
 	const userList = leaders?.users
 
 	return (
