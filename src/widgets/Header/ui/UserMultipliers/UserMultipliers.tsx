@@ -9,10 +9,10 @@ export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
 	return (
 		<VStack gap="space_0_75" justify="between" className={cls.user_multipliers}>
 			<HStack justify="between" className={cls.multiplier_heading}>
-				<Text variant="heading_small" className={cls.heading}>
+				<Text variant="heading_medium" className={cls.heading}>
 					Multipliers
 				</Text>
-				<Text variant="heading_small" className={cls.multiplier_value}>
+				<Text variant="heading_medium" className={cls.multiplier_value}>
 					{totalMultiplier}x
 				</Text>
 			</HStack>
