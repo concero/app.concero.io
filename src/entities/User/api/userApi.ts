@@ -1,6 +1,6 @@
 import { Address } from 'viem'
 import { TUpdateNicknameArgs } from '../model/types/request'
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
 	NicknameError,
 	TGetLeaderBoardReponse,
@@ -289,6 +289,7 @@ export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
 		refetchOnWindowFocus: true,
 		refetchInterval: 10_000,
 		refetchIntervalInBackground: true,
+		gcTime: 10_000,
 	})
 }
 export const useUserCountTx = (options?: UserApi.GetUserCountTx.RequestBody) => {
@@ -299,6 +300,7 @@ export const useUserCountTx = (options?: UserApi.GetUserCountTx.RequestBody) => 
 		refetchOnWindowFocus: true,
 		refetchInterval: 10_000,
 		refetchIntervalInBackground: true,
+		placeholderData: keepPreviousData,
 	})
 }
 
