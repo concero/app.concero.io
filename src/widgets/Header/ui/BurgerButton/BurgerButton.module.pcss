@@ -16,7 +16,7 @@
 }
 .menu_container {
 	position: absolute;
-	right: 130px;
+	right: 135px;
 	top: 60px;
 	width: 320px;
 	background-color: var(--color-gray-25);
@@ -26,6 +26,9 @@
 
 	box-shadow: 0px 2px 12px 0px var(--color-gray-100);
 
+	@media (max-width: 1279px) {
+		right: 32px;
+	}
 	@media (max-width: 743px) {
 		width: 100%;
 		right: 0;
