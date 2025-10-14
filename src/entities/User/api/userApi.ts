@@ -289,6 +289,7 @@ export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
 		refetchOnWindowFocus: true,
 		refetchInterval: 10_000,
 		refetchIntervalInBackground: true,
+		placeholderData: keepPreviousData,
 		gcTime: 10_000,
 	})
 }
@@ -298,7 +299,7 @@ export const useUserCountTx = (options?: UserApi.GetUserCountTx.RequestBody) => 
 		queryFn: () => userServiceApi.getUserCountTx(options as UserApi.GetUserCountTx.RequestBody),
 		enabled: !!options?.address && !!options?.from && !!options?.to,
 		refetchOnWindowFocus: true,
-		refetchInterval: 10_000,
+		refetchInterval: 20_000,
 		refetchIntervalInBackground: true,
 		placeholderData: keepPreviousData,
 	})
