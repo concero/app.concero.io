@@ -105,7 +105,7 @@ export function ProgressBar({
 						}}
 					>
 						<Tag size="md" variant="branded">
-							{toLocaleNumber(currentValue)}
+							{currentValue}
 							{symbol}
 						</Tag>
 					</div>
