@@ -171,6 +171,13 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
 		}
+		console.log('check_volume', {
+			maxVolume: Number(step?.details?.value),
+			minVolume: 0,
+			currentVolume:
+				roundDownToPrecision(volumeResponse?.payload?.volumeUSD ?? 0, Number(step?.details?.value) ?? 0) ??
+				Number(0),
+		})
 		return (
 			<VStack gap="space_0_75">
 				<ProgressBar
