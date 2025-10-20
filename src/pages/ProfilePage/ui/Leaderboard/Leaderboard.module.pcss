@@ -27,9 +27,7 @@
 		& > :first-child {
 			width: 128px;
 			height: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
+			padding-left: var(--space-s);
 			@media screen and (width < 1920px) {
 				width: auto;
 				min-width: 80px;
@@ -46,10 +44,11 @@
 		& > * {
 			color: var(--color-gray-700);
 			@media screen and (width > 744px) {
+				height: 100%;
 				padding-top: var(--space-s);
 				padding-right: var(--space-l);
 				padding-bottom: var(--space-s);
-				padding-left: var(--space-s);
+				padding-left: var(--space-xs);
 			}
 		}
 	}
@@ -59,6 +58,7 @@
 	}
 
 	.text {
+		width: min-content;
 		color: var(--color-gray-700);
 	}
 	.secondary_text {

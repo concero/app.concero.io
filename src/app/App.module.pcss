@@ -8,6 +8,15 @@
 	padding: var(--space-xl) var(--space-xl) var(--space-xxxxl) var(--space-xl);
 	background: linear-gradient(180deg, var(--color-gray-25) 0%, var(--color-gray-50) 30%);
 
+	@media (min-width: 1280px) {
+		display: grid;
+		grid-template-columns: repeat(24, minmax(0, 1fr));
+		column-gap: 16px;
+		& > * {
+			grid-column: 6 / 20; /* 6..19 включительно = 14 колонок */
+		}
+	}
+
 	@media screen and (width < 744px) {
 		padding: var(--space-m) var(--space-m) var(--space-xxxxl) var(--space-m);
 	}

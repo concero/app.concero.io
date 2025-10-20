@@ -11,94 +11,6 @@ import { TGetLeaderBoardReponse } from '@/entities/User/model/types/response'
 import { Address } from 'viem'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 
-const columns: TColumn<TGetLeaderBoardReponse['users'][number]>[] = [
-	{
-		key: 'rank',
-		title: 'Rank',
-		renderCell: (value: string) => <Text variant="body_medium">{value}</Text>,
-		renderHeader: () => (
-			<HStack>
-				<Text variant="heading_small" className={cls.secondary_text}>
-					Rank
-				</Text>
-			</HStack>
-		),
-		width: 128,
-	},
-	{
-		key: 'user',
-		title: 'User',
-		renderHeader: () => (
-			<HStack max>
-				<Text variant="heading_small" className={cls.secondary_text}>
-					User
-				</Text>
-			</HStack>
-		),
-		renderCell: (value: string, record) => {
-			return (
-				<HStack gap="space_0_5">
-					<Avatar address={record.address as Address} className={cls.avatar} />
-					<Text variant="heading_small" className={cls.text}>
-						{record.nickname ?? truncateWallet(record.address)}
-					</Text>
-				</HStack>
-			)
-		},
-	},
-	{
-		key: 'points',
-		title: 'CERs',
-		renderCell: (value: string) => (
-			<Text variant="body_medium" className={cls.text}>
-				{value}
-			</Text>
-		),
-	},
-]
-const columnsMobileView: TColumn<TGetLeaderBoardReponse['users'][number]>[] = [
-	{
-		key: 'user',
-		title: 'User',
-		renderCell: (value: string, record) => {
-			return (
-				<HStack gap="space_0_75" align="start">
-					<HStack
-						gap="space_0_25"
-						htmlProps={{
-							style: {
-								width: '69px',
-							},
-						}}
-					>
-						<Text variant="body_medium">#</Text>
-						<Text variant="body_medium" className={cls.text}>
-							{record.rank}
-						</Text>
-					</HStack>
-					<VStack gap="space_0_5">
-						<HStack gap="space_0_5">
-							<Avatar address="0x515151515" className={cls.avatar} />
-							<Text variant="heading_small" className={cls.text}>
-								{record.nickname ?? truncateWallet(record.address)}
-							</Text>
-							<Tag size="s" variant="neutral">
-								You
-							</Tag>
-						</HStack>
-						<HStack gap="space_0_25">
-							<Text variant="body_medium" className={cls.text}>
-								{numberFormat.format(Number(record.points))}
-							</Text>
-							<Text variant="body_medium">CERs</Text>
-						</HStack>
-					</VStack>
-				</HStack>
-			)
-		},
-	},
-]
-
 const numberFormat = new Intl.NumberFormat('en-US', {
 	minimumFractionDigits: 3,
 	maximumFractionDigits: 3,
@@ -109,6 +21,136 @@ export const Leaderboard = () => {
 	const { data: leaders } = useGetLeaderboard(user.data?.payload?.address, 100)
 	const userList = leaders?.users
 
+	const columns: TColumn<TGetLeaderBoardReponse['users'][number]>[] = [
+		{
+			key: 'rank',
+			title: 'Rank',
+			renderCell: (value: string) => <Text variant="body_medium">{value}</Text>,
+			renderHeader: () => (
+				<HStack>
+					<Text variant="heading_small" className={cls.secondary_text}>
+						Rank
+					</Text>
+				</HStack>
+			),
+			width: 128,
+		},
+		{
+			key: 'user',
+			title: 'User',
+			renderHeader: () => (
+				<HStack max>
+					<Text variant="heading_small" className={cls.secondary_text}>
+						User
+					</Text>
+				</HStack>
+			),
+			renderCell: (value: string, record) => {
+				return (
+					<HStack
+						gap="space_0_5"
+						htmlProps={{
+							style: {
+								width: 'calc(100% - 24px)',
+							},
+						}}
+					>
+						<div>
+							<Avatar address={record.address as Address} className={cls.avatar} />
+						</div>
+						<Text variant="heading_small" className={cls.text} ellipsis>
+							{record.nickname ?? truncateWallet(record.address)}
+						</Text>
+						{user.data?.payload?.address &&
+						user.data.payload.address.toLowerCase().trim() == record.address.toLowerCase().trim() ? (
+							<Tag size="s" variant="neutral">
+								You
+							</Tag>
+						) : null}
+					</HStack>
+				)
+			},
+		},
+		{
+			key: 'points',
+			title: 'CERs',
+			renderCell: (value: string) => (
+				<Text variant="body_medium" className={cls.text}>
+					{value}
+				</Text>
+			),
+		},
+	]
+	const columnsMobileView: TColumn<TGetLeaderBoardReponse['users'][number]>[] = [
+		{
+			key: 'user',
+			title: 'User',
+			renderCell: (value: string, record) => {
+				return (
+					<HStack
+						gap="space_0_75"
+						align="start"
+						max
+						htmlProps={{
+							style: {},
+						}}
+					>
+						<HStack
+							gap="space_0_25"
+							htmlProps={{
+								style: {
+									minWidth: '69px',
+								},
+							}}
+						>
+							<Text variant="body_medium">#</Text>
+							<Text variant="body_medium" className={cls.text}>
+								{record.rank}
+							</Text>
+						</HStack>
+						<VStack
+							gap="space_0_5"
+							max
+							htmlProps={{
+								style: {
+									overflow: 'auto',
+								},
+							}}
+						>
+							<HStack
+								gap="space_0_5"
+								htmlProps={{
+									style: {
+										width: 'calc(100% - 24px)',
+									},
+								}}
+							>
+								<div>
+									<Avatar address={record.address as Address} className={cls.avatar} />
+								</div>
+								<Text variant="heading_small" className={cls.text} ellipsis>
+									{record.nickname ?? truncateWallet(record.address)}
+								</Text>
+								{user.data?.payload?.address &&
+								user.data.payload.address.toLowerCase().trim() ==
+									record.address.toLowerCase().trim() ? (
+									<Tag size="s" variant="neutral">
+										You
+									</Tag>
+								) : null}
+							</HStack>
+							<HStack gap="space_0_25">
+								<Text variant="body_medium" className={cls.text}>
+									{numberFormat.format(Number(record.points))}
+								</Text>
+								<Text variant="body_medium">CERs</Text>
+							</HStack>
+						</VStack>
+					</HStack>
+				)
+			},
+		},
+	]
 	return (
 		<VStack gap="space_1" className={cls.card}>
 			<Text variant="heading_large" className={cls.title}>
@@ -121,7 +163,7 @@ export const Leaderboard = () => {
 						columns={isMobileView ? columnsMobileView : columns}
 						showHeader={!isMobileView}
 						className={cls.table}
-						data={userList}
+						data={userList.filter(user => user.rank <= 99)}
 					/>
 				) : null}
 			</VStack>
@@ -174,9 +216,18 @@ const UserRow = ({
 				</HStack>
 
 				<VStack gap="space_0_5">
-					<HStack gap="space_0_5">
-						<Avatar address="0x515151515" className={cls.avatar} />
-						<Text variant="heading_small" className={cls.text}>
+					<HStack
+						gap="space_0_5"
+						htmlProps={{
+							style: {
+								width: 'calc(100% - 24px)',
+							},
+						}}
+					>
+						<div>
+							<Avatar address="0x515151515" className={cls.avatar} />
+						</div>
+						<Text variant="heading_small" className={cls.text} ellipsis>
 							{userData.nickname ?? truncateWallet(userData.address)}
 						</Text>
 						<Tag size="s" variant="neutral">
@@ -195,20 +246,18 @@ const UserRow = ({
 	}
 	return (
 		<HStack className={cls.user_row} max>
-			<div>
-				<div
-					style={{
+			<HStack
+				htmlProps={{
+					style: {
 						height: '24px',
-						display: 'flex',
-						alignItems: 'center',
-						flexDirection: 'row',
-					}}
-				>
-					<Text variant="body_medium" className={cls.text}>
-						{foundedLeaderUser?.rank}
-					</Text>
-				</div>
-			</div>
+					},
+				}}
+				align="center"
+			>
+				<Text variant="body_medium" className={cls.text}>
+					{foundedLeaderUser?.rank}
+				</Text>
+			</HStack>
 			<HStack gap="space_0_5">
 				<Avatar address="0x515151515" className={cls.avatar} />
 				<Text variant="heading_small">{userData.nickname ?? truncateWallet(userData.address)}</Text>

@@ -66,7 +66,10 @@ const columnsMobileView: TColumn<TUserActionResponse['actions'][number]>[] = [
 				<VStack gap="space_0_5" className={cls.user_action} max>
 					{getUserActionName({ action: record })}
 					<HStack gap="12px" justify="between" max>
-						<Text variant="heading_small" className={cls.cers_text}>
+						<Text
+							variant="heading_small"
+							className={clsx(cls.cers_text, { [cls.danger_text]: (record?.points ?? 0) < 0 })}
+						>
 							{getUserActionPoints(record.points)}
 						</Text>
 						<Text variant="body_medium" className={cls.date_text}>
@@ -120,18 +123,4 @@ export const HistoryUserActions = ({ user, className }: TProps) => {
 			)}
 		</div>
 	)
-}
-{
-	/* {hasNextPage && (
-	<div className={clsx(cls.user_action, cls.load_next_wrap)}>
-		<Button
-			onClick={() => fetchNextPage()}
-			isDisabled={isFetchingNextPage}
-			variant="secondary"
-			size="m"
-		>
-			{isFetchingNextPage ? 'Loading...' : 'Load More'}
-		</Button>
-	</div>
-)} */
 }
