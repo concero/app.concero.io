@@ -8,7 +8,7 @@ import { PageWrap } from '@/shared/ui'
 export const TestingPage = () => {
 	const { theme } = useTheme()
 	return (
-		<PageWrap>
+		<PageWrap className={cls.page_wrap}>
 			<div className={cls.testing_start_block}>
 				<img
 					src={theme === 'light' ? TestingPortalLightImage : TestingPortalDarkImage}

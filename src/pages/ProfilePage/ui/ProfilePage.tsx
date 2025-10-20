@@ -45,7 +45,7 @@ export const ProfilePage = () => {
 	const Social_Discord_toShow = socialDiscord?.shortname ?? '-'
 	const Social_Email_toShow = user.email ?? '-'
 	return (
-		<PageWrap>
+		<PageWrap className={cls.page_wrap}>
 			<Banners />
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>

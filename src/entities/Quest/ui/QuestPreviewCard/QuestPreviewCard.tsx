@@ -85,7 +85,7 @@ export const QuestPreviewCard = (props: TProps) => {
 				</div>
 			</div>
 			{showImage && (
-				<div className={cls.image_wrap}>
+				<div className={clsx(cls.image_wrap, { [cls.size_xl]: size === 'xl' })}>
 					<AppImage
 						src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
 						alt="Quest image"

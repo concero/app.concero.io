@@ -12,11 +12,10 @@
 		display: grid;
 		grid-template-columns: repeat(24, minmax(0, 1fr));
 		column-gap: 16px;
-		& > * {
-			grid-column: 6 / 20; /* 6..19 включительно = 14 колонок */
-		}
 	}
-
+	.footer {
+		grid-column: 1 / -1;
+	}
 	@media screen and (width < 744px) {
 		padding: var(--space-m) var(--space-m) var(--space-xxxxl) var(--space-m);
 	}

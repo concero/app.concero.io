@@ -1,3 +1,10 @@
+.page_wrap {
+	grid-column: 6 / 20;
+
+	@media screen and (width < 1280px) {
+		grid-column: 1 / -1;
+	}
+}
 .profile_card_wrap {
 	display: flex;
 	flex-direction: column;

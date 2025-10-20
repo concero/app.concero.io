@@ -21,22 +21,22 @@
 		.size_xl {
 			grid-column: span 2;
 			grid-row: span 2;
-			width: 764px;
+			/* width: 764px; */
 			height: 716px;
 		}
 		.size_l {
-			width: 374px;
+			/* width: 374px; */
 			height: 350px;
 		}
 
 		@media screen and (width < 1920px) {
 			grid-template-columns: repeat(3, 1fr);
 			.size_xl {
-				width: 668px;
+				/* width: 668px; */
 				height: 716px;
 			}
 			.size_l {
-				width: 326px;
+				/* width: 326px; */
 				height: 350px;
 			}
 		}
@@ -66,7 +66,8 @@
 		}
 	}
 	.size_m {
-		width: 326px;
+		grid-column: span 1;
+		/* width: 326px; */
 		@media screen and (width < 744px) {
 			width: 100%;
 		}

@@ -12,7 +12,7 @@ export const App = () => {
 				<Header />
 				<div className={cls.wrap_page}>
 					<AppRouter />
-					<Footer />
+					<Footer className={cls.footer} />
 				</div>
 			</CheckTermsOfUseDecorator>
 		</AppScreen>

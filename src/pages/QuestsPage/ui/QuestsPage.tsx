@@ -13,7 +13,7 @@ export const QuestsPage = () => {
 	const { data: userResponse } = useUserByAddress(address ? (address as Address) : undefined)
 	const user = userResponse?.payload
 	return (
-		<PageWrap>
+		<PageWrap className={cls.page_wrap}>
 			<Banners />
 			{user && (
 				<div className={cls.streak_wrap}>

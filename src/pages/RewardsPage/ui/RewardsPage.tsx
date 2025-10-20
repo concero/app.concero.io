@@ -13,7 +13,7 @@ import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 interface Props {
 	user: TUserResponse | null
 }
-
+/** @deprecated */
 export const RewardsPage = ({ user }: Props) => {
 	const { address } = useAccount()
 	if (configEnvs.REWARD_IS_NOT_AVAILABLE && !isAdminAddress(address)) {
@@ -21,7 +21,7 @@ export const RewardsPage = ({ user }: Props) => {
 	}
 
 	return (
-		<PageWrap>
+		<PageWrap className={cls.page_wrap}>
 			<Banners />
 			{user && (
 				<div className={cls.streak_wrap}>
@@ -30,7 +30,7 @@ export const RewardsPage = ({ user }: Props) => {
 				</div>
 			)}
 			<DailyTaskList />
-			<QuestPreviewList />
+			<QuestPreviewList groups={['rewards']} />
 		</PageWrap>
 	)
 }
