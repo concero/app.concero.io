@@ -73,7 +73,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 					/>
 				))}
 			</div>
-			<HStack gap="16px" wrap="wrap">
+			<div className={cls.list_small}>
 				{quest_size_m?.map(quest => (
 					<QuestPreviewItem
 						quest={quest}
@@ -82,7 +82,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 						className={clsx(cls.preview_item, cls.size_m)}
 					/>
 				))}
-			</HStack>
+			</div>
 		</div>
 	)
 }

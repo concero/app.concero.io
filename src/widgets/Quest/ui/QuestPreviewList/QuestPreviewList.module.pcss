@@ -65,11 +65,28 @@
 			}
 		}
 	}
-	.size_m {
-		grid-column: span 1;
-		/* width: 326px; */
+	.list_small {
+		display: grid;
+		gap: 16px;
+		grid-auto-flow: row;
+		grid-template-columns: repeat(4, 1fr);
+		width: 100%;
+
+		@media screen and (width < 1920px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		@media screen and (width < 1280px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
 		@media screen and (width < 744px) {
-			width: 100%;
+			grid-template-columns: 1fr;
+		}
+
+		.size_m {
+			grid-column: span 1;
+			@media screen and (width < 744px) {
+				width: 100%;
+			}
 		}
 	}
 }
