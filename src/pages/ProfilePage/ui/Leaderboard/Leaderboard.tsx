@@ -87,14 +87,7 @@ export const Leaderboard = () => {
 			title: 'User',
 			renderCell: (value: string, record) => {
 				return (
-					<HStack
-						gap="space_0_75"
-						align="start"
-						max
-						htmlProps={{
-							style: {},
-						}}
-					>
+					<HStack gap="space_0_75" align="start" max>
 						<HStack
 							gap="space_0_25"
 							htmlProps={{

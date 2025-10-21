@@ -8,7 +8,7 @@ import { PageWrap } from '@/shared/ui'
 export const TestingPage = () => {
 	const { theme } = useTheme()
 	return (
-		<PageWrap className={cls.page_wrap}>
+		<>
 			<div className={cls.testing_start_block}>
 				<img
 					src={theme === 'light' ? TestingPortalLightImage : TestingPortalDarkImage}
@@ -22,7 +22,9 @@ export const TestingPage = () => {
 					</div>
 				</div>
 			</div>
-			<QuestPreviewList groups={['testing']} />
-		</PageWrap>
+			<PageWrap className={cls.page_wrap}>
+				<QuestPreviewList groups={['testing']} />
+			</PageWrap>
+		</>
 	)
 }
