@@ -129,7 +129,7 @@ export const HoldingStreak = (props: TProps) => {
 				) : (
 					<div className={cls.placeholder_image_wrap}>
 						<img
-							width={'100%'}
+							width={'300px'}
 							height={'100%'}
 							src={theme === 'light' ? LpHoldingStreak : LpHoldingStreakDark}
 							loading="lazy"
@@ -150,7 +150,7 @@ export const HoldingStreak = (props: TProps) => {
 							</span>
 							<span className={cls.text_cers}>
 								{' '}
-								{getUserFutureMultiplier(user.streak.liquidityHold)}x CERs multiplier!
+								{getUserFutureMultiplier(user.streak?.liquidity_pool ?? 0)}x CERs multiplier!
 							</span>
 						</div>
 					</>

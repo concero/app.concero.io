@@ -85,11 +85,16 @@
 	}
 	.placeholder_image_wrap {
 		display: flex;
-		padding: 25px 6px 24px 5px;
-		width: 100%;
+		/* padding: 25px 6px 24px 5px; */
+		/* width: 100%; */
+		/* flex: 1 0 0; */
 		justify-content: center;
 		align-items: center;
-		flex: 1 0 0;
+		@media screen and (max-width: 375px) {
+			& img {
+				max-width: 80vw;
+			}
+		}
 	}
 
 	.wrap_support_text {

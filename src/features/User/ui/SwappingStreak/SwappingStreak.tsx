@@ -112,7 +112,7 @@ export const SwappingStreak = (props: TProps) => {
 				) : (
 					<div className={cls.placeholder_image_wrap}>
 						<img
-							width={'100%'}
+							width={'300px'}
 							height={'100%'}
 							src={theme === 'light' ? StreakPlaceholder : StreakPlaceholderDark}
 							loading="lazy"
