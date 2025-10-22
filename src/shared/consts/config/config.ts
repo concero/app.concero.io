@@ -32,7 +32,7 @@ export const configEnvs = {
 
 	// POOLS & LP
 	POOL_IS_NOT_AVAILABLE: false,
-	REWARD_IS_NOT_AVAILABLE: false,
+	REWARD_IS_NOT_AVAILABLE: true,
 	PROFILE_IS_NOT_AVAILABLE: false,
 
 	PARENT_POOL_CONTRACT: IS_TESTNET ? parentPoolBaseSepolia : parentPoolBase,
