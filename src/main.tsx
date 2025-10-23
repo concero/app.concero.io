@@ -4,13 +4,12 @@ import { ThemeProvider } from '@concero/ui-kit'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { PostHogProvider } from 'posthog-js/react'
 import { BrowserRouter } from 'react-router-dom'
-import { WagmiProvider } from 'wagmi'
 import ErrorBoundary from './app/providers/ErrorBoundary/ErrorBoundary'
 import { queryClient } from './shared/api/tanstackClient'
 import { I18Provider } from './shared/i18n/I18nextProvider'
-import { config } from './shared/api/wagmi'
 import { App } from './app/App'
 import { StrictMode } from 'react'
+import { Web3Provider } from './app/providers/Web3Provider/Web3Provider'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<StrictMode>
@@ -20,9 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 					disable_session_recording: true,
 				}}
 			>
-				<WagmiProvider config={config}>
-					<I18Provider>
-						<QueryClientProvider client={queryClient}>
+				<I18Provider>
+					<QueryClientProvider client={queryClient}>
+						<Web3Provider>
 							<BrowserRouter
 								future={{
 									v7_startTransition: true,
@@ -33,9 +32,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 									<App />
 								</ThemeProvider>
 							</BrowserRouter>
-						</QueryClientProvider>
-					</I18Provider>
-				</WagmiProvider>
+						</Web3Provider>
+					</QueryClientProvider>
+				</I18Provider>
 			</PostHogProvider>
 		</ErrorBoundary>
 	</StrictMode>,

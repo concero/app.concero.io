@@ -1,4 +1,4 @@
-import { Chain, http } from 'viem'
+import { Chain, fallback, http } from 'viem'
 import { TChainDTO } from '../../types/api'
 
 export function convertToViemChain(chainDto: TChainDTO): Chain {
@@ -19,11 +19,16 @@ export function convertToViemChain(chainDto: TChainDTO): Chain {
 }
 
 export function createTransports(chains: TChainDTO[]) {
-	const transports: Record<number, ReturnType<typeof http>> = {}
+	const transports: Record<number, ReturnType<typeof fallback>> = {}
+
 	for (const chain of chains) {
-		// Защита от пустых RPC
-		const rpc = chain.rpcs[0] ?? 'https://rpc.ankr.com/eth' // fallback
-		transports[chain.id] = http(rpc)
+		if (!chain.rpcs?.length) continue // skip invalid chains
+
+		transports[chain.id] = fallback(
+			chain.rpcs.map(url => http(url.trim(), { batch: true })),
+			{ retryCount: 3, retryDelay: 1000 },
+		)
 	}
+
 	return transports
 }
