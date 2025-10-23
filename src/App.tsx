@@ -12,6 +12,7 @@ import ErrorBoundary from '@/app/providers/ErrorBoundary/ErrorBoundary'
 import { ThemeProvider } from '@concero/ui-kit'
 import { config } from './shared/api/wagmi'
 import { initPosthog } from './shared/posthog/initPosthog'
+import { Web3Provider } from './app/providers/Web3Provider/Web3Provider'
 
 function App() {
 	useEffect(() => {
@@ -27,8 +28,8 @@ function App() {
 				}}
 			>
 				<I18Provider>
-					<WagmiProvider config={config}>
-						<QueryClientProvider client={queryClient}>
+					<QueryClientProvider client={queryClient}>
+						<Web3Provider>
 							<BrowserRouter
 								future={{
 									v7_startTransition: true,
@@ -39,8 +40,8 @@ function App() {
 									<Navigator />
 								</ThemeProvider>
 							</BrowserRouter>
-						</QueryClientProvider>
-					</WagmiProvider>
+						</Web3Provider>
+					</QueryClientProvider>
 				</I18Provider>
 			</PostHogProvider>
 		</ErrorBoundary>
