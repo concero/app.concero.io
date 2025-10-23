@@ -53,7 +53,7 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 		if (!src) return
 		setStatus('loading')
 		const img = new Image()
-		img.src = src + (reloadKey ? `?r=${reloadKey}` : '')
+		img.src = src + (reloadKey > 0 ? `?retry=${Date.now()}` : '')
 		img.onload = () => {
 			setStatus('success')
 			if (imgRef.current) {
@@ -81,7 +81,6 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 		loadImage()
 		return () => {
 			clearTimeout(timerRef.current)
-			setStatus('loading')
 		}
 	}, [src, reloadKey])
 
@@ -113,18 +112,20 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 			}}
 		>
 			{renderFallback()}
-			<img
-				className={clsx(
-					cls.img,
-					{
-						[cls.hidden ?? '']: status !== 'success',
-					},
-					[className],
-				)}
-				ref={imgRef}
-				alt={alt}
-				{...htmlProps}
-			/>
+			{status === 'success' && (
+				<img
+					className={clsx(
+						cls.img,
+						{
+							[cls.hidden ?? '']: status !== 'success',
+						},
+						[className],
+					)}
+					ref={imgRef}
+					alt={alt}
+					{...htmlProps}
+				/>
+			)}
 		</VStack>
 	)
 })

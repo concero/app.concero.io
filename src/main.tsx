@@ -10,30 +10,33 @@ import { queryClient } from './shared/api/tanstackClient'
 import { I18Provider } from './shared/i18n/I18nextProvider'
 import { config } from './shared/api/wagmi'
 import { App } from './app/App'
+import { StrictMode } from 'react'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-	<ErrorBoundary>
-		<PostHogProvider
-			options={{
-				disable_session_recording: true,
-			}}
-		>
-			<I18Provider>
+	<StrictMode>
+		<ErrorBoundary>
+			<PostHogProvider
+				options={{
+					disable_session_recording: true,
+				}}
+			>
 				<WagmiProvider config={config}>
-					<QueryClientProvider client={queryClient}>
-						<BrowserRouter
-							future={{
-								v7_startTransition: true,
-								v7_relativeSplatPath: true,
-							}}
-						>
-							<ThemeProvider useSystemTheme storageSettings={{ persist: true }}>
-								<App />
-							</ThemeProvider>
-						</BrowserRouter>
-					</QueryClientProvider>
+					<I18Provider>
+						<QueryClientProvider client={queryClient}>
+							<BrowserRouter
+								future={{
+									v7_startTransition: true,
+									v7_relativeSplatPath: true,
+								}}
+							>
+								<ThemeProvider useSystemTheme storageSettings={{ persist: true }}>
+									<App />
+								</ThemeProvider>
+							</BrowserRouter>
+						</QueryClientProvider>
+					</I18Provider>
 				</WagmiProvider>
-			</I18Provider>
-		</PostHogProvider>
-	</ErrorBoundary>,
+			</PostHogProvider>
+		</ErrorBoundary>
+	</StrictMode>,
 )

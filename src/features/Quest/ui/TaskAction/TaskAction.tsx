@@ -152,10 +152,10 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			address: userResponse?.payload?.address,
 			from: startDate,
 			to: endDate,
-			isCrossChain: step.details.isCrossChain,
-			isTestnet: step.details.isTestnet,
-			fromChainIds: step.details.fromChainIds,
-			toChainIds: step.details.toChainIds,
+			...(step.details.isCrossChain ? { isCrossChain: step.details.isCrossChain } : {}),
+			...(step.details.isTestnet ? { isTestnet: step.details.isTestnet } : {}),
+			...(step.details.fromChainIds ? { fromChainIds: step.details.fromChainIds } : {}),
+			...(step.details.toChainIds ? { toChainIds: step.details.toChainIds } : {}),
 		})
 		useEffect(() => {
 			const probablyCount = volumeResponse?.payload.volumeUSD || 0
@@ -171,6 +171,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
 			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
 		}
+
 		return (
 			<VStack gap="space_0_75">
 				<ProgressBar

@@ -116,14 +116,14 @@ export const QuestCard = (props: TProps) => {
 						src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
 						alt="Quest image"
 						fallbackSrc={QuestPlaceholder}
-						retryTimeout={5000}
+						retryTimeout={10000}
 					/>
 				) : (
 					<AppImage
 						src={QuestPlaceholder}
 						alt="Quest image"
 						fallbackSrc={QuestPlaceholder}
-						retryTimeout={5000}
+						retryTimeout={10000}
 					/>
 				)}
 			</div>

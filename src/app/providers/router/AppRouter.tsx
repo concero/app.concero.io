@@ -31,7 +31,6 @@ export const AppRouter = () => {
 					</Suspense>
 				}
 			/>
-			(
 			<Route
 				path={routes.profile}
 				element={
@@ -40,7 +39,6 @@ export const AppRouter = () => {
 					</Suspense>
 				}
 			/>
-			)
 			<Route path={routes.root} element={<Navigate to={routes.quests} />} />
 			<Route path={'/*'} element={<Navigate to={routes.quests} />} />
 			<Route path={routes.pools} element={<ExternalRedirect url="https://app.lanca.io/pools" />} />

@@ -90,7 +90,7 @@ export const QuestPreviewCard = (props: TProps) => {
 						src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
 						alt="Quest image"
 						fallbackSrc={QuestPlaceholder}
-						retryTimeout={5000}
+						retryTimeout={10000}
 					/>
 				</div>
 			)}

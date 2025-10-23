@@ -1,6 +1,6 @@
 import { Address } from 'viem'
 import { TUpdateNicknameArgs } from '../model/types/request'
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
 	NicknameError,
 	TGetLeaderBoardReponse,
@@ -228,58 +228,70 @@ export const useUpdateNicknameMutation = () => {
 	)
 }
 
-type UserVolumeQueryKey = readonly ['userVolume', UserApi.GetUserVolume.RequestBody | undefined]
+// type UserVolumeQueryKey = readonly ['userVolume', UserApi.GetUserVolume.RequestBody | undefined]
 
+// export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
+// 	const lastDurationRef = useRef<number>(0)
+// 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+// 	const enabled = !!options?.address && !!options?.from && !!options?.to
+
+// 	const query = useQuery({
+// 		queryKey: ['userVolume', options] satisfies UserVolumeQueryKey,
+// 		queryFn: async () => {
+// 			const start = Date.now()
+// 			try {
+// 				return await userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody)
+// 			} finally {
+// 				lastDurationRef.current = Date.now() - start
+// 			}
+// 		},
+// 		enabled: false,
+// 		staleTime: 5_000,
+// 		gcTime: 60_000,
+// 		retry: 1,
+// 	})
+
+// 	useEffect(() => {
+// 		if (!enabled) {
+// 			if (timeoutRef.current) {
+// 				clearTimeout(timeoutRef.current)
+// 				timeoutRef.current = null
+// 			}
+// 			return
+// 		}
+
+// 		const executeRefetch = async () => {
+// 			await query.refetch()
+// 			const slowThreshold = 5_000
+// 			const nextInterval = lastDurationRef.current > slowThreshold ? 30_000 : 10_000
+
+// 			timeoutRef.current = setTimeout(executeRefetch, nextInterval)
+// 		}
+
+// 		executeRefetch()
+
+// 		return () => {
+// 			if (timeoutRef.current) {
+// 				clearTimeout(timeoutRef.current)
+// 				timeoutRef.current = null
+// 			}
+// 		}
+// 	}, [enabled, query.refetch])
+
+// 	return query
+// }
 export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
-	const lastDurationRef = useRef<number>(0)
-	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-	const enabled = !!options?.address && !!options?.from && !!options?.to
-
-	const query = useQuery({
-		queryKey: ['userVolume', options] satisfies UserVolumeQueryKey,
-		queryFn: async () => {
-			const start = Date.now()
-			try {
-				return await userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody)
-			} finally {
-				lastDurationRef.current = Date.now() - start
-			}
-		},
-		enabled: false,
-		staleTime: 5_000,
-		gcTime: 60_000,
-		retry: 1,
+	return useQuery({
+		queryKey: ['userVolume', options],
+		queryFn: () => userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody),
+		enabled: !!options?.address && !!options?.from && !!options?.to,
+		refetchOnWindowFocus: true,
+		refetchInterval: 10_000,
+		refetchIntervalInBackground: true,
+		placeholderData: keepPreviousData,
+		gcTime: 10_000,
 	})
-
-	useEffect(() => {
-		if (!enabled) {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current)
-				timeoutRef.current = null
-			}
-			return
-		}
-
-		const executeRefetch = async () => {
-			await query.refetch()
-			const slowThreshold = 5_000
-			const nextInterval = lastDurationRef.current > slowThreshold ? 30_000 : 10_000
-
-			timeoutRef.current = setTimeout(executeRefetch, nextInterval)
-		}
-
-		executeRefetch()
-
-		return () => {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current)
-				timeoutRef.current = null
-			}
-		}
-	}, [enabled, query.refetch])
-
-	return query
 }
 export const useUserCountTx = (options?: UserApi.GetUserCountTx.RequestBody) => {
 	return useQuery({
@@ -287,8 +299,9 @@ export const useUserCountTx = (options?: UserApi.GetUserCountTx.RequestBody) => 
 		queryFn: () => userServiceApi.getUserCountTx(options as UserApi.GetUserCountTx.RequestBody),
 		enabled: !!options?.address && !!options?.from && !!options?.to,
 		refetchOnWindowFocus: true,
-		refetchInterval: 10_000,
+		refetchInterval: 20_000,
 		refetchIntervalInBackground: true,
+		placeholderData: keepPreviousData,
 	})
 }
 
