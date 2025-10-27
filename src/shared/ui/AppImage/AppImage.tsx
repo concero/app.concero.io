@@ -60,7 +60,7 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 				imgRef.current.src = img.src
 			}
 			clearTimeout(timerRef.current)
-			setReloadKey(0)
+			// setReloadKey(0)
 		}
 
 		img.onerror = e => {

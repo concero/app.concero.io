@@ -19,7 +19,6 @@ export const ThemeSwitcher = (props: TProps) => {
 			variant="tetrary"
 			isFull
 			onClick={() => {
-				console.log('Click on Theme swithcer')
 				toggleTheme()
 			}}
 		>
