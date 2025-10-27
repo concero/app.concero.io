@@ -17,6 +17,7 @@ export const BurgerButton = (props: TProps) => {
 
 	const overlayFadeAnimation = useSpring({
 		to: {
+			// zIndex: isMenuOpened ? 2 : -2,
 			opacity: isMenuOpened ? 1 : 0,
 			pointerEvents: isMenuOpened ? 'auto' : ('none' as const),
 		},
@@ -25,13 +26,14 @@ export const BurgerButton = (props: TProps) => {
 			easing: (t: number) => t * t,
 		},
 		from: {
+			zIndex: 0,
 			opacity: 0,
 			pointerEvents: 'none' as const,
 		},
 	})
 	const fadeAnimation = useSpring({
 		to: {
-			zIndex: 1,
+			zIndex: -10,
 			opacity: isMenuOpened ? 1 : 0,
 			pointerEvents: isMenuOpened ? ('auto' as const) : ('none' as const),
 		},
@@ -69,7 +71,7 @@ export const BurgerButton = (props: TProps) => {
 					className={clsx(cls.menu_container, cls.hidden)}
 				>
 					<BurgerMenuContext.Provider value={{ closeMenu: handleMenuClose }}>
-						{menuContent}
+						{isMenuOpened ? menuContent : null}
 					</BurgerMenuContext.Provider>
 				</animated.div>
 			</animated.div>

@@ -31,25 +31,42 @@ const columns: TColumn<TUserActionResponse['actions'][number], keyof TUserAction
 	{
 		key: 'points',
 		title: 'CERs',
-		renderCell: (value: string, record) => {
+		renderHeader: () => {
 			return (
-				<Text variant="heading_small" className={cls.cers_text}>
-					{getUserActionPoints(value)}
-				</Text>
+				<HStack>
+					<HStack max justify="start">
+						<Text variant="heading_small" className={cls.text_header}>
+							CERs
+						</Text>
+					</HStack>
+					<HStack max justify="start">
+						<Text variant="heading_small" className={cls.text_header}>
+							Date
+						</Text>
+					</HStack>
+				</HStack>
 			)
 		},
-	},
-	{
-		key: 'executedAt',
-		title: 'Date',
-		renderCell: (value: string | number) => {
-			const timestampInMs = value.toString().length === 10 ? Number(value) * 1000 : value
+		renderCell: (_: string, record) => {
+			const timestampInMs =
+				record.executedAt.toString().length === 10 ? Number(record.executedAt) * 1000 : record.executedAt
 			const formattedDate = formatDateTime(new Date(timestampInMs), 'D MMM YYYY, HH:mm')
-
 			return (
-				<Text variant="body_medium" className={cls.date_text}>
-					{formattedDate}
-				</Text>
+				<HStack max>
+					<HStack max>
+						<Text
+							variant="heading_small"
+							className={clsx(cls.cers_text, { [cls.danger_text]: (record?.points ?? 0) < 0 })}
+						>
+							{getUserActionPoints(record.points)}
+						</Text>
+					</HStack>
+					<HStack max>
+						<Text variant="heading_small" className={cls.date_text}>
+							{formattedDate}
+						</Text>
+					</HStack>
+				</HStack>
 			)
 		},
 	},
@@ -64,6 +81,7 @@ const columnsMobileView: TColumn<TUserActionResponse['actions'][number]>[] = [
 			const formattedDate = formatDateTime(new Date(timestampInMs), 'D MMM YYYY, HH:mm')
 			return (
 				<VStack gap="space_0_5" className={cls.user_action} max>
+					{getUserActionName({ action: record })} {getUserActionName({ action: record })}{' '}
 					{getUserActionName({ action: record })}
 					<HStack gap="12px" justify="between" max>
 						<Text
