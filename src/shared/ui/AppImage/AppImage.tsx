@@ -112,20 +112,18 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 			}}
 		>
 			{renderFallback()}
-			{status === 'success' && (
-				<img
-					className={clsx(
-						cls.img,
-						{
-							[cls.hidden ?? '']: status !== 'success',
-						},
-						[className],
-					)}
-					ref={imgRef}
-					alt={alt}
-					{...htmlProps}
-				/>
-			)}
+			<img
+				className={clsx(
+					cls.img,
+					{
+						[cls.hidden ?? '']: status !== 'success',
+					},
+					[className],
+				)}
+				ref={imgRef}
+				alt={alt}
+				{...htmlProps}
+			/>
 		</VStack>
 	)
 })
