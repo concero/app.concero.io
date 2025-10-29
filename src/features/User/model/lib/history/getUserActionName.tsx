@@ -44,11 +44,11 @@ const getTxInfo = (action: TUserAction): JSX.Element => {
 
 const getQuestInfo = (action: TUserAction) => {
 	const actionData = action.data as TUserActionQuestData | null
-	return <span className={cls.title}>Quest completed: {actionData?.name}</span>
+	return <span className={cls.title}>Quest "{actionData?.name}" Completed</span>
 }
 const getQuestStepInfo = (action: TUserAction) => {
 	const actionData = action.data as TUserActionQuestData | null
-	return <span className={cls.title}>Quest step completed: {actionData?.name}</span>
+	return <span className={cls.title}>Quest {actionData?.name} Step Completed</span>
 }
 const getSocialConnectInfo = (action: TUserAction) => {
 	const { type } = action
@@ -60,7 +60,7 @@ const getSocialConnectInfo = (action: TUserAction) => {
 	if (type === 'discord_connected') {
 		name = 'Discord'
 	}
-	return <span className={cls.title}>Connected social: {name}</span>
+	return <span className={cls.title}>{name} Connected</span>
 }
 const getSocialDisconnectInfo = (action: TUserAction) => {
 	const { type } = action
@@ -72,7 +72,7 @@ const getSocialDisconnectInfo = (action: TUserAction) => {
 	if (type === 'discord_disconnected') {
 		name = 'Discord'
 	}
-	return <span className={cls.title}>Disconnected social: {name}</span>
+	return <span className={cls.title}>{name} Disconnected</span>
 }
 const getSpecialRewardInfo = (action: TUserAction) => {
 	const actionData = action.data as { name: string } | null

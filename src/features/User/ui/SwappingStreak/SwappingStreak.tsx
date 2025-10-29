@@ -17,8 +17,9 @@ import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
 import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
-const swapDescription = 'Perform swaps of at least $50 every day to get a multiplier. '
-const tooltipTitle = 'Daily Swapping Rewards'
+const swapDescription =
+	"Swap at least $50 daily to earn a multiplier. Missing a day resets your streak. New multipliers replace previous ones — they don't stack. "
+const tooltipTitle = 'Daily Swapping Streak'
 dayjs.extend(utc)
 type TProps = {
 	className?: string

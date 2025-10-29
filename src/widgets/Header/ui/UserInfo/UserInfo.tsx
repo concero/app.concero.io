@@ -37,7 +37,7 @@ export const UserInfo = (props: TProps) => {
 	const summaryMultiplier =
 		(user.multiplier.base || 0) + (user.multiplier.daily_swaps || 0) + (user.multiplier.liquidity_pool || 0)
 	const titleLeaderRank = 'Your leaderboard rank'
-	const descriptionLeaderRank = 'Climb the ranks to boost your airdrop!'
+	const descriptionLeaderRank = 'Complete quests to continue moving up the leaderboard!'
 	return (
 		<HStack gap="space_0_5">
 			<HStack gap="space_0_25">

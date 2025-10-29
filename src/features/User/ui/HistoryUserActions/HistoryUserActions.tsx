@@ -1,17 +1,16 @@
-import { TUserResponse } from '@/entities/User'
-import { Button, Spinner } from '@concero/ui-kit'
+import { Spinner } from '@concero/ui-kit'
 import clsx from 'clsx'
+import { TUserResponse } from '@/entities/User'
 import cls from './HistoryUserActions.module.pcss'
 import { useUserAction } from '@/entities/User/api/userApi'
 import { Text } from '@/shared/ui'
-import { Separator } from '@/components/layout/Separator/Separator'
 import { HStack, VStack } from '@/shared/ui/Stack'
 import { Table, TColumn } from '@/shared/ui/Table/Table'
 import { TUserActionResponse } from '@/entities/User'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
+import { formatDateTime } from '@/utils/formatting'
 import { getUserActionName } from '../../model/lib/history/getUserActionName'
 import { getUserActionPoints } from '../../model/lib/history/getUserActionPoints'
-import { formatDateTime } from '@/utils/formatting'
 
 type TProps = {
 	className?: string

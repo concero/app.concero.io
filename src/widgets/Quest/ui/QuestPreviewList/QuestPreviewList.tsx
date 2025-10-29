@@ -32,38 +32,7 @@ export const QuestPreviewList = (props: TProps): JSX.Element => {
 						className={clsx(cls.preview_item, cls.size_xl)}
 					/>
 				))}
-				{quest_size_xl?.map(quest => (
-					<QuestPreviewItem
-						quest={quest}
-						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
-						className={clsx(cls.preview_item, cls.size_xl)}
-					/>
-				))}
-				{quest_size_l?.map(quest => (
-					<QuestPreviewItem
-						quest={quest}
-						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
-						className={clsx(cls.preview_item, cls.size_l)}
-					/>
-				))}
-				{quest_size_l?.map(quest => (
-					<QuestPreviewItem
-						quest={quest}
-						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
-						className={clsx(cls.preview_item, cls.size_l)}
-					/>
-				))}
-				{quest_size_l?.map(quest => (
-					<QuestPreviewItem
-						quest={quest}
-						key={quest.id}
-						userQuest={questInstanceId_userQuest_map[quest.quest_instance_id]}
-						className={clsx(cls.preview_item, cls.size_l)}
-					/>
-				))}
+
 				{quest_size_l?.map(quest => (
 					<QuestPreviewItem
 						quest={quest}

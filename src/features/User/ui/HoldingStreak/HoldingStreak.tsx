@@ -15,14 +15,14 @@ import { streak_config } from '../../../../entities/User/config/streak'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { toLocaleNumber } from '@/utils/formatting'
 import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
-import { deposit } from 'viem/zksync'
 
 type TProps = {
 	className?: string
 	user: TUserResponse | null
 }
-const lpDescription = 'Hold a minimum of 100$ for one month to get your CERs multiplier reward!'
-const tooltipTitle = 'LP holding Rewards'
+const lpDescription =
+	"Hold $100+ in liquidity for each period to earn a CERs multiplier. Withdrawing resets your streak. New multipliers replace previous ones — they don't stack."
+const tooltipTitle = 'LP Holding Streak'
 
 export const HoldingStreak = (props: TProps) => {
 	const { className, user } = props

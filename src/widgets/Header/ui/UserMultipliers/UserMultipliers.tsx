@@ -2,34 +2,75 @@ import { Text } from '@/shared/ui'
 import cls from './UserMultipliers.module.pcss'
 import { TUserResponse } from '@/entities/User'
 import { HStack, VStack } from '@/shared/ui/Stack'
+import { Tag } from '@concero/ui-kit'
 
 export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
-	const { base, daily_swaps, liquidity_pool } = user.multiplier
-	const totalMultiplier = (base || 0) + (daily_swaps || 0) + (liquidity_pool || 0)
+	const { base = 1, daily_swaps = 0, liquidity_pool = 0 } = user.multiplier
 	return (
-		<VStack gap="space_0_75" justify="between" className={cls.user_multipliers}>
-			<HStack justify="between" className={cls.multiplier_heading}>
-				<Text variant="heading_medium" className={cls.heading}>
+		<VStack gap="space_0_75" max className={cls.user_multipliers}>
+			<VStack gap="space_0_25" max>
+				<Text variant="heading_small" className={cls.heading}>
 					Multipliers
 				</Text>
-				<Text variant="heading_medium" className={cls.multiplier_value}>
-					{totalMultiplier}x
+				<Text variant="body_medium" className={cls.description_text}>
+					The total multiplier combines base, swap, and liquidity values. The base is usually 1, but can be
+					higher in some cases. Swap and liquidity multipliers change based on your actions — up to 4x. All
+					multipliers are added together, not multiplied.
 				</Text>
-			</HStack>
-			<VStack gap="space_0_5" className={cls.multiplier_components}>
-				<HStack justify="between" className={cls.item}>
-					<Text variant="body_medium">Base</Text>
-					<Text variant="heading_small">{base || 0}x</Text>
+			</VStack>
+			<VStack gap="space_0_5" max>
+				<HStack justify="between" max>
+					<Text variant="heading_small" className={cls.title_multiplier}>
+						Base
+					</Text>
+					<Tag size="s" variant={base > 0 ? 'branded' : 'neutral'}>
+						{base > 1 ? base : 1}x
+					</Tag>
 				</HStack>
-				<HStack justify="between" className={cls.item}>
-					<Text variant="body_medium">Liquidity Holding</Text>
-					<Text variant="heading_small">{liquidity_pool || 0}x</Text>
+				<div className={cls.separator}></div>
+				<HStack justify="between" max>
+					<Text variant="heading_small" className={cls.title_multiplier}>
+						Liquidity Holding
+					</Text>
+					<Tag size="s" variant={liquidity_pool > 0 ? 'branded' : 'neutral'}>
+						{liquidity_pool}x
+					</Tag>
 				</HStack>
-				<HStack justify="between" className={cls.item}>
-					<Text variant="body_medium">Daily Swapping</Text>
-					<Text variant="heading_small">{daily_swaps || 0}x</Text>
+				<div className={cls.separator}></div>
+
+				<HStack justify="between" max>
+					<Text variant="heading_small" className={cls.title_multiplier}>
+						Daily Swapping
+					</Text>
+					<Tag size="s" variant={daily_swaps > 0 ? 'branded' : 'neutral'}>
+						{daily_swaps}x
+					</Tag>
 				</HStack>
 			</VStack>
 		</VStack>
 	)
 }
+// <VStack gap="space_0_75" justify="between" className={cls.user_multipliers}>
+// 	<HStack justify="between" className={cls.multiplier_heading}>
+// 		<Text variant="heading_medium" className={cls.heading}>
+// 			Multipliers
+// 		</Text>
+// 		<Text variant="heading_medium" className={cls.multiplier_value}>
+// 			{totalMultiplier}x
+// 		</Text>
+// 	</HStack>
+// 	<VStack gap="space_0_5" className={cls.multiplier_components}>
+// 		<HStack justify="between" className={cls.item}>
+// 			<Text variant="body_medium">Base</Text>
+// 			<Text variant="heading_small">{base || 0}x</Text>
+// 		</HStack>
+// <HStack justify="between" className={cls.item}>
+// 	<Text variant="body_medium">Liquidity Holding</Text>
+// 	<Text variant="heading_small">{liquidity_pool || 0}x</Text>
+// </HStack>
+// <HStack justify="between" className={cls.item}>
+// 	<Text variant="body_medium">Daily Swapping</Text>
+// 	<Text variant="heading_small">{daily_swaps || 0}x</Text>
+// </HStack>
+// 	</VStack>
+// </VStack>
