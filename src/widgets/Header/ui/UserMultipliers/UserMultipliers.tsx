@@ -13,9 +13,8 @@ export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
 					Multipliers
 				</Text>
 				<Text variant="body_medium" className={cls.description_text}>
-					The total multiplier combines base, swap, and liquidity values. The base is usually 1, but can be
-					higher in some cases. Swap and liquidity multipliers change based on your actions — up to 4x. All
-					multipliers are added together, not multiplied.
+					The total multiplier combines base, swap, and liquidity values. Swap and liquidity multipliers
+					change based on your actions — up to 4x. All multipliers are added together, not multiplied.
 				</Text>
 			</VStack>
 			<VStack gap="space_0_5" max>
