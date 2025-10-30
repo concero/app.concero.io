@@ -9,7 +9,7 @@ export const UserMultipliers = ({ user }: { user: TUserResponse }) => {
 	return (
 		<VStack gap="space_0_75" max className={cls.user_multipliers}>
 			<VStack gap="space_0_25" max>
-				<Text variant="heading_small" className={cls.heading}>
+				<Text variant="heading_medium" className={cls.heading}>
 					Multipliers
 				</Text>
 				<Text variant="body_medium" className={cls.description_text}>
