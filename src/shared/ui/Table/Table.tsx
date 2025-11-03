@@ -24,6 +24,24 @@ export const Table = (props: TTableProps) => {
 	const { className, columns, data = [], showHeader = true, onScrollEnd, scrollThreshold = 100 } = props
 	const [showShadow, setShowShadow] = useState(true)
 	const bodyRef = useRef<HTMLDivElement>(null)
+
+	const hasTriggeredAutoLoad = useRef(false)
+
+	const checkAndTriggerLoad = () => {
+		if (!onScrollEnd || !bodyRef.current || hasTriggeredAutoLoad.current) return
+
+		const { scrollHeight, clientHeight } = bodyRef.current
+		const isFullyLoaded = scrollHeight <= clientHeight
+
+		if (isFullyLoaded) {
+			hasTriggeredAutoLoad.current = true
+
+			setTimeout(() => {
+				onScrollEnd()
+			}, 0)
+		}
+	}
+
 	const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
 		const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
 		const isScrolledToBottom = scrollTop + clientHeight >= scrollHeight - 2
@@ -31,6 +49,7 @@ export const Table = (props: TTableProps) => {
 		setShowShadow(!isScrolledToBottom)
 
 		if (isScrolledToBottom && onScrollEnd) {
+			hasTriggeredAutoLoad.current = false
 			onScrollEnd()
 		}
 	}
@@ -39,6 +58,7 @@ export const Table = (props: TTableProps) => {
 		if (bodyRef.current) {
 			const { scrollHeight, clientHeight } = bodyRef.current
 			setShowShadow(scrollHeight > clientHeight)
+			checkAndTriggerLoad()
 		}
 	}, [data])
 	return (
