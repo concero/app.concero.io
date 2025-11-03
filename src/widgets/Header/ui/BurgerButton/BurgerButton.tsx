@@ -26,7 +26,7 @@ export const BurgerButton = (props: TProps) => {
 			easing: (t: number) => t * t,
 		},
 		from: {
-			zIndex: 0,
+			zIndex: 1,
 			opacity: 0,
 			pointerEvents: 'none' as const,
 		},
