@@ -80,7 +80,6 @@ const columnsMobileView: TColumn<TUserActionResponse['actions'][number]>[] = [
 			const formattedDate = formatDateTime(new Date(timestampInMs), 'D MMM YYYY, HH:mm')
 			return (
 				<VStack gap="space_0_5" className={cls.user_action} max>
-					{getUserActionName({ action: record })} {getUserActionName({ action: record })}{' '}
 					{getUserActionName({ action: record })}
 					<HStack gap="12px" justify="between" max>
 						<Text
