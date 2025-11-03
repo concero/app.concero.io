@@ -44,11 +44,11 @@ const getTxInfo = (action: TUserAction): JSX.Element => {
 
 const getQuestInfo = (action: TUserAction) => {
 	const actionData = action.data as TUserActionQuestData | null
-	return <span className={cls.title}>Quest "{actionData?.name}" Completed</span>
+	return <span className={cls.title}>Quest {actionData?.name ? `"${actionData?.name}"` : ''} Completed</span>
 }
 const getQuestStepInfo = (action: TUserAction) => {
 	const actionData = action.data as TUserActionQuestData | null
-	return <span className={cls.title}>Quest {actionData?.name} Step Completed</span>
+	return <span className={cls.title}>Quest {actionData?.name ? `"${actionData?.name}"` : ''} Step Completed</span>
 }
 const getSocialConnectInfo = (action: TUserAction) => {
 	const { type } = action
@@ -76,7 +76,7 @@ const getSocialDisconnectInfo = (action: TUserAction) => {
 }
 const getSpecialRewardInfo = (action: TUserAction) => {
 	const actionData = action.data as { name: string } | null
-	return <span className={cls.title}>Special reward: {actionData?.name}</span>
+	return <span className={cls.title}>Special reward {actionData?.name ? `: ${actionData?.name}` : ''}</span>
 }
 const getAdminRewardInfo = (action: TUserAction) => {
 	const actionData = action.data as { name: string } | null
