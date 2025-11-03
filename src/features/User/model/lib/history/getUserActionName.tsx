@@ -80,7 +80,8 @@ const getSpecialRewardInfo = (action: TUserAction) => {
 }
 const getAdminRewardInfo = (action: TUserAction) => {
 	const actionData = action.data as { name: string } | null
-	return <span className={cls.title}>CERs from the Team</span>
+	const titleToShow = actionData?.name ?? 'CERs from the Team'
+	return <span className={cls.title}>{titleToShow}</span>
 }
 
 export const getUserActionName = (props: UserActionProps) => {
