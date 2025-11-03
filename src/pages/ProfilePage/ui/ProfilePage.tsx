@@ -21,6 +21,8 @@ import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksS
 import { UserSocialType } from '@/entities/User/model/validations/validations'
 import { configEnvs } from '@/shared/consts/config/config'
 import { Leaderboard } from './Leaderboard/Leaderboard'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { routes } from '@/shared/consts/routing/routes'
 
 export const ProfilePage = () => {
 	const { address } = useAccount()
@@ -35,7 +37,7 @@ export const ProfilePage = () => {
 		return <TechWorksScreen />
 	}
 	if (!address || !user) {
-		return <LoginRequired />
+		return <Navigate to={routes.quests} replace />
 	}
 	const socialX = socials ? socials.find(social => social.type === UserSocialType.X) : null
 	const socialDiscord = socials ? socials.find(social => social.type === UserSocialType.Discord) : null
