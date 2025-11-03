@@ -47,7 +47,7 @@ export interface FlexProps {
 	wrap?: FlexWrap
 	gap?: HintedString<(typeof flexGapValues)[number], `${CssGapValue}`>
 	max?: boolean
-	flexref?: MutableRefObject<HTMLElement> | null | RefObject<HTMLElement | null>
+	flexref?: React.Ref<HTMLDivElement>
 	htmlProps?: OmitTyped<HTMLAttributes<HTMLElement>, 'className' | 'children'>
 }
 
@@ -60,6 +60,7 @@ export const getFlexStyle = (props: Omit<FlexProps, 'children'>) => {
 		wrap = 'nowrap',
 		gap,
 		max: maxProp,
+		flexref,
 		htmlProps,
 	} = props
 
@@ -76,6 +77,7 @@ export const getFlexStyle = (props: Omit<FlexProps, 'children'>) => {
 	}
 
 	return {
+		ref: flexref,
 		className: clsx(cls.flex, mods, classes),
 		...htmlProps,
 		style: {
