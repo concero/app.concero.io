@@ -1,3 +1,5 @@
+export { useUser } from './model/hooks/useUser'
+
 export { UserSocialType } from './model/validations/validations'
 export { getCountStreakPeriodText } from './model/lib/getCountStreakPeriodText'
 export { useGetUserLPBalance } from './model/hooks/useLPBalanceUser'
@@ -21,7 +23,14 @@ export {
 	useDisconnectEmailMutation,
 	useGetUserEarnings,
 	useSocials,
+	useGetLeaderboard,
 } from './api/userApi'
 
-export type { TUserResponse, TUserAction, TUserActionTxData, TUserActionQuestData } from './model/types/response'
+export type {
+	TUserResponse,
+	TUserAction,
+	TUserActionTxData,
+	TUserActionQuestData,
+	TUserActionResponse,
+} from './model/types/response'
 export type { UserApi } from './model/types/api'

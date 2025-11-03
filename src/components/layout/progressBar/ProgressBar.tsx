@@ -3,6 +3,7 @@ import { toLocaleNumber } from '../../../utils/formatting'
 import { SkeletonLoader } from '../SkeletonLoader/SkeletonLoader'
 import { Tag } from '../Tag/Tag'
 import { useEffect, useRef, useState } from 'react'
+import { HStack } from '@/shared/ui/Stack'
 
 /**@deprecated */
 export interface ProgressBarProps {
@@ -49,7 +50,7 @@ export function ProgressBar({
 		<SkeletonLoader width={128} height={27.5} />
 	) : (
 		<h3 className={classNames.value1}>
-			{toLocaleNumber(currentValue)} <span className={classNames.maxValue1}>/{toLocaleNumber(maxValue)}</span>
+			{toLocaleNumber(currentValue)} <span className={classNames.max_value1}>/{toLocaleNumber(maxValue)}</span>
 		</h3>
 	)
 
@@ -57,23 +58,23 @@ export function ProgressBar({
 		<SkeletonLoader width={64} height={20} />
 	) : (
 		<h3 className={classNames.value2}>
-			{toLocaleNumber(currentValue)} <span className={classNames.maxValue2}>/{toLocaleNumber(maxValue)}</span>
+			{toLocaleNumber(currentValue)} <span className={classNames.max_value2}>/{toLocaleNumber(maxValue)}</span>
 		</h3>
 	)
 
 	const progressLine = isLoading ? (
 		<SkeletonLoader height={8} />
 	) : (
-		<div ref={lineRef} className={classNames.progressBar} style={{ maxWidth: width, width: '100%' }}>
-			<span className={classNames.progressLine} style={{ maxWidth: width, width: `${percent}%` }}></span>
+		<div ref={lineRef} className={classNames.progress_bar} style={{ maxWidth: width, width: '100%' }}>
+			<span className={classNames.progress_line} style={{ maxWidth: width, width: `${percent}%` }}></span>
 		</div>
 	)
 
 	const progressRange = (
-		<div className="row jsb ac">
+		<HStack align="center" justify="between">
 			<p className="body1">{toLocaleNumber(minValue)}</p>
 			<p className="body1">{toLocaleNumber(maxValue)}</p>
-		</div>
+		</HStack>
 	)
 
 	if (type === 'big' || type === 'medium') {
@@ -96,9 +97,9 @@ export function ProgressBar({
 			{isLoading ? (
 				<SkeletonLoader width={64} height={34} />
 			) : (
-				<div className={classNames.currentValueWrapper}>
+				<div className={classNames.current_value_wrapper}>
 					<div
-						className={classNames.currentValue}
+						className={classNames.current_value}
 						ref={floatRef}
 						style={{
 							marginLeft: marginQuery,

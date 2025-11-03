@@ -1,10 +1,9 @@
-import { TUserResponse, useDiscordConnection, useSocials, useTwitterConnection } from '@/entities/User'
+import { useDiscordConnection, useSocials, useTwitterConnection, useUserByAddress } from '@/entities/User'
 import cls from './ProfilePage.module.pcss'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
 import { LoginRequired } from '@/features/Auth'
 import { Avatar } from '@/shared/ui/Avatar/Avatar'
-import { CersLeaderboard } from '@/features/User'
 import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
 import DiscordConnectedIcon from '@/shared/assets/icons/social_discord.svg?react'
 import DiscordDisconnectedIcon from '@/shared/assets/icons/social_discord_disabled.svg?react'
@@ -21,35 +20,34 @@ import { Banners } from '@/entities/Social'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
 import { UserSocialType } from '@/entities/User/model/validations/validations'
 import { configEnvs } from '@/shared/consts/config/config'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
-type TProps = {
-	user: TUserResponse | null
-}
-export const ProfilePage = (props: TProps) => {
-	const { user } = props
+import { Leaderboard } from './Leaderboard/Leaderboard'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { routes } from '@/shared/consts/routing/routes'
+
+export const ProfilePage = () => {
 	const { address } = useAccount()
+	const { data: userResponse } = useUserByAddress(address ? (address as Address) : undefined)
+	const user = userResponse?.payload
 	const { data: socialsResponse } = useSocials(address)
 	const socials = socialsResponse?.payload?.socials
 	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
 	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
 	const IsEmailConnected = user?.email && user.email.length > 0
-
-	if (configEnvs.PROFILE_IS_NOT_AVAILABLE && !isAdminAddress(address)) {
+	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
 	if (!address || !user) {
-		return <LoginRequired />
+		return <Navigate to={routes.quests} replace />
 	}
-
-	const socialX = socials?.find(social => social.type === UserSocialType.X)
-	const socialDiscord = socials?.find(social => social.type === UserSocialType.Discord)
+	const socialX = socials ? socials.find(social => social.type === UserSocialType.X) : null
+	const socialDiscord = socials ? socials.find(social => social.type === UserSocialType.Discord) : null
 
 	const addresToShow = truncateWallet(user.address, 4)
 	const Social_X_toShow = socialX?.shortname ?? '-'
 	const Social_Discord_toShow = socialDiscord?.shortname ?? '-'
 	const Social_Email_toShow = user.email ?? '-'
 	return (
-		<PageWrap>
+		<PageWrap className={cls.page_wrap}>
 			<Banners />
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>
@@ -69,7 +67,7 @@ export const ProfilePage = (props: TProps) => {
 				</div>
 				<div className={cls.user_info}>
 					<div className={cls.account_info}>
-						<Avatar address={user.address as Address} />
+						<Avatar address={user.address as Address} className={cls.avatar} />
 						<div className={cls.wrap_nick_address}>
 							<span className={cls.nickname}>{user.nickname ?? 'Nickname'}</span>
 							<span className={cls.address}>{addresToShow}</span>
@@ -95,7 +93,8 @@ export const ProfilePage = (props: TProps) => {
 					<AchievementGroupPreview />
 				</div>
 			</div>
-			<CersLeaderboard user={user} />
+			{/* <CersLeaderboard user={user} /> */}
+			<Leaderboard />
 		</PageWrap>
 	)
 }

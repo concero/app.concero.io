@@ -1,0 +1,70 @@
+.card {
+	width: 100%;
+	padding: var(--space-m);
+	border-radius: var(--space-l);
+	background-color: var(--color-gray-25);
+
+	.content {
+		overflow: auto;
+		width: 100%;
+	}
+	.title {
+		color: var(--color-gray-700);
+	}
+	.user_row {
+		height: 48px;
+		border-radius: var(--space-m);
+		background-color: var(--color-gray-50);
+		width: 100%;
+		min-width: min-content;
+		@media screen and (width < 744px) {
+			padding-top: var(--space-s);
+			padding-bottom: var(--space-s);
+			padding-left: var(--space-s);
+			height: 80px;
+		}
+
+		& > :first-child {
+			width: 128px;
+			height: 100%;
+			padding-left: var(--space-s);
+			@media screen and (width < 744px) {
+				height: 24px;
+				min-width: 57px;
+				padding-left: 0;
+			}
+		}
+		& > :not(:first-child) {
+			flex: 1;
+		}
+		& > :last-child {
+			justify-content: center;
+		}
+
+		& > * {
+			color: var(--color-gray-700);
+			@media screen and (width > 744px) {
+				height: 100%;
+				padding-top: var(--space-s);
+				padding-right: var(--space-l);
+				padding-bottom: var(--space-s);
+				padding-left: var(--space-xs);
+			}
+		}
+	}
+	.avatar {
+		width: 24px;
+		height: 24px;
+	}
+
+	.text {
+		width: min-content;
+		color: var(--color-gray-700);
+	}
+	.secondary_text {
+		color: var(--color-gray-500);
+	}
+	.table {
+		height: 538px;
+	}
+}

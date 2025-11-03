@@ -18,7 +18,9 @@ export const ThemeSwitcher = (props: TProps) => {
 			rightIcon={<Switch checked={theme == 'dark'} className={cls.switch} />}
 			variant="tetrary"
 			isFull
-			onClick={toggleTheme}
+			onClick={() => {
+				toggleTheme()
+			}}
 		>
 			Dark Theme
 		</Button>

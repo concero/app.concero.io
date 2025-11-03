@@ -1,55 +1,5 @@
 export const en = {
 	translation: {
-		swapCard: {
-			headerTitle: {
-				swap: 'Swap',
-				progress: 'Swap in progress',
-				success: 'Swap successful',
-				failed: 'Swap failed',
-				contactSupport: 'Contact support',
-				review: 'Review swap',
-			},
-			routeCard: {
-				swap: 'Swap to',
-				bridge: 'Bridge to',
-				via: 'via',
-			},
-			insurance: 'Insurance',
-			route: 'Route:',
-			selectRoute: 'Select route',
-			settings: {
-				title: 'Settings',
-				slippage: 'Slippage',
-				custom: 'Custom',
-				gasPrice: 'Gas price',
-				gas: {
-					fast: 'Fast',
-					normal: 'Normal',
-					slow: 'Slow',
-				},
-				showDestinationWallet: 'Show destination wallet',
-			},
-			sendToAddress: 'Send to address',
-			yourRoute: 'Your route',
-			clickToOpenDetails: 'Click to open details',
-			routeDetails: 'Route details',
-			message: {
-				lowGas: 'You need at least {{amount}} {{tokenSymbol}} on {{chainName}} to safely proceed with transaction.',
-			},
-		},
-		poolCard: {
-			deposit: {
-				headerTitle: {
-					deposit: 'Deposit',
-					withdraw: 'Withdraw',
-					progress: 'In progress',
-					success: 'Deposit successful',
-					failed: 'Deposit failed',
-					contactSupport: 'Contact support',
-					review: 'Review deposit',
-				},
-			},
-		},
 		header: {
 			swap: 'Swap',
 			earn: 'Earn',
@@ -67,29 +17,6 @@ export const en = {
 				changeLanguage: 'Change language',
 				toggleTheme: 'Toggle theme',
 			},
-		},
-		chartCard: {
-			title: 'Chart',
-			tradingView: 'TradingView',
-		},
-		newsCard: {
-			title: 'News',
-		},
-		stakingOpportunitiesCard: {
-			title: 'Staking opportunities',
-			filterTag: {
-				all: 'All',
-				myHoldings: 'My holdings',
-				myPositions: 'My positions',
-				chains: 'Chains',
-				category: 'Category',
-			},
-		},
-		stakingDetailsCard: {
-			protocol: 'Protocol',
-			vaultDetails: 'Vault details',
-			tokens: 'Tokens',
-			rewards: 'rewards',
 		},
 		button: {
 			stake: 'Stake',

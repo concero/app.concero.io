@@ -7,22 +7,6 @@ export type FlexJustify = 'start' | 'center' | 'end' | 'between'
 export type FlexAlign = 'start' | 'center' | 'end'
 export type FlexDirection = 'row' | 'column'
 export type FlexWrap = 'nowrap' | 'wrap'
-export type FlexGap = '4' | '8' | '16' | '24' | '32'
-const justifyClasses: Record<FlexJustify, string> = {
-	start: cls.justifyStart ?? '',
-	center: cls.justifyCenter ?? '',
-	end: cls.justifyEnd ?? '',
-	between: cls.justifyBetween ?? '',
-}
-const alignClasses: Record<FlexAlign, string> = {
-	start: cls.alignStart ?? '',
-	center: cls.alignCenter ?? '',
-	end: cls.alignEnd ?? '',
-}
-const directionClasses: Record<FlexDirection, string> = {
-	row: cls.directionRow ?? '',
-	column: cls.directionColumn ?? '',
-}
 
 const flexGapValues = [
 	'space_0_25',
@@ -37,7 +21,23 @@ const flexGapValues = [
 	'space_6',
 	'space_8',
 ] as const
+const justifyClasses: Record<FlexJustify, string> = {
+	start: cls.justify_start ?? '',
+	center: cls.justify_center ?? '',
+	end: cls.justify_end ?? '',
+	between: cls.justify_between ?? '',
+}
+const alignClasses: Record<FlexAlign, string> = {
+	start: cls.align_start ?? '',
+	center: cls.align_center ?? '',
+	end: cls.align_end ?? '',
+}
+const directionClasses: Record<FlexDirection, string> = {
+	row: cls.direction_row ?? '',
+	column: cls.direction_column ?? '',
+}
 type CssGapValue = `${0}` | `${number}${'rem' | 'em' | 'px' | 'vh' | 'vw'}` | 'auto'
+
 export interface FlexProps {
 	className?: string
 	children: ReactNode
@@ -74,6 +74,7 @@ export const getFlexStyle = (props: Omit<FlexProps, 'children'>) => {
 	} else {
 		styles['gap'] = gap
 	}
+
 	return {
 		className: clsx(cls.flex, mods, classes),
 		...htmlProps,

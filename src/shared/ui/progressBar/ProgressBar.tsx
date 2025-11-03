@@ -51,7 +51,7 @@ export function ProgressBar({
 	const progressLine = isLoading ? (
 		<SkeletonLoader height={8} />
 	) : (
-		<div ref={lineRef} className={classNames.progressBar} style={{ maxWidth: width, width: '100%' }}>
+		<div ref={lineRef} className={classNames.progress_bar} style={{ maxWidth: width, width: '100%' }}>
 			<span
 				className={clsx(classNames.progress_line, classNames[status])}
 				style={{ maxWidth: width, width: `${percent}%` }}
@@ -73,9 +73,9 @@ export function ProgressBar({
 			{isLoading ? (
 				<SkeletonLoader width={64} height={34} />
 			) : (
-				<div className={classNames.currentValueWrapper}>
+				<div className={classNames.current_value_wrapper}>
 					<div
-						className={classNames.currentValue}
+						className={classNames.current_value}
 						ref={floatRef}
 						style={{
 							marginLeft: marginQuery,

@@ -15,14 +15,14 @@ import { streak_config } from '../../../../entities/User/config/streak'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { toLocaleNumber } from '@/utils/formatting'
 import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
-import { deposit } from 'viem/zksync'
 
 type TProps = {
 	className?: string
 	user: TUserResponse | null
 }
-const lpDescription = 'Hold a minimum of 100$ for one month to get your CERs multiplier reward!'
-const tooltipTitle = 'LP holding Rewards'
+const lpDescription =
+	"Hold $100+ in liquidity for each period to earn a CERs multiplier. Withdrawing resets your streak. New multipliers replace previous ones — they don't stack."
+const tooltipTitle = 'LP Holding Streak'
 
 export const HoldingStreak = (props: TProps) => {
 	const { className, user } = props
@@ -32,9 +32,9 @@ export const HoldingStreak = (props: TProps) => {
 	 * but we need to display the new day that will be confirmed tonight. */
 	const currentStreak = user?.streak?.liquidity_pool ? user?.streak?.liquidity_pool + 1 : 0
 	const showStreakPlaceholder = !user || currentStreak < 1
-	// const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
-	//TODO: FIX
-	const userEarnings = { earnings: 0, deposit: 0 }
+	const { data: userEarnings } = useGetUserEarnings(user?.address as Address)
+	// TODO: FIX
+	// const userEarnings = { earnings: 0, deposit: 0 }
 	const balance = userEarnings ? Number(toLocaleNumber(userEarnings.earnings + userEarnings.deposit, 2)) : 0
 	const showDefaultTip = !showStreakPlaceholder && (balance > 100 || balance === 0)
 	const showDanger = !showStreakPlaceholder && balance ? balance > 0 && balance < 100 : false
@@ -129,7 +129,7 @@ export const HoldingStreak = (props: TProps) => {
 				) : (
 					<div className={cls.placeholder_image_wrap}>
 						<img
-							width={'100%'}
+							width={'300px'}
 							height={'100%'}
 							src={theme === 'light' ? LpHoldingStreak : LpHoldingStreakDark}
 							loading="lazy"
@@ -150,7 +150,7 @@ export const HoldingStreak = (props: TProps) => {
 							</span>
 							<span className={cls.text_cers}>
 								{' '}
-								{getUserFutureMultiplier(user.streak.liquidityHold)}x CERs multiplier!
+								{getUserFutureMultiplier(user.streak?.liquidity_pool ?? 0)}x CERs multiplier!
 							</span>
 						</div>
 					</>

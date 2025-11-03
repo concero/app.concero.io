@@ -1,0 +1,24 @@
+.footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: var(--space-l);
+	gap: var(--space-l);
+	min-height: 136px;
+
+	.logo_wrap {
+		display: flex;
+		flex-direction: column;
+		padding: 9px 0;
+	}
+
+	.list_icons {
+		display: flex;
+		flex-direction: row;
+		gap: var(--space-xs);
+	}
+
+	@media screen and (width < 1280px) {
+		width: 100%;
+	}
+}

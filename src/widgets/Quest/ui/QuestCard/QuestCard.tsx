@@ -11,7 +11,9 @@ import { getIsCanClaimQuest } from '@/entities/User'
 import { QuestTaskGroup } from '@/features/Quest'
 import { configEnvs } from '@/shared/consts/config/config'
 import { AppImage } from '@/shared/ui/AppImage'
+import CersIcon from '@/shared/assets/icons/CersIcon.svg?react'
 import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
+import { Text } from '@/shared/ui'
 import { HStack } from '@/shared/ui/Stack'
 type TProps = {
 	quest: TQuest
@@ -38,7 +40,6 @@ export const QuestCard = (props: TProps) => {
 
 	const rewardIsClaimed = !!userQuest?.finished_at
 	let statusOfQuest: TQuestCardStatus = address ? 'READY_TO_START' : 'NOT_CONNECT'
-
 	if (userQuest?.started_at) {
 		statusOfQuest = 'STARTED'
 	}
@@ -91,18 +92,21 @@ export const QuestCard = (props: TProps) => {
 			showTasks = false
 			controls = null
 	}
+
 	return (
 		<div className={cls.quest_card}>
 			<div className={cls.header}>
 				<div className={cls.title}>{quest.title}</div>
 				{quest.subtitle ? <div className={cls.subtitle}>{quest.subtitle}</div> : ''}
-				<HStack gap="space_0_5" className={cls.reward_points}>
-					+{' '}
-					{Math.max(
-						quest.quest_reward.tokenReward?.min_value ?? 0,
-						quest.quest_reward.tokenReward?.max_value ?? 0,
-					)}
-					<span>CERs</span>
+				<HStack gap="space_0_5" align="center" className={cls.reward_points}>
+					<Text variant="heading_xlarge">
+						+{' '}
+						{Math.max(
+							quest.quest_reward.tokenReward?.min_value ?? 0,
+							quest.quest_reward.tokenReward?.max_value ?? 0,
+						)}
+					</Text>
+					<CersIcon className={cls.icon} />
 				</HStack>
 			</div>
 
@@ -112,14 +116,14 @@ export const QuestCard = (props: TProps) => {
 						src={`${configEnvs.assetsURI}/quests/${theme == 'dark' ? 'dark_' : ''}${quest.image}`}
 						alt="Quest image"
 						fallbackSrc={QuestPlaceholder}
-						retryTimeout={5000}
+						retryTimeout={10000}
 					/>
 				) : (
 					<AppImage
 						src={QuestPlaceholder}
 						alt="Quest image"
 						fallbackSrc={QuestPlaceholder}
-						retryTimeout={5000}
+						retryTimeout={10000}
 					/>
 				)}
 			</div>

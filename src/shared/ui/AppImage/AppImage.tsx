@@ -53,14 +53,14 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 		if (!src) return
 		setStatus('loading')
 		const img = new Image()
-		img.src = src + (reloadKey ? `?r=${reloadKey}` : '')
+		img.src = src + (reloadKey > 0 ? `?retry=${Date.now()}` : '')
 		img.onload = () => {
 			setStatus('success')
 			if (imgRef.current) {
 				imgRef.current.src = img.src
 			}
 			clearTimeout(timerRef.current)
-			setReloadKey(0)
+			// setReloadKey(0)
 		}
 
 		img.onerror = e => {
@@ -81,7 +81,6 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 		loadImage()
 		return () => {
 			clearTimeout(timerRef.current)
-			setStatus('loading')
 		}
 	}, [src, reloadKey])
 

@@ -405,12 +405,11 @@ export const useDisconnectEmailMutation = () => {
 	})
 }
 
-export const useGetLeaderboard = (address?: string) => {
+export const useGetLeaderboard = (address?: string, limit?: number) => {
 	return useQuery({
 		queryKey: [tagInvalidation, address, 'useGetLeaderboard'],
 		queryFn: async () => {
-			if (!address) throw new Error('Address is required')
-			return userServiceApi.getLeaderboard({ userAddress: address })
+			return userServiceApi.getLeaderboard({ userAddress: address, limit })
 		},
 		enabled: !!address,
 		notifyOnChangeProps: ['data', 'isPending'],

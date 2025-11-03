@@ -1,0 +1,52 @@
+.points {
+	font: var(--font-heading-medium);
+	color: var(--color-accent-700);
+}
+.cers_icon {
+	width: 32px !important;
+	height: 32px !important;
+	border-radius: var(--space-xs) !important;
+	& svg {
+		min-width: 32px;
+		min-height: 32px;
+	}
+}
+.miltiplier_icon {
+	width: 32px !important;
+	height: 32px !important;
+	border-radius: var(--space-xl) !important;
+	& svg {
+		min-width: 32px;
+		min-height: 32px;
+	}
+}
+
+.leader_rank {
+	flex-direction: row;
+	color: var(--color-gray-700);
+
+	& > :first-child {
+		color: var(--color-gray-500);
+	}
+	&.top_user {
+		background-color: #ffd16e !important;
+		color: var(--color-warning-700) !important;
+		& > :first-child {
+			color: var(--color-warning-500);
+		}
+	}
+}
+.splitter {
+	width: 1px;
+	height: 40px;
+	background-color: var(--color-gray-100);
+}
+.title_tooltip_leader_rank {
+	color: var(--color-gray-100);
+}
+.description_tooltip_leader_rank {
+	color: var(--color-gray-300);
+}
+.gradient {
+	background: linear-gradient(180deg, var(--color-accent-200) 0%, var(--color-accent-50) 30%);
+}
