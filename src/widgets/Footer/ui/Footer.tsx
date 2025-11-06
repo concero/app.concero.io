@@ -13,9 +13,15 @@ export const Footer = (props: TProps) => {
 		<div className={clsx(className, cls.footer)}>
 			<Logo className={cls.logo_wrap} />
 			<div className={cls.list_icons}>
-				<LogoX />
-				<LogoDiscord />
-				<LogoMedium />
+				<a href="https://x.com/concero_io" target="_blank">
+					<LogoX />
+				</a>
+				<a href="https://discord.com/invite/nBMAdxYTZK" target="_blank">
+					<LogoDiscord />
+				</a>
+				<a href="https://medium.com/@concero" target="_blank">
+					<LogoMedium />
+				</a>
 			</div>
 		</div>
 	)
