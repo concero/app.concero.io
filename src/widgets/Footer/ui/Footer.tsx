@@ -16,7 +16,7 @@ export const Footer = (props: TProps) => {
 				<a href="https://x.com/concero_io" target="_blank">
 					<LogoX />
 				</a>
-				<a href="http://discord.gg/lanca" target="_blank">
+				<a href="https://discord.com/invite/nBMAdxYTZK" target="_blank">
 					<LogoDiscord />
 				</a>
 				<a href="https://medium.com/@concero" target="_blank">
