@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { categoryQuestNameMap, QuestPreviewCard, QuestStatus, TQuest, TUserQuest } from '@/entities/Quest'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
@@ -7,6 +7,7 @@ import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 import { Modal } from '@concero/ui-kit'
+import { useDisableBodyScroll } from '@/shared/lib/utils/useDisableBodySCroll'
 
 type TProps = {
 	quest: TQuest
@@ -18,6 +19,7 @@ export const QuestPreviewItem = (props: TProps) => {
 	const { quest, userQuest, className } = props
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
+	useDisableBodyScroll(isOpenQuestCard)
 	const rewardIsClaimed = !!userQuest?.finished_at
 
 	useEffect(() => {
