@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { categoryQuestNameMap, QuestPreviewCard, QuestStatus, TQuest, TUserQuest } from '@/entities/Quest'
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
