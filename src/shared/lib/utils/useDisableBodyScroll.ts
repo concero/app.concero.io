@@ -6,6 +6,7 @@ export const useDisableBodyScroll = (isOpen: boolean) => {
 		document.body.style.paddingRight = `${scrollBarWidth}px`
 		document.body.style.overflow = 'hidden'
 		document.body.style.touchAction = 'none'
+		document.body.style.height = '100vh'
 	}, [])
 
 	const enableScroll = useCallback(() => {
@@ -17,7 +18,7 @@ export const useDisableBodyScroll = (isOpen: boolean) => {
 	useEffect(() => {
 		if (isOpen) {
 			disableScroll()
-			return enableScroll // cleanup при закрытии
+			return enableScroll
 		}
 	}, [isOpen, disableScroll, enableScroll])
 }
