@@ -47,7 +47,7 @@ export const QuestTask = (props: TProps) => {
 	const onStartVerify = () => {
 		trackEvent({
 			category: category.QuestCard,
-			action: action.BeginQuest,
+			action: action.BeginVerifyQuest,
 			label: 'concero_verify_quest_begin',
 			data: { id: userQuest.questId, task: task.id, type: getEventTypeQuest(quest as TQuest) },
 		})
@@ -83,7 +83,6 @@ export const QuestTask = (props: TProps) => {
 			</div>
 		)
 	}
-	/** TODO: Change name step => task */
 	return (
 		<VStack gap="space_0_75" className={cls.step_wrap}>
 			<VStack gap="space_0_25">

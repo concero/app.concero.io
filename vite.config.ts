@@ -1,11 +1,12 @@
 import { defineConfig, loadEnv } from 'vite'
 import stylelint from 'vite-plugin-stylelint'
 import react from '@vitejs/plugin-react-swc'
-import precss from 'precss'
 import EnvironmentPlugin from 'vite-plugin-environment'
 import svgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
-
+import autoprefixer from 'autoprefixer'
+import postcssPresetEnv from 'postcss-preset-env'
+import precss from 'precss'
 const convertColorsToCurrentColorPlugin = {
 	name: 'convertColorsToCurrentColor',
 	description: 'Convert all fill and stroke colors to currentColor for monochrome SVGs.',
@@ -58,14 +59,32 @@ export default defineConfig(({ mode }) => {
 			}),
 		],
 		css: {
+			devSourcemap: true,
 			postcss: {
 				plugins: [precss()],
-			},
-			preprocessorOptions: {
-				postcss: {
-					api: 'modern-compiler', // or "modern"
+				preprocessorOptions: {
+					postcss: {
+						api: 'modern-compiler', // or "modern"
+					},
 				},
+				// plugins: [
+				// postcssPresetEnv({
+				// 	stage: 3,
+				// features: {
+				// 	'nesting-rules': true,
+
+				// 	'color-function': true,
+				// 	'gap-properties': true,
+				// },
+				// }),
+				// autoprefixer({
+				// 	grid: true,
+				// }),
+				// ],
 			},
+			// modules: {
+			// 	generateScopedName: mode === 'development' ? '[name]__[local]' : '[hash:base64:8]',
+			// },
 		},
 		define: {
 			__IS_DEV__: mode === 'development',
@@ -73,12 +92,12 @@ export default defineConfig(({ mode }) => {
 		build: {
 			outDir: './dist',
 			emptyOutDir: true,
-		},
-		rollupOptions: {
-			output: {
-				manualChunks: {
-					vendor: ['react', 'react-dom'],
-					utils: ['axios'],
+			rollupOptions: {
+				output: {
+					manualChunks: {
+						vendor: ['react', 'react-dom'],
+						utils: ['axios'],
+					},
 				},
 			},
 		},

@@ -19,8 +19,9 @@ export const Web3Provider = ({ children }: PropsWithChildren) => {
 		try {
 			const chainsDto = chainsResponse.payload.items.map(item => item.chain)
 
-			if (chainsDto.length === 0) {
+			if (chainsDto.length === 0 && import.meta.env.PROD) {
 				console.error('No chains returned from API')
+				return
 			}
 
 			const viemChains = chainsDto.map(convertToViemChain)
@@ -50,10 +51,12 @@ export const Web3Provider = ({ children }: PropsWithChildren) => {
 		return <WagmiProvider config={config}>{children}</WagmiProvider>
 	}
 
-	// Готовы к работе
 	if (wagmiConfig) {
+		console.log('Wagmi ready')
+
 		return <WagmiProvider config={wagmiConfig}>{children}</WagmiProvider>
 	} else {
+		console.log('Wagmi fallback')
 		return <WagmiProvider config={config}>{children}</WagmiProvider>
 	}
 }

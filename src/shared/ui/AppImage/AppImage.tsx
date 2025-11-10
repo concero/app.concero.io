@@ -64,8 +64,8 @@ export const AppImage = memo((props: AppImageProps): JSX.Element => {
 		}
 
 		img.onerror = e => {
-			if (__IS_DEV__ && src !== '') {
-				console.error('Failed to load image:', e, 'with source:', src)
+			if (src !== '' && import.meta.env.DEV) {
+				// console.error('Failed to load image:', e, 'with source:', src)
 			}
 			setStatus('error')
 			clearTimeout(timerRef.current)

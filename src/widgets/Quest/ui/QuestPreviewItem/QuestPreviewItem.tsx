@@ -7,7 +7,7 @@ import { action, category } from '@/constants/tracking'
 import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 import { Modal } from '@concero/ui-kit'
-import { useDisableBodyScroll } from '@/shared/lib/utils/useDisableBodySCroll'
+import { useDisableBodyScroll } from '@/shared/lib/utils/useDisableBodyScroll'
 
 type TProps = {
 	quest: TQuest
