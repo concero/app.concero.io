@@ -5,7 +5,9 @@ import { Header } from '@/widgets/Header'
 import { AppRouter } from './providers/router/AppRouter'
 import './styles/index.css'
 import cls from './App.module.pcss'
+import { useInitial } from './model/hooks/useInitial'
 export const App = () => {
+	useInitial()
 	return (
 		<AppScreen>
 			<CheckTermsOfUseDecorator>

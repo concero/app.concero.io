@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { Config, WagmiProvider } from 'wagmi'
 import { configEnvs } from '@/shared/consts/config/config'
@@ -10,11 +10,10 @@ const projectId = configEnvs.WEB3_MODAL_PROJECT_ID
 
 export const Web3Provider = ({ children }: PropsWithChildren) => {
 	const { data: chainsResponse, isLoading, isError } = useChains()
-	const [wagmiConfig, setWagmiConfig] = useState<Config | null>(null)
-	const [error, setError] = useState<string | null>(null)
+	const wagmiConfigRef = useRef<Config | null>(null)
 
 	useEffect(() => {
-		if (wagmiConfig || isLoading || !chainsResponse?.payload?.items) return
+		if (wagmiConfigRef.current || isLoading || !chainsResponse?.payload?.items) return
 
 		try {
 			const chainsDto = chainsResponse.payload.items.map(item => item.chain)
@@ -33,28 +32,26 @@ export const Web3Provider = ({ children }: PropsWithChildren) => {
 				projectId,
 			})
 
-			setWagmiConfig(adapter.wagmiConfig)
-			setError(null)
+			wagmiConfigRef.current = adapter.wagmiConfig
 		} catch (err) {
 			const message = err instanceof Error ? err.message : 'Unknown error during Wagmi config init'
 			console.error('[Web3Provider] Failed to initialize Wagmi:', message)
-			setError(message)
 		}
-	}, [chainsResponse, isLoading, wagmiConfig])
+	}, [chainsResponse, isLoading, wagmiConfigRef.current])
 
-	if (isLoading && !wagmiConfig) {
+	if (isLoading && !wagmiConfigRef.current) {
 		return null
 	}
 
-	if (error || isError) {
-		console.warn('Web3 unavailable:', error || 'Chain fetch failed')
+	if (isError) {
+		console.warn('Web3 unavailable: Chain fetch failed')
 		return <WagmiProvider config={config}>{children}</WagmiProvider>
 	}
 
-	if (wagmiConfig) {
+	if (wagmiConfigRef.current) {
 		console.log('Wagmi ready')
 
-		return <WagmiProvider config={wagmiConfig}>{children}</WagmiProvider>
+		return <WagmiProvider config={wagmiConfigRef.current}>{children}</WagmiProvider>
 	} else {
 		console.log('Wagmi fallback')
 		return <WagmiProvider config={config}>{children}</WagmiProvider>

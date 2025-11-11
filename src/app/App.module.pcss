@@ -1,4 +1,5 @@
 .wrap_page {
+	/* height: 100%; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -11,6 +12,7 @@
 	@media (min-width: 1280px) {
 		display: grid;
 		grid-template-columns: repeat(24, minmax(0, 1fr));
+		grid-template-rows: 1fr auto;
 		column-gap: 16px;
 	}
 	.footer {

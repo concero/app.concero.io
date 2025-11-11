@@ -1,4 +1,4 @@
-import { TQuest, useClaimQuestMutation } from '@/entities/Quest'
+import { useClaimQuestMutation } from '@/entities/Quest'
 import { TUserQuest } from '@/entities/Quest/model/types/response'
 import { Button } from '@concero/ui-kit'
 import { TButtonProps } from '@concero/ui-kit/dist/common/Button/Button'

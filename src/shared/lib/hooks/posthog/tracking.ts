@@ -1,4 +1,3 @@
-/**@deprecated */
 export enum category {
 	Header = 'cat_header',
 	StakingScreen = 'cat_staking_screen',
@@ -10,7 +9,7 @@ export enum category {
 	ChartCard = 'cat_chart_card',
 	Wallet = 'cat_wallet',
 }
-/**@deprecated */
+
 export enum action {
 	// API
 	APIError = 'action_api_error',
@@ -52,5 +51,4 @@ export enum action {
 	Click = 'action_click',
 	ExternalLinkClicked = 'action_external_link_clicked',
 }
-/**@deprecated */
 export enum label {}

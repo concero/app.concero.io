@@ -2,7 +2,6 @@ import { useDiscordConnection, useSocials, useTwitterConnection, useUserByAddres
 import cls from './ProfilePage.module.pcss'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
-import { LoginRequired } from '@/features/Auth'
 import { Avatar } from '@/shared/ui/Avatar/Avatar'
 import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
 import DiscordConnectedIcon from '@/shared/assets/icons/social_discord.svg?react'
@@ -21,7 +20,7 @@ import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksS
 import { UserSocialType } from '@/entities/User/model/validations/validations'
 import { configEnvs } from '@/shared/consts/config/config'
 import { Leaderboard } from './Leaderboard/Leaderboard'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { routes } from '@/shared/consts/routing/routes'
 
 export const ProfilePage = () => {
@@ -93,7 +92,6 @@ export const ProfilePage = () => {
 					<AchievementGroupPreview />
 				</div>
 			</div>
-			{/* <CersLeaderboard user={user} /> */}
 			<Leaderboard />
 		</PageWrap>
 	)

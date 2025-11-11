@@ -3,8 +3,6 @@ import { ConnectWallet } from '@/features/Auth'
 import { TQuest, TQuestCardStatus, TUserQuest } from '@/entities/Quest'
 import { ClaimReward, StartQuest } from '@/features/Quest'
 import { useTheme } from '@concero/ui-kit'
-import { action, category } from '@/constants/tracking'
-import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 import { useAccount } from 'wagmi'
 import { getIsCanClaimQuest } from '@/entities/User'
@@ -15,6 +13,8 @@ import CersIcon from '@/shared/assets/icons/CersIcon.svg?react'
 import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
 import { Text } from '@/shared/ui'
 import { HStack } from '@/shared/ui/Stack'
+import { trackEvent } from '@/shared/lib/hooks/posthog/useTracking'
+import { action, category } from '@/shared/lib/hooks/posthog/tracking'
 type TProps = {
 	quest: TQuest
 	userQuest?: TUserQuest
@@ -33,7 +33,7 @@ export const QuestCard = (props: TProps) => {
 		await trackEvent({
 			category: category.QuestCard,
 			action: action.BeginQuest,
-			label: 'concero_quest_begin',
+			label: 'rewards_quest_started',
 			data: { id: quest.id, type: getEventTypeQuest(quest as TQuest) },
 		})
 	}
