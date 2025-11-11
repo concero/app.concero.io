@@ -22,6 +22,8 @@ import { configEnvs } from '@/shared/consts/config/config'
 import { Leaderboard } from './Leaderboard/Leaderboard'
 import { Navigate } from 'react-router-dom'
 import { routes } from '@/shared/consts/routing/routes'
+import { Spinner } from '@concero/ui-kit'
+import { HStack } from '@/shared/ui/Stack'
 
 export const ProfilePage = () => {
 	const { address } = useAccount()
@@ -35,8 +37,18 @@ export const ProfilePage = () => {
 	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
-	if (!address || !user) {
+	if (!address) {
 		return <Navigate to={routes.quests} replace />
+	}
+	if (!user) {
+		return (
+			<PageWrap className={cls.page_wrap} key={'PageWrap'}>
+				<Banners key={'Banners'} />
+				<HStack justify="center" max>
+					<Spinner />
+				</HStack>
+			</PageWrap>
+		)
 	}
 	const socialX = socials ? socials.find(social => social.type === UserSocialType.X) : null
 	const socialDiscord = socials ? socials.find(social => social.type === UserSocialType.Discord) : null
@@ -46,8 +58,8 @@ export const ProfilePage = () => {
 	const Social_Discord_toShow = socialDiscord?.shortname ?? '-'
 	const Social_Email_toShow = user.email ?? '-'
 	return (
-		<PageWrap className={cls.page_wrap}>
-			<Banners />
+		<PageWrap className={cls.page_wrap} key={'PageWrap'}>
+			<Banners key={'Banners'} />
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>
 					<div className={cls.roles}></div>
