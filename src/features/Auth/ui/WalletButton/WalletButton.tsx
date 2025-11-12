@@ -1,15 +1,13 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import classNames from './WalletButton.module.pcss'
+import { walletConnect } from 'wagmi/connectors'
+import { injected, useAccount, useConnect, useDisconnect } from 'wagmi'
 import { IconWallet } from '@tabler/icons-react'
 import { Button } from '@concero/ui-kit'
-import { trackEvent } from '@/hooks/useTracking'
-import { action, category } from '@/constants/tracking'
 import { truncateWallet } from '@/utils/formatting'
 import TrailArrowRightIcon from '@/shared/assets/icons/monochrome/TrailArrowRight.svg?react'
-import { injected, useAccount, useConnect, useDisconnect } from 'wagmi'
-import { walletConnect } from 'wagmi/connectors'
-import { useEffect } from 'react'
 import { projectId } from '@/shared/api/wagmi'
+import classNames from './WalletButton.module.pcss'
 interface Props {
 	className?: string
 	isFull?: boolean
@@ -32,11 +30,6 @@ export const WalletButton = ({ className, isFull = false, setLoading }: Props) =
 				connect({ connector: walletConnect({ projectId: projectId }) })
 			}
 		}
-		void trackEvent({
-			category: category.Wallet,
-			action: action.ClickConnectWallet,
-			label: 'Clicked Connect Wallet',
-		})
 	}
 	useEffect(() => {
 		setLoading?.(isPending)

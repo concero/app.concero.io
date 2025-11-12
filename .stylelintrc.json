@@ -31,7 +31,7 @@
 				"resolveNestedSelectors": true
 			}
 		],
-		"selector-max-id": [0],
+		"selector-max-id": [1],
 		"string-quotes": "single",
 		"value-no-vendor-prefix": true,
 		"font-family-no-missing-generic-family-keyword": null,

@@ -4,9 +4,6 @@ import clsx from 'clsx'
 import { Tag } from '@concero/ui-kit'
 import { useState } from 'react'
 import { TTaskActionProps } from '../TaskAction/TaskAction'
-import { trackEvent } from '@/hooks/useTracking'
-import { action, category } from '@/constants/tracking'
-import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 import { VStack } from '@/shared/ui/Stack'
 type TProps = {
 	quest: TQuest
@@ -21,36 +18,16 @@ export const QuestTask = (props: TProps) => {
 	const [errorText, setErrorText] = useState<string | undefined>()
 	const handlerErrorVerify = (text: string) => {
 		setErrorText(text)
-		trackEvent({
-			category: category.QuestCard,
-			action: action.FailedQuest,
-			label: 'concero_verify_quest_fail',
-			data: {
-				id: userQuest.questId,
-				task: task.id,
-				type: getEventTypeQuest(quest as TQuest),
-			},
-		})
 	}
 	const handleSuccessVerify = () => {
-		trackEvent({
-			category: category.QuestCard,
-			action: action.SuccessQuest,
-			label: 'concero_verify_quest_success',
-			data: {
-				id: userQuest.questId,
-				task: task.id,
-				type: getEventTypeQuest(quest as TQuest),
-			},
-		})
+		if (import.meta.env.DEV) {
+			console.log('Success verify of quest')
+		}
 	}
 	const onStartVerify = () => {
-		trackEvent({
-			category: category.QuestCard,
-			action: action.BeginQuest,
-			label: 'concero_verify_quest_begin',
-			data: { id: userQuest.questId, task: task.id, type: getEventTypeQuest(quest as TQuest) },
-		})
+		if (import.meta.env.DEV) {
+			console.log('Success verify of quest')
+		}
 	}
 	const isDone = userQuest.steps
 		.filter(userStep => task.steps.find(step => step.id === userStep.stepId))
@@ -83,7 +60,6 @@ export const QuestTask = (props: TProps) => {
 			</div>
 		)
 	}
-	/** TODO: Change name step => task */
 	return (
 		<VStack gap="space_0_75" className={cls.step_wrap}>
 			<VStack gap="space_0_25">

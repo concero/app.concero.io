@@ -3,10 +3,11 @@ import { categoryQuestNameMap, QuestPreviewCard, QuestStatus, TQuest, TUserQuest
 import { QuestCard } from '../QuestCard/QuestCard'
 import { QuestRewardCard } from '@/entities/Quest'
 import cls from './QuestPreviewItem.module.pcss'
-import { action, category } from '@/constants/tracking'
-import { trackEvent } from '@/hooks/useTracking'
 import { getEventTypeQuest } from '@/shared/lib/utils/events/getEventTypeQuest'
 import { Modal } from '@concero/ui-kit'
+import { useDisableBodyScroll } from '@/shared/lib/utils/useDisableBodyScroll'
+import { trackEvent } from '@/shared/lib/hooks/posthog/useTracking'
+import { action, category } from '@/shared/lib/hooks/posthog/tracking'
 
 type TProps = {
 	quest: TQuest
@@ -18,6 +19,7 @@ export const QuestPreviewItem = (props: TProps) => {
 	const { quest, userQuest, className } = props
 	const [isOpenQuestCard, setIsOpenQuestCard] = useState(false)
 	const [isOpenRewardModal, setIsOpenRewardModal] = useState(false)
+	useDisableBodyScroll(isOpenQuestCard)
 	const rewardIsClaimed = !!userQuest?.finished_at
 
 	useEffect(() => {
@@ -56,8 +58,8 @@ export const QuestPreviewItem = (props: TProps) => {
 	const handleClaimReward = async (quest: TQuest) => {
 		await trackEvent({
 			category: category.QuestCard,
-			action: action.ClaimQuest,
-			label: 'concero_claim_quest',
+			action: action.FinishQuest,
+			label: 'quest_completed',
 			data: { id: quest.id, type: getEventTypeQuest(quest as TQuest) },
 		})
 		setIsOpenQuestCard(false)

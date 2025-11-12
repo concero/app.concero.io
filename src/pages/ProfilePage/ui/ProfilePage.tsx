@@ -2,7 +2,6 @@ import { useDiscordConnection, useSocials, useTwitterConnection, useUserByAddres
 import cls from './ProfilePage.module.pcss'
 import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
-import { LoginRequired } from '@/features/Auth'
 import { Avatar } from '@/shared/ui/Avatar/Avatar'
 import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
 import DiscordConnectedIcon from '@/shared/assets/icons/social_discord.svg?react'
@@ -21,8 +20,10 @@ import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksS
 import { UserSocialType } from '@/entities/User/model/validations/validations'
 import { configEnvs } from '@/shared/consts/config/config'
 import { Leaderboard } from './Leaderboard/Leaderboard'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { routes } from '@/shared/consts/routing/routes'
+import { Spinner } from '@concero/ui-kit'
+import { HStack } from '@/shared/ui/Stack'
 
 export const ProfilePage = () => {
 	const { address } = useAccount()
@@ -36,8 +37,18 @@ export const ProfilePage = () => {
 	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
-	if (!address || !user) {
+	if (!address) {
 		return <Navigate to={routes.quests} replace />
+	}
+	if (!user) {
+		return (
+			<PageWrap className={cls.page_wrap} key={'PageWrap'}>
+				<Banners key={'Banners'} />
+				<HStack justify="center" max>
+					<Spinner />
+				</HStack>
+			</PageWrap>
+		)
 	}
 	const socialX = socials ? socials.find(social => social.type === UserSocialType.X) : null
 	const socialDiscord = socials ? socials.find(social => social.type === UserSocialType.Discord) : null
@@ -47,8 +58,8 @@ export const ProfilePage = () => {
 	const Social_Discord_toShow = socialDiscord?.shortname ?? '-'
 	const Social_Email_toShow = user.email ?? '-'
 	return (
-		<PageWrap className={cls.page_wrap}>
-			<Banners />
+		<PageWrap className={cls.page_wrap} key={'PageWrap'}>
+			<Banners key={'Banners'} />
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>
 					<div className={cls.roles}></div>
@@ -93,7 +104,6 @@ export const ProfilePage = () => {
 					<AchievementGroupPreview />
 				</div>
 			</div>
-			{/* <CersLeaderboard user={user} /> */}
 			<Leaderboard />
 		</PageWrap>
 	)
