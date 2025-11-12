@@ -30,7 +30,7 @@ export const QuestCard = (props: TProps) => {
 	let showTasks = false
 	let showOnlyOptionalSteps = false
 	const handleEventPosthogOnStart = async (quest: TQuest) => {
-		await trackEvent({
+		trackEvent({
 			category: category.QuestCard,
 			action: action.BeginQuest,
 			label: 'rewards_quest_started',

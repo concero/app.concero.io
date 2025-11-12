@@ -12,7 +12,7 @@ type TProps = {
 }
 export const StartQuest = ({ questId, onStart, className, propsButton }: TProps) => {
 	const { address } = useAccount()
-	const { mutateAsync: addQuestInProgress, isPending, isError: startQuestIsError } = useStartQuestMutation()
+	const { mutateAsync: addQuestInProgress, isPending } = useStartQuestMutation()
 	const [loadingWithDelay, setLoadingWithDelay] = useState(false)
 	useEffect(() => {
 		if (isPending) {
@@ -27,10 +27,12 @@ export const StartQuest = ({ questId, onStart, className, propsButton }: TProps)
 	}, [isPending])
 	const startTheQuest = useCallback(() => {
 		if (address) {
-			addQuestInProgress({ address, questId })
+			addQuestInProgress({ address, questId }).catch(err => {
+				console.error('StartQuest | addQuestInProgress is failed, error: ', err)
+			})
 		}
 		onStart?.()
-	}, [])
+	}, [address, questId])
 
 	return (
 		<Button onClick={startTheQuest} className={className} isLoading={loadingWithDelay} {...propsButton}>

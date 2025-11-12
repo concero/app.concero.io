@@ -10,15 +10,12 @@ import { I18Provider } from './shared/i18n/I18nextProvider'
 import { App } from './app/App'
 import { StrictMode } from 'react'
 import { Web3Provider } from './app/providers/Web3Provider/Web3Provider'
+import posthog from 'posthog-js'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<ErrorBoundary>
-			<PostHogProvider
-				options={{
-					disable_session_recording: true,
-				}}
-			>
+			<PostHogProvider client={posthog}>
 				<I18Provider>
 					<QueryClientProvider client={queryClient}>
 						<Web3Provider>
