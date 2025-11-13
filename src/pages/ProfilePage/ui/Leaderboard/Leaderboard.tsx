@@ -218,7 +218,7 @@ const UserRow = ({
 						}}
 					>
 						<div>
-							<Avatar address="0x515151515" className={cls.avatar} />
+							<Avatar address={userData.address as Address} className={cls.avatar} />
 						</div>
 						<Text variant="heading_small" className={cls.text} ellipsis>
 							{userData.nickname ?? truncateWallet(userData.address)}
