@@ -76,7 +76,7 @@ export const Leaderboard = () => {
 			title: 'CERs',
 			renderCell: (value: string) => (
 				<Text variant="body_medium" className={cls.text}>
-					{value}
+					{numberFormat.format(Number(value))}
 				</Text>
 			),
 		},
@@ -252,7 +252,7 @@ const UserRow = ({
 				</Text>
 			</HStack>
 			<HStack gap="space_0_5">
-				<Avatar address="0x515151515" className={cls.avatar} />
+				<Avatar address={userData.address as Address} className={cls.avatar} />
 				<Text variant="heading_small">{userData.nickname ?? truncateWallet(userData.address)}</Text>
 				<Tag size="s" variant="neutral">
 					You
