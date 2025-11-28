@@ -42,7 +42,7 @@ export const Stepper = (props: TProps) => {
 		maxColumns = 7,
 		className,
 	} = props
-	const rows = Math.ceil(max / 7)
+	const rows = Math.ceil(max / maxColumns)
 
 	return (
 		<div className={clsx(cls.stepper_grid, className)}>
@@ -52,8 +52,8 @@ export const Stepper = (props: TProps) => {
 					className={cls.stepper_row}
 					style={{ gridTemplateColumns: `repeat(${maxColumns}, 1fr)` }}
 				>
-					{Array.from({ length: 7 }).map((_, cellIndex) => {
-						const index = rowIndex * 7 + cellIndex + 1
+					{Array.from({ length: maxColumns }).map((_, cellIndex) => {
+						const index = rowIndex * maxColumns + cellIndex + 1
 						if (index > max) return null
 
 						let variant: TStepVariant = 'default'

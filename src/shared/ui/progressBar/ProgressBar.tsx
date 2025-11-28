@@ -1,95 +1,59 @@
-import classNames from './ProgressBar.module.pcss'
-import { toLocaleNumber } from '../../../utils/formatting'
-import { SkeletonLoader } from '../SkeletonLoader/SkeletonLoader'
-import { useEffect, useRef, useState } from 'react'
-import { Tag } from '@concero/ui-kit'
-import clsx from 'clsx'
+import cls from './ProgressBar.module.scss'
 
-type TProgressStatus = 'default' | 'success' | 'danger' | 'warning'
-export interface ProgressBarProps {
-	type?: 'big' | 'medium' | 'float'
-	width?: number | string
-	symbol?: string
-	isLoading?: boolean
-	minValue?: number
-	currentValue: number
-	maxValue: number
-	status?: TProgressStatus
+type TSegmentedProgressBarProps = {
+	className?: string
+	value: number
+	maxSegments?: number
+	segmentGap?: number
 }
 
-export function ProgressBar({
-	width = '100%',
-	type = 'big',
-	symbol = '$',
-	status = 'default',
-	isLoading,
-	currentValue,
-	minValue = 0,
-	maxValue,
-}: ProgressBarProps) {
-	const floatRef = useRef<HTMLDivElement | null>(null)
-	const lineRef = useRef<HTMLDivElement | null>(null)
-	const [floatValueWidth, setFloatValueWidth] = useState(0)
-	const [progressLineWidth, setProgressLineWidth] = useState(0)
+type TTagOptions = {
+	show: boolean
+	transform: (value: number) => string
+}
+type TSolidProgressBarProps = {
+	className?: string
+	value: number
+	tag?: TTagOptions
+}
 
-	const floatValueMargin = floatValueWidth === 0 ? 0 : floatValueWidth / 2
+type TProps = {
+	variant?: 'solid' | 'segmented'
+} & (TSolidProgressBarProps | TSegmentedProgressBarProps)
 
-	useEffect(() => {
-		if (floatRef.current) {
-			const { width: elWidth } = floatRef.current.getBoundingClientRect()
-			setFloatValueWidth(elWidth)
-		}
+export const ProgressBar = (props: TProps) => {
+	const { className, variant = 'solid', value } = props
 
-		if (lineRef.current) {
-			const { width: elWidth } = lineRef.current.getBoundingClientRect()
-			setProgressLineWidth(elWidth)
-		}
-	}, [isLoading, currentValue, floatRef])
+	if (variant === 'segmented') {
+		const maxSegments = 'maxSegments' in props ? (props.maxSegments ?? 10) : 10
+		const gap = 'segmentGap' in props ? (props.segmentGap ?? 2) : 2
+		const active = Math.max(0, Math.min(maxSegments, Math.floor(value)))
 
-	const percent = (currentValue / maxValue) * 100
-
-	const progressLine = isLoading ? (
-		<SkeletonLoader height={8} />
-	) : (
-		<div ref={lineRef} className={classNames.progress_bar} style={{ maxWidth: width, width: '100%' }}>
-			<span
-				className={clsx(classNames.progress_line, classNames[status])}
-				style={{ maxWidth: width, width: `${percent}%` }}
-			></span>
-		</div>
-	)
-
-	if (type === 'big' || type === 'medium') {
-		return <div className="gap-sm">{progressLine}</div>
-	}
-
-	const marginQuery =
-		percent === 0
-			? 0
-			: `clamp(0px, calc(${percent}% - ${floatValueMargin}px), calc(${progressLineWidth}px - ${floatValueWidth}px))`
-
-	return (
-		<div className="gap-sm">
-			{isLoading ? (
-				<SkeletonLoader width={64} height={34} />
-			) : (
-				<div className={classNames.current_value_wrapper}>
-					<div
-						className={classNames.current_value}
-						ref={floatRef}
-						style={{
-							marginLeft: marginQuery,
-						}}
-					>
-						<Tag size="m" variant="branded">
-							{toLocaleNumber(currentValue)}
-							{symbol}
-						</Tag>
-					</div>
+		return (
+			<div className={`${cls.segmentedProgressBar} ${className || ''}`}>
+				<div
+					className={cls._segments}
+					style={
+						{
+							'--max-segments': maxSegments,
+							'--segment-gap': `${gap}px`,
+						} as React.CSSProperties
+					}
+				>
+					{Array.from({ length: maxSegments }).map((_, i) => (
+						<div key={i} className={`${cls._segment} `} data-active={i < active} />
+					))}
 				</div>
-			)}
-
-			{progressLine}
-		</div>
-	)
+			</div>
+		)
+	}
+	if (variant === 'solid') {
+		const safeValue = Math.max(0, Math.min(100, value))
+		return (
+			<div className={cls.track} style={{ '--progress': `${safeValue}%` } as React.CSSProperties}>
+				<div className={cls.fill} />
+			</div>
+		)
+	}
+	return null
 }

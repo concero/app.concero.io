@@ -7,16 +7,13 @@ import {
 	TUserActionResponse,
 	TUserNicknameCheckResponse,
 	TUserResponse,
-	TUserSocialType,
 	UserEarnings,
 } from '../model/types/response'
 import { ApiSuccess, createApiHandler, Http, TApiResponse, TPaginationParams } from '@/shared/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
 import { del, get, patch, post } from '@/shared/api/axiosClient'
 import { UserApi } from '../model/types/api'
-import { configEnvs } from '@/shared/consts/config/config'
 import { UserSocialType } from '../model/validations/validations'
-import { useEffect, useRef } from 'react'
 
 //--------------------------------Domain
 export const userAuthServiceApi = {

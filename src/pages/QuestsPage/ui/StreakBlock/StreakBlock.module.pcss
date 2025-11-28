@@ -1,0 +1,17 @@
+.streak_wrap {
+	/* display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	 */
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	align-self: stretch;
+	/* Mobile styles (375px - 743px) */
+	@media screen and (max-width: 743px) {
+		grid-template-columns: 1fr;
+		& > div {
+			width: 100%;
+		}
+	}
+}

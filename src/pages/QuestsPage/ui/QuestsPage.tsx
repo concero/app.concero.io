@@ -1,26 +1,15 @@
 import { Banners } from '@/entities/Social'
-import { SwappingStreak, HoldingStreak } from '@/features/User'
 import { PageWrap } from '@/shared/ui'
 import { DailyTaskList, QuestPreviewList } from '@/widgets/Quest'
-import { useUserByAddress } from '@/entities/User'
-import { Address } from 'viem'
-import { useAccount } from 'wagmi'
 
 import cls from './QuestsPage.module.pcss'
+import { StreakBlock } from './StreakBlock/StreakBlock'
 
 export const QuestsPage = () => {
-	const { address } = useAccount()
-	const { data: userResponse } = useUserByAddress(address ? (address as Address) : undefined)
-	const user = userResponse?.payload
 	return (
 		<PageWrap className={cls.page_wrap}>
 			<Banners />
-			{user && (
-				<div className={cls.streak_wrap}>
-					<SwappingStreak user={user} />
-					<HoldingStreak user={user} />
-				</div>
-			)}
+			<StreakBlock />
 			<DailyTaskList />
 			<QuestPreviewList groups={['rewards']} />
 		</PageWrap>

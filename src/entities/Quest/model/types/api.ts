@@ -1,5 +1,6 @@
 import { TPaginationParams } from '@/shared/types/api'
 
+/**@deprecated */
 export namespace TFindManyUserQuest {
 	export type RequestQuery = TPaginationParams
 	export type RequestBody = {
@@ -7,6 +8,7 @@ export namespace TFindManyUserQuest {
 		quest_instance_ids: string[]
 	}
 }
+/**@deprecated */
 export namespace TStartQuest {
 	export type RequestBody = {
 		address: string
@@ -17,6 +19,7 @@ export namespace TStartQuest {
 	}
 }
 
+/**@deprecated */
 export namespace TVerifyQuestStep {
 	export type RequestBody = {
 		address: string
@@ -26,6 +29,7 @@ export namespace TVerifyQuestStep {
 		verified: boolean
 	}
 }
+/**@deprecated */
 export namespace TVerifyQuest {
 	export type RequestBody = {
 		address: string
@@ -36,6 +40,7 @@ export namespace TVerifyQuest {
 	}
 }
 
+/**@deprecated */
 export namespace TClaimQuest {
 	export type RequestBody = {
 		address: string
@@ -43,5 +48,63 @@ export namespace TClaimQuest {
 	}
 	export type ResponsePayload = {
 		claimed: boolean
+	}
+}
+export namespace QuestApi {
+	export namespace TFindManyUserQuest {
+		export type RequestQuery = TPaginationParams
+		export type RequestBody = {
+			address: string
+			quest_instance_ids: string[]
+		}
+	}
+	export namespace TStartQuest {
+		export type RequestBody = {
+			address: string
+			questId: string
+		}
+		export type ResponsePayload = {
+			started: boolean
+		}
+	}
+
+	export namespace TVerifyQuestStep {
+		export type RequestBody = {
+			address: string
+			user_step_id: string
+		}
+		export type ResponsePayload = {
+			verified: boolean
+		}
+	}
+	export namespace TVerifyQuest {
+		export type RequestBody = {
+			address: string
+			user_quest_id: string
+		}
+		export type ResponsePayload = {
+			verified: boolean
+		}
+	}
+
+	export namespace TClaimQuest {
+		export type RequestBody = {
+			address: string
+			user_quest_id: string
+		}
+		export type ResponsePayload = {
+			claimed: boolean
+		}
+	}
+	export namespace CountUserQuest {
+		export type RequestBody = {
+			address: string
+			filters: {
+				isCompleted?: boolean
+			}
+		}
+		export type ResponsePayload = {
+			count: number
+		}
 	}
 }

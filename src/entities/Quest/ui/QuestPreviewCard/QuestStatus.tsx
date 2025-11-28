@@ -40,15 +40,21 @@ const getColorVariant = (args: { daysLeft: number; readyToClaim: boolean; isClai
 interface Props {
 	quest: TQuest
 	isClaimed?: boolean
+	isLocked?: boolean
 	userQuest?: TUserQuest
 }
-export const QuestStatus = ({ quest, isClaimed, userQuest }: Props) => {
+export const QuestStatus = ({ quest, isClaimed, userQuest, isLocked }: Props) => {
 	const { finished_at, started_at, interval } = quest
 
 	if (!userQuest) {
 		return (
 			<div className="row gap-xs">
 				<QuestTagIsNew isNew={quest.is_new} started_at={started_at} />
+				{isLocked ? (
+					<Tag size="s" variant={'neutral'}>
+						Locked
+					</Tag>
+				) : null}
 			</div>
 		)
 	}

@@ -15,7 +15,7 @@ import StreakPlaceholderDark from '@/shared/assets/images/streaks/holding_placeh
 import { streak_config } from '../../../../entities/User/config/streak'
 import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
-import { ProgressBar } from '@/shared/ui/progressBar/ProgressBar'
+import { ProgressBar } from '@/shared/ui/progressBar_deprecated/ProgressBar'
 import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
 const swapDescription =
 	"Swap at least $50 daily to earn a multiplier. Missing a day resets your streak. New multipliers replace previous ones — they don't stack. "

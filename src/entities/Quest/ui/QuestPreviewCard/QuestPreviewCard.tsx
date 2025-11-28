@@ -1,20 +1,21 @@
 import { Card } from '@/shared/ui/Card/Card'
-import type { TQuest, TQuestSize, TUserQuest } from '../../model/types/response'
-import cls from './QuestPreviewCard.module.pcss'
-import { QuestStatus } from './QuestStatus'
-import ArrowRightIcon from '@/shared/assets/icons/monochrome/ArrowRight.svg?react'
-import clsx from 'clsx'
-import { categoryQuestNameMap } from '../../config/nameMaps'
-import { ClaimReward } from '@/features/Quest'
-import { useEffect, useState } from 'react'
 import { IconButton, useTheme } from '@concero/ui-kit'
-import { getIsCanClaimQuest } from '@/entities/User'
+import clsx from 'clsx'
+import { ClaimReward } from '@/features/Quest'
+import { HStack, VStack } from '@/shared/ui/Stack'
+import { Text } from '@/shared/ui'
 import { configEnvs } from '@/shared/consts/config/config'
 import { AppImage } from '@/shared/ui/AppImage'
 import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
+import ArrowRightIcon from '@/shared/assets/icons/monochrome/ArrowRight.svg?react'
 import CersIcon from '@/shared/assets/icons/CersIcon.svg?react'
-import { Text } from '@/shared/ui'
-import { HStack } from '@/shared/ui/Stack'
+import type { TQuest, TQuestSize, TUserQuest } from '../../model/types/response'
+import { useQuestCardState } from '../../model/lib/useQuestCardState'
+import { useQuestCardLogic } from '../../model/lib/useQuestCardLogic'
+import { BlockerQuestFooter } from '../BlockerQuestFooter/BlockerQuestFooter'
+import { QuestStatus } from './QuestStatus'
+import cls from './QuestPreviewCard.module.pcss'
+
 type TClassname = string
 type TProps = {
 	quest?: TQuest
@@ -24,38 +25,21 @@ type TProps = {
 	className?: string
 }
 
+const sizeClassMap: Record<TQuestSize, TClassname> = {
+	s: cls.size_s,
+	m: cls.size_m,
+	l: cls.size_l,
+	xl: cls.size_xl,
+}
 export const QuestPreviewCard = (props: TProps) => {
 	const { quest, onClick, onClaim, userQuest, className } = props
+
 	const { theme } = useTheme()
 	if (!quest) return null
-	const size = quest.size
-	const [isHovered, setIsHovered] = useState<boolean>(false)
-	const [isPressed, setIsPressed] = useState<boolean>(false)
+	const { isHovered, isPressed, setIsHovered, setIsPressed } = useQuestCardState()
+	const { size, rewardIsClaimed, isCanClaimQuest, isLocked, showMetaInfo, showImage, reward, categoryLabel } =
+		useQuestCardLogic(quest, userQuest)
 
-	useEffect(() => {
-		const handleMouseUp = () => {
-			setIsPressed(false)
-		}
-		document.addEventListener('mouseup', handleMouseUp)
-		return () => {
-			document.removeEventListener('mouseup', handleMouseUp)
-		}
-	}, [])
-	const sizeClassMap: Record<TQuestSize, TClassname> = {
-		s: cls.size_s,
-		m: cls.size_m,
-		l: cls.size_l,
-		xl: cls.size_xl,
-	}
-
-	const showMetaInfo = size !== 's'
-	const showImage = size !== 's' && size !== 'm'
-	const rewardIsClaimed = Boolean(userQuest?.finished_at)
-	const isCanClaimQuest = getIsCanClaimQuest({ quest, userQuest })
-	const reward = Math.max(
-		quest.quest_reward?.tokenReward?.min_value ?? 0,
-		quest.quest_reward?.tokenReward?.max_value ?? 0,
-	)
 	return (
 		<Card
 			className={clsx(cls.preview_item, sizeClassMap[size], { [cls.disabled]: rewardIsClaimed }, className)}
@@ -68,9 +52,14 @@ export const QuestPreviewCard = (props: TProps) => {
 			<div className={cls.header}>
 				{showMetaInfo && (
 					<div className={cls.meta_info}>
-						<span className={cls.category}>{categoryQuestNameMap[quest.category]}</span>
+						<span className={cls.category}>{categoryLabel}</span>
 						<span className={cls.quest}>
-							<QuestStatus quest={quest} isClaimed={rewardIsClaimed} userQuest={userQuest} />
+							<QuestStatus
+								quest={quest}
+								isClaimed={rewardIsClaimed}
+								userQuest={userQuest}
+								isLocked={isLocked}
+							/>
 						</span>
 					</div>
 				)}
@@ -95,14 +84,15 @@ export const QuestPreviewCard = (props: TProps) => {
 				</div>
 			)}
 			<div className={cls.footer}>
-				{!rewardIsClaimed && !isCanClaimQuest && (
+				{!rewardIsClaimed && !isCanClaimQuest && !isLocked && (
 					<IconButton size="s" variant="secondary" isHovered={isHovered} isPressed={isPressed}>
 						<ArrowRightIcon />
 					</IconButton>
 				)}
-				{userQuest && isCanClaimQuest && !rewardIsClaimed && (
+				{userQuest && isCanClaimQuest && !rewardIsClaimed && !isLocked && (
 					<ClaimReward userQuestId={userQuest.id} onClaim={() => onClaim?.(quest)} />
 				)}
+				{isLocked && quest.blocker && <BlockerQuestFooter blocker={quest.blocker} />}
 			</div>
 		</Card>
 	)

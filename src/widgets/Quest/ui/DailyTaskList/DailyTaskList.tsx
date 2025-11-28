@@ -2,6 +2,7 @@ import cls from './DailyTaskList.module.pcss'
 import { useAccount } from 'wagmi'
 import { useAllQuests, useUserQuests } from '@/entities/Quest'
 import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
+
 export const DailyTaskList = (): JSX.Element => {
 	const { data: quests } = useAllQuests()
 	const { address } = useAccount()

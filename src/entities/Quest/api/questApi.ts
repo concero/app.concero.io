@@ -2,7 +2,14 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { TGetAllQuestsResponse, TUserQuestResponse } from '../model/types/response'
 import { createApiHandler, TApiResponse } from '@/shared/types/api'
 import { get, post } from '@/shared/api/axiosClient'
-import { TClaimQuest, TFindManyUserQuest, TStartQuest, TVerifyQuest, TVerifyQuestStep } from '../model/types/api'
+import {
+	QuestApi,
+	TClaimQuest,
+	TFindManyUserQuest,
+	TStartQuest,
+	TVerifyQuest,
+	TVerifyQuestStep,
+} from '../model/types/api'
 import { queryClient } from '@/shared/api/tanstackClient'
 const questService = {
 	getAllQuests: async () => {
@@ -36,6 +43,11 @@ const questService = {
 	claimQuest: async (body: TClaimQuest.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/quest/claim`
 		return createApiHandler(() => post<TApiResponse<TClaimQuest.ResponsePayload>>(url, body))
+	},
+	countUserQuest: async ({ address, filters }: QuestApi.CountUserQuest.RequestBody) => {
+		const url = `${process.env.CONCERO_API_URL}/users/quest/${address}/count`
+		// return createApiHandler(() => get<TApiResponse<QuestApi.CountUserQuest.ResponsePayload>>(url, { filters }))
+		return createApiHandler(() => get<TApiResponse<QuestApi.CountUserQuest.ResponsePayload>>(url, { filters }))
 	},
 }
 
@@ -101,4 +113,17 @@ export const useClaimQuestMutation = () => {
 	})
 }
 
+export const useCountUserQuests = (arg: QuestApi.CountUserQuest.RequestBody) => {
+	return useQuery({
+		queryKey: [tagInvalidationUserQuest, 'user_quests'],
+		queryFn: () => {
+			if (!arg.address) {
+				throw new Error('Address and quest_ids is required')
+			}
+			return questService.countUserQuest(arg)
+		},
+		enabled: !!arg.address,
+	})
+}
 export const invalidationTagQuest = tagInvalidation
+export const questServiceApi = questService
