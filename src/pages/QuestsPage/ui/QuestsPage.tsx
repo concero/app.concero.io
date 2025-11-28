@@ -1,10 +1,8 @@
 import { Banners } from '@/entities/Social'
-import { PageWrap } from '@/shared/ui'
+import { PageWrap, ProgressBar } from '@/shared/ui'
 import { DailyTaskList, QuestPreviewList } from '@/widgets/Quest'
-
 import cls from './QuestsPage.module.pcss'
 import { StreakBlock } from './StreakBlock/StreakBlock'
-import { ProgressBar } from '@/shared/ui/ProgressBar/ProgressBar'
 
 export const QuestsPage = () => {
 	return (
