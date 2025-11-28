@@ -1,59 +1,31 @@
-import cls from './ProgressBar.module.scss'
+import { forwardRef } from 'react'
+import { MetaProgressBar, TMetaProgressBarProps } from './MetaProgressBar/MetaProgressBar'
+import { ProgressLine, TProgressLineProps } from './ProgressLine/ProgressLine'
+import { OmitTyped } from '@/shared/types/utils'
 
-type TSegmentedProgressBarProps = {
-	className?: string
-	value: number
-	maxSegments?: number
-	segmentGap?: number
-}
+type TProgressBarProps = OmitTyped<TMetaProgressBarProps, 'children'> & TProgressLineProps
 
-type TTagOptions = {
-	show: boolean
-	transform: (value: number) => string
-}
-type TSolidProgressBarProps = {
-	className?: string
-	value: number
-	tag?: TTagOptions
-}
-
-type TProps = {
-	variant?: 'solid' | 'segmented'
-} & (TSolidProgressBarProps | TSegmentedProgressBarProps)
-
-export const ProgressBar = (props: TProps) => {
-	const { className, variant = 'solid', value } = props
-
-	if (variant === 'segmented') {
-		const maxSegments = 'maxSegments' in props ? (props.maxSegments ?? 10) : 10
-		const gap = 'segmentGap' in props ? (props.segmentGap ?? 2) : 2
-		const active = Math.max(0, Math.min(maxSegments, Math.floor(value)))
-
-		return (
-			<div className={`${cls.segmentedProgressBar} ${className || ''}`}>
-				<div
-					className={cls._segments}
-					style={
-						{
-							'--max-segments': maxSegments,
-							'--segment-gap': `${gap}px`,
-						} as React.CSSProperties
-					}
-				>
-					{Array.from({ length: maxSegments }).map((_, i) => (
-						<div key={i} className={`${cls._segment} `} data-active={i < active} />
-					))}
-				</div>
-			</div>
-		)
-	}
-	if (variant === 'solid') {
-		const safeValue = Math.max(0, Math.min(100, value))
-		return (
-			<div className={cls.track} style={{ '--progress': `${safeValue}%` } as React.CSSProperties}>
-				<div className={cls.fill} />
-			</div>
-		)
-	}
-	return null
-}
+export const ProgressBar = forwardRef<HTMLDivElement, TProgressBarProps>((props, ref) => {
+	const { value, description, error, isLoading } = props
+	return (
+		<MetaProgressBar
+			isLoading={isLoading}
+			error={{
+				isError: Boolean(error),
+				...error,
+			}}
+			description={description}
+		>
+			{props.variant == 'solid' && <ProgressLine ref={ref} value={value} variant={'solid'} tag={props.tag} />}
+			{props.variant == 'segmented' && (
+				<ProgressLine
+					ref={ref}
+					value={value}
+					variant={'segmented'}
+					maxSegments={props.maxSegments}
+					segmentGap={props.segmentGap}
+				/>
+			)}
+		</MetaProgressBar>
+	)
+})
