@@ -54,15 +54,17 @@ export const MetaProgressBar = (props: TMetaProgressBarProps) => {
 				<Text variant="heading_medium" className={cls.description_title}>
 					{title}
 				</Text>
-				<Text variant="heading_medium" className={cls.description_current_number}>
-					{current}
-				</Text>
-				<Text variant="heading_medium" className={cls.description_separator}>
-					/
-				</Text>
-				<Text variant="heading_medium" className={cls.description_max}>
-					{max}
-				</Text>
+				<HStack gap="4px">
+					<Text variant="heading_medium" className={cls.description_current_number}>
+						{current}
+					</Text>
+					<Text variant="heading_medium" className={cls.description_separator}>
+						/
+					</Text>
+					<Text variant="heading_medium" className={cls.description_max}>
+						{max}
+					</Text>
+				</HStack>
 			</HStack>
 		)
 		Footer = (
