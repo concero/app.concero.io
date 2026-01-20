@@ -1,39 +1,22 @@
-import { useDiscordConnection, useSocials, useTwitterConnection, useUserByAddress } from '@/entities/User'
-import cls from './ProfilePage.module.pcss'
-import { truncateWallet } from '@/utils/formatting'
 import { useAccount } from 'wagmi'
-import { Avatar } from '@/shared/ui/Avatar/Avatar'
-import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
-import DiscordConnectedIcon from '@/shared/assets/icons/social_discord.svg?react'
-import DiscordDisconnectedIcon from '@/shared/assets/icons/social_discord_disabled.svg?react'
-import TwitterConnectedIcon from '@/shared/assets/icons/Social_X.svg?react'
-import TwitterDisconnectedIcon from '@/shared/assets/icons/Social_X_disabled.svg?react'
-import EmailDisconnectedIcon from '@/shared/assets/icons/Email_disabled.svg?react'
-import EmailConnectedIcon from '@/shared/assets/icons/Email_connected.svg?react'
+import { useUserByAddress } from '@/entities/User'
 import { Address } from 'viem'
-import { AchievementGroupPreview } from '@/entities/Achievement'
-import { Separator } from '@/components/layout/Separator/Separator'
-import { OpenHistoryUserActions } from '@/features/User'
-import { AccoutSettings } from '@/features/User'
-import { Banners } from '@/entities/Social'
 import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
-import { UserSocialType } from '@/entities/User/model/validations/validations'
 import { configEnvs } from '@/shared/consts/config/config'
-import { Leaderboard } from './Leaderboard/Leaderboard'
 import { Navigate } from 'react-router-dom'
-import { routes } from '@/shared/consts/routing/routes'
-import { Spinner } from '@concero/ui-kit'
+import { PageWrap } from '@/shared/ui'
+import { Banners } from '@/entities/Social'
 import { HStack } from '@/shared/ui/Stack'
+import { Spinner } from '@concero/ui-kit'
+import { routes } from '@/shared/consts/routing/routes'
+import cls from './ProfilePage.module.pcss'
+import { ProfilePageContent } from './ProfilePageContent'
 
-export const ProfilePage = () => {
+export default function ProfilePage() {
 	const { address } = useAccount()
+
 	const { data: userResponse } = useUserByAddress(address ? (address as Address) : undefined)
 	const user = userResponse?.payload
-	const { data: socialsResponse } = useSocials(address)
-	const socials = socialsResponse?.payload?.socials
-	const { isConnected: isDiscordConnected } = useDiscordConnection({ user: user ?? undefined })
-	const { isConnected: isTwitterConnected } = useTwitterConnection({ user: user ?? undefined })
-	const IsEmailConnected = user?.email && user.email.length > 0
 	if (configEnvs.PROFILE_IS_NOT_AVAILABLE) {
 		return <TechWorksScreen />
 	}
@@ -50,61 +33,6 @@ export const ProfilePage = () => {
 			</PageWrap>
 		)
 	}
-	const socialX = socials ? socials.find(social => social.type === UserSocialType.X) : null
-	const socialDiscord = socials ? socials.find(social => social.type === UserSocialType.Discord) : null
 
-	const addresToShow = truncateWallet(user.address, 4)
-	const Social_X_toShow = socialX?.shortname ?? '-'
-	const Social_Discord_toShow = socialDiscord?.shortname ?? '-'
-	const Social_Email_toShow = user.email ?? '-'
-	return (
-		<PageWrap className={cls.page_wrap} key={'PageWrap'}>
-			<Banners key={'Banners'} />
-			<div className={cls.profile_card_wrap}>
-				<div className={cls.profile_header}>
-					<div className={cls.roles}></div>
-					<div className={cls.setting_wrap}>
-						<OpenHistoryUserActions
-							user={user}
-							text="History"
-							buttonProps={{
-								size: 's',
-								variant: 'secondary',
-							}}
-							className={cls.open_history_btn}
-						/>
-						<AccoutSettings user={user} />
-					</div>
-				</div>
-				<div className={cls.user_info}>
-					<div className={cls.account_info}>
-						<Avatar address={user.address as Address} className={cls.avatar} />
-						<div className={cls.wrap_nick_address}>
-							<span className={cls.nickname}>{user.nickname ?? 'Nickname'}</span>
-							<span className={cls.address}>{addresToShow}</span>
-						</div>
-					</div>
-					<div className={cls.socials_group}>
-						<div className={cls.social_item}>
-							{isTwitterConnected ? <TwitterConnectedIcon /> : <TwitterDisconnectedIcon />}
-							<span>{Social_X_toShow}</span>
-						</div>
-						<div className={cls.social_item}>
-							{isDiscordConnected ? <DiscordConnectedIcon /> : <DiscordDisconnectedIcon />}
-							<span>{Social_Discord_toShow}</span>
-						</div>
-						<div className={cls.social_item}>
-							{IsEmailConnected ? <EmailConnectedIcon /> : <EmailDisconnectedIcon />}
-							<span>{Social_Email_toShow}</span>
-						</div>
-					</div>
-				</div>
-				<Separator />
-				<div className={cls.achiev_wrap}>
-					<AchievementGroupPreview />
-				</div>
-			</div>
-			<Leaderboard />
-		</PageWrap>
-	)
+	return <ProfilePageContent user={user} />
 }

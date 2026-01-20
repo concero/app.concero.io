@@ -63,6 +63,19 @@ export namespace UserApi {
 			}
 			export type ResponsePayload = { link: string }
 		}
+		export namespace GetAuth2_0LinkX {
+			export type RequestParams = {
+				walletAddress?: string
+			}
+			export type ResponsePayload = { link: string }
+		}
+		export namespace GetLikedTweetsContract {
+			export type RequestParams = {
+				walletAddress?: string
+				code: string
+			}
+			export type ResponsePayload = { success: boolean }
+		}
 		export namespace ConnectX {
 			export type RequestParams = {
 				address?: string
