@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { Config, WagmiProvider } from 'wagmi'
 import { configEnvs } from '@/shared/consts/config/config'
@@ -10,7 +10,7 @@ const projectId = configEnvs.WEB3_MODAL_PROJECT_ID
 
 export const Web3Provider = ({ children }: PropsWithChildren) => {
 	const { data: chainsResponse, isLoading, isError } = useChains()
-	const wagmiConfigRef = useRef<Config | null>(null)
+	const wagmiConfigRef = useRef<Config | null | undefined>(null)
 
 	useEffect(() => {
 		if (wagmiConfigRef.current || isLoading || !chainsResponse?.payload?.items) return
@@ -39,21 +39,21 @@ export const Web3Provider = ({ children }: PropsWithChildren) => {
 		}
 	}, [chainsResponse, isLoading, wagmiConfigRef.current])
 
-	if (isLoading && !wagmiConfigRef.current) {
+	const activeConfig = wagmiConfigRef.current ? wagmiConfigRef.current : isError ? config : config
+
+	if (isLoading && wagmiConfigRef.current === null) {
 		return null
 	}
 
 	if (isError) {
-		console.warn('Web3 unavailable: Chain fetch failed')
-		return <WagmiProvider config={config}>{children}</WagmiProvider>
+		wagmiConfigRef.current = undefined
+		console.log('Web3 unavailable: Chain fetch failed')
 	}
 
 	if (wagmiConfigRef.current) {
 		console.log('Wagmi ready')
-
-		return <WagmiProvider config={wagmiConfigRef.current}>{children}</WagmiProvider>
 	} else {
 		console.log('Wagmi fallback')
-		return <WagmiProvider config={config}>{children}</WagmiProvider>
 	}
+	return <WagmiProvider config={activeConfig}>{children}</WagmiProvider>
 }

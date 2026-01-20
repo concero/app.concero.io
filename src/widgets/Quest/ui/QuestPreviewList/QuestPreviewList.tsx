@@ -1,7 +1,6 @@
 import { QuestPreviewItem } from '../QuestPreviewItem/QuestPreviewItem'
 import cls from './QuestPreviewList.module.pcss'
 import clsx from 'clsx'
-import { HStack } from '@/shared/ui/Stack'
 import { TQuestGroup } from '@/entities/Quest'
 import { useQuestPreviewList } from '../../model/hooks/useQuestPreviewList'
 

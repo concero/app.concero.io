@@ -88,6 +88,7 @@
 		"@vitejs/plugin-react": "^4.2.1",
 		"@vitejs/plugin-react-swc": "^3.3.2",
 		"autoprefixer": "^10.4.21",
+		"baseline-browser-mapping": "^2.9.11",
 		"eslint": "^9.17.0",
 		"eslint-config-love": "^114.0.0",
 		"eslint-config-prettier": "^9.1.0",
