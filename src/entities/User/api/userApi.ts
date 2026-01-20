@@ -148,6 +148,16 @@ export const socialsService = {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/x/link`
 		return createApiHandler(() => get<TApiResponse<UserApi.Socials.GetAuthLinkX.ResponsePayload, any>>(url))
 	},
+	getAuth2_0XLink: async ({ address }: { address: string }) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/x/auth2_0/link`
+		return createApiHandler(() => get<TApiResponse<UserApi.Socials.GetAuth2_0LinkX.ResponsePayload, any>>(url))
+	},
+	getLikedTweets: async ({ code, walletAddress }: { walletAddress?: string; code: string }) => {
+		const url = `${process.env.CONCERO_API_URL}/users/${walletAddress}/socials/x/auth2_0/get_liked_tweets`
+		return createApiHandler(() =>
+			post<TApiResponse<UserApi.Socials.GetLikedTweetsContract.ResponsePayload, any>>(url, { code }),
+		)
+	},
 	disconnectNetwork: async ({ socialType, address }: UserApi.Socials.DisconnectSocial.RequestParams) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/${socialType}`
 		return createApiHandler(() =>
@@ -228,59 +238,6 @@ export const useUpdateNicknameMutation = () => {
 	)
 }
 
-// type UserVolumeQueryKey = readonly ['userVolume', UserApi.GetUserVolume.RequestBody | undefined]
-
-// export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
-// 	const lastDurationRef = useRef<number>(0)
-// 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-// 	const enabled = !!options?.address && !!options?.from && !!options?.to
-
-// 	const query = useQuery({
-// 		queryKey: ['userVolume', options] satisfies UserVolumeQueryKey,
-// 		queryFn: async () => {
-// 			const start = Date.now()
-// 			try {
-// 				return await userServiceApi.getUserVolume(options as UserApi.GetUserVolume.RequestBody)
-// 			} finally {
-// 				lastDurationRef.current = Date.now() - start
-// 			}
-// 		},
-// 		enabled: false,
-// 		staleTime: 5_000,
-// 		gcTime: 60_000,
-// 		retry: 1,
-// 	})
-
-// 	useEffect(() => {
-// 		if (!enabled) {
-// 			if (timeoutRef.current) {
-// 				clearTimeout(timeoutRef.current)
-// 				timeoutRef.current = null
-// 			}
-// 			return
-// 		}
-
-// 		const executeRefetch = async () => {
-// 			await query.refetch()
-// 			const slowThreshold = 5_000
-// 			const nextInterval = lastDurationRef.current > slowThreshold ? 30_000 : 10_000
-
-// 			timeoutRef.current = setTimeout(executeRefetch, nextInterval)
-// 		}
-
-// 		executeRefetch()
-
-// 		return () => {
-// 			if (timeoutRef.current) {
-// 				clearTimeout(timeoutRef.current)
-// 				timeoutRef.current = null
-// 			}
-// 		}
-// 	}, [enabled, query.refetch])
-
-// 	return query
-// }
 export const useUserVolume = (options?: UserApi.GetUserVolume.RequestBody) => {
 	return useQuery({
 		queryKey: ['userVolume', options],
