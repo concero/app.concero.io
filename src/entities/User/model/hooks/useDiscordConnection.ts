@@ -12,6 +12,7 @@ type TUseDiscordConnectionProps = {
 
 export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	const [isConnected, setIsConnected] = useState<boolean>(false)
+	const [isConnecting, setIsConnecting] = useState<boolean>(false)
 	const [searchParams] = useSearchParams()
 	const { mutateAsync } = useConnectDiscordMutation()
 	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation(user?.address)
@@ -44,12 +45,21 @@ export const useDiscordConnection = ({ user }: TUseDiscordConnectionProps) => {
 	}
 
 	const listenDiscordConnection = async () => {
+		if (isConnecting) return
 		const code = searchParams.get('code')
+		const state = searchParams.get('state')
 
-		if (code && user) {
-			const { payload } = await mutateAsync({ token: code, address: user.address })
-			setIsConnected(!!payload?.username)
-			navigate('/profile')
+		if (code && user && !state) {
+			setIsConnecting(true)
+			try {
+				const { payload } = await mutateAsync({ token: code, address: user.address })
+				setIsConnected(!!payload?.username)
+			} catch (error) {
+				console.log('listenDiscordConnection', { error })
+			} finally {
+				setIsConnecting(false)
+				navigate('/profile')
+			}
 		}
 	}
 

@@ -12,6 +12,7 @@ interface UseTwitterConnectionProps {
 
 export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	const [isConnected, setIsConnected] = useState<boolean>(false)
+	const [isConnecting, setIsConnecting] = useState<boolean>(false)
 	const [searchParams] = useSearchParams()
 	const { mutateAsync } = useConnectXMutation()
 	const { mutateAsync: disconnectSocial } = useDisconnectSocialNetworkMutation(user?.address)
@@ -38,6 +39,7 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 			} else {
 				if (user) {
 					const link = await socialsService.getAuthXLink({ address: user.address })
+
 					window.location.href = link.payload.link
 				}
 			}
@@ -47,23 +49,28 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 	}
 
 	const listenTwitterConnection = async () => {
+		if (isConnecting) return
+		console.log('URL:', window.location.href)
 		const twitterCode = searchParams.get('oauth_token')
 		const twitterVerifyCode = searchParams.get('oauth_verifier')
 
-		if (twitterCode && twitterVerifyCode && user) {
-			try {
-				const result = await mutateAsync({
-					token: twitterCode,
-					verifier: twitterVerifyCode,
-					address: user.address,
-				})
-				setIsConnected(result.code === Http.Code.Enum.OK)
-				if (result.payload?.username) {
-					navigate('/profile')
-				}
-			} catch (error) {
+		setIsConnecting(true)
+		try {
+			if (!user || !twitterCode || !twitterVerifyCode) return
+			const result = await mutateAsync({
+				address: user.address,
+				token: twitterCode,
+				verifier: twitterVerifyCode,
+			})
+			setIsConnected(result.code === Http.Code.Enum.OK)
+			if (result.payload?.username) {
 				navigate('/profile')
 			}
+		} catch (error) {
+			console.log('listenTwitterConnection:', { error })
+		} finally {
+			setIsConnecting(false)
+			navigate('/profile')
 		}
 	}
 
