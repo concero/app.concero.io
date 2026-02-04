@@ -1,0 +1,113 @@
+.alert_body_wrap {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--space-s);
+	height: auto;
+	border-radius: var(--space-m);
+	padding: var(--space-xs) var(--space-m) var(--space-xs) var(--space-xs);
+	width: 100%;
+	.alert_body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxs);
+		&.only_title {
+			height: 100%;
+			justify-content: center;
+		}
+		.title {
+			font: var(--font-heading-large);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 100%;
+		}
+		.description {
+			font: var(--font-body-large);
+			white-space: normal;
+			overflow: hidden;
+			max-width: 100%;
+			text-overflow: ellipsis;
+			box-sizing: border-box;
+		}
+	}
+	&.branded {
+		background-color: var(--color-accent-100);
+		.title {
+			color: var(--color-accent-700);
+		}
+		.description {
+			color: var(--color-accent-600);
+		}
+	}
+	&.positive {
+		background-color: var(--color-success-100);
+		.title {
+			color: var(--color-success-700);
+		}
+		.description {
+			color: var(--color-success-600);
+		}
+	}
+	&.negative {
+		background-color: var(--color-danger-100);
+		.title {
+			color: var(--color-danger-700);
+		}
+		.description {
+			color: var(--color-danger-600);
+		}
+	}
+	&.warning {
+		background-color: var(--color-warning-100);
+		.title {
+			color: var(--color-warning-700);
+		}
+		.description {
+			color: var(--color-warning-600);
+		}
+	}
+	&.neutral {
+		background-color: var(--color-gray-100);
+		.title {
+			color: var(--color-gray-700);
+		}
+		.description {
+			color: var(--color-gray-600);
+		}
+	}
+}
+
+.icon_wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: var(--space-s);
+	width: var(--space-xxxl);
+	height: var(--space-xxxl);
+	padding: 12px;
+	&.branded {
+		background-color: var(--color-accent-25);
+		color: var(--color-accent-700);
+	}
+	&.positive {
+		background-color: var(--color-success-25);
+		color: var(--color-success-700);
+	}
+	&.negative {
+		background-color: var(--color-danger-25);
+		color: var(--color-danger-700);
+	}
+	&.warning {
+		background-color: var(--color-warning-25);
+		color: var(--color-warning-700);
+	}
+	&.neutral {
+		background-color: var(--color-gray-25);
+		color: var(--color-gray-700);
+	}
+
+	& > * {
+		width: 100%;
+		height: 100%;
+	}
+}

@@ -1,17 +1,25 @@
-import { TQuest, TQuestTask, TTaskType, TUserQuest } from '@/entities/Quest'
-import { Button } from '@concero/ui-kit'
-import cls from './TaskAction.module.pcss'
 import { useEffect, useState } from 'react'
+import { questServiceApi, TQuest, TQuestTask, TTaskType, TUserQuest } from '@/entities/Quest'
+import { useUserCountTx } from '@/entities/User/api/userApi'
+import { EUserQueueState } from '@/entities/Quest'
+import { configEnvs } from '@/shared/consts/config/config'
+import { Alert, Button } from '@concero/ui-kit'
+import { Alert as AlertLocal } from '@/shared/ui/Alert/Alert'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
 import { useAccount } from 'wagmi'
-import { configEnvs } from '@/shared/consts/config/config'
 import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
-import { useUserCountTx } from '@/entities/User/api/userApi'
 import { roundDownToPrecision } from '@/shared/lib/utils/number'
 import dayjs from 'dayjs'
-import { VStack } from '@/shared/ui/Stack'
+import { HStack, VStack } from '@/shared/ui/Stack'
+import { Text } from '@/shared/ui'
+import LockIcon from '@/shared/assets/icons/monochrome/Lock.svg?react'
+import TimeIcon from '@/shared/assets/icons/monochrome/Time.svg?react'
+import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
+import cls from './TaskAction.module.pcss'
+import { useIsQuestLocked } from '../../model/hooks/useIsQuestLocked'
+
 export type TTaskActionProps = {
 	quest: TQuest
 	task: TQuestTask
@@ -64,70 +72,151 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			</>
 		)
 	},
-	/**@deprecated */
-	progress_line: function (props: TTaskActionProps): JSX.Element {
-		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
+	retweet_x: function (props: TTaskActionProps): JSX.Element {
+		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props
 		const { address } = useAccount()
-		const { data: userResponse } = useUserByAddress(address)
+		const isLocked = useIsQuestLocked({ quest, address })
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const [isOpenedLink, setIsOpenedLink] = useState(false)
+		const isSingleTask = quest.tasks.length == 1
+		const [queueStatus, setQueueStatus] = useState<EUserQueueState>(EUserQueueState.NOT_QUEUED)
 		const step = task.steps[0]
 		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
-		const isDailyQuest = quest.interval === 'daily'
-		const isWeeklyQuest = quest.interval === 'weekly'
-		const isSingleTask = quest.tasks.length == 1
-		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		useEffect(() => {
+			if (isLocked || !userStep) return
+			questServiceApi
+				.getVerifyQueueStatus({ userStepId: userStep.id })
+				.then(res => {
+					setQueueStatus(res.payload.status)
+				})
+				.catch(err => {
+					console.log('retweet_x | Error', { err })
+				})
+		}, [isPending])
+		useEffect(() => {
+			if (queueStatus === EUserQueueState.VERIFIED) {
+				handleVerify()
+			}
+		}, [queueStatus])
 		const handleVerify = () => {
 			if (userStep) {
 				onStartVerify()
 				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
 			}
 		}
-		const handleSwap = () => {
-			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
-		}
-		let startDate = userQuest.started_at
-		let endDate = quest.finished_at
-		if (isDailyQuest) {
-			const dates = getDayRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		} else if (isWeeklyQuest) {
-			const dates = getWeekRangeDates()
-			startDate = dates.startDate
-			endDate = dates.endDate
-		}
-
-		const { data: volumeResponse } = useUserVolume({
-			address: userResponse?.payload?.address,
-			from: startDate,
-			to: endDate,
-			isCrossChain: step.details.isCrossChain,
-			isTestnet: step.details.isTestnet,
-			fromChainIds: step.details.fromChainIds,
-			toChainIds: step.details.toChainIds,
-		})
-
-		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
-			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
-		}
-		return (
-			<>
-				<ProgressBar
-					type="float"
-					currentValue={volumeResponse?.payload?.volumeUSD ?? Number(0)}
-					maxValue={Number(step?.details?.value)}
-					minValue={0}
+		if (isLocked) {
+			return (
+				<VStack gap="space_0_75">
+					<Button variant="primary" isDisabled size="l">
+						Start Quest
+					</Button>
+					<HStack gap="8px">
+						<LockIcon />
+						<Text variant="heading_small">
+							To unlock this quest, go to your profile settings and connect your X account
+						</Text>
+					</HStack>
+				</VStack>
+			)
+		} else if (queueStatus === EUserQueueState.IN_QUEUE) {
+			return (
+				<Alert
+					className={cls.alert}
+					icon={<TimeIcon />}
+					type="neutral"
+					title="Verifying your action..."
+					description="This may take up to 1 day"
 				/>
-				<div className={cls.controls}>
-					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
-						Swap
+			)
+		} else if (queueStatus === EUserQueueState.REJECTED) {
+			const handleResetSocialVerification = () => {
+				if (!userStep) return
+				questServiceApi
+					.resetVerifySocial({
+						userStepId: userStep?.id,
+					})
+					.then(res => {
+						if (res.payload.success) {
+							setQueueStatus(EUserQueueState.NOT_QUEUED)
+						}
+					})
+					.catch(err => {
+						console.log('retweet_x | handleResetSocialVerification |Error', { err })
+					})
+			}
+			return (
+				<VStack gap="space_1">
+					<Alert
+						className={cls.alert}
+						icon={<TimeIcon />}
+						type="negative"
+						title="Action not detected"
+						description="Make sure your account is public and you didn’t remove the like"
+					/>
+					<Button variant="primary" size="l" onClick={handleResetSocialVerification}>
+						Try Again
 					</Button>
-					<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
-						Verify
-					</Button>
-				</div>
-			</>
-		)
+				</VStack>
+			)
+		} else if (queueStatus === EUserQueueState.VERIFIED) {
+			return <></>
+		} else {
+			const handleLink = () => {
+				window.open(step.details.link, '_blank')
+				setTimeout(() => {
+					setIsOpenedLink(true)
+				}, 3000)
+			}
+
+			return (
+				<VStack gap="space_1">
+					<VStack gap="space_0_5">
+						<AlertLocal
+							className={cls.alert}
+							icon={<WarningIcon />}
+							type="neutral"
+							title="X account must be public"
+						/>
+						<AlertLocal
+							className={cls.alert}
+							icon={<WarningIcon />}
+							type="neutral"
+							title="Keep the like — if you delete it, you will lose the reward"
+						/>
+					</VStack>
+					<div className={cls.controls}>
+						{isOpenedLink ? (
+							<HStack>
+								<Button
+									variant={isSingleTask ? 'primary' : 'secondary_color'}
+									onClick={handleVerify}
+									size="l"
+								>
+									Verify
+								</Button>
+								<Button
+									variant={isSingleTask ? 'secondary' : 'secondary_color'}
+									onClick={handleLink}
+									size="l"
+								>
+									Open X
+								</Button>
+							</HStack>
+						) : (
+							<Button
+								variant={isSingleTask ? 'primary' : 'secondary_color'}
+								onClick={handleLink}
+								size="l"
+							>
+								Open X
+							</Button>
+						)}
+					</div>
+				</VStack>
+			)
+		}
 	},
+
 	check_volume: function (props: TTaskActionProps): JSX.Element {
 		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
 		const { address } = useAccount()
@@ -362,6 +451,70 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 						size="l"
 						isLoading={isPending}
 					>
+						Verify
+					</Button>
+				</div>
+			</>
+		)
+	},
+	/**@deprecated */
+	progress_line: function (props: TTaskActionProps): JSX.Element {
+		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
+		const { address } = useAccount()
+		const { data: userResponse } = useUserByAddress(address)
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const isDailyQuest = quest.interval === 'daily'
+		const isWeeklyQuest = quest.interval === 'weekly'
+		const isSingleTask = quest.tasks.length == 1
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		const handleSwap = () => {
+			window.open(step.details.link ?? configEnvs.lancanURL, '_blank')
+		}
+		let startDate = userQuest.started_at
+		let endDate = quest.finished_at
+		if (isDailyQuest) {
+			const dates = getDayRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		} else if (isWeeklyQuest) {
+			const dates = getWeekRangeDates()
+			startDate = dates.startDate
+			endDate = dates.endDate
+		}
+
+		const { data: volumeResponse } = useUserVolume({
+			address: userResponse?.payload?.address,
+			from: startDate,
+			to: endDate,
+			isCrossChain: step.details.isCrossChain,
+			isTestnet: step.details.isTestnet,
+			fromChainIds: step.details.fromChainIds,
+			toChainIds: step.details.toChainIds,
+		})
+
+		if (__IS_DEV__ && typeof step?.details?.value !== 'string' && typeof step?.details?.value !== 'number') {
+			console.warn('DEVELOPER!!!  step?.details?.value is not a number or string')
+		}
+		return (
+			<>
+				<ProgressBar
+					type="float"
+					currentValue={volumeResponse?.payload?.volumeUSD ?? Number(0)}
+					maxValue={Number(step?.details?.value)}
+					minValue={0}
+				/>
+				<div className={cls.controls}>
+					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleSwap} size="l">
+						Swap
+					</Button>
+					<Button variant={'tetrary_color'} onClick={handleVerify} isLoading={isPending} size="l">
 						Verify
 					</Button>
 				</div>

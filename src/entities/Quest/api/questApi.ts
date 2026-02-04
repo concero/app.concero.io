@@ -35,6 +35,18 @@ const questService = {
 		const url = `${process.env.CONCERO_API_URL}/users/quest/step/verify`
 		return createApiHandler(() => post<TApiResponse<TVerifyQuestStep.ResponsePayload>>(url, body))
 	},
+	getVerifyQueueStatus: async (query: QuestApi.TGetVerifyUserQueueStatus.RequestQuery) => {
+		const { userStepId } = query
+		const params = new URLSearchParams({ userStepId })
+		const url = `${process.env.CONCERO_API_URL}/users/quest/verify/queue/status?${params}`
+		return createApiHandler(() => get<TApiResponse<QuestApi.TGetVerifyUserQueueStatus.ResponsePayload>>(url))
+	},
+	resetVerifySocial: async (query: QuestApi.TResetVerifySocial.RequestQuery) => {
+		const { userStepId } = query
+		const params = new URLSearchParams({ userStepId })
+		const url = `${process.env.CONCERO_API_URL}/users/quest/verify/queue/remove?${params}`
+		return createApiHandler(() => post<TApiResponse<QuestApi.TResetVerifySocial.ResponsePayload>>(url))
+	},
 
 	verifyQuest: async (body: TVerifyQuest.RequestBody) => {
 		const url = `${process.env.CONCERO_API_URL}/users/quest/verify`

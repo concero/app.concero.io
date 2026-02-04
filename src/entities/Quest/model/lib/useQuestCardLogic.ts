@@ -1,13 +1,21 @@
 import { useMemo } from 'react'
-import { getIsCanClaimQuest } from '@/entities/User'
-import { TQuest, TQuestBlocker, TUserQuest } from '../types/response'
+import { getIsCanClaimQuest, TUserResponse } from '@/entities/User'
+import { TQuest, TUserQuest } from '../types/response'
 import { categoryQuestNameMap } from '../../config/nameMaps'
-
-export const useQuestCardLogic = (quest: TQuest, userQuest?: TUserQuest) => {
+import { useIsQuestLocked } from '@/features/Quest/model/hooks/useIsQuestLocked'
+export const useQuestCardLogic = ({
+	quest,
+	address,
+	userQuest,
+}: {
+	quest: TQuest
+	userQuest?: TUserQuest
+	address?: string
+}) => {
 	const size = quest.size
 	const rewardIsClaimed = Boolean(userQuest?.finished_at)
 	const isCanClaimQuest = getIsCanClaimQuest({ quest, userQuest })
-
+	const isLocked = useIsQuestLocked({ address, quest })
 	const showMetaInfo = size !== 's'
 	const showImage = size !== 's' && size !== 'm'
 
@@ -18,8 +26,6 @@ export const useQuestCardLogic = (quest: TQuest, userQuest?: TUserQuest) => {
 	}, [quest.quest_reward])
 
 	const categoryLabel = categoryQuestNameMap[quest.category]
-
-	const isLocked = size === 'm' || !!quest.blocker
 
 	return {
 		size,

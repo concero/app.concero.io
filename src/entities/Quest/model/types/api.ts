@@ -50,6 +50,14 @@ export namespace TClaimQuest {
 		claimed: boolean
 	}
 }
+
+export const enum EUserQueueState {
+	IN_QUEUE = 'in_queue',
+	REJECTED = 'rejected',
+	VERIFIED = 'verified',
+	NOT_QUEUED = 'not_queued',
+}
+
 export namespace QuestApi {
 	export namespace TFindManyUserQuest {
 		export type RequestQuery = TPaginationParams
@@ -75,6 +83,22 @@ export namespace QuestApi {
 		}
 		export type ResponsePayload = {
 			verified: boolean
+		}
+	}
+	export namespace TGetVerifyUserQueueStatus {
+		export type RequestQuery = {
+			userStepId: string
+		}
+		export type ResponsePayload = {
+			status: EUserQueueState
+		}
+	}
+	export namespace TResetVerifySocial {
+		export type RequestQuery = {
+			userStepId: string
+		}
+		export type ResponsePayload = {
+			success: boolean
 		}
 	}
 	export namespace TVerifyQuest {

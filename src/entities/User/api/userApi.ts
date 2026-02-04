@@ -149,6 +149,7 @@ export const socialsService = {
 		const url = `${process.env.CONCERO_API_URL}/users/${address}/socials/x/auth2_0/link`
 		return createApiHandler(() => get<TApiResponse<UserApi.Socials.GetAuth2_0LinkX.ResponsePayload, any>>(url))
 	},
+	/** @deprecated TODO: remove this api */
 	getLikedTweets: async ({ code, walletAddress }: { walletAddress?: string; code: string }) => {
 		const url = `${process.env.CONCERO_API_URL}/users/${walletAddress}/socials/x/auth2_0/get_liked_tweets`
 		return createApiHandler(() =>

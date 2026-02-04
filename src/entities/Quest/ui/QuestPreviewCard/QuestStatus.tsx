@@ -3,6 +3,7 @@ import { getQuestDaysLeft } from '../../model/lib/getQuestDaysLeft'
 import { TQuest, TQuestInterval, TUserQuest } from '../../model/types/response'
 import { Tag } from '@concero/ui-kit'
 import { getIsCanClaimQuest } from '@/entities/User'
+import { HStack } from '@/shared/ui/Stack'
 
 export const getDateUnitMap = (interval: TQuestInterval) => {
 	if (interval === 'daily') return 'day'
@@ -48,14 +49,14 @@ export const QuestStatus = ({ quest, isClaimed, userQuest, isLocked }: Props) =>
 
 	if (!userQuest) {
 		return (
-			<div className="row gap-xs">
+			<HStack gap="space_0_25">
 				<QuestTagIsNew isNew={quest.is_new} started_at={started_at} />
 				{isLocked ? (
 					<Tag size="s" variant={'neutral'}>
 						Locked
 					</Tag>
 				) : null}
-			</div>
+			</HStack>
 		)
 	}
 	const completedStepIds = userQuest?.steps ?? []
@@ -80,11 +81,11 @@ export const QuestStatus = ({ quest, isClaimed, userQuest, isLocked }: Props) =>
 	}
 	const variant = getColorVariant({ daysLeft, isClaimed, readyToClaim })
 	return (
-		<div className="row gap-xs">
+		<HStack gap="space_0_25">
 			<QuestTagIsNew isNew={quest.is_new} started_at={started_at} />
 			<Tag size="s" variant={variant}>
 				{status}
 			</Tag>
-		</div>
+		</HStack>
 	)
 }

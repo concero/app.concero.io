@@ -15,6 +15,7 @@ import { useQuestCardLogic } from '../../model/lib/useQuestCardLogic'
 import { BlockerQuestFooter } from '../BlockerQuestFooter/BlockerQuestFooter'
 import { QuestStatus } from './QuestStatus'
 import cls from './QuestPreviewCard.module.pcss'
+import { useAccount } from 'wagmi'
 
 type TClassname = string
 type TProps = {
@@ -33,12 +34,18 @@ const sizeClassMap: Record<TQuestSize, TClassname> = {
 }
 export const QuestPreviewCard = (props: TProps) => {
 	const { quest, onClick, onClaim, userQuest, className } = props
+	const { address } = useAccount()
+	//TODO: Move QuestPreviewCard to features
 
 	const { theme } = useTheme()
 	if (!quest) return null
 	const { isHovered, isPressed, setIsHovered, setIsPressed } = useQuestCardState()
 	const { size, rewardIsClaimed, isCanClaimQuest, isLocked, showMetaInfo, showImage, reward, categoryLabel } =
-		useQuestCardLogic(quest, userQuest)
+		useQuestCardLogic({
+			quest,
+			address,
+			userQuest,
+		})
 
 	return (
 		<Card
@@ -92,7 +99,7 @@ export const QuestPreviewCard = (props: TProps) => {
 				{userQuest && isCanClaimQuest && !rewardIsClaimed && !isLocked && (
 					<ClaimReward userQuestId={userQuest.id} onClaim={() => onClaim?.(quest)} />
 				)}
-				{isLocked && quest.blocker && <BlockerQuestFooter blocker={quest.blocker} />}
+				{isLocked && <BlockerQuestFooter quest={quest} />}
 			</div>
 		</Card>
 	)

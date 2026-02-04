@@ -6,6 +6,7 @@ export { QuestRewardCard } from './ui/QuestRewardCard/QuestRewardCard'
 /** Api */
 export { questServiceApi, useUserQuests } from './api/questApi'
 export { invalidationTagQuest } from './api/questApi'
+
 export { useClaimQuestMutation, useVerifyQuestMutation, useAllQuests, useVerifyQuestStepMutation } from './api/questApi'
 
 /** Others */
@@ -26,3 +27,4 @@ export type {
 	TQuestTask,
 	TUserStep,
 } from './model/types/response'
+export { EUserQueueState } from './model/types/api'

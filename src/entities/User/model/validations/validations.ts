@@ -14,7 +14,7 @@ export const UserSocialSchema = z.object({
 	name: z.string(),
 	shortname: z.string(),
 	originalId: z.string(),
-	connectedAt: z.number().int().nonnegative(), // timestamp in seconds
+	connectedAt: Nullable(z.number().int().nonnegative()), // timestamp in seconds
 	disconnectedAt: Nullable(z.number().int().nonnegative()),
 })
 

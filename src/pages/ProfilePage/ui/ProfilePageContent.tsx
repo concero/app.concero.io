@@ -11,7 +11,6 @@ import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
 import { Leaderboard } from './Leaderboard/Leaderboard'
 import { SocialsGroup } from './SocialsGroup/SocialsGroup'
-import { OAuth2_0 } from './OAuth2_0/OAuth2_0'
 import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 export const ProfilePageContent = ({ user }: { user: TUserResponse }) => {
@@ -19,7 +18,6 @@ export const ProfilePageContent = ({ user }: { user: TUserResponse }) => {
 	const isAdmin = isAdminAddress(user.address)
 	return (
 		<PageWrap className={cls.page_wrap} key={'PageWrap'}>
-			{user.address && isAdmin ? <OAuth2_0 address={user.address} /> : null}
 			<Banners key={'Banners'} />
 			<div className={cls.profile_card_wrap}>
 				<div className={cls.profile_header}>
