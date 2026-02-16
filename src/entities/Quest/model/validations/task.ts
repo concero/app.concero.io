@@ -14,6 +14,7 @@ export const taskTypeSchema = z.union([
 	z.literal('google_form'),
 	z.literal('like_x'),
 	z.literal('retweet_x'),
+	z.literal('follow_x'),
 ])
 
 export const taskSchema = z.object({

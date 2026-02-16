@@ -4,7 +4,6 @@ import { useUserCountTx } from '@/entities/User/api/userApi'
 import { EUserQueueState } from '@/entities/Quest'
 import { configEnvs } from '@/shared/consts/config/config'
 import { Alert, Button } from '@concero/ui-kit'
-import { Alert as AlertLocal } from '@/shared/ui/Alert/Alert'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
@@ -16,7 +15,6 @@ import { HStack, VStack } from '@/shared/ui/Stack'
 import { Text } from '@/shared/ui'
 import LockIcon from '@/shared/assets/icons/monochrome/Lock.svg?react'
 import TimeIcon from '@/shared/assets/icons/monochrome/Time.svg?react'
-import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
 import cls from './TaskAction.module.pcss'
 import { useIsQuestLocked } from '../../model/hooks/useIsQuestLocked'
 
@@ -170,23 +168,9 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 
 			return (
 				<VStack gap="space_1">
-					<VStack gap="space_0_5">
-						<AlertLocal
-							className={cls.alert}
-							icon={<WarningIcon />}
-							type="neutral"
-							title="X account must be public"
-						/>
-						<AlertLocal
-							className={cls.alert}
-							icon={<WarningIcon />}
-							type="neutral"
-							title="Keep the like — if you delete it, you will lose the reward"
-						/>
-					</VStack>
 					<div className={cls.controls}>
 						{isOpenedLink ? (
-							<HStack>
+							<HStack gap="space_0_25">
 								<Button
 									variant={isSingleTask ? 'primary' : 'secondary_color'}
 									onClick={handleVerify}
@@ -194,12 +178,8 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 								>
 									Verify
 								</Button>
-								<Button
-									variant={isSingleTask ? 'secondary' : 'secondary_color'}
-									onClick={handleLink}
-									size="l"
-								>
-									Open X
+								<Button variant={'secondary'} onClick={handleLink} size="l">
+									Open X2
 								</Button>
 							</HStack>
 						) : (
@@ -216,7 +196,48 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			)
 		}
 	},
+	follow_x: function (props: TTaskActionProps): JSX.Element {
+		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const [isOpenedLink, setIsOpenedLink] = useState(false)
+		const isSingleTask = quest.tasks.length == 1
+		if (__IS_DEV__ && task.steps.length > 1) {
+			console.warn(`DEVELOPER!!! Expected 1 Step, but given  ${task.steps.length} steps `)
+		}
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const handleLink = () => {
+			window.open(step.details.link, '_blank')
+			setTimeout(() => {
+				setIsOpenedLink(true)
+			}, 3000)
+		}
 
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		return (
+			<>
+				<div className={cls.controls}>
+					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
+						Open
+					</Button>
+					<Button
+						isDisabled={!isOpenedLink}
+						variant={isSingleTask ? 'secondary_color' : 'tetrary_color'}
+						onClick={handleVerify}
+						size="l"
+						isLoading={isPending}
+					>
+						Verify
+					</Button>
+				</div>
+			</>
+		)
+	},
 	check_volume: function (props: TTaskActionProps): JSX.Element {
 		const { quest, setErrorText, userQuest, onStartVerify, onSuccessVerify, task } = props
 		const { address } = useAccount()

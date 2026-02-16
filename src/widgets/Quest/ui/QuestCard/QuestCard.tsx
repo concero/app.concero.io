@@ -12,9 +12,12 @@ import { AppImage } from '@/shared/ui/AppImage'
 import CersIcon from '@/shared/assets/icons/CersIcon.svg?react'
 import QuestPlaceholder from '@/shared/assets/images/quest/QuestPlaceholder.webp'
 import { Text } from '@/shared/ui'
-import { HStack } from '@/shared/ui/Stack'
+import { HStack, VStack } from '@/shared/ui/Stack'
 import { trackEvent } from '@/shared/lib/hooks/posthog/useTracking'
 import { action, category } from '@/shared/lib/hooks/posthog/tracking'
+import WarningIcon from '@/shared/assets/icons/monochrome/warning.svg?react'
+import { Alert as AlertLocal } from '@/shared/ui/Alert/Alert'
+import { findXTask } from '@/entities/Quest'
 type TProps = {
 	quest: TQuest
 	userQuest?: TUserQuest
@@ -25,7 +28,9 @@ export const QuestCard = (props: TProps) => {
 	const { quest, userQuest, onClaim } = props
 	const { theme } = useTheme()
 	const { address } = useAccount()
-
+	const hasXTask = findXTask({
+		quest,
+	})
 	let controls = null
 	let showTasks = false
 	let showOnlyOptionalSteps = false
@@ -129,6 +134,22 @@ export const QuestCard = (props: TProps) => {
 			</div>
 
 			<div className={cls.description}>{quest.description}</div>
+			{hasXTask ? (
+				<VStack gap="space_0_5">
+					<AlertLocal
+						className={cls.alert}
+						icon={<WarningIcon />}
+						type="neutral"
+						title="X account must be public"
+					/>
+					<AlertLocal
+						className={cls.alert}
+						icon={<WarningIcon />}
+						type="neutral"
+						title="Keep the like — if you delete it, you will lose the reward"
+					/>
+				</VStack>
+			) : null}
 			{showTasks && <QuestTaskGroup quest={quest} userQuest={userQuest} onlyOptional={showOnlyOptionalSteps} />}
 			{controls ? <div className={cls.controls}>{controls}</div> : null}
 		</div>

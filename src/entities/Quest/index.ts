@@ -28,3 +28,4 @@ export type {
 	TUserStep,
 } from './model/types/response'
 export { EUserQueueState } from './model/types/api'
+export { findXTask } from './model/lib/findXTask'
