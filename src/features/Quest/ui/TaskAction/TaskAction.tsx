@@ -196,6 +196,51 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			)
 		}
 	},
+	nomis: function (props: TTaskActionProps): JSX.Element {
+		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props
+		const { handleVerifyQuest, isPending } = useVerifyQuest()
+		const [isOpenedLink, setIsOpenedLink] = useState(false)
+		const isSingleTask = quest.tasks.length == 1
+		if (__IS_DEV__ && task.steps.length > 1) {
+			console.warn(`DEVELOPER!!! Expected 1 Step, but given  ${task.steps.length} steps `)
+		}
+		const step = task.steps[0]
+		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+		const handleLink = () => {
+			window.open(step.details.link, '_blank')
+			setTimeout(() => {
+				setIsOpenedLink(true)
+			}, 2000)
+		}
+
+		const handleVerify = () => {
+			if (userStep) {
+				onStartVerify()
+				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			}
+		}
+		if (isOpenedLink) {
+			return (
+				<HStack gap="space_0_25">
+					<Button variant="secondary" isDisabled size="l">
+						Mint
+					</Button>
+					<Button variant={'primary'} onClick={handleVerify} size="l" isLoading={isPending}>
+						Verify
+					</Button>
+				</HStack>
+			)
+		}
+		return (
+			<>
+				<div className={cls.controls}>
+					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
+						Mint
+					</Button>
+				</div>
+			</>
+		)
+	},
 	follow_x: function (props: TTaskActionProps): JSX.Element {
 		const { quest, task, userQuest, setErrorText, onSuccessVerify, onStartVerify } = props
 		const { handleVerifyQuest, isPending } = useVerifyQuest()

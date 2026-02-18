@@ -26,7 +26,7 @@ export const QuestTask = (props: TProps) => {
 	}
 	const onStartVerify = () => {
 		if (import.meta.env.DEV) {
-			console.log('Success verify of quest')
+			console.log('Start verify of quest')
 		}
 	}
 	const isDone = userQuest.steps

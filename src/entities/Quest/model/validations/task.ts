@@ -15,6 +15,7 @@ export const taskTypeSchema = z.union([
 	z.literal('like_x'),
 	z.literal('retweet_x'),
 	z.literal('follow_x'),
+	z.literal('nomis'),
 ])
 
 export const taskSchema = z.object({

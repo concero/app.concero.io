@@ -44,7 +44,7 @@ export const QuestTaskGroup = (props: TProps) => {
 			/>
 		)
 	}
-
+	const countOfTasks = listTaskToShow.length
 	return (
 		<VStack gap="space_0_5" className={cls.group}>
 			{!isSingleStep && (
@@ -66,8 +66,8 @@ export const QuestTaskGroup = (props: TProps) => {
 					<Stepper
 						currentProgress={completedSteps}
 						activeCells={Array.from({ length: completedSteps }, (_, i) => i + 1)}
-						max={2}
-						maxColumns={2}
+						max={countOfTasks}
+						maxColumns={countOfTasks}
 						className={cls.stepper}
 					/>
 				</VStack>
