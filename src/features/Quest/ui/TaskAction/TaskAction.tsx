@@ -14,7 +14,7 @@ import dayjs from 'dayjs'
 import { HStack, VStack } from '@/shared/ui/Stack'
 import { Text } from '@/shared/ui'
 import LockIcon from '@/shared/assets/icons/monochrome/Lock.svg?react'
-import TimeIcon from '@/shared/assets/icons/monochrome/Time.svg?react'
+import TimeIcon from '@/shared/assets/icons/monochrome/time.svg?react'
 import cls from './TaskAction.module.pcss'
 import { useIsQuestLocked } from '../../model/hooks/useIsQuestLocked'
 
