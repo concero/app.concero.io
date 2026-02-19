@@ -1,5 +1,5 @@
+import { Card } from '@/components/cards/Card/Card'
 import classNames from './TechWorksScreen.module.pcss'
-import { Card } from '../../cards/Card/Card'
 
 export const TechWorksScreen = () => {
 	return (
