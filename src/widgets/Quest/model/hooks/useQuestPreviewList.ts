@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import { TUserQuest, useAllQuests, useUserQuests } from '@/entities/Quest'
 import { TQuestGroup } from '@/entities/Quest'
+import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 type UseQuestPreviewListProps = {
 	groups: TQuestGroup[]
@@ -11,11 +12,14 @@ export const useQuestPreviewList = (props: UseQuestPreviewListProps) => {
 	const { groups } = props
 	const { data: questsWrap, isFetching } = useAllQuests()
 	const { address } = useAccount()
+	const isAdmin = isAdminAddress(address)
 
 	const quest_instance_ids = questsWrap?.quests.map(quest => quest.quest_instance_id)
 	const { data: userQuestsResponse } = useUserQuests({ address, quest_instance_ids, skip: 0, take: 50 })
 
-	const quests = questsWrap?.quests.filter(q => groups.includes(q.group))
+	const quests = questsWrap?.quests
+		.filter(q => groups.includes(q.group))
+		.filter(quest => (quest.title === 'Campaign with Nomis' && isAdmin) || quest.title !== 'Campaign with Nomis')
 
 	const quest_size_m = useMemo(() => {
 		return quests?.filter(q => q.size === 'm').toSorted((a, b) => (b.sort_index || 0) - (a.sort_index || 0))
