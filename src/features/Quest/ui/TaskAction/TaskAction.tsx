@@ -3,7 +3,7 @@ import { questServiceApi, TQuest, TQuestTask, TTaskType, TUserQuest } from '@/en
 import { useUserCountTx } from '@/entities/User/api/userApi'
 import { EUserQueueState } from '@/entities/Quest'
 import { configEnvs } from '@/shared/consts/config/config'
-import { Alert, Button } from '@concero/ui-kit'
+import { Alert, Button, Spinner } from '@concero/ui-kit'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
@@ -51,11 +51,31 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
 			}
 		}
+		if (isOpenedLink) {
+			return (
+				<>
+					<div className={cls.controls}>
+						<Button variant={isSingleTask ? 'primary' : 'secondary'} onClick={handleLink} size="l">
+							Open X
+						</Button>
+						<Button
+							isDisabled={!isOpenedLink}
+							variant={isSingleTask ? 'secondary_color' : 'tetrary_color'}
+							onClick={handleVerify}
+							size="l"
+							isLoading={isPending}
+						>
+							Verify
+						</Button>
+					</div>
+				</>
+			)
+		}
 		return (
 			<>
 				<div className={cls.controls}>
 					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
-						Open
+						Open X
 					</Button>
 					<Button
 						isDisabled={!isOpenedLink}
@@ -106,7 +126,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			return (
 				<VStack gap="space_0_75">
 					<Button variant="primary" isDisabled size="l">
-						Start Quest
+						Open X
 					</Button>
 					<HStack gap="8px">
 						<LockIcon />
@@ -118,13 +138,12 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 			)
 		} else if (queueStatus === EUserQueueState.IN_QUEUE) {
 			return (
-				<Alert
-					className={cls.alert}
-					icon={<TimeIcon />}
-					type="neutral"
-					title="Verifying your action..."
-					description="This may take up to 1 day"
-				/>
+				<HStack gap="8px">
+					<Spinner type="gray" />
+					<Text variant="heading_small" className={cls.verify_tip_text}>
+						Verifying your action... (This may take up to 1 day)
+					</Text>
+				</HStack>
 			)
 		} else if (queueStatus === EUserQueueState.REJECTED) {
 			const handleResetSocialVerification = () => {
@@ -171,15 +190,11 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 					<div className={cls.controls}>
 						{isOpenedLink ? (
 							<HStack gap="space_0_25">
-								<Button
-									variant={isSingleTask ? 'primary' : 'secondary_color'}
-									onClick={handleVerify}
-									size="l"
-								>
-									Verify
-								</Button>
 								<Button variant={'secondary'} onClick={handleLink} size="l">
-									Open X2
+									Open X
+								</Button>
+								<Button variant={'primary'} onClick={handleVerify} size="l">
+									Verify
 								</Button>
 							</HStack>
 						) : (
@@ -264,20 +279,31 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
 			}
 		}
+		if (isOpenedLink) {
+			return (
+				<>
+					<div className={cls.controls}>
+						<Button variant={isSingleTask ? 'primary' : 'secondary'} onClick={handleLink} size="l">
+							Open X
+						</Button>
+						<Button
+							isDisabled={!isOpenedLink}
+							variant={'primary'}
+							onClick={handleVerify}
+							size="l"
+							isLoading={isPending}
+						>
+							Verify
+						</Button>
+					</div>
+				</>
+			)
+		}
 		return (
 			<>
 				<div className={cls.controls}>
 					<Button variant={isSingleTask ? 'primary' : 'secondary_color'} onClick={handleLink} size="l">
-						Open
-					</Button>
-					<Button
-						isDisabled={!isOpenedLink}
-						variant={isSingleTask ? 'secondary_color' : 'tetrary_color'}
-						onClick={handleVerify}
-						size="l"
-						isLoading={isPending}
-					>
-						Verify
+						Open X
 					</Button>
 				</div>
 			</>
