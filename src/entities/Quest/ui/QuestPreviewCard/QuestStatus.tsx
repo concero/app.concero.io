@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { getQuestDaysLeft } from '../../model/lib/getQuestDaysLeft'
 import { TQuest, TQuestInterval, TUserQuest } from '../../model/types/response'
-import { Tag } from '@concero/ui-kit'
+import { Tag, TTagVariant } from '@concero/ui-kit'
 import { getIsCanClaimQuest } from '@/entities/User'
 import { HStack } from '@/shared/ui/Stack'
 
@@ -30,7 +30,7 @@ export const QuestTagIsNew = (props: { started_at: number; isNew: boolean }) => 
 
 const getColorVariant = (args: { daysLeft: number; readyToClaim: boolean; isClaimed?: boolean }) => {
 	const { daysLeft, isClaimed, readyToClaim } = args
-	let variant: 'neutral' | 'warning' | 'negative' | 'positive' = 'neutral'
+	let variant: TTagVariant = 'branded'
 	if (daysLeft <= 3) variant = 'warning'
 	if (daysLeft <= 1) variant = 'negative'
 	if (readyToClaim) variant = 'positive'

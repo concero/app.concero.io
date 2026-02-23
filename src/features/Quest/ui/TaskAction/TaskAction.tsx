@@ -129,7 +129,12 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 						Open X
 					</Button>
 					<HStack gap="8px">
-						<LockIcon />
+						<LockIcon
+							style={{
+								minWidth: '16px',
+								minHeight: '16px',
+							}}
+						/>
 						<Text variant="heading_small">
 							To unlock this quest, go to your profile settings and connect your X account
 						</Text>
@@ -237,7 +242,7 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		if (isOpenedLink) {
 			return (
 				<HStack gap="space_0_25">
-					<Button variant="secondary" isDisabled size="l">
+					<Button variant="secondary" size="l">
 						Mint
 					</Button>
 					<Button variant={'primary'} onClick={handleVerify} size="l" isLoading={isPending}>

@@ -7,6 +7,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import autoprefixer from 'autoprefixer'
 import postcssPresetEnv from 'postcss-preset-env'
 import precss from 'precss'
+
 const convertColorsToCurrentColorPlugin = {
 	name: 'convertColorsToCurrentColor',
 	description: 'Convert all fill and stroke colors to currentColor for monochrome SVGs.',
@@ -30,6 +31,13 @@ const convertColorsToCurrentColorPlugin = {
 		}
 	},
 }
+
+const problematicEnvVars = ['CommonProgramFiles(x86)', 'ProgramFiles(x86)', 'IntelliJ IDEA Community Edition']
+
+// Remove the problematic environment variables
+problematicEnvVars.forEach(varName => {
+	delete process.env[varName]
+})
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd())
 	return {
