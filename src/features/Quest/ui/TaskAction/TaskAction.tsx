@@ -226,6 +226,10 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		}
 		const step = task.steps[0]
 		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+
+		const CACHE_KEY = `quest_verify_${userQuest.questId}_${step.id}`
+		const CACHE_TTL = 60 * 1000 // 1 minute
+
 		const handleLink = () => {
 			window.open(step.details.link, '_blank')
 			setTimeout(() => {
@@ -234,10 +238,50 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		}
 
 		const handleVerify = () => {
-			if (userStep) {
-				onStartVerify()
-				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			if (!userStep) return
+
+			const cached = localStorage.getItem(CACHE_KEY)
+			if (cached) {
+				try {
+					const { timestamp, success, error } = JSON.parse(cached)
+					if (Date.now() - timestamp < CACHE_TTL) {
+						if (success) {
+							onSuccessVerify()
+						} else if (error && setErrorText) {
+							setErrorText(
+								'You haven’t met the requirements for this task. Please complete it and try again in 1 minute.',
+							)
+						}
+						return
+					}
+				} catch (e) {
+					console.log('Error Parse JSON', e)
+				}
+				localStorage.removeItem(CACHE_KEY)
 			}
+
+			onStartVerify()
+			handleVerifyQuest({
+				onSuccessVerify: () => {
+					localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), success: true }))
+					onSuccessVerify()
+				},
+				setErrorText: (text: string) => {
+					localStorage.setItem(
+						CACHE_KEY,
+						JSON.stringify({
+							timestamp: Date.now(),
+							success: false,
+							error: 'You haven’t met the requirements for this task. Please complete it and try again in 1 minute.',
+						}),
+					)
+					setErrorText?.(
+						'You haven’t met the requirements for this task. Please complete it and try again in 1 minute.',
+					)
+				},
+				userQuest,
+				userStep,
+			})
 		}
 		if (isOpenedLink) {
 			return (
@@ -271,6 +315,9 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		}
 		const step = task.steps[0]
 		const userStep = userQuest.steps.find(userStep => userStep.stepId === task.steps[0].id)
+
+		const CACHE_KEY = `quest_verify_${userQuest.questId}_${step.id}`
+		const CACHE_TTL = 60 * 1000 // 1 minute
 		const handleLink = () => {
 			window.open(step.details.link, '_blank')
 			setTimeout(() => {
@@ -279,10 +326,50 @@ export const TaskActions: Record<TTaskType, (props: TTaskActionProps) => JSX.Ele
 		}
 
 		const handleVerify = () => {
-			if (userStep) {
-				onStartVerify()
-				handleVerifyQuest({ onSuccessVerify, setErrorText, userQuest, userStep })
+			if (!userStep) return
+
+			const cached = localStorage.getItem(CACHE_KEY)
+			if (cached) {
+				try {
+					const { timestamp, success, error } = JSON.parse(cached)
+					if (Date.now() - timestamp < CACHE_TTL) {
+						if (success) {
+							onSuccessVerify()
+						} else if (error && setErrorText) {
+							setErrorText(
+								'You haven’t met the requirements for this task. Please complete it and try again in 1 minute.',
+							)
+						}
+						return
+					}
+				} catch (e) {
+					console.log('Error Parse JSON', e)
+				}
+				localStorage.removeItem(CACHE_KEY)
 			}
+
+			onStartVerify()
+			handleVerifyQuest({
+				onSuccessVerify: () => {
+					localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), success: true }))
+					onSuccessVerify()
+				},
+				setErrorText: (text: string) => {
+					localStorage.setItem(
+						CACHE_KEY,
+						JSON.stringify({
+							timestamp: Date.now(),
+							success: false,
+							error: 'You haven’t met the requirements for this task. Please complete it and try again in 1 minute.',
+						}),
+					)
+					setErrorText?.(
+						'You haven’t met the requirements for this task. Please complete it and try again in 1 minute.',
+					)
+				},
+				userQuest,
+				userStep,
+			})
 		}
 		if (isOpenedLink) {
 			return (

@@ -24,7 +24,7 @@ export const BlockerQuestFooter = (props: TProps) => {
 				<TooltipWrapper
 					place={'bottom-start'}
 					className={cls.tooltipWrap}
-					tooltipId={'ID FOR TOOLTIP BLOCKER OF QUEST FOR CONNECT X'}
+					tooltipId={'BLOCKER OF QUEST FOR CONNECT X' + quest.id}
 					tooltipContent={
 						<Text variant="body_medium">
 							To unlock this quest, go to your profile settings and connect your X account.
