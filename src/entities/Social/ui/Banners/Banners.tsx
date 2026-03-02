@@ -1,6 +1,6 @@
 import { Button } from '@concero/ui-kit'
 import LancaIcon from '@/shared/assets/icons/Lanca_logomark.svg?react'
-import InfoIcon from '@/shared/assets/icons/InfoWrapped.svg?react'
+
 import { Banner } from '@/shared/ui'
 import cls from './Banners.module.pcss'
 export const Banners = () => {
@@ -25,18 +25,6 @@ export const Banners = () => {
 				<Button variant="primary" size="m" className={cls.btn} onClick={handleLancaClick}>
 					Open pools
 				</Button>
-			</Banner>
-			<Banner className={cls.cerp_banner_wrap}>
-				<div className={cls.heading_wrap_with_icon}>
-					<div className={cls.wrap_icon}>
-						<InfoIcon />
-					</div>
-					<div className={cls.heading_wrap}>
-						<span className={cls.title}>
-							Streaks will no longer accumulate but won’t reset — multipliers remain intact.
-						</span>
-					</div>
-				</div>
 			</Banner>
 		</div>
 	)

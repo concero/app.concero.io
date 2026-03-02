@@ -192,6 +192,7 @@ export const SwappingStreak = (props: TProps) => {
 				variant={warningTime || dangerTime ? 'primary' : showStreakPlaceholder ? 'primary' : 'secondary_color'}
 				size={isDesktop ? 'm' : 'l'}
 				onClick={handleSwapClick}
+				isDisabled
 			>
 				Swap
 			</Button>

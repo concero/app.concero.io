@@ -1,0 +1,53 @@
+.cerp_banner_wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	background-color: var(--color-accent-50);
+	width: 608px;
+	max-width: 100%;
+	.heading_wrap_with_icon {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		gap: var(--space-xs);
+		.wrap_icon {
+			display: flex;
+			flex-direction: row;
+			align-items: flex-start;
+			height: 100%;
+		}
+		& svg {
+			color: var(--color-accent-600);
+			min-width: 48px;
+		}
+		.heading_wrap {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--space-xs);
+			padding-right: var(--space-s);
+
+			.title {
+				color: var(--color-accent-700);
+				font: var(--font-heading-large);
+			}
+		}
+	}
+
+	@media screen and (max-width: 743px) {
+		align-items: flex-start;
+		flex-direction: column;
+		.heading_wrap {
+			align-items: flex-start !important;
+			justify-content: flex-start !important;
+			flex-direction: column !important;
+			gap: var(--space-xxs) !important;
+			.title {
+				text-align: left;
+			}
+		}
+		.btn {
+			margin-left: 56px;
+		}
+	}
+}

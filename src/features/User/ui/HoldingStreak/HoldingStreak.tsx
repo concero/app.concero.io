@@ -182,6 +182,7 @@ export const HoldingStreak = (props: TProps) => {
 				variant={showStreakPlaceholder ? 'primary' : 'secondary'}
 				size={isDesktop ? 'm' : 'l'}
 				onClick={handleLiquidityClick}
+				isDisabled
 			>
 				Provide Liquidity
 			</Button>
