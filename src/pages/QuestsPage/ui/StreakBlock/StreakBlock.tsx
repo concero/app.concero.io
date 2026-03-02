@@ -11,7 +11,7 @@ export const StreakBlock = () => {
 	const user = userResponse?.payload
 	if (!user) return null
 	return (
-		<VStack align="center" gap="16px" max>
+		<VStack align="center" gap="16px" max >
 			<StreaksBanner />
 			<div className={cls.streak_wrap}>
 				<SwappingStreak user={user} />

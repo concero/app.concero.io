@@ -1,5 +1,5 @@
 import { Banners } from '@/entities/Social'
-import { PageWrap, ProgressBar } from '@/shared/ui'
+import { PageWrap } from '@/shared/ui'
 import { DailyTaskList, QuestPreviewList } from '@/widgets/Quest'
 import cls from './QuestsPage.module.pcss'
 import { StreakBlock } from './StreakBlock/StreakBlock'
