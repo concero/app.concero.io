@@ -1,27 +1,12 @@
 import { Button } from '@concero/ui-kit'
 import LancaIcon from '@/shared/assets/icons/Lanca_logomark.svg?react'
-// import ConceroIcon from '@/shared/assets/icons/Concero_icon_banner.svg?react'
-// import CersEidiIcon from '@/shared/assets/icons/CersEidi.svg?react'
+import InfoIcon from '@/shared/assets/icons/InfoWrapped.svg?react'
 import { Banner } from '@/shared/ui'
 import cls from './Banners.module.pcss'
-// import { useAccount } from 'wagmi'
-// import { useCheckCersEidi, useClaimCersEidiMutation } from '../../api/SocialApi'
 export const Banners = () => {
-	// const { address } = useAccount()
-	// const isAdmin = isAdminAddress(address)
-	// const { data: isShowCersEidi, isFetching } = useCheckCersEidi({ address })
-	// const { mutateAsync, isPending, isSuccess } = useClaimCersEidiMutation()
 	const handleLancaClick = () => {
 		window.open('https://app.lanca.io', '_blank')
 	}
-	// const handleTestnetClick = () => {
-	// 	window.open('https://testnet.concero.io', '_blank')
-	// }
-	// const handleClaimCersEidi = () => {
-	// 	if (address) {
-	// 		mutateAsync({ address })
-	// 	}
-	// }
 	return (
 		<div className={cls.banners_wrap}>
 			<Banner className={cls.lanca_banner_wrap}>
@@ -30,55 +15,29 @@ export const Banners = () => {
 						<LancaIcon />
 					</div>
 					<div className={cls.heading_wrap}>
-						<span className={cls.title}>Lanca</span>
-						<span className={cls.description}>Swap, hold liquidity and earn CERs</span>
+						<span className={cls.title}>Lanca is entering a new chapter.</span>
+						<span className={cls.description}>
+							We’re sunsetting current pools and pausing swaps, bridges, and quests. If you provided
+							liquidity, please withdraw it — pool support ends soon.
+						</span>
 					</div>
 				</div>
 				<Button variant="primary" size="m" className={cls.btn} onClick={handleLancaClick}>
-					Swap
+					Open pools
 				</Button>
 			</Banner>
-			{/* <Banner className={cls.testnet_banner_wrap}>
+			<Banner className={cls.cerp_banner_wrap}>
 				<div className={cls.heading_wrap_with_icon}>
 					<div className={cls.wrap_icon}>
-						<ConceroIcon />
+						<InfoIcon />
 					</div>
 					<div className={cls.heading_wrap}>
-						<span className={cls.title}>Concero Testnet is live!</span>
+						<span className={cls.title}>
+							Streaks will no longer accumulate but won’t reset — multipliers remain intact.
+						</span>
 					</div>
 				</div>
-				<Button variant="primary" size="m" className={cls.btn} onClick={handleTestnetClick}>
-					Open Testnet
-				</Button>
-			</Banner> */}
-			{/* {isShowCersEidi && (
-				<Banner className={cls.testnet_banner_wrap}>
-					<div className={cls.heading_wrap_with_icon}>
-						<div className={cls.wrap_icon}>
-							<CersEidiIcon />
-						</div>
-						<div className={cls.heading_wrap}>
-							<span className={cls.title}>CERs Eidi</span>
-							<span className={cls.description}>Given by your beloved Lancan Intern </span>
-						</div>
-					</div>
-					<Button
-						variant="primary"
-						size="m"
-						className={cls.btn}
-						buttonProps={{
-							style: {
-								width: 'auto',
-							},
-						}}
-						onClick={handleClaimCersEidi}
-						isLoading={isPending || isFetching}
-						isDisabled={isSuccess}
-					>
-						Claim
-					</Button>
-				</Banner>
-			)} */}
+			</Banner>
 		</div>
 	)
 }
