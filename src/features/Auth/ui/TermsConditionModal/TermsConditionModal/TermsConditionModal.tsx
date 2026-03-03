@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Modal } from '@/components/modals/Modal/Modal'
+import { Modal } from '@/shared/ui/Modal/Modal'
 import VerifyIcon from '@/assets/icons/VerifyIcon.svg?react'
 import cls from './TermsConditionModal.module.pcss'
 import { Button, Checkbox } from '@concero/ui-kit'

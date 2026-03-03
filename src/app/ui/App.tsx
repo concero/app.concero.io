@@ -1,11 +1,11 @@
-import { AppScreen } from '@/components/screens/AppScreen/AppScreen'
+import { AppScreen } from './AppScreen/AppScreen'
 import { CheckTermsOfUseDecorator } from '@/features/Auth'
 import { Footer } from '@/widgets/Footer/ui/Footer'
 import { Header } from '@/widgets/Header'
-import { AppRouter } from './providers/router/AppRouter'
-import './styles/index.css'
+import { AppRouter } from '../providers/router/AppRouter'
+import '../styles/index.css'
 import cls from './App.module.pcss'
-import { useInitial } from './model/hooks/useInitial'
+import { useInitial } from '../model/hooks/useInitial'
 export const App = () => {
 	useInitial()
 	return (

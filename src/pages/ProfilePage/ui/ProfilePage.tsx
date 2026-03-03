@@ -1,7 +1,7 @@
 import { useAccount } from 'wagmi'
 import { useUserByAddress } from '@/entities/User'
 import { Address } from 'viem'
-import { TechWorksScreen } from '@/components/screens/TechWorksScreen/TechWorksScreen'
+import { TechWorksScreen } from '@/widgets/TechWorksScreen/TechWorksScreen'
 import { configEnvs } from '@/shared/consts/config/config'
 import { Navigate } from 'react-router-dom'
 import { PageWrap } from '@/shared/ui'

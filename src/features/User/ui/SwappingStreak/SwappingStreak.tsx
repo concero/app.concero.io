@@ -1,7 +1,7 @@
 import { TooltipWrapper } from '@/components/layout/WithTooltip/TooltipWrapper'
 import cls from './SwappingStreak.module.pcss'
 import { InfoIcon } from '../../../../assets/icons/InfoIcon'
-import { StreakTooltip } from '@/components/rewards/StreaksCard/StreakTooltip/StreakTooltip'
+import { StreakTooltip } from '@/entities/User/ui/StreakTooltip/StreakTooltip'
 import { getCountStreakPeriodText, TUserResponse, useUserVolume } from '@/entities/User'
 import { Button, Tag, useTheme } from '@concero/ui-kit'
 import { Separator } from '@/components/layout/Separator/Separator'

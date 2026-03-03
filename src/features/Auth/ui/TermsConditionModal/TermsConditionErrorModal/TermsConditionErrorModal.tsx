@@ -1,4 +1,4 @@
-import { Modal } from '@/components/modals/Modal/Modal'
+import { Modal } from '@/shared/ui/Modal/Modal'
 import WarningBoxIcon from '@/assets/icons/WarningBox.svg?react'
 import cls from './TermsConditionErrorModal.module.pcss'
 import { Button } from '@concero/ui-kit'

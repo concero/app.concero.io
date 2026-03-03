@@ -1,5 +1,5 @@
 import classNames from './Modal.module.pcss'
-import { LoadingAnimation } from '../../layout/LoadingAnimation/LoadingAnimation'
+import { LoadingAnimation } from '../LoadingAnimation/LoadingAnimation'
 import CrossIcon from '@/shared/assets/icons/monochrome/CrossIcon.svg?react'
 import { ReactNode } from 'react'
 import { IconButton } from '@concero/ui-kit'

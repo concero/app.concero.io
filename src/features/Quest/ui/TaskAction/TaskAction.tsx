@@ -8,7 +8,6 @@ import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
 import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
 import { useAccount } from 'wagmi'
-import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 import { roundDownToPrecision } from '@/shared/lib/utils/number'
 import dayjs from 'dayjs'
 import { HStack, VStack } from '@/shared/ui/Stack'
@@ -17,6 +16,7 @@ import LockIcon from '@/shared/assets/icons/monochrome/Lock.svg?react'
 import TimeIcon from '@/shared/assets/icons/monochrome/time.svg?react'
 import cls from './TaskAction.module.pcss'
 import { useIsQuestLocked } from '../../model/hooks/useIsQuestLocked'
+import { ProgressBar } from '@/shared/ui/progressBar_deprecated/ProgressBar'
 
 export type TTaskActionProps = {
 	quest: TQuest
