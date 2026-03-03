@@ -1,5 +1,5 @@
 import { HintedString } from '@/shared/types/utils'
-import { toLocaleNumber } from '@/utils/formatting'
+import { toLocaleNumber } from '@/shared/lib/utils/formatting'
 
 const returnValue = ['n/a'] as const
 

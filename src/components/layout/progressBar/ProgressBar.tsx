@@ -1,5 +1,5 @@
 import classNames from './ProgressBar.module.pcss'
-import { toLocaleNumber } from '../../../utils/formatting'
+import { toLocaleNumber } from '../../../shared/lib/utils/formatting'
 import { SkeletonLoader } from '../SkeletonLoader/SkeletonLoader'
 import { Tag } from '../Tag/Tag'
 import { useEffect, useRef, useState } from 'react'

@@ -1,4 +1,3 @@
-// import './styles/App.css'
 import '../../../app/styles/index.css'
 import '../../../app/styles/index.css'
 import '@concero/ui-kit/styles/concero/index.css'

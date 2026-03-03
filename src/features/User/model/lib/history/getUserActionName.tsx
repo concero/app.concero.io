@@ -1,5 +1,5 @@
 import { TUserAction, TUserActionTxData, TUserActionQuestData } from '@/entities/User'
-import { toLocaleNumber } from '@/utils/formatting'
+import { toLocaleNumber } from '@/shared/lib/utils/formatting'
 import cls from './getUserActionName.module.pcss'
 
 export interface UserActionProps {

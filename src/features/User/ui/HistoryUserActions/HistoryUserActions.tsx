@@ -8,7 +8,7 @@ import { HStack, VStack } from '@/shared/ui/Stack'
 import { Table, TColumn } from '@/shared/ui/Table/Table'
 import { TUserActionResponse } from '@/entities/User'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
-import { formatDateTime } from '@/utils/formatting'
+import { formatDateTime } from '@/shared/lib/utils/formatting'
 import { getUserActionName } from '../../model/lib/history/getUserActionName'
 import { getUserActionPoints } from '../../model/lib/history/getUserActionPoints'
 

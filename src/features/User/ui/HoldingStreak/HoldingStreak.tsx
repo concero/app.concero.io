@@ -13,7 +13,7 @@ import { Stepper } from '@/shared/ui/Stepper/Stepper'
 import { Address } from 'viem'
 import { streak_config } from '../../../../entities/User/config/streak'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
-import { toLocaleNumber } from '@/utils/formatting'
+import { toLocaleNumber } from '@/shared/lib/utils/formatting'
 import { getUserFutureMultiplier } from '../../model/lib/getUserStreakMultiplier'
 
 type TProps = {

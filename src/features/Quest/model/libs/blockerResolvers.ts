@@ -1,7 +1,7 @@
 import { TQuestBlocker } from '@/entities/Quest'
 import { questServiceApi } from '@/entities/Quest'
 import { TUserResponse, userServiceApi } from '@/entities/User'
-import { toLocaleNumber } from '@/utils/formatting'
+import { toLocaleNumber } from '@/shared/lib/utils/formatting'
 import dayjs from 'dayjs'
 import { Address } from 'viem'
 

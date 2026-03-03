@@ -1,11 +1,11 @@
 import classNames from './ProgressBar.module.pcss'
-import { toLocaleNumber } from '../../../utils/formatting'
+import { toLocaleNumber } from '../../../shared/lib/utils/formatting'
 import { SkeletonLoader } from '../SkeletonLoader/SkeletonLoader'
 import { useEffect, useRef, useState } from 'react'
-import { Tag } from '@concero/ui-kit'
-import clsx from 'clsx'
+import { HStack } from '@/shared/ui/Stack'
+import { Tag } from '@/components/layout/Tag/Tag'
 
-type TProgressStatus = 'default' | 'success' | 'danger' | 'warning'
+/**@deprecated */
 export interface ProgressBarProps {
 	type?: 'big' | 'medium' | 'float'
 	width?: number | string
@@ -14,14 +14,12 @@ export interface ProgressBarProps {
 	minValue?: number
 	currentValue: number
 	maxValue: number
-	status?: TProgressStatus
 }
-
+/**@deprecated */
 export function ProgressBar({
 	width = '100%',
 	type = 'big',
 	symbol = '$',
-	status = 'default',
 	isLoading,
 	currentValue,
 	minValue = 0,
@@ -48,19 +46,45 @@ export function ProgressBar({
 
 	const percent = (currentValue / maxValue) * 100
 
+	const progressValueBig = isLoading ? (
+		<SkeletonLoader width={128} height={27.5} />
+	) : (
+		<h3 className={classNames.value1}>
+			{toLocaleNumber(currentValue)} <span className={classNames.max_value1}>/{toLocaleNumber(maxValue)}</span>
+		</h3>
+	)
+
+	const progressValueMedium = isLoading ? (
+		<SkeletonLoader width={64} height={20} />
+	) : (
+		<h3 className={classNames.value2}>
+			{toLocaleNumber(currentValue)} <span className={classNames.max_value2}>/{toLocaleNumber(maxValue)}</span>
+		</h3>
+	)
+
 	const progressLine = isLoading ? (
 		<SkeletonLoader height={8} />
 	) : (
 		<div ref={lineRef} className={classNames.progress_bar} style={{ maxWidth: width, width: '100%' }}>
-			<span
-				className={clsx(classNames.progress_line, classNames[status])}
-				style={{ maxWidth: width, width: `${percent}%` }}
-			></span>
+			<span className={classNames.progress_line} style={{ maxWidth: width, width: `${percent}%` }}></span>
 		</div>
 	)
 
+	const progressRange = (
+		<HStack align="center" justify="between">
+			<p className="body1">{toLocaleNumber(minValue)}</p>
+			<p className="body1">{toLocaleNumber(maxValue)}</p>
+		</HStack>
+	)
+
 	if (type === 'big' || type === 'medium') {
-		return <div className="gap-sm">{progressLine}</div>
+		return (
+			<div className={classNames.full_width}>
+				{type === 'big' ? progressValueBig : progressValueMedium}
+				{progressLine}
+				{progressRange}
+			</div>
+		)
 	}
 
 	const marginQuery =
@@ -69,7 +93,7 @@ export function ProgressBar({
 			: `clamp(0px, calc(${percent}% - ${floatValueMargin}px), calc(${progressLineWidth}px - ${floatValueWidth}px))`
 
 	return (
-		<div className="gap-sm">
+		<div className={classNames.full_width}>
 			{isLoading ? (
 				<SkeletonLoader width={64} height={34} />
 			) : (
@@ -81,8 +105,8 @@ export function ProgressBar({
 							marginLeft: marginQuery,
 						}}
 					>
-						<Tag size="m" variant="branded">
-							{toLocaleNumber(currentValue)}
+						<Tag size="md" variant="branded">
+							{currentValue}
 							{symbol}
 						</Tag>
 					</div>
@@ -90,6 +114,7 @@ export function ProgressBar({
 			)}
 
 			{progressLine}
+			{progressRange}
 		</div>
 	)
 }

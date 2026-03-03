@@ -50,7 +50,6 @@ export const useTwitterConnection = ({ user }: UseTwitterConnectionProps) => {
 
 	const listenTwitterConnection = async () => {
 		if (isConnecting) return
-		console.log('URL:', window.location.href)
 		const twitterCode = searchParams.get('oauth_token')
 		const twitterVerifyCode = searchParams.get('oauth_verifier')
 

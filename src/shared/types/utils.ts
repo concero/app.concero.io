@@ -4,3 +4,4 @@ export type HintedString<KnownValues extends string, AllowedTemplate extends str
 	| KnownValues
 export type Nullable<T> = T | null
 export type TupleOfKeys<T> = T extends readonly (infer K)[] ? K : never
+export type Union<T extends string | number | boolean> = `${T}`

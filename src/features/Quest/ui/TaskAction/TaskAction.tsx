@@ -5,7 +5,7 @@ import { EUserQueueState } from '@/entities/Quest'
 import { configEnvs } from '@/shared/consts/config/config'
 import { Alert, Button, Spinner } from '@concero/ui-kit'
 import { useVerifyQuest } from '../../model/hooks/useVerifyQuest'
-import { getDayRangeDates, getWeekRangeDates } from '@/utils/date/getRangeDates'
+import { getDayRangeDates, getWeekRangeDates } from '@/shared/lib/utils/getRangeDates'
 import { useUserByAddress, useUserVolume } from '@/entities/User'
 import { useAccount } from 'wagmi'
 import { roundDownToPrecision } from '@/shared/lib/utils/number'
@@ -16,7 +16,7 @@ import LockIcon from '@/shared/assets/icons/monochrome/Lock.svg?react'
 import TimeIcon from '@/shared/assets/icons/monochrome/time.svg?react'
 import cls from './TaskAction.module.pcss'
 import { useIsQuestLocked } from '../../model/hooks/useIsQuestLocked'
-import { ProgressBar } from '@/shared/ui/progressBar_deprecated/ProgressBar'
+import { ProgressBar } from '@/components/layout/progressBar/ProgressBar'
 
 export type TTaskActionProps = {
 	quest: TQuest

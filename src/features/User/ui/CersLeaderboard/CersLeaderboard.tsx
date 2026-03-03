@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import cls from './CersLeaderboard.module.pcss'
 import { Tag } from '@concero/ui-kit'
 import BlockiesSvg from 'blockies-react-svg'
-import { truncateWallet } from '@/utils/formatting'
+import { truncateWallet } from '@/shared/lib/utils/formatting'
 import { useAccount } from 'wagmi'
 import { TGetLeaderBoardReponse } from '@/entities/User/model/types/response'
 

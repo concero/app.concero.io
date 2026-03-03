@@ -1,6 +1,6 @@
 import { TUserResponse } from '@/entities/User'
 import cls from './ProfilePage.module.pcss'
-import { truncateWallet } from '@/utils/formatting'
+import { truncateWallet } from '@/shared/lib/utils/formatting'
 import { Avatar } from '@/shared/ui/Avatar/Avatar'
 import { PageWrap } from '@/shared/ui/PageWrap/PageWrap'
 import { Address } from 'viem'

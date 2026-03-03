@@ -1,4 +1,4 @@
-import { Union } from '@/types/utils'
+import { Union } from './utils'
 
 export type TPaginationParams = {
 	take: number
