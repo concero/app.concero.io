@@ -12,14 +12,14 @@
 				}
 			}
 		],
+		"module": "ESNext",
+
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleDetection": "force",
-		"module": "ESNext",
 		"skipLibCheck": true,
 		/* Bundler mode */
 		"moduleResolution": "node",
-		"allowImportingTsExtensions": false,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
@@ -28,19 +28,37 @@
 		"paths": {
 			"@/*": ["./src/*"]
 		},
-		/* Linting */
-		"strict": true,
+		
+		//Paths/imports
+		"allowImportingTsExtensions": false,
+		"allowArbitraryExtensions": true,
+		
 		"allowSyntheticDefaultImports": true,
+
+
+		/* Linting */
+		"alwaysStrict": true,
+		"allowUnusedLabels": false,
+		"allowUnreachableCode": false,
+		"exactOptionalPropertyTypes": false,
+		"noFallthroughCasesInSwitch": false,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": false,
+		"noImplicitThis": true,
 		"noPropertyAccessFromIndexSignature": false,
 		"noUncheckedIndexedAccess": false,
-		"noImplicitReturns": false,
-		"noFallthroughCasesInSwitch": false,
-		"noUnusedLocals": false,
-		"noUnusedParameters": false
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"strictBindCallApply": true,
+		"strictBuiltinIteratorReturn": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+		"useUnknownInCatchVariables": true,
+		
+		
 	},
-	"include": [
-		"src",
-		"node_modules/eslint-plugin-react/lib/types.d.ts",
-	],
+	"include": ["src", "node_modules/eslint-plugin-react/lib/types.d.ts"],
 	"exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx", ".storybook/**/*.ts"]
 }

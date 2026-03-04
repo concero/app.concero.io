@@ -6,6 +6,7 @@
 	"scripts": {
 		"start": "npx vite",
 		"dev": "npx vite",
+		"check:types": "tsc --noEmit",
 		"dev-host": "npx vite --host",
 		"build": "npx vite build",
 		"lint:ts": "npx eslint \"src/**/*.{ts,tsx}\"",
@@ -14,6 +15,7 @@
 		"lint:fix": "npm run lint:ts --fix && npm run lint:css --fix",
 		"format:check": "npx prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md,css,pcss}\"",
 		"format:fix": "npx prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md,css,pcss}\"",
+		"precommit": "npm run check:types && npm run lint && npm run format:check",
 		"preview": "npx vite preview",
 		"test": "npx vitest --run",
 		"sb": "storybook dev -p 6006 --no-open",
