@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { Config, WagmiProvider } from 'wagmi'
 import { configEnvs } from '@/shared/consts/config/config'

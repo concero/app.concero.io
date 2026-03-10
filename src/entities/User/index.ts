@@ -9,7 +9,6 @@ export { DisconnectSocialsModal } from './ui/DisconnectSocialsModal/DisconnectSo
 export { AccoutSettingsModal } from './ui/AccoutSettingsModal/AccoutSettingsModal'
 export { getIsCanClaimQuest } from '../Quest/model/lib/getIsCanClaimQuest'
 export { getAccessToken } from './model/lib/getAccessToken'
-export { acceptTerms } from './model/lib/acceptTerms'
 
 export {
 	invalidationTagUser,

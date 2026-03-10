@@ -1,5 +1,5 @@
 import posthog from 'posthog-js'
-export interface TrackEventProps {
+interface TrackEventProps {
 	action: string
 	category: string
 	label: string

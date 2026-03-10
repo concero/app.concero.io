@@ -1,4 +1,4 @@
-import { type MutableRefObject, useCallback } from 'react'
+import { useCallback } from 'react'
 
 type CombinedRef<T> = ((instance: T | null) => void) | React.MutableRefObject<T | null> | null | undefined
 

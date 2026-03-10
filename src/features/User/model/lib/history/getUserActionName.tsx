@@ -2,7 +2,7 @@ import { TUserAction, TUserActionTxData, TUserActionQuestData } from '@/entities
 import { toLocaleNumber } from '@/shared/lib/utils/formatting'
 import cls from './getUserActionName.module.pcss'
 
-export interface UserActionProps {
+interface UserActionProps {
 	action: TUserAction
 }
 const getTxInfo = (action: TUserAction): JSX.Element => {

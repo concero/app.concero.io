@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from 'react'
 import { useAccount } from 'wagmi'
 import { usePostHog } from 'posthog-js/react'
-import { category } from '../../../../constants/tracking'
 import { trackEvent } from './useTracking'
+import { category } from './tracking'
 
 export const useLoadPosthogInstance = (): void => {
 	const { address } = useAccount()

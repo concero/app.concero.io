@@ -11,11 +11,10 @@ import { AccoutSettings } from '@/features/User'
 import { Banners } from '@/entities/Social'
 import { Leaderboard } from './Leaderboard/Leaderboard'
 import { SocialsGroup } from './SocialsGroup/SocialsGroup'
-import { isAdminAddress } from '@/shared/lib/tests/isAdminAddress'
 
 export const ProfilePageContent = ({ user }: { user: TUserResponse }) => {
 	const addresToShow = truncateWallet(user.address, 4)
-	const isAdmin = isAdminAddress(user.address)
+
 	return (
 		<PageWrap className={cls.page_wrap} key={'PageWrap'}>
 			<Banners key={'Banners'} />

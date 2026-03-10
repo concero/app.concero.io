@@ -5,7 +5,7 @@ import { Tag, TTagVariant } from '@concero/ui-kit'
 import { getIsCanClaimQuest } from '@/entities/User'
 import { HStack } from '@/shared/ui/Stack'
 
-export const getDateUnitMap = (interval: TQuestInterval) => {
+const getDateUnitMap = (interval: TQuestInterval) => {
 	if (interval === 'daily') return 'day'
 	if (interval === 'weekly') return 'week'
 	if (interval === 'monthly') return 'month'
@@ -13,7 +13,7 @@ export const getDateUnitMap = (interval: TQuestInterval) => {
 	return null
 }
 
-export const QuestTagIsNew = (props: { started_at: number; isNew: boolean }) => {
+const QuestTagIsNew = (props: { started_at: number; isNew: boolean }) => {
 	const { isNew, started_at } = props
 	if (!isNew) {
 		return null
